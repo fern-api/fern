@@ -89,10 +89,7 @@
                     "stream": false,
                   },
                   "response": {
-                    "body": {
-                      "id": "id",
-                      "streamed": false,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -141,10 +138,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "id": "id",
-                        "streamed": true,
-                      },
+                      {},
                     ],
                   },
                 },
@@ -222,8 +216,7 @@ service:
             stream: true
           response:
             stream:
-              - id: id
-                streamed: true
+              - {}
     get:
       path: /user/{userId}
       method: GET
@@ -249,9 +242,7 @@ service:
           request:
             stream: false
           response:
-            body:
-              id: id
-              streamed: false
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

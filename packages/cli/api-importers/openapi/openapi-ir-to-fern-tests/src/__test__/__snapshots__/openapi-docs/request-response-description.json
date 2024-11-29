@@ -16,10 +16,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "id": 1,
-                      "name": "name",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -69,9 +66,7 @@
         type: Schema1
       examples:
         - response:
-            body:
-              id: 1
-              name: name
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

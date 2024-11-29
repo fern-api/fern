@@ -77,15 +77,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "bar": {
-                  "value": {
-                    "value": "bar",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

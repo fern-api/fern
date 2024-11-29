@@ -336,36 +336,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "access_token": {
-                  "value": {
-                    "value": "access_token",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "token_type": {
-                  "value": {
-                    "value": "Bearer",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "expires_in": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "refresh_token": {
-                  "value": {
-                    "value": "refresh_token",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

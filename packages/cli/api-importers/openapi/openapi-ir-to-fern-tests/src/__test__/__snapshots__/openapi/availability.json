@@ -21,9 +21,7 @@
                     "x-fern-availability_path_param": "x-fern-availability_path_param",
                   },
                   "response": {
-                    "body": {
-                      "fine_setting": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -106,9 +104,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "not_deprecated_setting": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -143,9 +139,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "not_deprecated_setting": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -179,9 +173,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "not_deprecated_setting": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -219,9 +211,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "not_deprecated_setting": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -350,8 +340,7 @@
             deprecated_ref_id: deprecated_ref_id
             x-fern-availability_path_param: x-fern-availability_path_param
           response:
-            body:
-              fine_setting: true
+            body: {}
     postSuccessRef:
       path: /success-ref
       method: POST
@@ -373,8 +362,7 @@
       examples:
         - request: {}
           response:
-            body:
-              not_deprecated_setting: true
+            body: {}
     postSuccessInlinePropertyDeprecation:
       path: /success-inline-property-deprecation
       method: POST
@@ -396,8 +384,7 @@
       examples:
         - request: {}
           response:
-            body:
-              not_deprecated_setting: true
+            body: {}
     postSuccessInlineObjectDeprecation:
       path: /success-inline-object-deprecation
       method: POST
@@ -417,8 +404,7 @@
       examples:
         - request: {}
           response:
-            body:
-              not_deprecated_setting: true
+            body: {}
     postSuccessInlineBetaBody:
       path: /success-inline-beta-body
       method: POST
@@ -438,8 +424,7 @@
       examples:
         - request: {}
           response:
-            body:
-              not_deprecated_setting: true
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

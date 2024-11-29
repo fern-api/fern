@@ -46,10 +46,6 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                   },
                   "response": {
                     "body": {
-                      "acquisitionChannel": "ORGANIC",
-                      "allowedPaymentMethods": [
-                        "ACH",
-                      ],
                       "createdTimestamp": 1641654664000,
                       "directors": [
                         {
@@ -98,22 +94,12 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                               "documentIssuedDate": 1639939034000,
                               "documentNumber": "Z9431P",
                               "documentType": "passport",
-                              "nameOnDocument": {
-                                "firstName": "Baran",
-                                "lastName": "Ozkan",
-                                "middleName": "Realblood",
-                              },
                               "tags": [
                                 {
                                   "key": "customerType",
                                   "value": "wallet",
                                 },
                               ],
-                            },
-                          ],
-                          "pepStatus": [
-                            {
-                              "isPepHit": true,
                             },
                           ],
                           "tags": [
@@ -124,10 +110,6 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                           ],
                         },
                       ],
-                      "kycStatusDetails": {
-                        "reason": "reason",
-                        "status": "SUCCESSFUL",
-                      },
                       "legalEntity": {
                         "companyFinancialDetails": {
                           "expectedTransactionAmountPerMonth": {
@@ -138,12 +120,6 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                             "amountCurrency": "USD",
                             "amountValue": 8000,
                           },
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
                         },
                         "companyGeneralDetails": {
                           "businessIndustry": [
@@ -153,27 +129,10 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                           "mainProductsServicesSold": [
                             "Hazelnut",
                           ],
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                          "userRegistrationStatus": "REGISTERED",
-                          "userSegment": "SOLE_PROPRIETORSHIP",
                         },
                         "companyRegistrationDetails": {
-                          "dateOfRegistration": "dateOfRegistration",
-                          "legalEntityType": "legalEntityType",
                           "registrationCountry": "DE",
                           "registrationIdentifier": "PSJ554342",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                          "taxIdentifier": "taxIdentifier",
                         },
                         "contactDetails": {
                           "addresses": [
@@ -193,59 +152,11 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                               ],
                             },
                           ],
-                          "contactNumbers": [
-                            "contactNumbers",
-                          ],
-                          "emailIds": [
-                            "emailIds",
-                          ],
-                          "faxNumbers": [
-                            "faxNumbers",
-                          ],
-                          "websites": [
-                            "websites",
-                          ],
                         },
                         "reasonForAccountOpening": [
                           "string",
                         ],
                       },
-                      "linkedEntities": {
-                        "childUserIds": [
-                          "childUserIds",
-                        ],
-                        "parentUserId": "parentUserId",
-                      },
-                      "mccDetails": {
-                        "code": 1.1,
-                        "description": "description",
-                      },
-                      "riskLevel": "VERY_HIGH",
-                      "savedPaymentDetails": [
-                        {
-                          "checkIdentifier": "savedPaymentDetails",
-                          "checkNumber": "savedPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "savedPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        },
-                      ],
                       "shareHolders": [
                         {
                           "contactDetails": {
@@ -293,22 +204,12 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                               "documentIssuedDate": 1639939034000,
                               "documentNumber": "Z9431P",
                               "documentType": "passport",
-                              "nameOnDocument": {
-                                "firstName": "Baran",
-                                "lastName": "Ozkan",
-                                "middleName": "Realblood",
-                              },
                               "tags": [
                                 {
                                   "key": "customerType",
                                   "value": "wallet",
                                 },
                               ],
-                            },
-                          ],
-                          "pepStatus": [
-                            {
-                              "isPepHit": true,
                             },
                           ],
                           "tags": [
@@ -325,38 +226,7 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                           "value": "customValue",
                         },
                       ],
-                      "transactionLimits": {
-                        "maximumDailyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumMonthlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumQuarterlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumWeeklyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumYearlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                      "userStateDetails": {
-                        "reason": "reason",
-                        "state": "UNACCEPTABLE",
-                        "userId": "userId",
-                      },
                     },
                   },
                 },
@@ -442,10 +312,6 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                       },
                       "executedRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleHit": true,
@@ -456,10 +322,6 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                       ],
                       "hitRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleId": "R-1a",
@@ -496,12 +358,8 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                         },
                       },
                       "originUserId": "8650a2611d0771cba03310f74bf6",
-                      "productType": "productType",
                       "promotionCodeUsed": true,
                       "reference": "loan repayment",
-                      "relatedTransactionIds": [
-                        "relatedTransactionIds",
-                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -510,8 +368,6 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                       ],
                       "timestamp": 1641654664000,
                       "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-                      "transactionState": "CREATED",
-                      "type": "DEPOSIT",
                     },
                   },
                 },
@@ -553,7 +409,6 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                   },
                   "response": {
                     "body": {
-                      "acquisitionChannel": "ORGANIC",
                       "contactDetails": {
                         "addresses": [
                           {
@@ -578,18 +433,11 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                         "emailIds": [
                           "baran@flagright.com",
                         ],
-                        "faxNumbers": [
-                          "faxNumbers",
-                        ],
                         "websites": [
                           "flagright.com",
                         ],
                       },
                       "createdTimestamp": 1641654664000,
-                      "kycStatusDetails": {
-                        "reason": "reason",
-                        "status": "SUCCESSFUL",
-                      },
                       "legalDocuments": [
                         {
                           "documentExpirationDate": 1839939034000,
@@ -597,11 +445,6 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                           "documentIssuedDate": 1639939034000,
                           "documentNumber": "Z9431P",
                           "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
                           "tags": [
                             {
                               "key": "customerType",
@@ -610,53 +453,16 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                           ],
                         },
                       ],
-                      "pepStatus": [
-                        {
-                          "isPepHit": true,
-                          "pepCountry": "pepCountry",
-                        },
-                      ],
-                      "reasonForAccountOpening": [
-                        "reasonForAccountOpening",
-                      ],
-                      "riskLevel": "VERY_HIGH",
                       "tags": [
                         {
                           "key": "customKey",
                           "value": "customValue",
                         },
                       ],
-                      "transactionLimits": {
-                        "maximumDailyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumMonthlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumQuarterlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumWeeklyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumYearlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
                       "userDetails": {
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
-                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -664,12 +470,6 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                         },
                       },
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                      "userSegment": "RETAIL",
-                      "userStateDetails": {
-                        "reason": "reason",
-                        "state": "UNACCEPTABLE",
-                        "userId": "userId",
-                      },
                     },
                   },
                 },
@@ -724,10 +524,6 @@ Each consumer Business entity needs three mandatory fields:
                     "body": {
                       "executedRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleHit": true,
@@ -738,9 +534,6 @@ Each consumer Business entity needs three mandatory fields:
                       ],
                       "hitRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
                           "nature": "FRAUD",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -749,7 +542,6 @@ Each consumer Business entity needs three mandatory fields:
                           "ruleName": "Proof of funds for high value transactions",
                         },
                       ],
-                      "message": "message",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                     },
                   },
@@ -806,344 +598,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                   "response": {
                     "body": {
-                      "acquisitionChannel": "ORGANIC",
-                      "allowedPaymentMethods": [
-                        "ACH",
-                      ],
                       "createdTimestamp": 1.1,
-                      "directors": [
-                        {
-                          "contactDetails": {
-                            "addresses": [
-                              {
-                                "addressLines": [
-                                  "Klara-Franke Str 20",
-                                ],
-                                "city": "Berlin",
-                                "country": "Germany",
-                                "postcode": "10557",
-                                "state": "Berlin",
-                                "tags": [
-                                  {
-                                    "key": "customKey",
-                                    "value": "customValue",
-                                  },
-                                ],
-                              },
-                            ],
-                            "contactNumbers": [
-                              "+371 123132",
-                            ],
-                            "emailIds": [
-                              "baran@flagright.com",
-                            ],
-                            "websites": [
-                              "flagright.com",
-                            ],
-                          },
-                          "generalDetails": {
-                            "countryOfNationality": "DE",
-                            "countryOfResidence": "US",
-                            "dateOfBirth": "1991-01-01",
-                            "name": {
-                              "firstName": "Baran",
-                              "lastName": "Ozkan",
-                              "middleName": "Realblood",
-                            },
-                          },
-                          "legalDocuments": [
-                            {
-                              "documentExpirationDate": 1839939034000,
-                              "documentIssuedCountry": "DE",
-                              "documentIssuedDate": 1639939034000,
-                              "documentNumber": "Z9431P",
-                              "documentType": "passport",
-                              "nameOnDocument": {
-                                "firstName": "Baran",
-                                "lastName": "Ozkan",
-                                "middleName": "Realblood",
-                              },
-                              "tags": [
-                                {
-                                  "key": "customerType",
-                                  "value": "wallet",
-                                },
-                              ],
-                            },
-                          ],
-                          "pepStatus": [
-                            {
-                              "isPepHit": true,
-                            },
-                          ],
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "executedRules": [
-                        {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
-                          "ruleAction": "BLOCK",
-                          "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                          "ruleHit": true,
-                          "ruleId": "R-1a",
-                          "ruleInstanceId": "ruleInstanceId",
-                          "ruleName": "Proof of funds for high value transactions",
-                        },
-                      ],
-                      "hitRules": [
-                        {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "FRAUD",
-                          "ruleAction": "BLOCK",
-                          "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                          "ruleId": "R-1a",
-                          "ruleInstanceId": "ruleInstanceId",
-                          "ruleName": "Proof of funds for high value transactions",
-                        },
-                      ],
-                      "kycStatusDetails": {
-                        "reason": "reason",
-                        "status": "SUCCESSFUL",
-                      },
-                      "legalEntity": {
-                        "companyFinancialDetails": {
-                          "expectedTransactionAmountPerMonth": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "expectedTurnoverPerMonth": {
-                            "amountCurrency": "USD",
-                            "amountValue": 8000,
-                          },
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                        "companyGeneralDetails": {
-                          "businessIndustry": [
-                            "Farming",
-                          ],
-                          "legalName": "Ozkan Hazelnut Export JSC",
-                          "mainProductsServicesSold": [
-                            "Hazelnut",
-                          ],
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                          "userRegistrationStatus": "REGISTERED",
-                          "userSegment": "SOLE_PROPRIETORSHIP",
-                        },
-                        "companyRegistrationDetails": {
-                          "dateOfRegistration": "dateOfRegistration",
-                          "legalEntityType": "legalEntityType",
-                          "registrationCountry": "DE",
-                          "registrationIdentifier": "PSJ554342",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                          "taxIdentifier": "taxIdentifier",
-                        },
-                        "contactDetails": {
-                          "addresses": [
-                            {
-                              "addressLines": [
-                                "Klara-Franke Str 20",
-                              ],
-                              "city": "Berlin",
-                              "country": "Germany",
-                              "postcode": "10557",
-                              "state": "Berlin",
-                              "tags": [
-                                {
-                                  "key": "customKey",
-                                  "value": "customValue",
-                                },
-                              ],
-                            },
-                          ],
-                          "contactNumbers": [
-                            "contactNumbers",
-                          ],
-                          "emailIds": [
-                            "emailIds",
-                          ],
-                          "faxNumbers": [
-                            "faxNumbers",
-                          ],
-                          "websites": [
-                            "websites",
-                          ],
-                        },
-                        "reasonForAccountOpening": [
-                          "reasonForAccountOpening",
-                        ],
-                      },
-                      "linkedEntities": {
-                        "childUserIds": [
-                          "childUserIds",
-                        ],
-                        "parentUserId": "parentUserId",
-                      },
-                      "mccDetails": {
-                        "code": 1.1,
-                        "description": "description",
-                      },
-                      "riskLevel": "VERY_HIGH",
-                      "savedPaymentDetails": [
-                        {
-                          "checkIdentifier": "savedPaymentDetails",
-                          "checkNumber": "savedPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "savedPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                      "shareHolders": [
-                        {
-                          "contactDetails": {
-                            "addresses": [
-                              {
-                                "addressLines": [
-                                  "Klara-Franke Str 20",
-                                ],
-                                "city": "Berlin",
-                                "country": "Germany",
-                                "postcode": "10557",
-                                "state": "Berlin",
-                                "tags": [
-                                  {
-                                    "key": "customKey",
-                                    "value": "customValue",
-                                  },
-                                ],
-                              },
-                            ],
-                            "contactNumbers": [
-                              "+371 123132",
-                            ],
-                            "emailIds": [
-                              "baran@flagright.com",
-                            ],
-                            "websites": [
-                              "flagright.com",
-                            ],
-                          },
-                          "generalDetails": {
-                            "countryOfNationality": "DE",
-                            "countryOfResidence": "US",
-                            "dateOfBirth": "1991-01-01",
-                            "name": {
-                              "firstName": "Baran",
-                              "lastName": "Ozkan",
-                              "middleName": "Realblood",
-                            },
-                          },
-                          "legalDocuments": [
-                            {
-                              "documentExpirationDate": 1839939034000,
-                              "documentIssuedCountry": "DE",
-                              "documentIssuedDate": 1639939034000,
-                              "documentNumber": "Z9431P",
-                              "documentType": "passport",
-                              "nameOnDocument": {
-                                "firstName": "Baran",
-                                "lastName": "Ozkan",
-                                "middleName": "Realblood",
-                              },
-                              "tags": [
-                                {
-                                  "key": "customerType",
-                                  "value": "wallet",
-                                },
-                              ],
-                            },
-                          ],
-                          "pepStatus": [
-                            {
-                              "isPepHit": true,
-                            },
-                          ],
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                      "transactionLimits": {
-                        "maximumDailyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumMonthlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumQuarterlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumWeeklyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumYearlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
                       "userId": "userId",
-                      "userStateDetails": {
-                        "reason": "reason",
-                        "state": "UNACCEPTABLE",
-                        "userId": "userId",
-                      },
                     },
                   },
                 },
@@ -1315,10 +771,6 @@ Here are some of the most used payload fields explained (you can find the full p
                     "body": {
                       "executedRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleHit": true,
@@ -1329,10 +781,6 @@ Here are some of the most used payload fields explained (you can find the full p
                       ],
                       "hitRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleId": "R-1a",
@@ -1340,7 +788,6 @@ Here are some of the most used payload fields explained (you can find the full p
                           "ruleName": "Proof of funds for high value transactions",
                         },
                       ],
-                      "message": "message",
                       "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                     },
                   },
@@ -1463,10 +910,6 @@ Each consumer User entity needs three mandatory fields:
                     "body": {
                       "executedRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleHit": true,
@@ -1477,9 +920,6 @@ Each consumer User entity needs three mandatory fields:
                       ],
                       "hitRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
                           "nature": "FRAUD",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -1488,7 +928,6 @@ Each consumer User entity needs three mandatory fields:
                           "ruleName": "Proof of funds for high value transactions",
                         },
                       ],
-                      "message": "message",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                     },
                   },
@@ -1562,10 +1001,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "eventId": "7b80a539eea6e78acbd6d458e5971482",
                       "executedRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleHit": true,
@@ -1576,10 +1011,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       ],
                       "hitRules": [
                         {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
                           "ruleAction": "BLOCK",
                           "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "ruleId": "R-1a",
@@ -1659,12 +1090,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         },
                         "originUserId": "8650a2611d0771cba03310f74bf6",
-                        "productType": "productType",
                         "promotionCodeUsed": true,
                         "reference": "loan repayment",
-                        "relatedTransactionIds": [
-                          "relatedTransactionIds",
-                        ],
                         "tags": [
                           {
                             "key": "customKey",
@@ -1673,8 +1100,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         ],
                         "timestamp": 1641654664000,
                         "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-                        "transactionState": "CREATED",
-                        "type": "DEPOSIT",
                       },
                     },
                   },
@@ -1776,150 +1201,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                   "response": {
                     "body": {
-                      "acquisitionChannel": "ORGANIC",
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "contactNumbers",
-                        ],
-                        "emailIds": [
-                          "emailIds",
-                        ],
-                        "faxNumbers": [
-                          "faxNumbers",
-                        ],
-                        "websites": [
-                          "websites",
-                        ],
-                      },
                       "createdTimestamp": 1.1,
-                      "executedRules": [
-                        {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "AML",
-                          "ruleAction": "BLOCK",
-                          "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                          "ruleHit": true,
-                          "ruleId": "R-1a",
-                          "ruleInstanceId": "ruleInstanceId",
-                          "ruleName": "Proof of funds for high value transactions",
-                        },
-                      ],
-                      "hitRules": [
-                        {
-                          "labels": [
-                            "UNEXPECTED_BEHAVIOR",
-                          ],
-                          "nature": "FRAUD",
-                          "ruleAction": "BLOCK",
-                          "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                          "ruleId": "R-1a",
-                          "ruleInstanceId": "ruleInstanceId",
-                          "ruleName": "Proof of funds for high value transactions",
-                        },
-                      ],
-                      "kycStatusDetails": {
-                        "reason": "reason",
-                        "status": "SUCCESSFUL",
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                          ],
-                        },
-                      ],
-                      "pepStatus": [
-                        {
-                          "isPepHit": true,
-                          "pepCountry": "pepCountry",
-                        },
-                      ],
-                      "reasonForAccountOpening": [
-                        "reasonForAccountOpening",
-                      ],
-                      "riskLevel": "VERY_HIGH",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                      "transactionLimits": {
-                        "maximumDailyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumMonthlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumQuarterlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumWeeklyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "maximumYearlyTransactionLimit": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "userDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "gender": "M",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
                       "userId": "userId",
-                      "userSegment": "RETAIL",
-                      "userStateDetails": {
-                        "reason": "reason",
-                        "state": "UNACCEPTABLE",
-                        "userId": "userId",
-                      },
                     },
                   },
                 },
@@ -7599,9 +6882,6 @@ service:
                     ask for proof of funds
                   ruleAction: BLOCK
                   ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               hitRules:
                 - ruleId: R-1a
                   ruleInstanceId: ruleInstanceId
@@ -7610,11 +6890,7 @@ service:
                     If a user makes a remittance transaction >= 1800 in EUR -
                     ask for proof of funds
                   ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               transactionId: 7b80a539eea6e78acbd6d458e5971482
-              message: message
     get-consumer-transaction:
       path: /transactions/{transactionId}
       method: GET
@@ -7649,7 +6925,6 @@ service:
             transactionId: transactionId
           response:
             body:
-              transactionState: CREATED
               originAmountDetails:
                 transactionAmount: 800
                 transactionCurrency: EUR
@@ -7692,9 +6967,6 @@ service:
                   tags:
                     - key: customKey
                       value: customValue
-              relatedTransactionIds:
-                - relatedTransactionIds
-              productType: productType
               promotionCodeUsed: true
               reference: loan repayment
               deviceData:
@@ -7712,7 +6984,6 @@ service:
               tags:
                 - key: customKey
                   value: customValue
-              type: DEPOSIT
               transactionId: 7b80a539eea6e78acbd6d458e5971482
               timestamp: 1641654664000
               originUserId: 8650a2611d0771cba03310f74bf6
@@ -7726,9 +6997,6 @@ service:
                     ask for proof of funds
                   ruleAction: BLOCK
                   ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               hitRules:
                 - ruleId: R-1a
                   ruleInstanceId: ruleInstanceId
@@ -7737,9 +7005,6 @@ service:
                     If a user makes a remittance transaction >= 1800 in EUR -
                     ask for proof of funds
                   ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
     post-transaction-event:
       path: /events/transaction
       method: POST
@@ -7851,9 +7116,6 @@ service:
                     ask for proof of funds
                   ruleAction: BLOCK
                   ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               hitRules:
                 - ruleId: R-1a
                   ruleInstanceId: ruleInstanceId
@@ -7862,12 +7124,8 @@ service:
                     If a user makes a remittance transaction >= 1800 in EUR -
                     ask for proof of funds
                   ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               eventId: 7b80a539eea6e78acbd6d458e5971482
               transaction:
-                transactionState: CREATED
                 originAmountDetails:
                   transactionAmount: 800
                   transactionCurrency: EUR
@@ -7910,9 +7168,6 @@ service:
                     tags:
                       - key: customKey
                         value: customValue
-                relatedTransactionIds:
-                  - relatedTransactionIds
-                productType: productType
                 promotionCodeUsed: true
                 reference: loan repayment
                 deviceData:
@@ -7930,7 +7185,6 @@ service:
                 tags:
                   - key: customKey
                     value: customValue
-                type: DEPOSIT
                 transactionId: 7b80a539eea6e78acbd6d458e5971482
                 timestamp: 1641654664000
                 originUserId: 8650a2611d0771cba03310f74bf6
@@ -8030,9 +7284,6 @@ service:
                     ask for proof of funds
                   ruleAction: BLOCK
                   ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               hitRules:
                 - ruleId: R-1a
                   ruleInstanceId: ruleInstanceId
@@ -8041,11 +7292,8 @@ service:
                     If a user makes a remittance transaction >= 1800 in EUR -
                     ask for proof of funds
                   ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
                   nature: FRAUD
               userId: 96647cfd9e8fe66ee0f3362e011e34e8
-              message: message
     get-consumer-user:
       path: /consumer/users/{userId}
       method: GET
@@ -8080,13 +7328,6 @@ service:
             userId: userId
           response:
             body:
-              userStateDetails:
-                userId: userId
-                reason: reason
-                state: UNACCEPTABLE
-              kycStatusDetails:
-                reason: reason
-                status: SUCCESSFUL
               legalDocuments:
                 - documentType: passport
                   documentNumber: Z9431P
@@ -8096,17 +7337,11 @@ service:
                   tags:
                     - key: customerType
                       value: wallet
-                  nameOnDocument:
-                    firstName: Baran
-                    middleName: Realblood
-                    lastName: Ozkan
               contactDetails:
                 emailIds:
                   - baran@flagright.com
                 contactNumbers:
                   - '+37112345432'
-                faxNumbers:
-                  - faxNumbers
                 websites:
                   - flagright.com
                 addresses:
@@ -8119,33 +7354,6 @@ service:
                     tags:
                       - key: customKey
                         value: customValue
-              transactionLimits:
-                maximumDailyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumWeeklyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumMonthlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumQuarterlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumYearlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-              riskLevel: VERY_HIGH
-              acquisitionChannel: ORGANIC
-              reasonForAccountOpening:
-                - reasonForAccountOpening
-              userSegment: RETAIL
-              pepStatus:
-                - isPepHit: true
-                  pepCountry: pepCountry
               tags:
                 - key: customKey
                   value: customValue
@@ -8158,7 +7366,6 @@ service:
                 dateOfBirth: '1991-01-01'
                 countryOfResidence: US
                 countryOfNationality: DE
-                gender: M
               createdTimestamp: 1641654664000
     post-business-user:
       path: /business/users
@@ -8222,9 +7429,6 @@ service:
                     ask for proof of funds
                   ruleAction: BLOCK
                   ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
               hitRules:
                 - ruleId: R-1a
                   ruleInstanceId: ruleInstanceId
@@ -8233,11 +7437,8 @@ service:
                     If a user makes a remittance transaction >= 1800 in EUR -
                     ask for proof of funds
                   ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
                   nature: FRAUD
               userId: 96647cfd9e8fe66ee0f3362e011e34e8
-              message: message
     get-business-user-userId:
       path: /business/users/{userId}
       method: GET
@@ -8272,13 +7473,6 @@ service:
             userId: userId
           response:
             body:
-              userStateDetails:
-                userId: userId
-                reason: reason
-                state: UNACCEPTABLE
-              kycStatusDetails:
-                reason: reason
-                status: SUCCESSFUL
               legalEntity:
                 companyGeneralDetails:
                   legalName: Ozkan Hazelnut Export JSC
@@ -8286,11 +7480,6 @@ service:
                     - Farming
                   mainProductsServicesSold:
                     - Hazelnut
-                  userSegment: SOLE_PROPRIETORSHIP
-                  userRegistrationStatus: REGISTERED
-                  tags:
-                    - key: customKey
-                      value: customValue
                 companyFinancialDetails:
                   expectedTransactionAmountPerMonth:
                     amountValue: 800
@@ -8298,29 +7487,12 @@ service:
                   expectedTurnoverPerMonth:
                     amountValue: 8000
                     amountCurrency: USD
-                  tags:
-                    - key: customKey
-                      value: customValue
                 companyRegistrationDetails:
                   registrationIdentifier: PSJ554342
                   registrationCountry: DE
-                  taxIdentifier: taxIdentifier
-                  legalEntityType: legalEntityType
-                  dateOfRegistration: dateOfRegistration
-                  tags:
-                    - key: customKey
-                      value: customValue
                 reasonForAccountOpening:
                   - string
                 contactDetails:
-                  emailIds:
-                    - emailIds
-                  contactNumbers:
-                    - contactNumbers
-                  faxNumbers:
-                    - faxNumbers
-                  websites:
-                    - websites
                   addresses:
                     - addressLines:
                         - Klara-Franke Str 20
@@ -8349,10 +7521,6 @@ service:
                       tags:
                         - key: customerType
                           value: wallet
-                      nameOnDocument:
-                        firstName: Baran
-                        middleName: Realblood
-                        lastName: Ozkan
                   contactDetails:
                     emailIds:
                       - baran@flagright.com
@@ -8370,8 +7538,6 @@ service:
                         tags:
                           - key: customKey
                             value: customValue
-                  pepStatus:
-                    - isPepHit: true
                   tags:
                     - key: customKey
                       value: customValue
@@ -8393,10 +7559,6 @@ service:
                       tags:
                         - key: customerType
                           value: wallet
-                      nameOnDocument:
-                        firstName: Baran
-                        middleName: Realblood
-                        lastName: Ozkan
                   contactDetails:
                     emailIds:
                       - baran@flagright.com
@@ -8414,58 +7576,9 @@ service:
                         tags:
                           - key: customKey
                             value: customValue
-                  pepStatus:
-                    - isPepHit: true
                   tags:
                     - key: customKey
                       value: customValue
-              transactionLimits:
-                maximumDailyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumWeeklyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumMonthlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumQuarterlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumYearlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-              riskLevel: VERY_HIGH
-              allowedPaymentMethods:
-                - ACH
-              linkedEntities:
-                parentUserId: parentUserId
-                childUserIds:
-                  - childUserIds
-              acquisitionChannel: ORGANIC
-              savedPaymentDetails:
-                - method: CHECK
-                  checkNumber: savedPaymentDetails
-                  checkIdentifier: savedPaymentDetails
-                  name: savedPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
-              mccDetails:
-                code: 1.1
-                description: description
               tags:
                 - key: customKey
                   value: customValue
@@ -8556,109 +7669,8 @@ service:
             userId: userId
           response:
             body:
-              userStateDetails:
-                userId: userId
-                reason: reason
-                state: UNACCEPTABLE
-              kycStatusDetails:
-                reason: reason
-                status: SUCCESSFUL
-              legalDocuments:
-                - documentType: passport
-                  documentNumber: Z9431P
-                  documentIssuedDate: 1639939034000
-                  documentExpirationDate: 1839939034000
-                  documentIssuedCountry: DE
-                  tags:
-                    - key: customerType
-                      value: wallet
-                  nameOnDocument:
-                    firstName: Baran
-                    middleName: Realblood
-                    lastName: Ozkan
-              contactDetails:
-                emailIds:
-                  - emailIds
-                contactNumbers:
-                  - contactNumbers
-                faxNumbers:
-                  - faxNumbers
-                websites:
-                  - websites
-                addresses:
-                  - addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
-              transactionLimits:
-                maximumDailyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumWeeklyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumMonthlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumQuarterlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumYearlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-              riskLevel: VERY_HIGH
-              acquisitionChannel: ORGANIC
-              reasonForAccountOpening:
-                - reasonForAccountOpening
-              userSegment: RETAIL
-              pepStatus:
-                - isPepHit: true
-                  pepCountry: pepCountry
-              tags:
-                - key: customKey
-                  value: customValue
               userId: userId
-              userDetails:
-                name:
-                  firstName: Baran
-                  middleName: Realblood
-                  lastName: Ozkan
-                dateOfBirth: '1991-01-01'
-                countryOfResidence: US
-                countryOfNationality: DE
-                gender: M
               createdTimestamp: 1.1
-              executedRules:
-                - ruleId: R-1a
-                  ruleInstanceId: ruleInstanceId
-                  ruleName: Proof of funds for high value transactions
-                  ruleDescription: >-
-                    If a user makes a remittance transaction >= 1800 in EUR -
-                    ask for proof of funds
-                  ruleAction: BLOCK
-                  ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
-              hitRules:
-                - ruleId: R-1a
-                  ruleInstanceId: ruleInstanceId
-                  ruleName: Proof of funds for high value transactions
-                  ruleDescription: >-
-                    If a user makes a remittance transaction >= 1800 in EUR -
-                    ask for proof of funds
-                  ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: FRAUD
     post-business-user-event:
       path: /events/business/user
       method: POST
@@ -8744,228 +7756,8 @@ service:
             userId: userId
           response:
             body:
-              userStateDetails:
-                userId: userId
-                reason: reason
-                state: UNACCEPTABLE
-              kycStatusDetails:
-                reason: reason
-                status: SUCCESSFUL
-              legalEntity:
-                companyGeneralDetails:
-                  legalName: Ozkan Hazelnut Export JSC
-                  businessIndustry:
-                    - Farming
-                  mainProductsServicesSold:
-                    - Hazelnut
-                  userSegment: SOLE_PROPRIETORSHIP
-                  userRegistrationStatus: REGISTERED
-                  tags:
-                    - key: customKey
-                      value: customValue
-                companyFinancialDetails:
-                  expectedTransactionAmountPerMonth:
-                    amountValue: 800
-                    amountCurrency: GBP
-                  expectedTurnoverPerMonth:
-                    amountValue: 8000
-                    amountCurrency: USD
-                  tags:
-                    - key: customKey
-                      value: customValue
-                companyRegistrationDetails:
-                  registrationIdentifier: PSJ554342
-                  registrationCountry: DE
-                  taxIdentifier: taxIdentifier
-                  legalEntityType: legalEntityType
-                  dateOfRegistration: dateOfRegistration
-                  tags:
-                    - key: customKey
-                      value: customValue
-                reasonForAccountOpening:
-                  - reasonForAccountOpening
-                contactDetails:
-                  emailIds:
-                    - emailIds
-                  contactNumbers:
-                    - contactNumbers
-                  faxNumbers:
-                    - faxNumbers
-                  websites:
-                    - websites
-                  addresses:
-                    - addressLines:
-                        - Klara-Franke Str 20
-                      postcode: '10557'
-                      city: Berlin
-                      state: Berlin
-                      country: Germany
-                      tags:
-                        - key: customKey
-                          value: customValue
-              shareHolders:
-                - generalDetails:
-                    name:
-                      firstName: Baran
-                      middleName: Realblood
-                      lastName: Ozkan
-                    dateOfBirth: '1991-01-01'
-                    countryOfResidence: US
-                    countryOfNationality: DE
-                  legalDocuments:
-                    - documentType: passport
-                      documentNumber: Z9431P
-                      documentIssuedDate: 1639939034000
-                      documentExpirationDate: 1839939034000
-                      documentIssuedCountry: DE
-                      tags:
-                        - key: customerType
-                          value: wallet
-                      nameOnDocument:
-                        firstName: Baran
-                        middleName: Realblood
-                        lastName: Ozkan
-                  contactDetails:
-                    emailIds:
-                      - baran@flagright.com
-                    contactNumbers:
-                      - +371 123132
-                    websites:
-                      - flagright.com
-                    addresses:
-                      - addressLines:
-                          - Klara-Franke Str 20
-                        postcode: '10557'
-                        city: Berlin
-                        state: Berlin
-                        country: Germany
-                        tags:
-                          - key: customKey
-                            value: customValue
-                  pepStatus:
-                    - isPepHit: true
-                  tags:
-                    - key: customKey
-                      value: customValue
-              directors:
-                - generalDetails:
-                    name:
-                      firstName: Baran
-                      middleName: Realblood
-                      lastName: Ozkan
-                    dateOfBirth: '1991-01-01'
-                    countryOfResidence: US
-                    countryOfNationality: DE
-                  legalDocuments:
-                    - documentType: passport
-                      documentNumber: Z9431P
-                      documentIssuedDate: 1639939034000
-                      documentExpirationDate: 1839939034000
-                      documentIssuedCountry: DE
-                      tags:
-                        - key: customerType
-                          value: wallet
-                      nameOnDocument:
-                        firstName: Baran
-                        middleName: Realblood
-                        lastName: Ozkan
-                  contactDetails:
-                    emailIds:
-                      - baran@flagright.com
-                    contactNumbers:
-                      - +371 123132
-                    websites:
-                      - flagright.com
-                    addresses:
-                      - addressLines:
-                          - Klara-Franke Str 20
-                        postcode: '10557'
-                        city: Berlin
-                        state: Berlin
-                        country: Germany
-                        tags:
-                          - key: customKey
-                            value: customValue
-                  pepStatus:
-                    - isPepHit: true
-                  tags:
-                    - key: customKey
-                      value: customValue
-              transactionLimits:
-                maximumDailyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumWeeklyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumMonthlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumQuarterlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-                maximumYearlyTransactionLimit:
-                  amountValue: 800
-                  amountCurrency: GBP
-              riskLevel: VERY_HIGH
-              allowedPaymentMethods:
-                - ACH
-              linkedEntities:
-                parentUserId: parentUserId
-                childUserIds:
-                  - childUserIds
-              acquisitionChannel: ORGANIC
-              savedPaymentDetails:
-                - method: CHECK
-                  checkNumber: savedPaymentDetails
-                  checkIdentifier: savedPaymentDetails
-                  name: savedPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
-              mccDetails:
-                code: 1.1
-                description: description
-              tags:
-                - key: customKey
-                  value: customValue
               userId: userId
               createdTimestamp: 1.1
-              executedRules:
-                - ruleId: R-1a
-                  ruleInstanceId: ruleInstanceId
-                  ruleName: Proof of funds for high value transactions
-                  ruleDescription: >-
-                    If a user makes a remittance transaction >= 1800 in EUR -
-                    ask for proof of funds
-                  ruleAction: BLOCK
-                  ruleHit: true
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: AML
-              hitRules:
-                - ruleId: R-1a
-                  ruleInstanceId: ruleInstanceId
-                  ruleName: Proof of funds for high value transactions
-                  ruleDescription: >-
-                    If a user makes a remittance transaction >= 1800 in EUR -
-                    ask for proof of funds
-                  ruleAction: BLOCK
-                  labels:
-                    - UNEXPECTED_BEHAVIOR
-                  nature: FRAUD
   source:
     openapi: ../openapi.yml
 ",

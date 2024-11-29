@@ -17,9 +17,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -41,10 +39,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -61,9 +56,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -85,10 +78,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -115,10 +105,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -150,10 +137,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -185,10 +169,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -220,10 +201,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -255,10 +233,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -290,10 +265,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -325,10 +297,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -360,10 +329,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -395,10 +361,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -430,10 +393,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -465,10 +425,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -500,10 +457,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -535,10 +489,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -560,9 +511,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -574,9 +523,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -598,10 +545,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -633,10 +577,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -668,10 +609,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -708,10 +646,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -748,10 +683,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -793,10 +725,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -833,10 +762,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -878,10 +804,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -903,9 +826,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -917,9 +838,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -941,10 +860,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -966,9 +882,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -980,9 +894,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1004,10 +916,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1039,10 +948,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1074,10 +980,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1109,10 +1012,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1144,10 +1044,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1179,10 +1076,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1214,10 +1108,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1249,10 +1140,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1284,10 +1172,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1319,10 +1204,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1354,10 +1236,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1389,10 +1268,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1424,10 +1300,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1449,9 +1322,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1463,9 +1334,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1487,10 +1356,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1512,9 +1378,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1526,9 +1390,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1550,10 +1412,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1575,9 +1434,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1589,9 +1446,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1613,10 +1468,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1638,9 +1490,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1652,9 +1502,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1676,10 +1524,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1701,9 +1546,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1715,9 +1558,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1739,10 +1580,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1764,9 +1602,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1778,9 +1614,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1802,10 +1636,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1842,10 +1673,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1877,10 +1705,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1912,10 +1737,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -1937,9 +1759,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -1951,9 +1771,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -1975,10 +1793,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2000,9 +1815,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2014,9 +1827,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2038,10 +1849,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2063,9 +1871,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2077,9 +1883,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2101,10 +1905,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2126,9 +1927,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2140,9 +1939,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2164,10 +1961,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2189,9 +1983,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2203,9 +1995,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2227,10 +2017,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2252,9 +2039,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2266,9 +2051,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2290,10 +2073,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2325,10 +2105,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2360,10 +2137,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2395,10 +2169,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2430,10 +2201,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2465,10 +2233,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2500,10 +2265,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2535,10 +2297,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2570,10 +2329,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2605,10 +2361,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2630,10 +2383,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2674,10 +2424,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2694,9 +2441,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "status": 403,
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2733,10 +2478,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2773,10 +2515,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2798,9 +2537,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2822,10 +2559,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2847,9 +2581,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2871,10 +2603,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2896,9 +2625,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 409,
@@ -2910,9 +2637,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2934,10 +2659,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -2959,9 +2681,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -2983,10 +2703,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -3008,9 +2725,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "message": "Request not authorized",
-                },
+                "value": {},
               },
             ],
             "status-code": 403,
@@ -3032,10 +2747,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -3067,10 +2779,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -3102,10 +2811,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -3137,10 +2843,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -3172,10 +2875,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "code": "too_many_requests",
-                  "message": "too many requests",
-                },
+                "value": {},
               },
             ],
             "status-code": 429,
@@ -6368,8 +6068,7 @@ errors:
     type: TokenAuthorizedByRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   TokenIntrospectRequestUnauthorizedError:
     status-code: 401
     type: unknown
@@ -6394,9 +6093,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   SitesGetRequestBadRequestError:
     status-code: 400
     type: unknown
@@ -6419,9 +6116,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   SitesGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6448,9 +6143,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   SitesGetCustomDomainRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6484,16 +6177,13 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ActivityLogsListRequestForbiddenError:
     status-code: 403
     type: ActivityLogsListRequestForbiddenErrorBody
     docs: Forbidden request
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ActivityLogsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -6506,9 +6196,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ActivityLogsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6535,9 +6223,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   CollectionsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6564,9 +6250,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   CollectionsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6593,9 +6277,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   CollectionsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6622,9 +6304,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   DeleteCollectionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6651,9 +6331,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FieldsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6680,9 +6358,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   CollectionsDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6709,9 +6385,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FieldsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6738,9 +6412,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsListItemsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6767,9 +6439,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsCreateItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6796,9 +6466,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsListItemsLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6825,9 +6493,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsCreateItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6854,9 +6520,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsCreateItemForMultipleLocalesRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6883,9 +6547,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsGetItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6912,9 +6574,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsDeleteItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6941,9 +6601,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsUpdateItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6970,9 +6628,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsGetItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -6999,9 +6655,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsDeleteItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7028,9 +6682,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsUpdateItemLiveRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7057,9 +6709,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ItemsPublishItemRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7086,9 +6736,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   PagesListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7115,9 +6763,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   PagesGetMetadataRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7144,9 +6790,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UpdatePageSettingsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7177,9 +6821,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   PagesGetContentRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7210,9 +6852,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UpdateStaticContentRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7239,9 +6879,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsGetCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7268,9 +6906,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsUpsertCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7297,9 +6933,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsDeleteCustomCodeRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7326,9 +6960,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7355,9 +6987,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsRegisterHostedRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7384,9 +7014,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsRegisterInlineRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7413,9 +7041,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ScriptsListCustomCodeBlocksRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7442,9 +7068,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7471,9 +7095,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7500,9 +7122,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7529,9 +7149,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7558,9 +7176,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7587,9 +7203,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsListFoldersRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7616,9 +7230,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsCreateFolderRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7645,9 +7257,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AssetsGetFolderRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7674,9 +7284,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   WebhooksListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7703,9 +7311,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   WebhooksCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7732,9 +7338,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   WebhooksGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7761,9 +7365,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   WebhooksDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7798,9 +7400,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FormsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7831,9 +7431,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FormsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7864,9 +7462,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FormsListSubmissionsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7897,9 +7493,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FormsGetSubmissionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7934,9 +7528,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   FormsUpdateSubmissionRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7956,8 +7548,7 @@ errors:
     type: UsersListRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -7970,9 +7561,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UsersListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -7992,8 +7581,7 @@ errors:
     type: UsersGetRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8006,9 +7594,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UsersGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8028,8 +7614,7 @@ errors:
     type: UsersDeleteRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersDeleteRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8042,9 +7627,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UsersDeleteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8064,8 +7647,7 @@ errors:
     type: UsersUpdateRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8078,9 +7660,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UsersUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8100,8 +7680,7 @@ errors:
     type: UsersInviteRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersInviteRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8111,8 +7690,7 @@ errors:
     type: UsersInviteRequestConflictErrorBody
     docs: Conflict
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   UsersInviteRequestTooManyRequestsError:
     status-code: 429
     type: UsersInviteRequestTooManyRequestsErrorBody
@@ -8121,9 +7699,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   UsersInviteRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8143,8 +7719,7 @@ errors:
     type: AccessGroupsListRequestForbiddenErrorBody
     docs: Forbidden
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   AccessGroupsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8157,9 +7732,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   AccessGroupsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8179,8 +7752,7 @@ errors:
     type: ProductsListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8190,8 +7762,7 @@ errors:
     type: ProductsListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsListRequestTooManyRequestsError:
     status-code: 429
     type: ProductsListRequestTooManyRequestsErrorBody
@@ -8200,9 +7771,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8222,8 +7791,7 @@ errors:
     type: ProductsCreateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsCreateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8233,8 +7801,7 @@ errors:
     type: ProductsCreateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsCreateRequestTooManyRequestsError:
     status-code: 429
     type: ProductsCreateRequestTooManyRequestsErrorBody
@@ -8243,9 +7810,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsCreateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8265,8 +7830,7 @@ errors:
     type: ProductsGetRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8276,8 +7840,7 @@ errors:
     type: ProductsGetRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsGetRequestTooManyRequestsError:
     status-code: 429
     type: ProductsGetRequestTooManyRequestsErrorBody
@@ -8286,9 +7849,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8308,8 +7869,7 @@ errors:
     type: ProductsUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8319,8 +7879,7 @@ errors:
     type: ProductsUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsUpdateRequestTooManyRequestsError:
     status-code: 429
     type: ProductsUpdateRequestTooManyRequestsErrorBody
@@ -8329,9 +7888,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8351,8 +7908,7 @@ errors:
     type: ProductsCreateSkuRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsCreateSkuRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8362,8 +7918,7 @@ errors:
     type: ProductsCreateSkuRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsCreateSkuRequestTooManyRequestsError:
     status-code: 429
     type: ProductsCreateSkuRequestTooManyRequestsErrorBody
@@ -8372,9 +7927,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsCreateSkuRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8394,8 +7947,7 @@ errors:
     type: ProductsUpdateSkuRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   ProductsUpdateSkuRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8405,8 +7957,7 @@ errors:
     type: ProductsUpdateSkuRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   ProductsUpdateSkuRequestTooManyRequestsError:
     status-code: 429
     type: ProductsUpdateSkuRequestTooManyRequestsErrorBody
@@ -8415,9 +7966,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   ProductsUpdateSkuRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8437,8 +7986,7 @@ errors:
     type: OrdersListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8448,8 +7996,7 @@ errors:
     type: OrdersListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersListRequestTooManyRequestsError:
     status-code: 429
     type: OrdersListRequestTooManyRequestsErrorBody
@@ -8458,9 +8005,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8480,8 +8025,7 @@ errors:
     type: OrdersGetRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersGetRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8491,8 +8035,7 @@ errors:
     type: OrdersGetRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersGetRequestTooManyRequestsError:
     status-code: 429
     type: OrdersGetRequestTooManyRequestsErrorBody
@@ -8501,9 +8044,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersGetRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8523,8 +8064,7 @@ errors:
     type: OrdersUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8534,8 +8074,7 @@ errors:
     type: OrdersUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersUpdateRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateRequestTooManyRequestsErrorBody
@@ -8544,9 +8083,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8566,8 +8103,7 @@ errors:
     type: OrdersUpdateFulfillRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersUpdateFulfillRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8577,8 +8113,7 @@ errors:
     type: OrdersUpdateFulfillRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersUpdateFulfillRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateFulfillRequestTooManyRequestsErrorBody
@@ -8587,9 +8122,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersUpdateFulfillRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8609,8 +8142,7 @@ errors:
     type: OrdersUpdateUnfulfillRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersUpdateUnfulfillRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8620,8 +8152,7 @@ errors:
     type: OrdersUpdateUnfulfillRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersUpdateUnfulfillRequestTooManyRequestsError:
     status-code: 429
     type: OrdersUpdateUnfulfillRequestTooManyRequestsErrorBody
@@ -8630,9 +8161,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersUpdateUnfulfillRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8652,8 +8181,7 @@ errors:
     type: OrdersRefundRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   OrdersRefundRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8663,8 +8191,7 @@ errors:
     type: OrdersRefundRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   OrdersRefundRequestTooManyRequestsError:
     status-code: 429
     type: OrdersRefundRequestTooManyRequestsErrorBody
@@ -8673,9 +8200,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   OrdersRefundRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8695,8 +8220,7 @@ errors:
     type: InventoryListRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   InventoryListRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8706,8 +8230,7 @@ errors:
     type: InventoryListRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   InventoryListRequestTooManyRequestsError:
     status-code: 429
     type: InventoryListRequestTooManyRequestsErrorBody
@@ -8716,9 +8239,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   InventoryListRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8738,8 +8259,7 @@ errors:
     type: InventoryUpdateRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   InventoryUpdateRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8749,8 +8269,7 @@ errors:
     type: InventoryUpdateRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   InventoryUpdateRequestTooManyRequestsError:
     status-code: 429
     type: InventoryUpdateRequestTooManyRequestsErrorBody
@@ -8759,9 +8278,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   InventoryUpdateRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -8781,8 +8298,7 @@ errors:
     type: EcommerceGetSettingsRequestForbiddenErrorBody
     docs: Provided access token is valid, but is missing the required scopes.
     examples:
-      - value:
-          status: 403
+      - value: {}
   EcommerceGetSettingsRequestNotFoundError:
     status-code: 404
     type: unknown
@@ -8792,8 +8308,7 @@ errors:
     type: EcommerceGetSettingsRequestConflictErrorBody
     docs: The site does not have ecommerce enabled.
     examples:
-      - value:
-          message: Request not authorized
+      - value: {}
   EcommerceGetSettingsRequestTooManyRequestsError:
     status-code: 429
     type: EcommerceGetSettingsRequestTooManyRequestsErrorBody
@@ -8802,9 +8317,7 @@ errors:
       your application respect the X-RateLimit-Remaining header we include on
       API responses.
     examples:
-      - value:
-          message: too many requests
-          code: too_many_requests
+      - value: {}
   EcommerceGetSettingsRequestInternalServerError:
     status-code: 500
     type: unknown
@@ -9331,30 +8844,7 @@ service:
                     "asset_id": "580e63fc8c9a982ac9b8b745",
                   },
                   "response": {
-                    "body": {
-                      "altText": "A red chair",
-                      "contentType": "image/png",
-                      "createdOn": "2016-09-02T23:26:22Z",
-                      "displayName": "example-image-123.png",
-                      "hostedUrl": "example.com/hostedimage.png",
-                      "id": "55131cd036c09f7d07883dfc",
-                      "lastUpdated": "2016-09-06T21:12:22Z",
-                      "originalFileName": "image.png",
-                      "siteId": "62749158efef318abc8d5a0f",
-                      "size": 1500,
-                      "variants": [
-                        {
-                          "displayName": "A brown dog",
-                          "error": "error",
-                          "format": "format",
-                          "height": 900,
-                          "hostedUrl": "example.com/hostedimage.png",
-                          "originalFileName": "image.png",
-                          "quality": 1,
-                          "width": 1500,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9444,7 +8934,6 @@ service:
                     "body": {
                       "assets": [
                         {
-                          "altText": "A red chair",
                           "contentType": "image/png",
                           "createdOn": "2023-02-09T23:58:22Z",
                           "displayName": "63e5889e7fe4eafa7384cea4_Candy-Wrapper.png",
@@ -9564,30 +9053,7 @@ service:
                     "displayName": "bulldoze.png",
                   },
                   "response": {
-                    "body": {
-                      "altText": "A red chair",
-                      "contentType": "image/png",
-                      "createdOn": "2016-09-02T23:26:22Z",
-                      "displayName": "example-image-123.png",
-                      "hostedUrl": "example.com/hostedimage.png",
-                      "id": "55131cd036c09f7d07883dfc",
-                      "lastUpdated": "2016-09-06T21:12:22Z",
-                      "originalFileName": "image.png",
-                      "siteId": "62749158efef318abc8d5a0f",
-                      "size": 1500,
-                      "variants": [
-                        {
-                          "displayName": "A brown dog",
-                          "error": "error",
-                          "format": "format",
-                          "height": 900,
-                          "hostedUrl": "example.com/hostedimage.png",
-                          "originalFileName": "image.png",
-                          "quality": 1,
-                          "width": 1500,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10603,7 +10069,6 @@ service:
                       format: png
                       width: 500
                       quality: 100
-                  altText: A red chair
     create:
       path: /sites/{site_id}/assets
       method: POST
@@ -10704,26 +10169,7 @@ service:
         - path-parameters:
             asset_id: 580e63fc8c9a982ac9b8b745
           response:
-            body:
-              id: 55131cd036c09f7d07883dfc
-              contentType: image/png
-              size: 1500
-              siteId: 62749158efef318abc8d5a0f
-              hostedUrl: example.com/hostedimage.png
-              originalFileName: image.png
-              displayName: example-image-123.png
-              lastUpdated: '2016-09-06T21:12:22Z'
-              createdOn: '2016-09-02T23:26:22Z'
-              variants:
-                - hostedUrl: example.com/hostedimage.png
-                  originalFileName: image.png
-                  displayName: A brown dog
-                  format: format
-                  width: 1500
-                  height: 900
-                  quality: 1
-                  error: error
-              altText: A red chair
+            body: {}
     delete:
       path: /assets/{asset_id}
       method: DELETE
@@ -10780,26 +10226,7 @@ service:
           request:
             displayName: bulldoze.png
           response:
-            body:
-              id: 55131cd036c09f7d07883dfc
-              contentType: image/png
-              size: 1500
-              siteId: 62749158efef318abc8d5a0f
-              hostedUrl: example.com/hostedimage.png
-              originalFileName: image.png
-              displayName: example-image-123.png
-              lastUpdated: '2016-09-06T21:12:22Z'
-              createdOn: '2016-09-02T23:26:22Z'
-              variants:
-                - hostedUrl: example.com/hostedimage.png
-                  originalFileName: image.png
-                  displayName: A brown dog
-                  format: format
-                  width: 1500
-                  height: 900
-                  quality: 1
-                  error: error
-              altText: A red chair
+            body: {}
     list-folders:
       path: /sites/{site_id}/asset_folders
       method: GET
@@ -12518,21 +11945,7 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "cmsLocaleIds": [
-                        "653ad57de882f528b32e810e",
-                        "6514390aea353fc691d69827",
-                        "65143930ea353fc691d69cd8",
-                      ],
-                      "createdOn": "2023-03-17T18:47:35.560Z",
-                      "fieldData": {
-                        "name": "My new item",
-                        "slug": "my-new-item",
-                      },
                       "id": "580e64008c9a982ac9b8b754",
-                      "isArchived": true,
-                      "isDraft": true,
-                      "lastPublished": "2023-03-17T18:47:35.560Z",
-                      "lastUpdated": "2023-03-17T18:47:35.560Z",
                     },
                   },
                 },
@@ -15057,18 +14470,6 @@ service:
           response:
             body:
               id: 580e64008c9a982ac9b8b754
-              cmsLocaleIds:
-                - 653ad57de882f528b32e810e
-                - 6514390aea353fc691d69827
-                - 65143930ea353fc691d69cd8
-              lastPublished: '2023-03-17T18:47:35.560Z'
-              lastUpdated: '2023-03-17T18:47:35.560Z'
-              createdOn: '2023-03-17T18:47:35.560Z'
-              isArchived: true
-              isDraft: true
-              fieldData:
-                name: My new item
-                slug: my-new-item
     get-item:
       path: /collections/{collection_id}/items/{item_id}
       method: GET
@@ -15492,11 +14893,7 @@ Required scope | `ecommerce:read`
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "response": {
-                    "body": {
-                      "createdOn": "2018-10-04T15:21:02Z",
-                      "defaultCurrency": "USD",
-                      "siteId": "5eb0b5583bf24e2d3a488969",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -15597,10 +14994,7 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
           response:
-            body:
-              siteId: 5eb0b5583bf24e2d3a488969
-              createdOn: '2018-10-04T15:21:02Z'
-              defaultCurrency: USD
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -15758,16 +15152,9 @@ service:
                           "createdOn": "2016-10-24T19:41:29Z",
                           "displayName": "Email Form",
                           "fields": {
-                            "0": {
-                              "displayName": "Email",
-                              "userVisible": true,
-                            },
-                            "1": {
-                              "displayName": "Email",
-                              "userVisible": true,
-                            },
+                            "0": {},
+                            "1": {},
                           },
-                          "formElementId": "4e038d2c-6a1e-4953-7be9-a59a2b453177",
                           "id": "589a331aa51e760df7ccb89e",
                           "lastUpdated": "2016-10-24T19:43:17Z",
                           "pageId": "6419db964a9c43f6a3af6348",
@@ -15785,10 +15172,7 @@ service:
                           "createdOn": "2016-10-24T19:41:29Z",
                           "displayName": "Name Form",
                           "fields": {
-                            "0": {
-                              "displayName": "Email",
-                              "userVisible": true,
-                            },
+                            "0": {},
                           },
                           "formElementId": "4e038d2c-6a1e-4953-7be9-a59a2b453177",
                           "id": "580ff8d7ba3e45ba9fe588e9",
@@ -16908,12 +16292,8 @@ service:
                   createdOn: '2016-10-24T19:41:29Z'
                   lastUpdated: '2016-10-24T19:43:17Z'
                   fields:
-                    '0':
-                      displayName: Email
-                      userVisible: true
-                    '1':
-                      displayName: Email
-                      userVisible: true
+                    '0': {}
+                    '1': {}
                   responseSettings:
                     redirectUrl: https://example.com
                     redirectMethod: GET
@@ -16923,15 +16303,12 @@ service:
                   siteDomainId: 6419db964a9c436a4baf6248
                   pageId: 6419db964a9c43f6a3af6348
                   pageName: Home
-                  formElementId: 4e038d2c-6a1e-4953-7be9-a59a2b453177
                   workspaceId: 580e63fc8c9a982ac9b8b744
                 - displayName: Name Form
                   createdOn: '2016-10-24T19:41:29Z'
                   lastUpdated: '2016-10-24T19:43:17Z'
                   fields:
-                    '0':
-                      displayName: Email
-                      userVisible: true
+                    '0': {}
                   responseSettings:
                     redirectUrl: https://example.com
                     redirectMethod: GET
@@ -17223,11 +16600,7 @@ Required scope | `ecommerce:read`
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
                   "response": {
-                    "body": {
-                      "id": "5bfedb42bab0ad90fa7dad39",
-                      "inventoryType": "infinite",
-                      "quantity": 100,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17278,11 +16651,7 @@ Required scope | `ecommerce:write`
                     "inventoryType": "infinite",
                   },
                   "response": {
-                    "body": {
-                      "id": "5bfedb42bab0ad90fa7dad39",
-                      "inventoryType": "infinite",
-                      "quantity": 100,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17447,10 +16816,7 @@ Required scope | `ecommerce:write`
               {
                 "docs": undefined,
                 "name": undefined,
-                "payload": {
-                  "id": "5bfedb42bab0ad90fa7dad39",
-                  "quantity": 100,
-                },
+                "payload": {},
               },
             ],
             "headers": {},
@@ -17579,10 +16945,7 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           response:
-            body:
-              id: 5bfedb42bab0ad90fa7dad39
-              quantity: 100
-              inventoryType: infinite
+            body: {}
     update:
       path: /collections/{collection_id}/items/{item_id}/inventory
       method: PATCH
@@ -17638,10 +17001,7 @@ service:
           request:
             inventoryType: infinite
           response:
-            body:
-              id: 5bfedb42bab0ad90fa7dad39
-              quantity: 100
-              inventoryType: infinite
+            body: {}
   source:
     openapi: ../openapi.yml
   display-name: Inventory
@@ -17654,9 +17014,7 @@ webhooks:
       type: EcommInventoryChangedPayload
       docs: The availabile inventory for an item
     examples:
-      - payload:
-          id: 5bfedb42bab0ad90fa7dad39
-          quantity: 100
+      - payload: {}
 ",
     },
     "items.yml": {
@@ -18236,7 +17594,6 @@ Required scope | `ecommerce:read`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -18247,7 +17604,6 @@ Required scope | `ecommerce:read`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -18264,7 +17620,6 @@ Required scope | `ecommerce:read`
                         "addressee": "Arthur Dent",
                         "city": "New York",
                         "country": "US",
-                        "japanType": "kana",
                         "line1": "20 W 34th St",
                         "line2": "Empire State Building",
                         "postalCode": "10118",
@@ -18297,7 +17652,6 @@ Required scope | `ecommerce:read`
                         },
                       ],
                       "fulfilledOn": "2024-03-29T21:29:21Z",
-                      "hasDownloads": false,
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
                       "metadata": {
@@ -18310,7 +17664,6 @@ Required scope | `ecommerce:read`
                       },
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
-                      "paymentProcessor": "stripe",
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -18548,16 +17901,7 @@ Required scope | `ecommerce:read`
                             "unit": "USD",
                             "value": "5892",
                           },
-                          "downloadFiles": [
-                            {
-                              "id": "5e9a5eba75e0ac242e1b6f64",
-                              "name": "The modern web design process - Webflow Ebook.pdf",
-                              "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
-                            },
-                          ],
                           "hasDownloads": false,
-                          "isCustomerDeleted": false,
-                          "isShippingRequired": false,
                           "metadata": {
                             "isBuyNow": false,
                           },
@@ -18655,20 +17999,6 @@ Required scope | `ecommerce:read`
                             "paymentIntentId": "pi_3P410iJYFi4lcbXW0EKKgcVg",
                             "paymentMethod": "pm_1P410gJYFi4lcbXWbeKghqjK",
                           },
-                          "totals": {
-                            "extras": [
-                              {
-                                "description": "CA Taxes (6.25%)",
-                                "name": "State Taxes",
-                                "price": {
-                                  "string": "3.44",
-                                  "unit": "USD",
-                                  "value": "5892",
-                                },
-                                "type": "tax",
-                              },
-                            ],
-                          },
                         },
                         {
                           "acceptedOn": "2024-03-29T21:29:21Z",
@@ -18731,7 +18061,6 @@ Required scope | `ecommerce:read`
                               "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
                             },
                           ],
-                          "hasDownloads": false,
                           "isCustomerDeleted": false,
                           "isShippingRequired": true,
                           "metadata": {
@@ -18744,7 +18073,6 @@ Required scope | `ecommerce:read`
                           },
                           "orderComment": "",
                           "orderId": "fc7-128",
-                          "paymentProcessor": "stripe",
                           "purchasedItems": [
                             {
                               "count": 1,
@@ -18956,7 +18284,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -18967,7 +18294,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -18984,7 +18310,6 @@ Required scope | `ecommerce:write`
                         "addressee": "Arthur Dent",
                         "city": "New York",
                         "country": "US",
-                        "japanType": "kana",
                         "line1": "20 W 34th St",
                         "line2": "Empire State Building",
                         "postalCode": "10118",
@@ -19017,7 +18342,6 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "fulfilledOn": "2024-03-29T21:29:21Z",
-                      "hasDownloads": false,
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
                       "metadata": {
@@ -19030,7 +18354,6 @@ Required scope | `ecommerce:write`
                       },
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
-                      "paymentProcessor": "stripe",
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -19236,7 +18559,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19247,7 +18569,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19264,7 +18585,6 @@ Required scope | `ecommerce:write`
                         "addressee": "Arthur Dent",
                         "city": "New York",
                         "country": "US",
-                        "japanType": "kana",
                         "line1": "20 W 34th St",
                         "line2": "Empire State Building",
                         "postalCode": "10118",
@@ -19297,7 +18617,6 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "fulfilledOn": "2024-03-29T21:29:21Z",
-                      "hasDownloads": false,
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
                       "metadata": {
@@ -19310,7 +18629,6 @@ Required scope | `ecommerce:write`
                       },
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
-                      "paymentProcessor": "stripe",
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -19528,7 +18846,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19539,7 +18856,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19556,7 +18872,6 @@ Required scope | `ecommerce:write`
                         "addressee": "Arthur Dent",
                         "city": "New York",
                         "country": "US",
-                        "japanType": "kana",
                         "line1": "20 W 34th St",
                         "line2": "Empire State Building",
                         "postalCode": "10118",
@@ -19589,7 +18904,6 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "fulfilledOn": "2024-03-29T21:29:21Z",
-                      "hasDownloads": false,
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
                       "metadata": {
@@ -19602,7 +18916,6 @@ Required scope | `ecommerce:write`
                       },
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
-                      "paymentProcessor": "stripe",
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -19808,7 +19121,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19819,7 +19131,6 @@ Required scope | `ecommerce:write`
                           "addressee": "Arthur Dent",
                           "city": "New York",
                           "country": "US",
-                          "japanType": "kana",
                           "line1": "20 W 34th St",
                           "line2": "Empire State Building",
                           "postalCode": "10118",
@@ -19836,7 +19147,6 @@ Required scope | `ecommerce:write`
                         "addressee": "Arthur Dent",
                         "city": "New York",
                         "country": "US",
-                        "japanType": "kana",
                         "line1": "20 W 34th St",
                         "line2": "Empire State Building",
                         "postalCode": "10118",
@@ -19869,7 +19179,6 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "fulfilledOn": "2024-03-29T21:29:21Z",
-                      "hasDownloads": false,
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
                       "metadata": {
@@ -19882,7 +19191,6 @@ Required scope | `ecommerce:write`
                       },
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
-                      "paymentProcessor": "stripe",
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -27914,7 +27222,6 @@ Required scope | `ecommerce:write`
                     },
                   ],
                   "fulfilledOn": "2024-03-29T21:29:21Z",
-                  "hasDownloads": false,
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
                   "metadata": {
@@ -27927,7 +27234,6 @@ Required scope | `ecommerce:write`
                   },
                   "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                   "orderId": "fc7-128",
-                  "paymentProcessor": "stripe",
                   "purchasedItems": [
                     {
                       "count": 1,
@@ -28140,7 +27446,6 @@ Required scope | `ecommerce:write`
                     },
                   ],
                   "fulfilledOn": "2024-03-29T21:29:21Z",
-                  "hasDownloads": false,
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
                   "metadata": {
@@ -28153,7 +27458,6 @@ Required scope | `ecommerce:write`
                   },
                   "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                   "orderId": "fc7-128",
-                  "paymentProcessor": "stripe",
                   "purchasedItems": [
                     {
                       "count": 1,
@@ -34318,24 +33622,8 @@ service:
                     - key: value
                   metadata:
                     isBuyNow: false
-                  isCustomerDeleted: false
-                  isShippingRequired: false
                   hasDownloads: false
                   paymentProcessor: stripe
-                  totals:
-                    extras:
-                      - type: tax
-                        name: State Taxes
-                        description: CA Taxes (6.25%)
-                        price:
-                          unit: USD
-                          value: '5892'
-                          string: '3.44'
-                  downloadFiles:
-                    - id: 5e9a5eba75e0ac242e1b6f64
-                      name: The modern web design process - Webflow Ebook.pdf
-                      url: >-
-                        https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
                 - orderId: fc7-128
                   status: refunded
                   comment: Example comment to myself
@@ -34467,8 +33755,6 @@ service:
                     isBuyNow: false
                   isCustomerDeleted: false
                   isShippingRequired: true
-                  hasDownloads: false
-                  paymentProcessor: stripe
                   totals:
                     subtotal:
                       unit: USD
@@ -34575,7 +33861,6 @@ service:
                 string: ' 2.37 USD'
               allAddresses:
                 - type: billing
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -34584,7 +33869,6 @@ service:
                   country: US
                   postalCode: '10118'
                 - type: shipping
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -34604,7 +33888,6 @@ service:
                 postalCode: '10118'
               billingAddress:
                 type: billing
-                japanType: kana
                 addressee: Arthur Dent
                 line1: 20 W 34th St
                 line2: Empire State Building
@@ -34686,8 +33969,6 @@ service:
                 isBuyNow: false
               isCustomerDeleted: false
               isShippingRequired: true
-              hasDownloads: false
-              paymentProcessor: stripe
               totals:
                 subtotal:
                   unit: USD
@@ -34809,7 +34090,6 @@ service:
                 string: ' 2.37 USD'
               allAddresses:
                 - type: billing
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -34818,7 +34098,6 @@ service:
                   country: US
                   postalCode: '10118'
                 - type: shipping
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -34838,7 +34117,6 @@ service:
                 postalCode: '10118'
               billingAddress:
                 type: billing
-                japanType: kana
                 addressee: Arthur Dent
                 line1: 20 W 34th St
                 line2: Empire State Building
@@ -34920,8 +34198,6 @@ service:
                 isBuyNow: false
               isCustomerDeleted: false
               isShippingRequired: true
-              hasDownloads: false
-              paymentProcessor: stripe
               totals:
                 subtotal:
                   unit: USD
@@ -35032,7 +34308,6 @@ service:
                 string: ' 2.37 USD'
               allAddresses:
                 - type: billing
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35041,7 +34316,6 @@ service:
                   country: US
                   postalCode: '10118'
                 - type: shipping
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35061,7 +34335,6 @@ service:
                 postalCode: '10118'
               billingAddress:
                 type: billing
-                japanType: kana
                 addressee: Arthur Dent
                 line1: 20 W 34th St
                 line2: Empire State Building
@@ -35143,8 +34416,6 @@ service:
                 isBuyNow: false
               isCustomerDeleted: false
               isShippingRequired: true
-              hasDownloads: false
-              paymentProcessor: stripe
               totals:
                 subtotal:
                   unit: USD
@@ -35245,7 +34516,6 @@ service:
                 string: ' 2.37 USD'
               allAddresses:
                 - type: billing
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35254,7 +34524,6 @@ service:
                   country: US
                   postalCode: '10118'
                 - type: shipping
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35274,7 +34543,6 @@ service:
                 postalCode: '10118'
               billingAddress:
                 type: billing
-                japanType: kana
                 addressee: Arthur Dent
                 line1: 20 W 34th St
                 line2: Empire State Building
@@ -35356,8 +34624,6 @@ service:
                 isBuyNow: false
               isCustomerDeleted: false
               isShippingRequired: true
-              hasDownloads: false
-              paymentProcessor: stripe
               totals:
                 subtotal:
                   unit: USD
@@ -35469,7 +34735,6 @@ service:
                 string: ' 2.37 USD'
               allAddresses:
                 - type: billing
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35478,7 +34743,6 @@ service:
                   country: US
                   postalCode: '10118'
                 - type: shipping
-                  japanType: kana
                   addressee: Arthur Dent
                   line1: 20 W 34th St
                   line2: Empire State Building
@@ -35498,7 +34762,6 @@ service:
                 postalCode: '10118'
               billingAddress:
                 type: billing
-                japanType: kana
                 addressee: Arthur Dent
                 line1: 20 W 34th St
                 line2: Empire State Building
@@ -35580,8 +34843,6 @@ service:
                 isBuyNow: false
               isCustomerDeleted: false
               isShippingRequired: true
-              hasDownloads: false
-              paymentProcessor: stripe
               totals:
                 subtotal:
                   unit: USD
@@ -35766,8 +35027,6 @@ webhooks:
             isBuyNow: false
           isCustomerDeleted: false
           isShippingRequired: true
-          hasDownloads: false
-          paymentProcessor: stripe
           totals:
             subtotal:
               unit: USD
@@ -35948,8 +35207,6 @@ webhooks:
             isBuyNow: false
           isCustomerDeleted: false
           isShippingRequired: true
-          hasDownloads: false
-          paymentProcessor: stripe
           totals:
             subtotal:
               unit: USD
@@ -36125,7 +35382,6 @@ webhooks:
                       "createdOn": "2024-03-11T10:42:00Z",
                       "draft": false,
                       "id": "6596da6045e56dee495bcbba",
-                      "isMembersOnly": false,
                       "lastUpdated": "2024-03-11T10:42:42Z",
                       "localeId": "653fd9af6a07fc9cfd7a5e57",
                       "openGraph": {
@@ -36200,7 +35456,6 @@ webhooks:
                           "createdOn": "2024-03-11T10:42:00Z",
                           "draft": false,
                           "id": "6596da6045e56dee495bcbba",
-                          "isMembersOnly": false,
                           "lastUpdated": "2024-03-11T10:42:42Z",
                           "localeId": "653fd9af6a07fc9cfd7a5e57",
                           "openGraph": {
@@ -36224,7 +35479,6 @@ webhooks:
                           "createdOn": "2024-05-25T09:00:00Z",
                           "draft": false,
                           "id": "6596da6045e56dee495bcbad",
-                          "isMembersOnly": false,
                           "lastUpdated": "2024-05-25T09:42:00Z",
                           "localeId": "653fd9af6a07fc9cfd7a5e57",
                           "openGraph": {
@@ -36326,7 +35580,6 @@ webhooks:
                       "createdOn": "2024-03-11T10:42:00Z",
                       "draft": false,
                       "id": "6596da6045e56dee495bcbba",
-                      "isMembersOnly": false,
                       "lastUpdated": "2024-03-11T10:42:42Z",
                       "localeId": "653fd9af6a07fc9cfd7a5e57",
                       "openGraph": {
@@ -37813,7 +37066,6 @@ service:
                   archived: false
                   draft: false
                   canBranch: true
-                  isMembersOnly: false
                   seo:
                     title: The Ultimate Hitchhiker's Guide to the Galaxy
                     description: >-
@@ -37837,7 +37089,6 @@ service:
                   archived: false
                   draft: false
                   canBranch: true
-                  isMembersOnly: false
                   seo:
                     title: Celebrate Towel Day - The Hitchhiker's Guide to the Galaxy
                     description: >-
@@ -37905,7 +37156,6 @@ service:
               archived: false
               draft: false
               canBranch: true
-              isMembersOnly: false
               seo:
                 title: The Ultimate Hitchhiker's Guide to the Galaxy
                 description: >-
@@ -37997,7 +37247,6 @@ service:
               archived: false
               draft: false
               canBranch: true
-              isMembersOnly: false
               seo:
                 title: The Ultimate Hitchhiker's Guide to the Galaxy
                 description: >-
@@ -38263,20 +37512,7 @@ webhooks:
                     "page_id": "63c720f9347c2139b248e552",
                   },
                   "response": {
-                    "body": {
-                      "createdOn": "createdOn",
-                      "lastUpdated": "lastUpdated",
-                      "scripts": [
-                        {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "location": "header",
-                          "version": "version",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -38713,15 +37949,7 @@ service:
         - path-parameters:
             page_id: 63c720f9347c2139b248e552
           response:
-            body:
-              scripts:
-                - id: id
-                  location: header
-                  version: version
-                  attributes:
-                    key: value
-              lastUpdated: lastUpdated
-              createdOn: createdOn
+            body: {}
     upsert-custom-code:
       path: /pages/{page_id}/custom_code
       method: PUT
@@ -38859,94 +38087,7 @@ Required scope | `ecommerce:write`",
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "product": {
-                        "cmsLocaleId": "653ad57de882f528b32e810e",
-                        "createdOn": "2024-04-04T14:22:28Z",
-                        "fieldData": {
-                          "categories": [
-                            "categories",
-                          ],
-                          "default-sku": "66072fb71b89448912e2681c",
-                          "description": "A plain t-shirt",
-                          "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
-                          "name": "T-Shirt",
-                          "shippable": true,
-                          "sku-properties": [
-                            {
-                              "enum": [
-                                {
-                                  "id": "8d21a625d655ab260e9941c27180c75b",
-                                  "name": "Small",
-                                  "slug": "small",
-                                },
-                                {
-                                  "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
-                                  "name": "Medium",
-                                  "slug": "medium",
-                                },
-                                {
-                                  "id": "ec7877d6137ecf7ec86f726c135b1812",
-                                  "name": "Large",
-                                  "slug": "large",
-                                },
-                              ],
-                              "id": "31b77fa66fa376c2c0abb458d5be39fb",
-                              "name": "Size",
-                            },
-                            {
-                              "enum": [
-                                {
-                                  "id": "e539b0d6c3a609cd06ddb2da804f68f0",
-                                  "name": "Royal Blue",
-                                  "slug": "royal-blue",
-                                },
-                                {
-                                  "id": "68d98f2fbafc0fd45651cddc44798dd0",
-                                  "name": "Crimson Red",
-                                  "slug": "crimson-red",
-                                },
-                                {
-                                  "id": "996cd95c97fd5620d0a374c835b37205",
-                                  "name": "Forrest Green",
-                                  "slug": "forrest-green",
-                                },
-                              ],
-                              "id": "74d3738e62c568d5634dd6989daec5ec",
-                              "name": "Color",
-                            },
-                          ],
-                          "slug": "t-shirt",
-                          "tax-category": "standard-taxable",
-                        },
-                        "id": "660eb7a486d1d6e0412292d7",
-                        "isArchived": false,
-                        "isDraft": false,
-                        "lastPublished": "2024-04-04T14:24:19Z",
-                        "lastUpdated": "2024-04-04T14:30:19Z",
-                      },
-                      "skus": [
-                        {
-                          "cmsLocaleId": "653ad57de882f528b32e810e",
-                          "createdOn": "2023-03-17T18:47:35Z",
-                          "fieldData": {
-                            "name": "Blue T-shirt",
-                            "price": {
-                              "unit": "USD",
-                              "value": 100,
-                            },
-                            "quantity": 10,
-                            "sku-values": {
-                              "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                            },
-                            "slug": "t-shirt-blue",
-                          },
-                          "id": "580e63fc8c9a982ac9b8b745",
-                          "lastPublished": "2023-03-17T18:47:35Z",
-                          "lastUpdated": "2023-03-17T18:47:35Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -39021,29 +38162,7 @@ Required scope | `ecommerce:write`
                     ],
                   },
                   "response": {
-                    "body": {
-                      "skus": [
-                        {
-                          "cmsLocaleId": "653ad57de882f528b32e810e",
-                          "createdOn": "2023-03-17T18:47:35Z",
-                          "fieldData": {
-                            "name": "Blue T-shirt",
-                            "price": {
-                              "unit": "USD",
-                              "value": 100,
-                            },
-                            "quantity": 10,
-                            "sku-values": {
-                              "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                            },
-                            "slug": "t-shirt-blue",
-                          },
-                          "id": "580e63fc8c9a982ac9b8b745",
-                          "lastPublished": "2023-03-17T18:47:35Z",
-                          "lastUpdated": "2023-03-17T18:47:35Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -39111,94 +38230,7 @@ Required scope | `ecommerce:read`
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "response": {
-                    "body": {
-                      "product": {
-                        "cmsLocaleId": "653ad57de882f528b32e810e",
-                        "createdOn": "2024-04-04T14:22:28Z",
-                        "fieldData": {
-                          "categories": [
-                            "categories",
-                          ],
-                          "default-sku": "66072fb71b89448912e2681c",
-                          "description": "A plain t-shirt",
-                          "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
-                          "name": "T-Shirt",
-                          "shippable": true,
-                          "sku-properties": [
-                            {
-                              "enum": [
-                                {
-                                  "id": "8d21a625d655ab260e9941c27180c75b",
-                                  "name": "Small",
-                                  "slug": "small",
-                                },
-                                {
-                                  "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
-                                  "name": "Medium",
-                                  "slug": "medium",
-                                },
-                                {
-                                  "id": "ec7877d6137ecf7ec86f726c135b1812",
-                                  "name": "Large",
-                                  "slug": "large",
-                                },
-                              ],
-                              "id": "31b77fa66fa376c2c0abb458d5be39fb",
-                              "name": "Size",
-                            },
-                            {
-                              "enum": [
-                                {
-                                  "id": "e539b0d6c3a609cd06ddb2da804f68f0",
-                                  "name": "Royal Blue",
-                                  "slug": "royal-blue",
-                                },
-                                {
-                                  "id": "68d98f2fbafc0fd45651cddc44798dd0",
-                                  "name": "Crimson Red",
-                                  "slug": "crimson-red",
-                                },
-                                {
-                                  "id": "996cd95c97fd5620d0a374c835b37205",
-                                  "name": "Forrest Green",
-                                  "slug": "forrest-green",
-                                },
-                              ],
-                              "id": "74d3738e62c568d5634dd6989daec5ec",
-                              "name": "Color",
-                            },
-                          ],
-                          "slug": "t-shirt",
-                          "tax-category": "standard-taxable",
-                        },
-                        "id": "660eb7a486d1d6e0412292d7",
-                        "isArchived": false,
-                        "isDraft": false,
-                        "lastPublished": "2024-04-04T14:24:19Z",
-                        "lastUpdated": "2024-04-04T14:30:19Z",
-                      },
-                      "skus": [
-                        {
-                          "cmsLocaleId": "653ad57de882f528b32e810e",
-                          "createdOn": "2023-03-17T18:47:35Z",
-                          "fieldData": {
-                            "name": "Blue T-shirt",
-                            "price": {
-                              "unit": "USD",
-                              "value": 100,
-                            },
-                            "quantity": 10,
-                            "sku-values": {
-                              "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                            },
-                            "slug": "t-shirt-blue",
-                          },
-                          "id": "580e63fc8c9a982ac9b8b745",
-                          "lastPublished": "2023-03-17T18:47:35Z",
-                          "lastUpdated": "2023-03-17T18:47:35Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -39245,100 +38277,7 @@ Required scope | `ecommerce:read`
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "response": {
-                    "body": {
-                      "items": [
-                        {
-                          "product": {
-                            "cmsLocaleId": "653ad57de882f528b32e810e",
-                            "createdOn": "2024-04-04T14:22:28Z",
-                            "fieldData": {
-                              "default-sku": "66072fb71b89448912e2681c",
-                              "description": "A plain t-shirt",
-                              "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
-                              "name": "T-Shirt",
-                              "shippable": true,
-                              "sku-properties": [
-                                {
-                                  "enum": [
-                                    {
-                                      "id": "8d21a625d655ab260e9941c27180c75b",
-                                      "name": "Small",
-                                      "slug": "small",
-                                    },
-                                    {
-                                      "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
-                                      "name": "Medium",
-                                      "slug": "medium",
-                                    },
-                                    {
-                                      "id": "ec7877d6137ecf7ec86f726c135b1812",
-                                      "name": "Large",
-                                      "slug": "large",
-                                    },
-                                  ],
-                                  "id": "31b77fa66fa376c2c0abb458d5be39fb",
-                                  "name": "Size",
-                                },
-                                {
-                                  "enum": [
-                                    {
-                                      "id": "e539b0d6c3a609cd06ddb2da804f68f0",
-                                      "name": "Royal Blue",
-                                      "slug": "royal-blue",
-                                    },
-                                    {
-                                      "id": "68d98f2fbafc0fd45651cddc44798dd0",
-                                      "name": "Crimson Red",
-                                      "slug": "crimson-red",
-                                    },
-                                    {
-                                      "id": "996cd95c97fd5620d0a374c835b37205",
-                                      "name": "Forrest Green",
-                                      "slug": "forrest-green",
-                                    },
-                                  ],
-                                  "id": "74d3738e62c568d5634dd6989daec5ec",
-                                  "name": "Color",
-                                },
-                              ],
-                              "slug": "t-shirt",
-                              "tax-category": "standard-taxable",
-                            },
-                            "id": "660eb7a486d1d6e0412292d7",
-                            "isArchived": false,
-                            "isDraft": false,
-                            "lastPublished": "2024-04-04T14:24:19Z",
-                            "lastUpdated": "2024-04-04T14:30:19Z",
-                          },
-                          "skus": [
-                            {
-                              "cmsLocaleId": "653ad57de882f528b32e810e",
-                              "createdOn": "2023-03-17T18:47:35Z",
-                              "fieldData": {
-                                "name": "Blue T-shirt",
-                                "price": {
-                                  "unit": "USD",
-                                  "value": 100,
-                                },
-                                "quantity": 10,
-                                "sku-values": {
-                                  "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                                },
-                                "slug": "t-shirt-blue",
-                              },
-                              "id": "580e63fc8c9a982ac9b8b745",
-                              "lastPublished": "2023-03-17T18:47:35Z",
-                              "lastUpdated": "2023-03-17T18:47:35Z",
-                            },
-                          ],
-                        },
-                      ],
-                      "pagination": {
-                        "limit": 100,
-                        "offset": 0,
-                        "total": 100,
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -39400,9 +38339,6 @@ Required scope | `ecommerce:write`
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2024-04-04T14:22:28Z",
                       "fieldData": {
-                        "categories": [
-                          "categories",
-                        ],
                         "default-sku": "66072fb71b89448912e2681c",
                         "description": "A plain t-shirt",
                         "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
@@ -39536,39 +38472,7 @@ Required scope | `ecommerce:write`
                     "sku": {},
                   },
                   "response": {
-                    "body": {
-                      "cmsLocaleId": "653ad57de882f528b32e810e",
-                      "createdOn": "2023-03-17T18:47:35Z",
-                      "fieldData": {
-                        "compare-at-price": {
-                          "unit": "USD",
-                          "value": 100,
-                        },
-                        "ec-sku-billing-method": "one-time",
-                        "ec-sku-subscription-plan": {
-                          "frequency": 1,
-                          "interval": "day",
-                          "plans": [
-                            {},
-                          ],
-                          "trial": 7,
-                        },
-                        "name": "Blue T-shirt",
-                        "price": {
-                          "unit": "USD",
-                          "value": 100,
-                        },
-                        "quantity": 10,
-                        "sku-values": {
-                          "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                        },
-                        "slug": "t-shirt-blue",
-                        "track-inventory": true,
-                      },
-                      "id": "580e63fc8c9a982ac9b8b745",
-                      "lastPublished": "2023-03-17T18:47:35Z",
-                      "lastUpdated": "2023-03-17T18:47:35Z",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -45456,68 +44360,7 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
           response:
-            body:
-              items:
-                - product:
-                    id: 660eb7a486d1d6e0412292d7
-                    cmsLocaleId: 653ad57de882f528b32e810e
-                    lastPublished: '2024-04-04T14:24:19Z'
-                    lastUpdated: '2024-04-04T14:30:19Z'
-                    createdOn: '2024-04-04T14:22:28Z'
-                    isArchived: false
-                    isDraft: false
-                    fieldData:
-                      name: T-Shirt
-                      slug: t-shirt
-                      description: A plain t-shirt
-                      shippable: true
-                      sku-properties:
-                        - id: 31b77fa66fa376c2c0abb458d5be39fb
-                          name: Size
-                          enum:
-                            - id: 8d21a625d655ab260e9941c27180c75b
-                              name: Small
-                              slug: small
-                            - id: ecdca17106ad86c0dfe3b5f3ac8be6c9
-                              name: Medium
-                              slug: medium
-                            - id: ec7877d6137ecf7ec86f726c135b1812
-                              name: Large
-                              slug: large
-                        - id: 74d3738e62c568d5634dd6989daec5ec
-                          name: Color
-                          enum:
-                            - id: e539b0d6c3a609cd06ddb2da804f68f0
-                              name: Royal Blue
-                              slug: royal-blue
-                            - id: 68d98f2fbafc0fd45651cddc44798dd0
-                              name: Crimson Red
-                              slug: crimson-red
-                            - id: 996cd95c97fd5620d0a374c835b37205
-                              name: Forrest Green
-                              slug: forrest-green
-                      tax-category: standard-taxable
-                      default-sku: 66072fb71b89448912e2681c
-                      ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
-                  skus:
-                    - id: 580e63fc8c9a982ac9b8b745
-                      cmsLocaleId: 653ad57de882f528b32e810e
-                      lastPublished: '2023-03-17T18:47:35Z'
-                      lastUpdated: '2023-03-17T18:47:35Z'
-                      createdOn: '2023-03-17T18:47:35Z'
-                      fieldData:
-                        sku-values:
-                          ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                        name: Blue T-shirt
-                        slug: t-shirt-blue
-                        price:
-                          value: 100
-                          unit: USD
-                        quantity: 10
-              pagination:
-                limit: 100
-                offset: 0
-                total: 100
+            body: {}
     create:
       path: /sites/{site_id}/products
       method: POST
@@ -45592,65 +44435,7 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           request: {}
           response:
-            body:
-              product:
-                id: 660eb7a486d1d6e0412292d7
-                cmsLocaleId: 653ad57de882f528b32e810e
-                lastPublished: '2024-04-04T14:24:19Z'
-                lastUpdated: '2024-04-04T14:30:19Z'
-                createdOn: '2024-04-04T14:22:28Z'
-                isArchived: false
-                isDraft: false
-                fieldData:
-                  name: T-Shirt
-                  slug: t-shirt
-                  description: A plain t-shirt
-                  shippable: true
-                  sku-properties:
-                    - id: 31b77fa66fa376c2c0abb458d5be39fb
-                      name: Size
-                      enum:
-                        - id: 8d21a625d655ab260e9941c27180c75b
-                          name: Small
-                          slug: small
-                        - id: ecdca17106ad86c0dfe3b5f3ac8be6c9
-                          name: Medium
-                          slug: medium
-                        - id: ec7877d6137ecf7ec86f726c135b1812
-                          name: Large
-                          slug: large
-                    - id: 74d3738e62c568d5634dd6989daec5ec
-                      name: Color
-                      enum:
-                        - id: e539b0d6c3a609cd06ddb2da804f68f0
-                          name: Royal Blue
-                          slug: royal-blue
-                        - id: 68d98f2fbafc0fd45651cddc44798dd0
-                          name: Crimson Red
-                          slug: crimson-red
-                        - id: 996cd95c97fd5620d0a374c835b37205
-                          name: Forrest Green
-                          slug: forrest-green
-                  categories:
-                    - categories
-                  tax-category: standard-taxable
-                  default-sku: 66072fb71b89448912e2681c
-                  ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
-              skus:
-                - id: 580e63fc8c9a982ac9b8b745
-                  cmsLocaleId: 653ad57de882f528b32e810e
-                  lastPublished: '2023-03-17T18:47:35Z'
-                  lastUpdated: '2023-03-17T18:47:35Z'
-                  createdOn: '2023-03-17T18:47:35Z'
-                  fieldData:
-                    sku-values:
-                      ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                    name: Blue T-shirt
-                    slug: t-shirt-blue
-                    price:
-                      value: 100
-                      unit: USD
-                    quantity: 10
+            body: {}
     get:
       path: /sites/{site_id}/products/{product_id}
       method: GET
@@ -45687,65 +44472,7 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
             product_id: 580e63fc8c9a982ac9b8b745
           response:
-            body:
-              product:
-                id: 660eb7a486d1d6e0412292d7
-                cmsLocaleId: 653ad57de882f528b32e810e
-                lastPublished: '2024-04-04T14:24:19Z'
-                lastUpdated: '2024-04-04T14:30:19Z'
-                createdOn: '2024-04-04T14:22:28Z'
-                isArchived: false
-                isDraft: false
-                fieldData:
-                  name: T-Shirt
-                  slug: t-shirt
-                  description: A plain t-shirt
-                  shippable: true
-                  sku-properties:
-                    - id: 31b77fa66fa376c2c0abb458d5be39fb
-                      name: Size
-                      enum:
-                        - id: 8d21a625d655ab260e9941c27180c75b
-                          name: Small
-                          slug: small
-                        - id: ecdca17106ad86c0dfe3b5f3ac8be6c9
-                          name: Medium
-                          slug: medium
-                        - id: ec7877d6137ecf7ec86f726c135b1812
-                          name: Large
-                          slug: large
-                    - id: 74d3738e62c568d5634dd6989daec5ec
-                      name: Color
-                      enum:
-                        - id: e539b0d6c3a609cd06ddb2da804f68f0
-                          name: Royal Blue
-                          slug: royal-blue
-                        - id: 68d98f2fbafc0fd45651cddc44798dd0
-                          name: Crimson Red
-                          slug: crimson-red
-                        - id: 996cd95c97fd5620d0a374c835b37205
-                          name: Forrest Green
-                          slug: forrest-green
-                  categories:
-                    - categories
-                  tax-category: standard-taxable
-                  default-sku: 66072fb71b89448912e2681c
-                  ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
-              skus:
-                - id: 580e63fc8c9a982ac9b8b745
-                  cmsLocaleId: 653ad57de882f528b32e810e
-                  lastPublished: '2023-03-17T18:47:35Z'
-                  lastUpdated: '2023-03-17T18:47:35Z'
-                  createdOn: '2023-03-17T18:47:35Z'
-                  fieldData:
-                    sku-values:
-                      ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                    name: Blue T-shirt
-                    slug: t-shirt-blue
-                    price:
-                      value: 100
-                      unit: USD
-                    quantity: 10
+            body: {}
     update:
       path: /sites/{site_id}/products/{product_id}
       method: PATCH
@@ -45841,8 +44568,6 @@ service:
                       - id: 996cd95c97fd5620d0a374c835b37205
                         name: Forrest Green
                         slug: forrest-green
-                categories:
-                  - categories
                 tax-category: standard-taxable
                 default-sku: 66072fb71b89448912e2681c
                 ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
@@ -45907,22 +44632,7 @@ service:
             skus:
               - {}
           response:
-            body:
-              skus:
-                - id: 580e63fc8c9a982ac9b8b745
-                  cmsLocaleId: 653ad57de882f528b32e810e
-                  lastPublished: '2023-03-17T18:47:35Z'
-                  lastUpdated: '2023-03-17T18:47:35Z'
-                  createdOn: '2023-03-17T18:47:35Z'
-                  fieldData:
-                    sku-values:
-                      ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                    name: Blue T-shirt
-                    slug: t-shirt-blue
-                    price:
-                      value: 100
-                      unit: USD
-                    quantity: 10
+            body: {}
     update-sku:
       path: /sites/{site_id}/products/{product_id}/skus/{sku_id}
       method: PATCH
@@ -45983,32 +44693,7 @@ service:
           request:
             sku: {}
           response:
-            body:
-              id: 580e63fc8c9a982ac9b8b745
-              cmsLocaleId: 653ad57de882f528b32e810e
-              lastPublished: '2023-03-17T18:47:35Z'
-              lastUpdated: '2023-03-17T18:47:35Z'
-              createdOn: '2023-03-17T18:47:35Z'
-              fieldData:
-                sku-values:
-                  ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                name: Blue T-shirt
-                slug: t-shirt-blue
-                price:
-                  value: 100
-                  unit: USD
-                compare-at-price:
-                  value: 100
-                  unit: USD
-                ec-sku-billing-method: one-time
-                ec-sku-subscription-plan:
-                  interval: day
-                  frequency: 1
-                  trial: 7
-                  plans:
-                    - {}
-                track-inventory: true
-                quantity: 10
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -46049,7 +44734,6 @@ service:
                           "displayName": "Alert",
                           "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.1.js",
                           "id": "alert",
-                          "lastUpdated": "lastUpdated",
                           "version": "0.0.1",
                         },
                         {
@@ -46058,7 +44742,6 @@ service:
                           "displayName": "Alert",
                           "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.2.js",
                           "id": "alert",
-                          "lastUpdated": "lastUpdated",
                           "version": "0.0.2",
                         },
                         {
@@ -46068,7 +44751,6 @@ service:
                           "hostedLocation": "https://cdn.jsdelivr.net/.../cms_slider.js",
                           "id": "cms_slider",
                           "integrityHash": "sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+",
-                          "lastUpdated": "lastUpdated",
                           "version": "1.0.0",
                         },
                       ],
@@ -46125,7 +44807,6 @@ service:
                       "hostedLocation": "https://cdn.jsdelivr.net/.../cmsslider.js",
                       "id": "cms_slider",
                       "integrityHash": "sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+",
-                      "lastUpdated": "lastUpdated",
                       "version": "1.0.0",
                     },
                   },
@@ -46209,7 +44890,6 @@ service:
                       "displayName": "Alert",
                       "hostedLocation": "https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js",
                       "id": "alert",
-                      "lastUpdated": "lastUpdated",
                       "version": "0.0.1",
                     },
                   },
@@ -46571,14 +45251,12 @@ service:
                   displayName: Alert
                   hostedLocation: https://cdn.webflow.io/.../alert-0.0.1.js
                   createdOn: '2022-10-26T00:28:54.191Z'
-                  lastUpdated: lastUpdated
                   version: 0.0.1
                 - id: alert
                   canCopy: false
                   displayName: Alert
                   hostedLocation: https://cdn.webflow.io/.../alert-0.0.2.js
                   createdOn: '2022-10-26T00:28:54.191Z'
-                  lastUpdated: lastUpdated
                   version: 0.0.2
                 - id: cms_slider
                   canCopy: true
@@ -46587,7 +45265,6 @@ service:
                   integrityHash: >-
                     sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+
                   createdOn: '2022-10-26T00:28:54.191Z'
-                  lastUpdated: lastUpdated
                   version: 1.0.0
     register-hosted:
       path: /sites/{site_id}/registered_scripts/hosted
@@ -46666,7 +45343,6 @@ service:
               integrityHash: >-
                 sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+
               createdOn: '2022-10-26T00:28:54.191Z'
-              lastUpdated: lastUpdated
               version: 1.0.0
     register-inline:
       path: /sites/{site_id}/registered_scripts/inline
@@ -46742,7 +45418,6 @@ service:
               hostedLocation: >-
                 https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js
               createdOn: '2022-10-26T00:28:54.191Z'
-              lastUpdated: lastUpdated
               version: 0.0.1
   source:
     openapi: ../openapi.yml
@@ -46792,29 +45467,6 @@ service:
                       "id": "42e98c9a982ac9b8b742",
                       "lastPublished": "2023-04-02T12:42:00Z",
                       "lastUpdated": "2023-04-02T12:42:00Z",
-                      "locales": {
-                        "primary": {
-                          "cmsLocaleId": "653ad57de882f528b32e810e",
-                          "displayImageId": "displayImageId",
-                          "displayName": "English (United States)",
-                          "enabled": false,
-                          "id": "653fd9af6a07fc9cfd7a5e57",
-                          "redirect": true,
-                          "subdirectory": "",
-                          "tag": "en-US",
-                        },
-                        "secondary": [
-                          {
-                            "cmsLocaleId": "653ad57de882f528b32e810e",
-                            "displayName": "English (United States)",
-                            "enabled": false,
-                            "id": "653fd9af6a07fc9cfd7a5e57",
-                            "redirect": true,
-                            "subdirectory": "",
-                            "tag": "en-US",
-                          },
-                        ],
-                      },
                       "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                       "previewUrl": "https://screenshots.webflow.com/sites/6258612d1ee792848f805dcf/20231219211811_d5990556c743f33b7071300a03bf67e6.png",
                       "shortName": "hitchhikers-guide",
@@ -46915,7 +45567,6 @@ service:
                           "displayName": "Heart of Gold Spaceship",
                           "id": "42e63e98c9a982ac9b8b741",
                           "lastPublished": "2023-04-02T12:42:00Z",
-                          "lastUpdated": "2016-10-24T19:43:17Z",
                           "locales": {
                             "primary": {
                               "cmsLocaleId": "653ad57de882f528b32e810e",
@@ -46964,7 +45615,6 @@ service:
                           "displayName": "Marvin's Personal Blog",
                           "id": "42e63e98c9a982ac9b8b742",
                           "lastPublished": "2023-04-02T12:45:00Z",
-                          "lastUpdated": "2016-10-24T19:43:17Z",
                           "locales": {
                             "primary": {
                               "cmsLocaleId": "653ad57de882f528b32e810e",
@@ -47003,7 +45653,6 @@ service:
                           "displayName": "Vogon Poetry Archive",
                           "id": "42e63e98c9a982ac9b8b743",
                           "lastPublished": "2023-04-02T12:50:00Z",
-                          "lastUpdated": "2016-10-24T19:43:17Z",
                           "locales": {
                             "primary": {
                               "cmsLocaleId": "653ad57de882f528b32e810d",
@@ -47065,15 +45714,7 @@ service:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "customDomains": [
-                        {
-                          "id": "589a331aa51e760df7ccb89d",
-                          "url": "test-api-domain.com",
-                        },
-                      ],
-                      "publishToWebflowSubdomain": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -47596,8 +46237,6 @@ service:
                     "publishedBy": {
                       "displayName": "Zaphod BeebleBrox",
                     },
-                    "publishedOn": "2024-07-26T16:43:20Z",
-                    "siteId": "62749158efef318abc8d5a0f",
                   },
                   "triggerType": "site_publish",
                 },
@@ -47965,7 +46604,6 @@ service:
                   displayName: Heart of Gold Spaceship
                   shortName: heart-of-gold
                   lastPublished: '2023-04-02T12:42:00Z'
-                  lastUpdated: '2016-10-24T19:43:17Z'
                   previewUrl: >-
                     https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b741/197910121200.png
                   timeZone: DeepSpace/InfiniteImprobability
@@ -48003,7 +46641,6 @@ service:
                   displayName: Marvin's Personal Blog
                   shortName: paranoid-android
                   lastPublished: '2023-04-02T12:45:00Z'
-                  lastUpdated: '2016-10-24T19:43:17Z'
                   previewUrl: >-
                     https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b742/198110121200.png
                   timeZone: DeepSpace/Depression
@@ -48033,7 +46670,6 @@ service:
                   displayName: Vogon Poetry Archive
                   shortName: vogon-poetry
                   lastPublished: '2023-04-02T12:50:00Z'
-                  lastUpdated: '2016-10-24T19:43:17Z'
                   previewUrl: >-
                     https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b743/198210121200.png
                   timeZone: Vogsphere/PoetryHall
@@ -48099,24 +46735,6 @@ service:
                   url: hitchhikersguide.galaxy
                 - id: 589a331aa51e760df7ccb89e
                   url: heartofgold.spaceship
-              locales:
-                primary:
-                  id: 653fd9af6a07fc9cfd7a5e57
-                  cmsLocaleId: 653ad57de882f528b32e810e
-                  enabled: false
-                  displayName: English (United States)
-                  displayImageId: displayImageId
-                  redirect: true
-                  subdirectory: ''
-                  tag: en-US
-                secondary:
-                  - id: 653fd9af6a07fc9cfd7a5e57
-                    cmsLocaleId: 653ad57de882f528b32e810e
-                    enabled: false
-                    displayName: English (United States)
-                    redirect: true
-                    subdirectory: ''
-                    tag: en-US
     get-custom-domain:
       path: /sites/{site_id}/custom_domains
       method: GET
@@ -48194,11 +46812,7 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           request: {}
           response:
-            body:
-              customDomains:
-                - id: 589a331aa51e760df7ccb89d
-                  url: test-api-domain.com
-              publishToWebflowSubdomain: true
+            body: {}
   source:
     openapi: ../openapi.yml
   display-name: Sites
@@ -48214,8 +46828,6 @@ webhooks:
       - payload:
           triggerType: site_publish
           payload:
-            siteId: 62749158efef318abc8d5a0f
-            publishedOn: '2024-07-26T16:43:20Z'
             domains:
               - my-website.webflow.io
             publishedBy:
@@ -48747,8 +47359,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "createdOn": "createdOn",
-                      "lastUpdated": "lastUpdated",
                       "scripts": [
                         {
                           "attributes": {
@@ -48759,9 +47369,6 @@ service:
                           "version": "1.0.0",
                         },
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "id": "alert",
                           "location": "header",
                           "version": "0.0.1",
@@ -49403,10 +48010,6 @@ service:
                 - id: alert
                   location: header
                   version: 0.0.1
-                  attributes:
-                    key: value
-              lastUpdated: lastUpdated
-              createdOn: createdOn
     delete-custom-code:
       path: /sites/{site_id}/custom_code
       method: DELETE
@@ -49924,15 +48527,6 @@ service:
                         },
                       ],
                       "createdOn": "2022-05-20T13:46:12Z",
-                      "data": {
-                        "data": {
-                          "accept-communications": true,
-                          "accept-privacy": true,
-                          "additionalProperties": "additionalProperties",
-                          "email": "email",
-                          "name": "name",
-                        },
-                      },
                       "id": "6287ec36a841b25637c663df",
                       "invitedOn": "2022-05-20T13:46:12Z",
                       "isEmailVerified": true,
@@ -49997,15 +48591,6 @@ service:
                         },
                       ],
                       "createdOn": "2022-05-20T13:46:12Z",
-                      "data": {
-                        "data": {
-                          "accept-communications": true,
-                          "accept-privacy": true,
-                          "additionalProperties": "additionalProperties",
-                          "email": "email",
-                          "name": "name",
-                        },
-                      },
                       "id": "6287ec36a841b25637c663df",
                       "invitedOn": "2022-05-20T13:46:12Z",
                       "isEmailVerified": true,
@@ -50092,9 +48677,7 @@ service:
                           ],
                           "createdOn": "2022-05-20T13:46:12Z",
                           "id": "6287ec36a841b25637c663df",
-                          "invitedOn": "2016-10-24T19:41:29Z",
                           "isEmailVerified": false,
-                          "lastLogin": "2016-10-24T19:41:29Z",
                           "lastUpdated": "2022-05-20T13:46:12Z",
                           "status": "unverified",
                         },
@@ -50107,9 +48690,7 @@ service:
                           ],
                           "createdOn": "2022-05-19T05:32:04Z",
                           "id": "6287ec36a841b25637c663f0",
-                          "invitedOn": "2016-10-24T19:41:29Z",
                           "isEmailVerified": false,
-                          "lastLogin": "2016-10-24T19:41:29Z",
                           "lastUpdated": "2022-05-19T05:32:04Z",
                           "status": "unverified",
                         },
@@ -50122,9 +48703,7 @@ service:
                           ],
                           "createdOn": "2022-05-17T03:34:06Z",
                           "id": "6287ec36a841b25637c663d9",
-                          "invitedOn": "2016-10-24T19:41:29Z",
                           "isEmailVerified": true,
-                          "lastLogin": "2016-10-24T19:41:29Z",
                           "lastUpdated": "2022-05-17T03:34:06Z",
                           "status": "verified",
                         },
@@ -50137,9 +48716,7 @@ service:
                           ],
                           "createdOn": "2022-05-15T03:46:09Z",
                           "id": "6287ec37a841b25637c6641b",
-                          "invitedOn": "2016-10-24T19:41:29Z",
                           "isEmailVerified": false,
-                          "lastLogin": "2016-10-24T19:41:29Z",
                           "lastUpdated": "2022-05-15T03:46:09Z",
                           "status": "unverified",
                         },
@@ -50152,9 +48729,7 @@ service:
                           ],
                           "createdOn": "2022-05-15T02:55:38Z",
                           "id": "6287ec37a841b25637c66449",
-                          "invitedOn": "2016-10-24T19:41:29Z",
                           "isEmailVerified": true,
-                          "lastLogin": "2016-10-24T19:41:29Z",
                           "lastUpdated": "2022-05-15T02:55:38Z",
                           "status": "verified",
                         },
@@ -50243,15 +48818,6 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                         },
                       ],
                       "createdOn": "2022-05-20T13:46:12Z",
-                      "data": {
-                        "data": {
-                          "accept-communications": true,
-                          "accept-privacy": true,
-                          "additionalProperties": "additionalProperties",
-                          "email": "email",
-                          "name": "name",
-                        },
-                      },
                       "id": "6287ec36a841b25637c663df",
                       "invitedOn": "2022-05-20T13:46:12Z",
                       "isEmailVerified": true,
@@ -51444,23 +50010,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               {
                 "docs": undefined,
                 "name": undefined,
-                "payload": {
-                  "payload": {
-                    "accessGroups": [
-                      {
-                        "slug": "webflowers",
-                        "type": "admin",
-                      },
-                    ],
-                    "createdOn": "2022-05-20T13:46:12Z",
-                    "id": "6287ec36a841b25637c663df",
-                    "invitedOn": "2022-05-20T13:46:12Z",
-                    "isEmailVerified": true,
-                    "lastLogin": "2022-05-20T13:46:12Z",
-                    "lastUpdated": "2022-05-20T13:46:12Z",
-                    "status": "verified",
-                  },
-                },
+                "payload": {},
               },
             ],
             "headers": {},
@@ -51473,23 +50023,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               {
                 "docs": undefined,
                 "name": undefined,
-                "payload": {
-                  "payload": {
-                    "accessGroups": [
-                      {
-                        "slug": "webflowers",
-                        "type": "admin",
-                      },
-                    ],
-                    "createdOn": "2022-05-20T13:46:12Z",
-                    "id": "6287ec36a841b25637c663df",
-                    "invitedOn": "2022-05-20T13:46:12Z",
-                    "isEmailVerified": true,
-                    "lastLogin": "2022-05-20T13:46:12Z",
-                    "lastUpdated": "2022-05-20T13:46:12Z",
-                    "status": "verified",
-                  },
-                },
+                "payload": {},
               },
             ],
             "headers": {},
@@ -51502,23 +50036,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               {
                 "docs": undefined,
                 "name": undefined,
-                "payload": {
-                  "payload": {
-                    "accessGroups": [
-                      {
-                        "slug": "webflowers",
-                        "type": "admin",
-                      },
-                    ],
-                    "createdOn": "2022-05-20T13:46:12Z",
-                    "id": "6287ec36a841b25637c663df",
-                    "invitedOn": "2022-05-20T13:46:12Z",
-                    "isEmailVerified": true,
-                    "lastLogin": "2022-05-20T13:46:12Z",
-                    "lastUpdated": "2022-05-20T13:46:12Z",
-                    "status": "verified",
-                  },
-                },
+                "payload": {},
               },
             ],
             "headers": {},
@@ -52431,9 +50949,7 @@ service:
                 - id: 6287ec36a841b25637c663df
                   isEmailVerified: false
                   lastUpdated: '2022-05-20T13:46:12Z'
-                  invitedOn: '2016-10-24T19:41:29Z'
                   createdOn: '2022-05-20T13:46:12Z'
-                  lastLogin: '2016-10-24T19:41:29Z'
                   status: unverified
                   accessGroups:
                     - slug: vogon-construction-crew
@@ -52441,9 +50957,7 @@ service:
                 - id: 6287ec36a841b25637c663f0
                   isEmailVerified: false
                   lastUpdated: '2022-05-19T05:32:04Z'
-                  invitedOn: '2016-10-24T19:41:29Z'
                   createdOn: '2022-05-19T05:32:04Z'
-                  lastLogin: '2016-10-24T19:41:29Z'
                   status: unverified
                   accessGroups:
                     - slug: improbability-drive-test-subjects
@@ -52451,9 +50965,7 @@ service:
                 - id: 6287ec36a841b25637c663d9
                   isEmailVerified: true
                   lastUpdated: '2022-05-17T03:34:06Z'
-                  invitedOn: '2016-10-24T19:41:29Z'
                   createdOn: '2022-05-17T03:34:06Z'
-                  lastLogin: '2016-10-24T19:41:29Z'
                   status: verified
                   accessGroups:
                     - slug: heart-of-gold-crew
@@ -52461,9 +50973,7 @@ service:
                 - id: 6287ec37a841b25637c6641b
                   isEmailVerified: false
                   lastUpdated: '2022-05-15T03:46:09Z'
-                  invitedOn: '2016-10-24T19:41:29Z'
                   createdOn: '2022-05-15T03:46:09Z'
-                  lastLogin: '2016-10-24T19:41:29Z'
                   status: unverified
                   accessGroups:
                     - slug: hitchhikers-guide-research-team
@@ -52471,9 +50981,7 @@ service:
                 - id: 6287ec37a841b25637c66449
                   isEmailVerified: true
                   lastUpdated: '2022-05-15T02:55:38Z'
-                  invitedOn: '2016-10-24T19:41:29Z'
                   createdOn: '2022-05-15T02:55:38Z'
-                  lastLogin: '2016-10-24T19:41:29Z'
                   status: verified
                   accessGroups:
                     - slug: milliways-reservationists
@@ -52519,13 +51027,6 @@ service:
               accessGroups:
                 - slug: webflowers
                   type: admin
-              data:
-                data:
-                  name: name
-                  email: email
-                  accept-privacy: true
-                  accept-communications: true
-                  additionalProperties: additionalProperties
     delete:
       path: /sites/{site_id}/users/{user_id}
       method: DELETE
@@ -52618,13 +51119,6 @@ service:
               accessGroups:
                 - slug: webflowers
                   type: admin
-              data:
-                data:
-                  name: name
-                  email: email
-                  accept-privacy: true
-                  accept-communications: true
-                  additionalProperties: additionalProperties
     invite:
       path: /sites/{site_id}/users/invite
       method: POST
@@ -52686,13 +51180,6 @@ service:
               accessGroups:
                 - slug: webflowers
                   type: admin
-              data:
-                data:
-                  name: name
-                  email: email
-                  accept-privacy: true
-                  accept-communications: true
-                  additionalProperties: additionalProperties
   source:
     openapi: ../openapi.yml
 webhooks:
@@ -52702,54 +51189,21 @@ webhooks:
     headers: {}
     payload: UserAccountAddedPayload
     examples:
-      - payload:
-          payload:
-            id: 6287ec36a841b25637c663df
-            isEmailVerified: true
-            lastUpdated: '2022-05-20T13:46:12Z'
-            invitedOn: '2022-05-20T13:46:12Z'
-            createdOn: '2022-05-20T13:46:12Z'
-            lastLogin: '2022-05-20T13:46:12Z'
-            status: verified
-            accessGroups:
-              - slug: webflowers
-                type: admin
+      - payload: {}
   user_account_updated:
     method: POST
     display-name: Account Updated
     headers: {}
     payload: UserAccountUpdatedPayload
     examples:
-      - payload:
-          payload:
-            id: 6287ec36a841b25637c663df
-            isEmailVerified: true
-            lastUpdated: '2022-05-20T13:46:12Z'
-            invitedOn: '2022-05-20T13:46:12Z'
-            createdOn: '2022-05-20T13:46:12Z'
-            lastLogin: '2022-05-20T13:46:12Z'
-            status: verified
-            accessGroups:
-              - slug: webflowers
-                type: admin
+      - payload: {}
   user_account_deleted:
     method: POST
     display-name: Account Deleted
     headers: {}
     payload: UserAccountDeletedPayload
     examples:
-      - payload:
-          payload:
-            id: 6287ec36a841b25637c663df
-            isEmailVerified: true
-            lastUpdated: '2022-05-20T13:46:12Z'
-            invitedOn: '2022-05-20T13:46:12Z'
-            createdOn: '2022-05-20T13:46:12Z'
-            lastLogin: '2022-05-20T13:46:12Z'
-            status: verified
-            accessGroups:
-              - slug: webflowers
-                type: admin
+      - payload: {}
 ",
     },
     "webhooks.yml": {
@@ -52948,11 +51402,6 @@ webhooks:
                   },
                   "response": {
                     "body": {
-                      "pagination": {
-                        "limit": 100,
-                        "offset": 0,
-                        "total": 100,
-                      },
                       "webhooks": [
                         {
                           "createdOn": "2016-09-02T23:26:22Z",
@@ -53983,10 +52432,6 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           response:
             body:
-              pagination:
-                limit: 100
-                offset: 0
-                total: 100
               webhooks:
                 - id: 57ca0a9e418c504a6e1acbb6
                   triggerType: form_submission

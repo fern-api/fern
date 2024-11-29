@@ -91,36 +91,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "age": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "value": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

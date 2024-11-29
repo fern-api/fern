@@ -61,9 +61,7 @@
                     "stream": false,
                   },
                   "response": {
-                    "body": {
-                      "text": "text",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -102,9 +100,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "text": "text",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -169,7 +165,7 @@ service:
             prompt: prompt
           response:
             stream:
-              - text: text
+              - {}
     create:
       path: /completions/chat
       method: POST
@@ -191,8 +187,7 @@ service:
             stream: false
             prompt: prompt
           response:
-            body:
-              text: text
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

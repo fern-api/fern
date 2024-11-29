@@ -7996,26 +7996,14 @@ types:
                         "common_code_key": "common_code_key",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "is_backup": true,
                         "is_backup_access_code_available": true,
                         "is_external_modification_allowed": true,
                         "is_managed": true,
                         "is_offline_access_code": true,
                         "is_one_time_use": true,
-                        "is_scheduled_on_device": true,
-                        "is_waiting_for_code_assignment": true,
                         "name": "name",
-                        "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "setting",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "action_attempt": {
                         "action_attempt_id": "action_attempt_id",
@@ -8117,26 +8105,14 @@ types:
                           "common_code_key": "common_code_key",
                           "created_at": "2024-01-15T09:30:00Z",
                           "device_id": "device_id",
-                          "ends_at": "2024-01-15T09:30:00Z",
-                          "errors": {
-                            "key": "value",
-                          },
-                          "is_backup": true,
                           "is_backup_access_code_available": true,
                           "is_external_modification_allowed": true,
                           "is_managed": true,
                           "is_offline_access_code": true,
                           "is_one_time_use": true,
-                          "is_scheduled_on_device": true,
-                          "is_waiting_for_code_assignment": true,
                           "name": "name",
-                          "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                          "starts_at": "2024-01-15T09:30:00Z",
                           "status": "setting",
                           "type": "time_bound",
-                          "warnings": {
-                            "key": "value",
-                          },
                         },
                       ],
                       "ok": true,
@@ -8292,26 +8268,14 @@ types:
                         "common_code_key": "common_code_key",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "is_backup": true,
                         "is_backup_access_code_available": true,
                         "is_external_modification_allowed": true,
                         "is_managed": true,
                         "is_offline_access_code": true,
                         "is_one_time_use": true,
-                        "is_scheduled_on_device": true,
-                        "is_waiting_for_code_assignment": true,
                         "name": "name",
-                        "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "setting",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "ok": true,
                     },
@@ -8369,26 +8333,14 @@ types:
                         "common_code_key": "common_code_key",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "is_backup": true,
                         "is_backup_access_code_available": true,
                         "is_external_modification_allowed": true,
                         "is_managed": true,
                         "is_offline_access_code": true,
                         "is_one_time_use": true,
-                        "is_scheduled_on_device": true,
-                        "is_waiting_for_code_assignment": true,
                         "name": "name",
-                        "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "setting",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "ok": true,
                     },
@@ -8457,26 +8409,14 @@ types:
                           "common_code_key": "common_code_key",
                           "created_at": "2024-01-15T09:30:00Z",
                           "device_id": "device_id",
-                          "ends_at": "2024-01-15T09:30:00Z",
-                          "errors": {
-                            "key": "value",
-                          },
-                          "is_backup": true,
                           "is_backup_access_code_available": true,
                           "is_external_modification_allowed": true,
                           "is_managed": true,
                           "is_offline_access_code": true,
                           "is_one_time_use": true,
-                          "is_scheduled_on_device": true,
-                          "is_waiting_for_code_assignment": true,
                           "name": "name",
-                          "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                          "starts_at": "2024-01-15T09:30:00Z",
                           "status": "setting",
                           "type": "time_bound",
-                          "warnings": {
-                            "key": "value",
-                          },
                         },
                       ],
                       "ok": true,
@@ -8539,26 +8479,14 @@ types:
                         "common_code_key": "common_code_key",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "is_backup": true,
                         "is_backup_access_code_available": true,
                         "is_external_modification_allowed": true,
                         "is_managed": true,
                         "is_offline_access_code": true,
                         "is_one_time_use": true,
-                        "is_scheduled_on_device": true,
-                        "is_waiting_for_code_assignment": true,
                         "name": "name",
-                        "pulled_backup_access_code_id": "pulled_backup_access_code_id",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "setting",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "ok": true,
                     },
@@ -9055,25 +8983,15 @@ service:
                 action_type: LOCK_DOOR
               access_code:
                 common_code_key: common_code_key
-                is_scheduled_on_device: true
                 type: time_bound
-                is_waiting_for_code_assignment: true
                 access_code_id: access_code_id
                 device_id: device_id
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: setting
                 is_backup_access_code_available: true
-                is_backup: true
-                pulled_backup_access_code_id: pulled_backup_access_code_id
                 is_external_modification_allowed: true
                 is_one_time_use: true
                 is_offline_access_code: true
@@ -9133,25 +9051,15 @@ service:
             body:
               access_codes:
                 - common_code_key: common_code_key
-                  is_scheduled_on_device: true
                   type: time_bound
-                  is_waiting_for_code_assignment: true
                   access_code_id: access_code_id
                   device_id: device_id
                   name: name
                   code: code
                   created_at: '2024-01-15T09:30:00Z'
-                  errors:
-                    key: value
-                  warnings:
-                    key: value
                   is_managed: true
-                  starts_at: '2024-01-15T09:30:00Z'
-                  ends_at: '2024-01-15T09:30:00Z'
                   status: setting
                   is_backup_access_code_available: true
-                  is_backup: true
-                  pulled_backup_access_code_id: pulled_backup_access_code_id
                   is_external_modification_allowed: true
                   is_one_time_use: true
                   is_offline_access_code: true
@@ -9227,25 +9135,15 @@ service:
             body:
               generated_code:
                 common_code_key: common_code_key
-                is_scheduled_on_device: true
                 type: time_bound
-                is_waiting_for_code_assignment: true
                 access_code_id: access_code_id
                 device_id: device_id
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: setting
                 is_backup_access_code_available: true
-                is_backup: true
-                pulled_backup_access_code_id: pulled_backup_access_code_id
                 is_external_modification_allowed: true
                 is_one_time_use: true
                 is_offline_access_code: true
@@ -9284,25 +9182,15 @@ service:
             body:
               access_code:
                 common_code_key: common_code_key
-                is_scheduled_on_device: true
                 type: time_bound
-                is_waiting_for_code_assignment: true
                 access_code_id: access_code_id
                 device_id: device_id
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: setting
                 is_backup_access_code_available: true
-                is_backup: true
-                pulled_backup_access_code_id: pulled_backup_access_code_id
                 is_external_modification_allowed: true
                 is_one_time_use: true
                 is_offline_access_code: true
@@ -9338,25 +9226,15 @@ service:
             body:
               access_codes:
                 - common_code_key: common_code_key
-                  is_scheduled_on_device: true
                   type: time_bound
-                  is_waiting_for_code_assignment: true
                   access_code_id: access_code_id
                   device_id: device_id
                   name: name
                   code: code
                   created_at: '2024-01-15T09:30:00Z'
-                  errors:
-                    key: value
-                  warnings:
-                    key: value
                   is_managed: true
-                  starts_at: '2024-01-15T09:30:00Z'
-                  ends_at: '2024-01-15T09:30:00Z'
                   status: setting
                   is_backup_access_code_available: true
-                  is_backup: true
-                  pulled_backup_access_code_id: pulled_backup_access_code_id
                   is_external_modification_allowed: true
                   is_one_time_use: true
                   is_offline_access_code: true
@@ -9391,25 +9269,15 @@ service:
             body:
               backup_access_code:
                 common_code_key: common_code_key
-                is_scheduled_on_device: true
                 type: time_bound
-                is_waiting_for_code_assignment: true
                 access_code_id: access_code_id
                 device_id: device_id
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: setting
                 is_backup_access_code_available: true
-                is_backup: true
-                pulled_backup_access_code_id: pulled_backup_access_code_id
                 is_external_modification_allowed: true
                 is_one_time_use: true
                 is_offline_access_code: true
@@ -9515,18 +9383,10 @@ service:
                         "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
                         "is_managed": true,
                         "name": "name",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "set",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "ok": true,
                     },
@@ -9651,13 +9511,7 @@ service:
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: set
               ok: true
   source:
@@ -9812,18 +9666,10 @@ service:
                         "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "ends_at": "2024-01-15T09:30:00Z",
-                        "errors": {
-                          "key": "value",
-                        },
                         "is_managed": true,
                         "name": "name",
-                        "starts_at": "2024-01-15T09:30:00Z",
                         "status": "set",
                         "type": "time_bound",
-                        "warnings": {
-                          "key": "value",
-                        },
                       },
                       "ok": true,
                     },
@@ -9893,18 +9739,10 @@ service:
                           "code": "code",
                           "created_at": "2024-01-15T09:30:00Z",
                           "device_id": "device_id",
-                          "ends_at": "2024-01-15T09:30:00Z",
-                          "errors": {
-                            "key": "value",
-                          },
                           "is_managed": true,
                           "name": "name",
-                          "starts_at": "2024-01-15T09:30:00Z",
                           "status": "set",
                           "type": "time_bound",
-                          "warnings": {
-                            "key": "value",
-                          },
                         },
                       ],
                       "ok": true,
@@ -10207,13 +10045,7 @@ service:
                 name: name
                 code: code
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 is_managed: true
-                starts_at: '2024-01-15T09:30:00Z'
-                ends_at: '2024-01-15T09:30:00Z'
                 status: set
               ok: true
     list:
@@ -10252,13 +10084,7 @@ service:
                   name: name
                   code: code
                   created_at: '2024-01-15T09:30:00Z'
-                  errors:
-                    key: value
-                  warnings:
-                    key: value
                   is_managed: true
-                  starts_at: '2024-01-15T09:30:00Z'
-                  ends_at: '2024-01-15T09:30:00Z'
                   status: set
               ok: true
     update:
@@ -10523,26 +10349,11 @@ service:
                     "body": {
                       "acs_users": [
                         {
-                          "access_schedule": {
-                            "ends_at": "2024-01-15T09:30:00Z",
-                            "starts_at": "2024-01-15T09:30:00Z",
-                          },
                           "acs_system_id": "acs_system_id",
                           "acs_user_id": "acs_user_id",
                           "created_at": "2024-01-15T09:30:00Z",
                           "display_name": "display_name",
-                          "email": "email",
-                          "email_address": "email_address",
-                          "external_type": "pti_user",
-                          "external_type_display_name": "external_type_display_name",
-                          "full_name": "full_name",
-                          "hid_acs_system_id": "hid_acs_system_id",
                           "is_suspended": true,
-                          "phone_number": "phone_number",
-                          "user_identity_email_address": "user_identity_email_address",
-                          "user_identity_full_name": "user_identity_full_name",
-                          "user_identity_id": "user_identity_id",
-                          "user_identity_phone_number": "user_identity_phone_number",
                           "workspace_id": "workspace_id",
                         },
                       ],
@@ -10887,24 +10698,10 @@ service:
               acs_users:
                 - acs_user_id: acs_user_id
                   acs_system_id: acs_system_id
-                  hid_acs_system_id: hid_acs_system_id
                   workspace_id: workspace_id
                   created_at: '2024-01-15T09:30:00Z'
                   display_name: display_name
-                  external_type: pti_user
-                  external_type_display_name: external_type_display_name
                   is_suspended: true
-                  access_schedule:
-                    starts_at: '2024-01-15T09:30:00Z'
-                    ends_at: '2024-01-15T09:30:00Z'
-                  user_identity_id: user_identity_id
-                  user_identity_full_name: user_identity_full_name
-                  user_identity_email_address: user_identity_email_address
-                  user_identity_phone_number: user_identity_phone_number
-                  full_name: full_name
-                  email: email
-                  email_address: email_address
-                  phone_number: phone_number
               ok: true
     remove_user:
       path: /acs/access_groups/remove_user
@@ -11301,38 +11098,15 @@ service:
                       "acs_credential": {
                         "access_method": "code",
                         "acs_credential_id": "acs_credential_id",
-                        "acs_credential_pool_id": "acs_credential_pool_id",
                         "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "ends_at": "ends_at",
                         "errors": [
                           {
                             "error_code": "error_code",
                             "message": "message",
                           },
                         ],
-                        "external_type": "pti_card",
-                        "external_type_display_name": "external_type_display_name",
-                        "is_latest_desired_state_synced_with_provider": true,
-                        "is_multi_phone_sync_credential": true,
-                        "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                        "parent_acs_credential_id": "parent_acs_credential_id",
-                        "starts_at": "starts_at",
-                        "visionline_metadata": {
-                          "card_function_type": "guest",
-                          "common_acs_entrance_ids": [
-                            "common_acs_entrance_ids",
-                          ],
-                          "guest_acs_entrance_ids": [
-                            "guest_acs_entrance_ids",
-                          ],
-                          "joiner_acs_credential_ids": [
-                            "joiner_acs_credential_ids",
-                          ],
-                        },
                         "warnings": [
                           {
                             "message": "message",
@@ -11405,38 +11179,15 @@ service:
                       "acs_credential": {
                         "access_method": "code",
                         "acs_credential_id": "acs_credential_id",
-                        "acs_credential_pool_id": "acs_credential_pool_id",
                         "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "ends_at": "ends_at",
                         "errors": [
                           {
                             "error_code": "error_code",
                             "message": "message",
                           },
                         ],
-                        "external_type": "pti_card",
-                        "external_type_display_name": "external_type_display_name",
-                        "is_latest_desired_state_synced_with_provider": true,
-                        "is_multi_phone_sync_credential": true,
-                        "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                        "parent_acs_credential_id": "parent_acs_credential_id",
-                        "starts_at": "starts_at",
-                        "visionline_metadata": {
-                          "card_function_type": "guest",
-                          "common_acs_entrance_ids": [
-                            "common_acs_entrance_ids",
-                          ],
-                          "guest_acs_entrance_ids": [
-                            "guest_acs_entrance_ids",
-                          ],
-                          "joiner_acs_credential_ids": [
-                            "joiner_acs_credential_ids",
-                          ],
-                        },
                         "warnings": [
                           {
                             "message": "message",
@@ -11578,38 +11329,15 @@ service:
                       "acs_credential": {
                         "access_method": "code",
                         "acs_credential_id": "acs_credential_id",
-                        "acs_credential_pool_id": "acs_credential_pool_id",
                         "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "ends_at": "ends_at",
                         "errors": [
                           {
                             "error_code": "error_code",
                             "message": "message",
                           },
                         ],
-                        "external_type": "pti_card",
-                        "external_type_display_name": "external_type_display_name",
-                        "is_latest_desired_state_synced_with_provider": true,
-                        "is_multi_phone_sync_credential": true,
-                        "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                        "parent_acs_credential_id": "parent_acs_credential_id",
-                        "starts_at": "starts_at",
-                        "visionline_metadata": {
-                          "card_function_type": "guest",
-                          "common_acs_entrance_ids": [
-                            "common_acs_entrance_ids",
-                          ],
-                          "guest_acs_entrance_ids": [
-                            "guest_acs_entrance_ids",
-                          ],
-                          "joiner_acs_credential_ids": [
-                            "joiner_acs_credential_ids",
-                          ],
-                        },
                         "warnings": [
                           {
                             "message": "message",
@@ -11672,29 +11400,15 @@ service:
                         {
                           "access_method": "code",
                           "acs_credential_id": "acs_credential_id",
-                          "acs_credential_pool_id": "acs_credential_pool_id",
                           "acs_system_id": "acs_system_id",
-                          "acs_user_id": "acs_user_id",
-                          "code": "code",
                           "created_at": "2024-01-15T09:30:00Z",
                           "display_name": "display_name",
-                          "ends_at": "ends_at",
                           "errors": [
                             {
                               "error_code": "error_code",
                               "message": "message",
                             },
                           ],
-                          "external_type": "pti_card",
-                          "external_type_display_name": "external_type_display_name",
-                          "is_latest_desired_state_synced_with_provider": true,
-                          "is_multi_phone_sync_credential": true,
-                          "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                          "parent_acs_credential_id": "parent_acs_credential_id",
-                          "starts_at": "starts_at",
-                          "visionline_metadata": {
-                            "card_function_type": "guest",
-                          },
                           "warnings": [
                             {
                               "message": "message",
@@ -11760,16 +11474,6 @@ service:
                               "message": "message",
                             },
                           ],
-                          "latch_metadata": {
-                            "accessibility_type": "accessibility_type",
-                            "door_name": "door_name",
-                            "door_type": "door_type",
-                            "is_connected": true,
-                          },
-                          "visionline_metadata": {
-                            "door_category": "entrance",
-                            "door_name": "door_name",
-                          },
                         },
                       ],
                       "ok": true,
@@ -11828,38 +11532,15 @@ service:
                       "acs_credential": {
                         "access_method": "code",
                         "acs_credential_id": "acs_credential_id",
-                        "acs_credential_pool_id": "acs_credential_pool_id",
                         "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "ends_at": "ends_at",
                         "errors": [
                           {
                             "error_code": "error_code",
                             "message": "message",
                           },
                         ],
-                        "external_type": "pti_card",
-                        "external_type_display_name": "external_type_display_name",
-                        "is_latest_desired_state_synced_with_provider": true,
-                        "is_multi_phone_sync_credential": true,
-                        "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                        "parent_acs_credential_id": "parent_acs_credential_id",
-                        "starts_at": "starts_at",
-                        "visionline_metadata": {
-                          "card_function_type": "guest",
-                          "common_acs_entrance_ids": [
-                            "common_acs_entrance_ids",
-                          ],
-                          "guest_acs_entrance_ids": [
-                            "guest_acs_entrance_ids",
-                          ],
-                          "joiner_acs_credential_ids": [
-                            "joiner_acs_credential_ids",
-                          ],
-                        },
                         "warnings": [
                           {
                             "message": "message",
@@ -11931,38 +11612,15 @@ service:
                       "acs_credential": {
                         "access_method": "code",
                         "acs_credential_id": "acs_credential_id",
-                        "acs_credential_pool_id": "acs_credential_pool_id",
                         "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "code": "code",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "ends_at": "ends_at",
                         "errors": [
                           {
                             "error_code": "error_code",
                             "message": "message",
                           },
                         ],
-                        "external_type": "pti_card",
-                        "external_type_display_name": "external_type_display_name",
-                        "is_latest_desired_state_synced_with_provider": true,
-                        "is_multi_phone_sync_credential": true,
-                        "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                        "parent_acs_credential_id": "parent_acs_credential_id",
-                        "starts_at": "starts_at",
-                        "visionline_metadata": {
-                          "card_function_type": "guest",
-                          "common_acs_entrance_ids": [
-                            "common_acs_entrance_ids",
-                          ],
-                          "guest_acs_entrance_ids": [
-                            "guest_acs_entrance_ids",
-                          ],
-                          "joiner_acs_credential_ids": [
-                            "joiner_acs_credential_ids",
-                          ],
-                        },
                         "warnings": [
                           {
                             "message": "message",
@@ -12297,36 +11955,17 @@ service:
             body:
               acs_credential:
                 acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_credential_pool_id: acs_credential_pool_id
                 acs_system_id: acs_system_id
-                parent_acs_credential_id: parent_acs_credential_id
                 display_name: display_name
-                code: code
                 access_method: code
-                external_type: pti_card
-                external_type_display_name: external_type_display_name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
-                starts_at: starts_at
-                ends_at: ends_at
                 errors:
                   - error_code: error_code
                     message: message
                 warnings:
                   - warning_code: warning_code
                     message: message
-                is_multi_phone_sync_credential: true
-                is_latest_desired_state_synced_with_provider: true
-                latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                visionline_metadata:
-                  card_function_type: guest
-                  joiner_acs_credential_ids:
-                    - joiner_acs_credential_ids
-                  guest_acs_entrance_ids:
-                    - guest_acs_entrance_ids
-                  common_acs_entrance_ids:
-                    - common_acs_entrance_ids
               ok: true
     create:
       path: /acs/credentials/create
@@ -12375,36 +12014,17 @@ service:
             body:
               acs_credential:
                 acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_credential_pool_id: acs_credential_pool_id
                 acs_system_id: acs_system_id
-                parent_acs_credential_id: parent_acs_credential_id
                 display_name: display_name
-                code: code
                 access_method: code
-                external_type: pti_card
-                external_type_display_name: external_type_display_name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
-                starts_at: starts_at
-                ends_at: ends_at
                 errors:
                   - error_code: error_code
                     message: message
                 warnings:
                   - warning_code: warning_code
                     message: message
-                is_multi_phone_sync_credential: true
-                is_latest_desired_state_synced_with_provider: true
-                latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                visionline_metadata:
-                  card_function_type: guest
-                  joiner_acs_credential_ids:
-                    - joiner_acs_credential_ids
-                  guest_acs_entrance_ids:
-                    - guest_acs_entrance_ids
-                  common_acs_entrance_ids:
-                    - common_acs_entrance_ids
               ok: true
     delete:
       path: /acs/credentials/delete
@@ -12464,36 +12084,17 @@ service:
             body:
               acs_credential:
                 acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_credential_pool_id: acs_credential_pool_id
                 acs_system_id: acs_system_id
-                parent_acs_credential_id: parent_acs_credential_id
                 display_name: display_name
-                code: code
                 access_method: code
-                external_type: pti_card
-                external_type_display_name: external_type_display_name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
-                starts_at: starts_at
-                ends_at: ends_at
                 errors:
                   - error_code: error_code
                     message: message
                 warnings:
                   - warning_code: warning_code
                     message: message
-                is_multi_phone_sync_credential: true
-                is_latest_desired_state_synced_with_provider: true
-                latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                visionline_metadata:
-                  card_function_type: guest
-                  joiner_acs_credential_ids:
-                    - joiner_acs_credential_ids
-                  guest_acs_entrance_ids:
-                    - guest_acs_entrance_ids
-                  common_acs_entrance_ids:
-                    - common_acs_entrance_ids
               ok: true
     list:
       path: /acs/credentials/list
@@ -12521,30 +12122,17 @@ service:
             body:
               acs_credentials:
                 - acs_credential_id: acs_credential_id
-                  acs_user_id: acs_user_id
-                  acs_credential_pool_id: acs_credential_pool_id
                   acs_system_id: acs_system_id
-                  parent_acs_credential_id: parent_acs_credential_id
                   display_name: display_name
-                  code: code
                   access_method: code
-                  external_type: pti_card
-                  external_type_display_name: external_type_display_name
                   created_at: '2024-01-15T09:30:00Z'
                   workspace_id: workspace_id
-                  starts_at: starts_at
-                  ends_at: ends_at
                   errors:
                     - error_code: error_code
                       message: message
                   warnings:
                     - warning_code: warning_code
                       message: message
-                  is_multi_phone_sync_credential: true
-                  is_latest_desired_state_synced_with_provider: true
-                  latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                  visionline_metadata:
-                    card_function_type: guest
               ok: true
     list_accessible_entrances:
       path: /acs/credentials/list_accessible_entrances
@@ -12582,14 +12170,6 @@ service:
                   errors:
                     - error_code: error_code
                       message: message
-                  latch_metadata:
-                    accessibility_type: accessibility_type
-                    door_name: door_name
-                    door_type: door_type
-                    is_connected: true
-                  visionline_metadata:
-                    door_name: door_name
-                    door_category: entrance
               ok: true
     unassign:
       path: /acs/credentials/unassign
@@ -12625,36 +12205,17 @@ service:
             body:
               acs_credential:
                 acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_credential_pool_id: acs_credential_pool_id
                 acs_system_id: acs_system_id
-                parent_acs_credential_id: parent_acs_credential_id
                 display_name: display_name
-                code: code
                 access_method: code
-                external_type: pti_card
-                external_type_display_name: external_type_display_name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
-                starts_at: starts_at
-                ends_at: ends_at
                 errors:
                   - error_code: error_code
                     message: message
                 warnings:
                   - warning_code: warning_code
                     message: message
-                is_multi_phone_sync_credential: true
-                is_latest_desired_state_synced_with_provider: true
-                latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                visionline_metadata:
-                  card_function_type: guest
-                  joiner_acs_credential_ids:
-                    - joiner_acs_credential_ids
-                  guest_acs_entrance_ids:
-                    - guest_acs_entrance_ids
-                  common_acs_entrance_ids:
-                    - common_acs_entrance_ids
               ok: true
     update:
       path: /acs/credentials/update
@@ -12687,36 +12248,17 @@ service:
             body:
               acs_credential:
                 acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_credential_pool_id: acs_credential_pool_id
                 acs_system_id: acs_system_id
-                parent_acs_credential_id: parent_acs_credential_id
                 display_name: display_name
-                code: code
                 access_method: code
-                external_type: pti_card
-                external_type_display_name: external_type_display_name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
-                starts_at: starts_at
-                ends_at: ends_at
                 errors:
                   - error_code: error_code
                     message: message
                 warnings:
                   - warning_code: warning_code
                     message: message
-                is_multi_phone_sync_credential: true
-                is_latest_desired_state_synced_with_provider: true
-                latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                visionline_metadata:
-                  card_function_type: guest
-                  joiner_acs_credential_ids:
-                    - joiner_acs_credential_ids
-                  guest_acs_entrance_ids:
-                    - guest_acs_entrance_ids
-                  common_acs_entrance_ids:
-                    - common_acs_entrance_ids
               ok: true
   source:
     openapi: ../openapi.json
@@ -12758,22 +12300,6 @@ service:
                             "message": "message",
                           },
                         ],
-                        "latch_metadata": {
-                          "accessibility_type": "accessibility_type",
-                          "door_name": "door_name",
-                          "door_type": "door_type",
-                          "is_connected": true,
-                        },
-                        "visionline_metadata": {
-                          "door_category": "entrance",
-                          "door_name": "door_name",
-                          "profiles": [
-                            {
-                              "visionline_door_profile_id": "visionline_door_profile_id",
-                              "visionline_door_profile_type": "BLE",
-                            },
-                          ],
-                        },
                       },
                       "ok": true,
                     },
@@ -12898,16 +12424,6 @@ service:
                               "message": "message",
                             },
                           ],
-                          "latch_metadata": {
-                            "accessibility_type": "accessibility_type",
-                            "door_name": "door_name",
-                            "door_type": "door_type",
-                            "is_connected": true,
-                          },
-                          "visionline_metadata": {
-                            "door_category": "entrance",
-                            "door_name": "door_name",
-                          },
                         },
                       ],
                       "ok": true,
@@ -12975,29 +12491,15 @@ service:
                         {
                           "access_method": "code",
                           "acs_credential_id": "acs_credential_id",
-                          "acs_credential_pool_id": "acs_credential_pool_id",
                           "acs_system_id": "acs_system_id",
-                          "acs_user_id": "acs_user_id",
-                          "code": "code",
                           "created_at": "2024-01-15T09:30:00Z",
                           "display_name": "display_name",
-                          "ends_at": "ends_at",
                           "errors": [
                             {
                               "error_code": "error_code",
                               "message": "message",
                             },
                           ],
-                          "external_type": "pti_card",
-                          "external_type_display_name": "external_type_display_name",
-                          "is_latest_desired_state_synced_with_provider": true,
-                          "is_multi_phone_sync_credential": true,
-                          "latest_desired_state_synced_with_provider_at": "2024-01-15T09:30:00Z",
-                          "parent_acs_credential_id": "parent_acs_credential_id",
-                          "starts_at": "starts_at",
-                          "visionline_metadata": {
-                            "card_function_type": "guest",
-                          },
                           "warnings": [
                             {
                               "message": "message",
@@ -13162,17 +12664,6 @@ service:
                 errors:
                   - error_code: error_code
                     message: message
-                latch_metadata:
-                  accessibility_type: accessibility_type
-                  door_name: door_name
-                  door_type: door_type
-                  is_connected: true
-                visionline_metadata:
-                  door_name: door_name
-                  door_category: entrance
-                  profiles:
-                    - visionline_door_profile_id: visionline_door_profile_id
-                      visionline_door_profile_type: BLE
               ok: true
     grant_access:
       path: /acs/entrances/grant_access
@@ -13246,14 +12737,6 @@ service:
                   errors:
                     - error_code: error_code
                       message: message
-                  latch_metadata:
-                    accessibility_type: accessibility_type
-                    door_name: door_name
-                    door_type: door_type
-                    is_connected: true
-                  visionline_metadata:
-                    door_name: door_name
-                    door_category: entrance
               ok: true
     list_credentials_with_access:
       path: /acs/entrances/list_credentials_with_access
@@ -13286,30 +12769,17 @@ service:
             body:
               acs_credentials:
                 - acs_credential_id: acs_credential_id
-                  acs_user_id: acs_user_id
-                  acs_credential_pool_id: acs_credential_pool_id
                   acs_system_id: acs_system_id
-                  parent_acs_credential_id: parent_acs_credential_id
                   display_name: display_name
-                  code: code
                   access_method: code
-                  external_type: pti_card
-                  external_type_display_name: external_type_display_name
                   created_at: '2024-01-15T09:30:00Z'
                   workspace_id: workspace_id
-                  starts_at: starts_at
-                  ends_at: ends_at
                   errors:
                     - error_code: error_code
                       message: message
                   warnings:
                     - warning_code: warning_code
                       message: message
-                  is_multi_phone_sync_credential: true
-                  is_latest_desired_state_synced_with_provider: true
-                  latest_desired_state_synced_with_provider_at: '2024-01-15T09:30:00Z'
-                  visionline_metadata:
-                    card_function_type: guest
               ok: true
   source:
     openapi: ../openapi.json
@@ -13342,10 +12812,6 @@ service:
                     "body": {
                       "acs_system": {
                         "acs_system_id": "acs_system_id",
-                        "can_add_acs_users_to_acs_access_groups": true,
-                        "can_automate_enrollment": true,
-                        "can_create_acs_access_groups": true,
-                        "can_remove_acs_users_from_acs_access_groups": true,
                         "connected_account_ids": [
                           "connected_account_ids",
                         ],
@@ -13357,13 +12823,9 @@ service:
                             "message": "errors",
                           },
                         ],
-                        "external_type": "pti_site",
-                        "external_type_display_name": "external_type_display_name",
                         "image_alt_text": "image_alt_text",
                         "image_url": "image_url",
                         "name": "name",
-                        "system_type": "pti_site",
-                        "system_type_display_name": "system_type_display_name",
                         "warnings": [
                           {},
                         ],
@@ -13422,10 +12884,6 @@ service:
                       "acs_systems": [
                         {
                           "acs_system_id": "acs_system_id",
-                          "can_add_acs_users_to_acs_access_groups": true,
-                          "can_automate_enrollment": true,
-                          "can_create_acs_access_groups": true,
-                          "can_remove_acs_users_from_acs_access_groups": true,
                           "connected_account_ids": [
                             "connected_account_ids",
                           ],
@@ -13437,13 +12895,9 @@ service:
                               "message": "errors",
                             },
                           ],
-                          "external_type": "pti_site",
-                          "external_type_display_name": "external_type_display_name",
                           "image_alt_text": "image_alt_text",
                           "image_url": "image_url",
                           "name": "name",
-                          "system_type": "pti_site",
-                          "system_type_display_name": "system_type_display_name",
                           "warnings": [
                             {},
                           ],
@@ -13505,10 +12959,6 @@ service:
                       "acs_systems": [
                         {
                           "acs_system_id": "acs_system_id",
-                          "can_add_acs_users_to_acs_access_groups": true,
-                          "can_automate_enrollment": true,
-                          "can_create_acs_access_groups": true,
-                          "can_remove_acs_users_from_acs_access_groups": true,
                           "connected_account_ids": [
                             "connected_account_ids",
                           ],
@@ -13520,13 +12970,9 @@ service:
                               "message": "errors",
                             },
                           ],
-                          "external_type": "pti_site",
-                          "external_type_display_name": "external_type_display_name",
                           "image_alt_text": "image_alt_text",
                           "image_url": "image_url",
                           "name": "name",
-                          "system_type": "pti_site",
-                          "system_type_display_name": "system_type_display_name",
                           "warnings": [
                             {},
                           ],
@@ -13666,10 +13112,6 @@ service:
             body:
               acs_system:
                 acs_system_id: acs_system_id
-                external_type: pti_site
-                external_type_display_name: external_type_display_name
-                system_type: pti_site
-                system_type_display_name: system_type_display_name
                 name: name
                 created_at: '2024-01-15T09:30:00Z'
                 workspace_id: workspace_id
@@ -13683,10 +13125,6 @@ service:
                     message: errors
                 warnings:
                   - {}
-                can_automate_enrollment: true
-                can_create_acs_access_groups: true
-                can_remove_acs_users_from_acs_access_groups: true
-                can_add_acs_users_to_acs_access_groups: true
               ok: true
     list:
       path: /acs/systems/list
@@ -13717,10 +13155,6 @@ service:
             body:
               acs_systems:
                 - acs_system_id: acs_system_id
-                  external_type: pti_site
-                  external_type_display_name: external_type_display_name
-                  system_type: pti_site
-                  system_type_display_name: system_type_display_name
                   name: name
                   created_at: '2024-01-15T09:30:00Z'
                   workspace_id: workspace_id
@@ -13734,10 +13168,6 @@ service:
                       message: errors
                   warnings:
                     - {}
-                  can_automate_enrollment: true
-                  can_create_acs_access_groups: true
-                  can_remove_acs_users_from_acs_access_groups: true
-                  can_add_acs_users_to_acs_access_groups: true
               ok: true
     list_compatible_credential_manager_acs_systems:
       path: /acs/systems/list_compatible_credential_manager_acs_systems
@@ -13769,10 +13199,6 @@ service:
             body:
               acs_systems:
                 - acs_system_id: acs_system_id
-                  external_type: pti_site
-                  external_type_display_name: external_type_display_name
-                  system_type: pti_site
-                  system_type_display_name: system_type_display_name
                   name: name
                   created_at: '2024-01-15T09:30:00Z'
                   workspace_id: workspace_id
@@ -13786,10 +13212,6 @@ service:
                       message: errors
                   warnings:
                     - {}
-                  can_automate_enrollment: true
-                  can_create_acs_access_groups: true
-                  can_remove_acs_users_from_acs_access_groups: true
-                  can_add_acs_users_to_acs_access_groups: true
               ok: true
   source:
     openapi: ../openapi.json
@@ -13882,26 +13304,11 @@ service:
                   "response": {
                     "body": {
                       "acs_user": {
-                        "access_schedule": {
-                          "ends_at": "2024-01-15T09:30:00Z",
-                          "starts_at": "2024-01-15T09:30:00Z",
-                        },
                         "acs_system_id": "acs_system_id",
                         "acs_user_id": "acs_user_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "email": "email",
-                        "email_address": "email_address",
-                        "external_type": "pti_user",
-                        "external_type_display_name": "external_type_display_name",
-                        "full_name": "full_name",
-                        "hid_acs_system_id": "hid_acs_system_id",
                         "is_suspended": true,
-                        "phone_number": "phone_number",
-                        "user_identity_email_address": "user_identity_email_address",
-                        "user_identity_full_name": "user_identity_full_name",
-                        "user_identity_id": "user_identity_id",
-                        "user_identity_phone_number": "user_identity_phone_number",
                         "workspace_id": "workspace_id",
                       },
                       "ok": true,
@@ -14044,26 +13451,11 @@ service:
                   "response": {
                     "body": {
                       "acs_user": {
-                        "access_schedule": {
-                          "ends_at": "2024-01-15T09:30:00Z",
-                          "starts_at": "2024-01-15T09:30:00Z",
-                        },
                         "acs_system_id": "acs_system_id",
                         "acs_user_id": "acs_user_id",
                         "created_at": "2024-01-15T09:30:00Z",
                         "display_name": "display_name",
-                        "email": "email",
-                        "email_address": "email_address",
-                        "external_type": "pti_user",
-                        "external_type_display_name": "external_type_display_name",
-                        "full_name": "full_name",
-                        "hid_acs_system_id": "hid_acs_system_id",
                         "is_suspended": true,
-                        "phone_number": "phone_number",
-                        "user_identity_email_address": "user_identity_email_address",
-                        "user_identity_full_name": "user_identity_full_name",
-                        "user_identity_id": "user_identity_id",
-                        "user_identity_phone_number": "user_identity_phone_number",
                         "workspace_id": "workspace_id",
                       },
                       "ok": true,
@@ -14118,26 +13510,11 @@ service:
                     "body": {
                       "acs_users": [
                         {
-                          "access_schedule": {
-                            "ends_at": "2024-01-15T09:30:00Z",
-                            "starts_at": "2024-01-15T09:30:00Z",
-                          },
                           "acs_system_id": "acs_system_id",
                           "acs_user_id": "acs_user_id",
                           "created_at": "2024-01-15T09:30:00Z",
                           "display_name": "display_name",
-                          "email": "email",
-                          "email_address": "email_address",
-                          "external_type": "pti_user",
-                          "external_type_display_name": "external_type_display_name",
-                          "full_name": "full_name",
-                          "hid_acs_system_id": "hid_acs_system_id",
                           "is_suspended": true,
-                          "phone_number": "phone_number",
-                          "user_identity_email_address": "user_identity_email_address",
-                          "user_identity_full_name": "user_identity_full_name",
-                          "user_identity_id": "user_identity_id",
-                          "user_identity_phone_number": "user_identity_phone_number",
                           "workspace_id": "workspace_id",
                         },
                       ],
@@ -14216,16 +13593,6 @@ service:
                               "message": "message",
                             },
                           ],
-                          "latch_metadata": {
-                            "accessibility_type": "accessibility_type",
-                            "door_name": "door_name",
-                            "door_type": "door_type",
-                            "is_connected": true,
-                          },
-                          "visionline_metadata": {
-                            "door_category": "entrance",
-                            "door_name": "door_name",
-                          },
                         },
                       ],
                       "ok": true,
@@ -14875,24 +14242,10 @@ service:
               acs_user:
                 acs_user_id: acs_user_id
                 acs_system_id: acs_system_id
-                hid_acs_system_id: hid_acs_system_id
                 workspace_id: workspace_id
                 created_at: '2024-01-15T09:30:00Z'
                 display_name: display_name
-                external_type: pti_user
-                external_type_display_name: external_type_display_name
                 is_suspended: true
-                access_schedule:
-                  starts_at: '2024-01-15T09:30:00Z'
-                  ends_at: '2024-01-15T09:30:00Z'
-                user_identity_id: user_identity_id
-                user_identity_full_name: user_identity_full_name
-                user_identity_email_address: user_identity_email_address
-                user_identity_phone_number: user_identity_phone_number
-                full_name: full_name
-                email: email
-                email_address: email_address
-                phone_number: phone_number
               ok: true
     delete:
       path: /acs/users/delete
@@ -14953,24 +14306,10 @@ service:
               acs_user:
                 acs_user_id: acs_user_id
                 acs_system_id: acs_system_id
-                hid_acs_system_id: hid_acs_system_id
                 workspace_id: workspace_id
                 created_at: '2024-01-15T09:30:00Z'
                 display_name: display_name
-                external_type: pti_user
-                external_type_display_name: external_type_display_name
                 is_suspended: true
-                access_schedule:
-                  starts_at: '2024-01-15T09:30:00Z'
-                  ends_at: '2024-01-15T09:30:00Z'
-                user_identity_id: user_identity_id
-                user_identity_full_name: user_identity_full_name
-                user_identity_email_address: user_identity_email_address
-                user_identity_phone_number: user_identity_phone_number
-                full_name: full_name
-                email: email
-                email_address: email_address
-                phone_number: phone_number
               ok: true
     list:
       path: /acs/users/list
@@ -15008,24 +14347,10 @@ service:
               acs_users:
                 - acs_user_id: acs_user_id
                   acs_system_id: acs_system_id
-                  hid_acs_system_id: hid_acs_system_id
                   workspace_id: workspace_id
                   created_at: '2024-01-15T09:30:00Z'
                   display_name: display_name
-                  external_type: pti_user
-                  external_type_display_name: external_type_display_name
                   is_suspended: true
-                  access_schedule:
-                    starts_at: '2024-01-15T09:30:00Z'
-                    ends_at: '2024-01-15T09:30:00Z'
-                  user_identity_id: user_identity_id
-                  user_identity_full_name: user_identity_full_name
-                  user_identity_email_address: user_identity_email_address
-                  user_identity_phone_number: user_identity_phone_number
-                  full_name: full_name
-                  email: email
-                  email_address: email_address
-                  phone_number: phone_number
               ok: true
     list_accessible_entrances:
       path: /acs/users/list_accessible_entrances
@@ -15063,14 +14388,6 @@ service:
                   errors:
                     - error_code: error_code
                       message: message
-                  latch_metadata:
-                    accessibility_type: accessibility_type
-                    door_name: door_name
-                    door_type: door_type
-                    is_connected: true
-                  visionline_metadata:
-                    door_name: door_name
-                    door_category: entrance
               ok: true
     remove_from_access_group:
       path: /acs/users/remove_from_access_group
@@ -17181,25 +16498,9 @@ service:
                   "response": {
                     "body": {
                       "connected_account": {
-                        "account_type": "account_type",
                         "account_type_display_name": "account_type_display_name",
                         "automatically_manage_new_devices": true,
-                        "connected_account_id": "connected_account_id",
-                        "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "key": "value",
-                        },
-                        "errors": {
-                          "key": "value",
-                        },
-                        "user_identifier": {
-                          "api_url": "api_url",
-                          "email": "email",
-                          "exclusive": true,
-                          "phone": "phone",
-                          "username": "username",
-                        },
-                        "warnings": {
                           "key": "value",
                         },
                       },
@@ -17239,18 +16540,9 @@ service:
                     "body": {
                       "connected_accounts": [
                         {
-                          "account_type": "account_type",
                           "account_type_display_name": "account_type_display_name",
                           "automatically_manage_new_devices": true,
-                          "connected_account_id": "connected_account_id",
-                          "created_at": "2024-01-15T09:30:00Z",
                           "custom_metadata": {
-                            "key": "value",
-                          },
-                          "errors": {
-                            "key": "value",
-                          },
-                          "warnings": {
                             "key": "value",
                           },
                         },
@@ -17303,25 +16595,9 @@ service:
                   "response": {
                     "body": {
                       "connected_account": {
-                        "account_type": "account_type",
                         "account_type_display_name": "account_type_display_name",
                         "automatically_manage_new_devices": true,
-                        "connected_account_id": "connected_account_id",
-                        "created_at": "2024-01-15T09:30:00Z",
                         "custom_metadata": {
-                          "key": "value",
-                        },
-                        "errors": {
-                          "key": "value",
-                        },
-                        "user_identifier": {
-                          "api_url": "api_url",
-                          "email": "email",
-                          "exclusive": true,
-                          "phone": "phone",
-                          "username": "username",
-                        },
-                        "warnings": {
                           "key": "value",
                         },
                       },
@@ -17627,20 +16903,7 @@ service:
           response:
             body:
               connected_account:
-                connected_account_id: connected_account_id
-                created_at: '2024-01-15T09:30:00Z'
-                user_identifier:
-                  username: username
-                  api_url: api_url
-                  email: email
-                  phone: phone
-                  exclusive: true
-                account_type: account_type
                 account_type_display_name: account_type_display_name
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 custom_metadata:
                   key: value
                 automatically_manage_new_devices: true
@@ -17676,14 +16939,7 @@ service:
           response:
             body:
               connected_accounts:
-                - connected_account_id: connected_account_id
-                  created_at: '2024-01-15T09:30:00Z'
-                  account_type: account_type
-                  account_type_display_name: account_type_display_name
-                  errors:
-                    key: value
-                  warnings:
-                    key: value
+                - account_type_display_name: account_type_display_name
                   custom_metadata:
                     key: value
                   automatically_manage_new_devices: true
@@ -17721,20 +16977,7 @@ service:
           response:
             body:
               connected_account:
-                connected_account_id: connected_account_id
-                created_at: '2024-01-15T09:30:00Z'
-                user_identifier:
-                  username: username
-                  api_url: api_url
-                  email: email
-                  phone: phone
-                  exclusive: true
-                account_type: account_type
                 account_type_display_name: account_type_display_name
-                errors:
-                  key: value
-                warnings:
-                  key: value
                 custom_metadata:
                   key: value
                 automatically_manage_new_devices: true
@@ -17818,13 +17061,6 @@ service:
                   "response": {
                     "body": {
                       "device": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -17843,224 +17079,16 @@ service:
                           },
                         ],
                         "is_managed": true,
-                        "location": {
-                          "location_name": "location_name",
-                          "timezone": "timezone",
-                        },
-                        "nickname": "nickname",
                         "properties": {
-                          "_experimental_supported_code_from_access_codes_lengths": [
-                            1.1,
-                          ],
-                          "accessory_keypad": {
-                            "is_connected": true,
-                          },
                           "appearance": {
                             "name": "name",
-                          },
-                          "assa_abloy_credential_service_metadata": {
-                            "endpoints": [
-                              {
-                                "endpoint_id": "endpoint_id",
-                                "is_active": true,
-                              },
-                            ],
-                            "has_active_endpoint": true,
-                          },
-                          "august_metadata": {
-                            "has_keypad": true,
-                            "house_name": "house_name",
-                            "lock_id": "lock_id",
-                            "lock_name": "lock_name",
-                          },
-                          "avigilon_alta_metadata": {
-                            "entry_name": "entry_name",
-                            "entry_relays_total_count": 1.1,
-                            "org_name": "org_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                            "zone_id": 1.1,
-                            "zone_name": "zone_name",
-                          },
-                          "battery": {
-                            "level": 1.1,
-                            "status": "critical",
-                          },
-                          "battery_level": 1.1,
-                          "brivo_metadata": {
-                            "device_name": "device_name",
-                          },
-                          "code_constraints": [
-                            {
-                              "constraint_type": "no_zeros",
-                            },
-                          ],
-                          "controlbyweb_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "currently_triggering_noise_threshold_ids": [
-                            "currently_triggering_noise_threshold_ids",
-                          ],
-                          "door_open": true,
-                          "dormakaba_oracode_metadata": {
-                            "door_id": 1.1,
-                            "door_is_wireless": true,
-                            "door_name": "door_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                          },
-                          "ecobee_metadata": {
-                            "device_name": "device_name",
-                            "ecobee_device_id": "ecobee_device_id",
-                          },
-                          "four_suites_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                            "reclose_delay_in_seconds": 1.1,
-                          },
-                          "genie_metadata": {
-                            "device_name": "device_name",
-                            "door_name": "door_name",
-                          },
-                          "has_direct_power": true,
-                          "has_native_entry_events": true,
-                          "honeywell_resideo_metadata": {
-                            "device_name": "device_name",
-                            "honeywell_resideo_device_id": "honeywell_resideo_device_id",
-                          },
-                          "hubitat_metadata": {
-                            "device_id": "device_id",
-                            "device_label": "device_label",
-                            "device_name": "device_name",
-                          },
-                          "igloo_metadata": {
-                            "bridge_id": "bridge_id",
-                            "device_id": "device_id",
-                          },
-                          "igloohome_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "image_alt_text": "image_alt_text",
-                          "image_url": "image_url",
-                          "keypad_battery": {
-                            "level": 1.1,
-                          },
-                          "kwikset_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "model_number": "model_number",
-                          },
-                          "locked": true,
-                          "lockly_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "manufacturer": "manufacturer",
-                          "max_active_codes_supported": 1.1,
-                          "minut_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "latest_sensor_values": {
-                              "accelerometer_z": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "humidity": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "pressure": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "sound": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "temperature": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                            },
                           },
                           "model": {
                             "display_name": "display_name",
                             "manufacturer_display_name": "manufacturer_display_name",
                           },
                           "name": "name",
-                          "nest_metadata": {
-                            "custom_name": "custom_name",
-                            "device_name": "device_name",
-                            "nest_device_id": "nest_device_id",
-                          },
-                          "noise_level_decibels": 1.1,
-                          "noiseaware_metadata": {
-                            "device_id": "device_id",
-                            "device_model": "indoor",
-                            "device_name": "device_name",
-                            "noise_level_decibel": 1.1,
-                            "noise_level_nrs": 1.1,
-                          },
-                          "nuki_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "offline_access_codes_enabled": true,
                           "online": true,
-                          "online_access_codes_enabled": true,
-                          "salto_metadata": {
-                            "battery_level": "battery_level",
-                            "customer_reference": "customer_reference",
-                            "lock_id": "lock_id",
-                            "lock_type": "lock_type",
-                            "locked_state": "locked_state",
-                          },
-                          "schlage_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "seam_bridge_metadata": {
-                            "device_num": 1.1,
-                            "name": "name",
-                          },
-                          "serial_number": "serial_number",
-                          "smartthings_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "supported_code_lengths": [
-                            1.1,
-                          ],
-                          "supports_accessory_keypad": true,
-                          "supports_backup_access_code_pool": true,
-                          "supports_offline_access_codes": true,
-                          "tedee_metadata": {
-                            "bridge_id": 1.1,
-                            "bridge_name": "bridge_name",
-                            "device_id": 1.1,
-                            "device_model": "device_model",
-                            "device_name": "device_name",
-                            "serial_number": "serial_number",
-                          },
-                          "ttlock_metadata": {
-                            "feature_value": "feature_value",
-                            "lock_alias": "lock_alias",
-                            "lock_id": 1.1,
-                          },
-                          "two_n_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                          },
-                          "wyze_metadata": {
-                            "device_id": "device_id",
-                            "device_info_model": "device_info_model",
-                            "device_name": "device_name",
-                            "product_model": "product_model",
-                            "product_name": "product_name",
-                            "product_type": "product_type",
-                          },
                         },
                         "warnings": [
                           {
@@ -18123,13 +17151,6 @@ service:
                     "body": {
                       "devices": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -18148,7 +17169,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -18869,179 +17889,17 @@ service:
               device:
                 device_id: device_id
                 device_type: akuvox_lock
-                nickname: nickname
                 display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
-                  accessory_keypad:
-                    is_connected: true
                   appearance:
                     name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
-                location:
-                  location_name: location_name
-                  timezone: timezone
                 connected_account_id: connected_account_id
                 workspace_id: workspace_id
                 errors:
@@ -19054,13 +17912,6 @@ service:
                 is_managed: true
                 custom_metadata:
                   key: value
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               ok: true
     list:
       path: /devices/list
@@ -19110,7 +17961,6 @@ service:
               devices:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -19134,13 +17984,6 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
     list_device_providers:
       path: /devices/list_device_providers
@@ -19548,13 +18391,6 @@ service:
                   "response": {
                     "body": {
                       "device": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -19570,25 +18406,12 @@ service:
                         ],
                         "is_managed": true,
                         "properties": {
-                          "accessory_keypad": {
-                            "is_connected": true,
-                          },
-                          "battery": {
-                            "level": 1.1,
-                            "status": "critical",
-                          },
-                          "battery_level": 1.1,
-                          "image_alt_text": "image_alt_text",
-                          "image_url": "image_url",
-                          "manufacturer": "manufacturer",
                           "model": {
                             "display_name": "display_name",
                             "manufacturer_display_name": "manufacturer_display_name",
                           },
                           "name": "name",
-                          "offline_access_codes_enabled": true,
                           "online": true,
-                          "online_access_codes_enabled": true,
                         },
                         "warnings": [
                           {
@@ -19651,13 +18474,6 @@ service:
                     "body": {
                       "devices": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -20215,29 +19031,11 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 is_managed: true
                 properties:
-                  accessory_keypad:
-                    is_connected: true
                   name: name
                   online: true
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               ok: true
     list:
       path: /devices/unmanaged/list
@@ -20305,13 +19103,6 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
     update:
       path: /devices/unmanaged/update
@@ -20370,21 +19161,6 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "event": {
-                        "acs_credential_id": "acs_credential_id",
-                        "acs_system_id": "acs_system_id",
-                        "acs_user_id": "acs_user_id",
-                        "action_attempt_id": "action_attempt_id",
-                        "client_session_id": "client_session_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "device_id": "device_id",
-                        "enrollment_automation_id": "enrollment_automation_id",
-                        "event_id": "event_id",
-                        "event_type": "event_type",
-                        "occurred_at": "2024-01-15T09:30:00Z",
-                        "workspace_id": "workspace_id",
-                      },
-                      "message": "message",
                       "ok": true,
                     },
                   },
@@ -20447,14 +19223,7 @@ service:
                     "body": {
                       "events": [
                         {
-                          "acs_credential_id": "acs_credential_id",
-                          "acs_system_id": "acs_system_id",
-                          "acs_user_id": "acs_user_id",
-                          "action_attempt_id": "action_attempt_id",
-                          "client_session_id": "client_session_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "device_id": "device_id",
-                          "enrollment_automation_id": "enrollment_automation_id",
                           "event_id": "event_id",
                           "event_type": "event_type",
                           "occurred_at": "2024-01-15T09:30:00Z",
@@ -21348,20 +20117,6 @@ service:
         - request: {}
           response:
             body:
-              event:
-                event_id: event_id
-                device_id: device_id
-                action_attempt_id: action_attempt_id
-                acs_credential_id: acs_credential_id
-                acs_user_id: acs_user_id
-                acs_system_id: acs_system_id
-                client_session_id: client_session_id
-                enrollment_automation_id: enrollment_automation_id
-                event_type: event_type
-                workspace_id: workspace_id
-                created_at: '2024-01-15T09:30:00Z'
-                occurred_at: '2024-01-15T09:30:00Z'
-              message: message
               ok: true
     list:
       path: /events/list
@@ -21409,13 +20164,6 @@ service:
             body:
               events:
                 - event_id: event_id
-                  device_id: device_id
-                  action_attempt_id: action_attempt_id
-                  acs_credential_id: acs_credential_id
-                  acs_user_id: acs_user_id
-                  acs_system_id: acs_system_id
-                  client_session_id: client_session_id
-                  enrollment_automation_id: enrollment_automation_id
                   event_type: event_type
                   workspace_id: workspace_id
                   created_at: '2024-01-15T09:30:00Z'
@@ -21449,13 +20197,6 @@ service:
                   "response": {
                     "body": {
                       "device": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -21474,224 +20215,16 @@ service:
                           },
                         ],
                         "is_managed": true,
-                        "location": {
-                          "location_name": "location_name",
-                          "timezone": "timezone",
-                        },
-                        "nickname": "nickname",
                         "properties": {
-                          "_experimental_supported_code_from_access_codes_lengths": [
-                            1.1,
-                          ],
-                          "accessory_keypad": {
-                            "is_connected": true,
-                          },
                           "appearance": {
                             "name": "name",
-                          },
-                          "assa_abloy_credential_service_metadata": {
-                            "endpoints": [
-                              {
-                                "endpoint_id": "endpoint_id",
-                                "is_active": true,
-                              },
-                            ],
-                            "has_active_endpoint": true,
-                          },
-                          "august_metadata": {
-                            "has_keypad": true,
-                            "house_name": "house_name",
-                            "lock_id": "lock_id",
-                            "lock_name": "lock_name",
-                          },
-                          "avigilon_alta_metadata": {
-                            "entry_name": "entry_name",
-                            "entry_relays_total_count": 1.1,
-                            "org_name": "org_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                            "zone_id": 1.1,
-                            "zone_name": "zone_name",
-                          },
-                          "battery": {
-                            "level": 1.1,
-                            "status": "critical",
-                          },
-                          "battery_level": 1.1,
-                          "brivo_metadata": {
-                            "device_name": "device_name",
-                          },
-                          "code_constraints": [
-                            {
-                              "constraint_type": "no_zeros",
-                            },
-                          ],
-                          "controlbyweb_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "currently_triggering_noise_threshold_ids": [
-                            "currently_triggering_noise_threshold_ids",
-                          ],
-                          "door_open": true,
-                          "dormakaba_oracode_metadata": {
-                            "door_id": 1.1,
-                            "door_is_wireless": true,
-                            "door_name": "door_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                          },
-                          "ecobee_metadata": {
-                            "device_name": "device_name",
-                            "ecobee_device_id": "ecobee_device_id",
-                          },
-                          "four_suites_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                            "reclose_delay_in_seconds": 1.1,
-                          },
-                          "genie_metadata": {
-                            "device_name": "device_name",
-                            "door_name": "door_name",
-                          },
-                          "has_direct_power": true,
-                          "has_native_entry_events": true,
-                          "honeywell_resideo_metadata": {
-                            "device_name": "device_name",
-                            "honeywell_resideo_device_id": "honeywell_resideo_device_id",
-                          },
-                          "hubitat_metadata": {
-                            "device_id": "device_id",
-                            "device_label": "device_label",
-                            "device_name": "device_name",
-                          },
-                          "igloo_metadata": {
-                            "bridge_id": "bridge_id",
-                            "device_id": "device_id",
-                          },
-                          "igloohome_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "image_alt_text": "image_alt_text",
-                          "image_url": "image_url",
-                          "keypad_battery": {
-                            "level": 1.1,
-                          },
-                          "kwikset_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "model_number": "model_number",
-                          },
-                          "locked": true,
-                          "lockly_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "manufacturer": "manufacturer",
-                          "max_active_codes_supported": 1.1,
-                          "minut_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "latest_sensor_values": {
-                              "accelerometer_z": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "humidity": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "pressure": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "sound": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "temperature": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                            },
                           },
                           "model": {
                             "display_name": "display_name",
                             "manufacturer_display_name": "manufacturer_display_name",
                           },
                           "name": "name",
-                          "nest_metadata": {
-                            "custom_name": "custom_name",
-                            "device_name": "device_name",
-                            "nest_device_id": "nest_device_id",
-                          },
-                          "noise_level_decibels": 1.1,
-                          "noiseaware_metadata": {
-                            "device_id": "device_id",
-                            "device_model": "indoor",
-                            "device_name": "device_name",
-                            "noise_level_decibel": 1.1,
-                            "noise_level_nrs": 1.1,
-                          },
-                          "nuki_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "offline_access_codes_enabled": true,
                           "online": true,
-                          "online_access_codes_enabled": true,
-                          "salto_metadata": {
-                            "battery_level": "battery_level",
-                            "customer_reference": "customer_reference",
-                            "lock_id": "lock_id",
-                            "lock_type": "lock_type",
-                            "locked_state": "locked_state",
-                          },
-                          "schlage_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "seam_bridge_metadata": {
-                            "device_num": 1.1,
-                            "name": "name",
-                          },
-                          "serial_number": "serial_number",
-                          "smartthings_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "supported_code_lengths": [
-                            1.1,
-                          ],
-                          "supports_accessory_keypad": true,
-                          "supports_backup_access_code_pool": true,
-                          "supports_offline_access_codes": true,
-                          "tedee_metadata": {
-                            "bridge_id": 1.1,
-                            "bridge_name": "bridge_name",
-                            "device_id": 1.1,
-                            "device_model": "device_model",
-                            "device_name": "device_name",
-                            "serial_number": "serial_number",
-                          },
-                          "ttlock_metadata": {
-                            "feature_value": "feature_value",
-                            "lock_alias": "lock_alias",
-                            "lock_id": 1.1,
-                          },
-                          "two_n_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                          },
-                          "wyze_metadata": {
-                            "device_id": "device_id",
-                            "device_info_model": "device_info_model",
-                            "device_name": "device_name",
-                            "product_model": "product_model",
-                            "product_name": "product_name",
-                            "product_type": "product_type",
-                          },
                         },
                         "warnings": [
                           {
@@ -21702,13 +20235,6 @@ service:
                         "workspace_id": "workspace_id",
                       },
                       "lock": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -21727,224 +20253,16 @@ service:
                           },
                         ],
                         "is_managed": true,
-                        "location": {
-                          "location_name": "location_name",
-                          "timezone": "timezone",
-                        },
-                        "nickname": "nickname",
                         "properties": {
-                          "_experimental_supported_code_from_access_codes_lengths": [
-                            1.1,
-                          ],
-                          "accessory_keypad": {
-                            "is_connected": true,
-                          },
                           "appearance": {
                             "name": "name",
-                          },
-                          "assa_abloy_credential_service_metadata": {
-                            "endpoints": [
-                              {
-                                "endpoint_id": "endpoint_id",
-                                "is_active": true,
-                              },
-                            ],
-                            "has_active_endpoint": true,
-                          },
-                          "august_metadata": {
-                            "has_keypad": true,
-                            "house_name": "house_name",
-                            "lock_id": "lock_id",
-                            "lock_name": "lock_name",
-                          },
-                          "avigilon_alta_metadata": {
-                            "entry_name": "entry_name",
-                            "entry_relays_total_count": 1.1,
-                            "org_name": "org_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                            "zone_id": 1.1,
-                            "zone_name": "zone_name",
-                          },
-                          "battery": {
-                            "level": 1.1,
-                            "status": "critical",
-                          },
-                          "battery_level": 1.1,
-                          "brivo_metadata": {
-                            "device_name": "device_name",
-                          },
-                          "code_constraints": [
-                            {
-                              "constraint_type": "no_zeros",
-                            },
-                          ],
-                          "controlbyweb_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "currently_triggering_noise_threshold_ids": [
-                            "currently_triggering_noise_threshold_ids",
-                          ],
-                          "door_open": true,
-                          "dormakaba_oracode_metadata": {
-                            "door_id": 1.1,
-                            "door_is_wireless": true,
-                            "door_name": "door_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                          },
-                          "ecobee_metadata": {
-                            "device_name": "device_name",
-                            "ecobee_device_id": "ecobee_device_id",
-                          },
-                          "four_suites_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                            "reclose_delay_in_seconds": 1.1,
-                          },
-                          "genie_metadata": {
-                            "device_name": "device_name",
-                            "door_name": "door_name",
-                          },
-                          "has_direct_power": true,
-                          "has_native_entry_events": true,
-                          "honeywell_resideo_metadata": {
-                            "device_name": "device_name",
-                            "honeywell_resideo_device_id": "honeywell_resideo_device_id",
-                          },
-                          "hubitat_metadata": {
-                            "device_id": "device_id",
-                            "device_label": "device_label",
-                            "device_name": "device_name",
-                          },
-                          "igloo_metadata": {
-                            "bridge_id": "bridge_id",
-                            "device_id": "device_id",
-                          },
-                          "igloohome_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "image_alt_text": "image_alt_text",
-                          "image_url": "image_url",
-                          "keypad_battery": {
-                            "level": 1.1,
-                          },
-                          "kwikset_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "model_number": "model_number",
-                          },
-                          "locked": true,
-                          "lockly_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "manufacturer": "manufacturer",
-                          "max_active_codes_supported": 1.1,
-                          "minut_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "latest_sensor_values": {
-                              "accelerometer_z": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "humidity": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "pressure": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "sound": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "temperature": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                            },
                           },
                           "model": {
                             "display_name": "display_name",
                             "manufacturer_display_name": "manufacturer_display_name",
                           },
                           "name": "name",
-                          "nest_metadata": {
-                            "custom_name": "custom_name",
-                            "device_name": "device_name",
-                            "nest_device_id": "nest_device_id",
-                          },
-                          "noise_level_decibels": 1.1,
-                          "noiseaware_metadata": {
-                            "device_id": "device_id",
-                            "device_model": "indoor",
-                            "device_name": "device_name",
-                            "noise_level_decibel": 1.1,
-                            "noise_level_nrs": 1.1,
-                          },
-                          "nuki_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "offline_access_codes_enabled": true,
                           "online": true,
-                          "online_access_codes_enabled": true,
-                          "salto_metadata": {
-                            "battery_level": "battery_level",
-                            "customer_reference": "customer_reference",
-                            "lock_id": "lock_id",
-                            "lock_type": "lock_type",
-                            "locked_state": "locked_state",
-                          },
-                          "schlage_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "seam_bridge_metadata": {
-                            "device_num": 1.1,
-                            "name": "name",
-                          },
-                          "serial_number": "serial_number",
-                          "smartthings_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "supported_code_lengths": [
-                            1.1,
-                          ],
-                          "supports_accessory_keypad": true,
-                          "supports_backup_access_code_pool": true,
-                          "supports_offline_access_codes": true,
-                          "tedee_metadata": {
-                            "bridge_id": 1.1,
-                            "bridge_name": "bridge_name",
-                            "device_id": 1.1,
-                            "device_model": "device_model",
-                            "device_name": "device_name",
-                            "serial_number": "serial_number",
-                          },
-                          "ttlock_metadata": {
-                            "feature_value": "feature_value",
-                            "lock_alias": "lock_alias",
-                            "lock_id": 1.1,
-                          },
-                          "two_n_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                          },
-                          "wyze_metadata": {
-                            "device_id": "device_id",
-                            "device_info_model": "device_info_model",
-                            "device_name": "device_name",
-                            "product_model": "product_model",
-                            "product_name": "product_name",
-                            "product_type": "product_type",
-                          },
                         },
                         "warnings": [
                           {
@@ -22007,13 +20325,6 @@ service:
                     "body": {
                       "devices": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -22032,7 +20343,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -22055,13 +20365,6 @@ service:
                       ],
                       "locks": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -22080,7 +20383,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -22710,179 +21012,17 @@ service:
               lock:
                 device_id: device_id
                 device_type: akuvox_lock
-                nickname: nickname
                 display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
-                  accessory_keypad:
-                    is_connected: true
                   appearance:
                     name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
-                location:
-                  location_name: location_name
-                  timezone: timezone
                 connected_account_id: connected_account_id
                 workspace_id: workspace_id
                 errors:
@@ -22895,189 +21035,20 @@ service:
                 is_managed: true
                 custom_metadata:
                   key: value
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               device:
                 device_id: device_id
                 device_type: akuvox_lock
-                nickname: nickname
                 display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
-                  accessory_keypad:
-                    is_connected: true
                   appearance:
                     name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
-                location:
-                  location_name: location_name
-                  timezone: timezone
                 connected_account_id: connected_account_id
                 workspace_id: workspace_id
                 errors:
@@ -23090,13 +21061,6 @@ service:
                 is_managed: true
                 custom_metadata:
                   key: value
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               ok: true
     list:
       path: /locks/list
@@ -23146,7 +21110,6 @@ service:
               locks:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -23170,17 +21133,9 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               devices:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -23204,13 +21159,6 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
     lock_door:
       path: /locks/lock_door
@@ -23564,7 +21512,6 @@ service:
                         "name": "name",
                         "noise_threshold_decibels": 1.1,
                         "noise_threshold_id": "noise_threshold_id",
-                        "noise_threshold_nrs": 1.1,
                         "starts_daily_at": "starts_daily_at",
                       },
                       "ok": true,
@@ -23706,7 +21653,6 @@ service:
                         "name": "name",
                         "noise_threshold_decibels": 1.1,
                         "noise_threshold_id": "noise_threshold_id",
-                        "noise_threshold_nrs": 1.1,
                         "starts_daily_at": "starts_daily_at",
                       },
                       "ok": true,
@@ -23768,7 +21714,6 @@ service:
                           "name": "name",
                           "noise_threshold_decibels": 1.1,
                           "noise_threshold_id": "noise_threshold_id",
-                          "noise_threshold_nrs": 1.1,
                           "starts_daily_at": "starts_daily_at",
                         },
                       ],
@@ -24037,7 +21982,6 @@ service:
                 noise_threshold_id: noise_threshold_id
                 device_id: device_id
                 name: name
-                noise_threshold_nrs: 1.1
                 starts_daily_at: starts_daily_at
                 ends_daily_at: ends_daily_at
                 noise_threshold_decibels: 1.1
@@ -24116,7 +22060,6 @@ service:
                 noise_threshold_id: noise_threshold_id
                 device_id: device_id
                 name: name
-                noise_threshold_nrs: 1.1
                 starts_daily_at: starts_daily_at
                 ends_daily_at: ends_daily_at
                 noise_threshold_decibels: 1.1
@@ -24154,7 +22097,6 @@ service:
                 - noise_threshold_id: noise_threshold_id
                   device_id: device_id
                   name: name
-                  noise_threshold_nrs: 1.1
                   starts_daily_at: starts_daily_at
                   ends_daily_at: ends_daily_at
                   noise_threshold_decibels: 1.1
@@ -24402,13 +22344,6 @@ service:
                       "ok": true,
                       "phones": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -24426,7 +22361,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {},
                           "warnings": [
                             {
@@ -24575,7 +22509,6 @@ service:
               phones:
                 - device_id: device_id
                   device_type: android_phone
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -24591,13 +22524,6 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
   source:
     openapi: ../openapi.json
@@ -24630,13 +22556,6 @@ service:
                     "body": {
                       "ok": true,
                       "phone": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -24654,22 +22573,7 @@ service:
                           },
                         ],
                         "is_managed": true,
-                        "location": {
-                          "location_name": "location_name",
-                          "timezone": "timezone",
-                        },
-                        "nickname": "nickname",
-                        "properties": {
-                          "assa_abloy_credential_service_metadata": {
-                            "endpoints": [
-                              {
-                                "endpoint_id": "endpoint_id",
-                                "is_active": true,
-                              },
-                            ],
-                            "has_active_endpoint": true,
-                          },
-                        },
+                        "properties": {},
                         "warnings": [
                           {
                             "message": "message",
@@ -24899,19 +22803,10 @@ service:
               phone:
                 device_id: device_id
                 device_type: android_phone
-                nickname: nickname
                 display_name: display_name
                 capabilities_supported:
                   - access_code
-                properties:
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                location:
-                  location_name: location_name
-                  timezone: timezone
+                properties: {}
                 workspace_id: workspace_id
                 errors:
                   - error_code: error_code
@@ -24923,13 +22818,6 @@ service:
                 is_managed: true
                 custom_metadata:
                   key: value
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               ok: true
   source:
     openapi: ../openapi.json
@@ -25025,13 +22913,6 @@ service:
                     "body": {
                       "ok": true,
                       "thermostat": {
-                        "can_program_offline_access_codes": true,
-                        "can_program_online_access_codes": true,
-                        "can_remotely_lock": true,
-                        "can_remotely_unlock": true,
-                        "can_simulate_connection": true,
-                        "can_simulate_disconnection": true,
-                        "can_simulate_removal": true,
                         "capabilities_supported": [
                           "access_code",
                         ],
@@ -25050,224 +22931,16 @@ service:
                           },
                         ],
                         "is_managed": true,
-                        "location": {
-                          "location_name": "location_name",
-                          "timezone": "timezone",
-                        },
-                        "nickname": "nickname",
                         "properties": {
-                          "_experimental_supported_code_from_access_codes_lengths": [
-                            1.1,
-                          ],
-                          "accessory_keypad": {
-                            "is_connected": true,
-                          },
                           "appearance": {
                             "name": "name",
-                          },
-                          "assa_abloy_credential_service_metadata": {
-                            "endpoints": [
-                              {
-                                "endpoint_id": "endpoint_id",
-                                "is_active": true,
-                              },
-                            ],
-                            "has_active_endpoint": true,
-                          },
-                          "august_metadata": {
-                            "has_keypad": true,
-                            "house_name": "house_name",
-                            "lock_id": "lock_id",
-                            "lock_name": "lock_name",
-                          },
-                          "avigilon_alta_metadata": {
-                            "entry_name": "entry_name",
-                            "entry_relays_total_count": 1.1,
-                            "org_name": "org_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                            "zone_id": 1.1,
-                            "zone_name": "zone_name",
-                          },
-                          "battery": {
-                            "level": 1.1,
-                            "status": "critical",
-                          },
-                          "battery_level": 1.1,
-                          "brivo_metadata": {
-                            "device_name": "device_name",
-                          },
-                          "code_constraints": [
-                            {
-                              "constraint_type": "no_zeros",
-                            },
-                          ],
-                          "controlbyweb_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "currently_triggering_noise_threshold_ids": [
-                            "currently_triggering_noise_threshold_ids",
-                          ],
-                          "door_open": true,
-                          "dormakaba_oracode_metadata": {
-                            "door_id": 1.1,
-                            "door_is_wireless": true,
-                            "door_name": "door_name",
-                            "site_id": 1.1,
-                            "site_name": "site_name",
-                          },
-                          "ecobee_metadata": {
-                            "device_name": "device_name",
-                            "ecobee_device_id": "ecobee_device_id",
-                          },
-                          "four_suites_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                            "reclose_delay_in_seconds": 1.1,
-                          },
-                          "genie_metadata": {
-                            "device_name": "device_name",
-                            "door_name": "door_name",
-                          },
-                          "has_direct_power": true,
-                          "has_native_entry_events": true,
-                          "honeywell_resideo_metadata": {
-                            "device_name": "device_name",
-                            "honeywell_resideo_device_id": "honeywell_resideo_device_id",
-                          },
-                          "hubitat_metadata": {
-                            "device_id": "device_id",
-                            "device_label": "device_label",
-                            "device_name": "device_name",
-                          },
-                          "igloo_metadata": {
-                            "bridge_id": "bridge_id",
-                            "device_id": "device_id",
-                          },
-                          "igloohome_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "image_alt_text": "image_alt_text",
-                          "image_url": "image_url",
-                          "keypad_battery": {
-                            "level": 1.1,
-                          },
-                          "kwikset_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "model_number": "model_number",
-                          },
-                          "locked": true,
-                          "lockly_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "manufacturer": "manufacturer",
-                          "max_active_codes_supported": 1.1,
-                          "minut_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                            "latest_sensor_values": {
-                              "accelerometer_z": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "humidity": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "pressure": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "sound": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                              "temperature": {
-                                "time": "time",
-                                "value": 1.1,
-                              },
-                            },
                           },
                           "model": {
                             "display_name": "display_name",
                             "manufacturer_display_name": "manufacturer_display_name",
                           },
                           "name": "name",
-                          "nest_metadata": {
-                            "custom_name": "custom_name",
-                            "device_name": "device_name",
-                            "nest_device_id": "nest_device_id",
-                          },
-                          "noise_level_decibels": 1.1,
-                          "noiseaware_metadata": {
-                            "device_id": "device_id",
-                            "device_model": "indoor",
-                            "device_name": "device_name",
-                            "noise_level_decibel": 1.1,
-                            "noise_level_nrs": 1.1,
-                          },
-                          "nuki_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "offline_access_codes_enabled": true,
                           "online": true,
-                          "online_access_codes_enabled": true,
-                          "salto_metadata": {
-                            "battery_level": "battery_level",
-                            "customer_reference": "customer_reference",
-                            "lock_id": "lock_id",
-                            "lock_type": "lock_type",
-                            "locked_state": "locked_state",
-                          },
-                          "schlage_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "seam_bridge_metadata": {
-                            "device_num": 1.1,
-                            "name": "name",
-                          },
-                          "serial_number": "serial_number",
-                          "smartthings_metadata": {
-                            "device_id": "device_id",
-                            "device_name": "device_name",
-                          },
-                          "supported_code_lengths": [
-                            1.1,
-                          ],
-                          "supports_accessory_keypad": true,
-                          "supports_backup_access_code_pool": true,
-                          "supports_offline_access_codes": true,
-                          "tedee_metadata": {
-                            "bridge_id": 1.1,
-                            "bridge_name": "bridge_name",
-                            "device_id": 1.1,
-                            "device_model": "device_model",
-                            "device_name": "device_name",
-                            "serial_number": "serial_number",
-                          },
-                          "ttlock_metadata": {
-                            "feature_value": "feature_value",
-                            "lock_alias": "lock_alias",
-                            "lock_id": 1.1,
-                          },
-                          "two_n_metadata": {
-                            "device_id": 1.1,
-                            "device_name": "device_name",
-                          },
-                          "wyze_metadata": {
-                            "device_id": "device_id",
-                            "device_info_model": "device_info_model",
-                            "device_name": "device_name",
-                            "product_model": "product_model",
-                            "product_name": "product_name",
-                            "product_type": "product_type",
-                          },
                         },
                         "warnings": [
                           {
@@ -25462,13 +23135,6 @@ service:
                       "ok": true,
                       "thermostats": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -25487,7 +23153,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -26352,179 +24017,17 @@ service:
               thermostat:
                 device_id: device_id
                 device_type: akuvox_lock
-                nickname: nickname
                 display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
-                  accessory_keypad:
-                    is_connected: true
                   appearance:
                     name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
-                location:
-                  location_name: location_name
-                  timezone: timezone
                 connected_account_id: connected_account_id
                 workspace_id: workspace_id
                 errors:
@@ -26537,13 +24040,6 @@ service:
                 is_managed: true
                 custom_metadata:
                   key: value
-                can_remotely_unlock: true
-                can_remotely_lock: true
-                can_program_offline_access_codes: true
-                can_program_online_access_codes: true
-                can_simulate_removal: true
-                can_simulate_connection: true
-                can_simulate_disconnection: true
               ok: true
     heat:
       path: /thermostats/heat
@@ -26677,7 +24173,6 @@ service:
               thermostats:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -26701,13 +24196,6 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
     'off':
       path: /thermostats/off
@@ -26849,21 +24337,9 @@ service:
                   "response": {
                     "body": {
                       "climate_setting_schedule": {
-                        "automatic_cooling_enabled": true,
-                        "automatic_heating_enabled": true,
                         "climate_setting_schedule_id": "climate_setting_schedule_id",
-                        "cooling_set_point_celsius": 1.1,
-                        "cooling_set_point_fahrenheit": 1.1,
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "heating_set_point_celsius": 1.1,
-                        "heating_set_point_fahrenheit": 1.1,
-                        "hvac_mode_setting": "off",
-                        "manual_override_allowed": true,
-                        "name": "name",
                         "schedule_ends_at": "schedule_ends_at",
                         "schedule_starts_at": "schedule_starts_at",
                         "schedule_type": "time_bound",
@@ -26974,21 +24450,9 @@ service:
                   "response": {
                     "body": {
                       "climate_setting_schedule": {
-                        "automatic_cooling_enabled": true,
-                        "automatic_heating_enabled": true,
                         "climate_setting_schedule_id": "climate_setting_schedule_id",
-                        "cooling_set_point_celsius": 1.1,
-                        "cooling_set_point_fahrenheit": 1.1,
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "heating_set_point_celsius": 1.1,
-                        "heating_set_point_fahrenheit": 1.1,
-                        "hvac_mode_setting": "off",
-                        "manual_override_allowed": true,
-                        "name": "name",
                         "schedule_ends_at": "schedule_ends_at",
                         "schedule_starts_at": "schedule_starts_at",
                         "schedule_type": "time_bound",
@@ -27056,21 +24520,9 @@ service:
                     "body": {
                       "climate_setting_schedules": [
                         {
-                          "automatic_cooling_enabled": true,
-                          "automatic_heating_enabled": true,
                           "climate_setting_schedule_id": "climate_setting_schedule_id",
-                          "cooling_set_point_celsius": 1.1,
-                          "cooling_set_point_fahrenheit": 1.1,
                           "created_at": "2024-01-15T09:30:00Z",
                           "device_id": "device_id",
-                          "errors": {
-                            "key": "value",
-                          },
-                          "heating_set_point_celsius": 1.1,
-                          "heating_set_point_fahrenheit": 1.1,
-                          "hvac_mode_setting": "off",
-                          "manual_override_allowed": true,
-                          "name": "name",
                           "schedule_ends_at": "schedule_ends_at",
                           "schedule_starts_at": "schedule_starts_at",
                           "schedule_type": "time_bound",
@@ -27130,21 +24582,9 @@ service:
                   "response": {
                     "body": {
                       "climate_setting_schedule": {
-                        "automatic_cooling_enabled": true,
-                        "automatic_heating_enabled": true,
                         "climate_setting_schedule_id": "climate_setting_schedule_id",
-                        "cooling_set_point_celsius": 1.1,
-                        "cooling_set_point_fahrenheit": 1.1,
                         "created_at": "2024-01-15T09:30:00Z",
                         "device_id": "device_id",
-                        "errors": {
-                          "key": "value",
-                        },
-                        "heating_set_point_celsius": 1.1,
-                        "heating_set_point_fahrenheit": 1.1,
-                        "hvac_mode_setting": "off",
-                        "manual_override_allowed": true,
-                        "name": "name",
                         "schedule_ends_at": "schedule_ends_at",
                         "schedule_starts_at": "schedule_starts_at",
                         "schedule_type": "time_bound",
@@ -27376,20 +24816,9 @@ service:
                 climate_setting_schedule_id: climate_setting_schedule_id
                 schedule_type: time_bound
                 device_id: device_id
-                name: name
                 schedule_starts_at: schedule_starts_at
                 schedule_ends_at: schedule_ends_at
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                automatic_heating_enabled: true
-                automatic_cooling_enabled: true
-                hvac_mode_setting: 'off'
-                cooling_set_point_celsius: 1.1
-                heating_set_point_celsius: 1.1
-                cooling_set_point_fahrenheit: 1.1
-                heating_set_point_fahrenheit: 1.1
-                manual_override_allowed: true
               ok: true
     delete:
       path: /thermostats/climate_setting_schedules/delete
@@ -27454,20 +24883,9 @@ service:
                 climate_setting_schedule_id: climate_setting_schedule_id
                 schedule_type: time_bound
                 device_id: device_id
-                name: name
                 schedule_starts_at: schedule_starts_at
                 schedule_ends_at: schedule_ends_at
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                automatic_heating_enabled: true
-                automatic_cooling_enabled: true
-                hvac_mode_setting: 'off'
-                cooling_set_point_celsius: 1.1
-                heating_set_point_celsius: 1.1
-                cooling_set_point_fahrenheit: 1.1
-                heating_set_point_fahrenheit: 1.1
-                manual_override_allowed: true
               ok: true
     list:
       path: /thermostats/climate_setting_schedules/list
@@ -27502,20 +24920,9 @@ service:
                 - climate_setting_schedule_id: climate_setting_schedule_id
                   schedule_type: time_bound
                   device_id: device_id
-                  name: name
                   schedule_starts_at: schedule_starts_at
                   schedule_ends_at: schedule_ends_at
                   created_at: '2024-01-15T09:30:00Z'
-                  errors:
-                    key: value
-                  automatic_heating_enabled: true
-                  automatic_cooling_enabled: true
-                  hvac_mode_setting: 'off'
-                  cooling_set_point_celsius: 1.1
-                  heating_set_point_celsius: 1.1
-                  cooling_set_point_fahrenheit: 1.1
-                  heating_set_point_fahrenheit: 1.1
-                  manual_override_allowed: true
               ok: true
     update:
       path: /thermostats/climate_setting_schedules/update
@@ -27560,20 +24967,9 @@ service:
                 climate_setting_schedule_id: climate_setting_schedule_id
                 schedule_type: time_bound
                 device_id: device_id
-                name: name
                 schedule_starts_at: schedule_starts_at
                 schedule_ends_at: schedule_ends_at
                 created_at: '2024-01-15T09:30:00Z'
-                errors:
-                  key: value
-                automatic_heating_enabled: true
-                automatic_cooling_enabled: true
-                hvac_mode_setting: 'off'
-                cooling_set_point_celsius: 1.1
-                heating_set_point_celsius: 1.1
-                cooling_set_point_fahrenheit: 1.1
-                heating_set_point_fahrenheit: 1.1
-                manual_override_allowed: true
               ok: true
   source:
     openapi: ../openapi.json
@@ -27966,13 +25362,6 @@ service:
                     "body": {
                       "accessible_devices": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -27991,7 +25380,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -28014,13 +25402,6 @@ service:
                       ],
                       "devices": [
                         {
-                          "can_program_offline_access_codes": true,
-                          "can_program_online_access_codes": true,
-                          "can_remotely_lock": true,
-                          "can_remotely_unlock": true,
-                          "can_simulate_connection": true,
-                          "can_simulate_disconnection": true,
-                          "can_simulate_removal": true,
                           "capabilities_supported": [
                             "access_code",
                           ],
@@ -28039,7 +25420,6 @@ service:
                             },
                           ],
                           "is_managed": true,
-                          "nickname": "nickname",
                           "properties": {
                             "appearance": {
                               "name": "name",
@@ -28115,10 +25495,6 @@ service:
                       "acs_systems": [
                         {
                           "acs_system_id": "acs_system_id",
-                          "can_add_acs_users_to_acs_access_groups": true,
-                          "can_automate_enrollment": true,
-                          "can_create_acs_access_groups": true,
-                          "can_remove_acs_users_from_acs_access_groups": true,
                           "connected_account_ids": [
                             "connected_account_ids",
                           ],
@@ -28130,13 +25506,9 @@ service:
                               "message": "errors",
                             },
                           ],
-                          "external_type": "pti_site",
-                          "external_type_display_name": "external_type_display_name",
                           "image_alt_text": "image_alt_text",
                           "image_url": "image_url",
                           "name": "name",
-                          "system_type": "pti_site",
-                          "system_type_display_name": "system_type_display_name",
                           "warnings": [
                             {},
                           ],
@@ -28197,26 +25569,11 @@ service:
                     "body": {
                       "acs_users": [
                         {
-                          "access_schedule": {
-                            "ends_at": "2024-01-15T09:30:00Z",
-                            "starts_at": "2024-01-15T09:30:00Z",
-                          },
                           "acs_system_id": "acs_system_id",
                           "acs_user_id": "acs_user_id",
                           "created_at": "2024-01-15T09:30:00Z",
                           "display_name": "display_name",
-                          "email": "email",
-                          "email_address": "email_address",
-                          "external_type": "pti_user",
-                          "external_type_display_name": "external_type_display_name",
-                          "full_name": "full_name",
-                          "hid_acs_system_id": "hid_acs_system_id",
                           "is_suspended": true,
-                          "phone_number": "phone_number",
-                          "user_identity_email_address": "user_identity_email_address",
-                          "user_identity_full_name": "user_identity_full_name",
-                          "user_identity_id": "user_identity_id",
-                          "user_identity_phone_number": "user_identity_phone_number",
                           "workspace_id": "workspace_id",
                         },
                       ],
@@ -28984,7 +26341,6 @@ service:
               devices:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -29008,17 +26364,9 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               accessible_devices:
                 - device_id: device_id
                   device_type: akuvox_lock
-                  nickname: nickname
                   display_name: display_name
                   capabilities_supported:
                     - access_code
@@ -29042,13 +26390,6 @@ service:
                   is_managed: true
                   custom_metadata:
                     key: value
-                  can_remotely_unlock: true
-                  can_remotely_lock: true
-                  can_program_offline_access_codes: true
-                  can_program_online_access_codes: true
-                  can_simulate_removal: true
-                  can_simulate_connection: true
-                  can_simulate_disconnection: true
               ok: true
     list_acs_systems:
       path: /user_identities/list_acs_systems
@@ -29080,10 +26421,6 @@ service:
             body:
               acs_systems:
                 - acs_system_id: acs_system_id
-                  external_type: pti_site
-                  external_type_display_name: external_type_display_name
-                  system_type: pti_site
-                  system_type_display_name: system_type_display_name
                   name: name
                   created_at: '2024-01-15T09:30:00Z'
                   workspace_id: workspace_id
@@ -29097,10 +26434,6 @@ service:
                       message: errors
                   warnings:
                     - {}
-                  can_automate_enrollment: true
-                  can_create_acs_access_groups: true
-                  can_remove_acs_users_from_acs_access_groups: true
-                  can_add_acs_users_to_acs_access_groups: true
               ok: true
     list_acs_users:
       path: /user_identities/list_acs_users
@@ -29133,24 +26466,10 @@ service:
               acs_users:
                 - acs_user_id: acs_user_id
                   acs_system_id: acs_system_id
-                  hid_acs_system_id: hid_acs_system_id
                   workspace_id: workspace_id
                   created_at: '2024-01-15T09:30:00Z'
                   display_name: display_name
-                  external_type: pti_user
-                  external_type_display_name: external_type_display_name
                   is_suspended: true
-                  access_schedule:
-                    starts_at: '2024-01-15T09:30:00Z'
-                    ends_at: '2024-01-15T09:30:00Z'
-                  user_identity_id: user_identity_id
-                  user_identity_full_name: user_identity_full_name
-                  user_identity_email_address: user_identity_email_address
-                  user_identity_phone_number: user_identity_phone_number
-                  full_name: full_name
-                  email: email
-                  email_address: email_address
-                  phone_number: phone_number
               ok: true
     remove_acs_user:
       path: /user_identities/remove_acs_user
@@ -29874,10 +27193,6 @@ service:
                     "body": {
                       "ok": true,
                       "webhook": {
-                        "event_types": [
-                          "event_types",
-                        ],
-                        "secret": "secret",
                         "url": "url",
                         "webhook_id": "webhook_id",
                       },
@@ -29978,10 +27293,6 @@ service:
                     "body": {
                       "ok": true,
                       "webhook": {
-                        "event_types": [
-                          "event_types",
-                        ],
-                        "secret": "secret",
                         "url": "url",
                         "webhook_id": "webhook_id",
                       },
@@ -30028,10 +27339,6 @@ service:
                       "ok": true,
                       "webhooks": [
                         {
-                          "event_types": [
-                            "event_types",
-                          ],
-                          "secret": "secret",
                           "url": "url",
                           "webhook_id": "webhook_id",
                         },
@@ -30227,9 +27534,6 @@ service:
               webhook:
                 webhook_id: webhook_id
                 url: url
-                event_types:
-                  - event_types
-                secret: secret
               ok: true
     delete:
       path: /webhooks/delete
@@ -30284,9 +27588,6 @@ service:
               webhook:
                 webhook_id: webhook_id
                 url: url
-                event_types:
-                  - event_types
-                secret: secret
               ok: true
     list:
       path: /webhooks/list
@@ -30308,9 +27609,6 @@ service:
               webhooks:
                 - webhook_id: webhook_id
                   url: url
-                  event_types:
-                    - event_types
-                  secret: secret
               ok: true
     update:
       path: /webhooks/update

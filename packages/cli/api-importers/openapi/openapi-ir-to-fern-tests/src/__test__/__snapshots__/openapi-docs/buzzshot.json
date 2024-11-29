@@ -628,18 +628,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "hidden": true,
-                          "id": 1,
-                          "name": "name",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -669,38 +658,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z",
-                          },
-                          "date": "date",
-                          "extra_fields": [
-                            {
-                              "key": "key",
-                              "present": true,
-                            },
-                          ],
-                          "group": "group",
-                          "id": 1,
-                          "name": "name",
-                          "photos": [
-                            {
-                              "photo": "photo",
-                            },
-                          ],
-                          "room": "room",
-                          "start_at": "2024-01-15T09:30:00Z",
-                          "time": "time",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -746,55 +704,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "date": "date",
-                          "games": [
-                            {
-                              "complete": {
-                                "completed_at": "2024-01-15T09:30:00Z",
-                              },
-                              "date": "date",
-                              "extra_fields": [
-                                {
-                                  "key": "key",
-                                  "present": true,
-                                },
-                              ],
-                              "time": "time",
-                            },
-                          ],
-                          "id": 1,
-                          "is_event": true,
-                          "name": "name",
-                          "photos": [
-                            {
-                              "photo": "photo",
-                            },
-                          ],
-                          "players": [
-                            {
-                              "email": "email",
-                              "extra_fields": [
-                                {
-                                  "key": "key",
-                                  "present": true,
-                                },
-                              ],
-                              "phone": "phone",
-                            },
-                          ],
-                          "start_at": "2024-01-15T09:30:00Z",
-                          "time": "time",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -832,18 +742,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "hidden": true,
-                          "id": 1,
-                          "name": "name",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -873,23 +772,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "original_image": "original_image",
-                          "processed": [
-                            {
-                              "photo": "photo",
-                            },
-                          ],
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -919,29 +802,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?page=4",
-                      "previous": "http://api.example.org/accounts/?page=2",
-                      "results": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "email": "email",
-                          "extra_fields": [
-                            {
-                              "key": "key",
-                              "present": true,
-                            },
-                          ],
-                          "first_name": "first_name",
-                          "id": 1,
-                          "last_name": "last_name",
-                          "marketing_email_allowed": true,
-                          "phone": "phone",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -975,8 +836,6 @@
                   },
                   "response": {
                     "body": {
-                      "hidden": true,
-                      "id": 1,
                       "name": "name",
                     },
                   },
@@ -1009,7 +868,6 @@
                   },
                   "response": {
                     "body": {
-                      "added_at": "2024-01-15T09:30:00Z",
                       "complete": {
                         "completed_at": "2024-01-15T09:30:00Z",
                         "completion_time": 1,
@@ -1021,28 +879,13 @@
                       "extra_fields": [
                         {
                           "key": "key",
-                          "label": "label",
                           "present": true,
                           "value": {
                             "key": "value",
                           },
                         },
                       ],
-                      "group": "group",
-                      "id": 1,
-                      "name": "name",
-                      "photos": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "photo": "photo",
-                          "processed_image": "processed_image",
-                          "ready": "ready",
-                        },
-                      ],
-                      "room": "room",
-                      "start_at": "2024-01-15T09:30:00Z",
                       "time": "time",
-                      "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1095,44 +938,9 @@
                   },
                   "response": {
                     "body": {
-                      "added_at": "2024-01-15T09:30:00Z",
                       "date": "date",
-                      "games": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z",
-                          },
-                          "date": "date",
-                          "extra_fields": [
-                            {
-                              "key": "key",
-                              "present": true,
-                            },
-                          ],
-                          "id": 1,
-                          "name": "name",
-                          "room": "room",
-                          "start_at": "2024-01-15T09:30:00Z",
-                          "time": "time",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "id": 1,
-                      "is_event": true,
-                      "name": "name",
-                      "photos": [
-                        {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "game": "game",
-                          "photo": "photo",
-                          "processed_image": "processed_image",
-                          "ready": "ready",
-                        },
-                      ],
                       "players": [
                         {
-                          "added_at": "2024-01-15T09:30:00Z",
                           "email": "email",
                           "extra_fields": [
                             {
@@ -1140,17 +948,10 @@
                               "present": true,
                             },
                           ],
-                          "first_name": "first_name",
-                          "last_name": "last_name",
                           "phone": "phone",
-                          "player": "player",
-                          "signature": "signature",
-                          "updated_at": "2024-01-15T09:30:00Z",
                         },
                       ],
-                      "start_at": "2024-01-15T09:30:00Z",
                       "time": "time",
-                      "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1195,8 +996,6 @@
                   },
                   "response": {
                     "body": {
-                      "hidden": true,
-                      "id": 1,
                       "name": "name",
                     },
                   },
@@ -1229,17 +1028,10 @@
                   },
                   "response": {
                     "body": {
-                      "added_at": "2024-01-15T09:30:00Z",
-                      "id": "id",
                       "original_image": "original_image",
                       "processed": [
                         {
-                          "added_at": "2024-01-15T09:30:00Z",
-                          "game": "game",
-                          "group": "group",
                           "photo": "photo",
-                          "processed_image": "processed_image",
-                          "ready": "ready",
                         },
                       ],
                     },
@@ -1273,24 +1065,17 @@
                   },
                   "response": {
                     "body": {
-                      "added_at": "2024-01-15T09:30:00Z",
                       "email": "email",
                       "extra_fields": [
                         {
                           "key": "key",
-                          "label": "label",
                           "present": true,
                           "value": {
                             "key": "value",
                           },
                         },
                       ],
-                      "first_name": "first_name",
-                      "id": 1,
-                      "last_name": "last_name",
-                      "marketing_email_allowed": true,
                       "phone": "phone",
-                      "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1601,14 +1386,7 @@ service:
         type: ListAccountsResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: 1
-                  name: name
-                  hidden: true
+            body: {}
     retrieveAccount:
       path: /api/v2/accounts/{id}/
       method: GET
@@ -1628,9 +1406,7 @@ service:
             id: id
           response:
             body:
-              id: 1
               name: name
-              hidden: true
     listGames:
       path: /api/v2/games/
       method: GET
@@ -1661,27 +1437,7 @@ service:
         type: ListGamesResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: 1
-                  added_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  date: date
-                  time: time
-                  start_at: '2024-01-15T09:30:00Z'
-                  group: group
-                  room: room
-                  photos:
-                    - photo: photo
-                  extra_fields:
-                    - key: key
-                      present: true
-                  complete:
-                    completed_at: '2024-01-15T09:30:00Z'
+            body: {}
     retrieveGame:
       path: /api/v2/games/{id}/
       method: GET
@@ -1716,23 +1472,10 @@ service:
             id: id
           response:
             body:
-              id: 1
-              added_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              name: name
               date: date
               time: time
-              start_at: '2024-01-15T09:30:00Z'
-              group: group
-              room: room
-              photos:
-                - added_at: '2024-01-15T09:30:00Z'
-                  photo: photo
-                  processed_image: processed_image
-                  ready: ready
               extra_fields:
                 - key: key
-                  label: label
                   value:
                     key: value
                   present: true
@@ -1766,35 +1509,7 @@ service:
         type: ListGroupsResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: 1
-                  added_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  is_event: true
-                  name: name
-                  date: date
-                  time: time
-                  start_at: '2024-01-15T09:30:00Z'
-                  games:
-                    - date: date
-                      time: time
-                      extra_fields:
-                        - key: key
-                          present: true
-                      complete:
-                        completed_at: '2024-01-15T09:30:00Z'
-                  players:
-                    - email: email
-                      phone: phone
-                      extra_fields:
-                        - key: key
-                          present: true
-                  photos:
-                    - photo: photo
+            body: {}
     retrieveGroup:
       path: /api/v2/groups/{id}/
       method: GET
@@ -1823,46 +1538,14 @@ service:
             id: id
           response:
             body:
-              id: 1
-              added_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              is_event: true
-              name: name
               date: date
               time: time
-              start_at: '2024-01-15T09:30:00Z'
-              games:
-                - id: 1
-                  added_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  date: date
-                  time: time
-                  start_at: '2024-01-15T09:30:00Z'
-                  room: room
-                  extra_fields:
-                    - key: key
-                      present: true
-                  complete:
-                    completed_at: '2024-01-15T09:30:00Z'
               players:
-                - added_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  player: player
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
+                - email: email
                   phone: phone
                   extra_fields:
                     - key: key
                       present: true
-                  signature: signature
-              photos:
-                - added_at: '2024-01-15T09:30:00Z'
-                  game: game
-                  photo: photo
-                  processed_image: processed_image
-                  ready: ready
     listPlayers:
       path: /api/v2/players/
       method: GET
@@ -1881,22 +1564,7 @@ service:
         type: ListPlayersResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: 1
-                  added_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
-                  phone: phone
-                  extra_fields:
-                    - key: key
-                      present: true
-                  marketing_email_allowed: true
+            body: {}
     retrievePlayer:
       path: /api/v2/players/{id}/
       method: GET
@@ -1916,20 +1584,13 @@ service:
             id: id
           response:
             body:
-              id: 1
-              added_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              first_name: first_name
-              last_name: last_name
               email: email
               phone: phone
               extra_fields:
                 - key: key
-                  label: label
                   value:
                     key: value
                   present: true
-              marketing_email_allowed: true
     listLocations:
       path: /api/v2/rooms/
       method: GET
@@ -1948,14 +1609,7 @@ service:
         type: ListLocationsResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: 1
-                  name: name
-                  hidden: true
+            body: {}
     retrieveLocation:
       path: /api/v2/rooms/{id}/
       method: GET
@@ -1975,9 +1629,7 @@ service:
             id: id
           response:
             body:
-              id: 1
               name: name
-              hidden: true
     listPhotos:
       path: /api/v2/photos/
       method: GET
@@ -1996,16 +1648,7 @@ service:
         type: ListPhotosResponse
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - id: id
-                  added_at: '2024-01-15T09:30:00Z'
-                  original_image: original_image
-                  processed:
-                    - photo: photo
+            body: {}
     retrievePhoto:
       path: /api/v2/photos/{photo_id}/
       method: GET
@@ -2025,16 +1668,9 @@ service:
             photo_id: photo_id
           response:
             body:
-              id: id
-              added_at: '2024-01-15T09:30:00Z'
               original_image: original_image
               processed:
-                - added_at: '2024-01-15T09:30:00Z'
-                  game: game
-                  group: group
-                  photo: photo
-                  processed_image: processed_image
-                  ready: ready
+                - photo: photo
   source:
     openapi: ../openapi.yml
 ",

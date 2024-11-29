@@ -2038,8 +2038,6 @@ give access to details and data from the requesting user.",
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -2162,8 +2160,6 @@ give access to details and data from the requesting user.",
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -2233,8 +2229,6 @@ give access to details and data from the requesting user.",
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -2918,8 +2912,6 @@ service:
                     username: tmcw
               links:
                 self: self
-                prev: prev
-                next: next
     comments:
       path: /v1/me/comments
       method: GET
@@ -2973,8 +2965,6 @@ service:
                     privacy: public
               links:
                 self: self
-                prev: prev
-                next: next
     references:
       path: /v1/me/references
       method: GET
@@ -3021,8 +3011,6 @@ service:
                   referencedAt: '2024-01-15T09:30:00Z'
               links:
                 self: self
-                prev: prev
-                next: next
   source:
     openapi: ../openapi.yml
   display-name: me
@@ -3080,8 +3068,6 @@ imports:
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -3225,8 +3211,6 @@ service:
                     username: tmcw
               links:
                 self: self
-                prev: prev
-                next: next
   source:
     openapi: ../openapi.yml
   display-name: search
@@ -3317,7 +3301,6 @@ docs: Search
                       "columns": [
                         "columns",
                       ],
-                      "lastInsertRowid": "lastInsertRowid",
                       "rows": [
                         [
                           {
@@ -3347,7 +3330,6 @@ docs: Search
                       "columns": [
                         "columns",
                       ],
-                      "lastInsertRowid": "lastInsertRowid",
                       "rows": [
                         [
                           {
@@ -3587,7 +3569,6 @@ service:
               rows:
                 - - key: value
               rowsAffected: 1.1
-              lastInsertRowid: lastInsertRowid
         - name: example2
           request:
             statement:
@@ -3603,7 +3584,6 @@ service:
               rows:
                 - - key: value
               rowsAffected: 1.1
-              lastInsertRowid: lastInsertRowid
     batch:
       path: /v1/sqlite/batch
       method: POST
@@ -3729,8 +3709,6 @@ docs: SQLite
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -3887,8 +3865,6 @@ service:
                     username: tmcw
               links:
                 self: self
-                prev: prev
-                next: next
   source:
     openapi: ../openapi.yml
   display-name: users
@@ -4488,8 +4464,6 @@ let you get, create, and run vals.",
                         },
                       ],
                       "links": {
-                        "next": "next",
-                        "prev": "prev",
                         "self": "self",
                       },
                     },
@@ -5386,8 +5360,6 @@ service:
                   createdAt: '2024-01-15T09:30:00Z'
               links:
                 self: self
-                prev: prev
-                next: next
     createVersion:
       path: /v1/vals/{val_id}/versions
       method: POST

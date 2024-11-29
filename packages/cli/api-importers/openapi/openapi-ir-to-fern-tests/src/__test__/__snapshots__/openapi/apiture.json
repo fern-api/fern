@@ -23,17 +23,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -60,17 +49,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -109,17 +87,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -146,17 +113,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -177,17 +133,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -214,17 +159,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -245,17 +179,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -282,17 +205,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -351,17 +263,6 @@ The `attributes` object in the error may have the properties defined by the [`re
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -388,17 +289,6 @@ This error response may have one of the following `type` values:
                   "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
                   "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
                   "occurredAt": "2022-04-25T12:42:21Z",
-                  "problems": [
-                    {
-                      "detail": "No account exists at the given account_url",
-                      "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
-                      "instance": "https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617",
-                      "occurredAt": "2022-04-25T12:42:21Z",
-                      "status": 422,
-                      "title": "Account Not Found",
-                      "type": "https://production.api.apiture.com/errors/accountNotFound/v1.0.0",
-                    },
-                  ],
                   "status": 422,
                   "title": "Account Not Found",
                   "type": "https://production.api.apiture.com/errors/noSuchAccount/v1.0.0",
@@ -3050,15 +2940,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   UnauthorizedError:
     status-code: 401
     type: ProblemResponse
@@ -3126,15 +3007,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   ForbiddenError:
     status-code: 403
     type: ProblemResponse
@@ -3174,15 +3046,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   UnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
@@ -3207,15 +3070,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
       - value:
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           type: https://production.api.apiture.com/errors/invalidAccountId/v1.0.0
@@ -3241,15 +3095,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   TooManyRequestsError:
     status-code: 429
     type: ProblemResponse
@@ -3274,15 +3119,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   ServiceUnavailableError:
     status-code: 503
     type: ProblemResponse
@@ -3299,15 +3135,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   PreconditionFailedError:
     status-code: 412
     type: ProblemResponse
@@ -3332,15 +3159,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   GatewayTimeoutError:
     status-code: 504
     type: ProblemResponse
@@ -3365,15 +3183,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
   ConflictError:
     status-code: 409
     type: ProblemResponse
@@ -3397,15 +3206,6 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
           id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
           occurredAt: '2022-04-25T12:42:21Z'
-          problems:
-            - type: https://production.api.apiture.com/errors/accountNotFound/v1.0.0
-              title: Account Not Found
-              status: 422
-              detail: No account exists at the given account_url
-              instance: >-
-                https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
-              id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
-              occurredAt: '2022-04-25T12:42:21Z'
 types:
   AccountIds:
     docs: An array of account IDs.
@@ -6124,8 +5924,6 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                       ],
                       "limit": 1,
                       "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
-                      "primaryAccountId": "primaryAccountId",
-                      "start": "start",
                     },
                   },
                 },
@@ -6343,7 +6141,6 @@ service:
               limit: 1
               nextPage_url: >-
                 https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view
-              start: start
               items:
                 - id: bf23bc970b78d27691e8
                   label: Payroll Checking *1008
@@ -6382,7 +6179,6 @@ service:
                     viewCards: true
                     manageCards: false
               count: 6
-              primaryAccountId: primaryAccountId
     getAccount:
       path: /accounts/{accountId}
       method: GET
@@ -6695,98 +6491,66 @@ This information provides hints to clients, allowing bank customers to select tr
                       "accuracyEndsOn": "2026-12-31T00:00:00.000Z",
                       "restrictedDates": [
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-01",
                           "reason": "pastDate",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-02",
                           "reason": "pastDate",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-03",
                           "reason": "pastDate",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-04",
                           "reason": "pastDate",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-05",
                           "reason": "pastCutoffTime",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-06",
                           "reason": "riskRestricted",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-07",
                           "reason": "riskRestricted",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-08",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-09",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-10",
                           "reason": "holiday",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-15",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-16",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-22",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-23",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-29",
                           "reason": "closure",
                         },
                         {
-                          "creditOn": "2022-07-05",
-                          "debitOn": "2022-07-05",
                           "occursOn": "2022-10-30",
                           "reason": "closure",
                         },
@@ -6983,33 +6747,15 @@ This information provides hints to clients, allowing bank customers to select tr
                       "institution": {
                         "address": {
                           "address1": "239 West Princess Ave.",
-                          "address2": "Building 14, Suite 1500",
                           "countryCode": "US",
                           "locality": "Andalasia",
                           "postalCode": "28407",
                           "regionCode": "NC",
-                          "regionName": "NC",
                         },
                         "locator": "503000196",
                         "locatorType": "abaRoutingNumber",
                         "name": "First Bank of Andalasia",
                       },
-                      "intermediaryInstitutions": [
-                        {
-                          "address": {
-                            "address1": "239 West Princess Ave.",
-                            "address2": "Building 14, Suite 1500",
-                            "countryCode": "US",
-                            "locality": "Andalasia",
-                            "postalCode": "28407",
-                            "regionCode": "NC",
-                            "regionName": "NC",
-                          },
-                          "locator": "503000196",
-                          "locatorType": "abaRoutingNumber",
-                          "name": "First Bank of Andalasia",
-                        },
-                      ],
                     },
                   },
                 },
@@ -7135,26 +6881,12 @@ service:
                 name: First Bank of Andalasia
                 address:
                   address1: 239 West Princess Ave.
-                  address2: Building 14, Suite 1500
                   locality: Andalasia
                   countryCode: US
-                  regionName: NC
                   regionCode: NC
                   postalCode: '28407'
                 locator: '503000196'
                 locatorType: abaRoutingNumber
-              intermediaryInstitutions:
-                - name: First Bank of Andalasia
-                  address:
-                    address1: 239 West Princess Ave.
-                    address2: Building 14, Suite 1500
-                    locality: Andalasia
-                    countryCode: US
-                    regionName: NC
-                    regionCode: NC
-                    postalCode: '28407'
-                  locator: '503000196'
-                  locatorType: abaRoutingNumber
     listTransferSchedule:
       path: /institutions/{institutionId}/transferSchedule
       method: GET
@@ -7388,68 +7120,36 @@ service:
               restrictedDates:
                 - occursOn: '2022-10-01'
                   reason: pastDate
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-02'
                   reason: pastDate
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-03'
                   reason: pastDate
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-04'
                   reason: pastDate
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-05'
                   reason: pastCutoffTime
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-06'
                   reason: riskRestricted
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-07'
                   reason: riskRestricted
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-08'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-09'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-10'
                   reason: holiday
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-15'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-16'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-22'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-23'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-29'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
                 - occursOn: '2022-10-30'
                   reason: closure
-                  creditOn: '2022-07-05'
-                  debitOn: '2022-07-05'
               accuracyEndsOn: '2026-12-31T00:00:00.000Z'
   source:
     openapi: ../openapi.yml
@@ -7500,7 +7200,6 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
                       "id": "db4f580290d3e07bf55d",
                       "lastName": "Jones",
                       "sharedSecret": "obsolete obese octopus",
-                      "taxId": "taxId",
                     },
                   },
                 },
@@ -7600,7 +7299,6 @@ service:
             body:
               firstName: Mary
               lastName: Jones
-              taxId: taxId
               sharedSecret: obsolete obese octopus
               emailAddress: Mary.Jones@example.com
               disallowDebitCardAccess: false
@@ -7637,9 +7335,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "accounts": {
-                        "key": "value",
-                      },
                       "maximumOverdraftAccounts": 1,
                     },
                   },
@@ -7699,7 +7394,6 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                       "limit": 100,
                       "maximumOverdraftAccounts": 1,
                       "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
-                      "start": "start",
                     },
                   },
                 },
@@ -7768,9 +7462,6 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
                   "request": {},
                   "response": {
                     "body": {
-                      "accounts": {
-                        "key": "value",
-                      },
                       "maximumOverdraftAccounts": 1,
                     },
                   },
@@ -7887,7 +7578,6 @@ service:
               limit: 100
               nextPage_url: >-
                 https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100
-              start: start
               items:
                 - id: da1331a9e9168ea91346
                   label: Checking *3456
@@ -7924,8 +7614,6 @@ service:
             accountId: accountId
           response:
             body:
-              accounts:
-                key: value
               maximumOverdraftAccounts: 1
     patchOverdraftAccounts:
       path: /accounts/{accountId}/overdraftProtection
@@ -7973,8 +7661,6 @@ service:
           request: {}
           response:
             body:
-              accounts:
-                key: value
               maximumOverdraftAccounts: 1
   source:
     openapi: ../openapi.yml
@@ -8151,20 +7837,9 @@ The default response lists only recent transactions. Normally, this is transacti
                         {
                           "amount": "0.00",
                           "balance": "8509.38",
-                          "category": {
-                            "id": "id",
-                            "label": "label",
-                          },
-                          "check": {
-                            "number": 1,
-                          },
-                          "createdOn": "2023-05-18",
-                          "description": "description",
                           "id": "d62c0701-0d74",
-                          "memo": "memo",
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "balance",
                         },
@@ -8180,8 +7855,6 @@ The default response lists only recent transactions. Normally, this is transacti
                             "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
                             "number": 8412,
                           },
-                          "createdOn": "2023-05-18",
-                          "description": "description",
                           "id": "88f5bf17-ecc4",
                           "memo": "Paid electric bill",
                           "merchant": {
@@ -8191,7 +7864,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           },
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "debit",
                         },
@@ -8506,29 +8178,17 @@ service:
                   type: balance
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '0.00'
                   posted: true
                   balance: '8509.38'
-                  memo: memo
-                  description: description
-                  category:
-                    label: label
-                    id: id
-                  check:
-                    number: 1
                 - id: 88f5bf17-ecc4
                   type: debit
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '1276.21'
                   posted: true
                   balance: '8509.38'
                   memo: Paid electric bill
-                  description: description
                   category:
                     label: Utilities
                     id: '127'
@@ -8595,18 +8255,12 @@ Note: This operation requires an identity challenge if the financial institution
                   "response": {
                     "body": {
                       "amount": "275.00",
-                      "createdAt": "2022-04-18T07:21:35Z",
                       "id": "0399abed-fd3d",
                       "memo": "Cover check for car repair",
-                      "processedAt": "2024-01-15T09:30:00Z",
                       "schedule": {
-                        "amountLimit": "3456.78",
-                        "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
                         "frequency": "once",
-                        "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
                       },
                       "sourceAccount": {
@@ -8622,8 +8276,6 @@ Note: This operation requires an identity challenge if the financial institution
                         "location": "internal",
                         "type": "savings",
                       },
-                      "updatedAt": "2022-04-18T07:21:35Z",
-                      "updatedBy": "updatedBy",
                     },
                   },
                 },
@@ -8711,18 +8363,12 @@ Note: This operation requires an identity challenge if the financial institution
                   "response": {
                     "body": {
                       "amount": "275.00",
-                      "createdAt": "2022-04-18T07:21:35Z",
                       "id": "0399abed-fd3d",
                       "memo": "Cover check for car repair",
-                      "processedAt": "2024-01-15T09:30:00Z",
                       "schedule": {
-                        "amountLimit": "3456.78",
-                        "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
                         "frequency": "once",
-                        "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
                       },
                       "sourceAccount": {
@@ -8738,8 +8384,6 @@ Note: This operation requires an identity challenge if the financial institution
                         "location": "internal",
                         "type": "savings",
                       },
-                      "updatedAt": "2022-04-18T07:21:35Z",
-                      "updatedBy": "updatedBy",
                     },
                   },
                 },
@@ -8780,16 +8424,13 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "response": {
                     "body": {
-                      "count": 1,
                       "items": [
                         {
                           "amount": "275.00",
-                          "createdAt": "2022-04-18T07:21:35Z",
                           "id": "0399abed-fd3d",
                           "memo": "Cover check for car repair",
                           "processedAt": "2024-01-15T09:30:00Z",
                           "schedule": {
-                            "amountLimit": "3456.78",
                             "creditsOn": "2026-06-26",
                             "debitsOn": "2026-06-24",
                             "frequency": "once",
@@ -8808,17 +8449,12 @@ Note: This operation requires an identity challenge if the financial institution
                             "location": "internal",
                             "type": "savings",
                           },
-                          "updatedAt": "2022-04-18T07:21:35Z",
-                          "updatedBy": "updatedBy",
                         },
                         {
                           "amount": "100.00",
-                          "createdAt": "2022-04-18T07:21:35Z",
                           "id": "d62c0701-0d74",
                           "memo": "school expenses",
-                          "processedAt": "2024-01-15T09:30:00Z",
                           "schedule": {
-                            "amountLimit": "3456.78",
                             "count": 9,
                             "creditsOn": "2023-08-01",
                             "debitsOn": "2026-08-01",
@@ -8838,8 +8474,6 @@ Note: This operation requires an identity challenge if the financial institution
                             "location": "internal",
                             "type": "checking",
                           },
-                          "updatedAt": "2022-04-18T07:21:35Z",
-                          "updatedBy": "updatedBy",
                         },
                       ],
                       "limit": 10,
@@ -8933,18 +8567,12 @@ Note: This operation requires an identity challenge if the financial institution
                   "response": {
                     "body": {
                       "amount": "275.00",
-                      "createdAt": "2022-04-18T07:21:35Z",
                       "id": "0399abed-fd3d",
                       "memo": "Cover check for car repair",
-                      "processedAt": "2024-01-15T09:30:00Z",
                       "schedule": {
-                        "amountLimit": "3456.78",
-                        "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
                         "frequency": "once",
-                        "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
                       },
                       "sourceAccount": {
@@ -8960,8 +8588,6 @@ Note: This operation requires an identity challenge if the financial institution
                         "location": "internal",
                         "type": "savings",
                       },
-                      "updatedAt": "2022-04-18T07:21:35Z",
-                      "updatedBy": "updatedBy",
                     },
                   },
                 },
@@ -9111,9 +8737,7 @@ service:
                 https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10
               start: d1b48af913464aa49fcb07065dcc0616
               items:
-                - createdAt: '2022-04-18T07:21:35Z'
-                  updatedAt: '2022-04-18T07:21:35Z'
-                  amount: '275.00'
+                - amount: '275.00'
                   sourceAccount:
                     id: bd9b7af2-6f9b
                     label: Premiere Checking *6789
@@ -9129,15 +8753,11 @@ service:
                   schedule:
                     scheduledOn: '2026-06-28'
                     frequency: once
-                    amountLimit: '3456.78'
                     debitsOn: '2026-06-24'
                     creditsOn: '2026-06-26'
                   state: processed
                   processedAt: '2024-01-15T09:30:00Z'
-                  updatedBy: updatedBy
-                - createdAt: '2022-04-18T07:21:35Z'
-                  updatedAt: '2022-04-18T07:21:35Z'
-                  amount: '100.00'
+                - amount: '100.00'
                   sourceAccount:
                     id: bd9b7af2-6f9b
                     label: Checking *6789
@@ -9154,13 +8774,9 @@ service:
                     scheduledOn: '2023-08-01'
                     frequency: monthly
                     count: 9
-                    amountLimit: '3456.78'
                     debitsOn: '2026-08-01'
                     creditsOn: '2023-08-01'
                   state: scheduled
-                  processedAt: '2024-01-15T09:30:00Z'
-                  updatedBy: updatedBy
-              count: 1
     createTransfer:
       path: /transfers
       method: POST
@@ -9226,8 +8842,6 @@ service:
               frequency: once
           response:
             body:
-              createdAt: '2022-04-18T07:21:35Z'
-              updatedAt: '2022-04-18T07:21:35Z'
               amount: '275.00'
               sourceAccount:
                 id: bd9b7af2-6f9b
@@ -9243,16 +8857,10 @@ service:
               id: 0399abed-fd3d
               schedule:
                 scheduledOn: '2026-06-28'
-                recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
-                count: 1
-                amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
                 creditsOn: '2026-06-26'
               state: unscheduled
-              processedAt: '2024-01-15T09:30:00Z'
-              updatedBy: updatedBy
     getTransfer:
       path: /transfers/{transferId}
       method: GET
@@ -9277,8 +8885,6 @@ service:
             transferId: transferId
           response:
             body:
-              createdAt: '2022-04-18T07:21:35Z'
-              updatedAt: '2022-04-18T07:21:35Z'
               amount: '275.00'
               sourceAccount:
                 id: bd9b7af2-6f9b
@@ -9294,16 +8900,10 @@ service:
               id: 0399abed-fd3d
               schedule:
                 scheduledOn: '2026-06-28'
-                recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
-                count: 1
-                amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
                 creditsOn: '2026-06-26'
               state: unscheduled
-              processedAt: '2024-01-15T09:30:00Z'
-              updatedBy: updatedBy
     deleteTransfer:
       path: /transfers/{transferId}
       method: DELETE
@@ -9392,8 +8992,6 @@ service:
               frequency: once
           response:
             body:
-              createdAt: '2022-04-18T07:21:35Z'
-              updatedAt: '2022-04-18T07:21:35Z'
               amount: '275.00'
               sourceAccount:
                 id: bd9b7af2-6f9b
@@ -9409,16 +9007,10 @@ service:
               id: 0399abed-fd3d
               schedule:
                 scheduledOn: '2026-06-28'
-                recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
-                count: 1
-                amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
                 creditsOn: '2026-06-26'
               state: unscheduled
-              processedAt: '2024-01-15T09:30:00Z'
-              updatedBy: updatedBy
   source:
     openapi: ../openapi.yml
   display-name: Transfers

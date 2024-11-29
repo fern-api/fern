@@ -45,22 +45,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

@@ -5670,175 +5670,14 @@ docs: Real-time transcription
                   "response": {
                     "body": {
                       "acoustic_model": "acoustic_model",
-                      "audio_duration": 1.1,
-                      "audio_end_at": 1,
-                      "audio_start_from": 1,
                       "audio_url": "audio_url",
-                      "auto_chapters": true,
                       "auto_highlights": true,
-                      "auto_highlights_result": {
-                        "results": [
-                          {
-                            "count": 1,
-                            "rank": 1.1,
-                            "text": "text",
-                            "timestamps": [
-                              {
-                                "end": 1,
-                                "start": 1,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      "boost_param": "boost_param",
-                      "chapters": [
-                        {
-                          "end": 1,
-                          "gist": "gist",
-                          "headline": "headline",
-                          "start": 1,
-                          "summary": "summary",
-                        },
-                      ],
-                      "confidence": 1.1,
-                      "content_safety": true,
-                      "content_safety_labels": {
-                        "results": [
-                          {
-                            "labels": [
-                              {
-                                "confidence": 1.1,
-                                "label": "label",
-                                "severity": 1.1,
-                              },
-                            ],
-                            "sentences_idx_end": 1,
-                            "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": {
-                                "high": 1.1,
-                                "low": 1.1,
-                                "medium": 1.1,
-                              },
-                            },
-                            "summary": {
-                              "key": 1.1,
-                            },
-                            "text": "text",
-                            "timestamp": {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          },
-                        ],
-                        "status": "success",
-                      },
-                      "custom_spelling": [
-                        {
-                          "from": [
-                            "from",
-                          ],
-                          "to": "to",
-                        },
-                      ],
-                      "custom_topics": true,
-                      "disfluencies": true,
-                      "dual_channel": true,
-                      "entities": [
-                        {
-                          "end": 1,
-                          "entity_type": "banking_information",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "entity_detection": true,
-                      "error": "error",
-                      "filter_profanity": true,
-                      "format_text": true,
-                      "iab_categories": true,
-                      "iab_categories_result": {
-                        "results": [
-                          {
-                            "text": "text",
-                          },
-                        ],
-                        "status": "success",
-                        "summary": {
-                          "key": 1.1,
-                        },
-                      },
                       "id": "id",
-                      "language_code": "en",
-                      "language_detection": true,
                       "language_model": "language_model",
-                      "punctuate": true,
                       "redact_pii": true,
-                      "redact_pii_audio": true,
-                      "redact_pii_audio_quality": "redact_pii_audio_quality",
-                      "redact_pii_policies": [
-                        "medical_process",
-                      ],
-                      "redact_pii_sub": "entity_type",
-                      "sentiment_analysis": true,
-                      "sentiment_analysis_results": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "sentiment": "POSITIVE",
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "speaker_labels": true,
-                      "speakers_expected": 1,
-                      "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
-                      "summary": "summary",
-                      "summary_model": "summary_model",
-                      "summary_type": "summary_type",
-                      "text": "text",
-                      "throttled": true,
-                      "topics": [
-                        "topics",
-                      ],
-                      "utterances": [
-                        {
-                          "channel": "channel",
-                          "confidence": 1.1,
-                          "end": 1,
-                          "start": 1,
-                          "text": "text",
-                          "words": [
-                            {
-                              "confidence": 1.1,
-                              "end": 1,
-                              "start": 1,
-                              "text": "text",
-                            },
-                          ],
-                        },
-                      ],
                       "webhook_auth": true,
-                      "webhook_auth_header_name": "webhook_auth_header_name",
-                      "webhook_status_code": 1,
-                      "webhook_url": "webhook_url",
-                      "word_boost": [
-                        "word_boost",
-                      ],
-                      "words": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
                     },
                   },
                 },
@@ -5893,175 +5732,14 @@ docs: Real-time transcription
                   "response": {
                     "body": {
                       "acoustic_model": "acoustic_model",
-                      "audio_duration": 1.1,
-                      "audio_end_at": 1,
-                      "audio_start_from": 1,
                       "audio_url": "audio_url",
-                      "auto_chapters": true,
                       "auto_highlights": true,
-                      "auto_highlights_result": {
-                        "results": [
-                          {
-                            "count": 1,
-                            "rank": 1.1,
-                            "text": "text",
-                            "timestamps": [
-                              {
-                                "end": 1,
-                                "start": 1,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      "boost_param": "boost_param",
-                      "chapters": [
-                        {
-                          "end": 1,
-                          "gist": "gist",
-                          "headline": "headline",
-                          "start": 1,
-                          "summary": "summary",
-                        },
-                      ],
-                      "confidence": 1.1,
-                      "content_safety": true,
-                      "content_safety_labels": {
-                        "results": [
-                          {
-                            "labels": [
-                              {
-                                "confidence": 1.1,
-                                "label": "label",
-                                "severity": 1.1,
-                              },
-                            ],
-                            "sentences_idx_end": 1,
-                            "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": {
-                                "high": 1.1,
-                                "low": 1.1,
-                                "medium": 1.1,
-                              },
-                            },
-                            "summary": {
-                              "key": 1.1,
-                            },
-                            "text": "text",
-                            "timestamp": {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          },
-                        ],
-                        "status": "success",
-                      },
-                      "custom_spelling": [
-                        {
-                          "from": [
-                            "from",
-                          ],
-                          "to": "to",
-                        },
-                      ],
-                      "custom_topics": true,
-                      "disfluencies": true,
-                      "dual_channel": true,
-                      "entities": [
-                        {
-                          "end": 1,
-                          "entity_type": "banking_information",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "entity_detection": true,
-                      "error": "error",
-                      "filter_profanity": true,
-                      "format_text": true,
-                      "iab_categories": true,
-                      "iab_categories_result": {
-                        "results": [
-                          {
-                            "text": "text",
-                          },
-                        ],
-                        "status": "success",
-                        "summary": {
-                          "key": 1.1,
-                        },
-                      },
                       "id": "id",
-                      "language_code": "en",
-                      "language_detection": true,
                       "language_model": "language_model",
-                      "punctuate": true,
                       "redact_pii": true,
-                      "redact_pii_audio": true,
-                      "redact_pii_audio_quality": "redact_pii_audio_quality",
-                      "redact_pii_policies": [
-                        "medical_process",
-                      ],
-                      "redact_pii_sub": "entity_type",
-                      "sentiment_analysis": true,
-                      "sentiment_analysis_results": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "sentiment": "POSITIVE",
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "speaker_labels": true,
-                      "speakers_expected": 1,
-                      "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
-                      "summary": "summary",
-                      "summary_model": "summary_model",
-                      "summary_type": "summary_type",
-                      "text": "text",
-                      "throttled": true,
-                      "topics": [
-                        "topics",
-                      ],
-                      "utterances": [
-                        {
-                          "channel": "channel",
-                          "confidence": 1.1,
-                          "end": 1,
-                          "start": 1,
-                          "text": "text",
-                          "words": [
-                            {
-                              "confidence": 1.1,
-                              "end": 1,
-                              "start": 1,
-                              "text": "text",
-                            },
-                          ],
-                        },
-                      ],
                       "webhook_auth": true,
-                      "webhook_auth_header_name": "webhook_auth_header_name",
-                      "webhook_status_code": 1,
-                      "webhook_url": "webhook_url",
-                      "word_boost": [
-                        "word_boost",
-                      ],
-                      "words": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
                     },
                   },
                 },
@@ -6104,175 +5782,14 @@ docs: Real-time transcription
                   "response": {
                     "body": {
                       "acoustic_model": "acoustic_model",
-                      "audio_duration": 1.1,
-                      "audio_end_at": 1,
-                      "audio_start_from": 1,
                       "audio_url": "audio_url",
-                      "auto_chapters": true,
                       "auto_highlights": true,
-                      "auto_highlights_result": {
-                        "results": [
-                          {
-                            "count": 1,
-                            "rank": 1.1,
-                            "text": "text",
-                            "timestamps": [
-                              {
-                                "end": 1,
-                                "start": 1,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      "boost_param": "boost_param",
-                      "chapters": [
-                        {
-                          "end": 1,
-                          "gist": "gist",
-                          "headline": "headline",
-                          "start": 1,
-                          "summary": "summary",
-                        },
-                      ],
-                      "confidence": 1.1,
-                      "content_safety": true,
-                      "content_safety_labels": {
-                        "results": [
-                          {
-                            "labels": [
-                              {
-                                "confidence": 1.1,
-                                "label": "label",
-                                "severity": 1.1,
-                              },
-                            ],
-                            "sentences_idx_end": 1,
-                            "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": {
-                                "high": 1.1,
-                                "low": 1.1,
-                                "medium": 1.1,
-                              },
-                            },
-                            "summary": {
-                              "key": 1.1,
-                            },
-                            "text": "text",
-                            "timestamp": {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          },
-                        ],
-                        "status": "success",
-                      },
-                      "custom_spelling": [
-                        {
-                          "from": [
-                            "from",
-                          ],
-                          "to": "to",
-                        },
-                      ],
-                      "custom_topics": true,
-                      "disfluencies": true,
-                      "dual_channel": true,
-                      "entities": [
-                        {
-                          "end": 1,
-                          "entity_type": "banking_information",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "entity_detection": true,
-                      "error": "error",
-                      "filter_profanity": true,
-                      "format_text": true,
-                      "iab_categories": true,
-                      "iab_categories_result": {
-                        "results": [
-                          {
-                            "text": "text",
-                          },
-                        ],
-                        "status": "success",
-                        "summary": {
-                          "key": 1.1,
-                        },
-                      },
                       "id": "id",
-                      "language_code": "en",
-                      "language_detection": true,
                       "language_model": "language_model",
-                      "punctuate": true,
                       "redact_pii": true,
-                      "redact_pii_audio": true,
-                      "redact_pii_audio_quality": "redact_pii_audio_quality",
-                      "redact_pii_policies": [
-                        "medical_process",
-                      ],
-                      "redact_pii_sub": "entity_type",
-                      "sentiment_analysis": true,
-                      "sentiment_analysis_results": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "sentiment": "POSITIVE",
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
-                      "speaker_labels": true,
-                      "speakers_expected": 1,
-                      "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
-                      "summary": "summary",
-                      "summary_model": "summary_model",
-                      "summary_type": "summary_type",
-                      "text": "text",
-                      "throttled": true,
-                      "topics": [
-                        "topics",
-                      ],
-                      "utterances": [
-                        {
-                          "channel": "channel",
-                          "confidence": 1.1,
-                          "end": 1,
-                          "start": 1,
-                          "text": "text",
-                          "words": [
-                            {
-                              "confidence": 1.1,
-                              "end": 1,
-                              "start": 1,
-                              "text": "text",
-                            },
-                          ],
-                        },
-                      ],
                       "webhook_auth": true,
-                      "webhook_auth_header_name": "webhook_auth_header_name",
-                      "webhook_status_code": 1,
-                      "webhook_url": "webhook_url",
-                      "word_boost": [
-                        "word_boost",
-                      ],
-                      "words": [
-                        {
-                          "confidence": 1.1,
-                          "end": 1,
-                          "speaker": "speaker",
-                          "start": 1,
-                          "text": "text",
-                        },
-                      ],
                     },
                   },
                 },
@@ -6520,14 +6037,12 @@ docs: Real-time transcription
                       "page_details": {
                         "current_url": "current_url",
                         "limit": 1,
-                        "next_url": "next_url",
                         "prev_url": "prev_url",
                         "result_count": 1,
                       },
                       "transcripts": [
                         {
                           "audio_url": "audio_url",
-                          "completed": "2024-01-15T09:30:00Z",
                           "created": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "resource_url": "resource_url",
@@ -6728,13 +6243,11 @@ service:
                 result_count: 1
                 current_url: current_url
                 prev_url: prev_url
-                next_url: next_url
               transcripts:
                 - id: id
                   resource_url: resource_url
                   status: queued
                   created: '2024-01-15T09:30:00Z'
-                  completed: '2024-01-15T09:30:00Z'
                   audio_url: audio_url
     create:
       path: /v2/transcript
@@ -6776,124 +6289,11 @@ service:
               language_model: language_model
               acoustic_model: acoustic_model
               status: queued
-              language_code: en
               audio_url: audio_url
-              text: text
-              words:
-                - confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  speaker: speaker
-              utterances:
-                - channel: channel
-                  confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  words:
-                    - confidence: 1.1
-                      start: 1
-                      end: 1
-                      text: text
-              confidence: 1.1
-              audio_duration: 1.1
-              punctuate: true
-              format_text: true
-              dual_channel: true
-              webhook_url: webhook_url
-              webhook_status_code: 1
               webhook_auth: true
-              webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
-              auto_highlights_result:
-                results:
-                  - count: 1
-                    rank: 1.1
-                    text: text
-                    timestamps:
-                      - start: 1
-                        end: 1
-              audio_start_from: 1
-              audio_end_at: 1
-              word_boost:
-                - word_boost
-              boost_param: boost_param
-              filter_profanity: true
               redact_pii: true
-              redact_pii_audio: true
-              redact_pii_audio_quality: redact_pii_audio_quality
-              redact_pii_policies:
-                - medical_process
-              redact_pii_sub: entity_type
-              speaker_labels: true
-              speakers_expected: 1
-              content_safety: true
-              content_safety_labels:
-                status: success
-                results:
-                  - text: text
-                    labels:
-                      - label: label
-                        confidence: 1.1
-                        severity: 1.1
-                    sentences_idx_start: 1
-                    sentences_idx_end: 1
-                    timestamp:
-                      start: 1
-                      end: 1
-                    summary:
-                      key: 1.1
-                    severity_score_summary:
-                      key:
-                        low: 1.1
-                        medium: 1.1
-                        high: 1.1
-              iab_categories: true
-              iab_categories_result:
-                status: success
-                results:
-                  - text: text
-                summary:
-                  key: 1.1
-              language_detection: true
-              custom_spelling:
-                - from:
-                    - from
-                  to: to
-              auto_chapters: true
-              chapters:
-                - gist: gist
-                  headline: headline
-                  summary: summary
-                  start: 1
-                  end: 1
               summarization: true
-              summary_type: summary_type
-              summary_model: summary_model
-              summary: summary
-              custom_topics: true
-              topics:
-                - topics
-              disfluencies: true
-              sentiment_analysis: true
-              sentiment_analysis_results:
-                - text: text
-                  start: 1
-                  end: 1
-                  sentiment: POSITIVE
-                  confidence: 1.1
-                  speaker: speaker
-              entity_detection: true
-              entities:
-                - entity_type: banking_information
-                  text: text
-                  start: 1
-                  end: 1
-              speech_threshold: 1.1
-              throttled: true
-              error: error
     get:
       path: /v2/transcript/{transcript_id}
       method: GET
@@ -6928,124 +6328,11 @@ service:
               language_model: language_model
               acoustic_model: acoustic_model
               status: queued
-              language_code: en
               audio_url: audio_url
-              text: text
-              words:
-                - confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  speaker: speaker
-              utterances:
-                - channel: channel
-                  confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  words:
-                    - confidence: 1.1
-                      start: 1
-                      end: 1
-                      text: text
-              confidence: 1.1
-              audio_duration: 1.1
-              punctuate: true
-              format_text: true
-              dual_channel: true
-              webhook_url: webhook_url
-              webhook_status_code: 1
               webhook_auth: true
-              webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
-              auto_highlights_result:
-                results:
-                  - count: 1
-                    rank: 1.1
-                    text: text
-                    timestamps:
-                      - start: 1
-                        end: 1
-              audio_start_from: 1
-              audio_end_at: 1
-              word_boost:
-                - word_boost
-              boost_param: boost_param
-              filter_profanity: true
               redact_pii: true
-              redact_pii_audio: true
-              redact_pii_audio_quality: redact_pii_audio_quality
-              redact_pii_policies:
-                - medical_process
-              redact_pii_sub: entity_type
-              speaker_labels: true
-              speakers_expected: 1
-              content_safety: true
-              content_safety_labels:
-                status: success
-                results:
-                  - text: text
-                    labels:
-                      - label: label
-                        confidence: 1.1
-                        severity: 1.1
-                    sentences_idx_start: 1
-                    sentences_idx_end: 1
-                    timestamp:
-                      start: 1
-                      end: 1
-                    summary:
-                      key: 1.1
-                    severity_score_summary:
-                      key:
-                        low: 1.1
-                        medium: 1.1
-                        high: 1.1
-              iab_categories: true
-              iab_categories_result:
-                status: success
-                results:
-                  - text: text
-                summary:
-                  key: 1.1
-              language_detection: true
-              custom_spelling:
-                - from:
-                    - from
-                  to: to
-              auto_chapters: true
-              chapters:
-                - gist: gist
-                  headline: headline
-                  summary: summary
-                  start: 1
-                  end: 1
               summarization: true
-              summary_type: summary_type
-              summary_model: summary_model
-              summary: summary
-              custom_topics: true
-              topics:
-                - topics
-              disfluencies: true
-              sentiment_analysis: true
-              sentiment_analysis_results:
-                - text: text
-                  start: 1
-                  end: 1
-                  sentiment: POSITIVE
-                  confidence: 1.1
-                  speaker: speaker
-              entity_detection: true
-              entities:
-                - entity_type: banking_information
-                  text: text
-                  start: 1
-                  end: 1
-              speech_threshold: 1.1
-              throttled: true
-              error: error
     delete:
       path: /v2/transcript/{transcript_id}
       method: DELETE
@@ -7078,124 +6365,11 @@ service:
               language_model: language_model
               acoustic_model: acoustic_model
               status: queued
-              language_code: en
               audio_url: audio_url
-              text: text
-              words:
-                - confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  speaker: speaker
-              utterances:
-                - channel: channel
-                  confidence: 1.1
-                  start: 1
-                  end: 1
-                  text: text
-                  words:
-                    - confidence: 1.1
-                      start: 1
-                      end: 1
-                      text: text
-              confidence: 1.1
-              audio_duration: 1.1
-              punctuate: true
-              format_text: true
-              dual_channel: true
-              webhook_url: webhook_url
-              webhook_status_code: 1
               webhook_auth: true
-              webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
-              auto_highlights_result:
-                results:
-                  - count: 1
-                    rank: 1.1
-                    text: text
-                    timestamps:
-                      - start: 1
-                        end: 1
-              audio_start_from: 1
-              audio_end_at: 1
-              word_boost:
-                - word_boost
-              boost_param: boost_param
-              filter_profanity: true
               redact_pii: true
-              redact_pii_audio: true
-              redact_pii_audio_quality: redact_pii_audio_quality
-              redact_pii_policies:
-                - medical_process
-              redact_pii_sub: entity_type
-              speaker_labels: true
-              speakers_expected: 1
-              content_safety: true
-              content_safety_labels:
-                status: success
-                results:
-                  - text: text
-                    labels:
-                      - label: label
-                        confidence: 1.1
-                        severity: 1.1
-                    sentences_idx_start: 1
-                    sentences_idx_end: 1
-                    timestamp:
-                      start: 1
-                      end: 1
-                    summary:
-                      key: 1.1
-                    severity_score_summary:
-                      key:
-                        low: 1.1
-                        medium: 1.1
-                        high: 1.1
-              iab_categories: true
-              iab_categories_result:
-                status: success
-                results:
-                  - text: text
-                summary:
-                  key: 1.1
-              language_detection: true
-              custom_spelling:
-                - from:
-                    - from
-                  to: to
-              auto_chapters: true
-              chapters:
-                - gist: gist
-                  headline: headline
-                  summary: summary
-                  start: 1
-                  end: 1
               summarization: true
-              summary_type: summary_type
-              summary_model: summary_model
-              summary: summary
-              custom_topics: true
-              topics:
-                - topics
-              disfluencies: true
-              sentiment_analysis: true
-              sentiment_analysis_results:
-                - text: text
-                  start: 1
-                  end: 1
-                  sentiment: POSITIVE
-                  confidence: 1.1
-                  speaker: speaker
-              entity_detection: true
-              entities:
-                - entity_type: banking_information
-                  text: text
-                  start: 1
-                  end: 1
-              speech_threshold: 1.1
-              throttled: true
-              error: error
     getSubtitles:
       path: /v2/transcript/{transcript_id}/{subtitle_format}
       method: GET

@@ -67,22 +67,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "float"
-                  },
-                  "type": "primitive"
-                },
-                "value": {
-                  "value": {
-                    "value": 1000000,
-                    "type": "uint64"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

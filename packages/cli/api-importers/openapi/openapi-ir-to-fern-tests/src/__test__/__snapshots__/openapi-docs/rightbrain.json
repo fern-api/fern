@@ -16645,12 +16645,7 @@ types:
                       "collection_id": "collection_id",
                       "created": "2024-01-15T09:30:00Z",
                       "created_by_user_id": "created_by_user_id",
-                      "description": "description",
-                      "documents_have_been_modified": true,
                       "id": "id",
-                      "last_message": "2024-01-15T09:30:00Z",
-                      "summary": "summary",
-                      "title": "title",
                     },
                   },
                 },
@@ -16714,12 +16709,7 @@ types:
                       "collection_id": "collection_id",
                       "created": "2024-01-15T09:30:00Z",
                       "created_by_user_id": "created_by_user_id",
-                      "description": "description",
-                      "documents_have_been_modified": true,
                       "id": "id",
-                      "last_message": "2024-01-15T09:30:00Z",
-                      "summary": "summary",
-                      "title": "title",
                     },
                   },
                 },
@@ -16753,27 +16743,7 @@ types:
                     "chat_id": "chat_id",
                   },
                   "response": {
-                    "body": {
-                      "chat_guardrails": {
-                        "input": [
-                          {
-                            "name": "prompt_policy",
-                          },
-                        ],
-                        "output": [
-                          {
-                            "name": "source_validation",
-                          },
-                        ],
-                      },
-                      "chat_system_commands": [
-                        "chat_system_commands",
-                      ],
-                      "knn": 1,
-                      "llm": "gpt-4o",
-                      "query_expansion": true,
-                      "temperature": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -16808,13 +16778,7 @@ types:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -16849,12 +16813,7 @@ types:
                         "collection_id": "collection_id",
                         "created": "2024-01-15T09:30:00Z",
                         "created_by_user_id": "created_by_user_id",
-                        "description": "description",
-                        "documents_have_been_modified": true,
                         "id": "id",
-                        "last_message": "2024-01-15T09:30:00Z",
-                        "summary": "summary",
-                        "title": "title",
                       },
                     ],
                   },
@@ -16900,13 +16859,7 @@ types:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -16955,7 +16908,6 @@ types:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -17014,13 +16966,7 @@ types:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -17131,27 +17077,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "chat_guardrails": {
-                        "input": [
-                          {
-                            "name": "prompt_policy",
-                          },
-                        ],
-                        "output": [
-                          {
-                            "name": "source_validation",
-                          },
-                        ],
-                      },
-                      "chat_system_commands": [
-                        "chat_system_commands",
-                      ],
-                      "knn": 1,
-                      "llm": "gpt-4o",
-                      "query_expansion": true,
-                      "temperature": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17233,12 +17159,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                       "collection_id": "collection_id",
                       "created": "2024-01-15T09:30:00Z",
                       "created_by_user_id": "created_by_user_id",
-                      "description": "description",
-                      "documents_have_been_modified": true,
                       "id": "id",
-                      "last_message": "2024-01-15T09:30:00Z",
-                      "summary": "summary",
-                      "title": "title",
                     },
                   },
                 },
@@ -17405,15 +17326,10 @@ service:
       examples:
         - response:
             body:
-              - title: title
-                description: description
-                summary: summary
-                collection_id: collection_id
+              - collection_id: collection_id
                 created: '2024-01-15T09:30:00Z'
                 created_by_user_id: created_by_user_id
-                last_message: '2024-01-15T09:30:00Z'
                 id: id
-                documents_have_been_modified: true
     getChat:
       path: /chat/{chat_id}
       method: GET
@@ -17435,15 +17351,10 @@ service:
             chat_id: chat_id
           response:
             body:
-              title: title
-              description: description
-              summary: summary
               collection_id: collection_id
               created: '2024-01-15T09:30:00Z'
               created_by_user_id: created_by_user_id
-              last_message: '2024-01-15T09:30:00Z'
               id: id
-              documents_have_been_modified: true
     updateChat:
       path: /chat/{chat_id}
       method: POST
@@ -17473,15 +17384,10 @@ service:
             title: title
           response:
             body:
-              title: title
-              description: description
-              summary: summary
               collection_id: collection_id
               created: '2024-01-15T09:30:00Z'
               created_by_user_id: created_by_user_id
-              last_message: '2024-01-15T09:30:00Z'
               id: id
-              documents_have_been_modified: true
     getChatConfig:
       path: /chat/{chat_id}/config
       method: GET
@@ -17502,18 +17408,7 @@ service:
         - path-parameters:
             chat_id: chat_id
           response:
-            body:
-              llm: gpt-4o
-              temperature: 1.1
-              knn: 1
-              chat_system_commands:
-                - chat_system_commands
-              chat_guardrails:
-                input:
-                  - name: prompt_policy
-                output:
-                  - name: source_validation
-              query_expansion: true
+            body: {}
     setChatConfig:
       path: /chat/{chat_id}/config
       method: POST
@@ -17567,18 +17462,7 @@ service:
             chat_id: chat_id
           request: {}
           response:
-            body:
-              llm: gpt-4o
-              temperature: 1.1
-              knn: 1
-              chat_system_commands:
-                - chat_system_commands
-              chat_guardrails:
-                input:
-                  - name: prompt_policy
-                output:
-                  - name: source_validation
-              query_expansion: true
+            body: {}
     createChat:
       path: /chat
       method: POST
@@ -17613,15 +17497,10 @@ service:
             collection_id: collection_id
           response:
             body:
-              title: title
-              description: description
-              summary: summary
               collection_id: collection_id
               created: '2024-01-15T09:30:00Z'
               created_by_user_id: created_by_user_id
-              last_message: '2024-01-15T09:30:00Z'
               id: id
-              documents_have_been_modified: true
     queryChat:
       path: /chat/{chat_id}/query
       method: GET
@@ -17684,11 +17563,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     getMember:
       path: /chat/{chat_id}/iam/members/{member}
       method: GET
@@ -17716,11 +17590,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamUpdateMemberRoles:
       path: /chat/{chat_id}/iam/members/{member}
       method: POST
@@ -17773,11 +17642,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamTestPermissions:
       path: /chat/{chat_id}/iam/test
       method: POST
@@ -17818,7 +17682,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
   source:
     openapi: ../openapi.yml
 types:
@@ -17922,20 +17785,9 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "embedding_instances": [
-                        {
-                          "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "is_active": true,
-                        },
-                      ],
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
                       "project_id": "project_id",
-                      "summary": "summary",
                       "title": "title",
                     },
                   },
@@ -17985,20 +17837,9 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "embedding_instances": [
-                        {
-                          "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "is_active": true,
-                        },
-                      ],
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
                       "project_id": "project_id",
-                      "summary": "summary",
                       "title": "title",
                     },
                   },
@@ -18056,20 +17897,9 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "embedding_instances": [
-                        {
-                          "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "is_active": true,
-                        },
-                      ],
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
                       "project_id": "project_id",
-                      "summary": "summary",
                       "title": "title",
                     },
                   },
@@ -18163,20 +17993,9 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "embedding_instances": [
-                        {
-                          "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "is_active": true,
-                        },
-                      ],
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
                       "project_id": "project_id",
-                      "summary": "summary",
                       "title": "title",
                     },
                   },
@@ -18231,20 +18050,9 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "embedding_instances": [
-                        {
-                          "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
-                          "id": "id",
-                          "is_active": true,
-                        },
-                      ],
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
                       "project_id": "project_id",
-                      "summary": "summary",
                       "title": "title",
                     },
                   },
@@ -18285,13 +18093,7 @@ types:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -18338,13 +18140,7 @@ types:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -18397,7 +18193,6 @@ types:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -18460,13 +18255,7 @@ types:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -18543,12 +18332,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                           "collection_id": "collection_id",
                           "created": "2024-01-15T09:30:00Z",
                           "created_by_user_id": "created_by_user_id",
-                          "description": "description",
-                          "documents_have_been_modified": true,
                           "id": "id",
-                          "last_message": "2024-01-15T09:30:00Z",
-                          "summary": "summary",
-                          "title": "title",
                         },
                       ],
                     },
@@ -18604,17 +18388,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "embedding_instances": [
-                            {
-                              "chat_document_id": "chat_document_id",
-                              "id": "id",
-                              "is_active": true,
-                            },
-                          ],
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
                           "project_id": "project_id",
-                          "summary": "summary",
                           "title": "title",
                         },
                       ],
@@ -18846,13 +18622,8 @@ service:
                 - title: title
                   project_id: project_id
                   id: id
-                  summary: summary
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  embedding_instances:
-                    - id: id
-                      chat_document_id: chat_document_id
-                      is_active: true
     createCollection:
       path: /org/{org_id}/project/{project_id}/collection
       method: POST
@@ -18892,15 +18663,8 @@ service:
               title: title
               project_id: project_id
               id: id
-              summary: summary
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              embedding_instances:
-                - config:
-                    key: value
-                  id: id
-                  chat_document_id: chat_document_id
-                  is_active: true
     getCollection:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}
       method: GET
@@ -18932,15 +18696,8 @@ service:
               title: title
               project_id: project_id
               id: id
-              summary: summary
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              embedding_instances:
-                - config:
-                    key: value
-                  id: id
-                  chat_document_id: chat_document_id
-                  is_active: true
     collectionEdit:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}
       method: POST
@@ -18981,15 +18738,8 @@ service:
               title: title
               project_id: project_id
               id: id
-              summary: summary
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              embedding_instances:
-                - config:
-                    key: value
-                  id: id
-                  chat_document_id: chat_document_id
-                  is_active: true
     collectionStats:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/stats
       method: GET
@@ -19061,15 +18811,10 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - title: title
-                  description: description
-                  summary: summary
-                  collection_id: collection_id
+                - collection_id: collection_id
                   created: '2024-01-15T09:30:00Z'
                   created_by_user_id: created_by_user_id
-                  last_message: '2024-01-15T09:30:00Z'
                   id: id
-                  documents_have_been_modified: true
     queryCollection:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/query
       method: POST
@@ -19179,15 +18924,8 @@ service:
               title: title
               project_id: project_id
               id: id
-              summary: summary
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              embedding_instances:
-                - config:
-                    key: value
-                  id: id
-                  chat_document_id: chat_document_id
-                  is_active: true
     collectionRemove:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/remove
       method: POST
@@ -19227,15 +18965,8 @@ service:
               title: title
               project_id: project_id
               id: id
-              summary: summary
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              embedding_instances:
-                - config:
-                    key: value
-                  id: id
-                  chat_document_id: chat_document_id
-                  is_active: true
     iamListMembers:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members
@@ -19275,11 +19006,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     getMember:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}
@@ -19312,11 +19038,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamUpdateMemberRoles:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}
@@ -19374,11 +19095,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/test
       method: POST
@@ -19423,7 +19139,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
   source:
     openapi: ../openapi.yml
 types:
@@ -20112,24 +19827,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -20217,24 +19916,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -20319,16 +20002,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -20383,16 +20058,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -20515,14 +20182,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch
       method: POST
@@ -20555,22 +20215,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize
@@ -20667,15 +20314,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
       method: GET
@@ -20711,22 +20352,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config
       method: GET
@@ -20920,24 +20548,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -21025,24 +20637,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -21127,16 +20723,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -21191,16 +20779,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -21323,14 +20903,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch
@@ -21364,22 +20937,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize
@@ -21477,15 +21037,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run
@@ -21522,22 +21076,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config
@@ -21734,24 +21275,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -21839,24 +21364,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -21941,16 +21450,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -22005,16 +21506,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -22137,14 +21630,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch
@@ -22178,22 +21664,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize
@@ -22291,15 +21764,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run
@@ -22336,22 +21803,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config
@@ -22548,24 +22002,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -22653,24 +22091,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -22755,16 +22177,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -22819,16 +22233,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -22951,14 +22357,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch
@@ -22992,22 +22391,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize
@@ -23105,15 +22491,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
       method: GET
@@ -23149,22 +22529,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config
@@ -23361,24 +22728,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -23466,24 +22817,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -23568,16 +22903,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -23632,16 +22959,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -23764,14 +23083,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch
@@ -23805,22 +23117,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize
@@ -23918,15 +23217,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
       method: GET
@@ -23962,22 +23255,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config
@@ -24174,24 +23454,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -24279,24 +23543,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -24381,16 +23629,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -24445,16 +23685,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -24577,14 +23809,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch
@@ -24618,22 +23843,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize
@@ -24731,15 +23943,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run
@@ -24776,22 +23982,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config
@@ -24988,24 +24181,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -25093,24 +24270,8 @@ service:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -25195,16 +24356,8 @@ service:
                   "response": {
                     "body": [
                       {
-                        "createdTime": "createdTime",
                         "id": "id",
-                        "mimeType": "mimeType",
-                        "modifiedTime": "modifiedTime",
                         "name": "name",
-                        "size": "size",
-                        "synced": true,
-                        "tags": [
-                          "no_size",
-                        ],
                         "type": "file",
                       },
                     ],
@@ -25259,16 +24412,8 @@ service:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -25391,14 +24536,7 @@ service:
             body:
               - id: id
                 name: name
-                synced: true
-                size: size
-                mimeType: mimeType
-                createdTime: createdTime
-                modifiedTime: modifiedTime
                 type: file
-                tags:
-                  - no_size
     fetch:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch
@@ -25432,22 +24570,9 @@ service:
               - id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     authorize:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize
@@ -25545,15 +24670,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
     checkStatus:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run
@@ -25590,22 +24709,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     getConfiguration:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config
@@ -25735,9 +24841,6 @@ service:
                       "task_count": 1,
                       "tasks": [
                         {
-                          "info": {
-                            "key": "value",
-                          },
                           "state": "PENDING",
                           "task_id": "task_id",
                         },
@@ -25928,14 +25031,9 @@ service:
                   "response": {
                     "body": {
                       "chunks": 1,
-                      "connection_id": "connection_id",
-                      "description": "description",
                       "embedding_instances": [
                         {
                           "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
                           "id": "id",
                           "is_active": true,
                         },
@@ -25943,10 +25041,6 @@ service:
                       "id": "id",
                       "original_mime": "original_mime",
                       "project_id": "project_id",
-                      "source": "upload",
-                      "source_meta": {
-                        "key": "value",
-                      },
                       "strategy": "strategy",
                       "title": "title",
                     },
@@ -25994,8 +25088,6 @@ service:
                       "results": [
                         {
                           "chunks": 1,
-                          "connection_id": "connection_id",
-                          "description": "description",
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
@@ -26006,10 +25098,6 @@ service:
                           "id": "id",
                           "original_mime": "original_mime",
                           "project_id": "project_id",
-                          "source": "upload",
-                          "source_meta": {
-                            "key": "value",
-                          },
                           "strategy": "strategy",
                           "title": "title",
                         },
@@ -26119,14 +25207,9 @@ service:
                   "response": {
                     "body": {
                       "chunks": 1,
-                      "connection_id": "connection_id",
-                      "description": "description",
                       "embedding_instances": [
                         {
                           "chat_document_id": "chat_document_id",
-                          "config": {
-                            "key": "value",
-                          },
                           "id": "id",
                           "is_active": true,
                         },
@@ -26134,10 +25217,6 @@ service:
                       "id": "id",
                       "original_mime": "original_mime",
                       "project_id": "project_id",
-                      "source": "upload",
-                      "source_meta": {
-                        "key": "value",
-                      },
                       "strategy": "strategy",
                       "title": "title",
                     },
@@ -26198,8 +25277,6 @@ service:
                     "body": [
                       {
                         "chunks": 1,
-                        "connection_id": "connection_id",
-                        "description": "description",
                         "embedding_instances": [
                           {
                             "chat_document_id": "chat_document_id",
@@ -26210,10 +25287,6 @@ service:
                         "id": "id",
                         "original_mime": "original_mime",
                         "project_id": "project_id",
-                        "source": "upload",
-                        "source_meta": {
-                          "key": "value",
-                        },
                         "strategy": "strategy",
                         "title": "title",
                       },
@@ -26268,13 +25341,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -26321,13 +25388,7 @@ service:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -26380,7 +25441,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -26443,13 +25503,7 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -26520,9 +25574,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                       "task_count": 1,
                       "tasks": [
                         {
-                          "info": {
-                            "key": "value",
-                          },
                           "state": "PENDING",
                           "task_id": "task_id",
                         },
@@ -26717,12 +25768,7 @@ service:
               results:
                 - title: title
                   project_id: project_id
-                  description: description
-                  source: upload
                   strategy: strategy
-                  source_meta:
-                    key: value
-                  connection_id: connection_id
                   id: id
                   chunks: 1
                   original_mime: original_mime
@@ -26770,8 +25816,6 @@ service:
               tasks:
                 - task_id: task_id
                   state: PENDING
-                  info:
-                    key: value
     documentUpload:
       path: /org/{org_id}/project/{project_id}/document/upload
       method: POST
@@ -26811,12 +25855,7 @@ service:
             body:
               - title: title
                 project_id: project_id
-                description: description
-                source: upload
                 strategy: strategy
-                source_meta:
-                  key: value
-                connection_id: connection_id
                 id: id
                 chunks: 1
                 original_mime: original_mime
@@ -26857,8 +25896,6 @@ service:
               tasks:
                 - task_id: task_id
                   state: PENDING
-                  info:
-                    key: value
     documentQuery:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/query
       method: GET
@@ -26926,19 +25963,12 @@ service:
             body:
               title: title
               project_id: project_id
-              description: description
-              source: upload
               strategy: strategy
-              source_meta:
-                key: value
-              connection_id: connection_id
               id: id
               chunks: 1
               original_mime: original_mime
               embedding_instances:
-                - config:
-                    key: value
-                  id: id
+                - id: id
                   chat_document_id: chat_document_id
                   is_active: true
     documentUpdate:
@@ -26981,19 +26011,12 @@ service:
             body:
               title: title
               project_id: project_id
-              description: description
-              source: upload
               strategy: strategy
-              source_meta:
-                key: value
-              connection_id: connection_id
               id: id
               chunks: 1
               original_mime: original_mime
               embedding_instances:
-                - config:
-                    key: value
-                  id: id
+                - id: id
                   chat_document_id: chat_document_id
                   is_active: true
     documentDelete:
@@ -27134,11 +26157,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     getMember:
       path: >-
         /org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}
@@ -27171,11 +26189,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamUpdateMemberRoles:
       path: >-
         /org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}
@@ -27233,11 +26246,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/iam/test
       method: POST
@@ -27282,7 +26290,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
   source:
     openapi: ../openapi.yml
 ",
@@ -27320,7 +26327,6 @@ service:
                       "redirect_uris": [
                         "redirect_uris",
                       ],
-                      "scope": "scope",
                     },
                   },
                 },
@@ -27429,23 +26435,7 @@ service:
                     "identity_id": "identity_id",
                   },
                   "response": {
-                    "body": {
-                      "identity": {
-                        "key": "value",
-                      },
-                      "messages": [
-                        {
-                          "instance_ptr": "instance_ptr",
-                          "messages": [
-                            {
-                              "id": 1,
-                              "text": "text",
-                              "type": "info",
-                            },
-                          ],
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -27479,23 +26469,7 @@ service:
                     "identity_id": "identity_id",
                   },
                   "response": {
-                    "body": {
-                      "identity": {
-                        "key": "value",
-                      },
-                      "messages": [
-                        {
-                          "instance_ptr": "instance_ptr",
-                          "messages": [
-                            {
-                              "id": 1,
-                              "text": "text",
-                              "type": "info",
-                            },
-                          ],
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -27602,7 +26576,6 @@ service:
                 - redirect_uris
               client_id: client_id
               client_secret: client_secret
-              scope: scope
     webhookKratosSignupCheck:
       path: /internal/webhook/kratos/signup_check
       method: POST
@@ -27624,15 +26597,7 @@ service:
         - request:
             identity_id: identity_id
           response:
-            body:
-              messages:
-                - instance_ptr: instance_ptr
-                  messages:
-                    - id: 1
-                      text: text
-                      type: info
-              identity:
-                key: value
+            body: {}
     webhookKratosSignupCommit:
       path: /internal/webhook/kratos/signup_commit
       method: POST
@@ -27654,15 +26619,7 @@ service:
         - request:
             identity_id: identity_id
           response:
-            body:
-              messages:
-                - instance_ptr: instance_ptr
-                  messages:
-                    - id: 1
-                      text: text
-                      type: info
-              identity:
-                key: value
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -28024,7 +26981,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "contact_email": "contact_email",
                       "id": "id",
                       "name": "name",
@@ -28217,7 +27173,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "contact_email": "contact_email",
                       "id": "id",
                       "name": "name",
@@ -28260,9 +27215,6 @@ service:
                     "body": {
                       "email_address": "email_address",
                       "id": "id",
-                      "roles": [
-                        "roles",
-                      ],
                     },
                   },
                 },
@@ -28357,9 +27309,6 @@ service:
                         {
                           "email_address": "email_address",
                           "id": "id",
-                          "roles": [
-                            "roles",
-                          ],
                         },
                       ],
                     },
@@ -28404,13 +27353,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -28481,7 +27424,6 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "contact_email": "contact_email",
                       "id": "id",
                       "name": "name",
@@ -28540,7 +27482,6 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "contact_email": "contact_email",
                       "id": "id",
                       "name": "name",
@@ -28591,13 +27532,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -28640,13 +27575,7 @@ service:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -28695,7 +27624,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -28754,13 +27682,7 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -28938,11 +27860,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     organization_get_member:
       path: /org/{org_id}/iam/members/{member}
       method: GET
@@ -28970,11 +27887,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     organization_iam_update_member_roles:
       path: /org/{org_id}/iam/members/{member}
       method: POST
@@ -29027,11 +27939,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     organization_iam_test_permissions:
       path: /org/{org_id}/iam/test
       method: POST
@@ -29072,7 +27979,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
     orgList:
       path: /org
       method: GET
@@ -29125,7 +28031,6 @@ service:
             body:
               name: name
               contact_email: contact_email
-              avatar_url: avatar_url
               id: id
     orgGet:
       path: /org/{org_id}
@@ -29150,7 +28055,6 @@ service:
             body:
               name: name
               contact_email: contact_email
-              avatar_url: avatar_url
               id: id
     orgUpdate:
       path: /org/{org_id}
@@ -29185,7 +28089,6 @@ service:
             body:
               name: name
               contact_email: contact_email
-              avatar_url: avatar_url
               id: id
     orgJoin:
       path: /org/{org_id}/join
@@ -29209,11 +28112,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     orgInvitesList:
       path: /org/{org_id}/invite
       method: GET
@@ -29247,8 +28145,6 @@ service:
                 page_limit: 100
               results:
                 - email_address: email_address
-                  roles:
-                    - roles
                   id: id
     orgInvitesCreate:
       path: /org/{org_id}/invite
@@ -29285,8 +28181,6 @@ service:
           response:
             body:
               email_address: email_address
-              roles:
-                - roles
               id: id
     orgInvitesDelete:
       path: /org/{org_id}/invite/{org_invite_id}
@@ -29428,7 +28322,6 @@ service:
             body:
               name: name
               contact_email: contact_email
-              avatar_url: avatar_url
               id: id
   source:
     openapi: ../openapi.yml
@@ -29463,11 +28356,9 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "id": "id",
                       "name": "name",
                       "org_id": "org_id",
-                      "tasks_oauth_client_id": "tasks_oauth_client_id",
                     },
                   },
                 },
@@ -29516,13 +28407,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -29560,29 +28445,9 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
-                      "datasource_connections": [
-                        {
-                          "config": {
-                            "key": "value",
-                          },
-                          "created": "2024-01-15T09:30:00Z",
-                          "datasource": {
-                            "id": "id",
-                            "name": "name",
-                          },
-                          "datasource_id": "datasource_id",
-                          "id": "id",
-                          "modified": "2024-01-15T09:30:00Z",
-                          "name": "name",
-                          "private": true,
-                          "project_id": "project_id",
-                        },
-                      ],
                       "id": "id",
                       "name": "name",
                       "org_id": "org_id",
-                      "tasks_oauth_client_id": "tasks_oauth_client_id",
                     },
                   },
                 },
@@ -29616,27 +28481,7 @@ service:
                     "project_id": "project_id",
                   },
                   "response": {
-                    "body": {
-                      "chat_guardrails": {
-                        "input": [
-                          {
-                            "name": "prompt_policy",
-                          },
-                        ],
-                        "output": [
-                          {
-                            "name": "source_validation",
-                          },
-                        ],
-                      },
-                      "chat_system_commands": [
-                        "chat_system_commands",
-                      ],
-                      "knn": 1,
-                      "llm": "gpt-4o",
-                      "query_expansion": true,
-                      "temperature": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -29679,13 +28524,7 @@ service:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -29736,7 +28575,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -29797,13 +28635,7 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -29874,11 +28706,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "id": "id",
                           "name": "name",
                           "org_id": "org_id",
-                          "tasks_oauth_client_id": "tasks_oauth_client_id",
                         },
                       ],
                     },
@@ -29924,11 +28754,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "id": "id",
                       "name": "name",
                       "org_id": "org_id",
-                      "tasks_oauth_client_id": "tasks_oauth_client_id",
                     },
                   },
                 },
@@ -29977,27 +28805,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "chat_guardrails": {
-                        "input": [
-                          {
-                            "name": "prompt_policy",
-                          },
-                        ],
-                        "output": [
-                          {
-                            "name": "source_validation",
-                          },
-                        ],
-                      },
-                      "chat_system_commands": [
-                        "chat_system_commands",
-                      ],
-                      "knn": 1,
-                      "llm": "gpt-4o",
-                      "query_expansion": true,
-                      "temperature": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -30075,11 +28883,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "id": "id",
                       "name": "name",
                       "org_id": "org_id",
-                      "tasks_oauth_client_id": "tasks_oauth_client_id",
                     },
                   },
                 },
@@ -30288,10 +29094,8 @@ service:
                 page_limit: 100
               results:
                 - name: name
-                  avatar_url: avatar_url
                   id: id
                   org_id: org_id
-                  tasks_oauth_client_id: tasks_oauth_client_id
     createProject:
       path: /org/{org_id}/project
       method: POST
@@ -30322,10 +29126,8 @@ service:
           response:
             body:
               name: name
-              avatar_url: avatar_url
               id: id
               org_id: org_id
-              tasks_oauth_client_id: tasks_oauth_client_id
     getProject:
       path: /org/{org_id}/project/{project_id}
       method: GET
@@ -30351,23 +29153,8 @@ service:
           response:
             body:
               name: name
-              avatar_url: avatar_url
               id: id
               org_id: org_id
-              tasks_oauth_client_id: tasks_oauth_client_id
-              datasource_connections:
-                - id: id
-                  name: name
-                  private: true
-                  project_id: project_id
-                  datasource_id: datasource_id
-                  created: '2024-01-15T09:30:00Z'
-                  modified: '2024-01-15T09:30:00Z'
-                  config:
-                    key: value
-                  datasource:
-                    name: name
-                    id: id
     updateProject:
       path: /org/{org_id}/project/{project_id}
       method: POST
@@ -30401,10 +29188,8 @@ service:
           response:
             body:
               name: name
-              avatar_url: avatar_url
               id: id
               org_id: org_id
-              tasks_oauth_client_id: tasks_oauth_client_id
     getProjectConfig:
       path: /org/{org_id}/project/{project_id}/config
       method: GET
@@ -30426,18 +29211,7 @@ service:
             org_id: org_id
             project_id: project_id
           response:
-            body:
-              llm: gpt-4o
-              temperature: 1.1
-              knn: 1
-              chat_system_commands:
-                - chat_system_commands
-              chat_guardrails:
-                input:
-                  - name: prompt_policy
-                output:
-                  - name: source_validation
-              query_expansion: true
+            body: {}
     setProjectConfig:
       path: /org/{org_id}/project/{project_id}/config
       method: POST
@@ -30492,18 +29266,7 @@ service:
             project_id: project_id
           request: {}
           response:
-            body:
-              llm: gpt-4o
-              temperature: 1.1
-              knn: 1
-              chat_system_commands:
-                - chat_system_commands
-              chat_guardrails:
-                input:
-                  - name: prompt_policy
-                output:
-                  - name: source_validation
-              query_expansion: true
+            body: {}
     projectUpdateAvatar:
       path: /org/{org_id}/project/{project_id}/avatar
       method: POST
@@ -30539,10 +29302,8 @@ service:
           response:
             body:
               name: name
-              avatar_url: avatar_url
               id: id
               org_id: org_id
-              tasks_oauth_client_id: tasks_oauth_client_id
     iamListMembers:
       path: /org/{org_id}/project/{project_id}/iam/members
       method: GET
@@ -30577,11 +29338,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     getMember:
       path: /org/{org_id}/project/{project_id}/iam/members/{member}
       method: GET
@@ -30611,11 +29367,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamUpdateMemberRoles:
       path: /org/{org_id}/project/{project_id}/iam/members/{member}
       method: POST
@@ -30670,11 +29421,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/iam/test
       method: POST
@@ -30717,7 +29463,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
   source:
     openapi: ../openapi.yml
 types:
@@ -30840,24 +29585,8 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -30934,24 +29663,8 @@ types:
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "datasource_connection": {
-                        "config": {
-                          "key": "value",
-                        },
-                        "created_by": "created_by",
-                        "datasource_id": "datasource_id",
-                        "id": "id",
-                        "private": true,
-                        "project_id": "project_id",
-                        "token": "token",
-                      },
                       "id": "id",
                       "modified": "2024-01-15T09:30:00Z",
-                      "run_output": {
-                        "key": "value",
-                      },
-                      "status": "pending",
-                      "task_id": "task_id",
                     },
                   },
                 },
@@ -31019,16 +29732,8 @@ types:
                       "results": [
                         {
                           "created": "2024-01-15T09:30:00Z",
-                          "datasource_connection": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
-                          "run_output": {
-                            "key": "value",
-                          },
-                          "status": "pending",
-                          "task_id": "task_id",
                         },
                       ],
                     },
@@ -31129,22 +29834,9 @@ service:
               - urls
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}
       method: GET
@@ -31169,22 +29861,9 @@ service:
             sync_run_id: sync_run_id
           response:
             body:
-              task_id: task_id
-              status: pending
-              run_output:
-                key: value
               id: id
               created: '2024-01-15T09:30:00Z'
               modified: '2024-01-15T09:30:00Z'
-              datasource_connection:
-                private: true
-                project_id: project_id
-                datasource_id: datasource_id
-                config:
-                  key: value
-                token: token
-                created_by: created_by
-                id: id
     listRuns:
       path: /org/{org_id}/project/{project_id}/scrape/runs
       method: GET
@@ -31217,15 +29896,9 @@ service:
                 has_next: true
                 page_limit: 100
               results:
-                - task_id: task_id
-                  status: pending
-                  run_output:
-                    key: value
-                  id: id
+                - id: id
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
-                  datasource_connection:
-                    id: id
   source:
     openapi: ../openapi.yml
 ",
@@ -31921,7 +30594,6 @@ service:
                       "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
                       "revisions": [
                         {
-                          "active": true,
                           "created": "2024-06-13T14:01:03Z",
                           "id": "019011e6-e530-3aca-6cf7-2973387c255d",
                           "image_required": true,
@@ -31933,12 +30605,7 @@ service:
                             "match": "str",
                             "rationale": "str",
                           },
-                          "rag": {
-                            "collection_id": "collection_id",
-                            "rag_param": "rag_param",
-                          },
                           "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-                          "task_forwarder_id": "task_forwarder_id",
                           "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                         },
                       ],
@@ -32060,7 +30727,6 @@ service:
                       "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
                       "revisions": [
                         {
-                          "active": true,
                           "created": "2024-06-13T14:01:03Z",
                           "id": "019011e6-e530-3aca-6cf7-2973387c255d",
                           "image_required": true,
@@ -32072,12 +30738,7 @@ service:
                             "match": "str",
                             "rationale": "str",
                           },
-                          "rag": {
-                            "collection_id": "collection_id",
-                            "rag_param": "rag_param",
-                          },
                           "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-                          "task_forwarder_id": "task_forwarder_id",
                           "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                         },
                       ],
@@ -32315,7 +30976,6 @@ service:
                       "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
                       "revisions": [
                         {
-                          "active": true,
                           "created": "2024-06-13T14:01:03Z",
                           "id": "019011e6-e530-3aca-6cf7-2973387c255d",
                           "image_required": true,
@@ -32327,12 +30987,7 @@ service:
                             "match": "str",
                             "rationale": "str",
                           },
-                          "rag": {
-                            "collection_id": "collection_id",
-                            "rag_param": "rag_param",
-                          },
                           "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-                          "task_forwarder_id": "task_forwarder_id",
                           "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                         },
                       ],
@@ -32665,13 +31320,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -32718,13 +31367,7 @@ service:
                       },
                       "results": [
                         {
-                          "avatar_url": "avatar_url",
                           "member": "member",
-                          "name": "name",
-                          "roles": [
-                            "roles",
-                          ],
-                          "total_subjects": 1,
                         },
                       ],
                     },
@@ -32777,7 +31420,6 @@ service:
                   },
                   "response": {
                     "body": {
-                      "member": "member",
                       "permissions": [
                         "permissions",
                       ],
@@ -32840,13 +31482,7 @@ service:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
                       "member": "member",
-                      "name": "name",
-                      "roles": [
-                        "roles",
-                      ],
-                      "total_subjects": 1,
                     },
                   },
                 },
@@ -33334,15 +31970,10 @@ service:
                     hint: str
                     match: str
                     rationale: str
-                  task_forwarder_id: task_forwarder_id
-                  rag:
-                    collection_id: collection_id
-                    rag_param: rag_param
                   image_required: true
                   id: 019011e6-e530-3aca-6cf7-2973387c255d
                   created: '2024-06-13T14:01:03Z'
                   modified: '2024-06-13T14:01:03Z'
-                  active: true
       audiences:
         - free
         - paid
@@ -33409,15 +32040,10 @@ service:
                     hint: str
                     match: str
                     rationale: str
-                  task_forwarder_id: task_forwarder_id
-                  rag:
-                    collection_id: collection_id
-                    rag_param: rag_param
                   image_required: true
                   id: 019011e6-e530-3aca-6cf7-2973387c255d
                   created: '2024-06-13T14:01:03Z'
                   modified: '2024-06-13T14:01:03Z'
-                  active: true
       audiences:
         - free
         - paid
@@ -33543,15 +32169,10 @@ service:
                     hint: str
                     match: str
                     rationale: str
-                  task_forwarder_id: task_forwarder_id
-                  rag:
-                    collection_id: collection_id
-                    rag_param: rag_param
                   image_required: true
                   id: 019011e6-e530-3aca-6cf7-2973387c255d
                   created: '2024-06-13T14:01:03Z'
                   modified: '2024-06-13T14:01:03Z'
-                  active: true
       audiences:
         - free
         - paid
@@ -33752,11 +32373,6 @@ service:
                 page_limit: 100
               results:
                 - member: member
-                  roles:
-                    - roles
-                  name: name
-                  avatar_url: avatar_url
-                  total_subjects: 1
     task_get_member:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}
       method: GET
@@ -33788,11 +32404,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     task_iam_update_member_roles:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}
       method: POST
@@ -33849,11 +32460,6 @@ service:
           response:
             body:
               member: member
-              roles:
-                - roles
-              name: name
-              avatar_url: avatar_url
-              total_subjects: 1
     task_iam_test_permissions:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/test
       method: POST
@@ -33898,7 +32504,6 @@ service:
             body:
               permissions:
                 - permissions
-              member: member
     getTaskRun:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/run/{task_run_id}
       method: GET
@@ -34100,8 +32705,6 @@ types:
                 {
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
-                      "bio": "bio",
                       "email": "email",
                       "id": "id",
                       "name": "name",
@@ -34132,8 +32735,6 @@ types:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
-                      "bio": "bio",
                       "email": "email",
                       "id": "id",
                       "name": "name",
@@ -34181,8 +32782,6 @@ types:
                   "request": {},
                   "response": {
                     "body": {
-                      "avatar_url": "avatar_url",
-                      "bio": "bio",
                       "email": "email",
                       "id": "id",
                       "name": "name",
@@ -34243,8 +32842,6 @@ service:
             body:
               email: email
               name: name
-              bio: bio
-              avatar_url: avatar_url
               id: id
     userPost:
       path: /user
@@ -34274,8 +32871,6 @@ service:
             body:
               email: email
               name: name
-              bio: bio
-              avatar_url: avatar_url
               id: id
     userUpdateAvatar:
       path: /user/avatar
@@ -34301,8 +32896,6 @@ service:
             body:
               email: email
               name: name
-              bio: bio
-              avatar_url: avatar_url
               id: id
   source:
     openapi: ../openapi.yml

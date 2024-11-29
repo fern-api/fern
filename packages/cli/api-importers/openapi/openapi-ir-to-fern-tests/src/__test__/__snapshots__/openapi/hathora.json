@@ -952,11 +952,7 @@ types:
                       "appId": "appId",
                       "appName": "appName",
                       "appSecret": "appSecret",
-                      "authConfiguration": {
-                        "google": {
-                          "clientId": "clientId",
-                        },
-                      },
+                      "authConfiguration": {},
                       "createdAt": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
                       "deletedAt": "2024-01-15T09:30:00Z",
@@ -1021,11 +1017,7 @@ types:
                       "appId": "appId",
                       "appName": "appName",
                       "appSecret": "appSecret",
-                      "authConfiguration": {
-                        "google": {
-                          "clientId": "clientId",
-                        },
-                      },
+                      "authConfiguration": {},
                       "createdAt": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
                       "deletedAt": "2024-01-15T09:30:00Z",
@@ -1060,11 +1052,7 @@ types:
                         "appId": "appId",
                         "appName": "appName",
                         "appSecret": "appSecret",
-                        "authConfiguration": {
-                          "google": {
-                            "clientId": "clientId",
-                          },
-                        },
+                        "authConfiguration": {},
                         "createdAt": "2024-01-15T09:30:00Z",
                         "createdBy": "createdBy",
                         "deletedAt": "2024-01-15T09:30:00Z",
@@ -1126,11 +1114,7 @@ types:
                       "appId": "appId",
                       "appName": "appName",
                       "appSecret": "appSecret",
-                      "authConfiguration": {
-                        "google": {
-                          "clientId": "clientId",
-                        },
-                      },
+                      "authConfiguration": {},
                       "createdAt": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
                       "deletedAt": "2024-01-15T09:30:00Z",
@@ -1187,9 +1171,7 @@ service:
                 createdAt: '2024-01-15T09:30:00Z'
                 createdBy: createdBy
                 orgId: orgId
-                authConfiguration:
-                  google:
-                    clientId: clientId
+                authConfiguration: {}
                 appSecret: appSecret
                 appId: appId
                 appName: appName
@@ -1234,9 +1216,7 @@ service:
               createdAt: '2024-01-15T09:30:00Z'
               createdBy: createdBy
               orgId: orgId
-              authConfiguration:
-                google:
-                  clientId: clientId
+              authConfiguration: {}
               appSecret: appSecret
               appId: appId
               appName: appName
@@ -1270,9 +1250,7 @@ service:
               createdAt: '2024-01-15T09:30:00Z'
               createdBy: createdBy
               orgId: orgId
-              authConfiguration:
-                google:
-                  clientId: clientId
+              authConfiguration: {}
               appSecret: appSecret
               appId: appId
               appName: appName
@@ -1299,9 +1277,7 @@ service:
               createdAt: '2024-01-15T09:30:00Z'
               createdBy: createdBy
               orgId: orgId
-              authConfiguration:
-                google:
-                  clientId: clientId
+              authConfiguration: {}
               appSecret: appSecret
               appId: appId
               appName: appName
@@ -2476,9 +2452,6 @@ service:
                         "local": true,
                         "region": "Seattle",
                         "roomId": "roomId",
-                        "state": {
-                          "key": "value",
-                        },
                         "visibility": "private",
                       },
                     ],
@@ -2623,9 +2596,7 @@ service:
             Authorization: Authorization
           response:
             body:
-              - state:
-                  key: value
-                initialConfig:
+              - initialConfig:
                   key: value
                 createdAt: '2024-01-15T09:30:00Z'
                 createdBy: createdBy
@@ -2684,9 +2655,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -2763,9 +2731,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -2841,9 +2806,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -2919,9 +2881,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -2984,9 +2943,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -3027,9 +2983,6 @@ service:
                         "local": true,
                         "region": "Seattle",
                         "roomId": "roomId",
-                        "state": {
-                          "key": "value",
-                        },
                         "visibility": "private",
                       },
                     ],
@@ -3085,9 +3038,6 @@ service:
                       "local": true,
                       "region": "Seattle",
                       "roomId": "roomId",
-                      "state": {
-                        "key": "value",
-                      },
                       "visibility": "private",
                     },
                   },
@@ -3186,8 +3136,6 @@ service:
             region: Seattle
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3239,8 +3187,6 @@ service:
             region: Seattle
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3292,8 +3238,6 @@ service:
             region: Seattle
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3346,8 +3290,6 @@ service:
             region: Seattle
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3377,9 +3319,7 @@ service:
             appId: appId
           response:
             body:
-              - state:
-                  key: value
-                initialConfig:
+              - initialConfig:
                   key: value
                 createdAt: '2024-01-15T09:30:00Z'
                 createdBy: createdBy
@@ -3408,8 +3348,6 @@ service:
             roomId: roomId
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3449,8 +3387,6 @@ service:
               key: value
           response:
             body:
-              state:
-                key: value
               initialConfig:
                 key: value
               createdAt: '2024-01-15T09:30:00Z'
@@ -3663,32 +3599,7 @@ service:
                     "processId": "processId",
                   },
                   "response": {
-                    "body": {
-                      "cpu": [
-                        {
-                          "timestamp": 1.1,
-                          "value": 1.1,
-                        },
-                      ],
-                      "memory": [
-                        {
-                          "timestamp": 1.1,
-                          "value": 1.1,
-                        },
-                      ],
-                      "rate_egress": [
-                        {
-                          "timestamp": 1.1,
-                          "value": 1.1,
-                        },
-                      ],
-                      "total_egress": [
-                        {
-                          "timestamp": 1.1,
-                          "value": 1.1,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -3760,19 +3671,7 @@ service:
             appId: appId
             processId: processId
           response:
-            body:
-              cpu:
-                - value: 1.1
-                  timestamp: 1.1
-              memory:
-                - value: 1.1
-                  timestamp: 1.1
-              rate_egress:
-                - value: 1.1
-                  timestamp: 1.1
-              total_egress:
-                - value: 1.1
-                  timestamp: 1.1
+            body: {}
   source:
     openapi: ../openapi.json
 ",

@@ -46,11 +46,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "accessToken": "accessToken",
-                      "expiresIn": 1,
-                      "tokenType": "tokenType",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -79,12 +75,7 @@
                     "userId": "userId",
                   },
                   "response": {
-                    "body": {
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "email": "email",
-                      "id": "id",
-                      "username": "username",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -113,12 +104,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "email": "email",
-                      "id": "id",
-                      "username": "username",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -207,11 +193,7 @@ service:
         - GetUsersRequestNotFoundError
       examples:
         - response:
-            body:
-              id: id
-              username: username
-              email: email
-              createdAt: '2024-01-15T09:30:00Z'
+            body: {}
     getUserInformation:
       path: /users/{userId}
       method: GET
@@ -232,11 +214,7 @@ service:
         - path-parameters:
             userId: userId
           response:
-            body:
-              id: id
-              username: username
-              email: email
-              createdAt: '2024-01-15T09:30:00Z'
+            body: {}
     getAuthenticationToken:
       path: /token
       method: GET
@@ -252,10 +230,7 @@ service:
         - GetTokenRequestUnauthorizedError
       examples:
         - response:
-            body:
-              accessToken: accessToken
-              tokenType: tokenType
-              expiresIn: 1
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

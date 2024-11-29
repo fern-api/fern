@@ -16,9 +16,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "separator": "/",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -101,8 +99,7 @@
       examples:
         - request: {}
           response:
-            body:
-              separator: /
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

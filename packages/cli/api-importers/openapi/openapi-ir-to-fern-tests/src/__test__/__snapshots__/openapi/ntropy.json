@@ -4554,10 +4554,6 @@ bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") ",
                   "response": {
                     "body": {
                       "created_at": "2024-01-01T00:00:00Z",
-                      "error": {
-                        "code": "invalid_bank_statement",
-                        "message": "message",
-                      },
                       "file": {
                         "no_pages": 1,
                         "size": 4096,
@@ -4783,10 +4779,6 @@ for bs in sdk.bank_statements.list().auto_paginate():
                       "data": [
                         {
                           "created_at": "2024-01-01T00:00:00Z",
-                          "error": {
-                            "code": "invalid_bank_statement",
-                            "message": "message",
-                          },
                           "file": {
                             "no_pages": 1,
                             "size": 4096,
@@ -4883,10 +4875,6 @@ with open('bank_statement.pdf', 'rb') as fh:
                   "response": {
                     "body": {
                       "created_at": "2024-01-01T00:00:00Z",
-                      "error": {
-                        "code": "invalid_bank_statement",
-                        "message": "message",
-                      },
                       "file": {
                         "no_pages": 1,
                         "size": 4096,
@@ -4981,9 +4969,6 @@ service:
                   file:
                     no_pages: 1
                     size: 4096
-                  error:
-                    code: invalid_bank_statement
-                    message: message
           code-samples:
             - name: cURL
               language: cURL
@@ -5030,9 +5015,6 @@ service:
               file:
                 no_pages: 1
                 size: 4096
-              error:
-                code: invalid_bank_statement
-                message: message
           code-samples:
             - name: cURL
               language: cURL
@@ -5079,9 +5061,6 @@ service:
               file:
                 no_pages: 1
                 size: 4096
-              error:
-                code: invalid_bank_statement
-                message: message
           code-samples:
             - name: cURL
               language: cURL
@@ -7462,7 +7441,6 @@ recurring_groups = sdk.account_holders.recurring_groups(
                       {
                         "average_amount": 10,
                         "categories": {
-                          "accounting": "operational expenses",
                           "general": "outgoing - coffee shops",
                         },
                         "counterparty": {
@@ -7558,7 +7536,6 @@ service:
                   type: organization
                 categories:
                   general: outgoing - coffee shops
-                  accounting: operational expenses
                 transaction_ids:
                   - 2dc6SE8A7cTQ2jUdUadCg
                   - tQYAhhl0XNkl1wasacpVQ
@@ -7693,7 +7670,6 @@ report = sdk.reports.get("a652285d-de1b-4a6f-b6ce-45efa9be7952")
                         ".entities.counterparty",
                       ],
                       "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                      "rejection_reason": "rejection_reason",
                       "status": "open",
                       "transaction_id": "xbx8YP14g565Xk",
                     },
@@ -7756,12 +7732,10 @@ reports = sdk.reports.list()
                             ".entities.counterparty",
                           ],
                           "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                          "rejection_reason": "rejection_reason",
                           "status": "open",
                           "transaction_id": "xbx8YP14g565Xk",
                         },
                       ],
-                      "next_cursor": "next_cursor",
                     },
                   },
                 },
@@ -7869,7 +7843,6 @@ report = sdk.reports.create(
                         ".entities.counterparty",
                       ],
                       "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                      "rejection_reason": "rejection_reason",
                       "status": "open",
                       "transaction_id": "xbx8YP14g565Xk",
                     },
@@ -7965,7 +7938,6 @@ service:
       examples:
         - response:
             body:
-              next_cursor: next_cursor
               data:
                 - transaction_id: xbx8YP14g565Xk
                   description: lorem ipsum
@@ -7974,7 +7946,6 @@ service:
                   id: a652285d-de1b-4a6f-b6ce-45efa9be7952
                   created_at: '2024-10-03T02:53:30Z'
                   status: open
-                  rejection_reason: rejection_reason
           code-samples:
             - name: cURL
               language: cURL
@@ -8035,7 +8006,6 @@ service:
               id: a652285d-de1b-4a6f-b6ce-45efa9be7952
               created_at: '2024-10-03T02:53:30Z'
               status: open
-              rejection_reason: rejection_reason
           code-samples:
             - name: cURL
               language: cURL
@@ -8092,7 +8062,6 @@ service:
               id: a652285d-de1b-4a6f-b6ce-45efa9be7952
               created_at: '2024-10-03T02:53:30Z'
               status: open
-              rejection_reason: rejection_reason
           code-samples:
             - name: cURL
               language: cURL
@@ -8239,7 +8208,6 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
                       "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
                       "amount": 10,
                       "categories": {
-                        "accounting": "operational expenses",
                         "general": "outgoing - coffee shops",
                       },
                       "created_at": "2024-03-30T00:00:00Z",
@@ -8271,10 +8239,6 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
                         ],
                       },
                       "entry_type": "outgoing",
-                      "error": {
-                        "code": "account_holder_not_found",
-                        "message": "message",
-                      },
                       "id": "xbx8YP14g565Xk",
                       "location": {
                         "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
@@ -8288,7 +8252,6 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
                           "longitude": -82.389277,
                           "postcode": "32653",
                           "state": "Florida",
-                          "store_number": "store_number",
                           "street": "Nw 43rd Street 5480",
                         },
                       },
@@ -8383,10 +8346,6 @@ for tx in sdk.transactions.list().auto_paginate():
                             ],
                           },
                           "entry_type": "outgoing",
-                          "error": {
-                            "code": "account_holder_not_found",
-                            "message": "message",
-                          },
                           "id": "xbx8YP14g565Xk",
                           "location": {
                             "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
@@ -8666,7 +8625,6 @@ sdk.transactions.assign(
                       "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
                       "amount": 10,
                       "categories": {
-                        "accounting": "operational expenses",
                         "general": "outgoing - coffee shops",
                       },
                       "created_at": "2024-03-30T00:00:00Z",
@@ -8698,10 +8656,6 @@ sdk.transactions.assign(
                         ],
                       },
                       "entry_type": "outgoing",
-                      "error": {
-                        "code": "account_holder_not_found",
-                        "message": "message",
-                      },
                       "id": "xbx8YP14g565Xk",
                       "location": {
                         "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
@@ -8715,7 +8669,6 @@ sdk.transactions.assign(
                           "longitude": -82.389277,
                           "postcode": "32653",
                           "state": "Florida",
-                          "store_number": "store_number",
                           "street": "Nw 43rd Street 5480",
                         },
                       },
@@ -8809,7 +8762,6 @@ service:
                     type: payment_processor
               categories:
                 general: outgoing - coffee shops
-                accounting: operational expenses
               location:
                 raw_address: Nw 43rd Street 5480, Gainesville, Florida 32653, US
                 structured:
@@ -8824,10 +8776,6 @@ service:
                   google_maps_url: >-
                     https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
                   apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-                  store_number: store_number
-              error:
-                code: account_holder_not_found
-                message: message
               created_at: '2024-03-30T00:00:00Z'
               account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
               recurrence:
@@ -8960,9 +8908,6 @@ service:
                       google_maps_url: >-
                         https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
                       apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-                  error:
-                    code: account_holder_not_found
-                    message: message
                   created_at: '2024-03-30T00:00:00Z'
                   account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
                   recurrence:
@@ -9164,7 +9109,6 @@ service:
                     type: payment_processor
               categories:
                 general: outgoing - coffee shops
-                accounting: operational expenses
               location:
                 raw_address: Nw 43rd Street 5480, Gainesville, Florida 32653, US
                 structured:
@@ -9179,10 +9123,6 @@ service:
                   google_maps_url: >-
                     https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
                   apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-                  store_number: store_number
-              error:
-                code: account_holder_not_found
-                message: message
               created_at: '2024-03-30T00:00:00Z'
               account_holder_id: 35b927b6-6fda-40aa-93b8-95b47c2b2cad
               recurrence:

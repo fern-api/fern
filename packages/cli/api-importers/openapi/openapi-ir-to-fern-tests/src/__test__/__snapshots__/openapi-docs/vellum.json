@@ -303,15 +303,10 @@ Executes a deployed Workflow and streams back its results.",
                             },
                             "type": "TERMINAL",
                           },
-                          "error": {
-                            "code": "WORKFLOW_INITIALIZATION",
-                            "message": "message",
-                          },
                           "id": "id",
                           "node_id": "node_id",
                           "node_result_id": "node_result_id",
                           "state": "INITIATED",
-                          "ts": "2024-01-15T09:30:00Z",
                         },
                         "external_id": "string",
                         "run_id": "string",
@@ -413,20 +408,7 @@ Generate a completion using a previously defined deployment.
                   "response": {
                     "body": {
                       "results": [
-                        {
-                          "data": {
-                            "completions": [
-                              {
-                                "id": "id",
-                                "model_version_id": "model_version_id",
-                                "text": "text",
-                              },
-                            ],
-                          },
-                          "error": {
-                            "message": "message",
-                          },
-                        },
+                        {},
                       ],
                     },
                   },
@@ -511,17 +493,6 @@ Generate a stream of completions using a previously defined deployment.
                     "stream": [
                       {
                         "delta": {
-                          "data": {
-                            "completion": {
-                              "id": "id",
-                              "model_version_id": "model_version_id",
-                              "text": "text",
-                            },
-                            "completion_index": 1,
-                          },
-                          "error": {
-                            "message": "message",
-                          },
                           "request_index": 1,
                         },
                       },
@@ -2828,7 +2799,6 @@ Used to submit feedback regarding the quality of previously generated completion
                   node_id: node_id
                   node_result_id: node_result_id
                   state: INITIATED
-                  ts: '2024-01-15T09:30:00Z'
                   data:
                     type: TERMINAL
                     data:
@@ -2838,9 +2808,6 @@ Used to submit feedback regarding the quality of previously generated completion
                         value:
                           - text: text
                             role: SYSTEM
-                  error:
-                    message: message
-                    code: WORKFLOW_INITIALIZATION
     generate:
       path: /v1/generate
       method: POST
@@ -2902,13 +2869,7 @@ Used to submit feedback regarding the quality of previously generated completion
           response:
             body:
               results:
-                - data:
-                    completions:
-                      - id: id
-                        text: text
-                        model_version_id: model_version_id
-                  error:
-                    message: message
+                - {}
     generate-stream:
       path: /v1/generate-stream
       method: POST
@@ -2972,14 +2933,6 @@ Used to submit feedback regarding the quality of previously generated completion
             stream:
               - delta:
                   request_index: 1
-                  data:
-                    completion_index: 1
-                    completion:
-                      id: id
-                      text: text
-                      model_version_id: model_version_id
-                  error:
-                    message: message
     search:
       path: /v1/search
       method: POST
@@ -4575,13 +4528,11 @@ Used to retrieve a deployment given its ID or name.
                         "active_model_version_ids",
                       ],
                       "created": "2024-01-15T09:30:00Z",
-                      "environment": "DEVELOPMENT",
                       "id": "id",
                       "label": "label",
                       "last_deployed_on": "2024-01-15T09:30:00Z",
                       "model_type": "GENERATE",
                       "name": "name",
-                      "status": "ACTIVE",
                     },
                   },
                 },
@@ -4646,8 +4597,6 @@ service:
               created: '2024-01-15T09:30:00Z'
               label: label
               name: name
-              status: ACTIVE
-              environment: DEVELOPMENT
               model_type: GENERATE
               active_model_version_ids:
                 - active_model_version_ids
@@ -4698,14 +4647,12 @@ Creates a new document index.",
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "environment": "DEVELOPMENT",
                       "id": "id",
                       "indexing_config": {
                         "key": "value",
                       },
                       "label": "label",
                       "name": "name",
-                      "status": "ACTIVE",
                     },
                   },
                 },
@@ -4731,14 +4678,12 @@ Creates a new document index.",
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "environment": "DEVELOPMENT",
                       "id": "id",
                       "indexing_config": {
                         "key": "value",
                       },
                       "label": "label",
                       "name": "name",
-                      "status": "ACTIVE",
                     },
                   },
                 },
@@ -4766,14 +4711,12 @@ Creates a new document index.",
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
-                      "environment": "DEVELOPMENT",
                       "id": "id",
                       "indexing_config": {
                         "key": "value",
                       },
                       "label": "label",
                       "name": "name",
-                      "status": "ACTIVE",
                     },
                   },
                 },
@@ -4944,8 +4887,6 @@ service:
               created: '2024-01-15T09:30:00Z'
               label: label
               name: name
-              status: ACTIVE
-              environment: DEVELOPMENT
               indexing_config:
                 key: value
         - name: Index Using a Sentence Transformers Model
@@ -4967,8 +4908,6 @@ service:
               created: '2024-01-15T09:30:00Z'
               label: label
               name: name
-              status: ACTIVE
-              environment: DEVELOPMENT
               indexing_config:
                 key: value
         - name: Index Using OpenAI Model
@@ -4991,8 +4930,6 @@ service:
               created: '2024-01-15T09:30:00Z'
               label: label
               name: name
-              status: ACTIVE
-              environment: DEVELOPMENT
               indexing_config:
                 key: value
   source:
@@ -5019,31 +4956,7 @@ Used to list documents. Optionally filter on supported fields.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 123,
-                      "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                      "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                      "results": [
-                        {
-                          "document_to_document_indexes": [
-                            {
-                              "document_index_id": "document_index_id",
-                              "id": "id",
-                            },
-                          ],
-                          "external_id": "external_id",
-                          "id": "id",
-                          "keywords": [
-                            "keywords",
-                          ],
-                          "label": "label",
-                          "last_uploaded_at": "2024-01-15T09:30:00Z",
-                          "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                          "processing_state": "QUEUED",
-                          "status": "ACTIVE",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -5216,23 +5129,7 @@ service:
       url: Default
       examples:
         - response:
-            body:
-              count: 123
-              next: http://api.example.org/accounts/?offset=400&limit=100
-              previous: http://api.example.org/accounts/?offset=200&limit=100
-              results:
-                - id: id
-                  external_id: external_id
-                  last_uploaded_at: '2024-01-15T09:30:00Z'
-                  label: label
-                  processing_state: QUEUED
-                  processing_failure_reason: EXCEEDED_CHARACTER_LIMIT
-                  status: ACTIVE
-                  keywords:
-                    - keywords
-                  document_to_document_indexes:
-                    - id: id
-                      document_index_id: document_index_id
+            body: {}
     upload:
       path: /v1/upload-document
       method: POST
@@ -5381,12 +5278,6 @@ Used to retrieve a model version given its ID.
                     "body": {
                       "build_config": {
                         "base_model": "base_model",
-                        "sandbox_snapshot": {
-                          "id": "id",
-                          "prompt_id": "prompt_id",
-                          "prompt_index": 1,
-                          "sandbox_id": "sandbox_id",
-                        },
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "exec_config": {
@@ -5399,32 +5290,15 @@ Used to retrieve a model version given its ID.
                           "frequency_penalty": 1.1,
                           "max_tokens": 1,
                           "presence_penalty": 1.1,
-                          "stop": [
-                            "stop",
-                          ],
                           "temperature": 1.1,
-                          "top_k": 1.1,
                           "top_p": 1.1,
                         },
-                        "prompt_block_data": {
-                          "blocks": [
-                            {
-                              "block_type": "CHAT_MESSAGE",
-                              "id": "id",
-                              "properties": {},
-                            },
-                          ],
-                          "version": 1,
-                        },
-                        "prompt_syntax_version": 1,
-                        "prompt_template": "prompt_template",
                       },
                       "external_id": "external_id",
                       "id": "id",
                       "label": "label",
                       "model_type": "GENERATE",
                       "provider": "ANTHROPIC",
-                      "status": "CREATING",
                     },
                   },
                 },
@@ -5493,11 +5367,6 @@ service:
               external_id: external_id
               build_config:
                 base_model: base_model
-                sandbox_snapshot:
-                  id: id
-                  prompt_index: 1
-                  prompt_id: prompt_id
-                  sandbox_id: sandbox_id
               exec_config:
                 parameters:
                   temperature: 1.1
@@ -5505,20 +5374,8 @@ service:
                   top_p: 1.1
                   frequency_penalty: 1.1
                   presence_penalty: 1.1
-                  stop:
-                    - stop
-                  top_k: 1.1
                 input_variables:
                   - key: key
-                prompt_template: prompt_template
-                prompt_block_data:
-                  version: 1
-                  blocks:
-                    - id: id
-                      block_type: CHAT_MESSAGE
-                      properties: {}
-                prompt_syntax_version: 1
-              status: CREATING
     model_version_compile_prompt:
       path: /v1/model-versions/{id}/compile-prompt
       method: POST
@@ -5927,23 +5784,10 @@ or overwritten with default values.",
                       "id": "id",
                       "inputs": [
                         {
-                          "chat_history": [
-                            {
-                              "role": "SYSTEM",
-                              "text": "text",
-                            },
-                          ],
                           "key": "key",
-                          "type": "TEXT",
-                          "value": "value",
                         },
                       ],
-                      "label": "label",
-                      "metric_input_params": {
-                        "params": {
-                          "target": "target",
-                        },
-                      },
+                      "metric_input_params": {},
                     },
                   },
                 },
@@ -5976,23 +5820,10 @@ or overwritten with default values.",
                       "id": "id",
                       "inputs": [
                         {
-                          "chat_history": [
-                            {
-                              "role": "SYSTEM",
-                              "text": "text",
-                            },
-                          ],
                           "key": "key",
-                          "type": "TEXT",
-                          "value": "value",
                         },
                       ],
-                      "label": "label",
-                      "metric_input_params": {
-                        "params": {
-                          "target": "target",
-                        },
-                      },
+                      "metric_input_params": {},
                     },
                   },
                 },
@@ -6124,18 +5955,10 @@ service:
                 value: Why hello, there!
           response:
             body:
-              label: label
               inputs:
                 - key: key
-                  type: TEXT
-                  value: value
-                  chat_history:
-                    - text: text
-                      role: SYSTEM
               id: id
-              metric_input_params:
-                params:
-                  target: target
+              metric_input_params: {}
         - name: Chat History Example
           path-parameters:
             id: id
@@ -6151,18 +5974,10 @@ service:
                     role: ASSISTANT
           response:
             body:
-              label: label
               inputs:
                 - key: key
-                  type: TEXT
-                  value: value
-                  chat_history:
-                    - text: text
-                      role: SYSTEM
               id: id
-              metric_input_params:
-                params:
-                  target: target
+              metric_input_params: {}
     delete_sandbox_scenario:
       path: /v1/sandboxes/{id}/scenarios/{scenario_id}
       method: DELETE
@@ -6257,14 +6072,10 @@ or overwritten with default values.",
                   },
                   "response": {
                     "body": {
-                      "evaluation_params": {
-                        "target": "target",
-                      },
+                      "evaluation_params": {},
                       "input_values": {
                         "key": "value",
                       },
-                      "label": "label",
-                      "test_case_id": "test_case_id",
                     },
                   },
                 },
@@ -6399,12 +6210,9 @@ service:
             evaluation_params: {}
           response:
             body:
-              test_case_id: test_case_id
-              label: label
               input_values:
                 key: value
-              evaluation_params:
-                target: target
+              evaluation_params: {}
     delete_test_suite_test_case:
       path: /v1/test-suites/{id}/test-cases/{test_case_id}
       method: DELETE

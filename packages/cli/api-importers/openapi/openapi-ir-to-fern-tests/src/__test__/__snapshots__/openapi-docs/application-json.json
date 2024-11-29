@@ -15,10 +15,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "bar": "bar",
-                      "foo": "foo",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -39,10 +36,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "bar": "bar",
-                      "foo": "foo",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -91,9 +85,7 @@
         type: Data
       examples:
         - response:
-            body:
-              foo: foo
-              bar: bar
+            body: {}
     getApplicationJson:
       path: /application-json
       method: GET
@@ -105,9 +97,7 @@
         type: Data
       examples:
         - response:
-            body:
-              foo: foo
-              bar: bar
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

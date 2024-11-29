@@ -230,32 +230,6 @@
                     },
                     "request": {
                       "properties": {
-                        "urls": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "urls",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "callback_url": {
-                          "value": {
-                            "value": "callback_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "notify": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
                         "files": {
                           "value": [
                             {
@@ -536,63 +510,6 @@
                         "type": "discriminated"
                       },
                       "type": "oneOf"
-                    },
-                    "results": {
-                      "properties": {
-                        "predictions": {
-                          "value": [
-                            {
-                              "properties": {
-                                "file": {
-                                  "value": {
-                                    "value": "file",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "models": {
-                                  "properties": {},
-                                  "type": "object"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "errors": {
-                          "value": [
-                            {
-                              "properties": {
-                                "message": {
-                                  "value": {
-                                    "value": "message",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "file": {
-                                  "value": {
-                                    "value": "file",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "error": {
-                      "value": {
-                        "value": "error",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -746,88 +663,6 @@
                 },
                 "request": {
                   "properties": {
-                    "models": {
-                      "properties": {
-                        "burst": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "facemesh": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "transcription": {
-                      "properties": {
-                        "language": {
-                          "value": "zh",
-                          "type": "enum"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "urls": {
-                      "value": [
-                        {
-                          "value": {
-                            "value": "urls",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "callback_url": {
-                      "value": {
-                        "value": "callback_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "notify": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
                     "files": {
                       "value": [
                         {

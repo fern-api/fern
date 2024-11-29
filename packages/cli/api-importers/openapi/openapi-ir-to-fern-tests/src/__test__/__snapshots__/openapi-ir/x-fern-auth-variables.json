@@ -76,15 +76,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": "id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -175,15 +167,7 @@
             "value": {
               "value": [
                 {
-                  "properties": {
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               ],

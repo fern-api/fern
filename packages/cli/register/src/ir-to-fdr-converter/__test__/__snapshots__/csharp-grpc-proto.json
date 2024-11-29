@@ -283,30 +283,10 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "user": {
-                  "username": "username",
-                  "email": "email",
-                  "age": 1,
-                  "weight": 1.1,
-                  "metadata": {
-                    "key": 1.1
-                  }
-                }
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "user": {
-                    "username": "username",
-                    "email": "email",
-                    "age": 1,
-                    "weight": 1.1,
-                    "metadata": {
-                      "key": 1.1
-                    }
-                  }
-                }
+                "value": {}
               }
             }
           ]

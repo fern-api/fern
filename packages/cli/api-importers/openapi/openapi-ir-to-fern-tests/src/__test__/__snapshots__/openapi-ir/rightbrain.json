@@ -342,39 +342,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -624,39 +591,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -1046,39 +980,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -1416,13 +1317,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -1714,13 +1608,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -1948,13 +1835,6 @@
                 "contact_email": {
                   "value": {
                     "value": "contact_email",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -2213,13 +2093,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -2440,39 +2313,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -2788,18 +2628,6 @@
                           },
                           "type": "primitive"
                         },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -3094,18 +2922,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
                 },
                 "id": {
                   "value": {
@@ -4345,13 +4161,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -4452,20 +4261,6 @@
                 "name": {
                   "value": {
                     "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "bio": {
-                  "value": {
-                    "value": "bio",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -4597,20 +4392,6 @@
                   },
                   "type": "primitive"
                 },
-                "bio": {
-                  "value": {
-                    "value": "bio",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -4732,20 +4513,6 @@
                 "name": {
                   "value": {
                     "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "bio": {
-                  "value": {
-                    "value": "bio",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -5048,13 +4815,6 @@
                           },
                           "type": "primitive"
                         },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -5065,13 +4825,6 @@
                         "org_id": {
                           "value": {
                             "value": "org_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tasks_oauth_client_id": {
-                          "value": {
-                            "value": "tasks_oauth_client_id",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -5330,13 +5083,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -5347,13 +5093,6 @@
                 "org_id": {
                   "value": {
                     "value": "org_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "tasks_oauth_client_id": {
-                  "value": {
-                    "value": "tasks_oauth_client_id",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -5602,13 +5341,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -5622,112 +5354,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "tasks_oauth_client_id": {
-                  "value": {
-                    "value": "tasks_oauth_client_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "datasource_connections": {
-                  "value": [
-                    {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "private": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "project_id": {
-                          "value": {
-                            "value": "project_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "datasource_id": {
-                          "value": {
-                            "value": "datasource_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "created": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "modified": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "datasource": {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -5996,13 +5622,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -6013,13 +5632,6 @@
                 "org_id": {
                   "value": {
                     "value": "org_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "tasks_oauth_client_id": {
-                  "value": {
-                    "value": "tasks_oauth_client_id",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -6161,81 +5773,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "llm": {
-                  "value": "gpt-4o",
-                  "type": "enum"
-                },
-                "temperature": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "knn": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "chat_system_commands": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "chat_system_commands",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "chat_guardrails": {
-                  "properties": {
-                    "input": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": "prompt_policy",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "output": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "source_validation",
-                                "type": "string"
-                              },
-                              "type": "literal"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "query_expansion": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -6494,81 +6032,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "llm": {
-                  "value": "gpt-4o",
-                  "type": "enum"
-                },
-                "temperature": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "knn": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "chat_system_commands": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "chat_system_commands",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "chat_guardrails": {
-                  "properties": {
-                    "input": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": "prompt_policy",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "output": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "source_validation",
-                                "type": "string"
-                              },
-                              "type": "literal"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "query_expansion": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -6834,13 +6298,6 @@
                   },
                   "type": "primitive"
                 },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -6851,13 +6308,6 @@
                 "org_id": {
                   "value": {
                     "value": "org_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "tasks_oauth_client_id": {
-                  "value": {
-                    "value": "tasks_oauth_client_id",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -7174,39 +6624,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -7482,39 +6899,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -7930,39 +7314,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -8326,13 +7677,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -8685,13 +8029,6 @@
                           },
                           "type": "primitive"
                         },
-                        "summary": {
-                          "value": {
-                            "value": "summary",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "created": {
                           "value": {
                             "value": "2024-01-15T09:30:00Z",
@@ -8705,37 +8042,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "embedding_instances": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": "id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "chat_document_id": {
-                                  "value": {
-                                    "value": "chat_document_id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "is_active": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -9031,13 +8337,6 @@
                   },
                   "type": "primitive"
                 },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "created": {
                   "value": {
                     "value": "2024-01-15T09:30:00Z",
@@ -9051,58 +8350,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "embedding_instances": {
-                  "value": [
-                    {
-                      "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_document_id": {
-                          "value": {
-                            "value": "chat_document_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -9388,13 +8635,6 @@
                   },
                   "type": "primitive"
                 },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "created": {
                   "value": {
                     "value": "2024-01-15T09:30:00Z",
@@ -9408,58 +8648,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "embedding_instances": {
-                  "value": [
-                    {
-                      "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_document_id": {
-                          "value": {
-                            "value": "chat_document_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -9777,13 +8965,6 @@
                   },
                   "type": "primitive"
                 },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "created": {
                   "value": {
                     "value": "2024-01-15T09:30:00Z",
@@ -9797,58 +8978,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "embedding_instances": {
-                  "value": [
-                    {
-                      "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_document_id": {
-                          "value": {
-                            "value": "chat_document_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -10498,27 +9627,6 @@
                   "value": [
                     {
                       "properties": {
-                        "title": {
-                          "value": {
-                            "value": "title",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "description": {
-                          "value": {
-                            "value": "description",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "summary": {
-                          "value": {
-                            "value": "summary",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "collection_id": {
                           "value": {
                             "value": "collection_id",
@@ -10540,24 +9648,10 @@
                           },
                           "type": "primitive"
                         },
-                        "last_message": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
                             "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "documents_have_been_modified": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
                           },
                           "type": "primitive"
                         }
@@ -11473,13 +10567,6 @@
                   },
                   "type": "primitive"
                 },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "created": {
                   "value": {
                     "value": "2024-01-15T09:30:00Z",
@@ -11493,58 +10580,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "embedding_instances": {
-                  "value": [
-                    {
-                      "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_document_id": {
-                          "value": {
-                            "value": "chat_document_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -11868,13 +10903,6 @@
                   },
                   "type": "primitive"
                 },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "created": {
                   "value": {
                     "value": "2024-01-15T09:30:00Z",
@@ -11888,58 +10916,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "embedding_instances": {
-                  "value": [
-                    {
-                      "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_document_id": {
-                          "value": {
-                            "value": "chat_document_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
                 }
               },
               "type": "object"
@@ -12279,39 +11255,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -12613,39 +11556,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -13087,39 +11997,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -13509,13 +12386,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -13993,48 +12863,9 @@
                           },
                           "type": "primitive"
                         },
-                        "description": {
-                          "value": {
-                            "value": "description",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "source": {
-                          "value": "upload",
-                          "type": "enum"
-                        },
                         "strategy": {
                           "value": {
                             "value": "strategy",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "source_meta": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "connection_id": {
-                          "value": {
-                            "value": "connection_id",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -14408,27 +13239,6 @@
                         "state": {
                           "value": "PENDING",
                           "type": "enum"
-                        },
-                        "info": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -14742,48 +13552,9 @@
                       },
                       "type": "primitive"
                     },
-                    "description": {
-                      "value": {
-                        "value": "description",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "source": {
-                      "value": "upload",
-                      "type": "enum"
-                    },
                     "strategy": {
                       "value": {
                         "value": "strategy",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "source_meta": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "connection_id": {
-                      "value": {
-                        "value": "connection_id",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -15132,27 +13903,6 @@
                         "state": {
                           "value": "PENDING",
                           "type": "enum"
-                        },
-                        "info": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -15759,48 +14509,9 @@
                   },
                   "type": "primitive"
                 },
-                "description": {
-                  "value": {
-                    "value": "description",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "source": {
-                  "value": "upload",
-                  "type": "enum"
-                },
                 "strategy": {
                   "value": {
                     "value": "strategy",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "source_meta": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
-                "connection_id": {
-                  "value": {
-                    "value": "connection_id",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -15830,27 +14541,6 @@
                   "value": [
                     {
                       "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -16185,48 +14875,9 @@
                   },
                   "type": "primitive"
                 },
-                "description": {
-                  "value": {
-                    "value": "description",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "source": {
-                  "value": "upload",
-                  "type": "enum"
-                },
                 "strategy": {
                   "value": {
                     "value": "strategy",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "source_meta": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
-                "connection_id": {
-                  "value": {
-                    "value": "connection_id",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -16256,27 +14907,6 @@
                   "value": [
                     {
                       "properties": {
-                        "config": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -17473,39 +16103,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -17807,39 +16404,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -18281,39 +16845,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -18703,13 +17234,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -18823,27 +17347,6 @@
               "value": [
                 {
                   "properties": {
-                    "title": {
-                      "value": {
-                        "value": "title",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "description": {
-                      "value": {
-                        "value": "description",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "summary": {
-                      "value": {
-                        "value": "summary",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "collection_id": {
                       "value": {
                         "value": "collection_id",
@@ -18865,24 +17368,10 @@
                       },
                       "type": "primitive"
                     },
-                    "last_message": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
                     "id": {
                       "value": {
                         "value": "id",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "documents_have_been_modified": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
                       },
                       "type": "primitive"
                     }
@@ -19099,27 +17588,6 @@
           "response": {
             "value": {
               "properties": {
-                "title": {
-                  "value": {
-                    "value": "title",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "description": {
-                  "value": {
-                    "value": "description",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "collection_id": {
                   "value": {
                     "value": "collection_id",
@@ -19141,24 +17609,10 @@
                   },
                   "type": "primitive"
                 },
-                "last_message": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "documents_have_been_modified": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
                   },
                   "type": "primitive"
                 }
@@ -19403,27 +17857,6 @@
           "response": {
             "value": {
               "properties": {
-                "title": {
-                  "value": {
-                    "value": "title",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "description": {
-                  "value": {
-                    "value": "description",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "collection_id": {
                   "value": {
                     "value": "collection_id",
@@ -19445,24 +17878,10 @@
                   },
                   "type": "primitive"
                 },
-                "last_message": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "documents_have_been_modified": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
                   },
                   "type": "primitive"
                 }
@@ -19675,81 +18094,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "llm": {
-                  "value": "gpt-4o",
-                  "type": "enum"
-                },
-                "temperature": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "knn": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "chat_system_commands": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "chat_system_commands",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "chat_guardrails": {
-                  "properties": {
-                    "input": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": "prompt_policy",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "output": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "source_validation",
-                                "type": "string"
-                              },
-                              "type": "literal"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "query_expansion": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -19981,81 +18326,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "llm": {
-                  "value": "gpt-4o",
-                  "type": "enum"
-                },
-                "temperature": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "knn": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "chat_system_commands": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "chat_system_commands",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "chat_guardrails": {
-                  "properties": {
-                    "input": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": "prompt_policy",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "output": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "source_validation",
-                                "type": "string"
-                              },
-                              "type": "literal"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "query_expansion": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -20267,27 +18538,6 @@
           "response": {
             "value": {
               "properties": {
-                "title": {
-                  "value": {
-                    "value": "title",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "description": {
-                  "value": {
-                    "value": "description",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "summary": {
-                  "value": {
-                    "value": "summary",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "collection_id": {
                   "value": {
                     "value": "collection_id",
@@ -20309,24 +18559,10 @@
                   },
                   "type": "primitive"
                 },
-                "last_message": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
                 "id": {
                   "value": {
                     "value": "id",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "documents_have_been_modified": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
                   },
                   "type": "primitive"
                 }
@@ -20887,39 +19123,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -21169,39 +19372,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -21591,39 +19761,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -21961,13 +20098,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -22174,53 +20304,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -22426,38 +20512,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -22478,74 +20532,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -23663,38 +21649,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -23715,18 +21669,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -24025,38 +21967,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -24077,74 +21987,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -25075,53 +22917,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -25327,38 +23125,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -25379,74 +23145,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -26564,38 +24262,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -26616,18 +24282,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -26926,38 +24580,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -26978,74 +24600,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -27976,53 +25530,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -28228,38 +25738,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -28280,74 +25758,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -29465,38 +26875,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -29517,18 +26895,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -29827,38 +27193,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -29879,74 +27213,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -30877,53 +28143,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -31129,38 +28351,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -31181,74 +28371,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -32366,38 +29488,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -32418,18 +29508,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -32728,38 +29806,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -32780,74 +29826,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -33778,53 +30756,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -34030,38 +30964,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -34082,74 +30984,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -35267,38 +32101,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -35319,18 +32121,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -35629,38 +32419,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -35681,74 +32439,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -36679,53 +33369,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -36931,38 +33577,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -36983,74 +33597,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -38168,38 +34714,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -38220,18 +34734,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -38530,38 +35032,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -38582,74 +35052,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -39580,53 +35982,9 @@
                       },
                       "type": "primitive"
                     },
-                    "synced": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "size": {
-                      "value": {
-                        "value": "size",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "mimeType": {
-                      "value": {
-                        "value": "mimeType",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "createdTime": {
-                      "value": {
-                        "value": "createdTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "modifiedTime": {
-                      "value": {
-                        "value": "modifiedTime",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "file",
                       "type": "enum"
-                    },
-                    "tags": {
-                      "value": [
-                        {
-                          "value": "no_size",
-                          "type": "enum"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -39832,38 +36190,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -39884,74 +36210,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -41069,38 +37327,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -41121,18 +37347,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -41431,38 +37645,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -41483,74 +37665,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -42693,13 +38807,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "scope": {
-                  "value": {
-                    "value": "scope",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -42813,74 +38920,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "messages": {
-                  "value": [
-                    {
-                      "properties": {
-                        "instance_ptr": {
-                          "value": {
-                            "value": "instance_ptr",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "messages": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": 1,
-                                    "type": "int"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": {
-                                  "value": "info",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "identity": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -42992,74 +39032,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "messages": {
-                  "value": [
-                    {
-                      "properties": {
-                        "instance_ptr": {
-                          "value": {
-                            "value": "instance_ptr",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "messages": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": 1,
-                                    "type": "int"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": {
-                                  "value": "info",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "identity": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -43377,38 +39350,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -43429,74 +39370,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -43660,38 +39533,6 @@
           "response": {
             "value": {
               "properties": {
-                "task_id": {
-                  "value": {
-                    "value": "task_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "status": {
-                  "value": "pending",
-                  "type": "enum"
-                },
-                "run_output": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "id": {
                   "value": {
                     "value": "id",
@@ -43712,74 +39553,6 @@
                     "type": "datetime"
                   },
                   "type": "primitive"
-                },
-                "datasource_connection": {
-                  "properties": {
-                    "private": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "project_id": {
-                      "value": {
-                        "value": "project_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "datasource_id": {
-                      "value": {
-                        "value": "datasource_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "config": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
-                    "token": {
-                      "value": {
-                        "value": "token",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_by": {
-                      "value": {
-                        "value": "created_by",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -43992,38 +39765,6 @@
                   "value": [
                     {
                       "properties": {
-                        "task_id": {
-                          "value": {
-                            "value": "task_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "pending",
-                          "type": "enum"
-                        },
-                        "run_output": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "id": {
                           "value": {
                             "value": "id",
@@ -44044,18 +39785,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "datasource_connection": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -46544,32 +42273,6 @@
                           ],
                           "type": "map"
                         },
-                        "task_forwarder_id": {
-                          "value": {
-                            "value": "task_forwarder_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "rag": {
-                          "properties": {
-                            "collection_id": {
-                              "value": {
-                                "value": "collection_id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "rag_param": {
-                              "value": {
-                                "value": "rag_param",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
                         "image_required": {
                           "value": {
                             "value": true,
@@ -46595,13 +42298,6 @@
                           "value": {
                             "value": "2024-06-13T14:01:03.021673",
                             "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
                           },
                           "type": "primitive"
                         }
@@ -47010,32 +42706,6 @@
                           ],
                           "type": "map"
                         },
-                        "task_forwarder_id": {
-                          "value": {
-                            "value": "task_forwarder_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "rag": {
-                          "properties": {
-                            "collection_id": {
-                              "value": {
-                                "value": "collection_id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "rag_param": {
-                              "value": {
-                                "value": "rag_param",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
                         "image_required": {
                           "value": {
                             "value": true,
@@ -47061,13 +42731,6 @@
                           "value": {
                             "value": "2024-06-13T14:01:03.021673",
                             "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
                           },
                           "type": "primitive"
                         }
@@ -47499,32 +43162,6 @@
                           ],
                           "type": "map"
                         },
-                        "task_forwarder_id": {
-                          "value": {
-                            "value": "task_forwarder_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "rag": {
-                          "properties": {
-                            "collection_id": {
-                              "value": {
-                                "value": "collection_id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "rag_param": {
-                              "value": {
-                                "value": "rag_param",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
                         "image_required": {
                           "value": {
                             "value": true,
@@ -47550,13 +43187,6 @@
                           "value": {
                             "value": "2024-06-13T14:01:03.021673",
                             "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "active": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
                           },
                           "type": "primitive"
                         }
@@ -48763,39 +44393,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "roles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "avatar_url": {
-                          "value": {
-                            "value": "avatar_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_subjects": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -49097,39 +44694,6 @@
                   "value": {
                     "value": "member",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -49571,39 +45135,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "roles",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "name": {
-                  "value": {
-                    "value": "name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "total_subjects": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -49993,13 +45524,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "member": {
-                  "value": {
-                    "value": "member",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"

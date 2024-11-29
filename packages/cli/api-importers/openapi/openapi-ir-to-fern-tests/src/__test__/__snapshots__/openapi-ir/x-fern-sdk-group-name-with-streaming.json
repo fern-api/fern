@@ -129,22 +129,7 @@
           "response": {
             "value": [
               {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "streamed": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "literal"
-                  }
-                },
+                "properties": {},
                 "type": "object"
               }
             ],
@@ -281,22 +266,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": "id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "streamed": {
-                  "value": {
-                    "value": false,
-                    "type": "boolean"
-                  },
-                  "type": "literal"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

@@ -315,10 +315,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "accounting": {
-                      "value": "operational expenses",
-                      "type": "enum"
                     }
                   },
                   "type": "object"
@@ -403,32 +399,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "store_number": {
-                          "value": {
-                            "value": "store_number",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    }
-                  },
-                  "type": "object"
-                },
-                "error": {
-                  "properties": {
-                    "code": {
-                      "value": "account_holder_not_found",
-                      "type": "enum"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "message",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -1046,22 +1019,6 @@
                                 }
                               },
                               "type": "object"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "error": {
-                          "properties": {
-                            "code": {
-                              "value": "account_holder_not_found",
-                              "type": "enum"
-                            },
-                            "message": {
-                              "value": {
-                                "value": "message",
-                                "type": "string"
-                              },
-                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -1828,10 +1785,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "accounting": {
-                      "value": "operational expenses",
-                      "type": "enum"
                     }
                   },
                   "type": "object"
@@ -1916,32 +1869,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "store_number": {
-                          "value": {
-                            "value": "store_number",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    }
-                  },
-                  "type": "object"
-                },
-                "error": {
-                  "properties": {
-                    "code": {
-                      "value": "account_holder_not_found",
-                      "type": "enum"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "message",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -3320,22 +3250,6 @@
                             }
                           },
                           "type": "object"
-                        },
-                        "error": {
-                          "properties": {
-                            "code": {
-                              "value": "invalid_bank_statement",
-                              "type": "enum"
-                            },
-                            "message": {
-                              "value": {
-                                "value": "message",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -3499,22 +3413,6 @@
                       "value": {
                         "value": 4096,
                         "type": "int"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
-                },
-                "error": {
-                  "properties": {
-                    "code": {
-                      "value": "invalid_bank_statement",
-                      "type": "enum"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "message",
-                        "type": "string"
                       },
                       "type": "primitive"
                     }
@@ -3695,22 +3593,6 @@
                       "value": {
                         "value": 4096,
                         "type": "int"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
-                },
-                "error": {
-                  "properties": {
-                    "code": {
-                      "value": "invalid_bank_statement",
-                      "type": "enum"
-                    },
-                    "message": {
-                      "value": {
-                        "value": "message",
-                        "type": "string"
                       },
                       "type": "primitive"
                     }
@@ -5261,10 +5143,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "accounting": {
-                          "value": "operational expenses",
-                          "type": "enum"
                         }
                       },
                       "type": "object"
@@ -7111,13 +6989,6 @@
           "response": {
             "value": {
               "properties": {
-                "next_cursor": {
-                  "value": {
-                    "value": "next_cursor",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "data": {
                   "value": [
                     {
@@ -7165,13 +7036,6 @@
                         "status": {
                           "value": "open",
                           "type": "enum"
-                        },
-                        "rejection_reason": {
-                          "value": {
-                            "value": "rejection_reason",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -7368,13 +7232,6 @@
                 "status": {
                   "value": "open",
                   "type": "enum"
-                },
-                "rejection_reason": {
-                  "value": {
-                    "value": "rejection_reason",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -7556,13 +7413,6 @@
                 "status": {
                   "value": "open",
                   "type": "enum"
-                },
-                "rejection_reason": {
-                  "value": {
-                    "value": "rejection_reason",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"

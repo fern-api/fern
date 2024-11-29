@@ -20,11 +20,7 @@
                     "stream_response": false,
                   },
                   "response": {
-                    "body": {
-                      "answer": "answer",
-                      "chat_id": "chat_id",
-                      "turn_id": "turn_id",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -70,9 +66,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "chunk": "Hello, how can I help you today?",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -185,7 +179,7 @@
             stream_response: true
           response:
             stream:
-              - chunk: Hello, how can I help you today?
+              - {}
     chat:
       path: /v2/chats
       method: POST
@@ -215,10 +209,7 @@
             query: How can I use the Vectara platform?
             stream_response: false
           response:
-            body:
-              chat_id: chat_id
-              turn_id: turn_id
-              answer: answer
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

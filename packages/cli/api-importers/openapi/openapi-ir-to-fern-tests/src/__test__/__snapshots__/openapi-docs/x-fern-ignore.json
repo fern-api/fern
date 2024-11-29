@@ -16,19 +16,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "meta": {
-                        "hasMore": true,
-                      },
-                      "users": [
-                        {
-                          "age": 1,
-                          "email": "email",
-                          "id": "id",
-                          "name": "name",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -122,14 +110,7 @@
         type: UsersResponse
       examples:
         - response:
-            body:
-              meta:
-                hasMore: true
-              users:
-                - id: id
-                  name: name
-                  email: email
-                  age: 1
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

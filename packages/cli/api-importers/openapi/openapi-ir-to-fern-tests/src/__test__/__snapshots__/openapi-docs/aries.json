@@ -15894,50 +15894,8 @@ docs: Feature discovery
                   "response": {
                     "body": {
                       "results": [
-                        {
-                          "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created_at": "2021-12-31 23:59:59+00:00",
-                          "disclosures": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "disclosures": [
-                              {
-                                "key": "value",
-                              },
-                            ],
-                          },
-                          "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "queries_msg": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          },
-                          "state": "active",
-                          "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "trace": true,
-                          "updated_at": "2021-12-31 23:59:59+00:00",
-                        },
-                        {
-                          "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created_at": "2021-12-31 23:59:59+00:00",
-                          "disclosures": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "disclosures": [
-                              {
-                                "key": "value",
-                              },
-                            ],
-                          },
-                          "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "queries_msg": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          },
-                          "state": "active",
-                          "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "trace": true,
-                          "updated_at": "2021-12-31 23:59:59+00:00",
-                        },
+                        {},
+                        {},
                       ],
                     },
                   },
@@ -16061,36 +16019,8 @@ service:
         - response:
             body:
               results:
-                - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  created_at: '2021-12-31 23:59:59+00:00'
-                  disclosures:
-                    '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                    '@type': https://didcomm.org/my-family/1.0/my-message-type
-                    disclosures:
-                      - key: value
-                  discovery_exchange_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  queries_msg:
-                    '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                    '@type': https://didcomm.org/my-family/1.0/my-message-type
-                  state: active
-                  thread_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  trace: true
-                  updated_at: '2021-12-31 23:59:59+00:00'
-                - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  created_at: '2021-12-31 23:59:59+00:00'
-                  disclosures:
-                    '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                    '@type': https://didcomm.org/my-family/1.0/my-message-type
-                    disclosures:
-                      - key: value
-                  discovery_exchange_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  queries_msg:
-                    '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                    '@type': https://didcomm.org/my-family/1.0/my-message-type
-                  state: active
-                  thread_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  trace: true
-                  updated_at: '2021-12-31 23:59:59+00:00'
+                - {}
+                - {}
   source:
     openapi: ../openapi.yml
   display-name: discover-features v2.0

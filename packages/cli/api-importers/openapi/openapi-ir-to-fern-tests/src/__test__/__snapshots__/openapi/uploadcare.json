@@ -3053,9 +3053,7 @@ Log.d("TAG", file.toString())
                     "UPLOADCARE_PUB_KEY": "caa9d29da887ee88ffe6",
                   },
                   "response": {
-                    "body": {
-                      "filename": "filename",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -3212,28 +3210,6 @@ Log.d("TAG", file.toString())
                           "subtype": "jpeg",
                           "type": "image",
                         },
-                        "video": {
-                          "audio": [
-                            {
-                              "bitrate": 78,
-                              "channels": 2,
-                              "codec": "aac",
-                              "sample_rate": 44100,
-                            },
-                          ],
-                          "bitrate": 393,
-                          "duration": 261827,
-                          "format": "mp4",
-                          "video": [
-                            {
-                              "bitrate": 315,
-                              "codec": "h264",
-                              "frame_rate": 30,
-                              "height": 360,
-                              "width": 640,
-                            },
-                          ],
-                        },
                       },
                       "done": 2667636,
                       "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
@@ -3264,28 +3240,9 @@ Log.d("TAG", file.toString())
                       },
                       "mime_type": "image/jpeg",
                       "original_filename": "IMG-0412_123.JPG",
-                      "s3_bucket": "custom-s3-bucket-name",
                       "size": 2667636,
                       "total": 2667636,
                       "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "video_info": {
-                        "audio": {
-                          "bitrate": 78,
-                          "channels": "2",
-                          "codec": "aac",
-                          "sample_rate": 44100,
-                        },
-                        "bitrate": 393,
-                        "duration": 261827,
-                        "format": "mp4",
-                        "video": {
-                          "bitrate": 315,
-                          "codec": "h264",
-                          "frame_rate": 30,
-                          "height": 360,
-                          "width": 640,
-                        },
-                      },
                     },
                   },
                 },
@@ -3592,28 +3549,6 @@ Log.d("TAG", file.toString())
                           "subtype": "jpeg",
                           "type": "image",
                         },
-                        "video": {
-                          "audio": [
-                            {
-                              "bitrate": 78,
-                              "channels": 2,
-                              "codec": "aac",
-                              "sample_rate": 44100,
-                            },
-                          ],
-                          "bitrate": 393,
-                          "duration": 261827,
-                          "format": "mp4",
-                          "video": [
-                            {
-                              "bitrate": 315,
-                              "codec": "h264",
-                              "frame_rate": 30,
-                              "height": 360,
-                              "width": 640,
-                            },
-                          ],
-                        },
                       },
                       "done": 2667636,
                       "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
@@ -3644,29 +3579,10 @@ Log.d("TAG", file.toString())
                       },
                       "mime_type": "image/jpeg",
                       "original_filename": "IMG-0412_123.JPG",
-                      "s3_bucket": "custom-s3-bucket-name",
                       "size": 2667636,
                       "total": 2667636,
                       "type": "file_info",
                       "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "video_info": {
-                        "audio": {
-                          "bitrate": 78,
-                          "channels": "2",
-                          "codec": "aac",
-                          "sample_rate": 44100,
-                        },
-                        "bitrate": 393,
-                        "duration": 261827,
-                        "format": "mp4",
-                        "video": {
-                          "bitrate": 315,
-                          "codec": "h264",
-                          "frame_rate": 30,
-                          "height": 360,
-                          "width": 640,
-                        },
-                      },
                     },
                   },
                 },
@@ -4048,28 +3964,6 @@ Log.d("TAG", status.toString())
                           "subtype": "jpeg",
                           "type": "image",
                         },
-                        "video": {
-                          "audio": [
-                            {
-                              "bitrate": 78,
-                              "channels": 2,
-                              "codec": "aac",
-                              "sample_rate": 44100,
-                            },
-                          ],
-                          "bitrate": 393,
-                          "duration": 261827,
-                          "format": "mp4",
-                          "video": [
-                            {
-                              "bitrate": 315,
-                              "codec": "h264",
-                              "frame_rate": 30,
-                              "height": 360,
-                              "width": 640,
-                            },
-                          ],
-                        },
                       },
                       "done": 2667636,
                       "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
@@ -4100,29 +3994,10 @@ Log.d("TAG", status.toString())
                       },
                       "mime_type": "image/jpeg",
                       "original_filename": "IMG-0412_123.JPG",
-                      "s3_bucket": "custom-s3-bucket-name",
                       "size": 2667636,
                       "status": "success",
                       "total": 2667636,
                       "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "video_info": {
-                        "audio": {
-                          "bitrate": 78,
-                          "channels": "2",
-                          "codec": "aac",
-                          "sample_rate": 44100,
-                        },
-                        "bitrate": 393,
-                        "duration": 261827,
-                        "format": "mp4",
-                        "video": {
-                          "bitrate": 315,
-                          "codec": "h264",
-                          "frame_rate": 30,
-                          "height": 360,
-                          "width": 640,
-                        },
-                      },
                     },
                   },
                 },
@@ -4484,28 +4359,6 @@ Log.d("TAG", file.toString())
                           "subtype": "jpeg",
                           "type": "image",
                         },
-                        "video": {
-                          "audio": [
-                            {
-                              "bitrate": 78,
-                              "channels": 2,
-                              "codec": "aac",
-                              "sample_rate": 44100,
-                            },
-                          ],
-                          "bitrate": 393,
-                          "duration": 261827,
-                          "format": "mp4",
-                          "video": [
-                            {
-                              "bitrate": 315,
-                              "codec": "h264",
-                              "frame_rate": 30,
-                              "height": 360,
-                              "width": 640,
-                            },
-                          ],
-                        },
                       },
                       "done": 2667636,
                       "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
@@ -4536,28 +4389,9 @@ Log.d("TAG", file.toString())
                       },
                       "mime_type": "image/jpeg",
                       "original_filename": "IMG-0412_123.JPG",
-                      "s3_bucket": "custom-s3-bucket-name",
                       "size": 2667636,
                       "total": 2667636,
                       "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "video_info": {
-                        "audio": {
-                          "bitrate": 78,
-                          "channels": "2",
-                          "codec": "aac",
-                          "sample_rate": 44100,
-                        },
-                        "bitrate": 393,
-                        "duration": 261827,
-                        "format": "mp4",
-                        "video": {
-                          "bitrate": 315,
-                          "codec": "h264",
-                          "frame_rate": 30,
-                          "height": 360,
-                          "width": 640,
-                        },
-                      },
                     },
                   },
                 },
@@ -5182,8 +5016,7 @@ service:
         - request:
             UPLOADCARE_PUB_KEY: caa9d29da887ee88ffe6
           response:
-            body:
-              filename: filename
+            body: {}
           code-samples:
             - name: JS
               language: JavaScript
@@ -5718,21 +5551,6 @@ service:
                 dpi:
                   - 72
                   - 72
-              video_info:
-                duration: 261827
-                format: mp4
-                bitrate: 393
-                audio:
-                  bitrate: 78
-                  codec: aac
-                  sample_rate: 44100
-                  channels: '2'
-                video:
-                  height: 360
-                  width: 640
-                  frame_rate: 30
-                  bitrate: 315
-                  codec: h264
               content_info:
                 mime:
                   mime: image/jpeg
@@ -5752,28 +5570,12 @@ service:
                   dpi:
                     - 72
                     - 72
-                video:
-                  duration: 261827
-                  format: mp4
-                  bitrate: 393
-                  audio:
-                    - bitrate: 78
-                      codec: aac
-                      sample_rate: 44100
-                      channels: 2
-                  video:
-                    - height: 360
-                      width: 640
-                      frame_rate: 30
-                      bitrate: 315
-                      codec: h264
               metadata:
                 subsystem: uploader
                 pet: cat
               is_image: true
               is_stored: true
               is_ready: true
-              s3_bucket: custom-s3-bucket-name
           code-samples:
             - name: JS
               language: JavaScript
@@ -6141,21 +5943,6 @@ service:
                 dpi:
                   - 72
                   - 72
-              video_info:
-                duration: 261827
-                format: mp4
-                bitrate: 393
-                audio:
-                  bitrate: 78
-                  codec: aac
-                  sample_rate: 44100
-                  channels: '2'
-                video:
-                  height: 360
-                  width: 640
-                  frame_rate: 30
-                  bitrate: 315
-                  codec: h264
               content_info:
                 mime:
                   mime: image/jpeg
@@ -6175,28 +5962,12 @@ service:
                   dpi:
                     - 72
                     - 72
-                video:
-                  duration: 261827
-                  format: mp4
-                  bitrate: 393
-                  audio:
-                    - bitrate: 78
-                      codec: aac
-                      sample_rate: 44100
-                      channels: 2
-                  video:
-                    - height: 360
-                      width: 640
-                      frame_rate: 30
-                      bitrate: 315
-                      codec: h264
               metadata:
                 subsystem: uploader
                 pet: cat
               is_image: true
               is_stored: true
               is_ready: true
-              s3_bucket: custom-s3-bucket-name
               type: file_info
           code-samples:
             - name: JS
@@ -6533,21 +6304,6 @@ service:
                 dpi:
                   - 72
                   - 72
-              video_info:
-                duration: 261827
-                format: mp4
-                bitrate: 393
-                audio:
-                  bitrate: 78
-                  codec: aac
-                  sample_rate: 44100
-                  channels: '2'
-                video:
-                  height: 360
-                  width: 640
-                  frame_rate: 30
-                  bitrate: 315
-                  codec: h264
               content_info:
                 mime:
                   mime: image/jpeg
@@ -6567,28 +6323,12 @@ service:
                   dpi:
                     - 72
                     - 72
-                video:
-                  duration: 261827
-                  format: mp4
-                  bitrate: 393
-                  audio:
-                    - bitrate: 78
-                      codec: aac
-                      sample_rate: 44100
-                      channels: 2
-                  video:
-                    - height: 360
-                      width: 640
-                      frame_rate: 30
-                      bitrate: 315
-                      codec: h264
               metadata:
                 subsystem: uploader
                 pet: cat
               is_image: true
               is_stored: true
               is_ready: true
-              s3_bucket: custom-s3-bucket-name
               status: success
           code-samples:
             - name: JS
@@ -6895,21 +6635,6 @@ service:
                 dpi:
                   - 72
                   - 72
-              video_info:
-                duration: 261827
-                format: mp4
-                bitrate: 393
-                audio:
-                  bitrate: 78
-                  codec: aac
-                  sample_rate: 44100
-                  channels: '2'
-                video:
-                  height: 360
-                  width: 640
-                  frame_rate: 30
-                  bitrate: 315
-                  codec: h264
               content_info:
                 mime:
                   mime: image/jpeg
@@ -6929,28 +6654,12 @@ service:
                   dpi:
                     - 72
                     - 72
-                video:
-                  duration: 261827
-                  format: mp4
-                  bitrate: 393
-                  audio:
-                    - bitrate: 78
-                      codec: aac
-                      sample_rate: 44100
-                      channels: 2
-                  video:
-                    - height: 360
-                      width: 640
-                      frame_rate: 30
-                      bitrate: 315
-                      codec: h264
               metadata:
                 subsystem: uploader
                 pet: cat
               is_image: true
               is_stored: true
               is_ready: true
-              s3_bucket: custom-s3-bucket-name
           code-samples:
             - name: JS
               language: JavaScript

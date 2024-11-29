@@ -22,11 +22,7 @@
                     "limit": 1,
                   },
                   "response": {
-                    "body": {
-                      "results": [
-                        "results",
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -134,9 +130,7 @@
           query-parameters:
             limit: 1
           response:
-            body:
-              results:
-                - results
+            body: {}
   source:
     openapi: ../openapi.yml
 types:
@@ -165,11 +159,7 @@ types:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "results": [
-                        "results",
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -272,9 +262,7 @@ service:
             id: id
           request: {}
           response:
-            body:
-              results:
-                - results
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

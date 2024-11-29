@@ -17,22 +17,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "email": "email",
-                      "id": "id",
-                      "name": "name",
-                      "settings": {
-                        "lastModified": "2024-01-15T09:30:00Z",
-                        "notifications": true,
-                        "theme": "theme",
-                      },
-                      "stats": {
-                        "accountStatus": "active",
-                        "lastLoginTime": "2024-01-15T09:30:00Z",
-                        "totalLogins": 1,
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -71,22 +56,7 @@
                     "userId": "userId",
                   },
                   "response": {
-                    "body": {
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "email": "email",
-                      "id": "id",
-                      "name": "name",
-                      "settings": {
-                        "lastModified": "2024-01-15T09:30:00Z",
-                        "notifications": true,
-                        "theme": "theme",
-                      },
-                      "stats": {
-                        "accountStatus": "active",
-                        "lastLoginTime": "2024-01-15T09:30:00Z",
-                        "totalLogins": 1,
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -186,19 +156,7 @@
       examples:
         - request: {}
           response:
-            body:
-              id: id
-              name: name
-              email: email
-              createdAt: '2024-01-15T09:30:00Z'
-              settings:
-                theme: theme
-                notifications: true
-                lastModified: '2024-01-15T09:30:00Z'
-              stats:
-                totalLogins: 1
-                lastLoginTime: '2024-01-15T09:30:00Z'
-                accountStatus: active
+            body: {}
     getAUser:
       path: /users/{userId}
       method: GET
@@ -215,19 +173,7 @@
         - path-parameters:
             userId: userId
           response:
-            body:
-              id: id
-              name: name
-              email: email
-              createdAt: '2024-01-15T09:30:00Z'
-              settings:
-                theme: theme
-                notifications: true
-                lastModified: '2024-01-15T09:30:00Z'
-              stats:
-                totalLogins: 1
-                lastLoginTime: '2024-01-15T09:30:00Z'
-                accountStatus: active
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

@@ -7050,11 +7050,7 @@ types:
                     "secret": "secret",
                   },
                   "response": {
-                    "body": {
-                      "access_token": "access_token",
-                      "expires_in": 1,
-                      "token_type": "token_type",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7132,10 +7128,7 @@ types:
             organizationID: organizationID
             secret: secret
           response:
-            body:
-              access_token: access_token
-              expires_in: 1
-              token_type: token_type
+            body: {}
   source:
     openapi: ../swagger.json
 ",
@@ -7164,46 +7157,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "externalID": "externalID",
-                      "id": "id",
-                      "info": {
-                        "awsBuyer": {
-                          "awsAccountID": "awsAccountID",
-                          "awsCustomerID": "awsCustomerID",
-                          "dataFeedAccountID": "dataFeedAccountID",
-                        },
-                        "azureBuyer": {
-                          "emailId": "emailId",
-                          "objectId": "objectId",
-                          "puid": "puid",
-                          "tenantId": "tenantId",
-                        },
-                        "collectableAmount": 1.1,
-                        "disbursedAmount": 1.1,
-                        "gcpBuyer": {
-                          "approvals": [
-                            {},
-                          ],
-                          "createTime": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "inputProperties": [
-                            1,
-                          ],
-                          "name": "name",
-                          "provider": "provider",
-                          "state": "ACCOUNT_STATE_UNSPECIFIED",
-                          "updateTime": "2024-01-15T09:30:00Z",
-                        },
-                        "invoicedAmount": 1.1,
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "name": "name",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7242,21 +7196,7 @@ types:
                   },
                   "response": {
                     "body": [
-                      {
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "externalID": "externalID",
-                        "id": "id",
-                        "info": {
-                          "collectableAmount": 1.1,
-                          "disbursedAmount": 1.1,
-                          "invoicedAmount": 1.1,
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -7293,46 +7233,7 @@ types:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "externalID": "externalID",
-                      "id": "id",
-                      "info": {
-                        "awsBuyer": {
-                          "awsAccountID": "awsAccountID",
-                          "awsCustomerID": "awsCustomerID",
-                          "dataFeedAccountID": "dataFeedAccountID",
-                        },
-                        "azureBuyer": {
-                          "emailId": "emailId",
-                          "objectId": "objectId",
-                          "puid": "puid",
-                          "tenantId": "tenantId",
-                        },
-                        "collectableAmount": 1.1,
-                        "disbursedAmount": 1.1,
-                        "gcpBuyer": {
-                          "approvals": [
-                            {},
-                          ],
-                          "createTime": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "inputProperties": [
-                            1,
-                          ],
-                          "name": "name",
-                          "provider": "provider",
-                          "state": "ACCOUNT_STATE_UNSPECIFIED",
-                          "updateTime": "2024-01-15T09:30:00Z",
-                        },
-                        "invoicedAmount": 1.1,
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "name": "name",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7406,18 +7307,7 @@ service:
             orgId: orgId
           response:
             body:
-              - creationTime: '2024-01-15T09:30:00Z'
-                description: description
-                externalID: externalID
-                id: id
-                info:
-                  collectableAmount: 1.1
-                  disbursedAmount: 1.1
-                  invoicedAmount: 1.1
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                organizationID: organizationID
-                partner: AWS
+              - {}
     GetBuyer:
       path: /org/{orgId}/buyer/{buyerId}
       method: GET
@@ -7443,39 +7333,7 @@ service:
             orgId: orgId
             buyerId: buyerId
           response:
-            body:
-              creationTime: '2024-01-15T09:30:00Z'
-              description: description
-              externalID: externalID
-              id: id
-              info:
-                awsBuyer:
-                  awsAccountID: awsAccountID
-                  awsCustomerID: awsCustomerID
-                  dataFeedAccountID: dataFeedAccountID
-                azureBuyer:
-                  emailId: emailId
-                  objectId: objectId
-                  puid: puid
-                  tenantId: tenantId
-                collectableAmount: 1.1
-                disbursedAmount: 1.1
-                gcpBuyer:
-                  approvals:
-                    - {}
-                  createTime: '2024-01-15T09:30:00Z'
-                  id: id
-                  inputProperties:
-                    - 1
-                  name: name
-                  provider: provider
-                  state: ACCOUNT_STATE_UNSPECIFIED
-                  updateTime: '2024-01-15T09:30:00Z'
-                invoicedAmount: 1.1
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              name: name
-              organizationID: organizationID
-              partner: AWS
+            body: {}
     UpdateBuyerNameDescription:
       path: /org/{orgId}/buyer/{buyerId}
       method: PATCH
@@ -7512,39 +7370,7 @@ service:
             buyerId: buyerId
           request: {}
           response:
-            body:
-              creationTime: '2024-01-15T09:30:00Z'
-              description: description
-              externalID: externalID
-              id: id
-              info:
-                awsBuyer:
-                  awsAccountID: awsAccountID
-                  awsCustomerID: awsCustomerID
-                  dataFeedAccountID: dataFeedAccountID
-                azureBuyer:
-                  emailId: emailId
-                  objectId: objectId
-                  puid: puid
-                  tenantId: tenantId
-                collectableAmount: 1.1
-                disbursedAmount: 1.1
-                gcpBuyer:
-                  approvals:
-                    - {}
-                  createTime: '2024-01-15T09:30:00Z'
-                  id: id
-                  inputProperties:
-                    - 1
-                  name: name
-                  provider: provider
-                  state: ACCOUNT_STATE_UNSPECIFIED
-                  updateTime: '2024-01-15T09:30:00Z'
-                invoicedAmount: 1.1
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              name: name
-              organizationID: organizationID
-              partner: AWS
+            body: {}
   source:
     openapi: ../swagger.json
 ",
@@ -7579,13 +7405,7 @@ service:
                     "organizationID": "organizationID",
                   },
                   "response": {
-                    "body": {
-                      "creditAmountIncrement": 1.1,
-                      "entitlementID": "entitlementID",
-                      "entitlementTermID": "entitlementTermID",
-                      "newCreditAmount": 1.1,
-                      "organizationID": "organizationID",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7641,60 +7461,7 @@ service:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "entitlementTermID": "entitlementTermID",
-                      "externalBuyerID": "externalBuyerID",
-                      "externalID": "externalID",
-                      "externalProductID": "externalProductID",
-                      "id": "id",
-                      "info": {
-                        "autoRenew": true,
-                        "awsEntitlements": [
-                          {},
-                        ],
-                        "azureSubscriptions": [
-                          {},
-                        ],
-                        "collectableAmount": 1.1,
-                        "commitAmount": 1.1,
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "disbursedAmount": 1.1,
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpEntitlements": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "invoicedAmount": 1.1,
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "name": "name",
-                      "offerID": "offerID",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
-                      "status": "ACTIVE",
-                      "type": "type",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7733,60 +7500,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementTermID": "entitlementTermID",
-                        "externalBuyerID": "externalBuyerID",
-                        "externalID": "externalID",
-                        "externalProductID": "externalProductID",
-                        "id": "id",
-                        "info": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "ACTIVE",
-                        "type": "type",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -7823,60 +7537,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementTermID": "entitlementTermID",
-                        "externalBuyerID": "externalBuyerID",
-                        "externalID": "externalID",
-                        "externalProductID": "externalProductID",
-                        "id": "id",
-                        "info": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "ACTIVE",
-                        "type": "type",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -7917,60 +7578,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementTermID": "entitlementTermID",
-                        "externalBuyerID": "externalBuyerID",
-                        "externalID": "externalID",
-                        "externalProductID": "externalProductID",
-                        "id": "id",
-                        "info": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "ACTIVE",
-                        "type": "type",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -8011,60 +7619,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementTermID": "entitlementTermID",
-                        "externalBuyerID": "externalBuyerID",
-                        "externalID": "externalID",
-                        "externalProductID": "externalProductID",
-                        "id": "id",
-                        "info": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "ACTIVE",
-                        "type": "type",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -8105,60 +7660,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementTermID": "entitlementTermID",
-                        "externalBuyerID": "externalBuyerID",
-                        "externalID": "externalID",
-                        "externalProductID": "externalProductID",
-                        "id": "id",
-                        "info": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "ACTIVE",
-                        "type": "type",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -8199,60 +7701,7 @@ service:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "buyerID": "buyerID",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "entitlementTermID": "entitlementTermID",
-                      "externalBuyerID": "externalBuyerID",
-                      "externalID": "externalID",
-                      "externalProductID": "externalProductID",
-                      "id": "id",
-                      "info": {
-                        "autoRenew": true,
-                        "awsEntitlements": [
-                          {},
-                        ],
-                        "azureSubscriptions": [
-                          {},
-                        ],
-                        "collectableAmount": 1.1,
-                        "commitAmount": 1.1,
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "disbursedAmount": 1.1,
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpEntitlements": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "invoicedAmount": 1.1,
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "name": "name",
-                      "offerID": "offerID",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
-                      "status": "ACTIVE",
-                      "type": "type",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -8341,50 +7790,7 @@ service:
             buyerId: buyerId
           response:
             body:
-              - buyerID: buyerID
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementTermID: entitlementTermID
-                externalBuyerID: externalBuyerID
-                externalID: externalID
-                externalProductID: externalProductID
-                id: id
-                info:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                status: ACTIVE
-                type: type
+              - {}
     ListEntitlements:
       path: /org/{orgId}/entitlement
       method: GET
@@ -8407,50 +7813,7 @@ service:
             orgId: orgId
           response:
             body:
-              - buyerID: buyerID
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementTermID: entitlementTermID
-                externalBuyerID: externalBuyerID
-                externalID: externalID
-                externalProductID: externalProductID
-                id: id
-                info:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                status: ACTIVE
-                type: type
+              - {}
     GetEntitlement:
       path: /org/{orgId}/entitlement/{entitlementId}
       method: GET
@@ -8476,51 +7839,7 @@ service:
             orgId: orgId
             entitlementId: entitlementId
           response:
-            body:
-              buyerID: buyerID
-              creationTime: '2024-01-15T09:30:00Z'
-              endTime: '2024-01-15T09:30:00Z'
-              entitlementTermID: entitlementTermID
-              externalBuyerID: externalBuyerID
-              externalID: externalID
-              externalProductID: externalProductID
-              id: id
-              info:
-                autoRenew: true
-                awsEntitlements:
-                  - {}
-                azureSubscriptions:
-                  - {}
-                collectableAmount: 1.1
-                commitAmount: 1.1
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                disbursedAmount: 1.1
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpEntitlements:
-                  - {}
-                gcpPlans:
-                  - {}
-                invoicedAmount: 1.1
-                paymentInstallments:
-                  - {}
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              name: name
-              offerID: offerID
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              startTime: '2024-01-15T09:30:00Z'
-              status: ACTIVE
-              type: type
+            body: {}
     AddEntitlementCredit:
       path: /org/{orgId}/entitlement/{entitlementId}/addCredit
       method: POST
@@ -8564,12 +7883,7 @@ service:
             entitlementID: entitlementID
             organizationID: organizationID
           response:
-            body:
-              creditAmountIncrement: 1.1
-              entitlementID: entitlementID
-              entitlementTermID: entitlementTermID
-              newCreditAmount: 1.1
-              organizationID: organizationID
+            body: {}
     UpdateEntitlementName:
       path: /org/{orgId}/entitlement/{entitlementId}/entitlementName
       method: PATCH
@@ -8604,51 +7918,7 @@ service:
             entitlementId: entitlementId
           request: {}
           response:
-            body:
-              buyerID: buyerID
-              creationTime: '2024-01-15T09:30:00Z'
-              endTime: '2024-01-15T09:30:00Z'
-              entitlementTermID: entitlementTermID
-              externalBuyerID: externalBuyerID
-              externalID: externalID
-              externalProductID: externalProductID
-              id: id
-              info:
-                autoRenew: true
-                awsEntitlements:
-                  - {}
-                azureSubscriptions:
-                  - {}
-                collectableAmount: 1.1
-                commitAmount: 1.1
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                disbursedAmount: 1.1
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpEntitlements:
-                  - {}
-                gcpPlans:
-                  - {}
-                invoicedAmount: 1.1
-                paymentInstallments:
-                  - {}
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              name: name
-              offerID: offerID
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              startTime: '2024-01-15T09:30:00Z'
-              status: ACTIVE
-              type: type
+            body: {}
     ListEntitlementsByOffer:
       path: /org/{orgId}/offer/{offerId}/entitlement
       method: GET
@@ -8675,50 +7945,7 @@ service:
             offerId: offerId
           response:
             body:
-              - buyerID: buyerID
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementTermID: entitlementTermID
-                externalBuyerID: externalBuyerID
-                externalID: externalID
-                externalProductID: externalProductID
-                id: id
-                info:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                status: ACTIVE
-                type: type
+              - {}
     ListEntitlementsByPartner:
       path: /org/{orgId}/partner/{partner}/entitlement
       method: GET
@@ -8745,50 +7972,7 @@ service:
             partner: AWS
           response:
             body:
-              - buyerID: buyerID
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementTermID: entitlementTermID
-                externalBuyerID: externalBuyerID
-                externalID: externalID
-                externalProductID: externalProductID
-                id: id
-                info:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                status: ACTIVE
-                type: type
+              - {}
     ListEntitlementsByProduct:
       path: /org/{orgId}/product/{productId}/entitlement
       method: GET
@@ -8815,50 +7999,7 @@ service:
             productId: productId
           response:
             body:
-              - buyerID: buyerID
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementTermID: entitlementTermID
-                externalBuyerID: externalBuyerID
-                externalID: externalID
-                externalProductID: externalProductID
-                id: id
-                info:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                name: name
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                status: ACTIVE
-                type: type
+              - {}
   source:
     openapi: ../swagger.json
 types:
@@ -8896,60 +8037,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "buyerID": "buyerID",
-                      "commitAmount": 1.1,
-                      "creditAmount": 1.1,
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "entitlementID": "entitlementID",
-                      "entitlementInfo": {
-                        "autoRenew": true,
-                        "awsEntitlements": [
-                          {},
-                        ],
-                        "azureSubscriptions": [
-                          {},
-                        ],
-                        "collectableAmount": 1.1,
-                        "commitAmount": 1.1,
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "disbursedAmount": 1.1,
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpEntitlements": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "invoicedAmount": 1.1,
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                      },
-                      "externalEntitlementID": "externalEntitlementID",
-                      "id": "id",
-                      "info": {
-                        "type": "",
-                      },
-                      "offerID": "offerID",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "startTime": "2024-01-15T09:30:00Z",
-                      "usedCommitAmount": 1.1,
-                      "usedCreditAmount": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -8993,60 +8081,7 @@ types:
                   },
                   "response": {
                     "body": [
-                      {
-                        "buyerID": "buyerID",
-                        "commitAmount": 1.1,
-                        "creditAmount": 1.1,
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "entitlementID": "entitlementID",
-                        "entitlementInfo": {
-                          "autoRenew": true,
-                          "awsEntitlements": [
-                            {},
-                          ],
-                          "azureSubscriptions": [
-                            {},
-                          ],
-                          "collectableAmount": 1.1,
-                          "commitAmount": 1.1,
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "disbursedAmount": 1.1,
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpEntitlements": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "invoicedAmount": 1.1,
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "externalEntitlementID": "externalEntitlementID",
-                        "id": "id",
-                        "info": {
-                          "type": "",
-                        },
-                        "offerID": "offerID",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "usedCommitAmount": 1.1,
-                        "usedCreditAmount": 1.1,
-                      },
+                      {},
                     ],
                   },
                 },
@@ -9110,49 +8145,7 @@ service:
             entitlementId: entitlementId
           response:
             body:
-              - buyerID: buyerID
-                commitAmount: 1.1
-                creditAmount: 1.1
-                endTime: '2024-01-15T09:30:00Z'
-                entitlementID: entitlementID
-                entitlementInfo:
-                  autoRenew: true
-                  awsEntitlements:
-                    - {}
-                  azureSubscriptions:
-                    - {}
-                  collectableAmount: 1.1
-                  commitAmount: 1.1
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  disbursedAmount: 1.1
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpEntitlements:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  invoicedAmount: 1.1
-                  paymentInstallments:
-                    - {}
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                externalEntitlementID: externalEntitlementID
-                id: id
-                info:
-                  type: ''
-                offerID: offerID
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                startTime: '2024-01-15T09:30:00Z'
-                usedCommitAmount: 1.1
-                usedCreditAmount: 1.1
+              - {}
     GetEntitlementTerm:
       path: >-
         /org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}
@@ -9183,50 +8176,7 @@ service:
             entitlementId: entitlementId
             entitlementTermId: entitlementTermId
           response:
-            body:
-              buyerID: buyerID
-              commitAmount: 1.1
-              creditAmount: 1.1
-              endTime: '2024-01-15T09:30:00Z'
-              entitlementID: entitlementID
-              entitlementInfo:
-                autoRenew: true
-                awsEntitlements:
-                  - {}
-                azureSubscriptions:
-                  - {}
-                collectableAmount: 1.1
-                commitAmount: 1.1
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                disbursedAmount: 1.1
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpEntitlements:
-                  - {}
-                gcpPlans:
-                  - {}
-                invoicedAmount: 1.1
-                paymentInstallments:
-                  - {}
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-              externalEntitlementID: externalEntitlementID
-              id: id
-              info:
-                type: ''
-              offerID: offerID
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              startTime: '2024-01-15T09:30:00Z'
-              usedCommitAmount: 1.1
-              usedCreditAmount: 1.1
+            body: {}
   source:
     openapi: ../swagger.json
 ",
@@ -9261,82 +8211,7 @@ service:
                     "service": "MARKETPLACE",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "info": {
-                        "awsAceIntegration": {
-                          "partnerId": "partnerId",
-                          "s3BucketName": "s3BucketName",
-                          "s3BucketRegion": "s3BucketRegion",
-                          "secretKey": "secretKey",
-                        },
-                        "awsIntegration": {
-                          "externalID": "externalID",
-                          "iamRoleArn": "iamRoleArn",
-                          "marketplaceStartDate": "2024-01-15T09:30:00Z",
-                          "mcasFullSyncDone": true,
-                          "mcasIamRoleArn": "mcasIamRoleArn",
-                          "mcasS3Bucket": "mcasS3Bucket",
-                          "mcasSnsTopic": "mcasSnsTopic",
-                          "mdfsFullSyncDone": true,
-                          "mdfsKmsKeyArn": "mdfsKmsKeyArn",
-                          "mdfsS3BucketArn": "mdfsS3BucketArn",
-                          "policyArns": [
-                            "policyArns",
-                          ],
-                          "revenueRecordFullSyncDone": true,
-                        },
-                        "azureIntegration": {
-                          "cmaFullSyncDone": true,
-                          "secretKey": "secretKey",
-                        },
-                        "gcpIntegration": {
-                          "gcpProjectId": "gcpProjectId",
-                          "gcpProjectNumber": "gcpProjectNumber",
-                          "identityProviderId": "identityProviderId",
-                          "partnerId": "partnerId",
-                          "pubsubTopic": "pubsubTopic",
-                          "reportBucket": "reportBucket",
-                          "reportFullSyncDone": true,
-                          "reportStartDate": "2024-01-15T09:30:00Z",
-                          "serviceAccountEmail": "serviceAccountEmail",
-                          "serviceNames": [
-                            "serviceNames",
-                          ],
-                          "workloadIdentityPoolId": "workloadIdentityPoolId",
-                        },
-                        "hubspotCrmIntegration": {
-                          "portalId": 1,
-                          "secretKey": "secretKey",
-                        },
-                        "salesforceCrmIntegration": {
-                          "filters": [
-                            {},
-                          ],
-                          "instanceUrl": "instanceUrl",
-                          "isSandbox": true,
-                          "secretKey": "secretKey",
-                          "subdomain": "subdomain",
-                        },
-                        "slackIntegration": {
-                          "accessToken": "accessToken",
-                          "appId": "appId",
-                          "botUserId": "botUserId",
-                          "expiresIn": 1,
-                          "redirectUrl": "redirectUrl",
-                          "refreshToken": "refreshToken",
-                          "scope": "scope",
-                          "tokenType": "tokenType",
-                        },
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "service": "MARKETPLACE",
-                      "status": "CREATED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9433,82 +8308,7 @@ service:
                     "service": "MARKETPLACE",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "info": {
-                        "awsAceIntegration": {
-                          "partnerId": "partnerId",
-                          "s3BucketName": "s3BucketName",
-                          "s3BucketRegion": "s3BucketRegion",
-                          "secretKey": "secretKey",
-                        },
-                        "awsIntegration": {
-                          "externalID": "externalID",
-                          "iamRoleArn": "iamRoleArn",
-                          "marketplaceStartDate": "2024-01-15T09:30:00Z",
-                          "mcasFullSyncDone": true,
-                          "mcasIamRoleArn": "mcasIamRoleArn",
-                          "mcasS3Bucket": "mcasS3Bucket",
-                          "mcasSnsTopic": "mcasSnsTopic",
-                          "mdfsFullSyncDone": true,
-                          "mdfsKmsKeyArn": "mdfsKmsKeyArn",
-                          "mdfsS3BucketArn": "mdfsS3BucketArn",
-                          "policyArns": [
-                            "policyArns",
-                          ],
-                          "revenueRecordFullSyncDone": true,
-                        },
-                        "azureIntegration": {
-                          "cmaFullSyncDone": true,
-                          "secretKey": "secretKey",
-                        },
-                        "gcpIntegration": {
-                          "gcpProjectId": "gcpProjectId",
-                          "gcpProjectNumber": "gcpProjectNumber",
-                          "identityProviderId": "identityProviderId",
-                          "partnerId": "partnerId",
-                          "pubsubTopic": "pubsubTopic",
-                          "reportBucket": "reportBucket",
-                          "reportFullSyncDone": true,
-                          "reportStartDate": "2024-01-15T09:30:00Z",
-                          "serviceAccountEmail": "serviceAccountEmail",
-                          "serviceNames": [
-                            "serviceNames",
-                          ],
-                          "workloadIdentityPoolId": "workloadIdentityPoolId",
-                        },
-                        "hubspotCrmIntegration": {
-                          "portalId": 1,
-                          "secretKey": "secretKey",
-                        },
-                        "salesforceCrmIntegration": {
-                          "filters": [
-                            {},
-                          ],
-                          "instanceUrl": "instanceUrl",
-                          "isSandbox": true,
-                          "secretKey": "secretKey",
-                          "subdomain": "subdomain",
-                        },
-                        "slackIntegration": {
-                          "accessToken": "accessToken",
-                          "appId": "appId",
-                          "botUserId": "botUserId",
-                          "expiresIn": 1,
-                          "redirectUrl": "redirectUrl",
-                          "refreshToken": "refreshToken",
-                          "scope": "scope",
-                          "tokenType": "tokenType",
-                        },
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "service": "MARKETPLACE",
-                      "status": "CREATED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9551,16 +8351,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "service": "MARKETPLACE",
-                        "status": "CREATED",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -9604,82 +8395,7 @@ service:
                     "service": "MARKETPLACE",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "info": {
-                        "awsAceIntegration": {
-                          "partnerId": "partnerId",
-                          "s3BucketName": "s3BucketName",
-                          "s3BucketRegion": "s3BucketRegion",
-                          "secretKey": "secretKey",
-                        },
-                        "awsIntegration": {
-                          "externalID": "externalID",
-                          "iamRoleArn": "iamRoleArn",
-                          "marketplaceStartDate": "2024-01-15T09:30:00Z",
-                          "mcasFullSyncDone": true,
-                          "mcasIamRoleArn": "mcasIamRoleArn",
-                          "mcasS3Bucket": "mcasS3Bucket",
-                          "mcasSnsTopic": "mcasSnsTopic",
-                          "mdfsFullSyncDone": true,
-                          "mdfsKmsKeyArn": "mdfsKmsKeyArn",
-                          "mdfsS3BucketArn": "mdfsS3BucketArn",
-                          "policyArns": [
-                            "policyArns",
-                          ],
-                          "revenueRecordFullSyncDone": true,
-                        },
-                        "azureIntegration": {
-                          "cmaFullSyncDone": true,
-                          "secretKey": "secretKey",
-                        },
-                        "gcpIntegration": {
-                          "gcpProjectId": "gcpProjectId",
-                          "gcpProjectNumber": "gcpProjectNumber",
-                          "identityProviderId": "identityProviderId",
-                          "partnerId": "partnerId",
-                          "pubsubTopic": "pubsubTopic",
-                          "reportBucket": "reportBucket",
-                          "reportFullSyncDone": true,
-                          "reportStartDate": "2024-01-15T09:30:00Z",
-                          "serviceAccountEmail": "serviceAccountEmail",
-                          "serviceNames": [
-                            "serviceNames",
-                          ],
-                          "workloadIdentityPoolId": "workloadIdentityPoolId",
-                        },
-                        "hubspotCrmIntegration": {
-                          "portalId": 1,
-                          "secretKey": "secretKey",
-                        },
-                        "salesforceCrmIntegration": {
-                          "filters": [
-                            {},
-                          ],
-                          "instanceUrl": "instanceUrl",
-                          "isSandbox": true,
-                          "secretKey": "secretKey",
-                          "subdomain": "subdomain",
-                        },
-                        "slackIntegration": {
-                          "accessToken": "accessToken",
-                          "appId": "appId",
-                          "botUserId": "botUserId",
-                          "expiresIn": 1,
-                          "redirectUrl": "redirectUrl",
-                          "refreshToken": "refreshToken",
-                          "scope": "scope",
-                          "tokenType": "tokenType",
-                        },
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "service": "MARKETPLACE",
-                      "status": "CREATED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9907,14 +8623,7 @@ service:
             orgId: orgId
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                organizationID: organizationID
-                partner: AWS
-                service: MARKETPLACE
-                status: CREATED
+              - {}
     CreateIntegration:
       path: /org/{orgId}/integration
       method: POST
@@ -9954,70 +8663,7 @@ service:
             partner: AWS
             service: MARKETPLACE
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              info:
-                awsAceIntegration:
-                  partnerId: partnerId
-                  s3BucketName: s3BucketName
-                  s3BucketRegion: s3BucketRegion
-                  secretKey: secretKey
-                awsIntegration:
-                  externalID: externalID
-                  iamRoleArn: iamRoleArn
-                  marketplaceStartDate: '2024-01-15T09:30:00Z'
-                  mcasFullSyncDone: true
-                  mcasIamRoleArn: mcasIamRoleArn
-                  mcasS3Bucket: mcasS3Bucket
-                  mcasSnsTopic: mcasSnsTopic
-                  mdfsFullSyncDone: true
-                  mdfsKmsKeyArn: mdfsKmsKeyArn
-                  mdfsS3BucketArn: mdfsS3BucketArn
-                  policyArns:
-                    - policyArns
-                  revenueRecordFullSyncDone: true
-                azureIntegration:
-                  cmaFullSyncDone: true
-                  secretKey: secretKey
-                gcpIntegration:
-                  gcpProjectId: gcpProjectId
-                  gcpProjectNumber: gcpProjectNumber
-                  identityProviderId: identityProviderId
-                  partnerId: partnerId
-                  pubsubTopic: pubsubTopic
-                  reportBucket: reportBucket
-                  reportFullSyncDone: true
-                  reportStartDate: '2024-01-15T09:30:00Z'
-                  serviceAccountEmail: serviceAccountEmail
-                  serviceNames:
-                    - serviceNames
-                  workloadIdentityPoolId: workloadIdentityPoolId
-                hubspotCrmIntegration:
-                  portalId: 1
-                  secretKey: secretKey
-                salesforceCrmIntegration:
-                  filters:
-                    - {}
-                  instanceUrl: instanceUrl
-                  isSandbox: true
-                  secretKey: secretKey
-                  subdomain: subdomain
-                slackIntegration:
-                  accessToken: accessToken
-                  appId: appId
-                  botUserId: botUserId
-                  expiresIn: 1
-                  redirectUrl: redirectUrl
-                  refreshToken: refreshToken
-                  scope: scope
-                  tokenType: tokenType
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              organizationID: organizationID
-              partner: AWS
-              service: MARKETPLACE
-              status: CREATED
+            body: {}
     GetIntegration:
       path: /org/{orgId}/integration/{partner}/{service}
       method: GET
@@ -10048,70 +8694,7 @@ service:
             partner: AWS
             service: MARKETPLACE
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              info:
-                awsAceIntegration:
-                  partnerId: partnerId
-                  s3BucketName: s3BucketName
-                  s3BucketRegion: s3BucketRegion
-                  secretKey: secretKey
-                awsIntegration:
-                  externalID: externalID
-                  iamRoleArn: iamRoleArn
-                  marketplaceStartDate: '2024-01-15T09:30:00Z'
-                  mcasFullSyncDone: true
-                  mcasIamRoleArn: mcasIamRoleArn
-                  mcasS3Bucket: mcasS3Bucket
-                  mcasSnsTopic: mcasSnsTopic
-                  mdfsFullSyncDone: true
-                  mdfsKmsKeyArn: mdfsKmsKeyArn
-                  mdfsS3BucketArn: mdfsS3BucketArn
-                  policyArns:
-                    - policyArns
-                  revenueRecordFullSyncDone: true
-                azureIntegration:
-                  cmaFullSyncDone: true
-                  secretKey: secretKey
-                gcpIntegration:
-                  gcpProjectId: gcpProjectId
-                  gcpProjectNumber: gcpProjectNumber
-                  identityProviderId: identityProviderId
-                  partnerId: partnerId
-                  pubsubTopic: pubsubTopic
-                  reportBucket: reportBucket
-                  reportFullSyncDone: true
-                  reportStartDate: '2024-01-15T09:30:00Z'
-                  serviceAccountEmail: serviceAccountEmail
-                  serviceNames:
-                    - serviceNames
-                  workloadIdentityPoolId: workloadIdentityPoolId
-                hubspotCrmIntegration:
-                  portalId: 1
-                  secretKey: secretKey
-                salesforceCrmIntegration:
-                  filters:
-                    - {}
-                  instanceUrl: instanceUrl
-                  isSandbox: true
-                  secretKey: secretKey
-                  subdomain: subdomain
-                slackIntegration:
-                  accessToken: accessToken
-                  appId: appId
-                  botUserId: botUserId
-                  expiresIn: 1
-                  redirectUrl: redirectUrl
-                  refreshToken: refreshToken
-                  scope: scope
-                  tokenType: tokenType
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              organizationID: organizationID
-              partner: AWS
-              service: MARKETPLACE
-              status: CREATED
+            body: {}
     DeleteIntegration:
       path: /org/{orgId}/integration/{partner}/{service}
       method: DELETE
@@ -10190,70 +8773,7 @@ service:
             partner: AWS
             service: MARKETPLACE
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              info:
-                awsAceIntegration:
-                  partnerId: partnerId
-                  s3BucketName: s3BucketName
-                  s3BucketRegion: s3BucketRegion
-                  secretKey: secretKey
-                awsIntegration:
-                  externalID: externalID
-                  iamRoleArn: iamRoleArn
-                  marketplaceStartDate: '2024-01-15T09:30:00Z'
-                  mcasFullSyncDone: true
-                  mcasIamRoleArn: mcasIamRoleArn
-                  mcasS3Bucket: mcasS3Bucket
-                  mcasSnsTopic: mcasSnsTopic
-                  mdfsFullSyncDone: true
-                  mdfsKmsKeyArn: mdfsKmsKeyArn
-                  mdfsS3BucketArn: mdfsS3BucketArn
-                  policyArns:
-                    - policyArns
-                  revenueRecordFullSyncDone: true
-                azureIntegration:
-                  cmaFullSyncDone: true
-                  secretKey: secretKey
-                gcpIntegration:
-                  gcpProjectId: gcpProjectId
-                  gcpProjectNumber: gcpProjectNumber
-                  identityProviderId: identityProviderId
-                  partnerId: partnerId
-                  pubsubTopic: pubsubTopic
-                  reportBucket: reportBucket
-                  reportFullSyncDone: true
-                  reportStartDate: '2024-01-15T09:30:00Z'
-                  serviceAccountEmail: serviceAccountEmail
-                  serviceNames:
-                    - serviceNames
-                  workloadIdentityPoolId: workloadIdentityPoolId
-                hubspotCrmIntegration:
-                  portalId: 1
-                  secretKey: secretKey
-                salesforceCrmIntegration:
-                  filters:
-                    - {}
-                  instanceUrl: instanceUrl
-                  isSandbox: true
-                  secretKey: secretKey
-                  subdomain: subdomain
-                slackIntegration:
-                  accessToken: accessToken
-                  appId: appId
-                  botUserId: botUserId
-                  expiresIn: 1
-                  redirectUrl: redirectUrl
-                  refreshToken: refreshToken
-                  scope: scope
-                  tokenType: tokenType
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              organizationID: organizationID
-              partner: AWS
-              service: MARKETPLACE
-              status: CREATED
+            body: {}
     VerifyIntegration:
       path: /org/{orgId}/integration/{partner}/{service}/verify
       method: POST
@@ -10379,24 +8899,7 @@ types:
                     "usageRecordGroupId": "usageRecordGroupId",
                   },
                   "response": {
-                    "body": {
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "entitlementID": "entitlementID",
-                      "id": "id",
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "metaInfo": {
-                        "originRecords": {
-                          "key": 1.1,
-                        },
-                      },
-                      "organizationID": "organizationID",
-                      "records": {
-                        "key": 1.1,
-                      },
-                      "serialID": 1,
-                      "status": "status",
-                      "usageRecordReportID": "usageRecordReportID",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10435,63 +8938,7 @@ types:
                     "usageRecordReportId": "usageRecordReportId",
                   },
                   "response": {
-                    "body": {
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "entitlementID": "entitlementID",
-                      "entitlementTermID": "entitlementTermID",
-                      "id": "id",
-                      "info": {
-                        "awsMeteringResponse": {
-                          "resultMetadata": {
-                            "key": "value",
-                          },
-                          "results": [
-                            {},
-                          ],
-                          "unprocessedRecords": [
-                            {},
-                          ],
-                        },
-                        "azureMeteringResponse": {
-                          "count": 1,
-                          "result": [
-                            {},
-                          ],
-                        },
-                        "commitAmount": 1.1,
-                        "creditAmount": 1.1,
-                        "creditRecords": {
-                          "key": 1.1,
-                        },
-                        "dimensionUnitPrice": {
-                          "key": 1.1,
-                        },
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "gcpMeteringResponse": {
-                          "reportErrors": [
-                            {},
-                          ],
-                          "serviceConfigId": "serviceConfigId",
-                          "serviceRolloutId": "serviceRolloutId",
-                        },
-                        "includedRecords": {
-                          "key": 1.1,
-                        },
-                        "reportedRecords": {
-                          "key": 1.1,
-                        },
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "usageRecordGroupIds": [
-                          "usageRecordGroupIds",
-                        ],
-                        "usedCommitAmount": 1.1,
-                        "usedCommitAmountIncrement": 1.1,
-                        "usedCreditAmount": 1.1,
-                        "usedCreditAmountIncrement": 1.1,
-                      },
-                      "organizationID": "organizationID",
-                      "productID": "productID",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10531,24 +8978,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordGroups": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "id": "id",
-                          "lastUpdateTime": "2024-01-15T09:30:00Z",
-                          "organizationID": "organizationID",
-                          "records": {
-                            "key": 1.1,
-                          },
-                          "serialID": 1,
-                          "status": "status",
-                          "usageRecordReportID": "usageRecordReportID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10608,24 +9038,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordGroups": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "id": "id",
-                          "lastUpdateTime": "2024-01-15T09:30:00Z",
-                          "organizationID": "organizationID",
-                          "records": {
-                            "key": 1.1,
-                          },
-                          "serialID": 1,
-                          "status": "status",
-                          "usageRecordReportID": "usageRecordReportID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10682,24 +9095,7 @@ types:
                     "productId": "productId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordGroups": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "id": "id",
-                          "lastUpdateTime": "2024-01-15T09:30:00Z",
-                          "organizationID": "organizationID",
-                          "records": {
-                            "key": 1.1,
-                          },
-                          "serialID": 1,
-                          "status": "status",
-                          "usageRecordReportID": "usageRecordReportID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10760,19 +9156,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordReports": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "entitlementTermID": "entitlementTermID",
-                          "id": "id",
-                          "organizationID": "organizationID",
-                          "productID": "productID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10836,19 +9220,7 @@ types:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordReports": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "entitlementTermID": "entitlementTermID",
-                          "id": "id",
-                          "organizationID": "organizationID",
-                          "productID": "productID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10905,19 +9277,7 @@ types:
                     "productId": "productId",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "usageRecordReports": [
-                        {
-                          "creationTime": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "entitlementTermID": "entitlementTermID",
-                          "id": "id",
-                          "organizationID": "organizationID",
-                          "productID": "productID",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10986,24 +9346,7 @@ types:
                     },
                   },
                   "response": {
-                    "body": {
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "entitlementID": "entitlementID",
-                      "id": "id",
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "metaInfo": {
-                        "originRecords": {
-                          "key": 1.1,
-                        },
-                      },
-                      "organizationID": "organizationID",
-                      "records": {
-                        "key": 1.1,
-                      },
-                      "serialID": 1,
-                      "status": "status",
-                      "usageRecordReportID": "usageRecordReportID",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11105,19 +9448,7 @@ service:
             orgId: orgId
             entitlementId: entitlementId
           response:
-            body:
-              nextOffset: 1
-              usageRecordGroups:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  id: id
-                  lastUpdateTime: '2024-01-15T09:30:00Z'
-                  organizationID: organizationID
-                  records:
-                    key: 1.1
-                  serialID: 1
-                  status: status
-                  usageRecordReportID: usageRecordReportID
+            body: {}
     ReportUsageRecordGroup:
       path: /org/{orgId}/entitlement/{entitlementId}/usageRecordGroup
       method: POST
@@ -11169,20 +9500,7 @@ service:
             records:
               key: 1.1
           response:
-            body:
-              creationTime: '2024-01-15T09:30:00Z'
-              entitlementID: entitlementID
-              id: id
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              metaInfo:
-                originRecords:
-                  key: 1.1
-              organizationID: organizationID
-              records:
-                key: 1.1
-              serialID: 1
-              status: status
-              usageRecordReportID: usageRecordReportID
+            body: {}
     ListUsageRecordReportsByEntitlement:
       path: /org/{orgId}/entitlement/{entitlementId}/usageRecordReport
       method: GET
@@ -11233,15 +9551,7 @@ service:
             orgId: orgId
             entitlementId: entitlementId
           response:
-            body:
-              nextOffset: 1
-              usageRecordReports:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  entitlementTermID: entitlementTermID
-                  id: id
-                  organizationID: organizationID
-                  productID: productID
+            body: {}
     ListUsageRecordGroupsByProduct:
       path: /org/{orgId}/product/{productId}/usageRecordGroup
       method: GET
@@ -11285,19 +9595,7 @@ service:
             orgId: orgId
             productId: productId
           response:
-            body:
-              nextOffset: 1
-              usageRecordGroups:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  id: id
-                  lastUpdateTime: '2024-01-15T09:30:00Z'
-                  organizationID: organizationID
-                  records:
-                    key: 1.1
-                  serialID: 1
-                  status: status
-                  usageRecordReportID: usageRecordReportID
+            body: {}
     ListUsageRecordReportsByProduct:
       path: /org/{orgId}/product/{productId}/usageRecordReport
       method: GET
@@ -11341,15 +9639,7 @@ service:
             orgId: orgId
             productId: productId
           response:
-            body:
-              nextOffset: 1
-              usageRecordReports:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  entitlementTermID: entitlementTermID
-                  id: id
-                  organizationID: organizationID
-                  productID: productID
+            body: {}
     ListUsageRecordGroupsByOrganization:
       path: /org/{orgId}/usageRecordGroup
       method: GET
@@ -11389,19 +9679,7 @@ service:
         - path-parameters:
             orgId: orgId
           response:
-            body:
-              nextOffset: 1
-              usageRecordGroups:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  id: id
-                  lastUpdateTime: '2024-01-15T09:30:00Z'
-                  organizationID: organizationID
-                  records:
-                    key: 1.1
-                  serialID: 1
-                  status: status
-                  usageRecordReportID: usageRecordReportID
+            body: {}
     GetUsageRecordGroup:
       path: /org/{orgId}/usageRecordGroup/{usageRecordGroupId}
       method: GET
@@ -11427,20 +9705,7 @@ service:
             orgId: orgId
             usageRecordGroupId: usageRecordGroupId
           response:
-            body:
-              creationTime: '2024-01-15T09:30:00Z'
-              entitlementID: entitlementID
-              id: id
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              metaInfo:
-                originRecords:
-                  key: 1.1
-              organizationID: organizationID
-              records:
-                key: 1.1
-              serialID: 1
-              status: status
-              usageRecordReportID: usageRecordReportID
+            body: {}
     ListUsageRecordReportsByOrganization:
       path: /org/{orgId}/usageRecordReport
       method: GET
@@ -11480,15 +9745,7 @@ service:
         - path-parameters:
             orgId: orgId
           response:
-            body:
-              nextOffset: 1
-              usageRecordReports:
-                - creationTime: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  entitlementTermID: entitlementTermID
-                  id: id
-                  organizationID: organizationID
-                  productID: productID
+            body: {}
     GetUsageRecordReport:
       path: /org/{orgId}/usageRecordReport/{usageRecordReportId}
       method: GET
@@ -11516,48 +9773,7 @@ service:
             orgId: orgId
             usageRecordReportId: usageRecordReportId
           response:
-            body:
-              creationTime: '2024-01-15T09:30:00Z'
-              entitlementID: entitlementID
-              entitlementTermID: entitlementTermID
-              id: id
-              info:
-                awsMeteringResponse:
-                  resultMetadata:
-                    key: value
-                  results:
-                    - {}
-                  unprocessedRecords:
-                    - {}
-                azureMeteringResponse:
-                  count: 1
-                  result:
-                    - {}
-                commitAmount: 1.1
-                creditAmount: 1.1
-                creditRecords:
-                  key: 1.1
-                dimensionUnitPrice:
-                  key: 1.1
-                endTime: '2024-01-15T09:30:00Z'
-                gcpMeteringResponse:
-                  reportErrors:
-                    - {}
-                  serviceConfigId: serviceConfigId
-                  serviceRolloutId: serviceRolloutId
-                includedRecords:
-                  key: 1.1
-                reportedRecords:
-                  key: 1.1
-                startTime: '2024-01-15T09:30:00Z'
-                usageRecordGroupIds:
-                  - usageRecordGroupIds
-                usedCommitAmount: 1.1
-                usedCommitAmountIncrement: 1.1
-                usedCreditAmount: 1.1
-                usedCreditAmountIncrement: 1.1
-              organizationID: organizationID
-              productID: productID
+            body: {}
   source:
     openapi: ../swagger.json
 ",
@@ -11627,129 +9843,7 @@ service:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
-                      "externalID": "externalID",
-                      "id": "id",
-                      "info": {
-                        "azureOriginalPlan": {
-                          "$schema": "schema",
-                          "id": "id",
-                          "plan": "plan",
-                          "product": "product",
-                          "resourceName": "resourceName",
-                          "validations": [
-                            {},
-                          ],
-                        },
-                        "azurePrivateOffer": {
-                          "$schema": "schema",
-                          "acceptBy": "2024-01-15T09:30:00Z",
-                          "acceptanceLinks": [
-                            {},
-                          ],
-                          "beneficiaries": [
-                            {},
-                          ],
-                          "eTag": "eTag",
-                          "end": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "lastModified": "2024-01-15T09:30:00Z",
-                          "name": "name",
-                          "notificationContacts": [
-                            "notificationContacts",
-                          ],
-                          "preparedBy": "preparedBy",
-                          "pricing": [
-                            {},
-                          ],
-                          "privateOfferType": "customerPromotion",
-                          "resourceName": "resourceName",
-                          "start": "2024-01-15T09:30:00Z",
-                          "state": "draft",
-                          "subState": "pendingAcceptance",
-                          "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
-                          "validations": [
-                            {},
-                          ],
-                          "variableStartDate": true,
-                        },
-                        "azureProductVariant": {
-                          "azureGovernmentCertifications": [
-                            {},
-                          ],
-                          "cloudAvailabilities": [
-                            "cloudAvailabilities",
-                          ],
-                          "conversionPaths": "conversionPaths",
-                          "extendedProperties": [
-                            {},
-                          ],
-                          "externalID": "externalID",
-                          "featureAvailabilities": [
-                            {},
-                          ],
-                          "friendlyName": "friendlyName",
-                          "id": "id",
-                          "leadGenID": "leadGenID",
-                          "referenceVariantID": "referenceVariantID",
-                          "resourceType": "AzureSkuVariant",
-                          "state": "InActive",
-                        },
-                        "buyerAwsAccountIds": [
-                          "buyerAwsAccountIds",
-                        ],
-                        "buyerAzureTenants": [
-                          {},
-                        ],
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpMetrics": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "privateOfferUrl": "privateOfferUrl",
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                        "visibility": "PRIVATE",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "metaInfo": {
-                        "baseAgreementId": "baseAgreementId",
-                        "contacts": [
-                          {},
-                        ],
-                        "isAgreementBasedOffer": true,
-                        "isRenewalOffer": true,
-                        "notifications": [
-                          {},
-                        ],
-                      },
-                      "name": "name",
-                      "offerType": "DEFAULT",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "status": "ACCEPTED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11789,129 +9883,7 @@ service:
                   },
                   "request": {},
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
-                      "externalID": "externalID",
-                      "id": "id",
-                      "info": {
-                        "azureOriginalPlan": {
-                          "$schema": "schema",
-                          "id": "id",
-                          "plan": "plan",
-                          "product": "product",
-                          "resourceName": "resourceName",
-                          "validations": [
-                            {},
-                          ],
-                        },
-                        "azurePrivateOffer": {
-                          "$schema": "schema",
-                          "acceptBy": "2024-01-15T09:30:00Z",
-                          "acceptanceLinks": [
-                            {},
-                          ],
-                          "beneficiaries": [
-                            {},
-                          ],
-                          "eTag": "eTag",
-                          "end": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "lastModified": "2024-01-15T09:30:00Z",
-                          "name": "name",
-                          "notificationContacts": [
-                            "notificationContacts",
-                          ],
-                          "preparedBy": "preparedBy",
-                          "pricing": [
-                            {},
-                          ],
-                          "privateOfferType": "customerPromotion",
-                          "resourceName": "resourceName",
-                          "start": "2024-01-15T09:30:00Z",
-                          "state": "draft",
-                          "subState": "pendingAcceptance",
-                          "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
-                          "validations": [
-                            {},
-                          ],
-                          "variableStartDate": true,
-                        },
-                        "azureProductVariant": {
-                          "azureGovernmentCertifications": [
-                            {},
-                          ],
-                          "cloudAvailabilities": [
-                            "cloudAvailabilities",
-                          ],
-                          "conversionPaths": "conversionPaths",
-                          "extendedProperties": [
-                            {},
-                          ],
-                          "externalID": "externalID",
-                          "featureAvailabilities": [
-                            {},
-                          ],
-                          "friendlyName": "friendlyName",
-                          "id": "id",
-                          "leadGenID": "leadGenID",
-                          "referenceVariantID": "referenceVariantID",
-                          "resourceType": "AzureSkuVariant",
-                          "state": "InActive",
-                        },
-                        "buyerAwsAccountIds": [
-                          "buyerAwsAccountIds",
-                        ],
-                        "buyerAzureTenants": [
-                          {},
-                        ],
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpMetrics": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "privateOfferUrl": "privateOfferUrl",
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                        "visibility": "PRIVATE",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "metaInfo": {
-                        "baseAgreementId": "baseAgreementId",
-                        "contacts": [
-                          {},
-                        ],
-                        "isAgreementBasedOffer": true,
-                        "isRenewalOffer": true,
-                        "notifications": [
-                          {},
-                        ],
-                      },
-                      "name": "name",
-                      "offerType": "DEFAULT",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "status": "ACCEPTED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11989,129 +9961,7 @@ service:
                     "orgId": "orgId",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "endTime": "2024-01-15T09:30:00Z",
-                      "expireTime": "2024-01-15T09:30:00Z",
-                      "externalID": "externalID",
-                      "id": "id",
-                      "info": {
-                        "azureOriginalPlan": {
-                          "$schema": "schema",
-                          "id": "id",
-                          "plan": "plan",
-                          "product": "product",
-                          "resourceName": "resourceName",
-                          "validations": [
-                            {},
-                          ],
-                        },
-                        "azurePrivateOffer": {
-                          "$schema": "schema",
-                          "acceptBy": "2024-01-15T09:30:00Z",
-                          "acceptanceLinks": [
-                            {},
-                          ],
-                          "beneficiaries": [
-                            {},
-                          ],
-                          "eTag": "eTag",
-                          "end": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "lastModified": "2024-01-15T09:30:00Z",
-                          "name": "name",
-                          "notificationContacts": [
-                            "notificationContacts",
-                          ],
-                          "preparedBy": "preparedBy",
-                          "pricing": [
-                            {},
-                          ],
-                          "privateOfferType": "customerPromotion",
-                          "resourceName": "resourceName",
-                          "start": "2024-01-15T09:30:00Z",
-                          "state": "draft",
-                          "subState": "pendingAcceptance",
-                          "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
-                          "validations": [
-                            {},
-                          ],
-                          "variableStartDate": true,
-                        },
-                        "azureProductVariant": {
-                          "azureGovernmentCertifications": [
-                            {},
-                          ],
-                          "cloudAvailabilities": [
-                            "cloudAvailabilities",
-                          ],
-                          "conversionPaths": "conversionPaths",
-                          "extendedProperties": [
-                            {},
-                          ],
-                          "externalID": "externalID",
-                          "featureAvailabilities": [
-                            {},
-                          ],
-                          "friendlyName": "friendlyName",
-                          "id": "id",
-                          "leadGenID": "leadGenID",
-                          "referenceVariantID": "referenceVariantID",
-                          "resourceType": "AzureSkuVariant",
-                          "state": "InActive",
-                        },
-                        "buyerAwsAccountIds": [
-                          "buyerAwsAccountIds",
-                        ],
-                        "buyerAzureTenants": [
-                          {},
-                        ],
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "discount": 1.1,
-                        "eulaType": "",
-                        "eulaUrl": "eulaUrl",
-                        "gcpMetrics": [
-                          {},
-                        ],
-                        "gcpPlans": [
-                          {},
-                        ],
-                        "paymentInstallments": [
-                          {},
-                        ],
-                        "privateOfferUrl": "privateOfferUrl",
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                        "visibility": "PRIVATE",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "metaInfo": {
-                        "baseAgreementId": "baseAgreementId",
-                        "contacts": [
-                          {},
-                        ],
-                        "isAgreementBasedOffer": true,
-                        "isRenewalOffer": true,
-                        "notifications": [
-                          {},
-                        ],
-                      },
-                      "name": "name",
-                      "offerType": "DEFAULT",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productID": "productID",
-                      "service": "MARKETPLACE",
-                      "status": "ACCEPTED",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -12150,65 +10000,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "expireTime": "2024-01-15T09:30:00Z",
-                        "externalID": "externalID",
-                        "id": "id",
-                        "info": {
-                          "buyerAwsAccountIds": [
-                            "buyerAwsAccountIds",
-                          ],
-                          "buyerAzureTenants": [
-                            {},
-                          ],
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpMetrics": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "privateOfferUrl": "privateOfferUrl",
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                          "visibility": "PRIVATE",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "metaInfo": {
-                          "baseAgreementId": "baseAgreementId",
-                          "contacts": [
-                            {},
-                          ],
-                          "isAgreementBasedOffer": true,
-                          "isRenewalOffer": true,
-                          "notifications": [
-                            {},
-                          ],
-                        },
-                        "name": "name",
-                        "offerType": "DEFAULT",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "status": "ACCEPTED",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -12248,65 +10040,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "expireTime": "2024-01-15T09:30:00Z",
-                        "externalID": "externalID",
-                        "id": "id",
-                        "info": {
-                          "buyerAwsAccountIds": [
-                            "buyerAwsAccountIds",
-                          ],
-                          "buyerAzureTenants": [
-                            {},
-                          ],
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpMetrics": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "privateOfferUrl": "privateOfferUrl",
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                          "visibility": "PRIVATE",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "metaInfo": {
-                          "baseAgreementId": "baseAgreementId",
-                          "contacts": [
-                            {},
-                          ],
-                          "isAgreementBasedOffer": true,
-                          "isRenewalOffer": true,
-                          "notifications": [
-                            {},
-                          ],
-                        },
-                        "name": "name",
-                        "offerType": "DEFAULT",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "status": "ACCEPTED",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -12357,65 +10091,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "expireTime": "2024-01-15T09:30:00Z",
-                        "externalID": "externalID",
-                        "id": "id",
-                        "info": {
-                          "buyerAwsAccountIds": [
-                            "buyerAwsAccountIds",
-                          ],
-                          "buyerAzureTenants": [
-                            {},
-                          ],
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "discount": 1.1,
-                          "eulaType": "",
-                          "eulaUrl": "eulaUrl",
-                          "gcpMetrics": [
-                            {},
-                          ],
-                          "gcpPlans": [
-                            {},
-                          ],
-                          "paymentInstallments": [
-                            {},
-                          ],
-                          "privateOfferUrl": "privateOfferUrl",
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                          "visibility": "PRIVATE",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "metaInfo": {
-                          "baseAgreementId": "baseAgreementId",
-                          "contacts": [
-                            {},
-                          ],
-                          "isAgreementBasedOffer": true,
-                          "isRenewalOffer": true,
-                          "notifications": [
-                            {},
-                          ],
-                        },
-                        "name": "name",
-                        "offerType": "DEFAULT",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productID": "productID",
-                        "service": "MARKETPLACE",
-                        "status": "ACCEPTED",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -12493,104 +10169,7 @@ service:
             orgId: orgId
           request: {}
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              endTime: '2024-01-15T09:30:00Z'
-              expireTime: '2024-01-15T09:30:00Z'
-              externalID: externalID
-              id: id
-              info:
-                azureOriginalPlan:
-                  $schema: schema
-                  id: id
-                  plan: plan
-                  product: product
-                  resourceName: resourceName
-                  validations:
-                    - {}
-                azurePrivateOffer:
-                  $schema: schema
-                  acceptBy: '2024-01-15T09:30:00Z'
-                  acceptanceLinks:
-                    - {}
-                  beneficiaries:
-                    - {}
-                  eTag: eTag
-                  end: '2024-01-15T09:30:00Z'
-                  id: id
-                  lastModified: '2024-01-15T09:30:00Z'
-                  name: name
-                  notificationContacts:
-                    - notificationContacts
-                  preparedBy: preparedBy
-                  pricing:
-                    - {}
-                  privateOfferType: customerPromotion
-                  resourceName: resourceName
-                  start: '2024-01-15T09:30:00Z'
-                  state: draft
-                  subState: pendingAcceptance
-                  termsAndConditionsDocSasUrl: termsAndConditionsDocSasUrl
-                  validations:
-                    - {}
-                  variableStartDate: true
-                azureProductVariant:
-                  azureGovernmentCertifications:
-                    - {}
-                  cloudAvailabilities:
-                    - cloudAvailabilities
-                  conversionPaths: conversionPaths
-                  extendedProperties:
-                    - {}
-                  externalID: externalID
-                  featureAvailabilities:
-                    - {}
-                  friendlyName: friendlyName
-                  id: id
-                  leadGenID: leadGenID
-                  referenceVariantID: referenceVariantID
-                  resourceType: AzureSkuVariant
-                  state: InActive
-                buyerAwsAccountIds:
-                  - buyerAwsAccountIds
-                buyerAzureTenants:
-                  - {}
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpMetrics:
-                  - {}
-                gcpPlans:
-                  - {}
-                paymentInstallments:
-                  - {}
-                privateOfferUrl: privateOfferUrl
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-                visibility: PRIVATE
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              metaInfo:
-                baseAgreementId: baseAgreementId
-                contacts:
-                  - {}
-                isAgreementBasedOffer: true
-                isRenewalOffer: true
-                notifications:
-                  - {}
-              name: name
-              offerType: DEFAULT
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              status: ACCEPTED
+            body: {}
     ListOffersByOrganization:
       path: /org/{orgId}/offer
       method: GET
@@ -12613,52 +10192,7 @@ service:
             orgId: orgId
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                expireTime: '2024-01-15T09:30:00Z'
-                externalID: externalID
-                id: id
-                info:
-                  buyerAwsAccountIds:
-                    - buyerAwsAccountIds
-                  buyerAzureTenants:
-                    - {}
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpMetrics:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  paymentInstallments:
-                    - {}
-                  privateOfferUrl: privateOfferUrl
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                  visibility: PRIVATE
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                metaInfo:
-                  baseAgreementId: baseAgreementId
-                  contacts:
-                    - {}
-                  isAgreementBasedOffer: true
-                  isRenewalOffer: true
-                  notifications:
-                    - {}
-                name: name
-                offerType: DEFAULT
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                status: ACCEPTED
+              - {}
     CreateOffer:
       path: /org/{orgId}/offer
       method: POST
@@ -12685,104 +10219,7 @@ service:
             orgId: orgId
           request: {}
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              endTime: '2024-01-15T09:30:00Z'
-              expireTime: '2024-01-15T09:30:00Z'
-              externalID: externalID
-              id: id
-              info:
-                azureOriginalPlan:
-                  $schema: schema
-                  id: id
-                  plan: plan
-                  product: product
-                  resourceName: resourceName
-                  validations:
-                    - {}
-                azurePrivateOffer:
-                  $schema: schema
-                  acceptBy: '2024-01-15T09:30:00Z'
-                  acceptanceLinks:
-                    - {}
-                  beneficiaries:
-                    - {}
-                  eTag: eTag
-                  end: '2024-01-15T09:30:00Z'
-                  id: id
-                  lastModified: '2024-01-15T09:30:00Z'
-                  name: name
-                  notificationContacts:
-                    - notificationContacts
-                  preparedBy: preparedBy
-                  pricing:
-                    - {}
-                  privateOfferType: customerPromotion
-                  resourceName: resourceName
-                  start: '2024-01-15T09:30:00Z'
-                  state: draft
-                  subState: pendingAcceptance
-                  termsAndConditionsDocSasUrl: termsAndConditionsDocSasUrl
-                  validations:
-                    - {}
-                  variableStartDate: true
-                azureProductVariant:
-                  azureGovernmentCertifications:
-                    - {}
-                  cloudAvailabilities:
-                    - cloudAvailabilities
-                  conversionPaths: conversionPaths
-                  extendedProperties:
-                    - {}
-                  externalID: externalID
-                  featureAvailabilities:
-                    - {}
-                  friendlyName: friendlyName
-                  id: id
-                  leadGenID: leadGenID
-                  referenceVariantID: referenceVariantID
-                  resourceType: AzureSkuVariant
-                  state: InActive
-                buyerAwsAccountIds:
-                  - buyerAwsAccountIds
-                buyerAzureTenants:
-                  - {}
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpMetrics:
-                  - {}
-                gcpPlans:
-                  - {}
-                paymentInstallments:
-                  - {}
-                privateOfferUrl: privateOfferUrl
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-                visibility: PRIVATE
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              metaInfo:
-                baseAgreementId: baseAgreementId
-                contacts:
-                  - {}
-                isAgreementBasedOffer: true
-                isRenewalOffer: true
-                notifications:
-                  - {}
-              name: name
-              offerType: DEFAULT
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              status: ACCEPTED
+            body: {}
     GetOffer:
       path: /org/{orgId}/offer/{offerId}
       method: GET
@@ -12808,104 +10245,7 @@ service:
             orgId: orgId
             offerId: offerId
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              endTime: '2024-01-15T09:30:00Z'
-              expireTime: '2024-01-15T09:30:00Z'
-              externalID: externalID
-              id: id
-              info:
-                azureOriginalPlan:
-                  $schema: schema
-                  id: id
-                  plan: plan
-                  product: product
-                  resourceName: resourceName
-                  validations:
-                    - {}
-                azurePrivateOffer:
-                  $schema: schema
-                  acceptBy: '2024-01-15T09:30:00Z'
-                  acceptanceLinks:
-                    - {}
-                  beneficiaries:
-                    - {}
-                  eTag: eTag
-                  end: '2024-01-15T09:30:00Z'
-                  id: id
-                  lastModified: '2024-01-15T09:30:00Z'
-                  name: name
-                  notificationContacts:
-                    - notificationContacts
-                  preparedBy: preparedBy
-                  pricing:
-                    - {}
-                  privateOfferType: customerPromotion
-                  resourceName: resourceName
-                  start: '2024-01-15T09:30:00Z'
-                  state: draft
-                  subState: pendingAcceptance
-                  termsAndConditionsDocSasUrl: termsAndConditionsDocSasUrl
-                  validations:
-                    - {}
-                  variableStartDate: true
-                azureProductVariant:
-                  azureGovernmentCertifications:
-                    - {}
-                  cloudAvailabilities:
-                    - cloudAvailabilities
-                  conversionPaths: conversionPaths
-                  extendedProperties:
-                    - {}
-                  externalID: externalID
-                  featureAvailabilities:
-                    - {}
-                  friendlyName: friendlyName
-                  id: id
-                  leadGenID: leadGenID
-                  referenceVariantID: referenceVariantID
-                  resourceType: AzureSkuVariant
-                  state: InActive
-                buyerAwsAccountIds:
-                  - buyerAwsAccountIds
-                buyerAzureTenants:
-                  - {}
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                discount: 1.1
-                eulaType: ''
-                eulaUrl: eulaUrl
-                gcpMetrics:
-                  - {}
-                gcpPlans:
-                  - {}
-                paymentInstallments:
-                  - {}
-                privateOfferUrl: privateOfferUrl
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-                visibility: PRIVATE
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              metaInfo:
-                baseAgreementId: baseAgreementId
-                contacts:
-                  - {}
-                isAgreementBasedOffer: true
-                isRenewalOffer: true
-                notifications:
-                  - {}
-              name: name
-              offerType: DEFAULT
-              organizationID: organizationID
-              partner: AWS
-              productID: productID
-              service: MARKETPLACE
-              status: ACCEPTED
+            body: {}
     DeleteOffer:
       path: /org/{orgId}/offer/{offerId}
       method: DELETE
@@ -12998,52 +10338,7 @@ service:
             Authorization: Bearer <token>
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                expireTime: '2024-01-15T09:30:00Z'
-                externalID: externalID
-                id: id
-                info:
-                  buyerAwsAccountIds:
-                    - buyerAwsAccountIds
-                  buyerAzureTenants:
-                    - {}
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpMetrics:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  paymentInstallments:
-                    - {}
-                  privateOfferUrl: privateOfferUrl
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                  visibility: PRIVATE
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                metaInfo:
-                  baseAgreementId: baseAgreementId
-                  contacts:
-                    - {}
-                  isAgreementBasedOffer: true
-                  isRenewalOffer: true
-                  notifications:
-                    - {}
-                name: name
-                offerType: DEFAULT
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                status: ACCEPTED
+              - {}
     ListOffersByProduct:
       path: /org/{orgId}/product/{productId}/offer
       method: GET
@@ -13070,52 +10365,7 @@ service:
             productId: productId
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                endTime: '2024-01-15T09:30:00Z'
-                expireTime: '2024-01-15T09:30:00Z'
-                externalID: externalID
-                id: id
-                info:
-                  buyerAwsAccountIds:
-                    - buyerAwsAccountIds
-                  buyerAzureTenants:
-                    - {}
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  discount: 1.1
-                  eulaType: ''
-                  eulaUrl: eulaUrl
-                  gcpMetrics:
-                    - {}
-                  gcpPlans:
-                    - {}
-                  paymentInstallments:
-                    - {}
-                  privateOfferUrl: privateOfferUrl
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                  visibility: PRIVATE
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                metaInfo:
-                  baseAgreementId: baseAgreementId
-                  contacts:
-                    - {}
-                  isAgreementBasedOffer: true
-                  isRenewalOffer: true
-                  notifications:
-                    - {}
-                name: name
-                offerType: DEFAULT
-                organizationID: organizationID
-                partner: AWS
-                productID: productID
-                service: MARKETPLACE
-                status: ACCEPTED
+              - {}
   source:
     openapi: ../swagger.json
 types:
@@ -13152,15 +10402,7 @@ types:
                   },
                   "response": {
                     "body": [
-                      {
-                        "endTime": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "message": "message",
-                        "name": "name",
-                        "startTime": "2024-01-15T09:30:00Z",
-                        "status": "status",
-                        "type": "TemporalWorkflow",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -13255,13 +10497,7 @@ service:
             orgId: orgId
           response:
             body:
-              - endTime: '2024-01-15T09:30:00Z'
-                id: id
-                message: message
-                name: name
-                startTime: '2024-01-15T09:30:00Z'
-                status: status
-                type: TemporalWorkflow
+              - {}
   source:
     openapi: ../swagger.json
 ",
@@ -13329,86 +10565,7 @@ service:
                     "productId": "productId",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "externalID": "externalID",
-                      "fulfillmentUrl": "fulfillmentUrl",
-                      "id": "id",
-                      "info": {
-                        "attributes": {
-                          "key": "value",
-                        },
-                        "awsSaasProduct": {
-                          "Dimensions": [
-                            {},
-                          ],
-                          "Versions": [
-                            {},
-                          ],
-                          "dataFeedProductId": "dataFeedProductId",
-                          "productId": "productId",
-                        },
-                        "awsSnsSubscriptions": [
-                          {},
-                        ],
-                        "azureProduct": {
-                          "availabilities": [
-                            {},
-                          ],
-                          "branches": [
-                            {},
-                          ],
-                          "externalIDs": [
-                            {},
-                          ],
-                          "id": "id",
-                          "isModularPublishing": true,
-                          "listings": [
-                            {},
-                          ],
-                          "name": "name",
-                          "packageConfigurations": [
-                            {},
-                          ],
-                          "properties": [
-                            {},
-                          ],
-                          "resourceType": "resourceType",
-                          "submissions": [
-                            {},
-                          ],
-                          "variants": [
-                            {},
-                          ],
-                        },
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "eulaUrl": "eulaUrl",
-                        "gcpProduct": {
-                          "createTime": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "marketplace": "marketplaces/google-cloud",
-                          "name": "name",
-                          "service": "service",
-                        },
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "name": "name",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productType": "UNKNOWN",
-                      "service": "MARKETPLACE",
-                      "status": "status",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -13448,15 +10605,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "Description": "Description",
-                        "Key": "Key",
-                        "Name": "Name",
-                        "Types": [
-                          "Types",
-                        ],
-                        "Unit": "Unit",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -13496,39 +10645,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "externalID": "externalID",
-                        "fulfillmentUrl": "fulfillmentUrl",
-                        "id": "id",
-                        "info": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "awsSnsSubscriptions": [
-                            {},
-                          ],
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "eulaUrl": "eulaUrl",
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "name": "name",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productType": "UNKNOWN",
-                        "service": "MARKETPLACE",
-                        "status": "status",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -13565,39 +10682,7 @@ service:
                   },
                   "response": {
                     "body": [
-                      {
-                        "createdBy": "createdBy",
-                        "creationTime": "2024-01-15T09:30:00Z",
-                        "externalID": "externalID",
-                        "fulfillmentUrl": "fulfillmentUrl",
-                        "id": "id",
-                        "info": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "awsSnsSubscriptions": [
-                            {},
-                          ],
-                          "commits": [
-                            {},
-                          ],
-                          "currency": "currency",
-                          "dimensions": [
-                            {},
-                          ],
-                          "eulaUrl": "eulaUrl",
-                          "refundCancelationPolicy": "refundCancelationPolicy",
-                          "sellerNotes": "sellerNotes",
-                        },
-                        "lastUpdateTime": "2024-01-15T09:30:00Z",
-                        "lastUpdatedBy": "lastUpdatedBy",
-                        "name": "name",
-                        "organizationID": "organizationID",
-                        "partner": "AWS",
-                        "productType": "UNKNOWN",
-                        "service": "MARKETPLACE",
-                        "status": "status",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -13642,86 +10727,7 @@ service:
                     "organizationID": "organizationID",
                   },
                   "response": {
-                    "body": {
-                      "createdBy": "createdBy",
-                      "creationTime": "2024-01-15T09:30:00Z",
-                      "externalID": "externalID",
-                      "fulfillmentUrl": "fulfillmentUrl",
-                      "id": "id",
-                      "info": {
-                        "attributes": {
-                          "key": "value",
-                        },
-                        "awsSaasProduct": {
-                          "Dimensions": [
-                            {},
-                          ],
-                          "Versions": [
-                            {},
-                          ],
-                          "dataFeedProductId": "dataFeedProductId",
-                          "productId": "productId",
-                        },
-                        "awsSnsSubscriptions": [
-                          {},
-                        ],
-                        "azureProduct": {
-                          "availabilities": [
-                            {},
-                          ],
-                          "branches": [
-                            {},
-                          ],
-                          "externalIDs": [
-                            {},
-                          ],
-                          "id": "id",
-                          "isModularPublishing": true,
-                          "listings": [
-                            {},
-                          ],
-                          "name": "name",
-                          "packageConfigurations": [
-                            {},
-                          ],
-                          "properties": [
-                            {},
-                          ],
-                          "resourceType": "resourceType",
-                          "submissions": [
-                            {},
-                          ],
-                          "variants": [
-                            {},
-                          ],
-                        },
-                        "commits": [
-                          {},
-                        ],
-                        "currency": "currency",
-                        "dimensions": [
-                          {},
-                        ],
-                        "eulaUrl": "eulaUrl",
-                        "gcpProduct": {
-                          "createTime": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "marketplace": "marketplaces/google-cloud",
-                          "name": "name",
-                          "service": "service",
-                        },
-                        "refundCancelationPolicy": "refundCancelationPolicy",
-                        "sellerNotes": "sellerNotes",
-                      },
-                      "lastUpdateTime": "2024-01-15T09:30:00Z",
-                      "lastUpdatedBy": "lastUpdatedBy",
-                      "name": "name",
-                      "organizationID": "organizationID",
-                      "partner": "AWS",
-                      "productType": "UNKNOWN",
-                      "service": "MARKETPLACE",
-                      "status": "status",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -13818,32 +10824,7 @@ service:
             partner: AWS
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                externalID: externalID
-                fulfillmentUrl: fulfillmentUrl
-                id: id
-                info:
-                  attributes:
-                    key: value
-                  awsSnsSubscriptions:
-                    - {}
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  eulaUrl: eulaUrl
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                name: name
-                organizationID: organizationID
-                partner: AWS
-                productType: UNKNOWN
-                service: MARKETPLACE
-                status: status
+              - {}
     ListProductsByOrganization:
       path: /org/{orgId}/product
       method: GET
@@ -13866,32 +10847,7 @@ service:
             orgId: orgId
           response:
             body:
-              - createdBy: createdBy
-                creationTime: '2024-01-15T09:30:00Z'
-                externalID: externalID
-                fulfillmentUrl: fulfillmentUrl
-                id: id
-                info:
-                  attributes:
-                    key: value
-                  awsSnsSubscriptions:
-                    - {}
-                  commits:
-                    - {}
-                  currency: currency
-                  dimensions:
-                    - {}
-                  eulaUrl: eulaUrl
-                  refundCancelationPolicy: refundCancelationPolicy
-                  sellerNotes: sellerNotes
-                lastUpdateTime: '2024-01-15T09:30:00Z'
-                lastUpdatedBy: lastUpdatedBy
-                name: name
-                organizationID: organizationID
-                partner: AWS
-                productType: UNKNOWN
-                service: MARKETPLACE
-                status: status
+              - {}
     GetProduct:
       path: /org/{orgId}/product/{productId}
       method: GET
@@ -13917,67 +10873,7 @@ service:
             orgId: orgId
             productId: productId
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              externalID: externalID
-              fulfillmentUrl: fulfillmentUrl
-              id: id
-              info:
-                attributes:
-                  key: value
-                awsSaasProduct:
-                  Dimensions:
-                    - {}
-                  Versions:
-                    - {}
-                  dataFeedProductId: dataFeedProductId
-                  productId: productId
-                awsSnsSubscriptions:
-                  - {}
-                azureProduct:
-                  availabilities:
-                    - {}
-                  branches:
-                    - {}
-                  externalIDs:
-                    - {}
-                  id: id
-                  isModularPublishing: true
-                  listings:
-                    - {}
-                  name: name
-                  packageConfigurations:
-                    - {}
-                  properties:
-                    - {}
-                  resourceType: resourceType
-                  submissions:
-                    - {}
-                  variants:
-                    - {}
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                eulaUrl: eulaUrl
-                gcpProduct:
-                  createTime: '2024-01-15T09:30:00Z'
-                  id: id
-                  marketplace: marketplaces/google-cloud
-                  name: name
-                  service: service
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              name: name
-              organizationID: organizationID
-              partner: AWS
-              productType: UNKNOWN
-              service: MARKETPLACE
-              status: status
+            body: {}
     DeleteProduct:
       path: /org/{orgId}/product/{productId}
       method: DELETE
@@ -14041,67 +10937,7 @@ service:
             id: id
             organizationID: organizationID
           response:
-            body:
-              createdBy: createdBy
-              creationTime: '2024-01-15T09:30:00Z'
-              externalID: externalID
-              fulfillmentUrl: fulfillmentUrl
-              id: id
-              info:
-                attributes:
-                  key: value
-                awsSaasProduct:
-                  Dimensions:
-                    - {}
-                  Versions:
-                    - {}
-                  dataFeedProductId: dataFeedProductId
-                  productId: productId
-                awsSnsSubscriptions:
-                  - {}
-                azureProduct:
-                  availabilities:
-                    - {}
-                  branches:
-                    - {}
-                  externalIDs:
-                    - {}
-                  id: id
-                  isModularPublishing: true
-                  listings:
-                    - {}
-                  name: name
-                  packageConfigurations:
-                    - {}
-                  properties:
-                    - {}
-                  resourceType: resourceType
-                  submissions:
-                    - {}
-                  variants:
-                    - {}
-                commits:
-                  - {}
-                currency: currency
-                dimensions:
-                  - {}
-                eulaUrl: eulaUrl
-                gcpProduct:
-                  createTime: '2024-01-15T09:30:00Z'
-                  id: id
-                  marketplace: marketplaces/google-cloud
-                  name: name
-                  service: service
-                refundCancelationPolicy: refundCancelationPolicy
-                sellerNotes: sellerNotes
-              lastUpdateTime: '2024-01-15T09:30:00Z'
-              lastUpdatedBy: lastUpdatedBy
-              name: name
-              organizationID: organizationID
-              partner: AWS
-              productType: UNKNOWN
-              service: MARKETPLACE
-              status: status
+            body: {}
     ListProductMeteringDimensions:
       path: /org/{orgId}/product/{productId}/dimension
       method: GET
@@ -14128,12 +10964,7 @@ service:
             productId: productId
           response:
             body:
-              - Description: Description
-                Key: Key
-                Name: Name
-                Types:
-                  - Types
-                Unit: Unit
+              - {}
   source:
     openapi: ../swagger.json
 ",
@@ -14168,40 +10999,7 @@ service:
                     "service": "MARKETPLACE",
                   },
                   "response": {
-                    "body": {
-                      "buyerID": "buyerID",
-                      "entitlementID": "entitlementID",
-                      "organizationID": "organizationID",
-                      "partner": "partner",
-                      "productID": "productID",
-                      "reportDate": "2024-01-15T09:30:00Z",
-                      "reportType": "InvoicedAmount",
-                      "revenueRecords": [
-                        {
-                          "amount": 1.1,
-                          "buyerID": "buyerID",
-                          "collectableAmount": 1.1,
-                          "currency": "currency",
-                          "date": "2024-01-15T09:30:00Z",
-                          "disburseAmount": 1.1,
-                          "disburseDate": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "id": "id",
-                          "invoiceAmount": 1.1,
-                          "invoiceDate": "2024-01-15T09:30:00Z",
-                          "organizationID": "organizationID",
-                          "partner": "partner",
-                          "paymentDueDate": "2024-01-15T09:30:00Z",
-                          "productID": "productID",
-                          "refundDisburseAmount": 1.1,
-                          "refundDisburseDate": "2024-01-15T09:30:00Z",
-                          "refundInvoiceAmount": 1.1,
-                          "refundInvoiceDate": "2024-01-15T09:30:00Z",
-                          "taxAmount": 1.1,
-                        },
-                      ],
-                      "service": "service",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14276,25 +11074,7 @@ service:
                     "organizationID": "organizationID",
                   },
                   "response": {
-                    "body": {
-                      "entitlementID": "entitlementID",
-                      "organizationID": "organizationID",
-                      "reportDate": "2024-01-15T09:30:00Z",
-                      "usageRecords": [
-                        {
-                          "amounts": [
-                            1.1,
-                          ],
-                          "date": "2024-01-15T09:30:00Z",
-                          "keys": [
-                            "keys",
-                          ],
-                          "quantities": [
-                            1.1,
-                          ],
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14343,12 +11123,7 @@ service:
                     "partner": "AWS",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "revenueRecordDetails": [
-                        {},
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14421,33 +11196,7 @@ service:
                     "partner": "AWS",
                   },
                   "response": {
-                    "body": {
-                      "nextOffset": 1,
-                      "revenueRecords": [
-                        {
-                          "amount": 1.1,
-                          "buyerID": "buyerID",
-                          "collectableAmount": 1.1,
-                          "currency": "currency",
-                          "date": "2024-01-15T09:30:00Z",
-                          "disburseAmount": 1.1,
-                          "disburseDate": "2024-01-15T09:30:00Z",
-                          "entitlementID": "entitlementID",
-                          "id": "id",
-                          "invoiceAmount": 1.1,
-                          "invoiceDate": "2024-01-15T09:30:00Z",
-                          "organizationID": "organizationID",
-                          "partner": "partner",
-                          "paymentDueDate": "2024-01-15T09:30:00Z",
-                          "productID": "productID",
-                          "refundDisburseAmount": 1.1,
-                          "refundDisburseDate": "2024-01-15T09:30:00Z",
-                          "refundInvoiceAmount": 1.1,
-                          "refundInvoiceDate": "2024-01-15T09:30:00Z",
-                          "taxAmount": 1.1,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14627,29 +11376,7 @@ service:
             orgId: orgId
             partner: AWS
           response:
-            body:
-              nextOffset: 1
-              revenueRecords:
-                - amount: 1.1
-                  buyerID: buyerID
-                  collectableAmount: 1.1
-                  currency: currency
-                  date: '2024-01-15T09:30:00Z'
-                  disburseAmount: 1.1
-                  disburseDate: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  id: id
-                  invoiceAmount: 1.1
-                  invoiceDate: '2024-01-15T09:30:00Z'
-                  organizationID: organizationID
-                  partner: partner
-                  paymentDueDate: '2024-01-15T09:30:00Z'
-                  productID: productID
-                  refundDisburseAmount: 1.1
-                  refundDisburseDate: '2024-01-15T09:30:00Z'
-                  refundInvoiceAmount: 1.1
-                  refundInvoiceDate: '2024-01-15T09:30:00Z'
-                  taxAmount: 1.1
+            body: {}
     ListRevenueRecordDetails:
       path: /org/{orgId}/partner/{partner}/revenueRecordDetail
       method: GET
@@ -14704,10 +11431,7 @@ service:
             orgId: orgId
             partner: AWS
           response:
-            body:
-              nextOffset: 1
-              revenueRecordDetails:
-                - {}
+            body: {}
     GetRevenueReport:
       path: /org/{orgId}/revenueReport
       method: POST
@@ -14763,36 +11487,7 @@ service:
             reportType: InvoicedAmount
             service: MARKETPLACE
           response:
-            body:
-              buyerID: buyerID
-              entitlementID: entitlementID
-              organizationID: organizationID
-              partner: partner
-              productID: productID
-              reportDate: '2024-01-15T09:30:00Z'
-              reportType: InvoicedAmount
-              revenueRecords:
-                - amount: 1.1
-                  buyerID: buyerID
-                  collectableAmount: 1.1
-                  currency: currency
-                  date: '2024-01-15T09:30:00Z'
-                  disburseAmount: 1.1
-                  disburseDate: '2024-01-15T09:30:00Z'
-                  entitlementID: entitlementID
-                  id: id
-                  invoiceAmount: 1.1
-                  invoiceDate: '2024-01-15T09:30:00Z'
-                  organizationID: organizationID
-                  partner: partner
-                  paymentDueDate: '2024-01-15T09:30:00Z'
-                  productID: productID
-                  refundDisburseAmount: 1.1
-                  refundDisburseDate: '2024-01-15T09:30:00Z'
-                  refundInvoiceAmount: 1.1
-                  refundInvoiceDate: '2024-01-15T09:30:00Z'
-                  taxAmount: 1.1
-              service: service
+            body: {}
     GetUsageReport:
       path: /org/{orgId}/usageReport
       method: POST
@@ -14827,18 +11522,7 @@ service:
             entitlementID: entitlementID
             organizationID: organizationID
           response:
-            body:
-              entitlementID: entitlementID
-              organizationID: organizationID
-              reportDate: '2024-01-15T09:30:00Z'
-              usageRecords:
-                - amounts:
-                    - 1.1
-                  date: '2024-01-15T09:30:00Z'
-                  keys:
-                    - keys
-                  quantities:
-                    - 1.1
+            body: {}
   source:
     openapi: ../swagger.json
 ",

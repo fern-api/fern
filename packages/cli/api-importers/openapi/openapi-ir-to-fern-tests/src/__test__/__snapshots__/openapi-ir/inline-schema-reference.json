@@ -133,15 +133,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "message": {
-                  "value": {
-                    "value": "message",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

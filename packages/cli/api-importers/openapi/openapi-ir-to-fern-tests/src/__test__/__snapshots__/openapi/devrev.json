@@ -5111,7 +5111,6 @@ types:
                   },
                   "response": {
                     "body": {
-                      "expires_at": "2024-01-15T09:30:00Z",
                       "url": "url",
                     },
                   },
@@ -5235,7 +5234,6 @@ service:
             id: don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>
           response:
             body:
-              expires_at: '2024-01-15T09:30:00Z'
               url: url
     prepare:
       path: /artifacts.prepare
@@ -5841,10 +5839,7 @@ authenticated user.
                   "response": {
                     "body": {
                       "access_token": "access_token",
-                      "client_id": "client_id",
                       "expires_in": 1000000,
-                      "refresh_token": "refresh_token",
-                      "scope": "scope",
                       "token_type": "bearer",
                     },
                   },
@@ -5984,44 +5979,7 @@ given Dev organization.
                   "response": {
                     "body": {
                       "token": {
-                        "client_id": "client_id",
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "scopes": [
-                          "scopes",
-                        ],
-                        "status": "active",
-                        "subject": "subject",
-                        "token_hint": "token_hint",
                       },
                     },
                   },
@@ -6068,28 +6026,7 @@ token type issued for a given subject.
                     "body": {
                       "tokens": [
                         {
-                          "client_id": "client_id",
-                          "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
-                          },
-                          "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "display_id",
-                          "expires_at": "2024-01-15T09:30:00Z",
                           "id": "id",
-                          "issued_at": "2024-01-15T09:30:00Z",
-                          "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
-                          },
-                          "modified_date": "2024-01-15T09:30:00Z",
-                          "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                          "scopes": [
-                            "scopes",
-                          ],
-                          "status": "active",
-                          "subject": "subject",
-                          "token_hint": "token_hint",
                         },
                       ],
                     },
@@ -6194,44 +6131,7 @@ organization.
                   "response": {
                     "body": {
                       "token": {
-                        "client_id": "client_id",
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "scopes": [
-                          "scopes",
-                        ],
-                        "status": "active",
-                        "subject": "subject",
-                        "token_hint": "token_hint",
                       },
                     },
                   },
@@ -6351,10 +6251,7 @@ service:
           response:
             body:
               access_token: access_token
-              client_id: client_id
               expires_in: 1000000
-              refresh_token: refresh_token
-              scope: scope
               token_type: bearer
     delete:
       path: /auth-tokens.delete
@@ -6423,39 +6320,7 @@ service:
           response:
             body:
               token:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                client_id: client_id
-                expires_at: '2024-01-15T09:30:00Z'
-                issued_at: '2024-01-15T09:30:00Z'
-                requested_token_type: urn:devrev:params:oauth:token-type:aat
-                scopes:
-                  - scopes
-                status: active
-                subject: subject
-                token_hint: token_hint
     list:
       path: /auth-tokens.list
       method: GET
@@ -6499,25 +6364,7 @@ service:
         - response:
             body:
               tokens:
-                - created_by:
-                    type: sys_user
-                    id: created_by
-                  created_date: '2024-01-15T09:30:00Z'
-                  display_id: display_id
-                  id: id
-                  modified_by:
-                    type: sys_user
-                    id: modified_by
-                  modified_date: '2024-01-15T09:30:00Z'
-                  client_id: client_id
-                  expires_at: '2024-01-15T09:30:00Z'
-                  issued_at: '2024-01-15T09:30:00Z'
-                  requested_token_type: urn:devrev:params:oauth:token-type:aat
-                  scopes:
-                    - scopes
-                  status: active
-                  subject: subject
-                  token_hint: token_hint
+                - id: id
     selfDelete:
       path: /auth-tokens.self.delete
       method: POST
@@ -6584,39 +6431,7 @@ service:
           response:
             body:
               token:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                client_id: client_id
-                expires_at: '2024-01-15T09:30:00Z'
-                issued_at: '2024-01-15T09:30:00Z'
-                requested_token_type: urn:devrev:params:oauth:token-type:aat
-                scopes:
-                  - scopes
-                status: active
-                subject: subject
-                token_hint: token_hint
   source:
     openapi: ../openapi.yml
   display-name: auth-tokens
@@ -6652,37 +6467,9 @@ docs: Security token interactions.
                     "body": {
                       "dev_users": [
                         {
-                          "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
-                          },
-                          "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "display_id",
-                          "display_name": "display_name",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "email",
-                          "external_identities": [
-                            {
-                              "key": "value",
-                            },
-                          ],
-                          "full_name": "full_name",
                           "id": "id",
-                          "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
-                          },
-                          "modified_date": "2024-01-15T09:30:00Z",
-                          "phone_numbers": [
-                            "phone_numbers",
-                          ],
-                          "state": "active",
                         },
                       ],
-                      "next_cursor": "next_cursor",
-                      "prev_cursor": "prev_cursor",
                     },
                   },
                 },
@@ -6752,50 +6539,7 @@ used.
                   "response": {
                     "body": {
                       "dev_user": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "display_picture": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
-                        "email": "email",
-                        "external_identities": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                        "full_name": "full_name",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "phone_numbers": [
-                          "phone_numbers",
-                        ],
-                        "state": "active",
                       },
                     },
                   },
@@ -6877,28 +6621,7 @@ service:
         - response:
             body:
               dev_users:
-                - created_by:
-                    type: sys_user
-                    id: created_by
-                  created_date: '2024-01-15T09:30:00Z'
-                  display_id: display_id
-                  id: id
-                  modified_by:
-                    type: sys_user
-                    id: modified_by
-                  modified_date: '2024-01-15T09:30:00Z'
-                  display_name: display_name
-                  display_picture:
-                    id: id
-                  email: email
-                  full_name: full_name
-                  phone_numbers:
-                    - phone_numbers
-                  state: active
-                  external_identities:
-                    - key: value
-              next_cursor: next_cursor
-              prev_cursor: prev_cursor
+                - id: id
     self:
       path: /dev-users.self
       method: GET
@@ -6920,41 +6643,7 @@ service:
         - response:
             body:
               dev_user:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                display_name: display_name
-                display_picture:
-                  display_id: display_id
-                  id: id
-                email: email
-                full_name: full_name
-                phone_numbers:
-                  - phone_numbers
-                state: active
-                external_identities:
-                  - key: value
   source:
     openapi: ../openapi.yml
   display-name: dev-users
@@ -7233,7 +6922,6 @@ docs: Dev user interactions.
                 {
                   "response": {
                     "body": {
-                      "next_cursor": "next_cursor",
                       "parts": [
                         {
                           "artifacts": [
@@ -7272,7 +6960,6 @@ docs: Dev user interactions.
                           "type": "product",
                         },
                       ],
-                      "prev_cursor": "prev_cursor",
                     },
                   },
                 },
@@ -7659,7 +7346,6 @@ service:
       examples:
         - response:
             body:
-              next_cursor: next_cursor
               parts:
                 - type: product
                   created_by:
@@ -7683,7 +7369,6 @@ service:
                     - tag:
                         id: id
                         name: name
-              prev_cursor: prev_cursor
     update:
       path: /parts.update
       method: POST
@@ -7789,38 +7474,7 @@ organization.
                   "response": {
                     "body": {
                       "rev_org": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                       },
                     },
                   },
@@ -7944,38 +7598,7 @@ records.
                   "response": {
                     "body": {
                       "rev_org": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                       },
                     },
                   },
@@ -8020,26 +7643,9 @@ to access.
                 {
                   "response": {
                     "body": {
-                      "next_cursor": "next_cursor",
-                      "prev_cursor": "prev_cursor",
                       "rev_orgs": [
                         {
-                          "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
-                          },
-                          "created_date": "2024-01-15T09:30:00Z",
-                          "description": "description",
-                          "display_id": "display_id",
-                          "display_name": "display_name",
-                          "domain": "domain",
-                          "external_ref": "external_ref",
                           "id": "id",
-                          "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
-                          },
-                          "modified_date": "2024-01-15T09:30:00Z",
                         },
                       ],
                     },
@@ -8138,38 +7744,7 @@ them.
                   "response": {
                     "body": {
                       "rev_org": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                       },
                     },
                   },
@@ -8292,34 +7867,7 @@ service:
           response:
             body:
               rev_org:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                display_name: display_name
-                description: description
-                domain: domain
-                external_ref: external_ref
     delete:
       path: /rev-orgs.delete
       method: POST
@@ -8382,34 +7930,7 @@ service:
           response:
             body:
               rev_org:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                display_name: display_name
-                description: description
-                domain: domain
-                external_ref: external_ref
     list:
       path: /rev-orgs.list
       method: GET
@@ -8487,23 +8008,8 @@ service:
       examples:
         - response:
             body:
-              next_cursor: next_cursor
-              prev_cursor: prev_cursor
               rev_orgs:
-                - created_by:
-                    type: sys_user
-                    id: created_by
-                  created_date: '2024-01-15T09:30:00Z'
-                  display_id: display_id
-                  id: id
-                  modified_by:
-                    type: sys_user
-                    id: modified_by
-                  modified_date: '2024-01-15T09:30:00Z'
-                  display_name: display_name
-                  description: description
-                  domain: domain
-                  external_ref: external_ref
+                - id: id
     update:
       path: /rev-orgs.update
       method: POST
@@ -8559,34 +8065,7 @@ service:
           response:
             body:
               rev_org:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                display_name: display_name
-                description: description
-                domain: domain
-                external_ref: external_ref
   source:
     openapi: ../openapi.yml
   display-name: rev-orgs
@@ -8626,38 +8105,7 @@ and a logical concept denoted by the tag's name.
                   "response": {
                     "body": {
                       "tag": {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
                     },
@@ -8771,38 +8219,7 @@ permitted.
                   "response": {
                     "body": {
                       "tag": {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
                     },
@@ -8844,26 +8261,9 @@ permitted.
                 {
                   "response": {
                     "body": {
-                      "next_cursor": "next_cursor",
-                      "prev_cursor": "prev_cursor",
                       "tags": [
                         {
-                          "allowed_values": [
-                            "allowed_values",
-                          ],
-                          "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
-                          },
-                          "created_date": "2024-01-15T09:30:00Z",
-                          "description": "description",
-                          "display_id": "display_id",
                           "id": "id",
-                          "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
-                          },
-                          "modified_date": "2024-01-15T09:30:00Z",
                           "name": "name",
                         },
                       ],
@@ -8923,38 +8323,7 @@ used.
                   "response": {
                     "body": {
                       "tag": {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
                     },
@@ -9054,33 +8423,7 @@ service:
           response:
             body:
               tag:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                allowed_values:
-                  - allowed_values
-                description: description
                 name: name
     delete:
       path: /tags.delete
@@ -9144,33 +8487,7 @@ service:
           response:
             body:
               tag:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                allowed_values:
-                  - allowed_values
-                description: description
                 name: name
     list:
       path: /tags.list
@@ -9210,22 +8527,8 @@ service:
       examples:
         - response:
             body:
-              next_cursor: next_cursor
-              prev_cursor: prev_cursor
               tags:
-                - created_by:
-                    type: sys_user
-                    id: created_by
-                  created_date: '2024-01-15T09:30:00Z'
-                  display_id: display_id
-                  id: id
-                  modified_by:
-                    type: sys_user
-                    id: modified_by
-                  modified_date: '2024-01-15T09:30:00Z'
-                  allowed_values:
-                    - allowed_values
-                  description: description
+                - id: id
                   name: name
     update:
       path: /tags.update
@@ -9269,33 +8572,7 @@ service:
           response:
             body:
               tag:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                allowed_values:
-                  - allowed_values
-                description: description
                 name: name
   source:
     openapi: ../openapi.yml
@@ -9499,8 +8776,6 @@ docs: DevRev tag interactions.
                   },
                   "response": {
                     "body": {
-                      "next_cursor": "next_cursor",
-                      "prev_cursor": "prev_cursor",
                       "timeline_entries": [
                         {
                           "artifacts": [
@@ -9829,8 +9104,6 @@ service:
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
           response:
             body:
-              next_cursor: next_cursor
-              prev_cursor: prev_cursor
               timeline_entries:
                 - type: timeline_comment
                   created_by:
@@ -9945,37 +9218,7 @@ docs: APIs to manage timeline entries for objects.
                   "response": {
                     "body": {
                       "webhook": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
                         "url": "url",
@@ -10098,37 +9341,7 @@ response.
                   "response": {
                     "body": {
                       "webhook": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
                         "url": "url",
@@ -10174,21 +9387,7 @@ response.
                     "body": {
                       "webhooks": [
                         {
-                          "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
-                          },
-                          "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "display_id",
-                          "event_types": [
-                            "part_created",
-                          ],
                           "id": "id",
-                          "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
-                          },
-                          "modified_date": "2024-01-15T09:30:00Z",
                           "secret": "secret",
                           "status": "active",
                           "url": "url",
@@ -10229,37 +9428,7 @@ response.
                   "response": {
                     "body": {
                       "webhook": {
-                        "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
                         "id": "id",
-                        "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
-                          "display_picture": {
-                            "id": "id",
-                          },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
-                          "state": "active",
-                          "type": "sys_user",
-                        },
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
                         "url": "url",
@@ -10381,32 +9550,7 @@ service:
           response:
             body:
               webhook:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                event_types:
-                  - part_created
                 secret: secret
                 status: active
                 url: url
@@ -10472,32 +9616,7 @@ service:
           response:
             body:
               webhook:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                event_types:
-                  - part_created
                 secret: secret
                 status: active
                 url: url
@@ -10522,18 +9641,7 @@ service:
         - response:
             body:
               webhooks:
-                - created_by:
-                    type: sys_user
-                    id: created_by
-                  created_date: '2024-01-15T09:30:00Z'
-                  display_id: display_id
-                  id: id
-                  modified_by:
-                    type: sys_user
-                    id: modified_by
-                  modified_date: '2024-01-15T09:30:00Z'
-                  event_types:
-                    - part_created
+                - id: id
                   secret: secret
                   status: active
                   url: url
@@ -10599,32 +9707,7 @@ service:
           response:
             body:
               webhook:
-                created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
-                  display_picture:
-                    id: id
-                  email: created_by
-                  full_name: created_by
-                  state: active
-                created_date: '2024-01-15T09:30:00Z'
-                display_id: display_id
                 id: id
-                modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
-                  display_picture:
-                    id: id
-                  email: modified_by
-                  full_name: modified_by
-                  state: active
-                modified_date: '2024-01-15T09:30:00Z'
-                event_types:
-                  - part_created
                 secret: secret
                 status: active
                 url: url
@@ -10705,7 +9788,6 @@ docs: Webhook event APIs.
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "work",
                         "group": {
-                          "display_id": "display_id",
                           "id": "id",
                         },
                         "id": "work",
@@ -11024,7 +10106,6 @@ organizations.
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "work",
                         "group": {
-                          "display_id": "display_id",
                           "id": "id",
                         },
                         "id": "work",
@@ -11114,8 +10195,6 @@ organizations.
                 {
                   "response": {
                     "body": {
-                      "next_cursor": "next_cursor",
-                      "prev_cursor": "prev_cursor",
                       "works": [
                         {
                           "applies_to_part": {
@@ -11311,7 +10390,6 @@ organizations.
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "work",
                         "group": {
-                          "display_id": "display_id",
                           "id": "id",
                         },
                         "id": "work",
@@ -11479,7 +10557,6 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: work
                 group:
-                  display_id: display_id
                   id: id
                 rev_org:
                   type: rev_org
@@ -11707,7 +10784,6 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: work
                 group:
-                  display_id: display_id
                   id: id
                 rev_org:
                   type: rev_org
@@ -11795,8 +10871,6 @@ service:
       examples:
         - response:
             body:
-              next_cursor: next_cursor
-              prev_cursor: prev_cursor
               works:
                 - type: ticket
                   created_by:
@@ -11914,7 +10988,6 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: work
                 group:
-                  display_id: display_id
                   id: id
                 rev_org:
                   type: rev_org

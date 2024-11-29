@@ -347,20 +347,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -1697,20 +1683,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -2303,20 +2275,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -2786,20 +2744,6 @@
                     "self": {
                       "value": {
                         "value": "self",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -3624,20 +3568,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -4012,13 +3942,6 @@
                     "type": "double"
                   },
                   "type": "primitive"
-                },
-                "lastInsertRowid": {
-                  "value": {
-                    "value": "lastInsertRowid",
-                    "type": "string"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -4121,13 +4044,6 @@
                   "value": {
                     "value": 1.1,
                     "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "lastInsertRowid": {
-                  "value": {
-                    "value": "lastInsertRowid",
-                    "type": "string"
                   },
                   "type": "primitive"
                 }
@@ -7841,20 +7757,6 @@
                     "self": {
                       "value": {
                         "value": "self",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
                         "type": "string"
                       },
                       "type": "primitive"

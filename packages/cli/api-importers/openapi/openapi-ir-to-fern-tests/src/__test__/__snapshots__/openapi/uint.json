@@ -16,10 +16,7 @@
                 {
                   "request": {},
                   "response": {
-                    "body": {
-                      "id": 1.1,
-                      "value": 1000000,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -90,9 +87,7 @@
       examples:
         - request: {}
           response:
-            body:
-              id: 1.1
-              value: 1000000
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

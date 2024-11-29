@@ -4253,25 +4253,11 @@ types:
                   },
                   "response": {
                     "body": {
-                      "archived_at": "archived_at",
-                      "attempt_number": 1,
-                      "bulk_retry_id": "bulk_retry_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "delivered_at": "2024-01-15T09:30:00Z",
-                      "delivery_latency": 1,
-                      "destination_id": "destination_id",
-                      "error_code": "TIMEOUT",
                       "event_id": "event_id",
                       "id": "id",
-                      "requested_url": "requested_url",
-                      "responded_at": "2024-01-15T09:30:00Z",
-                      "response_latency": 1,
-                      "response_status": 1,
-                      "state": "DELIVERING",
                       "status": "QUEUED",
-                      "successful_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
-                      "trigger": "INITIAL",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -4302,40 +4288,7 @@ types:
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "archived_at": "archived_at",
-                          "attempt_number": 1,
-                          "bulk_retry_id": "bulk_retry_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "delivered_at": "2024-01-15T09:30:00Z",
-                          "delivery_latency": 1,
-                          "destination_id": "destination_id",
-                          "error_code": "TIMEOUT",
-                          "event_id": "event_id",
-                          "id": "id",
-                          "requested_url": "requested_url",
-                          "responded_at": "2024-01-15T09:30:00Z",
-                          "response_latency": 1,
-                          "response_status": 1,
-                          "state": "DELIVERING",
-                          "status": "QUEUED",
-                          "successful_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "trigger": "INITIAL",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -4432,35 +4385,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  event_id: event_id
-                  response_status: 1
-                  attempt_number: 1
-                  trigger: INITIAL
-                  error_code: TIMEOUT
-                  requested_url: requested_url
-                  bulk_retry_id: bulk_retry_id
-                  status: QUEUED
-                  successful_at: '2024-01-15T09:30:00Z'
-                  delivered_at: '2024-01-15T09:30:00Z'
-                  responded_at: '2024-01-15T09:30:00Z'
-                  delivery_latency: 1
-                  response_latency: 1
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  state: DELIVERING
-                  archived_at: archived_at
-                  destination_id: destination_id
+            body: {}
     getAttempt:
       path: /attempts/{id}
       method: GET
@@ -4484,23 +4409,9 @@ service:
               id: id
               team_id: team_id
               event_id: event_id
-              response_status: 1
-              attempt_number: 1
-              trigger: INITIAL
-              error_code: TIMEOUT
-              requested_url: requested_url
-              bulk_retry_id: bulk_retry_id
               status: QUEUED
-              successful_at: '2024-01-15T09:30:00Z'
-              delivered_at: '2024-01-15T09:30:00Z'
-              responded_at: '2024-01-15T09:30:00Z'
-              delivery_latency: 1
-              response_latency: 1
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              state: DELIVERING
-              archived_at: archived_at
-              destination_id: destination_id
   source:
     openapi: ../openapi.yml
   display-name: Attempts
@@ -4536,20 +4447,10 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   },
                   "response": {
                     "body": {
-                      "alias": "alias",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "event_data_id": "event_data_id",
                       "id": "id",
                       "label": "label",
-                      "last_used_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -4666,20 +4567,10 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   },
                   "response": {
                     "body": {
-                      "alias": "alias",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "event_data_id": "event_data_id",
                       "id": "id",
                       "label": "label",
-                      "last_used_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -4712,32 +4603,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "alias": "alias",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "data": {
-                            "path": "path",
-                          },
-                          "event_data_id": "event_data_id",
-                          "id": "id",
-                          "label": "label",
-                          "last_used_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -4832,28 +4698,13 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                     "body": [
                       {
                         "attempts": 1,
-                        "cli_id": "cli_id",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "body": "body",
-                          "headers": "headers",
-                          "is_large_payload": true,
-                          "parsed_query": "parsed_query",
-                          "path": "path",
-                          "query": "query",
-                        },
                         "destination_id": "destination_id",
                         "event_data_id": "event_data_id",
                         "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
                         "request_id": "request_id",
-                        "response_status": 1,
                         "source_id": "source_id",
                         "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                         "webhook_id": "webhook_id",
@@ -4908,20 +4759,10 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   "request": {},
                   "response": {
                     "body": {
-                      "alias": "alias",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "event_data_id": "event_data_id",
                       "id": "id",
                       "label": "label",
-                      "last_used_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -5095,26 +4936,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  event_data_id: event_data_id
-                  label: label
-                  alias: alias
-                  data:
-                    path: path
-                  last_used_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createBookmark:
       path: /bookmarks
       method: POST
@@ -5167,15 +4989,6 @@ service:
               webhook_id: webhook_id
               event_data_id: event_data_id
               label: label
-              alias: alias
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              last_used_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getBookmark:
@@ -5203,15 +5016,6 @@ service:
               webhook_id: webhook_id
               event_data_id: event_data_id
               label: label
-              alias: alias
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              last_used_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateBookmark:
@@ -5268,15 +5072,6 @@ service:
               webhook_id: webhook_id
               event_data_id: event_data_id
               label: label
-              alias: alias
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              last_used_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     deleteBookmark:
@@ -5339,23 +5134,9 @@ service:
                 event_data_id: event_data_id
                 request_id: request_id
                 attempts: 1
-                data:
-                  path: path
-                  query: query
-                  parsed_query: parsed_query
-                  headers: headers
-                  body: body
-                  is_large_payload: true
-                last_attempt_at: '2024-01-15T09:30:00Z'
-                next_attempt_at: '2024-01-15T09:30:00Z'
-                response_status: 1
                 status: SCHEDULED
-                successful_at: '2024-01-15T09:30:00Z'
-                cli_id: cli_id
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-                created_at_id: created_at_id
-                last_attempt_at_id: last_attempt_at_id
   source:
     openapi: ../openapi.yml
   display-name: Bookmarks
@@ -5388,21 +5169,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -5436,21 +5205,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                   "request": {},
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -5494,11 +5251,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "progress": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -5524,37 +5277,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "cancelled_at": "2024-01-15T09:30:00Z",
-                          "completed_at": "2024-01-15T09:30:00Z",
-                          "completed_count": 1,
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "estimated_batch": 1,
-                          "estimated_count": 1,
-                          "failed_count": 1,
-                          "id": "id",
-                          "in_progress": true,
-                          "number": 1.1,
-                          "processed_batch": 1,
-                          "progress": 1.1,
-                          "query": {
-                            "key": "value",
-                          },
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -5608,21 +5331,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -6676,31 +6387,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  query:
-                    key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  cancelled_at: '2024-01-15T09:30:00Z'
-                  completed_at: '2024-01-15T09:30:00Z'
-                  estimated_batch: 1
-                  estimated_count: 1
-                  processed_batch: 1
-                  completed_count: 1
-                  in_progress: true
-                  progress: 1.1
-                  failed_count: 1
-                  number: 1.1
+            body: {}
     createEventBulkRetry:
       path: /bulk/events/retry
       method: POST
@@ -6731,20 +6418,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     generateEventBulkRetryPlan:
       path: /bulk/events/retry/plan
       method: GET
@@ -6761,10 +6437,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              estimated_batch: 1
-              estimated_count: 1
-              progress: 1.1
+            body: {}
     getEventBulkRetry:
       path: /bulk/events/retry/{id}
       method: GET
@@ -6787,20 +6460,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     cancelEventBulkRetry:
       path: /bulk/events/retry/{id}/cancel
       method: POST
@@ -6823,20 +6485,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
   source:
     openapi: ../openapi.yml
   display-name: Bulk retry events
@@ -6869,21 +6520,9 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -6917,21 +6556,9 @@ docs: ''
                   "request": {},
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -6975,11 +6602,7 @@ docs: ''
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "progress": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7005,37 +6628,7 @@ docs: ''
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "cancelled_at": "2024-01-15T09:30:00Z",
-                          "completed_at": "2024-01-15T09:30:00Z",
-                          "completed_count": 1,
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "estimated_batch": 1,
-                          "estimated_count": 1,
-                          "failed_count": 1,
-                          "id": "id",
-                          "in_progress": true,
-                          "number": 1.1,
-                          "processed_batch": 1,
-                          "progress": 1.1,
-                          "query": {
-                            "key": "value",
-                          },
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7089,21 +6682,9 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -7301,31 +6882,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  query:
-                    key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  cancelled_at: '2024-01-15T09:30:00Z'
-                  completed_at: '2024-01-15T09:30:00Z'
-                  estimated_batch: 1
-                  estimated_count: 1
-                  processed_batch: 1
-                  completed_count: 1
-                  in_progress: true
-                  progress: 1.1
-                  failed_count: 1
-                  number: 1.1
+            body: {}
     createIgnoredEventBulkRetry:
       path: /bulk/ignored-events/retry
       method: POST
@@ -7354,20 +6911,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     generateIgnoredEventBulkRetryPlan:
       path: /bulk/ignored-events/retry/plan
       method: GET
@@ -7384,10 +6930,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              estimated_batch: 1
-              estimated_count: 1
-              progress: 1.1
+            body: {}
     getIgnoredEventBulkRetry:
       path: /bulk/ignored-events/retry/{id}
       method: GET
@@ -7410,20 +6953,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     cancelIgnoredEventBulkRetry:
       path: /bulk/ignored-events/retry/{id}/cancel
       method: POST
@@ -7446,20 +6978,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
   source:
     openapi: ../openapi.yml
   display-name: Bulk retry ignored events
@@ -7492,21 +7013,9 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -7540,21 +7049,9 @@ docs: ''
                   "request": {},
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -7598,11 +7095,7 @@ docs: ''
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "progress": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7628,37 +7121,7 @@ docs: ''
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "cancelled_at": "2024-01-15T09:30:00Z",
-                          "completed_at": "2024-01-15T09:30:00Z",
-                          "completed_count": 1,
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "estimated_batch": 1,
-                          "estimated_count": 1,
-                          "failed_count": 1,
-                          "id": "id",
-                          "in_progress": true,
-                          "number": 1.1,
-                          "processed_batch": 1,
-                          "progress": 1.1,
-                          "query": {
-                            "key": "value",
-                          },
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -7712,21 +7175,9 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "cancelled_at": "2024-01-15T09:30:00Z",
-                      "completed_at": "2024-01-15T09:30:00Z",
-                      "completed_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "estimated_batch": 1,
-                      "estimated_count": 1,
-                      "failed_count": 1,
                       "id": "id",
                       "in_progress": true,
-                      "number": 1.1,
-                      "processed_batch": 1,
-                      "progress": 1.1,
-                      "query": {
-                        "key": "value",
-                      },
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -8502,31 +7953,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  query:
-                    key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  cancelled_at: '2024-01-15T09:30:00Z'
-                  completed_at: '2024-01-15T09:30:00Z'
-                  estimated_batch: 1
-                  estimated_count: 1
-                  processed_batch: 1
-                  completed_count: 1
-                  in_progress: true
-                  progress: 1.1
-                  failed_count: 1
-                  number: 1.1
+            body: {}
     createRequestBulkRetry:
       path: /bulk/requests/retry
       method: POST
@@ -8557,20 +7984,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     generateRequestBulkRetryPlan:
       path: /bulk/requests/retry/plan
       method: GET
@@ -8587,10 +8003,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              estimated_batch: 1
-              estimated_count: 1
-              progress: 1.1
+            body: {}
     getRequestBulkRetry:
       path: /bulk/requests/retry/{id}
       method: GET
@@ -8613,20 +8026,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
     cancelRequestBulkRetry:
       path: /bulk/requests/retry/{id}/cancel
       method: POST
@@ -8649,20 +8051,9 @@ service:
             body:
               id: id
               team_id: team_id
-              query:
-                key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              cancelled_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              estimated_batch: 1
-              estimated_count: 1
-              processed_batch: 1
-              completed_count: 1
               in_progress: true
-              progress: 1.1
-              failed_count: 1
-              number: 1.1
   source:
     openapi: ../openapi.yml
   display-name: Bulk retry requests
@@ -8695,64 +8086,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -8793,64 +8139,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -8954,64 +8255,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9048,68 +8304,7 @@ docs: ''
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "archived_at": "2024-01-15T09:30:00Z",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "destination": {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "team_id": "team_id",
-                            "updated_at": "2024-01-15T09:30:00Z",
-                          },
-                          "id": "id",
-                          "name": "name",
-                          "paused_at": "2024-01-15T09:30:00Z",
-                          "resolved_rules": [
-                            {
-                              "delay": 1,
-                              "type": "delay",
-                            },
-                          ],
-                          "rules": [
-                            {
-                              "delay": 1,
-                              "type": "delay",
-                            },
-                          ],
-                          "ruleset": {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "is_team_default": true,
-                            "name": "name",
-                            "rules": [
-                              {
-                                "delay": 1,
-                                "type": "delay",
-                              },
-                            ],
-                            "team_id": "team_id",
-                            "updated_at": "2024-01-15T09:30:00Z",
-                          },
-                          "source": {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "team_id": "team_id",
-                            "updated_at": "2024-01-15T09:30:00Z",
-                            "url": "url",
-                          },
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9183,64 +8378,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9280,64 +8430,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9377,64 +8482,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9477,64 +8537,19 @@ docs: ''
                   "request": {},
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9614,64 +8629,19 @@ docs: ''
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "destination": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
                       },
                       "id": "id",
                       "name": "name",
-                      "paused_at": "2024-01-15T09:30:00Z",
-                      "resolved_rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "rules": [
-                        {
-                          "delay": 1,
-                          "type": "delay",
-                        },
-                      ],
-                      "ruleset": {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [
-                          {
-                            "delay": 1,
-                            "type": "delay",
-                          },
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
                       "source": {
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "created_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
                         "name": "name",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -10180,51 +9150,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  name: name
-                  team_id: team_id
-                  destination:
-                    id: id
-                    name: name
-                    team_id: team_id
-                    updated_at: '2024-01-15T09:30:00Z'
-                    created_at: '2024-01-15T09:30:00Z'
-                  source:
-                    id: id
-                    name: name
-                    team_id: team_id
-                    url: url
-                    updated_at: '2024-01-15T09:30:00Z'
-                    created_at: '2024-01-15T09:30:00Z'
-                  ruleset:
-                    id: id
-                    name: name
-                    team_id: team_id
-                    rules:
-                      - type: delay
-                        delay: 1
-                    is_team_default: true
-                    updated_at: '2024-01-15T09:30:00Z'
-                    created_at: '2024-01-15T09:30:00Z'
-                  resolved_rules:
-                    - type: delay
-                      delay: 1
-                  rules:
-                    - type: delay
-                      delay: 1
-                  archived_at: '2024-01-15T09:30:00Z'
-                  paused_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createConnection:
       path: /webhooks
       method: POST
@@ -10291,12 +9217,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10304,35 +9224,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     upsertConnection:
@@ -10401,12 +9294,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10414,35 +9301,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getConnection:
@@ -10472,12 +9332,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10485,35 +9339,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateConnection:
@@ -10570,12 +9397,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10583,35 +9404,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     archiveConnection:
@@ -10641,12 +9435,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10654,35 +9442,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     unarchiveConnection:
@@ -10712,12 +9473,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10725,35 +9480,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     pauseConnection:
@@ -10783,12 +9511,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10796,35 +9518,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     unpauseConnection:
@@ -10854,12 +9549,6 @@ service:
                 id: id
                 name: name
                 team_id: team_id
-                path_forwarding_disabled: true
-                url: url
-                cli_path: cli_path
-                rate_limit: 1
-                rate_limit_period: second
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               source:
@@ -10867,35 +9556,8 @@ service:
                 name: name
                 team_id: team_id
                 url: url
-                integration_id: integration_id
-                integration:
-                  id: id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              ruleset:
-                id: id
-                name: name
-                team_id: team_id
-                rules:
-                  - type: delay
-                    delay: 1
-                is_team_default: true
-                archived_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-              resolved_rules:
-                - type: delay
-                  delay: 1
-              rules:
-                - type: delay
-                  delay: 1
-              archived_at: '2024-01-15T09:30:00Z'
-              paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
   source:
@@ -10932,17 +9594,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -10976,17 +9632,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -11054,17 +9704,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -11094,31 +9738,7 @@ docs: >-
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "archived_at": "2024-01-15T09:30:00Z",
-                          "cli_path": "cli_path",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "path_forwarding_disabled": true,
-                          "rate_limit": 1,
-                          "rate_limit_period": "second",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "url": "url",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11175,17 +9795,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -11223,17 +9837,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -11309,17 +9917,11 @@ docs: >-
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
-                      "cli_path": "cli_path",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "name": "name",
-                      "path_forwarding_disabled": true,
-                      "rate_limit": 1,
-                      "rate_limit_period": "second",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "url": "url",
                     },
                   },
                 },
@@ -11499,26 +10101,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  name: name
-                  team_id: team_id
-                  path_forwarding_disabled: true
-                  url: url
-                  cli_path: cli_path
-                  rate_limit: 1
-                  rate_limit_period: second
-                  archived_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createDestination:
       path: /destinations
       method: POST
@@ -11565,12 +10148,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     upsertDestination:
@@ -11619,12 +10196,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getDestination:
@@ -11650,12 +10221,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateDestination:
@@ -11712,12 +10277,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     archiveDestination:
@@ -11743,12 +10302,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     unarchiveDestination:
@@ -11774,12 +10327,6 @@ service:
               id: id
               name: name
               team_id: team_id
-              path_forwarding_disabled: true
-              url: url
-              cli_path: cli_path
-              rate_limit: 1
-              rate_limit_period: second
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
   source:
@@ -11815,28 +10362,13 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "response": {
                     "body": {
                       "attempts": 1,
-                      "cli_id": "cli_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_at_id": "created_at_id",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "destination_id": "destination_id",
                       "event_data_id": "event_data_id",
                       "id": "id",
-                      "last_attempt_at": "2024-01-15T09:30:00Z",
-                      "last_attempt_at_id": "last_attempt_at_id",
-                      "next_attempt_at": "2024-01-15T09:30:00Z",
                       "request_id": "request_id",
-                      "response_status": 1,
                       "source_id": "source_id",
                       "status": "SCHEDULED",
-                      "successful_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -11869,41 +10401,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "attempts": 1,
-                          "cli_id": "cli_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "created_at_id": "created_at_id",
-                          "data": {
-                            "path": "path",
-                          },
-                          "destination_id": "destination_id",
-                          "event_data_id": "event_data_id",
-                          "id": "id",
-                          "last_attempt_at": "2024-01-15T09:30:00Z",
-                          "last_attempt_at_id": "last_attempt_at_id",
-                          "next_attempt_at": "2024-01-15T09:30:00Z",
-                          "request_id": "request_id",
-                          "response_status": 1,
-                          "source_id": "source_id",
-                          "status": "SCHEDULED",
-                          "successful_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -12072,28 +10570,13 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "response": {
                     "body": {
                       "attempts": 1,
-                      "cli_id": "cli_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_at_id": "created_at_id",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "destination_id": "destination_id",
                       "event_data_id": "event_data_id",
                       "id": "id",
-                      "last_attempt_at": "2024-01-15T09:30:00Z",
-                      "last_attempt_at_id": "last_attempt_at_id",
-                      "next_attempt_at": "2024-01-15T09:30:00Z",
                       "request_id": "request_id",
-                      "response_status": 1,
                       "source_id": "source_id",
                       "status": "SCHEDULED",
-                      "successful_at": "2024-01-15T09:30:00Z",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -12130,51 +10613,22 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "response": {
                     "body": {
                       "attempt": {
-                        "archived_at": "archived_at",
-                        "attempt_number": 1,
-                        "bulk_retry_id": "bulk_retry_id",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "delivered_at": "2024-01-15T09:30:00Z",
-                        "delivery_latency": 1,
-                        "destination_id": "destination_id",
-                        "error_code": "TIMEOUT",
                         "event_id": "event_id",
                         "id": "id",
-                        "requested_url": "requested_url",
-                        "responded_at": "2024-01-15T09:30:00Z",
-                        "response_latency": 1,
-                        "response_status": 1,
-                        "state": "DELIVERING",
                         "status": "QUEUED",
-                        "successful_at": "2024-01-15T09:30:00Z",
                         "team_id": "team_id",
-                        "trigger": "INITIAL",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
                       "event": {
                         "attempts": 1,
-                        "cli_id": "cli_id",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "body": "body",
-                          "headers": "headers",
-                          "is_large_payload": true,
-                          "parsed_query": "parsed_query",
-                          "path": "path",
-                          "query": "query",
-                        },
                         "destination_id": "destination_id",
                         "event_data_id": "event_data_id",
                         "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
                         "request_id": "request_id",
-                        "response_status": 1,
                         "source_id": "source_id",
                         "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                         "webhook_id": "webhook_id",
@@ -12313,35 +10767,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  source_id: source_id
-                  destination_id: destination_id
-                  event_data_id: event_data_id
-                  request_id: request_id
-                  attempts: 1
-                  data:
-                    path: path
-                  last_attempt_at: '2024-01-15T09:30:00Z'
-                  next_attempt_at: '2024-01-15T09:30:00Z'
-                  response_status: 1
-                  status: SCHEDULED
-                  successful_at: '2024-01-15T09:30:00Z'
-                  cli_id: cli_id
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  created_at_id: created_at_id
-                  last_attempt_at_id: last_attempt_at_id
+            body: {}
     getEvent:
       path: /events/{id}
       method: GET
@@ -12370,23 +10796,9 @@ service:
               event_data_id: event_data_id
               request_id: request_id
               attempts: 1
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              last_attempt_at: '2024-01-15T09:30:00Z'
-              next_attempt_at: '2024-01-15T09:30:00Z'
-              response_status: 1
               status: SCHEDULED
-              successful_at: '2024-01-15T09:30:00Z'
-              cli_id: cli_id
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              created_at_id: created_at_id
-              last_attempt_at_id: last_attempt_at_id
     getRequestRawBody:
       path: /events/{id}/raw_body
       method: GET
@@ -12437,44 +10849,16 @@ service:
                 event_data_id: event_data_id
                 request_id: request_id
                 attempts: 1
-                data:
-                  path: path
-                  query: query
-                  parsed_query: parsed_query
-                  headers: headers
-                  body: body
-                  is_large_payload: true
-                last_attempt_at: '2024-01-15T09:30:00Z'
-                next_attempt_at: '2024-01-15T09:30:00Z'
-                response_status: 1
                 status: SCHEDULED
-                successful_at: '2024-01-15T09:30:00Z'
-                cli_id: cli_id
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-                created_at_id: created_at_id
-                last_attempt_at_id: last_attempt_at_id
               attempt:
                 id: id
                 team_id: team_id
                 event_id: event_id
-                response_status: 1
-                attempt_number: 1
-                trigger: INITIAL
-                error_code: TIMEOUT
-                requested_url: requested_url
-                bulk_retry_id: bulk_retry_id
                 status: QUEUED
-                successful_at: '2024-01-15T09:30:00Z'
-                delivered_at: '2024-01-15T09:30:00Z'
-                responded_at: '2024-01-15T09:30:00Z'
-                delivery_latency: 1
-                response_latency: 1
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-                state: DELIVERING
-                archived_at: archived_at
-                destination_id: destination_id
     muteEvent:
       path: /events/{id}/mute
       method: PUT
@@ -12503,23 +10887,9 @@ service:
               event_data_id: event_data_id
               request_id: request_id
               attempts: 1
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              last_attempt_at: '2024-01-15T09:30:00Z'
-              next_attempt_at: '2024-01-15T09:30:00Z'
-              response_status: 1
               status: SCHEDULED
-              successful_at: '2024-01-15T09:30:00Z'
-              cli_id: cli_id
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              created_at_id: created_at_id
-              last_attempt_at_id: last_attempt_at_id
   source:
     openapi: ../openapi.yml
   display-name: Events
@@ -12784,38 +11154,7 @@ docs: An event is any request that Hookdeck receives from a source.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "configs": {
-                            "algorithm": "md5",
-                            "encoding": "base64",
-                            "header_key": "header_key",
-                            "webhook_secret_key": "webhook_secret_key",
-                          },
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                          "sources": [
-                            "sources",
-                          ],
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -12981,30 +11320,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  label: label
-                  provider: twitter
-                  features:
-                    - VERIFICATION
-                  configs:
-                    webhook_secret_key: webhook_secret_key
-                    algorithm: md5
-                    header_key: header_key
-                    encoding: base64
-                  sources:
-                    - sources
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createIntegration:
       path: /integrations
       method: POST
@@ -13286,21 +11602,12 @@ types:
                   },
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13392,21 +11699,12 @@ types:
                   },
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13441,21 +11739,12 @@ types:
                   },
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13490,21 +11779,12 @@ types:
                   },
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13536,32 +11816,7 @@ types:
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "configs": {
-                            "connections": "connections",
-                            "strategy": "first_attempt",
-                          },
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "deleted_at": "2024-01-15T09:30:00Z",
-                          "disabled_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "type": "delivery",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -13605,21 +11860,12 @@ types:
                   "request": {},
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13686,21 +11932,12 @@ types:
                   },
                   "response": {
                     "body": {
-                      "channels": {
-                        "slack": {
-                          "channel_name": "channel_name",
-                        },
-                      },
                       "configs": {
                         "connections": "connections",
                         "strategy": "first_attempt",
                       },
                       "created_at": "2024-01-15T09:30:00Z",
-                      "deleted_at": "2024-01-15T09:30:00Z",
-                      "disabled_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "name": "name",
-                      "team_id": "team_id",
                       "type": "delivery",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -13879,26 +12116,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  name: name
-                  type: delivery
-                  configs:
-                    strategy: first_attempt
-                    connections: connections
-                  disabled_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  deleted_at: '2024-01-15T09:30:00Z'
+            body: {}
     createIssueTrigger:
       path: /issue-triggers
       method: POST
@@ -13934,19 +12152,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
     upsertIssueTrigger:
       path: /issue-triggers
       method: PUT
@@ -13983,19 +12194,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
     getIssueTrigger:
       path: /issue-triggers/{id}
       method: GET
@@ -14017,19 +12221,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
     updateIssueTrigger:
       path: /issue-triggers/{id}
       method: PUT
@@ -14070,19 +12267,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
     deleteIssueTrigger:
       path: /issue-triggers/{id}
       method: DELETE
@@ -14125,19 +12315,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
     enableIssueTrigger:
       path: /issue-triggers/{id}/enable
       method: PUT
@@ -14159,19 +12342,12 @@ service:
           response:
             body:
               id: id
-              team_id: team_id
-              name: name
               type: delivery
               configs:
                 strategy: first_attempt
                 connections: connections
-              channels:
-                slack:
-                  channel_name: channel_name
-              disabled_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              deleted_at: '2024-01-15T09:30:00Z'
   source:
     openapi: ../openapi.yml
   display-name: Issue Triggers
@@ -14223,7 +12399,6 @@ docs: >-
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
                       "team_id": "string",
@@ -14273,7 +12448,6 @@ docs: >-
                         "transformation_execution": {
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
-                          "issue_id": "issue_id",
                           "log_level": "debug",
                           "logs": [
                             {
@@ -14281,40 +12455,12 @@ docs: >-
                               "type": "error",
                             },
                           ],
-                          "original_event_data": {
-                            "path": "path",
-                          },
                           "original_event_data_id": "original_event_data_id",
                           "team_id": "team_id",
                           "transformation_id": "transformation_id",
-                          "transformed_event_data": {
-                            "path": "path",
-                          },
                           "transformed_event_data_id": "transformed_event_data_id",
                           "updated_at": "2024-01-15T09:30:00Z",
                           "webhook_id": "webhook_id",
-                        },
-                        "trigger_attempt": {
-                          "archived_at": "archived_at",
-                          "attempt_number": 1,
-                          "bulk_retry_id": "bulk_retry_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "delivered_at": "2024-01-15T09:30:00Z",
-                          "delivery_latency": 1,
-                          "destination_id": "destination_id",
-                          "error_code": "TIMEOUT",
-                          "event_id": "event_id",
-                          "id": "id",
-                          "requested_url": "requested_url",
-                          "responded_at": "2024-01-15T09:30:00Z",
-                          "response_latency": 1,
-                          "response_status": 1,
-                          "state": "DELIVERING",
-                          "status": "QUEUED",
-                          "successful_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "trigger": "INITIAL",
-                          "updated_at": "2024-01-15T09:30:00Z",
                         },
                       },
                       "dismissed_at": "2024-01-15T09:30:00Z",
@@ -14326,7 +12472,6 @@ docs: >-
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
                       "team_id": "string",
@@ -14438,61 +12583,7 @@ docs: >-
                     "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
                   },
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "aggregation_keys": {
-                            "log_level": "debug",
-                            "transformation_id": [
-                              "transformation_id",
-                            ],
-                          },
-                          "auto_resolved_at": "2024-01-15T09:30:00Z",
-                          "created_at": "models",
-                          "data": {
-                            "transformation_execution": {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "log_level": "debug",
-                              "logs": [
-                                {
-                                  "message": "message",
-                                  "type": "error",
-                                },
-                              ],
-                              "original_event_data_id": "original_event_data_id",
-                              "team_id": "team_id",
-                              "transformation_id": "transformation_id",
-                              "transformed_event_data_id": "transformed_event_data_id",
-                              "updated_at": "2024-01-15T09:30:00Z",
-                              "webhook_id": "webhook_id",
-                            },
-                          },
-                          "dismissed_at": "2024-01-15T09:30:00Z",
-                          "first_seen_at": "2024-01-15T09:30:00Z",
-                          "id": "iss_YXKv5OdJXCiVwkPhGy",
-                          "last_seen_at": "2024-01-15T09:30:00Z",
-                          "last_updated_by": "models",
-                          "merged_with": "models",
-                          "opened_at": "2024-01-15T09:30:00Z",
-                          "reference": {
-                            "transformation_execution_id": "transformation_execution_id",
-                          },
-                          "status": "OPENED",
-                          "team_id": "models",
-                          "type": "transformation",
-                          "updated_at": "models",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14582,7 +12673,6 @@ docs: >-
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
                       "team_id": "string",
@@ -14808,48 +12898,7 @@ service:
             issue_trigger_id: it_BXKv5OdJXCiVwkPhGy
             merged_with: iss_AXKv3OdJXCiKlkPhDz
           response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - type: transformation
-                  id: iss_YXKv5OdJXCiVwkPhGy
-                  team_id: models
-                  status: OPENED
-                  opened_at: '2024-01-15T09:30:00Z'
-                  first_seen_at: '2024-01-15T09:30:00Z'
-                  last_seen_at: '2024-01-15T09:30:00Z'
-                  last_updated_by: models
-                  dismissed_at: '2024-01-15T09:30:00Z'
-                  auto_resolved_at: '2024-01-15T09:30:00Z'
-                  merged_with: models
-                  updated_at: models
-                  created_at: models
-                  aggregation_keys:
-                    transformation_id:
-                      - transformation_id
-                    log_level: debug
-                  reference:
-                    transformation_execution_id: transformation_execution_id
-                  data:
-                    transformation_execution:
-                      id: id
-                      transformed_event_data_id: transformed_event_data_id
-                      original_event_data_id: original_event_data_id
-                      transformation_id: transformation_id
-                      team_id: team_id
-                      webhook_id: webhook_id
-                      log_level: debug
-                      logs:
-                        - type: error
-                          message: message
-                      updated_at: '2024-01-15T09:30:00Z'
-                      created_at: '2024-01-15T09:30:00Z'
+            body: {}
     getIssueCount:
       path: /issues/count
       method: GET
@@ -14937,7 +12986,6 @@ service:
                 log_level: debug
               reference:
                 transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
               data:
                 transformation_execution:
                   id: id
@@ -14952,32 +13000,6 @@ service:
                       message: message
                   updated_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
-                  original_event_data:
-                    path: path
-                  transformed_event_data:
-                    path: path
-                  issue_id: issue_id
-                trigger_attempt:
-                  id: id
-                  team_id: team_id
-                  event_id: event_id
-                  response_status: 1
-                  attempt_number: 1
-                  trigger: INITIAL
-                  error_code: TIMEOUT
-                  requested_url: requested_url
-                  bulk_retry_id: bulk_retry_id
-                  status: QUEUED
-                  successful_at: '2024-01-15T09:30:00Z'
-                  delivered_at: '2024-01-15T09:30:00Z'
-                  responded_at: '2024-01-15T09:30:00Z'
-                  delivery_latency: 1
-                  response_latency: 1
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  state: DELIVERING
-                  archived_at: archived_at
-                  destination_id: destination_id
     updateIssue:
       path: /issues/{id}
       method: PUT
@@ -15028,7 +13050,6 @@ service:
                 log_level: debug
               reference:
                 transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
     dismissIssue:
       path: /issues/{id}
       method: DELETE
@@ -15068,7 +13089,6 @@ service:
                 log_level: debug
               reference:
                 transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
   source:
     openapi: ../openapi.yml
   display-name: Issues
@@ -15100,9 +13120,6 @@ docs: >-
                     "body": {
                       "enabled": true,
                       "source_id": "source_id",
-                      "topics": [
-                        "issue.opened",
-                      ],
                     },
                   },
                 },
@@ -15183,8 +13200,6 @@ service:
           response:
             body:
               enabled: true
-              topics:
-                - issue.opened
               source_id: source_id
   source:
     openapi: ../openapi.yml
@@ -15218,30 +13233,11 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "response": {
                     "body": {
-                      "cli_events_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
-                      "duplicate_hash": "duplicate_hash",
-                      "duplicate_hits": 1,
-                      "events_count": 1,
                       "id": "id",
-                      "ignored_count": 1,
-                      "ingest_priority": "NORMAL",
-                      "ingested_at": "2024-01-15T09:30:00Z",
-                      "ingested_at_id": "ingested_at_id",
-                      "original_event_data_id": "original_event_data_id",
-                      "rejection_cause": "SOURCE_ARCHIVED",
                       "source_id": "source_id",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "verified": true,
                     },
                   },
                 },
@@ -15275,41 +13271,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "attempts": 1,
-                          "cli_id": "cli_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "created_at_id": "created_at_id",
-                          "data": {
-                            "path": "path",
-                          },
-                          "destination_id": "destination_id",
-                          "event_data_id": "event_data_id",
-                          "id": "id",
-                          "last_attempt_at": "2024-01-15T09:30:00Z",
-                          "last_attempt_at_id": "last_attempt_at_id",
-                          "next_attempt_at": "2024-01-15T09:30:00Z",
-                          "request_id": "request_id",
-                          "response_status": 1,
-                          "source_id": "source_id",
-                          "status": "SCHEDULED",
-                          "successful_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -15448,28 +13410,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "cause": "ARCHIVED",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "meta": "body",
-                          "request_id": "request_id",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -15551,39 +13492,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "cli_events_count": 1,
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "data": {
-                            "path": "path",
-                          },
-                          "duplicate_hash": "duplicate_hash",
-                          "duplicate_hits": 1,
-                          "events_count": 1,
-                          "id": "id",
-                          "ignored_count": 1,
-                          "ingest_priority": "NORMAL",
-                          "ingested_at": "2024-01-15T09:30:00Z",
-                          "ingested_at_id": "ingested_at_id",
-                          "original_event_data_id": "original_event_data_id",
-                          "rejection_cause": "SOURCE_ARCHIVED",
-                          "source_id": "source_id",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "verified": true,
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -15671,56 +13580,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "response": {
                     "body": {
-                      "events": [
-                        {
-                          "attempts": 1,
-                          "cli_id": "cli_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "created_at_id": "created_at_id",
-                          "data": {
-                            "path": "path",
-                          },
-                          "destination_id": "destination_id",
-                          "event_data_id": "event_data_id",
-                          "id": "id",
-                          "last_attempt_at": "2024-01-15T09:30:00Z",
-                          "last_attempt_at_id": "last_attempt_at_id",
-                          "next_attempt_at": "2024-01-15T09:30:00Z",
-                          "request_id": "request_id",
-                          "response_status": 1,
-                          "source_id": "source_id",
-                          "status": "SCHEDULED",
-                          "successful_at": "2024-01-15T09:30:00Z",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
                       "request": {
-                        "cli_events_count": 1,
                         "created_at": "2024-01-15T09:30:00Z",
-                        "data": {
-                          "body": "body",
-                          "headers": "headers",
-                          "is_large_payload": true,
-                          "parsed_query": "parsed_query",
-                          "path": "path",
-                          "query": "query",
-                        },
-                        "duplicate_hash": "duplicate_hash",
-                        "duplicate_hits": 1,
-                        "events_count": 1,
                         "id": "id",
-                        "ignored_count": 1,
-                        "ingest_priority": "NORMAL",
-                        "ingested_at": "2024-01-15T09:30:00Z",
-                        "ingested_at_id": "ingested_at_id",
-                        "original_event_data_id": "original_event_data_id",
-                        "rejection_cause": "SOURCE_ARCHIVED",
                         "source_id": "source_id",
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "verified": true,
                       },
                     },
                   },
@@ -15896,33 +13761,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  verified: true
-                  original_event_data_id: original_event_data_id
-                  duplicate_hash: duplicate_hash
-                  duplicate_hits: 1
-                  rejection_cause: SOURCE_ARCHIVED
-                  ingest_priority: NORMAL
-                  ingested_at: '2024-01-15T09:30:00Z'
-                  ingested_at_id: ingested_at_id
-                  source_id: source_id
-                  events_count: 1
-                  cli_events_count: 1
-                  ignored_count: 1
-                  data:
-                    path: path
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     getRequest:
       path: /requests/{id}
       method: GET
@@ -15945,25 +13784,7 @@ service:
             body:
               id: id
               team_id: team_id
-              verified: true
-              original_event_data_id: original_event_data_id
-              duplicate_hash: duplicate_hash
-              duplicate_hits: 1
-              rejection_cause: SOURCE_ARCHIVED
-              ingest_priority: NORMAL
-              ingested_at: '2024-01-15T09:30:00Z'
-              ingested_at_id: ingested_at_id
               source_id: source_id
-              events_count: 1
-              cli_events_count: 1
-              ignored_count: 1
-              data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getRequestRawBody:
@@ -16025,48 +13846,9 @@ service:
               request:
                 id: id
                 team_id: team_id
-                verified: true
-                original_event_data_id: original_event_data_id
-                duplicate_hash: duplicate_hash
-                duplicate_hits: 1
-                rejection_cause: SOURCE_ARCHIVED
-                ingest_priority: NORMAL
-                ingested_at: '2024-01-15T09:30:00Z'
-                ingested_at_id: ingested_at_id
                 source_id: source_id
-                events_count: 1
-                cli_events_count: 1
-                ignored_count: 1
-                data:
-                  path: path
-                  query: query
-                  parsed_query: parsed_query
-                  headers: headers
-                  body: body
-                  is_large_payload: true
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
-              events:
-                - id: id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  source_id: source_id
-                  destination_id: destination_id
-                  event_data_id: event_data_id
-                  request_id: request_id
-                  attempts: 1
-                  data:
-                    path: path
-                  last_attempt_at: '2024-01-15T09:30:00Z'
-                  next_attempt_at: '2024-01-15T09:30:00Z'
-                  response_status: 1
-                  status: SCHEDULED
-                  successful_at: '2024-01-15T09:30:00Z'
-                  cli_id: cli_id
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  created_at_id: created_at_id
-                  last_attempt_at_id: last_attempt_at_id
     getRequestEvents:
       path: /requests/{id}/events
       method: GET
@@ -16151,35 +13933,7 @@ service:
         - path-parameters:
             id: id
           response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  source_id: source_id
-                  destination_id: destination_id
-                  event_data_id: event_data_id
-                  request_id: request_id
-                  attempts: 1
-                  data:
-                    path: path
-                  last_attempt_at: '2024-01-15T09:30:00Z'
-                  next_attempt_at: '2024-01-15T09:30:00Z'
-                  response_status: 1
-                  status: SCHEDULED
-                  successful_at: '2024-01-15T09:30:00Z'
-                  cli_id: cli_id
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  created_at_id: created_at_id
-                  last_attempt_at_id: last_attempt_at_id
+            body: {}
     getRequestIgnoredEvents:
       path: /requests/{id}/ignored_events
       method: GET
@@ -16214,23 +13968,7 @@ service:
         - path-parameters:
             id: id
           response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  cause: ARCHIVED
-                  request_id: request_id
-                  meta: body
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
   source:
     openapi: ../openapi.yml
   display-name: Requests
@@ -16263,7 +14001,6 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16309,7 +14046,6 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16377,7 +14113,6 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16419,33 +14154,7 @@ docs: A request represent a webhook received by Hookdeck.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "archived_at": "2024-01-15T09:30:00Z",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "is_team_default": true,
-                          "name": "name",
-                          "rules": [
-                            {
-                              "delay": 1,
-                              "type": "delay",
-                            },
-                          ],
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -16497,7 +14206,6 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16545,7 +14253,6 @@ docs: A request represent a webhook received by Hookdeck.
                   "request": {},
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16621,7 +14328,6 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
@@ -16740,25 +14446,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  name: name
-                  team_id: team_id
-                  rules:
-                    - type: delay
-                      delay: 1
-                  is_team_default: true
-                  archived_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createRuleset:
       path: /rulesets
       method: POST
@@ -16800,7 +14488,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     upsertRuleset:
@@ -16844,7 +14531,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getRuleset:
@@ -16874,7 +14560,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateRuleset:
@@ -16925,7 +14610,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     archiveRuleset:
@@ -16955,7 +14639,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     unarchiveRuleset:
@@ -16985,7 +14668,6 @@ service:
                 - type: delay
                   delay: 1
               is_team_default: true
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
   source:
@@ -17020,18 +14702,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17069,18 +14741,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17135,18 +14797,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17180,36 +14832,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "archived_at": "2024-01-15T09:30:00Z",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "integration": {
-                            "features": [
-                              "VERIFICATION",
-                            ],
-                            "id": "id",
-                            "label": "label",
-                            "provider": "twitter",
-                          },
-                          "integration_id": "integration_id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "url": "url",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17262,18 +14885,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17313,18 +14926,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   "request": {},
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17387,18 +14990,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "response": {
                     "body": {
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                      },
-                      "integration_id": "integration_id",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17505,29 +15098,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  name: name
-                  team_id: team_id
-                  url: url
-                  integration_id: integration_id
-                  integration:
-                    id: id
-                    label: label
-                    provider: twitter
-                    features:
-                      - VERIFICATION
-                  archived_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createSource:
       path: /sources
       method: POST
@@ -17562,14 +15133,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     upsertSource:
@@ -17606,14 +15169,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getSource:
@@ -17640,14 +15195,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateSource:
@@ -17691,14 +15238,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     archiveSource:
@@ -17725,14 +15264,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     unarchiveSource:
@@ -17759,14 +15290,6 @@ service:
               name: name
               team_id: team_id
               url: url
-              integration_id: integration_id
-              integration:
-                id: id
-                label: label
-                provider: twitter
-                features:
-                  - VERIFICATION
-              archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
   source:
@@ -17805,12 +15328,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "body": {
                       "code": "code",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "encrypted_env": "encrypted_env",
-                      "env": {
-                        "key": "value",
-                      },
                       "id": "id",
-                      "iv": "iv",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17874,12 +15392,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "body": {
                       "code": "code",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "encrypted_env": "encrypted_env",
-                      "env": {
-                        "key": "value",
-                      },
                       "id": "id",
-                      "iv": "iv",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -17918,7 +15431,6 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "issue_id": "issue_id",
                       "log_level": "debug",
                       "logs": [
                         {
@@ -17926,25 +15438,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                           "type": "error",
                         },
                       ],
-                      "original_event_data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "original_event_data_id": "original_event_data_id",
                       "team_id": "team_id",
                       "transformation_id": "transformation_id",
-                      "transformed_event_data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
                       "transformed_event_data_id": "transformed_event_data_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                       "webhook_id": "webhook_id",
@@ -17981,42 +15477,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "issue_id": "issue_id",
-                          "log_level": "debug",
-                          "logs": [
-                            {
-                              "message": "message",
-                              "type": "error",
-                            },
-                          ],
-                          "original_event_data": {
-                            "path": "path",
-                          },
-                          "original_event_data_id": "original_event_data_id",
-                          "team_id": "team_id",
-                          "transformation_id": "transformation_id",
-                          "transformed_event_data": {
-                            "path": "path",
-                          },
-                          "transformed_event_data_id": "transformed_event_data_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18077,28 +15538,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "count": 1,
-                      "models": [
-                        {
-                          "code": "code",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "encrypted_env": "encrypted_env",
-                          "id": "id",
-                          "iv": "iv",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                      ],
-                      "pagination": {
-                        "dir": "asc",
-                        "limit": 1,
-                        "next": "next",
-                        "order_by": "order_by",
-                        "prev": "prev",
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18147,22 +15587,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   "request": {},
                   "response": {
                     "body": {
-                      "console": [
-                        {
-                          "message": "message",
-                          "type": "error",
-                        },
-                      ],
-                      "execution_id": "execution_id",
                       "log_level": "debug",
-                      "request": {
-                        "body": "body",
-                        "headers": "headers",
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                      },
-                      "request_id": "request_id",
-                      "transformation_id": "transformation_id",
                     },
                   },
                 },
@@ -18229,12 +15654,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "body": {
                       "code": "code",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "encrypted_env": "encrypted_env",
-                      "env": {
-                        "key": "value",
-                      },
                       "id": "id",
-                      "iv": "iv",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -18303,12 +15723,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     "body": {
                       "code": "code",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "encrypted_env": "encrypted_env",
-                      "env": {
-                        "key": "value",
-                      },
                       "id": "id",
-                      "iv": "iv",
                       "name": "name",
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -18629,23 +16044,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  team_id: team_id
-                  name: name
-                  code: code
-                  encrypted_env: encrypted_env
-                  iv: iv
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
+            body: {}
     createTransformation:
       path: /transformations
       method: POST
@@ -18689,10 +16088,6 @@ service:
               team_id: team_id
               name: name
               code: code
-              encrypted_env: encrypted_env
-              iv: iv
-              env:
-                key: value
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     upsertTransformation:
@@ -18738,10 +16133,6 @@ service:
               team_id: team_id
               name: name
               code: code
-              encrypted_env: encrypted_env
-              iv: iv
-              env:
-                key: value
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     getTransformation:
@@ -18768,10 +16159,6 @@ service:
               team_id: team_id
               name: name
               code: code
-              encrypted_env: encrypted_env
-              iv: iv
-              env:
-                key: value
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     updateTransformation:
@@ -18820,10 +16207,6 @@ service:
               team_id: team_id
               name: name
               code: code
-              encrypted_env: encrypted_env
-              iv: iv
-              env:
-                key: value
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
     testTransformation:
@@ -18867,18 +16250,7 @@ service:
         - request: {}
           response:
             body:
-              request_id: request_id
-              transformation_id: transformation_id
-              execution_id: execution_id
               log_level: debug
-              request:
-                headers: headers
-                path: path
-                parsed_query: parsed_query
-                body: body
-              console:
-                - type: error
-                  message: message
     getTransformationExecutions:
       path: /transformations/{id}/executions
       method: GET
@@ -18919,32 +16291,7 @@ service:
         - path-parameters:
             id: id
           response:
-            body:
-              pagination:
-                order_by: order_by
-                dir: asc
-                limit: 1
-                prev: prev
-                next: next
-              count: 1
-              models:
-                - id: id
-                  transformed_event_data_id: transformed_event_data_id
-                  original_event_data_id: original_event_data_id
-                  transformation_id: transformation_id
-                  team_id: team_id
-                  webhook_id: webhook_id
-                  log_level: debug
-                  logs:
-                    - type: error
-                      message: message
-                  updated_at: '2024-01-15T09:30:00Z'
-                  created_at: '2024-01-15T09:30:00Z'
-                  original_event_data:
-                    path: path
-                  transformed_event_data:
-                    path: path
-                  issue_id: issue_id
+            body: {}
     getTransformationExecution:
       path: /transformations/{id}/executions/{execution_id}
       method: GET
@@ -18979,21 +16326,6 @@ service:
                   message: message
               updated_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
-              original_event_data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              transformed_event_data:
-                path: path
-                query: query
-                parsed_query: parsed_query
-                headers: headers
-                body: body
-                is_large_payload: true
-              issue_id: issue_id
   source:
     openapi: ../openapi.yml
   display-name: Transformations

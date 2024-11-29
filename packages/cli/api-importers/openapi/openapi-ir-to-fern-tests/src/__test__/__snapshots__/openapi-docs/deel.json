@@ -20581,36 +20581,7 @@ errors:
                   "response": {
                     "body": {
                       "data": [
-                        {
-                          "adjustment": "0.00",
-                          "approve_date": "approve_date",
-                          "approvers": "approvers",
-                          "bonus": "0.00",
-                          "commissions": "0.00",
-                          "contract_country": "US",
-                          "contract_start_date": "2020-03-31T10:58:49.780Z",
-                          "contractor_email": "name@email.com",
-                          "contractor_employee_name": "Jane Doe",
-                          "contractor_unique_identifier": "12345",
-                          "currency": "USD",
-                          "date": "2022-10-01T00:59:28.482Z",
-                          "deductions": "0.00",
-                          "expenses": "0.00",
-                          "frequency": "",
-                          "general_ledger_account": "",
-                          "invoice_number": "5069872",
-                          "others": "0.00",
-                          "overtime": "0.00",
-                          "payment_currency": "USD",
-                          "payment_date": "2022-11-01T17:20:32.837Z",
-                          "pro_rata": "0.00",
-                          "processing_fee": "0.00",
-                          "receipt_number": "5551621",
-                          "team": "Deel Inc.",
-                          "total": "1000.00",
-                          "total_payment_currency": "1000.00",
-                          "work": "0.00",
-                        },
+                        {},
                       ],
                     },
                   },
@@ -20653,11 +20624,7 @@ errors:
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "expires_at": "2020-03-31T10:58:49Z",
-                        "id": "12345",
-                        "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -20702,11 +20669,7 @@ errors:
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "expires_at": "2020-03-31T10:58:49Z",
-                        "id": "12345",
-                        "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -20746,25 +20709,7 @@ errors:
                 {
                   "response": {
                     "body": {
-                      "data": {
-                        "rows": [
-                          {
-                            "contract": {
-                              "contract_type": "pay_as_you_go_time_based",
-                              "id": "rhCTiRd9Mad41RwjsFWw-",
-                              "name": "Lisandro Shanahan-Dynamic Web Specialist",
-                            },
-                            "created_at": "2022-05-24T09:38:46Z",
-                            "currency": "USD",
-                            "id": 5586317,
-                            "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
-                            "payment_currency": "USD",
-                            "status": "pending",
-                            "total": 1000,
-                          },
-                        ],
-                        "total": 1.1,
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -20821,28 +20766,7 @@ errors:
                 {
                   "response": {
                     "body": {
-                      "data": {
-                        "rows": [
-                          {
-                            "created_at": "2022-05-24T09:38:46Z",
-                            "id": 12345,
-                            "label": "label",
-                            "paid_at": "2022-05-24T09:38:46Z",
-                            "payment_currency": "USD",
-                            "payment_method": {
-                              "type": "stripe_bacs_debit",
-                            },
-                            "status": "paid",
-                            "total": 1015,
-                            "workers": [
-                              {
-                                "name": "Jane Doe",
-                              },
-                            ],
-                          },
-                        ],
-                        "total": 1.1,
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -20935,20 +20859,7 @@ service:
       examples:
         - response:
             body:
-              data:
-                rows:
-                  - id: 5586317
-                    invoice_id: rhCTiRd9Mad41RwjsFWw-
-                    status: pending
-                    currency: USD
-                    payment_currency: USD
-                    contract:
-                      id: rhCTiRd9Mad41RwjsFWw-
-                      name: Lisandro Shanahan-Dynamic Web Specialist
-                      contract_type: pay_as_you_go_time_based
-                    created_at: '2022-05-24T09:38:46Z'
-                    total: 1000
-                total: 1.1
+              data: {}
       audiences:
         - external
     getInvoiceDownloadLink:
@@ -20979,10 +20890,7 @@ service:
             invoice_id: 1000000
           response:
             body:
-              data:
-                id: '12345'
-                url: https://s3URL/letsdeel.com/invoices/12345.pdf
-                expires_at: '2020-03-31T10:58:49Z'
+              data: {}
       audiences:
         - external
     getBillingInvoiceDownloadLink:
@@ -21013,10 +20921,7 @@ service:
             invoice_id: 1000000
           response:
             body:
-              data:
-                id: '12345'
-                url: https://s3URL/letsdeel.com/invoices/12345.pdf
-                expires_at: '2020-03-31T10:58:49Z'
+              data: {}
       audiences:
         - external
     getPaymentList:
@@ -21064,20 +20969,7 @@ service:
       examples:
         - response:
             body:
-              data:
-                rows:
-                  - id: 12345
-                    payment_method:
-                      type: stripe_bacs_debit
-                    status: paid
-                    payment_currency: USD
-                    label: label
-                    paid_at: '2022-05-24T09:38:46Z'
-                    created_at: '2022-05-24T09:38:46Z'
-                    total: 1015
-                    workers:
-                      - name: Jane Doe
-                total: 1.1
+              data: {}
       audiences:
         - external
     GetPaymentsBreakDownById:
@@ -21109,34 +21001,7 @@ service:
           response:
             body:
               data:
-                - date: '2022-10-01T00:59:28.482Z'
-                  general_ledger_account: ''
-                  team: Deel Inc.
-                  contractor_unique_identifier: '12345'
-                  contractor_employee_name: Jane Doe
-                  contractor_email: name@email.com
-                  invoice_number: '5069872'
-                  currency: USD
-                  payment_currency: USD
-                  receipt_number: '5551621'
-                  work: '0.00'
-                  bonus: '0.00'
-                  expenses: '0.00'
-                  commissions: '0.00'
-                  deductions: '0.00'
-                  overtime: '0.00'
-                  pro_rata: '0.00'
-                  others: '0.00'
-                  processing_fee: '0.00'
-                  adjustment: '0.00'
-                  total: '1000.00'
-                  total_payment_currency: '1000.00'
-                  payment_date: '2022-11-01T17:20:32.837Z'
-                  frequency: ''
-                  contract_country: US
-                  contract_start_date: '2020-03-31T10:58:49.780Z'
-                  approvers: approvers
-                  approve_date: approve_date
+                - {}
       audiences:
         - external
   source:
@@ -21306,24 +21171,7 @@ service:
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "avatar_url": "avatar_url",
-                      "client_country": "US",
-                      "contractor_country": "US",
-                      "email": "email",
-                      "first_name": "first_name",
-                      "full_name": "full_name",
-                      "id": 1.1,
-                      "last_name": "last_name",
-                      "middle_name": "middle_name",
-                      "organization_id": 1.1,
-                      "organization_name": "organization_name",
-                      "profile_type": "client",
-                      "slack_team_id": "slack_team_id",
-                      "slack_user_id": "slack_user_id",
-                      "user_id": 1.1,
-                      "username": "username",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -21359,61 +21207,7 @@ service:
                   "response": {
                     "body": {
                       "data": [
-                        {
-                          "birth_date": "birth_date",
-                          "completion_date": "completion_date",
-                          "contract_types": [
-                            "contract_types",
-                          ],
-                          "country": "country",
-                          "country_name": "country_name",
-                          "department": "department",
-                          "direct_manager": "direct_manager",
-                          "direct_reports": "direct_reports",
-                          "direct_reports_count": 1,
-                          "email": "email",
-                          "employments": [
-                            {},
-                          ],
-                          "first_name": "first_name",
-                          "full_name": "full_name",
-                          "has_deel_user": true,
-                          "hiring_status": "hiring_status",
-                          "hiring_type": "hiring_type",
-                          "hourly_report_total": "hourly_report_total",
-                          "id": "id",
-                          "job_title": "job_title",
-                          "last_name": "last_name",
-                          "payments": [
-                            {
-                              "created_at": "2022-05-24T09:38:46Z",
-                              "id": 12345,
-                              "label": "label",
-                              "paid_at": "2022-05-24T09:38:46Z",
-                              "payment_currency": "USD",
-                              "payment_method": {
-                                "type": "stripe_bacs_debit",
-                              },
-                              "status": "paid",
-                              "total": 1015,
-                              "workers": [
-                                {
-                                  "name": "Jane Doe",
-                                },
-                              ],
-                            },
-                          ],
-                          "personal_email": "personal_email",
-                          "pic_url": "pic_url",
-                          "seniority": "seniority",
-                          "start_date": "start_date",
-                          "state": "state",
-                          "team": "team",
-                          "team_id": 1,
-                          "timezone": "timezone",
-                          "work_email": "work_email",
-                          "work_location": "work_location",
-                        },
+                        {},
                       ],
                     },
                   },
@@ -21496,50 +21290,7 @@ service:
         - response:
             body:
               data:
-                - id: id
-                  first_name: first_name
-                  last_name: last_name
-                  full_name: full_name
-                  email: email
-                  work_email: work_email
-                  personal_email: personal_email
-                  country_name: country_name
-                  birth_date: birth_date
-                  pic_url: pic_url
-                  start_date: start_date
-                  payments:
-                    - id: 12345
-                      payment_method:
-                        type: stripe_bacs_debit
-                      status: paid
-                      payment_currency: USD
-                      label: label
-                      paid_at: '2022-05-24T09:38:46Z'
-                      created_at: '2022-05-24T09:38:46Z'
-                      total: 1015
-                      workers:
-                        - name: Jane Doe
-                  hourly_report_total: hourly_report_total
-                  state: state
-                  seniority: seniority
-                  completion_date: completion_date
-                  direct_manager: direct_manager
-                  direct_reports: direct_reports
-                  direct_reports_count: 1
-                  employments:
-                    - {}
-                  hiring_status: hiring_status
-                  hiring_type: hiring_type
-                  job_title: job_title
-                  country: country
-                  team_id: 1
-                  team: team
-                  timezone: timezone
-                  department: department
-                  work_location: work_location
-                  contract_types:
-                    - contract_types
-                  has_deel_user: true
+                - {}
       audiences:
         - external
     getPeople:
@@ -21562,23 +21313,7 @@ service:
         - root.GetPeopleRequestInternalServerError
       examples:
         - response:
-            body:
-              id: 1.1
-              user_id: 1.1
-              username: username
-              first_name: first_name
-              middle_name: middle_name
-              last_name: last_name
-              full_name: full_name
-              email: email
-              avatar_url: avatar_url
-              profile_type: client
-              slack_user_id: slack_user_id
-              slack_team_id: slack_team_id
-              organization_id: 1.1
-              organization_name: organization_name
-              client_country: US
-              contractor_country: US
+            body: {}
       audiences:
         - external
   source:
@@ -21626,18 +21361,9 @@ service:
                       "data": {
                         "calculated_premium": 50,
                         "id": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
-                        "misclassification_guarantee": {
-                          "description": "description",
-                          "name": "name",
-                        },
-                        "penalties": {
-                          "description": "description",
-                          "name": "name",
-                        },
-                        "third_party_liabilities": {
-                          "description": "description",
-                          "name": "name",
-                        },
+                        "misclassification_guarantee": {},
+                        "penalties": {},
+                        "third_party_liabilities": {},
                       },
                     },
                   },
@@ -21812,34 +21538,19 @@ service:
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -21855,28 +21566,6 @@ service:
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -21980,34 +21669,19 @@ service:
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -22023,28 +21697,6 @@ service:
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -22146,34 +21798,19 @@ service:
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -22189,28 +21826,6 @@ service:
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -22312,34 +21927,19 @@ service:
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -22355,28 +21955,6 @@ service:
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -22480,34 +22058,19 @@ service:
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -22523,28 +22086,6 @@ service:
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -22700,10 +22241,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "completion_date": "1999-12-31",
-                        "id": "id",
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -22807,9 +22345,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -22828,25 +22363,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -22869,13 +22386,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
     createContractTaskBased:
       path: /contracts/task-based
       method: POST
@@ -22932,9 +22442,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -22953,25 +22460,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -22994,13 +22483,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
     createContractMilestoneBased:
       path: /contracts/milestone-based
       method: POST
@@ -23057,9 +22539,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -23078,25 +22557,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -23119,13 +22580,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
     createContractFixedRate:
       path: /contracts/fixed-rate
       method: POST
@@ -23184,9 +22638,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -23205,25 +22656,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -23246,13 +22679,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
     createContract:
       path: /contracts
       method: POST
@@ -23312,9 +22738,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -23333,25 +22756,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -23374,13 +22779,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
       audiences:
         - external
     getContractPreview:
@@ -23493,9 +22891,7 @@ service:
             data: {}
           response:
             body:
-              data:
-                id: id
-                completion_date: '1999-12-31'
+              data: {}
       audiences:
         - external
     addPremium:
@@ -23538,15 +22934,9 @@ service:
               data:
                 id: d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb
                 calculated_premium: 50
-                misclassification_guarantee:
-                  name: name
-                  description: description
-                penalties:
-                  name: name
-                  description: description
-                third_party_liabilities:
-                  name: name
-                  description: description
+                misclassification_guarantee: {}
+                penalties: {}
+                third_party_liabilities: {}
       audiences:
         - external
     removePremiumFromContract:
@@ -23796,11 +23186,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                       "data": {
                         "calculation_type": "CUSTOM_AMOUNT",
                         "daily_rate": "5.8571",
-                        "last_cycle": {
-                          "completion_date": "2022-05-24T09:38:46Z",
-                          "end": "2022-05-24T09:38:46Z",
-                          "start": "2022-05-24T09:38:46Z",
-                        },
+                        "last_cycle": {},
                         "remaining_days": "5.8571",
                         "total": "5.8571",
                         "workweek_end": 1.1,
@@ -24009,34 +23395,19 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "scale": "scale",
                         },
                         "created_at": "2022-05-24T09:38:46Z",
-                        "custom_fields": [
-                          {
-                            "name": "Employee ID",
-                            "value": "54234",
-                          },
-                        ],
                         "employment_details": {
-                          "country": "US",
                           "days_per_week": 1.1,
                           "hours_per_day": 1.1,
                           "paid_vacation_days": 1.1,
                           "probation_period": 1.1,
-                          "state": "CO",
                           "type": "type",
                         },
-                        "external_id": "external_id",
                         "id": "id",
-                        "invitations": {
-                          "client_email": "client_email",
-                          "worker_email": "worker_email",
-                        },
+                        "invitations": {},
                         "is_archived": true,
                         "job_title": "job_title",
-                        "notice_period": 15,
-                        "scope_of_work": "scope_of_work",
                         "seniority": {
                           "id": 2,
-                          "level": 2,
                           "name": "Mid (Individual Contributor Level 2)",
                         },
                         "signatures": {
@@ -24052,28 +23423,6 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                         "termination_date": "2022-05-24T09:38:46Z",
                         "title": "title",
                         "type": "ongoing_time_based",
-                        "who_reports": "both",
-                        "worker": {
-                          "alternate_email": [
-                            {
-                              "isVerified": true,
-                            },
-                          ],
-                          "date_of_birth": "2022-05-24T09:38:46Z",
-                          "email": "email",
-                          "expected_email": "expected_email",
-                          "first_name": "John",
-                          "full_name": "full_name",
-                          "id": 1000000,
-                          "image": "image",
-                          "last_name": "Doe",
-                          "legal_entity": {
-                            "personal_name": "personal_name",
-                            "registration_number": "registration_number",
-                            "type": "individual",
-                          },
-                          "nationality": "US",
-                        },
                       },
                     },
                   },
@@ -24120,12 +23469,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                         {
                           "client": {},
                           "created_at": "2022-05-24T09:38:46Z",
-                          "external_id": "external_id",
                           "id": "id",
                           "invitations": {},
                           "is_archived": true,
                           "is_shielded": true,
-                          "notice_period": 15,
                           "signatures": {
                             "client_signed_at": "2022-05-24T09:38:46Z",
                             "worker_signature": "Jane Doe",
@@ -24135,7 +23482,6 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "termination_date": "2022-05-24T09:38:46Z",
                           "title": "title",
                           "type": "ongoing_time_based",
-                          "who_reports": "both",
                           "worker": {
                             "full_name": "full_name",
                             "id": 1000000,
@@ -24236,14 +23582,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "data": [
-                        {
-                          "id": 1,
-                          "title": "UK Employment Contract 2022.",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -24348,24 +23687,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "first_payment_dates": [
-                          {
-                            "due": "1999-12-31",
-                          },
-                        ],
-                        "pro_rata": {
-                          "calculation_type": "CUSTOM_AMOUNT",
-                          "cycle_end": "1999-12-31",
-                          "cycle_start": "1999-12-31",
-                          "cycle_work_days": 11,
-                          "daily_rate": 2500,
-                          "rate": 2500,
-                          "total": 2500,
-                          "work_week_end": "Sunday",
-                          "work_week_start": "Sunday",
-                        },
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -24620,9 +23942,6 @@ service:
                   is_archived: true
                   created_at: '2022-05-24T09:38:46Z'
                   termination_date: '2022-05-24T09:38:46Z'
-                  notice_period: 15
-                  who_reports: both
-                  external_id: external_id
               page:
                 cursor: cursor
                 total_rows: 1.1
@@ -24666,9 +23985,6 @@ service:
                 seniority:
                   id: 2
                   name: Mid (Individual Contributor Level 2)
-                  level: 2
-                who_reports: both
-                scope_of_work: scope_of_work
                 start_date: '2022-05-24T09:38:46Z'
                 termination_date: '2022-05-24T09:38:46Z'
                 special_clause: special_clause
@@ -24687,25 +24003,7 @@ service:
                     subtype: subtype
                     registration_number: registration_number
                     vat_number: vat_number
-                worker:
-                  id: 1000000
-                  full_name: full_name
-                  email: email
-                  alternate_email:
-                    - isVerified: true
-                  nationality: US
-                  image: image
-                  legal_entity:
-                    type: individual
-                    personal_name: personal_name
-                    registration_number: registration_number
-                  date_of_birth: '2022-05-24T09:38:46Z'
-                  expected_email: expected_email
-                  first_name: John
-                  last_name: Doe
-                invitations:
-                  client_email: client_email
-                  worker_email: worker_email
+                invitations: {}
                 signatures:
                   client_signature: client_signature
                   client_signed_at: '2022-05-24T09:38:46Z'
@@ -24728,13 +24026,6 @@ service:
                   hours_per_day: 1.1
                   probation_period: 1.1
                   paid_vacation_days: 1.1
-                  country: US
-                  state: CO
-                notice_period: 15
-                custom_fields:
-                  - name: Employee ID
-                    value: '54234'
-                external_id: external_id
       audiences:
         - external
     attachExternalId:
@@ -25086,10 +24377,7 @@ service:
                 daily_rate: '5.8571'
                 total: '5.8571'
                 remaining_days: '5.8571'
-                last_cycle:
-                  start: '2022-05-24T09:38:46Z'
-                  end: '2022-05-24T09:38:46Z'
-                  completion_date: '2022-05-24T09:38:46Z'
+                last_cycle: {}
                 calculation_type: CUSTOM_AMOUNT
                 workweek_start: 1.1
                 workweek_end: 1.1
@@ -25126,19 +24414,7 @@ service:
               compensation_details: {}
           response:
             body:
-              data:
-                pro_rata:
-                  calculation_type: CUSTOM_AMOUNT
-                  rate: 2500
-                  daily_rate: 2500
-                  total: 2500
-                  cycle_work_days: 11
-                  work_week_start: Sunday
-                  work_week_end: Sunday
-                  cycle_start: '1999-12-31'
-                  cycle_end: '1999-12-31'
-                first_payment_dates:
-                  - due: '1999-12-31'
+              data: {}
       audiences:
         - external
     getContractTemplates:
@@ -25161,10 +24437,7 @@ service:
         - root.GetContractTemplatesRequestInternalServerError
       examples:
         - response:
-            body:
-              data:
-                - id: 1
-                  title: UK Employment Contract 2022.
+            body: {}
   source:
     openapi: ../openapi.yml
   display-name: Contracts
@@ -25217,45 +24490,7 @@ types:
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "compensation_details": {
-                          "currency": "currency",
-                          "salary": 1.1,
-                          "variable_compensation": "variable_compensation",
-                          "variable_compensation_type": "variable_compensation_type",
-                        },
-                        "created_at": "2022-05-24T09:38:46Z",
-                        "employee": {
-                          "email": "email",
-                          "first_name": "first_name",
-                          "last_name": "last_name",
-                          "legal_name": "legal_name",
-                        },
-                        "employment": {
-                          "calculated_holidays": "calculated_holidays",
-                          "country": "country",
-                          "end_date": "1999-12-31",
-                          "probation_period": 1.1,
-                          "scope_of_work": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
-                          "start_date": "1999-12-31",
-                          "state": "state",
-                          "time_off_type": "time_off_type",
-                          "work_visa_required": true,
-                        },
-                        "health_plan": {
-                          "id": "id",
-                          "name": "name",
-                        },
-                        "id": "id",
-                        "job_title": "Designer",
-                        "seniority": {
-                          "id": 2,
-                          "level": 2,
-                          "name": "Mid (Individual Contributor Level 2)",
-                        },
-                        "status": "new",
-                        "type": "ongoing_time_based",
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -25303,60 +24538,7 @@ types:
                   },
                   "response": {
                     "body": {
-                      "data": {
-                        "adjustments_information_box": "Not allowed to contract people under 21.",
-                        "currency": "BRL",
-                        "definite_contract": {
-                          "maximum_limitation": 36,
-                          "type": "ALLOWED_WITHOUT_LIMITATION",
-                        },
-                        "health_insurance": {
-                          "providers": [
-                            {
-                              "currency": "USD",
-                              "ending_rule": "END_OF_MONTH",
-                              "home_page_url": "https://bit.ly/3uW72fp",
-                              "name": "United Healthcare VSP Vision & Delta Dental: Singles Only",
-                              "type": "PLAN",
-                            },
-                          ],
-                          "status": "REQUIRED",
-                        },
-                        "hiring_guide_country_name": "brazil",
-                        "holiday": {
-                          "min": "20",
-                        },
-                        "insurance_fee": "15.00",
-                        "part_time_holiday": {
-                          "min": "15",
-                          "type": "PRORATED",
-                        },
-                        "part_time_probation": {
-                          "max": 60,
-                          "min": 30,
-                        },
-                        "probation": {
-                          "max": 90,
-                          "min": "min",
-                        },
-                        "salary": {
-                          "max": "2649300.00",
-                          "min": "14544.00",
-                        },
-                        "sick_days": {
-                          "max": "max",
-                          "min": "0",
-                        },
-                        "start_date_buffer": 5,
-                        "work_schedule": {
-                          "days": {
-                            "max": "6",
-                          },
-                          "hours": {
-                            "max": "10",
-                          },
-                        },
-                      },
+                      "data": {},
                     },
                   },
                 },
@@ -25417,47 +24599,7 @@ service:
             country_code: US
           response:
             body:
-              data:
-                holiday:
-                  min: '20'
-                part_time_holiday:
-                  type: PRORATED
-                  min: '15'
-                sick_days:
-                  min: '0'
-                  max: max
-                salary:
-                  min: '14544.00'
-                  max: '2649300.00'
-                probation:
-                  min: min
-                  max: 90
-                part_time_probation:
-                  min: 30
-                  max: 60
-                work_schedule:
-                  days:
-                    max: '6'
-                  hours:
-                    max: '10'
-                insurance_fee: '15.00'
-                currency: BRL
-                hiring_guide_country_name: brazil
-                start_date_buffer: 5
-                definite_contract:
-                  type: ALLOWED_WITHOUT_LIMITATION
-                  maximum_limitation: 36
-                adjustments_information_box: Not allowed to contract people under 21.
-                health_insurance:
-                  status: REQUIRED
-                  providers:
-                    - name: >-
-                        United Healthcare VSP Vision & Delta Dental: Singles
-                        Only
-                      home_page_url: https://bit.ly/3uW72fp
-                      currency: USD
-                      type: PLAN
-                      ending_rule: END_OF_MONTH
+              data: {}
       audiences:
         - external
     createEorContract:
@@ -25494,43 +24636,7 @@ service:
               compensation_details: {}
           response:
             body:
-              data:
-                id: id
-                type: ongoing_time_based
-                created_at: '2022-05-24T09:38:46Z'
-                status: new
-                job_title: Designer
-                employment:
-                  scope_of_work: >-
-                    A designer works on the entire process of defining
-                    requirements, visualizing and creating graphics including
-                    illustrations or logos. Also, the designer works on shaping
-                    the visual aspects of websites, product packaging, and more.
-                  start_date: '1999-12-31'
-                  end_date: '1999-12-31'
-                  country: country
-                  state: state
-                  work_visa_required: true
-                  time_off_type: time_off_type
-                  probation_period: 1.1
-                  calculated_holidays: calculated_holidays
-                compensation_details:
-                  salary: 1.1
-                  currency: currency
-                  variable_compensation: variable_compensation
-                  variable_compensation_type: variable_compensation_type
-                employee:
-                  legal_name: legal_name
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
-                health_plan:
-                  id: id
-                  name: name
-                seniority:
-                  id: 2
-                  name: Mid (Individual Contributor Level 2)
-                  level: 2
+              data: {}
       audiences:
         - external
   source:
@@ -25615,10 +24721,8 @@ docs: Employee of Record (EOR).
                           "first_name": "John",
                           "last_name": "Doe",
                           "nationality": "CA",
-                          "state": "AC",
                           "work_email": "john.doe@domain.com",
                         },
-                        "id": "6733c95b-df52-419e-906d-6904d3117dab",
                         "job_information": {
                           "job_title_id": 1.1,
                           "seniority_id": 1.1,
@@ -25626,10 +24730,6 @@ docs: Employee of Record (EOR).
                         "team_information": {
                           "legal_entity_id": 1.1,
                           "team_id": 1.1,
-                        },
-                        "vacation_info": {
-                          "vacation_accrual_start_date": "vacation_accrual_start_date",
-                          "vacation_yearly_policy": 1.1,
                         },
                       },
                     },
@@ -25715,7 +24815,6 @@ service:
                   work_email: john.doe@domain.com
                   nationality: CA
                   country: BR
-                  state: AC
                 team_information:
                   team_id: 1.1
                   legal_entity_id: 1.1
@@ -25731,10 +24830,6 @@ service:
                   start_date: '1999-12-31'
                   employee_number: 1.1
                   end_date: '1999-12-31'
-                vacation_info:
-                  vacation_accrual_start_date: vacation_accrual_start_date
-                  vacation_yearly_policy: 1.1
-                id: 6733c95b-df52-419e-906d-6904d3117dab
       audiences:
         - external
   source:
@@ -25785,10 +24880,6 @@ docs: API end-points related to HRIS data.
                     "body": {
                       "data": {
                         "created": true,
-                        "created_at": "2022-05-24T09:38:46Z",
-                        "id": "id",
-                        "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
                       },
                     },
                   },
@@ -26028,7 +25119,6 @@ docs: API end-points related to HRIS data.
                           },
                           "created_at": "2022-05-24T09:38:46Z",
                           "currency_code": "USD",
-                          "custom_scale": "custom_scale",
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
@@ -26036,7 +25126,6 @@ docs: API end-points related to HRIS data.
                             "end_date": "2022-05-24T09:38:46Z",
                             "start_date": "2022-05-24T09:38:46Z",
                           },
-                          "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
                             "full_name": "John Smith",
@@ -26048,7 +25137,6 @@ docs: API end-points related to HRIS data.
                             "remarks": "remarks",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "scale": "custom",
                           "status": "status",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
@@ -26171,7 +25259,6 @@ docs: API end-points related to HRIS data.
                           },
                           "created_at": "2022-05-24T09:38:46Z",
                           "currency_code": "USD",
-                          "custom_scale": "custom_scale",
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
@@ -26179,7 +25266,6 @@ docs: API end-points related to HRIS data.
                             "end_date": "2022-05-24T09:38:46Z",
                             "start_date": "2022-05-24T09:38:46Z",
                           },
-                          "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
                             "full_name": "John Smith",
@@ -26191,7 +25277,6 @@ docs: API end-points related to HRIS data.
                             "remarks": "remarks",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "scale": "custom",
                           "status": "status",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
@@ -26434,7 +25519,6 @@ service:
             body:
               data:
                 - id: id
-                  public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
                   status: status
                   description: description
@@ -26443,8 +25527,6 @@ service:
                   quantity: 1
                   total_amount: '200.0000'
                   created_at: '2022-05-24T09:38:46Z'
-                  scale: custom
-                  custom_scale: custom_scale
                   attachment:
                     filename: filename
                     key: key
@@ -26551,7 +25633,6 @@ service:
             body:
               data:
                 - id: id
-                  public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
                   status: status
                   description: description
@@ -26560,8 +25641,6 @@ service:
                   quantity: 1
                   total_amount: '200.0000'
                   created_at: '2022-05-24T09:38:46Z'
-                  scale: custom
-                  custom_scale: custom_scale
                   attachment:
                     filename: filename
                     key: key
@@ -26629,10 +25708,6 @@ service:
             body:
               data:
                 created: true
-                id: id
-                public_id: 00000000-0000-0000-0000-000000000000
-                status: status
-                created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external
     deleteInvoiceAdjustmentById:
@@ -28020,7 +27095,6 @@ docs: Helper end-points for managing milestones of Deel contracts
                         "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "Yearly bonus.",
                         "id": "id",
-                        "public_id": "00000000-0000-0000-0000-000000000000",
                         "reported_by": {
                           "full_name": "John Smith",
                           "id": 123456,
@@ -28089,7 +27163,6 @@ docs: Helper end-points for managing milestones of Deel contracts
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "Yearly bonus.",
                           "id": "id",
-                          "public_id": "00000000-0000-0000-0000-000000000000",
                           "reported_by": {
                             "full_name": "John Smith",
                             "id": 123456,
@@ -28166,7 +27239,6 @@ service:
             body:
               data:
                 - id: id
-                  public_id: 00000000-0000-0000-0000-000000000000
                   status: status
                   description: Yearly bonus.
                   date_submitted: '2022-05-24T09:38:46Z'
@@ -28261,7 +27333,6 @@ service:
             body:
               data:
                 id: id
-                public_id: 00000000-0000-0000-0000-000000000000
                 status: status
                 description: Yearly bonus.
                 date_submitted: '2022-05-24T09:38:46Z'
@@ -28334,9 +27405,6 @@ docs: End-points to manage off-cycle payments for a given contract
                           },
                         },
                       ],
-                      "page": {
-                        "total_rows": 1.1,
-                      },
                     },
                   },
                 },
@@ -28388,16 +27456,7 @@ docs: End-points to manage off-cycle payments for a given contract
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "data": [
-                        {
-                          "entity_subtype": "entity_subtype",
-                          "entity_type": "individual",
-                          "id": 1.1,
-                          "name": "name",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -28527,12 +27586,7 @@ service:
         - root.GetLegalEntityListRequestInternalServerError
       examples:
         - response:
-            body:
-              data:
-                - id: 1.1
-                  name: name
-                  entity_type: individual
-                  entity_subtype: entity_subtype
+            body: {}
       audiences:
         - external
     getOrganizations:
@@ -28639,8 +27693,6 @@ service:
                   provider_legal_entity:
                     id: 1.1
                     name: Deel Inc.
-              page:
-                total_rows: 1.1
   source:
     openapi: ../openapi.yml
   display-name: Organizations
@@ -28759,10 +27811,6 @@ docs: Helper end-points for additional information about your organizations
                       "data": [
                         {
                           "amount": "200",
-                          "attachment": {
-                            "filename": "filename",
-                            "key": "key",
-                          },
                           "date_submitted": "1999-12-31",
                           "description": "Make the button pop.",
                           "id": 12345,
@@ -28834,10 +27882,6 @@ docs: Helper end-points for additional information about your organizations
                       "data": [
                         {
                           "amount": "200",
-                          "attachment": {
-                            "filename": "filename",
-                            "key": "key",
-                          },
                           "date_submitted": "1999-12-31",
                           "description": "Make the button pop.",
                           "id": 12345,
@@ -28968,10 +28012,6 @@ docs: Helper end-points for additional information about your organizations
                       "data": [
                         {
                           "amount": "200",
-                          "attachment": {
-                            "filename": "filename",
-                            "key": "key",
-                          },
                           "date_submitted": "1999-12-31",
                           "description": "Make the button pop.",
                           "id": 12345,
@@ -29045,9 +28085,6 @@ service:
                   date_submitted: '1999-12-31'
                   description: Make the button pop.
                   status: approved
-                  attachment:
-                    filename: filename
-                    key: key
       audiences:
         - external
     createContractPgoTak:
@@ -29138,9 +28175,6 @@ service:
                   date_submitted: '1999-12-31'
                   description: Make the button pop.
                   status: approved
-                  attachment:
-                    filename: filename
-                    key: key
       audiences:
         - external
     createTaskReviewById:
@@ -29190,9 +28224,6 @@ service:
                   date_submitted: '1999-12-31'
                   description: Make the button pop.
                   status: approved
-                  attachment:
-                    filename: filename
-                    key: key
       audiences:
         - external
     deleteContractPgoTak:
@@ -29282,86 +28313,12 @@ docs: End-points to manage tasks for a given contract
                   "response": {
                     "body": {
                       "data": {
-                        "applied_changes": [
-                          {
-                            "days_used_end_year": "2.00",
-                            "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
-                            "status": "REQUESTED",
-                            "total_days_used": "4.00",
-                            "type": "VACATION",
-                          },
-                        ],
-                        "attachments": [
-                          {},
-                        ],
-                        "can_request_changes": true,
-                        "change_request": {
-                          "attachments": [
-                            {},
-                          ],
-                          "date_is_half_day": true,
-                          "days_used_end_year": "2.00",
-                          "days_used_start_year": "2.00",
-                          "denial_reason": "No time off available",
-                          "end_date_is_half_day": true,
-                          "has_multiple_dates": true,
-                          "other_timeoff_name": "This is time off for a doctor's appointment",
-                          "reason": "I have a doctors appointment",
-                          "requested_at": "2022-05-24T09:38:46Z",
-                          "requester": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "reviewed_at": "2022-05-24T09:38:46Z",
-                          "reviewer": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "single_date": "2022-05-24T09:38:46Z",
-                          "start_date_is_half_day": true,
-                          "status": "REQUESTED",
-                          "total_days_used": "4.00",
-                          "type": "VACATION",
-                        },
-                        "contract_id": "abc123",
                         "created_at": "2022-05-24T09:38:46Z",
-                        "date_is_half_day": true,
-                        "days_used_end_year": "2.00",
-                        "days_used_start_year": "2.00",
-                        "denial_reason": "No time off available",
-                        "end_date": "2022-05-24T09:38:46Z",
-                        "end_date_is_half_day": true,
-                        "has_multiple_dates": true,
                         "id": 6938,
-                        "is_updated": true,
-                        "other_timeoff_name": "This is time off for a doctor's appointment",
-                        "reason": "I have a doctors appointment",
                         "requested_at": "2022-05-24T09:38:46Z",
-                        "requester": {
-                          "id": 409222,
-                          "is_employee": true,
-                          "name": "Mr. Rogers",
-                          "pic_url": "pic_url",
-                          "profile_type": "client",
-                        },
-                        "reviewed_at": "2022-05-24T09:38:46Z",
-                        "reviewer": {
-                          "id": 409222,
-                          "is_employee": true,
-                          "name": "Mr. Rogers",
-                          "pic_url": "pic_url",
-                          "profile_type": "client",
-                        },
-                        "single_date": "2022-05-24T09:38:46Z",
                         "start_date": "2022-05-24T09:38:46Z",
-                        "start_date_is_half_day": true,
                         "status": "REQUESTED",
-                        "total_days_used": "4.00",
                         "type": "VACATION",
-                        "updated_at": "2022-05-24T09:38:46Z",
                       },
                     },
                   },
@@ -29465,86 +28422,12 @@ docs: End-points to manage tasks for a given contract
                   "response": {
                     "body": {
                       "data": {
-                        "applied_changes": [
-                          {
-                            "days_used_end_year": "2.00",
-                            "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
-                            "status": "REQUESTED",
-                            "total_days_used": "4.00",
-                            "type": "VACATION",
-                          },
-                        ],
-                        "attachments": [
-                          {},
-                        ],
-                        "can_request_changes": true,
-                        "change_request": {
-                          "attachments": [
-                            {},
-                          ],
-                          "date_is_half_day": true,
-                          "days_used_end_year": "2.00",
-                          "days_used_start_year": "2.00",
-                          "denial_reason": "No time off available",
-                          "end_date_is_half_day": true,
-                          "has_multiple_dates": true,
-                          "other_timeoff_name": "This is time off for a doctor's appointment",
-                          "reason": "I have a doctors appointment",
-                          "requested_at": "2022-05-24T09:38:46Z",
-                          "requester": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "reviewed_at": "2022-05-24T09:38:46Z",
-                          "reviewer": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "single_date": "2022-05-24T09:38:46Z",
-                          "start_date_is_half_day": true,
-                          "status": "REQUESTED",
-                          "total_days_used": "4.00",
-                          "type": "VACATION",
-                        },
-                        "contract_id": "abc123",
                         "created_at": "2022-05-24T09:38:46Z",
-                        "date_is_half_day": true,
-                        "days_used_end_year": "2.00",
-                        "days_used_start_year": "2.00",
-                        "denial_reason": "No time off available",
-                        "end_date": "2022-05-24T09:38:46Z",
-                        "end_date_is_half_day": true,
-                        "has_multiple_dates": true,
                         "id": 6938,
-                        "is_updated": true,
-                        "other_timeoff_name": "This is time off for a doctor's appointment",
-                        "reason": "I have a doctors appointment",
                         "requested_at": "2022-05-24T09:38:46Z",
-                        "requester": {
-                          "id": 409222,
-                          "is_employee": true,
-                          "name": "Mr. Rogers",
-                          "pic_url": "pic_url",
-                          "profile_type": "client",
-                        },
-                        "reviewed_at": "2022-05-24T09:38:46Z",
-                        "reviewer": {
-                          "id": 409222,
-                          "is_employee": true,
-                          "name": "Mr. Rogers",
-                          "pic_url": "pic_url",
-                          "profile_type": "client",
-                        },
-                        "single_date": "2022-05-24T09:38:46Z",
                         "start_date": "2022-05-24T09:38:46Z",
-                        "start_date_is_half_day": true,
                         "status": "REQUESTED",
-                        "total_days_used": "4.00",
                         "type": "VACATION",
-                        "updated_at": "2022-05-24T09:38:46Z",
                       },
                     },
                   },
@@ -29603,36 +28486,26 @@ docs: End-points to manage tasks for a given contract
                               {
                                 "requests": [
                                   {
-                                    "contract_id": "abc123",
                                     "created_at": "2022-05-24T09:38:46Z",
-                                    "days_used_end_year": "2.00",
-                                    "days_used_start_year": "2.00",
                                     "id": 6938,
                                     "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
-                                    "total_days_used": "4.00",
                                     "type": "VACATION",
                                   },
                                 ],
-                                "year": 2022,
                               },
                             ],
                             "sick_leaves": [
                               {
                                 "requests": [
                                   {
-                                    "contract_id": "abc123",
                                     "created_at": "2022-05-24T09:38:46Z",
-                                    "days_used_end_year": "2.00",
-                                    "days_used_start_year": "2.00",
                                     "id": 6938,
                                     "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
-                                    "total_days_used": "4.00",
                                     "type": "VACATION",
                                   },
                                 ],
-                                "year": 2022,
                               },
                             ],
                             "time_zones": "time_zones",
@@ -29640,18 +28513,13 @@ docs: End-points to manage tasks for a given contract
                               {
                                 "requests": [
                                   {
-                                    "contract_id": "abc123",
                                     "created_at": "2022-05-24T09:38:46Z",
-                                    "days_used_end_year": "2.00",
-                                    "days_used_start_year": "2.00",
                                     "id": 6938,
                                     "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
-                                    "total_days_used": "4.00",
                                     "type": "VACATION",
                                   },
                                 ],
-                                "year": 2022,
                               },
                             ],
                           },
@@ -29695,24 +28563,7 @@ docs: End-points to manage tasks for a given contract
                     "body": {
                       "data": {
                         "entitlements": [
-                          {
-                            "max_rollover_yearly": "3",
-                            "other_leave_approved": "5",
-                            "other_leave_requested": "5",
-                            "other_leave_total": "5",
-                            "other_leave_used": "5",
-                            "sick_leave_allowed": "16",
-                            "sick_leave_approved": "5",
-                            "sick_leave_requested": "5",
-                            "sick_leave_total": "5",
-                            "sick_leave_used": "5",
-                            "vacation_allowed": "16",
-                            "vacation_approved": "5",
-                            "vacation_requested": "5",
-                            "vacation_total": "5",
-                            "vacation_used": "5",
-                            "year": 2022,
-                          },
+                          {},
                         ],
                       },
                     },
@@ -29758,60 +28609,12 @@ docs: End-points to manage tasks for a given contract
                     "body": {
                       "data": [
                         {
-                          "applied_changes": [
-                            {
-                              "days_used_end_year": "2.00",
-                              "days_used_start_year": "2.00",
-                              "requested_at": "2022-05-24T09:38:46Z",
-                              "status": "REQUESTED",
-                              "total_days_used": "4.00",
-                              "type": "VACATION",
-                            },
-                          ],
-                          "attachments": [
-                            {},
-                          ],
-                          "can_request_changes": true,
-                          "change_request": {
-                            "days_used_end_year": "2.00",
-                            "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
-                            "status": "REQUESTED",
-                            "total_days_used": "4.00",
-                            "type": "VACATION",
-                          },
-                          "contract_id": "abc123",
                           "created_at": "2022-05-24T09:38:46Z",
-                          "date_is_half_day": true,
-                          "days_used_end_year": "2.00",
-                          "days_used_start_year": "2.00",
-                          "denial_reason": "No time off available",
-                          "end_date": "2022-05-24T09:38:46Z",
-                          "end_date_is_half_day": true,
-                          "has_multiple_dates": true,
                           "id": 6938,
-                          "is_updated": true,
-                          "other_timeoff_name": "This is time off for a doctor's appointment",
-                          "reason": "I have a doctors appointment",
                           "requested_at": "2022-05-24T09:38:46Z",
-                          "requester": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "reviewed_at": "2022-05-24T09:38:46Z",
-                          "reviewer": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "single_date": "2022-05-24T09:38:46Z",
                           "start_date": "2022-05-24T09:38:46Z",
-                          "start_date_is_half_day": true,
                           "status": "REQUESTED",
-                          "total_days_used": "4.00",
                           "type": "VACATION",
-                          "updated_at": "2022-05-24T09:38:46Z",
                         },
                       ],
                     },
@@ -29937,53 +28740,12 @@ service:
           response:
             body:
               data:
-                - reason: I have a doctors appointment
-                  type: VACATION
+                - type: VACATION
                   requested_at: '2022-05-24T09:38:46Z'
-                  reviewed_at: '2022-05-24T09:38:46Z'
-                  denial_reason: No time off available
-                  has_multiple_dates: true
                   status: REQUESTED
-                  other_timeoff_name: This is time off for a doctor's appointment
-                  requester:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  reviewer:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  days_used_start_year: '2.00'
-                  days_used_end_year: '2.00'
-                  total_days_used: '4.00'
-                  start_date_is_half_day: true
-                  end_date_is_half_day: true
-                  single_date: '2022-05-24T09:38:46Z'
-                  date_is_half_day: true
-                  attachments:
-                    - {}
                   id: 6938
-                  contract_id: abc123
                   created_at: '2022-05-24T09:38:46Z'
-                  updated_at: '2022-05-24T09:38:46Z'
                   start_date: '2022-05-24T09:38:46Z'
-                  end_date: '2022-05-24T09:38:46Z'
-                  can_request_changes: true
-                  is_updated: true
-                  change_request:
-                    type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
-                    status: REQUESTED
-                    days_used_start_year: '2.00'
-                    days_used_end_year: '2.00'
-                    total_days_used: '4.00'
-                  applied_changes:
-                    - type: VACATION
-                      requested_at: '2022-05-24T09:38:46Z'
-                      status: REQUESTED
-                      days_used_start_year: '2.00'
-                      days_used_end_year: '2.00'
-                      total_days_used: '4.00'
       audiences:
         - external
     createEorTimeOffs:
@@ -30019,76 +28781,12 @@ service:
           response:
             body:
               data:
-                reason: I have a doctors appointment
                 type: VACATION
                 requested_at: '2022-05-24T09:38:46Z'
-                reviewed_at: '2022-05-24T09:38:46Z'
-                denial_reason: No time off available
-                has_multiple_dates: true
                 status: REQUESTED
-                other_timeoff_name: This is time off for a doctor's appointment
-                requester:
-                  id: 409222
-                  name: Mr. Rogers
-                  pic_url: pic_url
-                  profile_type: client
-                  is_employee: true
-                reviewer:
-                  id: 409222
-                  name: Mr. Rogers
-                  pic_url: pic_url
-                  profile_type: client
-                  is_employee: true
-                days_used_start_year: '2.00'
-                days_used_end_year: '2.00'
-                total_days_used: '4.00'
-                start_date_is_half_day: true
-                end_date_is_half_day: true
-                single_date: '2022-05-24T09:38:46Z'
-                date_is_half_day: true
-                attachments:
-                  - {}
                 id: 6938
-                contract_id: abc123
                 created_at: '2022-05-24T09:38:46Z'
-                updated_at: '2022-05-24T09:38:46Z'
                 start_date: '2022-05-24T09:38:46Z'
-                end_date: '2022-05-24T09:38:46Z'
-                can_request_changes: true
-                is_updated: true
-                change_request:
-                  reason: I have a doctors appointment
-                  type: VACATION
-                  requested_at: '2022-05-24T09:38:46Z'
-                  reviewed_at: '2022-05-24T09:38:46Z'
-                  denial_reason: No time off available
-                  has_multiple_dates: true
-                  status: REQUESTED
-                  other_timeoff_name: This is time off for a doctor's appointment
-                  requester:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  reviewer:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  days_used_start_year: '2.00'
-                  days_used_end_year: '2.00'
-                  total_days_used: '4.00'
-                  start_date_is_half_day: true
-                  end_date_is_half_day: true
-                  single_date: '2022-05-24T09:38:46Z'
-                  date_is_half_day: true
-                  attachments:
-                    - {}
-                applied_changes:
-                  - type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
-                    status: REQUESTED
-                    days_used_start_year: '2.00'
-                    days_used_end_year: '2.00'
-                    total_days_used: '4.00'
       audiences:
         - external
     editEorTimeOffs:
@@ -30128,76 +28826,12 @@ service:
           response:
             body:
               data:
-                reason: I have a doctors appointment
                 type: VACATION
                 requested_at: '2022-05-24T09:38:46Z'
-                reviewed_at: '2022-05-24T09:38:46Z'
-                denial_reason: No time off available
-                has_multiple_dates: true
                 status: REQUESTED
-                other_timeoff_name: This is time off for a doctor's appointment
-                requester:
-                  id: 409222
-                  name: Mr. Rogers
-                  pic_url: pic_url
-                  profile_type: client
-                  is_employee: true
-                reviewer:
-                  id: 409222
-                  name: Mr. Rogers
-                  pic_url: pic_url
-                  profile_type: client
-                  is_employee: true
-                days_used_start_year: '2.00'
-                days_used_end_year: '2.00'
-                total_days_used: '4.00'
-                start_date_is_half_day: true
-                end_date_is_half_day: true
-                single_date: '2022-05-24T09:38:46Z'
-                date_is_half_day: true
-                attachments:
-                  - {}
                 id: 6938
-                contract_id: abc123
                 created_at: '2022-05-24T09:38:46Z'
-                updated_at: '2022-05-24T09:38:46Z'
                 start_date: '2022-05-24T09:38:46Z'
-                end_date: '2022-05-24T09:38:46Z'
-                can_request_changes: true
-                is_updated: true
-                change_request:
-                  reason: I have a doctors appointment
-                  type: VACATION
-                  requested_at: '2022-05-24T09:38:46Z'
-                  reviewed_at: '2022-05-24T09:38:46Z'
-                  denial_reason: No time off available
-                  has_multiple_dates: true
-                  status: REQUESTED
-                  other_timeoff_name: This is time off for a doctor's appointment
-                  requester:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  reviewer:
-                    id: 409222
-                    name: Mr. Rogers
-                    profile_type: client
-                  days_used_start_year: '2.00'
-                  days_used_end_year: '2.00'
-                  total_days_used: '4.00'
-                  start_date_is_half_day: true
-                  end_date_is_half_day: true
-                  single_date: '2022-05-24T09:38:46Z'
-                  date_is_half_day: true
-                  attachments:
-                    - {}
-                applied_changes:
-                  - type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
-                    status: REQUESTED
-                    days_used_start_year: '2.00'
-                    days_used_end_year: '2.00'
-                    total_days_used: '4.00'
       audiences:
         - external
     deleteEorTimeOffs:
@@ -30260,22 +28894,7 @@ service:
             body:
               data:
                 entitlements:
-                  - year: 2022
-                    vacation_allowed: '16'
-                    sick_leave_allowed: '16'
-                    vacation_requested: '5'
-                    vacation_approved: '5'
-                    vacation_used: '5'
-                    vacation_total: '5'
-                    sick_leave_requested: '5'
-                    sick_leave_approved: '5'
-                    sick_leave_used: '5'
-                    sick_leave_total: '5'
-                    other_leave_requested: '5'
-                    other_leave_approved: '5'
-                    other_leave_used: '5'
-                    other_leave_total: '5'
-                    max_rollover_yearly: '3'
+                  - {}
       audiences:
         - external
     getEorClientTimeOffs:
@@ -30304,40 +28923,25 @@ service:
                     eor_contract_id: 110143
                     contract_id: 7WjJWdsJ113vocUN6Buwn
                     vacations:
-                      - year: 2022
-                        requests:
+                      - requests:
                           - type: VACATION
                             requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
-                            days_used_start_year: '2.00'
-                            days_used_end_year: '2.00'
-                            total_days_used: '4.00'
                             id: 6938
-                            contract_id: abc123
                             created_at: '2022-05-24T09:38:46Z'
                     sick_leaves:
-                      - year: 2022
-                        requests:
+                      - requests:
                           - type: VACATION
                             requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
-                            days_used_start_year: '2.00'
-                            days_used_end_year: '2.00'
-                            total_days_used: '4.00'
                             id: 6938
-                            contract_id: abc123
                             created_at: '2022-05-24T09:38:46Z'
                     others:
-                      - year: 2022
-                        requests:
+                      - requests:
                           - type: VACATION
                             requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
-                            days_used_start_year: '2.00'
-                            days_used_end_year: '2.00'
-                            total_days_used: '4.00'
                             id: 6938
-                            contract_id: abc123
                             created_at: '2022-05-24T09:38:46Z'
                     time_zones: time_zones
                 total_requests: 1.1
@@ -30432,10 +29036,6 @@ docs: Manage time off requests.
                     "body": {
                       "data": {
                         "created": true,
-                        "created_at": "2022-05-24T09:38:46Z",
-                        "id": "id",
-                        "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
                       },
                     },
                   },
@@ -30684,15 +29284,9 @@ docs: Manage time off requests.
                         },
                         "created_at": "2022-05-04T03:45:27.108Z",
                         "currency_code": "USD",
-                        "custom_scale": "custom_scale",
                         "date_submitted": "2022-05-24T09:38:46Z",
                         "description": "description",
                         "id": "id",
-                        "payment_cycle": {
-                          "end_date": "2022-05-24T09:38:46Z",
-                          "start_date": "2022-05-24T09:38:46Z",
-                        },
-                        "public_id": "00000000-0000-0000-0000-000000000000",
                         "quantity": 1,
                         "reported_by": {
                           "full_name": "John Smith",
@@ -30704,7 +29298,6 @@ docs: Manage time off requests.
                           "remarks": "remarks",
                           "reviewed_at": "2022-05-04T03:45:27.899Z",
                         },
-                        "scale": "custom",
                         "status": "approved",
                         "total_amount": "200.0000",
                         "type": "type",
@@ -30769,11 +29362,9 @@ docs: Manage time off requests.
                           },
                           "created_at": "2022-05-04T03:45:27.108Z",
                           "currency_code": "USD",
-                          "custom_scale": "custom_scale",
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
                             "full_name": "John Smith",
@@ -30785,7 +29376,6 @@ docs: Manage time off requests.
                             "remarks": "remarks",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "scale": "custom",
                           "status": "approved",
                           "total_amount": "200.0000",
                           "type": "type",
@@ -30890,11 +29480,9 @@ docs: Manage time off requests.
                           },
                           "created_at": "2022-05-04T03:45:27.108Z",
                           "currency_code": "USD",
-                          "custom_scale": "custom_scale",
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
                             "full_name": "John Smith",
@@ -30906,7 +29494,6 @@ docs: Manage time off requests.
                             "remarks": "remarks",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "scale": "custom",
                           "status": "approved",
                           "total_amount": "200.0000",
                           "type": "type",
@@ -31118,7 +29705,6 @@ service:
             body:
               data:
                 - id: id
-                  public_id: 00000000-0000-0000-0000-000000000000
                   type: type
                   status: approved
                   description: description
@@ -31127,8 +29713,6 @@ service:
                   total_amount: '200.0000'
                   quantity: 1
                   created_at: '2022-05-04T03:45:27.108Z'
-                  scale: custom
-                  custom_scale: custom_scale
                   attachment:
                     filename: filename
                     key: key
@@ -31217,7 +29801,6 @@ service:
             body:
               data:
                 - id: id
-                  public_id: 00000000-0000-0000-0000-000000000000
                   type: type
                   status: approved
                   description: description
@@ -31226,8 +29809,6 @@ service:
                   total_amount: '200.0000'
                   quantity: 1
                   created_at: '2022-05-04T03:45:27.108Z'
-                  scale: custom
-                  custom_scale: custom_scale
                   attachment:
                     filename: filename
                     key: key
@@ -31288,10 +29869,6 @@ service:
             body:
               data:
                 created: true
-                id: id
-                public_id: 00000000-0000-0000-0000-000000000000
-                status: status
-                created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external
     getTimesheetById:
@@ -31328,7 +29905,6 @@ service:
                     email: email
                     approved: true
                 id: id
-                public_id: 00000000-0000-0000-0000-000000000000
                 type: type
                 status: approved
                 description: description
@@ -31337,8 +29913,6 @@ service:
                 total_amount: '200.0000'
                 quantity: 1
                 created_at: '2022-05-04T03:45:27.108Z'
-                scale: custom
-                custom_scale: custom_scale
                 attachment:
                   filename: filename
                   key: key
@@ -31356,9 +29930,6 @@ service:
                   id: id
                   title: title
                   type: ongoing_time_based
-                payment_cycle:
-                  start_date: '2022-05-24T09:38:46Z'
-                  end_date: '2022-05-24T09:38:46Z'
                 reported_by:
                   id: 123456
                   full_name: John Smith
@@ -31610,7 +30181,6 @@ docs: >-
                         "events": [
                           "contract.created",
                         ],
-                        "hidden": false,
                         "id": 1.1,
                         "name": "My webhooks",
                         "signing_key": "signing_key",
@@ -31701,7 +30271,6 @@ docs: >-
                         "events": [
                           "contract.created",
                         ],
-                        "hidden": false,
                         "id": 1.1,
                         "name": "My webhooks",
                         "signing_key": "signing_key",
@@ -31762,7 +30331,6 @@ docs: >-
                         "events": [
                           "contract.created",
                         ],
-                        "hidden": false,
                         "id": 1.1,
                         "name": "My webhooks",
                         "signing_key": "signing_key",
@@ -31852,7 +30420,6 @@ docs: >-
                           "events": [
                             "contract.created",
                           ],
-                          "hidden": false,
                           "id": 1.1,
                           "name": "My webhooks",
                           "signing_key": "signing_key",
@@ -31944,7 +30511,6 @@ service:
                     - contract.created
                   created_at: created_at
                   updated_at: updated_at
-                  hidden: false
       audiences:
         - external
     createWebhook:
@@ -32013,7 +30579,6 @@ service:
                   - contract.created
                 created_at: created_at
                 updated_at: updated_at
-                hidden: false
       audiences:
         - external
     WebhookController_getById:
@@ -32054,7 +30619,6 @@ service:
                   - contract.created
                 created_at: created_at
                 updated_at: updated_at
-                hidden: false
       audiences:
         - external
     WebhookController_deleteById:
@@ -32146,7 +30710,6 @@ service:
                   - contract.created
                 created_at: created_at
                 updated_at: updated_at
-                hidden: false
       audiences:
         - external
   source:

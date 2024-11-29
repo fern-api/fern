@@ -18,9 +18,7 @@
                     "stream": false,
                   },
                   "response": {
-                    "body": {
-                      "id": "id",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -61,9 +59,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "id": "id",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -105,11 +101,7 @@
                     "stream": false,
                   },
                   "response": {
-                    "body": {
-                      "id": "id",
-                      "name": "name",
-                      "streamed": false,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -150,11 +142,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "id": "id",
-                        "name": "name",
-                        "streamed": true,
-                      },
+                      {},
                     ],
                   },
                 },
@@ -196,10 +184,7 @@
                     "stream": false,
                   },
                   "response": {
-                    "body": {
-                      "id": "id",
-                      "inline": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -240,11 +225,7 @@
                   },
                   "response": {
                     "stream": [
-                      {
-                        "id": "id",
-                        "inline": true,
-                        "streamed": true,
-                      },
+                      {},
                     ],
                   },
                 },
@@ -428,7 +409,7 @@
             stream: true
           response:
             stream:
-              - id: id
+              - {}
     user:
       path: /v1/users
       method: POST
@@ -451,8 +432,7 @@
         - request:
             stream: false
           response:
-            body:
-              id: id
+            body: {}
     user_v2_stream:
       path: /v2/users
       method: POST
@@ -477,9 +457,7 @@
             stream: true
           response:
             stream:
-              - id: id
-                name: name
-                streamed: true
+              - {}
     user_v2:
       path: /v2/users
       method: POST
@@ -502,10 +480,7 @@
         - request:
             stream: false
           response:
-            body:
-              id: id
-              name: name
-              streamed: false
+            body: {}
     user_v3_stream:
       path: /v3/users
       method: POST
@@ -530,9 +505,7 @@
             stream: true
           response:
             stream:
-              - id: id
-                inline: true
-                streamed: true
+              - {}
     user_v3:
       path: /v3/users
       method: POST
@@ -555,9 +528,7 @@
         - request:
             stream: false
           response:
-            body:
-              id: id
-              inline: true
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

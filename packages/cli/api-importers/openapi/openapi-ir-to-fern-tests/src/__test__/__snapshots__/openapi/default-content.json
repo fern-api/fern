@@ -45,9 +45,7 @@
                     "model": "model",
                   },
                   "response": {
-                    "body": {
-                      "bar": "bar",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -92,8 +90,7 @@ service:
         - path-parameters:
             model: model
           response:
-            body:
-              bar: bar
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

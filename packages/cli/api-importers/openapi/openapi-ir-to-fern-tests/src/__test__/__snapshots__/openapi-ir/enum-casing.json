@@ -44,37 +44,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "status": {
-                  "value": "success",
-                  "type": "enum"
-                },
-                "message": {
-                  "value": {
-                    "value": "message",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "custom_fields": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": "value",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

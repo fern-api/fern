@@ -16,13 +16,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "custom_fields": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                      "status": "success",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -97,11 +91,7 @@
         type: ExampleResponse
       examples:
         - response:
-            body:
-              status: success
-              message: message
-              custom_fields:
-                key: value
+            body: {}
   source:
     openapi: ../openapi.yml
 types:

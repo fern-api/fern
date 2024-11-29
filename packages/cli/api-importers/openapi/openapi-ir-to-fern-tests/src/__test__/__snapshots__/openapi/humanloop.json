@@ -6182,38 +6182,8 @@ deployed to the default Environment will be used.
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "datapoints": [
-                        {
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
-                        },
-                      ],
                       "datapoints_count": 1,
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
@@ -6285,38 +6255,8 @@ exists, it will be ignored.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "datapoints": [
-                        {
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
-                        },
-                      ],
                       "datapoints_count": 1,
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
@@ -6427,38 +6367,8 @@ Set the deployed Version for the specified Environment.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "datapoints": [
-                        {
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
-                        },
-                      ],
                       "datapoints_count": 1,
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
@@ -6521,38 +6431,8 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "datapoints": [
-                        {
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
-                        },
-                      ],
                       "datapoints_count": 1,
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
@@ -6611,26 +6491,8 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       "page": 1,
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "datapoints": [
-                            {
-                              "id": "id",
-                            },
-                          ],
                           "datapoints_count": 1,
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
                           "id": "id",
                           "last_used_at": "2024-01-15T09:30:00Z",
                           "name": "name",
@@ -6717,17 +6579,6 @@ By default the deployed version of the Dataset is returned. Use the query parame
                       "records": [
                         {
                           "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
                         },
                       ],
                       "size": 1,
@@ -6804,26 +6655,8 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "datapoints": [
-                            {
-                              "id": "id",
-                            },
-                          ],
                           "datapoints_count": 1,
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
                           "id": "id",
                           "last_used_at": "2024-01-15T09:30:00Z",
                           "name": "name",
@@ -6882,38 +6715,8 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "datapoints": [
-                        {
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "target": {
-                            "key": "value",
-                          },
-                        },
-                      ],
                       "datapoints_count": 1,
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
@@ -7015,22 +6818,11 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  commit_message: commit_message
                   datapoints_count: 1
-                  datapoints:
-                    - id: id
               page: 1
               size: 1
               total: 1
@@ -7138,29 +6930,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               datapoints_count: 1
-              datapoints:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
     get:
       path: /datasets/{id}
       method: GET
@@ -7219,29 +6993,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               datapoints_count: 1
-              datapoints:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
     delete:
       path: /datasets/{id}
       method: DELETE
@@ -7293,29 +7049,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               datapoints_count: 1
-              datapoints:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
     listdatapoints:
       path: /datasets/{id}/datapoints
       method: GET
@@ -7358,13 +7096,7 @@ service:
           response:
             body:
               records:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
+                - id: id
               page: 1
               size: 1
               total: 1
@@ -7408,22 +7140,11 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  commit_message: commit_message
                   datapoints_count: 1
-                  datapoints:
-                    - id: id
     commit:
       path: /datasets/{id}/versions/{version_id}/commit
       method: POST
@@ -7459,29 +7180,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               datapoints_count: 1
-              datapoints:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
     deploy:
       path: /datasets/{id}/versions/{version_id}/deploy
       method: POST
@@ -7522,29 +7225,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               datapoints_count: 1
-              datapoints:
-                - inputs:
-                    key: value
-                  messages:
-                    - role: user
-                  target:
-                    key: value
-                  id: id
   source:
     openapi: ../openapi.yml
   display-name: Datasets
@@ -7646,33 +7331,9 @@ and check its status.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
                       "dataset": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "datapoints": [
-                          {
-                            "id": "id",
-                          },
-                        ],
                         "datapoints_count": 1,
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
                         "id": "id",
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -7682,7 +7343,6 @@ and check its status.",
                       },
                       "evaluatees": [
                         {
-                          "batch_id": "batch_id",
                           "orchestrated": true,
                           "version": {
                             "created_at": "2024-01-15T09:30:00Z",
@@ -7800,33 +7460,9 @@ Retrieve the Evaluation with the given ID.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
                       "dataset": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "datapoints": [
-                          {
-                            "id": "id",
-                          },
-                        ],
                         "datapoints_count": 1,
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
                         "id": "id",
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -7836,7 +7472,6 @@ Retrieve the Evaluation with the given ID.",
                       },
                       "evaluatees": [
                         {
-                          "batch_id": "batch_id",
                           "orchestrated": true,
                           "version": {
                             "created_at": "2024-01-15T09:30:00Z",
@@ -7995,10 +7630,6 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                       "records": [
                         {
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
                           "dataset": {
                             "created_at": "2024-01-15T09:30:00Z",
                             "datapoints_count": 1,
@@ -8142,33 +7773,9 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
                       "dataset": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "datapoints": [
-                          {
-                            "id": "id",
-                          },
-                        ],
                         "datapoints_count": 1,
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
                         "id": "id",
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -8178,7 +7785,6 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                       },
                       "evaluatees": [
                         {
-                          "batch_id": "batch_id",
                           "orchestrated": true,
                           "version": {
                             "created_at": "2024-01-15T09:30:00Z",
@@ -8276,33 +7882,9 @@ as completed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
                       "dataset": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "datapoints": [
-                          {
-                            "id": "id",
-                          },
-                        ],
                         "datapoints_count": 1,
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
                         "id": "id",
                         "last_used_at": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -8312,7 +7894,6 @@ as completed.",
                       },
                       "evaluatees": [
                         {
-                          "batch_id": "batch_id",
                           "orchestrated": true,
                           "version": {
                             "created_at": "2024-01-15T09:30:00Z",
@@ -8496,9 +8077,6 @@ service:
                       orchestrated: true
                   status: pending
                   created_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   updated_at: '2024-01-15T09:30:00Z'
               page: 1
               size: 1
@@ -8549,23 +8127,11 @@ service:
                 id: id
                 name: name
                 version_id: version_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
-                commit_message: commit_message
                 datapoints_count: 1
-                datapoints:
-                  - id: id
               evaluatees:
                 - version:
                     id: id
@@ -8580,7 +8146,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  batch_id: batch_id
                   orchestrated: true
               evaluators:
                 - version:
@@ -8602,10 +8167,6 @@ service:
                   orchestrated: true
               status: pending
               created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               updated_at: '2024-01-15T09:30:00Z'
     get:
       path: /evaluations/{id}
@@ -8637,23 +8198,11 @@ service:
                 id: id
                 name: name
                 version_id: version_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
-                commit_message: commit_message
                 datapoints_count: 1
-                datapoints:
-                  - id: id
               evaluatees:
                 - version:
                     id: id
@@ -8668,7 +8217,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  batch_id: batch_id
                   orchestrated: true
               evaluators:
                 - version:
@@ -8690,10 +8238,6 @@ service:
                   orchestrated: true
               status: pending
               created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               updated_at: '2024-01-15T09:30:00Z'
     delete:
       path: /evaluations/{id}
@@ -8762,23 +8306,11 @@ service:
                 id: id
                 name: name
                 version_id: version_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
-                commit_message: commit_message
                 datapoints_count: 1
-                datapoints:
-                  - id: id
               evaluatees:
                 - version:
                     id: id
@@ -8793,7 +8325,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  batch_id: batch_id
                   orchestrated: true
               evaluators:
                 - version:
@@ -8815,10 +8346,6 @@ service:
                   orchestrated: true
               status: pending
               created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               updated_at: '2024-01-15T09:30:00Z'
     updatestatus:
       path: /evaluations/{id}/status
@@ -8863,23 +8390,11 @@ service:
                 id: id
                 name: name
                 version_id: version_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
-                commit_message: commit_message
                 datapoints_count: 1
-                datapoints:
-                  - id: id
               evaluatees:
                 - version:
                     id: id
@@ -8894,7 +8409,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  batch_id: batch_id
                   orchestrated: true
               evaluators:
                 - version:
@@ -8916,10 +8430,6 @@ service:
                   orchestrated: true
               status: pending
               created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               updated_at: '2024-01-15T09:30:00Z'
     getstats:
       path: /evaluations/{id}/stats
@@ -9031,22 +8541,7 @@ docs: >+
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "inputs": [
                         {
@@ -9122,22 +8617,7 @@ an exception will be raised.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "inputs": [
                         {
@@ -9218,117 +8698,13 @@ an exception will be raised.",
                   "response": {
                     "body": [
                       {
-                        "datapoint_id": "datapoint_id",
-                        "error": "error",
-                        "llm_evaluation_log": {
-                          "batch_ids": [
-                            "batch_ids",
-                          ],
-                          "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
-                            "type": "generic",
-                          },
-                          "config_id": "config_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "duration": 1.1,
-                          "environment": "environment",
-                          "error": "error",
-                          "evaluation_results": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "evaluator_id": "evaluator_id",
-                              "evaluator_version_id": "evaluator_version_id",
-                              "id": "id",
-                              "log_id": "log_id",
-                              "updated_at": "2024-01-15T09:30:00Z",
-                            },
-                          ],
-                          "feedback": [
-                            {
-                              "id": "id",
-                              "type": "rating",
-                              "value": 1.1,
-                            },
-                          ],
-                          "finish_reason": "finish_reason",
-                          "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "judgment": true,
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "metadata": {
-                            "key": "value",
-                          },
-                          "metric_values": [
-                            {
-                              "metric_id": "metric_id",
-                              "metric_name": "metric_name",
-                              "metric_value": 1.1,
-                            },
-                          ],
-                          "observability_status": "pending",
-                          "output": "output",
-                          "output_cost": 1.1,
-                          "output_message": {
-                            "role": "user",
-                          },
-                          "output_tokens": 1,
-                          "parent_id": "parent_id",
-                          "parent_reference_id": "parent_reference_id",
-                          "project": "project",
-                          "project_id": "project_id",
-                          "prompt_cost": 1.1,
-                          "prompt_tokens": 1,
-                          "provider_latency": 1.1,
-                          "provider_request": {
-                            "key": "value",
-                          },
-                          "provider_response": {
-                            "key": "value",
-                          },
-                          "raw_output": "raw_output",
-                          "reference_id": "reference_id",
-                          "save": true,
-                          "session_id": "session_id",
-                          "session_reference_id": "session_reference_id",
-                          "source": "source",
-                          "source_datapoint_id": "source_datapoint_id",
-                          "tokens": 1,
-                          "tool_choice": "none",
-                          "tools": [
-                            {
-                              "id": "id",
-                              "name": "name",
-                              "result": "result",
-                              "signature": "signature",
-                            },
-                          ],
-                          "trial_id": "trial_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "user": "user",
-                        },
                         "log": {
-                          "batch_ids": [
-                            "batch_ids",
-                          ],
                           "config": {
                             "id": "config",
                             "name": "config",
                             "status": "config",
                             "type": "generic",
                           },
-                          "config_id": "config_id",
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "duration": 1.1,
-                          "environment": "environment",
-                          "error": "error",
                           "evaluation_results": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
@@ -9339,77 +8715,11 @@ an exception will be raised.",
                               "updated_at": "2024-01-15T09:30:00Z",
                             },
                           ],
-                          "feedback": [
-                            {
-                              "id": "id",
-                              "type": "rating",
-                              "value": 1.1,
-                            },
-                          ],
-                          "finish_reason": "finish_reason",
                           "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "judgment": true,
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "metadata": {
-                            "key": "value",
-                          },
-                          "metric_values": [
-                            {
-                              "metric_id": "metric_id",
-                              "metric_name": "metric_name",
-                              "metric_value": 1.1,
-                            },
-                          ],
                           "observability_status": "pending",
-                          "output": "output",
-                          "output_cost": 1.1,
-                          "output_message": {
-                            "role": "user",
-                          },
-                          "output_tokens": 1,
-                          "parent_id": "parent_id",
-                          "parent_reference_id": "parent_reference_id",
-                          "project": "project",
-                          "project_id": "project_id",
-                          "prompt_cost": 1.1,
-                          "prompt_tokens": 1,
-                          "provider_latency": 1.1,
-                          "provider_request": {
-                            "key": "value",
-                          },
-                          "provider_response": {
-                            "key": "value",
-                          },
-                          "raw_output": "raw_output",
-                          "reference_id": "reference_id",
-                          "save": true,
-                          "session_id": "session_id",
-                          "session_reference_id": "session_reference_id",
-                          "source": "source",
-                          "source_datapoint_id": "source_datapoint_id",
-                          "tokens": 1,
-                          "tool_choice": "none",
-                          "tools": [
-                            {
-                              "id": "id",
-                              "name": "name",
-                              "result": "result",
-                              "signature": "signature",
-                            },
-                          ],
-                          "trial_id": "trial_id",
                           "updated_at": "2024-01-15T09:30:00Z",
-                          "user": "user",
                         },
                         "log_id": "log_id",
-                        "value": true,
                       },
                     ],
                   },
@@ -9509,22 +8819,7 @@ will be used for calls made to the Evaluator in this Environment.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "inputs": [
                         {
@@ -9594,22 +8889,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "inputs": [
                         {
@@ -9675,21 +8955,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
                           "id": "id",
                           "inputs": [
                             {
@@ -9773,22 +9039,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                   "response": {
                     "body": [
                       {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "directory_id": "directory_id",
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
                         "id": "id",
                         "inputs": [
                           {
@@ -9839,21 +9090,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
                           "id": "id",
                           "inputs": [
                             {
@@ -9924,22 +9161,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
                       "id": "id",
                       "inputs": [
                         {
@@ -10099,20 +9321,10 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  commit_message: commit_message
                   spec:
                     evaluator_type: human
                     arguments_type: target_free
@@ -10178,21 +9390,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               spec:
                 evaluator_type: human
                 arguments_type: target_free
@@ -10243,21 +9444,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               spec:
                 evaluator_type: human
                 arguments_type: target_free
@@ -10320,21 +9510,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               spec:
                 evaluator_type: human
                 arguments_type: target_free
@@ -10383,20 +9562,10 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  commit_message: commit_message
                   spec:
                     evaluator_type: human
                     arguments_type: target_free
@@ -10449,21 +9618,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               spec:
                 evaluator_type: human
                 arguments_type: target_free
@@ -10507,21 +9665,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              commit_message: commit_message
               spec:
                 evaluator_type: human
                 arguments_type: target_free
@@ -10549,21 +9696,10 @@ service:
               - id: id
                 name: name
                 version_id: version_id
-                directory_id: directory_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
-                commit_message: commit_message
                 spec:
                   evaluator_type: human
                   arguments_type: target_free
@@ -10628,65 +9764,12 @@ service:
             body:
               - log_id: log_id
                 log:
-                  project: project
-                  project_id: project_id
-                  session_id: session_id
-                  session_reference_id: session_reference_id
-                  parent_id: parent_id
-                  parent_reference_id: parent_reference_id
-                  inputs:
-                    key: value
-                  source: source
-                  metadata:
-                    key: value
-                  save: true
-                  source_datapoint_id: source_datapoint_id
                   id: id
-                  reference_id: reference_id
-                  trial_id: trial_id
-                  messages:
-                    - role: user
-                  output: output
-                  judgment: true
-                  config_id: config_id
                   config:
                     type: generic
                     id: config
                     status: config
                     name: config
-                  environment: environment
-                  feedback:
-                    - type: rating
-                      value: 1.1
-                      id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  error: error
-                  duration: 1.1
-                  output_message:
-                    role: user
-                  prompt_tokens: 1
-                  output_tokens: 1
-                  prompt_cost: 1.1
-                  output_cost: 1.1
-                  provider_request:
-                    key: value
-                  provider_response:
-                    key: value
-                  user: user
-                  provider_latency: 1.1
-                  tokens: 1
-                  raw_output: raw_output
-                  finish_reason: finish_reason
-                  metric_values:
-                    - metric_id: metric_id
-                      metric_name: metric_name
-                      metric_value: 1.1
-                  tools:
-                    - id: id
-                      name: name
-                      signature: signature
-                      result: result
-                  tool_choice: none
                   evaluation_results:
                     - id: id
                       evaluator_id: evaluator_id
@@ -10696,82 +9779,6 @@ service:
                       created_at: '2024-01-15T09:30:00Z'
                   observability_status: pending
                   updated_at: '2024-01-15T09:30:00Z'
-                  batch_ids:
-                    - batch_ids
-                datapoint_id: datapoint_id
-                llm_evaluation_log:
-                  project: project
-                  project_id: project_id
-                  session_id: session_id
-                  session_reference_id: session_reference_id
-                  parent_id: parent_id
-                  parent_reference_id: parent_reference_id
-                  inputs:
-                    key: value
-                  source: source
-                  metadata:
-                    key: value
-                  save: true
-                  source_datapoint_id: source_datapoint_id
-                  id: id
-                  reference_id: reference_id
-                  trial_id: trial_id
-                  messages:
-                    - role: user
-                  output: output
-                  judgment: true
-                  config_id: config_id
-                  config:
-                    type: generic
-                    id: config
-                    status: config
-                    name: config
-                  environment: environment
-                  feedback:
-                    - type: rating
-                      value: 1.1
-                      id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  error: error
-                  duration: 1.1
-                  output_message:
-                    role: user
-                  prompt_tokens: 1
-                  output_tokens: 1
-                  prompt_cost: 1.1
-                  output_cost: 1.1
-                  provider_request:
-                    key: value
-                  provider_response:
-                    key: value
-                  user: user
-                  provider_latency: 1.1
-                  tokens: 1
-                  raw_output: raw_output
-                  finish_reason: finish_reason
-                  metric_values:
-                    - metric_id: metric_id
-                      metric_name: metric_name
-                      metric_value: 1.1
-                  tools:
-                    - id: id
-                      name: name
-                      signature: signature
-                      result: result
-                  tool_choice: none
-                  evaluation_results:
-                    - id: id
-                      evaluator_id: evaluator_id
-                      evaluator_version_id: evaluator_version_id
-                      log_id: log_id
-                      updated_at: '2024-01-15T09:30:00Z'
-                      created_at: '2024-01-15T09:30:00Z'
-                  observability_status: pending
-                  updated_at: '2024-01-15T09:30:00Z'
-                  batch_ids:
-                    - batch_ids
-                value: true
-                error: error
   source:
     openapi: ../openapi.yml
 types:
@@ -10861,75 +9868,9 @@ You can manually create Logs through the API.
                   },
                   "response": {
                     "body": {
-                      "batches": [
-                        "batches",
-                      ],
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment": "environment",
-                      "error": "error",
-                      "finish_reason": "finish_reason",
                       "id": "id",
-                      "inputs": {
-                        "key": "value",
-                      },
-                      "messages": [
-                        {
-                          "content": "content",
-                          "name": "name",
-                          "role": "user",
-                          "tool_call_id": "tool_call_id",
-                          "tool_calls": [
-                            {
-                              "function": {
-                                "name": "name",
-                              },
-                              "id": "id",
-                              "type": "function",
-                            },
-                          ],
-                        },
-                      ],
-                      "metadata": {
-                        "key": "value",
-                      },
-                      "output": "output",
-                      "output_cost": 1.1,
-                      "output_message": {
-                        "content": "content",
-                        "name": "name",
-                        "role": "user",
-                        "tool_call_id": "tool_call_id",
-                        "tool_calls": [
-                          {
-                            "function": {
-                              "name": "name",
-                            },
-                            "id": "id",
-                            "type": "function",
-                          },
-                        ],
-                      },
-                      "output_tokens": 1,
-                      "parent_id": "parent_id",
                       "prompt": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "directory_id": "directory_id",
-                        "endpoint": "complete",
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
-                        "frequency_penalty": 1.1,
                         "id": "id",
                         "inputs": [
                           {
@@ -10937,58 +9878,14 @@ You can manually create Logs through the API.
                           },
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
-                        "linked_tools": [
-                          {
-                            "description": "description",
-                            "id": "id",
-                            "name": "name",
-                            "version_id": "version_id",
-                          },
-                        ],
-                        "max_tokens": 1,
                         "model": "model",
                         "name": "name",
-                        "other": {
-                          "key": "value",
-                        },
-                        "presence_penalty": 1.1,
-                        "provider": "openai",
-                        "response_format": {
-                          "type": "json_object",
-                        },
-                        "seed": 1,
                         "status": "uncommitted",
-                        "stop": "stop",
-                        "temperature": 1.1,
-                        "template": "template",
-                        "tools": [
-                          {
-                            "description": "description",
-                            "name": "name",
-                          },
-                        ],
-                        "top_p": 1.1,
                         "total_logs_count": 1,
                         "updated_at": "2024-01-15T09:30:00Z",
                         "version_id": "version_id",
                         "version_logs_count": 1,
                       },
-                      "prompt_cost": 1.1,
-                      "prompt_tokens": 1,
-                      "provider_latency": 1.1,
-                      "provider_request": {
-                        "key": "value",
-                      },
-                      "provider_response": {
-                        "key": "value",
-                      },
-                      "raw_output": "raw_output",
-                      "save": true,
-                      "session_id": "session_id",
-                      "source": "source",
-                      "source_datapoint_id": "source_datapoint_id",
-                      "tool_choice": "none",
-                      "user": "user",
                     },
                   },
                 },
@@ -11027,32 +9924,7 @@ You can manually create Logs through the API.
                       "page": 1,
                       "records": [
                         {
-                          "batches": [
-                            "batches",
-                          ],
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "environment": "environment",
-                          "error": "error",
-                          "finish_reason": "finish_reason",
                           "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "metadata": {
-                            "key": "value",
-                          },
-                          "output": "output",
-                          "output_cost": 1.1,
-                          "output_message": {
-                            "role": "user",
-                          },
-                          "output_tokens": 1,
-                          "parent_id": "parent_id",
                           "prompt": {
                             "created_at": "2024-01-15T09:30:00Z",
                             "id": "id",
@@ -11070,22 +9942,6 @@ You can manually create Logs through the API.
                             "version_id": "version_id",
                             "version_logs_count": 1,
                           },
-                          "prompt_cost": 1.1,
-                          "prompt_tokens": 1,
-                          "provider_latency": 1.1,
-                          "provider_request": {
-                            "key": "value",
-                          },
-                          "provider_response": {
-                            "key": "value",
-                          },
-                          "raw_output": "raw_output",
-                          "save": true,
-                          "session_id": "session_id",
-                          "source": "source",
-                          "source_datapoint_id": "source_datapoint_id",
-                          "tool_choice": "none",
-                          "user": "user",
                         },
                       ],
                       "size": 1,
@@ -11237,14 +10093,7 @@ service:
           response:
             body:
               records:
-                - output_message:
-                    role: user
-                  prompt_tokens: 1
-                  output_tokens: 1
-                  prompt_cost: 1.1
-                  output_cost: 1.1
-                  finish_reason: finish_reason
-                  prompt:
+                - prompt:
                     id: id
                     name: name
                     version_id: version_id
@@ -11257,31 +10106,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  messages:
-                    - role: user
-                  tool_choice: none
-                  output: output
-                  raw_output: raw_output
-                  created_at: '2024-01-15T09:30:00Z'
-                  error: error
-                  provider_latency: 1.1
-                  provider_request:
-                    key: value
-                  provider_response:
-                    key: value
-                  session_id: session_id
-                  parent_id: parent_id
-                  inputs:
-                    key: value
-                  source: source
-                  metadata:
-                    key: value
-                  save: true
-                  source_datapoint_id: source_datapoint_id
-                  batches:
-                    - batches
-                  user: user
-                  environment: environment
                   id: id
               page: 1
               size: 1
@@ -11325,100 +10149,19 @@ service:
             id: id
           response:
             body:
-              output_message:
-                content: content
-                name: name
-                tool_call_id: tool_call_id
-                role: user
-                tool_calls:
-                  - id: id
-                    type: function
-                    function:
-                      name: name
-              prompt_tokens: 1
-              output_tokens: 1
-              prompt_cost: 1.1
-              output_cost: 1.1
-              finish_reason: finish_reason
               prompt:
                 id: id
                 name: name
                 version_id: version_id
-                directory_id: directory_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
                 model: model
-                endpoint: complete
-                template: template
-                provider: openai
-                max_tokens: 1
-                temperature: 1.1
-                top_p: 1.1
-                stop: stop
-                presence_penalty: 1.1
-                frequency_penalty: 1.1
-                other:
-                  key: value
-                seed: 1
-                response_format:
-                  type: json_object
-                tools:
-                  - name: name
-                    description: description
-                linked_tools:
-                  - name: name
-                    description: description
-                    id: id
-                    version_id: version_id
-                commit_message: commit_message
                 version_logs_count: 1
                 total_logs_count: 1
                 inputs:
                   - name: name
-              messages:
-                - content: content
-                  name: name
-                  tool_call_id: tool_call_id
-                  role: user
-                  tool_calls:
-                    - id: id
-                      type: function
-                      function:
-                        name: name
-              tool_choice: none
-              output: output
-              raw_output: raw_output
-              created_at: '2024-01-15T09:30:00Z'
-              error: error
-              provider_latency: 1.1
-              provider_request:
-                key: value
-              provider_response:
-                key: value
-              session_id: session_id
-              parent_id: parent_id
-              inputs:
-                key: value
-              source: source
-              metadata:
-                key: value
-              save: true
-              source_datapoint_id: source_datapoint_id
-              batches:
-                - batches
-              user: user
-              environment: environment
               id: id
   source:
     openapi: ../openapi.yml
@@ -11499,72 +10242,14 @@ in the case where you are storing or deriving your Prompt details in code.",
                   "request": {},
                   "response": {
                     "body": {
-                      "batches": [
-                        "batches",
-                      ],
-                      "environment": "environment",
                       "id": "id",
-                      "inputs": {
-                        "key": "value",
-                      },
                       "logs": [
                         {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "error": "error",
-                          "finish_reason": "finish_reason",
                           "index": 1,
-                          "output": "output",
-                          "output_cost": 1.1,
-                          "output_message": {
-                            "role": "user",
-                          },
-                          "output_tokens": 1,
-                          "prompt_cost": 1.1,
-                          "prompt_tokens": 1,
-                          "provider_latency": 1.1,
-                          "raw_output": "raw_output",
                         },
                       ],
-                      "messages": [
-                        {
-                          "content": "content",
-                          "name": "name",
-                          "role": "user",
-                          "tool_call_id": "tool_call_id",
-                          "tool_calls": [
-                            {
-                              "function": {
-                                "name": "name",
-                              },
-                              "id": "id",
-                              "type": "function",
-                            },
-                          ],
-                        },
-                      ],
-                      "metadata": {
-                        "key": "value",
-                      },
-                      "parent_id": "parent_id",
                       "prompt": {
-                        "commit_message": "commit_message",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "created_by": {
-                          "email_address": "email_address",
-                          "full_name": "full_name",
-                          "id": "id",
-                        },
-                        "directory_id": "directory_id",
-                        "endpoint": "complete",
-                        "environments": [
-                          {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "id": "id",
-                            "name": "name",
-                            "tag": "default",
-                          },
-                        ],
-                        "frequency_penalty": 1.1,
                         "id": "id",
                         "inputs": [
                           {
@@ -11572,48 +10257,14 @@ in the case where you are storing or deriving your Prompt details in code.",
                           },
                         ],
                         "last_used_at": "2024-01-15T09:30:00Z",
-                        "linked_tools": [
-                          {
-                            "description": "description",
-                            "id": "id",
-                            "name": "name",
-                            "version_id": "version_id",
-                          },
-                        ],
-                        "max_tokens": 1,
                         "model": "model",
                         "name": "name",
-                        "other": {
-                          "key": "value",
-                        },
-                        "presence_penalty": 1.1,
-                        "provider": "openai",
-                        "response_format": {
-                          "type": "json_object",
-                        },
-                        "seed": 1,
                         "status": "uncommitted",
-                        "stop": "stop",
-                        "temperature": 1.1,
-                        "template": "template",
-                        "tools": [
-                          {
-                            "description": "description",
-                            "name": "name",
-                          },
-                        ],
-                        "top_p": 1.1,
                         "total_logs_count": 1,
                         "updated_at": "2024-01-15T09:30:00Z",
                         "version_id": "version_id",
                         "version_logs_count": 1,
                       },
-                      "save": true,
-                      "session_id": "session_id",
-                      "source": "source",
-                      "source_datapoint_id": "source_datapoint_id",
-                      "tool_choice": "none",
-                      "user": "user",
                     },
                   },
                 },
@@ -11758,24 +10409,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -11783,43 +10417,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -11876,24 +10476,7 @@ an exception will be raised.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -11901,43 +10484,9 @@ an exception will be raised.",
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -12093,24 +10642,7 @@ will be used for calls made to the Prompt in this Environment.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -12118,43 +10650,9 @@ will be used for calls made to the Prompt in this Environment.",
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -12210,24 +10708,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -12235,43 +10716,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -12323,23 +10770,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "endpoint": "complete",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
-                          "frequency_penalty": 1.1,
                           "id": "id",
                           "inputs": [
                             {
@@ -12347,37 +10778,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                             },
                           ],
                           "last_used_at": "2024-01-15T09:30:00Z",
-                          "linked_tools": [
-                            {
-                              "description": "description",
-                              "id": "id",
-                              "name": "name",
-                              "version_id": "version_id",
-                            },
-                          ],
-                          "max_tokens": 1,
                           "model": "model",
                           "name": "name",
-                          "other": {
-                            "key": "value",
-                          },
-                          "presence_penalty": 1.1,
-                          "provider": "openai",
-                          "response_format": {
-                            "type": "json_object",
-                          },
-                          "seed": 1,
                           "status": "uncommitted",
-                          "stop": "stop",
-                          "temperature": 1.1,
-                          "template": "template",
-                          "tools": [
-                            {
-                              "description": "description",
-                              "name": "name",
-                            },
-                          ],
-                          "top_p": 1.1,
                           "total_logs_count": 1,
                           "updated_at": "2024-01-15T09:30:00Z",
                           "version_id": "version_id",
@@ -12458,23 +10861,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "endpoint": "complete",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
-                          "frequency_penalty": 1.1,
                           "id": "id",
                           "inputs": [
                             {
@@ -12482,37 +10869,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                             },
                           ],
                           "last_used_at": "2024-01-15T09:30:00Z",
-                          "linked_tools": [
-                            {
-                              "description": "description",
-                              "id": "id",
-                              "name": "name",
-                              "version_id": "version_id",
-                            },
-                          ],
-                          "max_tokens": 1,
                           "model": "model",
                           "name": "name",
-                          "other": {
-                            "key": "value",
-                          },
-                          "presence_penalty": 1.1,
-                          "provider": "openai",
-                          "response_format": {
-                            "type": "json_object",
-                          },
-                          "seed": 1,
                           "status": "uncommitted",
-                          "stop": "stop",
-                          "temperature": 1.1,
-                          "template": "template",
-                          "tools": [
-                            {
-                              "description": "description",
-                              "name": "name",
-                            },
-                          ],
-                          "top_p": 1.1,
                           "total_logs_count": 1,
                           "updated_at": "2024-01-15T09:30:00Z",
                           "version_id": "version_id",
@@ -12579,7 +10938,6 @@ in the case where you are storing or deriving your Prompt details in code.",
                     "body": {
                       "id": "id",
                       "prompt_id": "prompt_id",
-                      "session_id": "session_id",
                       "version_id": "version_id",
                     },
                   },
@@ -12747,24 +11105,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -12772,43 +11113,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -12871,24 +11178,7 @@ within the Prompt for monitoring purposes.",
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "endpoint": "complete",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "frequency_penalty": 1.1,
                       "id": "id",
                       "inputs": [
                         {
@@ -12896,43 +11186,9 @@ within the Prompt for monitoring purposes.",
                         },
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
-                      "linked_tools": [
-                        {
-                          "description": "description",
-                          "id": "id",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                          "version_id": "version_id",
-                        },
-                      ],
-                      "max_tokens": 1,
                       "model": "model",
                       "name": "name",
-                      "other": {
-                        "key": "value",
-                      },
-                      "presence_penalty": 1.1,
-                      "provider": "openai",
-                      "response_format": {
-                        "type": "json_object",
-                      },
-                      "seed": 1,
                       "status": "uncommitted",
-                      "stop": "stop",
-                      "temperature": 1.1,
-                      "template": "template",
-                      "tools": [
-                        {
-                          "description": "description",
-                          "name": "name",
-                          "parameters": {
-                            "key": "value",
-                          },
-                        },
-                      ],
-                      "top_p": 1.1,
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -13107,43 +11363,11 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
                   model: model
-                  endpoint: complete
-                  template: template
-                  provider: openai
-                  max_tokens: 1
-                  temperature: 1.1
-                  top_p: 1.1
-                  stop: stop
-                  presence_penalty: 1.1
-                  frequency_penalty: 1.1
-                  other:
-                    key: value
-                  seed: 1
-                  response_format:
-                    type: json_object
-                  tools:
-                    - name: name
-                      description: description
-                  linked_tools:
-                    - name: name
-                      description: description
-                      id: id
-                      version_id: version_id
-                  commit_message: commit_message
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -13278,48 +11502,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -13366,48 +11553,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -13466,48 +11616,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -13552,43 +11665,11 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
                   model: model
-                  endpoint: complete
-                  template: template
-                  provider: openai
-                  max_tokens: 1
-                  temperature: 1.1
-                  top_p: 1.1
-                  stop: stop
-                  presence_penalty: 1.1
-                  frequency_penalty: 1.1
-                  other:
-                    key: value
-                  seed: 1
-                  response_format:
-                    type: json_object
-                  tools:
-                    - name: name
-                      description: description
-                  linked_tools:
-                    - name: name
-                      description: description
-                      id: id
-                      version_id: version_id
-                  commit_message: commit_message
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -13637,48 +11718,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -13718,48 +11762,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -13939,7 +11946,6 @@ service:
               id: id
               prompt_id: prompt_id
               version_id: version_id
-              session_id: session_id
     call:
       path: /prompts/{id}/call
       method: POST
@@ -14113,87 +12119,18 @@ service:
                 id: id
                 name: name
                 version_id: version_id
-                directory_id: directory_id
-                environments:
-                  - id: id
-                    created_at: '2024-01-15T09:30:00Z'
-                    name: name
-                    tag: default
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  id: id
-                  email_address: email_address
-                  full_name: full_name
                 status: uncommitted
                 last_used_at: '2024-01-15T09:30:00Z'
                 model: model
-                endpoint: complete
-                template: template
-                provider: openai
-                max_tokens: 1
-                temperature: 1.1
-                top_p: 1.1
-                stop: stop
-                presence_penalty: 1.1
-                frequency_penalty: 1.1
-                other:
-                  key: value
-                seed: 1
-                response_format:
-                  type: json_object
-                tools:
-                  - name: name
-                    description: description
-                linked_tools:
-                  - name: name
-                    description: description
-                    id: id
-                    version_id: version_id
-                commit_message: commit_message
                 version_logs_count: 1
                 total_logs_count: 1
                 inputs:
                   - name: name
-              messages:
-                - content: content
-                  name: name
-                  tool_call_id: tool_call_id
-                  role: user
-                  tool_calls:
-                    - id: id
-                      type: function
-                      function:
-                        name: name
-              tool_choice: none
-              session_id: session_id
-              parent_id: parent_id
-              inputs:
-                key: value
-              source: source
-              metadata:
-                key: value
-              save: true
-              source_datapoint_id: source_datapoint_id
-              batches:
-                - batches
-              user: user
-              environment: environment
               id: id
               logs:
-                - output: output
-                  raw_output: raw_output
-                  created_at: '2024-01-15T09:30:00Z'
-                  error: error
-                  provider_latency: 1.1
-                  output_message:
-                    role: user
-                  prompt_tokens: 1
-                  output_tokens: 1
-                  prompt_cost: 1.1
-                  output_cost: 1.1
-                  finish_reason: finish_reason
-                  index: 1
+                - index: 1
     updateEvaluators:
       path: /prompts/{id}/evaluators
       method: POST
@@ -14226,48 +12163,11 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
               model: model
-              endpoint: complete
-              template: template
-              provider: openai
-              max_tokens: 1
-              temperature: 1.1
-              top_p: 1.1
-              stop: stop
-              presence_penalty: 1.1
-              frequency_penalty: 1.1
-              other:
-                key: value
-              seed: 1
-              response_format:
-                type: json_object
-              tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-              linked_tools:
-                - name: name
-                  description: description
-                  parameters:
-                    key: value
-                  id: id
-                  version_id: version_id
-              commit_message: commit_message
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -14464,32 +12364,7 @@ Log is in, nested within the evaluated Log.
                       "id": "id",
                       "logs": [
                         {
-                          "batches": [
-                            "batches",
-                          ],
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "environment": "environment",
-                          "error": "error",
-                          "finish_reason": "finish_reason",
                           "id": "id",
-                          "inputs": {
-                            "key": "value",
-                          },
-                          "messages": [
-                            {
-                              "role": "user",
-                            },
-                          ],
-                          "metadata": {
-                            "key": "value",
-                          },
-                          "output": "output",
-                          "output_cost": 1.1,
-                          "output_message": {
-                            "role": "user",
-                          },
-                          "output_tokens": 1,
-                          "parent_id": "parent_id",
                           "prompt": {
                             "created_at": "2024-01-15T09:30:00Z",
                             "id": "id",
@@ -14507,22 +12382,6 @@ Log is in, nested within the evaluated Log.
                             "version_id": "version_id",
                             "version_logs_count": 1,
                           },
-                          "prompt_cost": 1.1,
-                          "prompt_tokens": 1,
-                          "provider_latency": 1.1,
-                          "provider_request": {
-                            "key": "value",
-                          },
-                          "provider_response": {
-                            "key": "value",
-                          },
-                          "raw_output": "raw_output",
-                          "save": true,
-                          "session_id": "session_id",
-                          "source": "source",
-                          "source_datapoint_id": "source_datapoint_id",
-                          "tool_choice": "none",
-                          "user": "user",
                         },
                       ],
                       "updated_at": "2024-01-15T09:30:00Z",
@@ -14678,14 +12537,7 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               logs:
-                - output_message:
-                    role: user
-                  prompt_tokens: 1
-                  output_tokens: 1
-                  prompt_cost: 1.1
-                  output_cost: 1.1
-                  finish_reason: finish_reason
-                  prompt:
+                - prompt:
                     id: id
                     name: name
                     version_id: version_id
@@ -14698,31 +12550,6 @@ service:
                     total_logs_count: 1
                     inputs:
                       - name: name
-                  messages:
-                    - role: user
-                  tool_choice: none
-                  output: output
-                  raw_output: raw_output
-                  created_at: '2024-01-15T09:30:00Z'
-                  error: error
-                  provider_latency: 1.1
-                  provider_request:
-                    key: value
-                  provider_response:
-                    key: value
-                  session_id: session_id
-                  parent_id: parent_id
-                  inputs:
-                    key: value
-                  source: source
-                  metadata:
-                    key: value
-                  save: true
-                  source_datapoint_id: source_datapoint_id
-                  batches:
-                    - batches
-                  user: user
-                  environment: environment
                   id: id
     delete:
       path: /sessions/{id}
@@ -14856,29 +12683,7 @@ docs: >+
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -14887,13 +12692,7 @@ docs: >+
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -14949,29 +12748,7 @@ an exception will be raised.",
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -14980,13 +12757,7 @@ an exception will be raised.",
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -15093,29 +12864,7 @@ will be used for calls made to the Tool in this Environment.",
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -15124,13 +12873,7 @@ will be used for calls made to the Tool in this Environment.",
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -15186,29 +12929,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                   },
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -15217,13 +12938,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -15275,25 +12990,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
-                          "function": {
-                            "description": "description",
-                            "name": "name",
-                          },
                           "id": "id",
                           "inputs": [
                             {
@@ -15302,13 +12999,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                           ],
                           "last_used_at": "2024-01-15T09:30:00Z",
                           "name": "name",
-                          "setup_values": {
-                            "key": "value",
-                          },
-                          "signature": "signature",
-                          "source_code": "source_code",
                           "status": "uncommitted",
-                          "tool_type": "pinecone_search",
                           "total_logs_count": 1,
                           "updated_at": "2024-01-15T09:30:00Z",
                           "version_id": "version_id",
@@ -15380,13 +13071,6 @@ By default the deployed version of the Tool is returned. Use the query parameter
                       {
                         "description": "description",
                         "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                        "setup_schema": {
-                          "key": "value",
-                        },
-                        "signature": "signature",
                       },
                     ],
                   },
@@ -15428,25 +13112,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "body": {
                       "records": [
                         {
-                          "commit_message": "commit_message",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "created_by": {
-                            "email_address": "email_address",
-                            "id": "id",
-                          },
-                          "directory_id": "directory_id",
-                          "environments": [
-                            {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "name": "name",
-                              "tag": "default",
-                            },
-                          ],
-                          "function": {
-                            "description": "description",
-                            "name": "name",
-                          },
                           "id": "id",
                           "inputs": [
                             {
@@ -15455,13 +13121,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                           ],
                           "last_used_at": "2024-01-15T09:30:00Z",
                           "name": "name",
-                          "setup_values": {
-                            "key": "value",
-                          },
-                          "signature": "signature",
-                          "source_code": "source_code",
                           "status": "uncommitted",
-                          "tool_type": "pinecone_search",
                           "total_logs_count": 1,
                           "updated_at": "2024-01-15T09:30:00Z",
                           "version_id": "version_id",
@@ -15527,7 +13187,6 @@ in the case where you are storing or deriving your Tool details in code.",
                   "response": {
                     "body": {
                       "id": "id",
-                      "session_id": "session_id",
                       "tool_id": "tool_id",
                       "version_id": "version_id",
                     },
@@ -15660,29 +13319,7 @@ in the case where you are storing or deriving your Tool details in code.",
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -15691,13 +13328,7 @@ in the case where you are storing or deriving your Tool details in code.",
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -15760,29 +13391,7 @@ within the Tool for monitoring purposes.",
                   "request": {},
                   "response": {
                     "body": {
-                      "commit_message": "commit_message",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "created_by": {
-                        "email_address": "email_address",
-                        "full_name": "full_name",
-                        "id": "id",
-                      },
-                      "directory_id": "directory_id",
-                      "environments": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "tag": "default",
-                        },
-                      ],
-                      "function": {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {
-                          "key": "value",
-                        },
-                      },
                       "id": "id",
                       "inputs": [
                         {
@@ -15791,13 +13400,7 @@ within the Tool for monitoring purposes.",
                       ],
                       "last_used_at": "2024-01-15T09:30:00Z",
                       "name": "name",
-                      "setup_values": {
-                        "key": "value",
-                      },
-                      "signature": "signature",
-                      "source_code": "source_code",
                       "status": "uncommitted",
-                      "tool_type": "pinecone_search",
                       "total_logs_count": 1,
                       "updated_at": "2024-01-15T09:30:00Z",
                       "version_id": "version_id",
@@ -15883,28 +13486,10 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  function:
-                    name: name
-                    description: description
-                  source_code: source_code
-                  setup_values:
-                    key: value
-                  tool_type: pinecone_search
-                  commit_message: commit_message
-                  signature: signature
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -15975,31 +13560,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16045,31 +13609,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16128,31 +13671,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16197,28 +13719,10 @@ service:
                 - id: id
                   name: name
                   version_id: version_id
-                  directory_id: directory_id
-                  environments:
-                    - id: id
-                      created_at: '2024-01-15T09:30:00Z'
-                      name: name
-                      tag: default
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    id: id
-                    email_address: email_address
                   status: uncommitted
                   last_used_at: '2024-01-15T09:30:00Z'
-                  function:
-                    name: name
-                    description: description
-                  source_code: source_code
-                  setup_values:
-                    key: value
-                  tool_type: pinecone_search
-                  commit_message: commit_message
-                  signature: signature
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -16267,31 +13771,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16331,31 +13814,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16494,7 +13956,6 @@ service:
               id: id
               tool_id: tool_id
               version_id: version_id
-              session_id: session_id
     updateEvaluators:
       path: /tools/{id}/evaluators
       method: POST
@@ -16527,31 +13988,10 @@ service:
               id: id
               name: name
               version_id: version_id
-              directory_id: directory_id
-              environments:
-                - id: id
-                  created_at: '2024-01-15T09:30:00Z'
-                  name: name
-                  tag: default
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              created_by:
-                id: id
-                email_address: email_address
-                full_name: full_name
               status: uncommitted
               last_used_at: '2024-01-15T09:30:00Z'
-              function:
-                name: name
-                description: description
-                parameters:
-                  key: value
-              source_code: source_code
-              setup_values:
-                key: value
-              tool_type: pinecone_search
-              commit_message: commit_message
-              signature: signature
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -16579,11 +14019,6 @@ service:
             body:
               - name: name
                 description: description
-                parameters:
-                  key: value
-                signature: signature
-                setup_schema:
-                  key: value
   source:
     openapi: ../openapi.yml
 ",

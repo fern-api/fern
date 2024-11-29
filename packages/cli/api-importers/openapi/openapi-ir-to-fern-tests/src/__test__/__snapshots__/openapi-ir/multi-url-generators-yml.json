@@ -75,36 +75,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": "id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "username": {
-                  "value": {
-                    "value": "username",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "email": {
-                  "value": {
-                    "value": "email",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "createdAt": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -213,36 +184,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": "id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "username": {
-                  "value": {
-                    "value": "username",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "email": {
-                  "value": {
-                    "value": "email",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "createdAt": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -312,29 +254,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "accessToken": {
-                  "value": {
-                    "value": "accessToken",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "tokenType": {
-                  "value": {
-                    "value": "tokenType",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "expiresIn": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

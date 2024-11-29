@@ -122,15 +122,7 @@
           "response": {
             "value": [
               {
-                "properties": {
-                  "text": {
-                    "value": {
-                      "value": "text",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
+                "properties": {},
                 "type": "object"
               }
             ],
@@ -260,15 +252,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "text": {
-                  "value": {
-                    "value": "text",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

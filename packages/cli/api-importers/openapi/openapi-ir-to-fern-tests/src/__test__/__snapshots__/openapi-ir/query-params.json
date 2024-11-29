@@ -344,20 +344,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "results": {
-                  "value": [
-                    {
-                      "value": {
-                        "value": "results",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  ],
-                  "type": "array"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

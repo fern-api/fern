@@ -177,15 +177,7 @@
           "response": {
             "value": [
               {
-                "properties": {
-                  "chunk": {
-                    "value": {
-                      "value": "Hello, how can I help you today?",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
+                "properties": {},
                 "type": "object"
               }
             ],
@@ -366,29 +358,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "chat_id": {
-                  "value": {
-                    "value": "chat_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "turn_id": {
-                  "value": {
-                    "value": "turn_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "answer": {
-                  "value": {
-                    "value": "answer",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

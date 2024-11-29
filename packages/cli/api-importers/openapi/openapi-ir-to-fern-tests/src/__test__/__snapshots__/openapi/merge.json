@@ -9759,18 +9759,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "category": "hris",
-                      "end_user_email_address": "kendall.roy@waystar-royco.com",
-                      "end_user_organization_name": "Waystar Royco",
-                      "end_user_origin_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "id": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
-                      "integration": "BambooHR",
-                      "integration_slug": "bamboohr",
-                      "is_duplicate": true,
-                      "status": "COMPLETE",
-                      "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -9810,18 +9799,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              id: 0496d4c2-42e6-4072-80b3-7b69bfdc76fd
-              integration: BambooHR
-              integration_slug: bamboohr
-              category: hris
-              end_user_origin_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-              end_user_organization_name: Waystar Royco
-              end_user_email_address: kendall.roy@waystar-royco.com
-              status: COMPLETE
-              webhook_listener_url: >-
-                https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4
-              is_duplicate: true
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -9848,18 +9826,7 @@ service:
                     "body": {
                       "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
                       "integration": {
-                        "api_endpoints_to_documentation_urls": {
-                          "key": "value",
-                        },
-                        "categories": [
-                          "hris",
-                        ],
-                        "color": "color",
-                        "image": "image",
-                        "is_in_beta": true,
                         "name": "name",
-                        "slug": "slug",
-                        "square_image": "square_image",
                       },
                     },
                   },
@@ -9913,15 +9880,6 @@ service:
               account_token: T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB
               integration:
                 name: name
-                categories:
-                  - hris
-                image: image
-                square_image: square_image
-                color: color
-                slug: slug
-                is_in_beta: true
-                api_endpoints_to_documentation_urls:
-                  key: value
   source:
     openapi: ../openapi.yml
 ",
@@ -9944,37 +9902,8 @@ service:
                   "headers": {},
                   "response": {
                     "body": {
-                      "available_model_operations": [
-                        {
-                          "available_operations": [
-                            "FETCH",
-                            "CREATE",
-                          ],
-                          "model_name": "Candidate",
-                          "required_post_parameters": [
-                            "remote_user_id",
-                          ],
-                          "supported_fields": [
-                            "first_name",
-                            "last_name",
-                            "company",
-                            "title",
-                          ],
-                        },
-                      ],
                       "integration": {
-                        "api_endpoints_to_documentation_urls": {
-                          "key": "value",
-                        },
-                        "categories": [
-                          "hris",
-                        ],
-                        "color": "color",
-                        "image": "image",
-                        "is_in_beta": true,
                         "name": "name",
-                        "slug": "slug",
-                        "square_image": "square_image",
                       },
                       "passthrough_available": true,
                     },
@@ -10020,28 +9949,7 @@ service:
             body:
               integration:
                 name: name
-                categories:
-                  - hris
-                image: image
-                square_image: square_image
-                color: color
-                slug: slug
-                is_in_beta: true
-                api_endpoints_to_documentation_urls:
-                  key: value
               passthrough_available: true
-              available_model_operations:
-                - model_name: Candidate
-                  available_operations:
-                    - FETCH
-                    - CREATE
-                  required_post_parameters:
-                    - remote_user_id
-                  supported_fields:
-                    - first_name
-                    - last_name
-                    - company
-                    - title
   source:
     openapi: ../openapi.yml
 ",
@@ -10063,40 +9971,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "account_number": "439291590",
-                          "account_type": "SAVINGS",
-                          "bank_name": "Chase",
-                          "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_created_at": "2021-12-06T10:11:26Z",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/bank-info",
-                            },
-                          ],
-                          "remote_id": "123234",
-                          "remote_was_deleted": true,
-                          "routing_number": "089690059",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10193,34 +10068,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "account_number": "439291590",
-                      "account_type": "SAVINGS",
-                      "bank_name": "Chase",
-                      "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "remote_created_at": "2021-12-06T10:11:26Z",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/bank-info",
-                        },
-                      ],
-                      "remote_id": "123234",
-                      "remote_was_deleted": true,
-                      "routing_number": "089690059",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10395,29 +10243,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
-                  remote_id: '123234'
-                  employee: a3617eb4-dfe3-426f-921e-a65fc1661e10
-                  account_number: '439291590'
-                  routing_number: '089690059'
-                  bank_name: Chase
-                  account_type: SAVINGS
-                  remote_created_at: '2021-12-06T10:11:26Z'
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /bank-info
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /bank-info/{id}
       method: GET
@@ -10454,26 +10280,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
-              remote_id: '123234'
-              employee: a3617eb4-dfe3-426f-921e-a65fc1661e10
-              account_number: '439291590'
-              routing_number: '089690059'
-              bank_name: Chase
-              account_type: SAVINGS
-              remote_created_at: '2021-12-06T10:11:26Z'
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /bank-info
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -10495,41 +10302,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "benefit_plan_type": "benefit_plan_type",
-                          "company_contribution": 150,
-                          "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "employee_contribution": 23.65,
-                          "end_date": "2021-10-15T00:23:25Z",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "provider_name": "Blue Shield of California",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/benefits",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "start_date": "2020-11-15T00:59:25Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10603,35 +10376,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "benefit_plan_type": "benefit_plan_type",
-                      "company_contribution": 150,
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "employee_contribution": 23.65,
-                      "end_date": "2021-10-15T00:23:25Z",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "provider_name": "Blue Shield of California",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/benefits",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "start_date": "2020-11-15T00:59:25Z",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10737,30 +10482,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 3fe5ae7a-f1ba-4529-b7af-84e86dc6d232
-                  remote_id: '19202938'
-                  employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-                  provider_name: Blue Shield of California
-                  benefit_plan_type: benefit_plan_type
-                  employee_contribution: 23.65
-                  company_contribution: 150
-                  start_date: '2020-11-15T00:59:25Z'
-                  end_date: '2021-10-15T00:23:25Z'
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /benefits
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /benefits/{id}
       method: GET
@@ -10791,27 +10513,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 3fe5ae7a-f1ba-4529-b7af-84e86dc6d232
-              remote_id: '19202938'
-              employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-              provider_name: Blue Shield of California
-              benefit_plan_type: benefit_plan_type
-              employee_contribution: 23.65
-              company_contribution: 150
-              start_date: '2020-11-15T00:59:25Z'
-              end_date: '2021-10-15T00:23:25Z'
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /benefits
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -10833,41 +10535,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "display_name": "Waystar Royco",
-                          "eins": [
-                            "12-3456789",
-                            "12-3451111",
-                            "11-0011000",
-                          ],
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                          "legal_name": "Waystar Royco, Inc.",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/companies",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -10933,35 +10601,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "display_name": "Waystar Royco",
-                      "eins": [
-                        "12-3456789",
-                        "12-3451111",
-                        "11-0011000",
-                      ],
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                      "legal_name": "Waystar Royco, Inc.",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/companies",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11053,29 +10693,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 1b998423-db0a-4037-a4cf-f79c60cb67b3
-                  remote_id: '19202938'
-                  legal_name: Waystar Royco, Inc.
-                  display_name: Waystar Royco
-                  eins:
-                    - 12-3456789
-                    - 12-3451111
-                    - 11-0011000
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /companies
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /companies/{id}
       method: GET
@@ -11101,26 +10719,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 1b998423-db0a-4037-a4cf-f79c60cb67b3
-              remote_id: '19202938'
-              legal_name: Waystar Royco, Inc.
-              display_name: Waystar Royco
-              eins:
-                - 12-3456789
-                - 12-3451111
-                - 11-0011000
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /companies
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -11187,77 +10786,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "check_date": "2020-11-10T00:00:00Z",
-                          "deductions": [
-                            {
-                              "company_deduction": 78.78,
-                              "employee_deduction": 34.54,
-                              "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                              "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                              "modified_at": "2021-10-16T00:00:00Z",
-                              "name": "Social Security",
-                            },
-                          ],
-                          "earnings": [
-                            {
-                              "amount": 1002.34,
-                              "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                              "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                              "modified_at": "2021-10-16T00:00:00Z",
-                              "type": "SALARY",
-                            },
-                            {
-                              "amount": 8342.34,
-                              "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                              "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                              "modified_at": "2021-10-16T00:00:00Z",
-                              "type": "OVERTIME",
-                            },
-                          ],
-                          "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "end_date": "2020-11-09T00:00:00Z",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "gross_pay": 1342.67,
-                          "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "net_pay": 865.78,
-                          "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/employee-payroll",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "start_date": "2020-11-08T00:00:00Z",
-                          "taxes": [
-                            {
-                              "amount": 100.25,
-                              "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                              "employer_tax": true,
-                              "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                              "modified_at": "2021-10-16T00:00:00Z",
-                              "name": "California State Income Tax",
-                            },
-                          ],
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11351,134 +10880,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "check_date": "2020-11-10T00:00:00Z",
-                      "deductions": [
-                        {
-                          "company_deduction": 78.78,
-                          "employee_deduction": 34.54,
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "name": "Social Security",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/payroll-deduction",
-                            },
-                          ],
-                          "remote_id": "93478612",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                      "earnings": [
-                        {
-                          "amount": 1002.34,
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "path": "path",
-                            },
-                          ],
-                          "remote_id": "52802",
-                          "remote_was_deleted": true,
-                          "type": "SALARY",
-                        },
-                        {
-                          "amount": 8342.34,
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "path": "path",
-                            },
-                          ],
-                          "remote_id": "52802",
-                          "remote_was_deleted": true,
-                          "type": "OVERTIME",
-                        },
-                      ],
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "end_date": "2020-11-09T00:00:00Z",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "gross_pay": 1342.67,
-                      "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "net_pay": 865.78,
-                      "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/employee-payroll",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "start_date": "2020-11-08T00:00:00Z",
-                      "taxes": [
-                        {
-                          "amount": 100.25,
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "employer_tax": true,
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "name": "California State Income Tax",
-                          "remote_data": [
-                            {
-                              "path": "path",
-                            },
-                          ],
-                          "remote_id": "26806834",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -11654,55 +11056,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: fb8c55b6-1cb8-4b4c-9fb6-17924231619d
-                  remote_id: '19202938'
-                  employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-                  payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                  gross_pay: 1342.67
-                  net_pay: 865.78
-                  start_date: '2020-11-08T00:00:00Z'
-                  end_date: '2020-11-09T00:00:00Z'
-                  check_date: '2020-11-10T00:00:00Z'
-                  earnings:
-                    - id: babbced6-3a81-4775-8da2-490dc6385259
-                      employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                      amount: 1002.34
-                      type: SALARY
-                      modified_at: '2021-10-16T00:00:00Z'
-                    - id: babbced6-3a81-4775-8da2-490dc6385259
-                      employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                      amount: 8342.34
-                      type: OVERTIME
-                      modified_at: '2021-10-16T00:00:00Z'
-                  deductions:
-                    - id: 5fd439fc-1b64-4755-b275-64918936c365
-                      employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                      name: Social Security
-                      employee_deduction: 34.54
-                      company_deduction: 78.78
-                      modified_at: '2021-10-16T00:00:00Z'
-                  taxes:
-                    - id: e3a825fd-c38d-4095-a717-df98c4cb9ebc
-                      employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                      name: California State Income Tax
-                      amount: 100.25
-                      employer_tax: true
-                      modified_at: '2021-10-16T00:00:00Z'
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /employee-payroll
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /employee-payroll-runs/{id}
       method: GET
@@ -11733,90 +11087,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: fb8c55b6-1cb8-4b4c-9fb6-17924231619d
-              remote_id: '19202938'
-              employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-              payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-              gross_pay: 1342.67
-              net_pay: 865.78
-              start_date: '2020-11-08T00:00:00Z'
-              end_date: '2020-11-09T00:00:00Z'
-              check_date: '2020-11-10T00:00:00Z'
-              earnings:
-                - id: babbced6-3a81-4775-8da2-490dc6385259
-                  remote_id: '52802'
-                  employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                  amount: 1002.34
-                  type: SALARY
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: path
-                - id: babbced6-3a81-4775-8da2-490dc6385259
-                  remote_id: '52802'
-                  employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                  amount: 8342.34
-                  type: OVERTIME
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: path
-              deductions:
-                - id: 5fd439fc-1b64-4755-b275-64918936c365
-                  remote_id: '93478612'
-                  employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                  name: Social Security
-                  employee_deduction: 34.54
-                  company_deduction: 78.78
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /payroll-deduction
-                      data:
-                        '0': Varies by platform
-              taxes:
-                - id: e3a825fd-c38d-4095-a717-df98c4cb9ebc
-                  remote_id: '26806834'
-                  employee_payroll_run: 35347df1-95e7-46e2-93cc-66f1191edca5
-                  name: California State Income Tax
-                  amount: 100.25
-                  employer_tax: true
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: path
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /employee-payroll
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -11846,86 +11117,14 @@ service:
                         {
                           "detail": "custom_fields is a required field on model.",
                           "problem_type": "MISSING_REQUIRED_FIELD",
-                          "source": {
-                            "pointer": "pointer",
-                          },
                           "title": "Missing Required Field",
                         },
                       ],
-                      "logs": [
-                        {
-                          "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "log_summary": {
-                            "method": "POST",
-                            "status_code": 200,
-                            "url": "https://harvest.greenhouse.io/v1/candidates/",
-                          },
-                        },
-                      ],
-                      "model": {
-                        "avatar": "http://alturl.com/h2h8m",
-                        "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                        "custom_fields": {
-                          "key": "value",
-                        },
-                        "date_of_birth": "1990-11-10T00:00:00Z",
-                        "display_full_name": "Cousin Greg Hirsch",
-                        "employee_number": "2",
-                        "employment_status": "ACTIVE",
-                        "employments": [
-                          "17a54124-287f-494d-965e-3c5b330c9a68",
-                        ],
-                        "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                        "field_mappings": {
-                          "linked_account_defined_targets": {
-                            "custom_key": "custom_value",
-                          },
-                          "organization_defined_targets": {
-                            "custom_key": "custom_value",
-                          },
-                        },
-                        "first_name": "Greg",
-                        "gender": "MALE",
-                        "groups": [
-                          "21a54124-397f-494d-985e-3c5b330b8a68",
-                        ],
-                        "hire_date": "2020-10-10T00:00:00Z",
-                        "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                        "last_name": "Hirsch",
-                        "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                        "marital_status": "SINGLE",
-                        "mobile_phone_number": "+1234567890",
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                        "personal_email": "greg@gmail.com",
-                        "remote_created_at": "2020-10-11T00:00:00Z",
-                        "remote_data": [
-                          {
-                            "data": {
-                              "0": "Varies by platform",
-                            },
-                            "path": "/people",
-                          },
-                        ],
-                        "remote_id": "19202938",
-                        "remote_was_deleted": true,
-                        "ssn": "1234567890",
-                        "start_date": "2020-10-11T00:00:00Z",
-                        "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                        "termination_date": "2021-10-12T00:00:00Z",
-                        "username": "cousingreg",
-                        "work_email": "greg@merge.dev",
-                        "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      },
+                      "model": {},
                       "warnings": [
                         {
                           "detail": "An unrecognized field, age, was passed in with request data.",
                           "problem_type": "UNRECOGNIZED_FIELD",
-                          "source": {
-                            "pointer": "pointer",
-                          },
                           "title": "Unrecognized Field",
                         },
                       ],
@@ -11994,68 +11193,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "avatar": "http://alturl.com/h2h8m",
-                          "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                          "custom_fields": {
-                            "key": "value",
-                          },
-                          "date_of_birth": "1990-11-10T00:00:00Z",
-                          "display_full_name": "Cousin Greg Hirsch",
-                          "employee_number": "2",
-                          "employment_status": "ACTIVE",
-                          "employments": [
-                            "17a54124-287f-494d-965e-3c5b330c9a68",
-                          ],
-                          "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "first_name": "Greg",
-                          "gender": "MALE",
-                          "groups": [
-                            "21a54124-397f-494d-985e-3c5b330b8a68",
-                          ],
-                          "hire_date": "2020-10-10T00:00:00Z",
-                          "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                          "last_name": "Hirsch",
-                          "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                          "marital_status": "SINGLE",
-                          "mobile_phone_number": "+1234567890",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                          "personal_email": "greg@gmail.com",
-                          "remote_created_at": "2020-10-11T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/people",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "ssn": "1234567890",
-                          "start_date": "2020-10-11T00:00:00Z",
-                          "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                          "termination_date": "2021-10-12T00:00:00Z",
-                          "username": "cousingreg",
-                          "work_email": "greg@merge.dev",
-                          "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -12217,15 +11355,8 @@ service:
                     "body": {
                       "has_conditional_params": true,
                       "has_required_linked_account_params": true,
-                      "remote_field_classes": {
-                        "key": "value",
-                      },
                       "request_schema": {
                         "key": "value",
-                      },
-                      "status": {
-                        "can_make_request": true,
-                        "linked_account_status": "linked_account_status",
                       },
                     },
                   },
@@ -12252,62 +11383,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "avatar": "http://alturl.com/h2h8m",
-                      "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                      "custom_fields": {
-                        "key": "value",
-                      },
-                      "date_of_birth": "1990-11-10T00:00:00Z",
-                      "display_full_name": "Cousin Greg Hirsch",
-                      "employee_number": "2",
-                      "employment_status": "ACTIVE",
-                      "employments": [
-                        "17a54124-287f-494d-965e-3c5b330c9a68",
-                      ],
-                      "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "first_name": "Greg",
-                      "gender": "MALE",
-                      "groups": [
-                        "21a54124-397f-494d-985e-3c5b330b8a68",
-                      ],
-                      "hire_date": "2020-10-10T00:00:00Z",
-                      "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                      "last_name": "Hirsch",
-                      "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                      "marital_status": "SINGLE",
-                      "mobile_phone_number": "+1234567890",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                      "personal_email": "greg@gmail.com",
-                      "remote_created_at": "2020-10-11T00:00:00Z",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/people",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "ssn": "1234567890",
-                      "start_date": "2020-10-11T00:00:00Z",
-                      "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                      "termination_date": "2021-10-12T00:00:00Z",
-                      "username": "cousingreg",
-                      "work_email": "greg@merge.dev",
-                      "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -15884,54 +14960,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 0958cbc6-6040-430a-848e-aafacbadf4ae
-                  remote_id: '19202938'
-                  employee_number: '2'
-                  company: 8d9fd929-436c-4fd4-a48b-0c61f68d6178
-                  first_name: Greg
-                  last_name: Hirsch
-                  display_full_name: Cousin Greg Hirsch
-                  username: cousingreg
-                  groups:
-                    - 21a54124-397f-494d-985e-3c5b330b8a68
-                  work_email: greg@merge.dev
-                  personal_email: greg@gmail.com
-                  mobile_phone_number: '+1234567890'
-                  employments:
-                    - 17a54124-287f-494d-965e-3c5b330c9a68
-                  home_location: d2f972d0-2526-434b-9409-4c3b468e08f0
-                  work_location: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-                  manager: 0048ea5b-911e-4dff-9364-92070dea62ff
-                  team: 249c9faa-3045-4a31-953b-8f22d3613301
-                  pay_group: ad1264e2-39be-4787-b749-f1aade9e3405
-                  ssn: '1234567890'
-                  gender: MALE
-                  ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
-                  marital_status: SINGLE
-                  date_of_birth: '1990-11-10T00:00:00Z'
-                  hire_date: '2020-10-10T00:00:00Z'
-                  start_date: '2020-10-11T00:00:00Z'
-                  remote_created_at: '2020-10-11T00:00:00Z'
-                  employment_status: ACTIVE
-                  termination_date: '2021-10-12T00:00:00Z'
-                  avatar: http://alturl.com/h2h8m
-                  custom_fields:
-                    key: value
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /people
-                      data:
-                        '0': Varies by platform
+            body: {}
     create:
       path: /employees
       method: POST
@@ -15961,71 +14990,15 @@ service:
             model: {}
           response:
             body:
-              model:
-                id: 0958cbc6-6040-430a-848e-aafacbadf4ae
-                remote_id: '19202938'
-                employee_number: '2'
-                company: 8d9fd929-436c-4fd4-a48b-0c61f68d6178
-                first_name: Greg
-                last_name: Hirsch
-                display_full_name: Cousin Greg Hirsch
-                username: cousingreg
-                groups:
-                  - 21a54124-397f-494d-985e-3c5b330b8a68
-                work_email: greg@merge.dev
-                personal_email: greg@gmail.com
-                mobile_phone_number: '+1234567890'
-                employments:
-                  - 17a54124-287f-494d-965e-3c5b330c9a68
-                home_location: d2f972d0-2526-434b-9409-4c3b468e08f0
-                work_location: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-                manager: 0048ea5b-911e-4dff-9364-92070dea62ff
-                team: 249c9faa-3045-4a31-953b-8f22d3613301
-                pay_group: ad1264e2-39be-4787-b749-f1aade9e3405
-                ssn: '1234567890'
-                gender: MALE
-                ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
-                marital_status: SINGLE
-                date_of_birth: '1990-11-10T00:00:00Z'
-                hire_date: '2020-10-10T00:00:00Z'
-                start_date: '2020-10-11T00:00:00Z'
-                remote_created_at: '2020-10-11T00:00:00Z'
-                employment_status: ACTIVE
-                termination_date: '2021-10-12T00:00:00Z'
-                avatar: http://alturl.com/h2h8m
-                custom_fields:
-                  key: value
-                remote_was_deleted: true
-                modified_at: '2021-10-16T00:00:00Z'
-                field_mappings:
-                  organization_defined_targets:
-                    custom_key: custom_value
-                  linked_account_defined_targets:
-                    custom_key: custom_value
-                remote_data:
-                  - path: /people
-                    data:
-                      '0': Varies by platform
+              model: {}
               warnings:
-                - source:
-                    pointer: pointer
-                  title: Unrecognized Field
+                - title: Unrecognized Field
                   detail: An unrecognized field, age, was passed in with request data.
                   problem_type: UNRECOGNIZED_FIELD
               errors:
-                - source:
-                    pointer: pointer
-                  title: Missing Required Field
+                - title: Missing Required Field
                   detail: custom_fields is a required field on model.
                   problem_type: MISSING_REQUIRED_FIELD
-              logs:
-                - log_id: 99433219-8017-4acd-bb3c-ceb23d663832
-                  dashboard_view: >-
-                    https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832
-                  log_summary:
-                    url: https://harvest.greenhouse.io/v1/candidates/
-                    method: POST
-                    status_code: 200
     retrieve:
       path: /employees/{id}
       method: GET
@@ -16067,51 +15040,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 0958cbc6-6040-430a-848e-aafacbadf4ae
-              remote_id: '19202938'
-              employee_number: '2'
-              company: 8d9fd929-436c-4fd4-a48b-0c61f68d6178
-              first_name: Greg
-              last_name: Hirsch
-              display_full_name: Cousin Greg Hirsch
-              username: cousingreg
-              groups:
-                - 21a54124-397f-494d-985e-3c5b330b8a68
-              work_email: greg@merge.dev
-              personal_email: greg@gmail.com
-              mobile_phone_number: '+1234567890'
-              employments:
-                - 17a54124-287f-494d-965e-3c5b330c9a68
-              home_location: d2f972d0-2526-434b-9409-4c3b468e08f0
-              work_location: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-              manager: 0048ea5b-911e-4dff-9364-92070dea62ff
-              team: 249c9faa-3045-4a31-953b-8f22d3613301
-              pay_group: ad1264e2-39be-4787-b749-f1aade9e3405
-              ssn: '1234567890'
-              gender: MALE
-              ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
-              marital_status: SINGLE
-              date_of_birth: '1990-11-10T00:00:00Z'
-              hire_date: '2020-10-10T00:00:00Z'
-              start_date: '2020-10-11T00:00:00Z'
-              remote_created_at: '2020-10-11T00:00:00Z'
-              employment_status: ACTIVE
-              termination_date: '2021-10-12T00:00:00Z'
-              avatar: http://alturl.com/h2h8m
-              custom_fields:
-                key: value
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /people
-                  data:
-                    '0': Varies by platform
+            body: {}
     ignoreCreate:
       path: /employees/ignore/{model_id}
       method: POST
@@ -16150,11 +15079,6 @@ service:
             body:
               request_schema:
                 key: value
-              remote_field_classes:
-                key: value
-              status:
-                linked_account_status: linked_account_status
-                can_make_request: true
               has_conditional_params: true
               has_required_linked_account_params: true
   source:
@@ -16178,44 +15102,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "effective_date": "2023-10-06T18:42:34Z",
-                          "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                          "employment_type": "FULL_TIME",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "flsa_status": "EXEMPT",
-                          "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                          "job_title": "Executive Assistant to Tom Wambsgans",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "pay_currency": "XUA",
-                          "pay_frequency": "WEEKLY",
-                          "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                          "pay_period": "HOUR",
-                          "pay_rate": 1.1,
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/jobs",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -16301,38 +15188,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "effective_date": "2023-10-06T18:42:34Z",
-                      "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                      "employment_type": "FULL_TIME",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "flsa_status": "EXEMPT",
-                      "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                      "job_title": "Executive Assistant to Tom Wambsgans",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "pay_currency": "XUA",
-                      "pay_frequency": "WEEKLY",
-                      "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                      "pay_period": "HOUR",
-                      "pay_rate": 1.1,
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/jobs",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -16861,33 +15717,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 65d8ffd0-211b-4ba4-b85a-fbe2ce220982
-                  remote_id: '19202938'
-                  employee: 0958cbc6-6040-430a-848e-aafacbadf4ae
-                  job_title: Executive Assistant to Tom Wambsgans
-                  pay_rate: 1.1
-                  pay_period: HOUR
-                  pay_frequency: WEEKLY
-                  pay_currency: XUA
-                  pay_group: d4e4837f-9900-484c-ac40-528365bb08ef
-                  flsa_status: EXEMPT
-                  effective_date: '2023-10-06T18:42:34Z'
-                  employment_type: FULL_TIME
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /jobs
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /employments/{id}
       method: GET
@@ -16924,30 +15754,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 65d8ffd0-211b-4ba4-b85a-fbe2ce220982
-              remote_id: '19202938'
-              employee: 0958cbc6-6040-430a-848e-aafacbadf4ae
-              job_title: Executive Assistant to Tom Wambsgans
-              pay_rate: 1.1
-              pay_period: HOUR
-              pay_frequency: WEEKLY
-              pay_currency: XUA
-              pay_group: d4e4837f-9900-484c-ac40-528365bb08ef
-              flsa_status: EXEMPT
-              effective_date: '2023-10-06T18:42:34Z'
-              employment_type: FULL_TIME
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /jobs
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -16972,11 +15779,8 @@ service:
                     "body": [
                       {
                         "is_initial_sync": true,
-                        "last_sync_start": "2021-03-30T19:44:18Z",
                         "model_id": "hris.Employee",
                         "model_name": "Employee",
-                        "next_sync_start": "2021-03-30T20:44:18Z",
-                        "selective_sync_configurations_usage": "IN_NEXT_SYNC",
                         "status": "SYNCING",
                       },
                     ],
@@ -17027,11 +15831,8 @@ service:
             body:
               - model_name: Employee
                 model_id: hris.Employee
-                last_sync_start: '2021-03-30T19:44:18Z'
-                next_sync_start: '2021-03-30T20:44:18Z'
                 status: SYNCING
                 is_initial_sync: true
-                selective_sync_configurations_usage: IN_NEXT_SYNC
   source:
     openapi: ../openapi.yml
 ",
@@ -17130,37 +15931,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "134e0111-0f67-44f6-98f0-597000290bb3",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "name": "COST_CENTER_US",
-                          "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/group",
-                            },
-                          ],
-                          "remote_id": "800293",
-                          "remote_was_deleted": true,
-                          "type": "TEAM",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17238,31 +16009,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "134e0111-0f67-44f6-98f0-597000290bb3",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "name": "COST_CENTER_US",
-                      "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/group",
-                        },
-                      ],
-                      "remote_id": "800293",
-                      "remote_was_deleted": true,
-                      "type": "TEAM",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17373,26 +16120,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 134e0111-0f67-44f6-98f0-597000290bb3
-                  remote_id: '800293'
-                  parent_group: 2ef51b11-2c4e-4b02-8d1d-50592d9e96ef
-                  name: COST_CENTER_US
-                  type: TEAM
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /group
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /groups/{id}
       method: GET
@@ -17424,23 +16152,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 134e0111-0f67-44f6-98f0-597000290bb3
-              remote_id: '800293'
-              parent_group: 2ef51b11-2c4e-4b02-8d1d-50592d9e96ef
-              name: COST_CENTER_US
-              type: TEAM
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /group
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -17461,27 +16173,7 @@ service:
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "end_user": {
-                            "key": "value",
-                          },
-                          "error_description": "string",
-                          "error_details": [
-                            "Missing employee permissions.",
-                            "Missing time off permissions.",
-                          ],
-                          "first_incident_time": "2022-12-05T16:19:15Z",
-                          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "is_muted": true,
-                          "last_incident_time": "2022-12-05T16:19:15Z",
-                          "status": "ONGOING",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17557,19 +16249,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "end_user": {
-                        "key": "value",
-                      },
                       "error_description": "string",
-                      "error_details": [
-                        "Missing employee permissions.",
-                        "Missing time off permissions.",
-                      ],
-                      "first_incident_time": "2022-12-05T16:19:15Z",
-                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "is_muted": true,
-                      "last_incident_time": "2022-12-05T16:19:15Z",
-                      "status": "ONGOING",
                     },
                   },
                 },
@@ -17682,21 +16362,7 @@ service:
         type: root.PaginatedIssueList
       examples:
         - response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  status: ONGOING
-                  error_description: string
-                  end_user:
-                    key: value
-                  first_incident_time: '2022-12-05T16:19:15Z'
-                  last_incident_time: '2022-12-05T16:19:15Z'
-                  is_muted: true
-                  error_details:
-                    - Missing employee permissions.
-                    - Missing time off permissions.
+            body: {}
     retrieve:
       path: /issues/{id}
       method: GET
@@ -17714,17 +16380,7 @@ service:
             id: id
           response:
             body:
-              id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-              status: ONGOING
               error_description: string
-              end_user:
-                key: value
-              first_incident_time: '2022-12-05T16:19:15Z'
-              last_incident_time: '2022-12-05T16:19:15Z'
-              is_muted: true
-              error_details:
-                - Missing employee permissions.
-                - Missing time off permissions.
   source:
     openapi: ../openapi.yml
 ",
@@ -17754,9 +16410,7 @@ service:
                   },
                   "response": {
                     "body": {
-                      "integration_name": "Lever",
                       "link_token": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
-                      "magic_link_url": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n",
                     },
                   },
                 },
@@ -17811,8 +16465,6 @@ service:
           response:
             body:
               link_token: necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0
-              integration_name: Lever
-              magic_link_url: https://link.merge.dev/asdfjkl12345jsndfgi2i83n
   source:
     openapi: ../openapi.yml
 ",
@@ -17833,50 +16485,7 @@ service:
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "category": "hris",
-                          "end_user_email_address": "hradmin@foobar.dev",
-                          "end_user_organization_name": "Foo Bar, LLC",
-                          "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
-                          "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
-                          "integration": {
-                            "available_model_operations": [
-                              {
-                                "available_operations": [
-                                  "FETCH",
-                                  "CREATE",
-                                ],
-                                "model_name": "Candidate",
-                                "required_post_parameters": [
-                                  "remote_user_id",
-                                ],
-                                "supported_fields": [
-                                  "first_name",
-                                  "last_name",
-                                  "company",
-                                  "title",
-                                ],
-                              },
-                            ],
-                            "categories": [
-                              "hris",
-                            ],
-                            "color": "color",
-                            "name": "name",
-                            "passthrough_available": true,
-                            "slug": "slug",
-                          },
-                          "is_duplicate": true,
-                          "status": "COMPLETE",
-                          "status_detail": "status_detail",
-                          "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18081,39 +16690,7 @@ service:
         type: root.PaginatedAccountDetailsAndActionsList
       examples:
         - response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: e59b1821-f85c-4e28-a6b3-1804156f3563
-                  category: hris
-                  status: COMPLETE
-                  status_detail: status_detail
-                  end_user_origin_id: 3ac95cde-6c7f-4eef-afec-be710b42308d
-                  end_user_organization_name: Foo Bar, LLC
-                  end_user_email_address: hradmin@foobar.dev
-                  webhook_listener_url: >-
-                    https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4
-                  is_duplicate: true
-                  integration:
-                    name: name
-                    categories:
-                      - hris
-                    color: color
-                    slug: slug
-                    passthrough_available: true
-                    available_model_operations:
-                      - model_name: Candidate
-                        available_operations:
-                          - FETCH
-                          - CREATE
-                        required_post_parameters:
-                          - remote_user_id
-                        supported_fields:
-                          - first_name
-                          - last_name
-                          - company
-                          - title
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -18135,43 +16712,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "city": "New York ",
-                          "country": "AF",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                          "location_type": "HOME",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "name": "NYC Office",
-                          "phone_number": "+1111111111",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/locations",
-                            },
-                          ],
-                          "remote_id": "93018402",
-                          "remote_was_deleted": true,
-                          "state": "NY",
-                          "street_1": "2920 Broadway",
-                          "street_2": "2nd Floor",
-                          "zip_code": "10027",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18245,37 +16786,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "city": "New York ",
-                      "country": "AF",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                      "location_type": "HOME",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "name": "NYC Office",
-                      "phone_number": "+1111111111",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/locations",
-                        },
-                      ],
-                      "remote_id": "93018402",
-                      "remote_was_deleted": true,
-                      "state": "NY",
-                      "street_1": "2920 Broadway",
-                      "street_2": "2nd Floor",
-                      "zip_code": "10027",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18381,32 +16892,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: f5e6a151-f44e-449a-afb1-8fd781905958
-                  remote_id: '93018402'
-                  name: NYC Office
-                  phone_number: '+1111111111'
-                  street_1: 2920 Broadway
-                  street_2: 2nd Floor
-                  city: 'New York '
-                  state: NY
-                  zip_code: '10027'
-                  country: AF
-                  location_type: HOME
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /locations
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /locations/{id}
       method: GET
@@ -18438,29 +16924,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: f5e6a151-f44e-449a-afb1-8fd781905958
-              remote_id: '93018402'
-              name: NYC Office
-              phone_number: '+1111111111'
-              street_1: 2920 Broadway
-              street_2: 2nd Floor
-              city: 'New York '
-              state: NY
-              zip_code: '10027'
-              country: AF
-              location_type: HOME
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /locations
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -18487,19 +16951,11 @@ service:
                   },
                   "response": {
                     "body": {
-                      "headers": {
-                        "Authorization": "<redacted>",
-                        "EXTRA-HEADER": "value",
-                      },
                       "method": "GET",
                       "path": "/scooters",
                       "response": {
                         "key": "value",
                       },
-                      "response_headers": {
-                        "X-Page-Token": "value",
-                      },
-                      "response_type": "JSON",
                       "status": 200,
                     },
                   },
@@ -18557,12 +17013,6 @@ service:
               status: 200
               response:
                 key: value
-              response_headers:
-                X-Page-Token: value
-              response_type: JSON
-              headers:
-                EXTRA-HEADER: value
-                Authorization: <redacted>
   source:
     openapi: ../openapi.yml
 ",
@@ -18584,35 +17034,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "pay_group_name": "contractor",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/pay-group",
-                            },
-                          ],
-                          "remote_id": "800293",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18678,29 +17100,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "pay_group_name": "contractor",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/pay-group",
-                        },
-                      ],
-                      "remote_id": "800293",
-                      "remote_was_deleted": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -18792,24 +17192,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
-                  remote_id: '800293'
-                  pay_group_name: contractor
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /pay-group
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /pay-groups/{id}
       method: GET
@@ -18835,21 +17218,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
-              remote_id: '800293'
-              pay_group_name: contractor
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /pay-group
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -18871,39 +17240,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "check_date": "2020-11-15T00:00:00Z",
-                          "end_date": "2020-11-15T00:00:00Z",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/payroll",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "run_state": "PAID",
-                          "run_type": "REGULAR",
-                          "start_date": "2020-11-08T00:00:00Z",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -19003,33 +17340,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "check_date": "2020-11-15T00:00:00Z",
-                      "end_date": "2020-11-15T00:00:00Z",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/payroll",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "run_state": "PAID",
-                      "run_type": "REGULAR",
-                      "start_date": "2020-11-08T00:00:00Z",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -19280,28 +17591,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 37336947-b3d4-4a4c-a310-ab6ab510e079
-                  remote_id: '19202938'
-                  run_state: PAID
-                  run_type: REGULAR
-                  start_date: '2020-11-08T00:00:00Z'
-                  end_date: '2020-11-15T00:00:00Z'
-                  check_date: '2020-11-15T00:00:00Z'
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /payroll
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /payroll-runs/{id}
       method: GET
@@ -19333,25 +17623,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 37336947-b3d4-4a4c-a310-ab6ab510e079
-              remote_id: '19202938'
-              run_state: PAID
-              run_type: REGULAR
-              start_date: '2020-11-08T00:00:00Z'
-              end_date: '2020-11-15T00:00:00Z'
-              check_date: '2020-11-15T00:00:00Z'
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /payroll
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -19724,21 +17996,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "is_initial_sync": true,
-                          "last_sync_start": "2021-03-30T19:44:18Z",
-                          "model_id": "hris.Employee",
-                          "model_name": "Employee",
-                          "next_sync_start": "2021-03-30T20:44:18Z",
-                          "selective_sync_configurations_usage": "IN_NEXT_SYNC",
-                          "status": "SYNCING",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -19802,17 +18060,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - model_name: Employee
-                  model_id: hris.Employee
-                  last_sync_start: '2021-03-30T19:44:18Z'
-                  next_sync_start: '2021-03-30T20:44:18Z'
-                  status: SYNCING
-                  is_initial_sync: true
-                  selective_sync_configurations_usage: IN_NEXT_SYNC
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -19834,36 +18082,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "name": "Engineering",
-                          "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/teams",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -19937,30 +18156,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "name": "Engineering",
-                      "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/teams",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -20064,25 +18260,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 13a72919-9fae-4f54-81ca-ddfd8712a1ba
-                  remote_id: '19202938'
-                  name: Engineering
-                  parent_team: 1b998423-db0a-4037-a4cf-f79c60cb67b3
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /teams
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /teams/{id}
       method: GET
@@ -20113,22 +18291,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 13a72919-9fae-4f54-81ca-ddfd8712a1ba
-              remote_id: '19202938'
-              name: Engineering
-              parent_team: 1b998423-db0a-4037-a4cf-f79c60cb67b3
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /teams
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -20158,61 +18321,14 @@ service:
                         {
                           "detail": "custom_fields is a required field on model.",
                           "problem_type": "MISSING_REQUIRED_FIELD",
-                          "source": {
-                            "pointer": "pointer",
-                          },
                           "title": "Missing Required Field",
                         },
                       ],
-                      "logs": [
-                        {
-                          "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "log_summary": {
-                            "method": "POST",
-                            "status_code": 200,
-                            "url": "https://harvest.greenhouse.io/v1/candidates/",
-                          },
-                        },
-                      ],
-                      "model": {
-                        "amount": 3,
-                        "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                        "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                        "end_time": "2020-11-17T00:00:00Z",
-                        "field_mappings": {
-                          "linked_account_defined_targets": {
-                            "custom_key": "custom_value",
-                          },
-                          "organization_defined_targets": {
-                            "custom_key": "custom_value",
-                          },
-                        },
-                        "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "remote_data": [
-                          {
-                            "data": {
-                              "0": "Varies by platform",
-                            },
-                            "path": "/leave",
-                          },
-                        ],
-                        "remote_id": "19202938",
-                        "remote_was_deleted": true,
-                        "request_type": "VACATION",
-                        "start_time": "2020-11-10T00:00:00Z",
-                        "status": "REQUESTED",
-                        "units": "HOURS",
-                      },
+                      "model": {},
                       "warnings": [
                         {
                           "detail": "An unrecognized field, age, was passed in with request data.",
                           "problem_type": "UNRECOGNIZED_FIELD",
-                          "source": {
-                            "pointer": "pointer",
-                          },
                           "title": "Unrecognized Field",
                         },
                       ],
@@ -20253,43 +18369,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "amount": 3,
-                          "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                          "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                          "end_time": "2020-11-17T00:00:00Z",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/leave",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "request_type": "VACATION",
-                          "start_time": "2020-11-10T00:00:00Z",
-                          "status": "REQUESTED",
-                          "units": "HOURS",
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -20396,15 +18476,8 @@ service:
                     "body": {
                       "has_conditional_params": true,
                       "has_required_linked_account_params": true,
-                      "remote_field_classes": {
-                        "key": "value",
-                      },
                       "request_schema": {
                         "key": "value",
-                      },
-                      "status": {
-                        "can_make_request": true,
-                        "linked_account_status": "linked_account_status",
                       },
                     },
                   },
@@ -20431,37 +18504,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "amount": 3,
-                      "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                      "end_time": "2020-11-17T00:00:00Z",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/leave",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "request_type": "VACATION",
-                      "start_time": "2020-11-10T00:00:00Z",
-                      "status": "REQUESTED",
-                      "units": "HOURS",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -20870,32 +18913,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 91b2b905-e866-40c8-8be2-efe53827a0aa
-                  remote_id: '19202938'
-                  employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-                  approver: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-                  status: REQUESTED
-                  employee_note: Moving into the new apartment Kendall Roy gave me!
-                  units: HOURS
-                  amount: 3
-                  request_type: VACATION
-                  start_time: '2020-11-10T00:00:00Z'
-                  end_time: '2020-11-17T00:00:00Z'
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /leave
-                      data:
-                        '0': Varies by platform
+            body: {}
     create:
       path: /time-off
       method: POST
@@ -20925,49 +18943,15 @@ service:
             model: {}
           response:
             body:
-              model:
-                id: 91b2b905-e866-40c8-8be2-efe53827a0aa
-                remote_id: '19202938'
-                employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-                approver: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-                status: REQUESTED
-                employee_note: Moving into the new apartment Kendall Roy gave me!
-                units: HOURS
-                amount: 3
-                request_type: VACATION
-                start_time: '2020-11-10T00:00:00Z'
-                end_time: '2020-11-17T00:00:00Z'
-                remote_was_deleted: true
-                modified_at: '2021-10-16T00:00:00Z'
-                field_mappings:
-                  organization_defined_targets:
-                    custom_key: custom_value
-                  linked_account_defined_targets:
-                    custom_key: custom_value
-                remote_data:
-                  - path: /leave
-                    data:
-                      '0': Varies by platform
+              model: {}
               warnings:
-                - source:
-                    pointer: pointer
-                  title: Unrecognized Field
+                - title: Unrecognized Field
                   detail: An unrecognized field, age, was passed in with request data.
                   problem_type: UNRECOGNIZED_FIELD
               errors:
-                - source:
-                    pointer: pointer
-                  title: Missing Required Field
+                - title: Missing Required Field
                   detail: custom_fields is a required field on model.
                   problem_type: MISSING_REQUIRED_FIELD
-              logs:
-                - log_id: 99433219-8017-4acd-bb3c-ceb23d663832
-                  dashboard_view: >-
-                    https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832
-                  log_summary:
-                    url: https://harvest.greenhouse.io/v1/candidates/
-                    method: POST
-                    status_code: 200
     retrieve:
       path: /time-off/{id}
       method: GET
@@ -21004,29 +18988,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 91b2b905-e866-40c8-8be2-efe53827a0aa
-              remote_id: '19202938'
-              employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-              approver: 9efbc633-3387-4306-aa55-e2c635e6bb4f
-              status: REQUESTED
-              employee_note: Moving into the new apartment Kendall Roy gave me!
-              units: HOURS
-              amount: 3
-              request_type: VACATION
-              start_time: '2020-11-10T00:00:00Z'
-              end_time: '2020-11-17T00:00:00Z'
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /leave
-                  data:
-                    '0': Varies by platform
+            body: {}
     metaPostRetrieve:
       path: /time-off/meta/post
       method: GET
@@ -21043,11 +19005,6 @@ service:
             body:
               request_schema:
                 key: value
-              remote_field_classes:
-                key: value
-              status:
-                linked_account_status: linked_account_status
-                can_make_request: true
               has_conditional_params: true
               has_required_linked_account_params: true
   source:
@@ -21071,38 +19028,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                      "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                      "results": [
-                        {
-                          "balance": 1.1,
-                          "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "field_mappings": {
-                            "linked_account_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                            "organization_defined_targets": {
-                              "custom_key": "custom_value",
-                            },
-                          },
-                          "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "policy_type": "VACATION",
-                          "remote_data": [
-                            {
-                              "data": {
-                                "0": "Varies by platform",
-                              },
-                              "path": "/leave",
-                            },
-                          ],
-                          "remote_id": "19202938",
-                          "remote_was_deleted": true,
-                          "used": 1.1,
-                        },
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -21195,32 +19121,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "balance": 1.1,
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "field_mappings": {
-                        "linked_account_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                        "organization_defined_targets": {
-                          "custom_key": "custom_value",
-                        },
-                      },
-                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "policy_type": "VACATION",
-                      "remote_data": [
-                        {
-                          "data": {
-                            "0": "Varies by platform",
-                          },
-                          "path": "/leave",
-                        },
-                      ],
-                      "remote_id": "19202938",
-                      "remote_was_deleted": true,
-                      "used": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -21383,27 +19284,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-              previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
-              results:
-                - id: 91b2b905-e866-40c8-8be2-efe53827a0aa
-                  remote_id: '19202938'
-                  employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-                  balance: 1.1
-                  used: 1.1
-                  policy_type: VACATION
-                  remote_was_deleted: true
-                  modified_at: '2021-10-16T00:00:00Z'
-                  field_mappings:
-                    organization_defined_targets:
-                      custom_key: custom_value
-                    linked_account_defined_targets:
-                      custom_key: custom_value
-                  remote_data:
-                    - path: /leave
-                      data:
-                        '0': Varies by platform
+            body: {}
     retrieve:
       path: /time-off-balances/{id}
       method: GET
@@ -21440,24 +19321,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              id: 91b2b905-e866-40c8-8be2-efe53827a0aa
-              remote_id: '19202938'
-              employee: d2f972d0-2526-434b-9409-4c3b468e08f0
-              balance: 1.1
-              used: 1.1
-              policy_type: VACATION
-              remote_was_deleted: true
-              modified_at: '2021-10-16T00:00:00Z'
-              field_mappings:
-                organization_defined_targets:
-                  custom_key: custom_value
-                linked_account_defined_targets:
-                  custom_key: custom_value
-              remote_data:
-                - path: /leave
-                  data:
-                    '0': Varies by platform
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -21486,7 +19350,6 @@ service:
                     "body": {
                       "event": "event",
                       "is_active": true,
-                      "key": "key",
                     },
                   },
                 },
@@ -21517,7 +19380,6 @@ service:
                       {
                         "event": "event",
                         "is_active": true,
-                        "key": "key",
                       },
                     ],
                   },
@@ -21562,7 +19424,6 @@ service:
             body:
               - event: event
                 is_active: true
-                key: key
     create:
       path: /webhook-receivers
       method: POST
@@ -21585,7 +19446,6 @@ service:
             body:
               event: event
               is_active: true
-              key: key
   source:
     openapi: ../openapi.yml
 ",

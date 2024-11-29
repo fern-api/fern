@@ -12,11 +12,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_amendments",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -28,11 +24,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -44,11 +36,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -60,11 +48,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -76,11 +60,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items/123456",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -92,11 +72,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings/123456",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -108,11 +84,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -124,11 +96,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/carbon_calculation",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -140,11 +108,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -156,11 +120,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices/abcxyz-23456-def",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -172,11 +132,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -188,11 +144,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -204,11 +156,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_containers",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -220,11 +168,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_containers/1234",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -236,11 +180,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/customs_entries/abcdefg-1234567-hijk",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -252,11 +192,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/custom_entries",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -268,11 +204,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -284,11 +216,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents/ABC123/download",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -300,11 +228,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -316,11 +240,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents/ABC123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -332,11 +252,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/events",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -348,11 +264,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/events/123456",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -364,11 +276,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/invoices",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -380,11 +288,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/invoices/abcdef123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -396,11 +300,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -412,11 +312,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations/abdef123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -428,11 +324,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -444,11 +336,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -460,11 +348,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities/9281",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -476,11 +360,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities/9281",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -492,11 +372,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -508,11 +384,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/me/companies",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -524,11 +396,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies/ABC123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -540,11 +408,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -556,11 +420,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -572,11 +432,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts/ABC123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -588,11 +444,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts/ABC123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -604,11 +456,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -620,11 +468,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations/abdef123",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -636,11 +480,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_container_legs",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -652,11 +492,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_container_legs/1234",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -668,11 +504,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ports",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -684,11 +516,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -700,11 +528,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -716,11 +540,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products/84291",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -732,11 +552,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products/84291",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -748,11 +564,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -764,11 +576,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -780,11 +588,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_order_line_items",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -796,11 +600,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_order_line_items/123456",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -812,11 +612,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders/12345",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -828,11 +624,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders/12345",
-                  "version": 3,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -844,11 +636,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -860,11 +648,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipment_legs",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -876,11 +660,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipment_legs/948211",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -892,11 +672,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments/1234",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -908,11 +684,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments/1234",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -924,11 +696,7 @@
               {
                 "docs": undefined,
                 "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments_shareable",
-                  "version": 2,
-                },
+                "value": {},
               },
             ],
             "status-code": 400,
@@ -9885,523 +9653,349 @@ errors:
     type: BookingAmendmentCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_amendments
-          version: 2
+      - value: {}
   BookingLineItemIndexRequestBadRequestError:
     status-code: 400
     type: BookingLineItemIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items
-          version: 2
+      - value: {}
   BookingLineItemCreateRequestBadRequestError:
     status-code: 400
     type: BookingLineItemCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items
-          version: 2
+      - value: {}
   BookingLineItemShowRequestBadRequestError:
     status-code: 400
     type: BookingLineItemShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items/123456
-          version: 2
+      - value: {}
   BookingsIndexRequestBadRequestError:
     status-code: 400
     type: BookingsIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings
-          version: 2
+      - value: {}
   BookingCreateRequestBadRequestError:
     status-code: 400
     type: BookingCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings
-          version: 2
+      - value: {}
   BookingShowRequestBadRequestError:
     status-code: 400
     type: BookingShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings/123456
-          version: 2
+      - value: {}
   CarbonCalculationCreateRequestBadRequestError:
     status-code: 400
     type: CarbonCalculationCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/carbon_calculation
-          version: 2
+      - value: {}
   CommercialInvoicesCreateRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices
-          version: 2
+      - value: {}
   CommercialInvoicesUpdateRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices
-          version: 2
+      - value: {}
   CommercialInvoicesShowRequestBadRequestError:
     status-code: 400
     type: CommercialInvoicesShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices/abcxyz-23456-def
-          version: 2
+      - value: {}
   CustomsEntryIndexRequestBadRequestError:
     status-code: 400
     type: CustomsEntryIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/custom_entries
-          version: 2
+      - value: {}
   CustomsEntriesShowRequestBadRequestError:
     status-code: 400
     type: CustomsEntriesShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/customs_entries/abcdefg-1234567-hijk
-          version: 2
+      - value: {}
   DocumentsIndexRequestBadRequestError:
     status-code: 400
     type: DocumentsIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents
-          version: 2
+      - value: {}
   DocumentsCreateRequestBadRequestError:
     status-code: 400
     type: DocumentsCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents
-          version: 2
+      - value: {}
   DocumentsShowRequestBadRequestError:
     status-code: 400
     type: DocumentsShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents/ABC123
-          version: 2
+      - value: {}
   DocumentsDownloadRequestBadRequestError:
     status-code: 400
     type: DocumentsDownloadRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents/ABC123/download
-          version: 2
+      - value: {}
   EventsIndexRequestBadRequestError:
     status-code: 400
     type: EventsIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/events
-          version: 2
+      - value: {}
   EventsShowRequestBadRequestError:
     status-code: 400
     type: EventsShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/events/123456
-          version: 2
+      - value: {}
   InvoiceIndexRequestBadRequestError:
     status-code: 400
     type: InvoiceIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/invoices
-          version: 2
+      - value: {}
   InvoicesShowRequestBadRequestError:
     status-code: 400
     type: InvoicesShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/invoices/abcdef123
-          version: 2
+      - value: {}
   NetworkCompanyIndexRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies
-          version: 2
+      - value: {}
   NetworkCompanyCreateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies
-          version: 2
+      - value: {}
   NetworkCompanyUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies/ABC123
-          version: 2
+      - value: {}
   CompanyEntityIndexRequestBadRequestError:
     status-code: 400
     type: CompanyEntityIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities
-          version: 2
+      - value: {}
   NetworkCompanyEntityCreateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities
-          version: 2
+      - value: {}
   NetworkCompanyEntityShowRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities/9281
-          version: 2
+      - value: {}
   NetworkCompanyEntityUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyEntityUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities/9281
-          version: 2
+      - value: {}
   NetworkContactIndexRequestBadRequestError:
     status-code: 400
     type: NetworkContactIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts
-          version: 2
+      - value: {}
   NetworkContactCreateRequestBadRequestError:
     status-code: 400
     type: NetworkContactCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts
-          version: 2
+      - value: {}
   NetworkContactShowRequestBadRequestError:
     status-code: 400
     type: NetworkContactShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts/ABC123
-          version: 2
+      - value: {}
   NetworkContactUpdateRequestBadRequestError:
     status-code: 400
     type: NetworkContactUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts/ABC123
-          version: 2
+      - value: {}
   LocationIndexRequestBadRequestError:
     status-code: 400
     type: LocationIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations
-          version: 2
+      - value: {}
   NetworkLocationCreateRequestBadRequestError:
     status-code: 400
     type: NetworkLocationCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations
-          version: 2
+      - value: {}
   NetworkLocationShowRequestBadRequestError:
     status-code: 400
     type: NetworkLocationShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations/abdef123
-          version: 2
+      - value: {}
   LocationUpdateRequestBadRequestError:
     status-code: 400
     type: LocationUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations/abdef123
-          version: 2
+      - value: {}
   NetworkCompanyMeRequestBadRequestError:
     status-code: 400
     type: NetworkCompanyMeRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/me/companies
-          version: 2
+      - value: {}
   OceanContainerLegsIndexRequestBadRequestError:
     status-code: 400
     type: OceanContainerLegsIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_container_legs
-          version: 2
+      - value: {}
   OceanContainerLegsShowRequestBadRequestError:
     status-code: 400
     type: OceanContainerLegsShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_container_legs/1234
-          version: 2
+      - value: {}
   ContainerListRequestBadRequestError:
     status-code: 400
     type: ContainerListRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_containers
-          version: 2
+      - value: {}
   ContainerShowRequestBadRequestError:
     status-code: 400
     type: ContainerShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_containers/1234
-          version: 2
+      - value: {}
   PortsIndexRequestBadRequestError:
     status-code: 400
     type: PortsIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ports
-          version: 2
+      - value: {}
   ProductIndexRequestBadRequestError:
     status-code: 400
     type: ProductIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products
-          version: 2
+      - value: {}
   ProductCreateRequestBadRequestError:
     status-code: 400
     type: ProductCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products
-          version: 2
+      - value: {}
   ProductShowRequestBadRequestError:
     status-code: 400
     type: ProductShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products/84291
-          version: 2
+      - value: {}
   ProductUpdateRequestBadRequestError:
     status-code: 400
     type: ProductUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products/84291
-          version: 2
+      - value: {}
   PurchaseOrderLineItemIndexRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderLineItemIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_order_line_items
-          version: 3
+      - value: {}
   PurchaseOrderLineItemShowRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderLineItemShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_order_line_items/123456
-          version: 3
+      - value: {}
   PurchaseOrderIndexRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders
-          version: 3
+      - value: {}
   PurchaseOrderCreateRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderCreateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders
-          version: 3
+      - value: {}
   PurchaseOrderShowRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders/12345
-          version: 3
+      - value: {}
   PurchaseOrderUpdateRequestBadRequestError:
     status-code: 400
     type: PurchaseOrderUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders/12345
-          version: 3
+      - value: {}
   ShipmentLegIndexRequestBadRequestError:
     status-code: 400
     type: ShipmentLegIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipment_legs
-          version: 2
+      - value: {}
   ShipmentLegShowRequestBadRequestError:
     status-code: 400
     type: ShipmentLegShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipment_legs/948211
-          version: 2
+      - value: {}
   ShipmentIndexRequestBadRequestError:
     status-code: 400
     type: ShipmentIndexRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments
-          version: 2
+      - value: {}
   ShipmentShowRequestBadRequestError:
     status-code: 400
     type: ShipmentShowRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments/1234
-          version: 2
+      - value: {}
   ShipmentUpdateRequestBadRequestError:
     status-code: 400
     type: ShipmentUpdateRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments/1234
-          version: 2
+      - value: {}
   ShipmentsShareableRequestBadRequestError:
     status-code: 400
     type: ShipmentsShareableRequestBadRequestErrorBody
     docs: error
     examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments_shareable
-          version: 2
+      - value: {}
 ",
     },
     "booking.yml": {
@@ -10442,7 +10036,6 @@ errors:
                           {
                             "_object": "/booking",
                             "cargo": {
-                              "_object": "/cargo",
                               "contains_hazmat": true,
                               "contains_li_ion": true,
                               "contains_magnets": true,
@@ -10454,7 +10047,6 @@ errors:
                               "marks_and_numbers": "Fragile",
                               "shipping_units": [
                                 {
-                                  "_object": "/shipping_unit",
                                   "atomic_count": 9,
                                   "count": 9,
                                   "height": {
@@ -10538,7 +10130,6 @@ errors:
                             "ocean_booking": {
                               "_object": "/ocean/booking",
                               "container_counts": {
-                                "_object": "/container_counts",
                                 "forty_five_ft_hc": 5,
                                 "forty_ft": 3,
                                 "forty_ft_hc": 4,
@@ -10594,7 +10185,6 @@ errors:
                               },
                               "product_descriptions": [
                                 {
-                                  "_object": "/bookings/product_descriptions",
                                   "description": "Watches",
                                   "description_for_export_customs": "手表",
                                   "description_for_export_customs_locale": "zh_CN",
@@ -10852,13 +10442,7 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "booking_line_items": {
-                          "_object": "/api/refs/collection",
-                          "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
-                          "ref_type": "/purchase_orders/booking_line_item",
-                        },
                         "cargo": {
-                          "_object": "/cargo",
                           "contains_hazmat": true,
                           "contains_li_ion": true,
                           "contains_magnets": true,
@@ -10870,7 +10454,6 @@ errors:
                           "marks_and_numbers": "Fragile",
                           "shipping_units": [
                             {
-                              "_object": "/shipping_unit",
                               "atomic_count": 9,
                               "count": 9,
                               "height": {
@@ -11039,7 +10622,6 @@ errors:
                             },
                           ],
                           "wants_delivery_service": false,
-                          "wants_pickup_service": true,
                         },
                         "origin_address": {
                           "_object": "/address",
@@ -11053,12 +10635,6 @@ errors:
                           "timezone": "America/Los_Angeles",
                           "unlocode": "US AL2",
                           "zip": "56307",
-                        },
-                        "shipment": {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
                         },
                         "shipper_entity": {
                           "_object": "/company_entity",
@@ -11087,7 +10663,6 @@ errors:
                           ],
                         },
                         "special_instructions": "Handle carefully",
-                        "status": "archived",
                         "transportation_mode": "ocean",
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
@@ -11221,13 +10796,7 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "booking_line_items": {
-                          "_object": "/api/refs/collection",
-                          "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
-                          "ref_type": "/purchase_orders/booking_line_item",
-                        },
                         "cargo": {
-                          "_object": "/cargo",
                           "contains_hazmat": false,
                           "contains_li_ion": true,
                           "contains_magnets": false,
@@ -11239,7 +10808,6 @@ errors:
                           "marks_and_numbers": "Very fragile",
                           "shipping_units": [
                             {
-                              "_object": "/shipping_unit",
                               "atomic_count": 9,
                               "count": 3,
                               "height": {
@@ -11300,7 +10868,6 @@ errors:
                             "zip": "56307",
                           },
                           "name": "Zoomit",
-                          "ref": "zoomit_ref",
                           "vat_numbers": [
                             {
                               "_object": "company_entity/vat_number",
@@ -11394,16 +10961,7 @@ errors:
                             ],
                             "name": "Shanghai, China",
                           },
-                          "product_descriptions": [
-                            {
-                              "_object": "/bookings/product_descriptions",
-                              "description": "Wristwatches",
-                              "description_for_export_customs": "手表",
-                              "description_for_export_customs_locale": "zh_CN",
-                            },
-                          ],
                           "wants_delivery_service": false,
-                          "wants_pickup_service": true,
                         },
                         "origin_address": {
                           "_object": "/address",
@@ -11419,12 +10977,6 @@ errors:
                           "zip": "56307",
                         },
                         "quote_status": "accepted_quote",
-                        "shipment": {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
                         "shipper_entity": {
                           "_object": "/company_entity",
                           "id": 9281,
@@ -11442,7 +10994,6 @@ errors:
                             "zip": "56307",
                           },
                           "name": "Zoomit",
-                          "ref": "zoomit_ref",
                           "vat_numbers": [
                             {
                               "_object": "company_entity/vat_number",
@@ -11452,7 +11003,6 @@ errors:
                           ],
                         },
                         "special_instructions": "",
-                        "status": "archived",
                         "transportation_mode": "ocean",
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
@@ -11817,7 +11367,6 @@ service:
                       _object: /ocean/booking
                       is_lcl: false
                       container_counts:
-                        _object: /container_counts
                         twenty_ft: 2
                         forty_ft: 3
                         forty_ft_hc: 4
@@ -11858,8 +11407,7 @@ service:
                           - _object: /ocean/port
                             port_code: '2704'
                       product_descriptions:
-                        - _object: /bookings/product_descriptions
-                          description: Watches
+                        - description: Watches
                           description_for_export_customs: 手表
                           description_for_export_customs_locale: zh_CN
                           hs_code:
@@ -11871,7 +11419,6 @@ service:
                     wants_export_customs_service: true
                     wants_import_customs_service: true
                     cargo:
-                      _object: /cargo
                       volume:
                         value: 472.62
                         unit: cbm
@@ -11882,8 +11429,7 @@ service:
                         _object: /quantity/weight
                       marks_and_numbers: Fragile
                       shipping_units:
-                        - _object: /shipping_unit
-                          name: Watches
+                        - name: Watches
                           volume:
                             value: 472.62
                             unit: cbm
@@ -12104,12 +11650,6 @@ service:
                 _object: /booking
                 id: 2983
                 name: PO 123
-                shipment:
-                  _object: /api/refs/object
-                  ref_type: /shipment
-                  link: https://api.flexport.com/shipments/123
-                  id: 123
-                status: archived
                 shipper_entity:
                   _object: /company_entity
                   id: 9281
@@ -12163,7 +11703,6 @@ service:
                     forty_ft_hc: 4
                     forty_five_ft_hc: 5
                   incoterm: FOB
-                  wants_pickup_service: true
                   wants_delivery_service: false
                   origin_port:
                     _object: /place
@@ -12240,7 +11779,6 @@ service:
                 wants_export_customs_service: true
                 wants_import_customs_service: true
                 cargo:
-                  _object: /cargo
                   volume:
                     value: 472.62
                     unit: cbm
@@ -12251,8 +11789,7 @@ service:
                     _object: /quantity/weight
                   marks_and_numbers: Fragile
                   shipping_units:
-                    - _object: /shipping_unit
-                      name: Watches
+                    - name: Watches
                       volume:
                         value: 472.62
                         unit: cbm
@@ -12284,10 +11821,6 @@ service:
                   lithium_batteries_packing_types:
                     - packed_loose
                 special_instructions: Handle carefully
-                booking_line_items:
-                  _object: /api/refs/collection
-                  ref_type: /purchase_orders/booking_line_item
-                  link: https://api.flexport.com/booking_line_items?f.booking.id=123
                 created_at: '2019-04-01T18:44:34Z'
                 metadata:
                   purchase_order:
@@ -12325,18 +11858,11 @@ service:
                 _object: /booking
                 id: 2983
                 name: PO 123456
-                shipment:
-                  _object: /api/refs/object
-                  ref_type: /shipment
-                  link: https://api.flexport.com/shipments/123
-                  id: 123
-                status: archived
                 quote_status: accepted_quote
                 shipper_entity:
                   _object: /company_entity
                   id: 9281
                   name: Zoomit
-                  ref: zoomit_ref
                   mailing_address:
                     _object: /address
                     street_address: 1641 Settlers Lane
@@ -12357,7 +11883,6 @@ service:
                   _object: /company_entity
                   id: 9281
                   name: Zoomit
-                  ref: zoomit_ref
                   mailing_address:
                     _object: /address
                     street_address: 1641 Settlers Lane
@@ -12386,7 +11911,6 @@ service:
                     forty_ft_hc: 4
                     forty_five_ft_hc: 8
                   incoterm: FOB
-                  wants_pickup_service: true
                   wants_delivery_service: false
                   origin_port:
                     _object: /place
@@ -12422,11 +11946,6 @@ service:
                         port_code: '57035'
                       - _object: /ocean/port
                         port_code: '57035'
-                  product_descriptions:
-                    - _object: /bookings/product_descriptions
-                      description: Wristwatches
-                      description_for_export_customs: 手表
-                      description_for_export_customs_locale: zh_CN
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -12456,7 +11975,6 @@ service:
                 wants_export_customs_service: true
                 wants_import_customs_service: true
                 cargo:
-                  _object: /cargo
                   volume:
                     value: 472.62
                     unit: cbm
@@ -12467,8 +11985,7 @@ service:
                     _object: /quantity/weight
                   marks_and_numbers: Very fragile
                   shipping_units:
-                    - _object: /shipping_unit
-                      name: Airplanes
+                    - name: Airplanes
                       volume:
                         value: 472.62
                         unit: cbm
@@ -12500,10 +12017,6 @@ service:
                   lithium_batteries_packing_types:
                     - contained_in_equipment
                 special_instructions: ''
-                booking_line_items:
-                  _object: /api/refs/collection
-                  ref_type: /purchase_orders/booking_line_item
-                  link: https://api.flexport.com/booking_line_items?f.booking.id=123
                 created_at: '2019-04-01T18:44:34Z'
                 metadata:
                   purchase_order:
@@ -12613,7 +12126,6 @@ docs: Endpoints relating to Booking objects
                         "id": 2983,
                         "is_pending": false,
                         "new_cargo": {
-                          "_object": "/cargo",
                           "contains_hazmat": true,
                           "contains_li_ion": true,
                           "contains_magnets": true,
@@ -12625,52 +12137,43 @@ docs: Endpoints relating to Booking objects
                           "marks_and_numbers": "Fragile",
                           "shipping_units": [
                             {
-                              "_object": "/shipping_unit",
                               "atomic_count": 9,
                               "count": 9,
                               "height": {
-                                "_object": "/quantity/length",
                                 "unit": "cm",
                                 "value": 472.62,
                               },
                               "length": {
-                                "_object": "/quantity/length",
                                 "unit": "cm",
                                 "value": 472.62,
                               },
                               "name": "Watches",
                               "unit_type": "carton",
                               "volume": {
-                                "_object": "/quantity/volume",
                                 "unit": "cbm",
                                 "value": 472.62,
                               },
                               "weight": {
-                                "_object": "/quantity/weight",
                                 "unit": "kg",
                                 "value": 2300.4,
                               },
                               "width": {
-                                "_object": "/quantity/length",
                                 "unit": "cm",
                                 "value": 472.62,
                               },
                             },
                           ],
                           "volume": {
-                            "_object": "/quantity/volume",
                             "unit": "cbm",
                             "value": 472.62,
                           },
                           "weight": {
-                            "_object": "/quantity/weight",
                             "unit": "kg",
                             "value": 2300.4,
                           },
                         },
                         "new_cargo_ready_date": "2019-06-30",
                         "new_container_counts": {
-                          "_object": "/container_counts",
                           "forty_five_ft_hc": 5,
                           "forty_ft": 3,
                           "forty_ft_hc": 4,
@@ -12718,19 +12221,9 @@ docs: Endpoints relating to Booking objects
                           "unlocode": "US AL2",
                           "zip": "60666",
                         },
-                        "new_product_descriptions": [
-                          {
-                            "_object": "/booking_amendment_product_description",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                          },
-                        ],
-                        "new_wants_bco": true,
-                        "new_wants_flexport_freight": true,
                         "new_wants_import_customs_service": false,
                         "new_wants_pickup_service": false,
                       },
-                      "self": "https://api.flexport.com/booking_amendments",
                       "version": 2,
                     },
                   },
@@ -12984,7 +12477,6 @@ service:
           response:
             body:
               _object: /api/response
-              self: https://api.flexport.com/booking_amendments
               version: 2
               data:
                 _object: /booking_amendment
@@ -12993,15 +12485,12 @@ service:
                 is_pending: false
                 new_name: Valentine's Day - 2020
                 new_container_counts:
-                  _object: /container_counts
                   twenty_ft: 2
                   forty_ft: 3
                   forty_ft_hc: 4
                   forty_five_ft_hc: 5
                 new_wants_import_customs_service: false
                 new_wants_pickup_service: false
-                new_wants_flexport_freight: true
-                new_wants_bco: true
                 new_origin_address:
                   _object: /address
                   street_address: 123 Queen St
@@ -13033,42 +12522,29 @@ service:
                   ref: my-chicago-ref
                   unlocode: US AL2
                 new_cargo_ready_date: '2019-06-30'
-                new_product_descriptions:
-                  - _object: /booking_amendment_product_description
-                    description: Wristwatches
-                    description_for_export_customs: 手表
                 new_cargo:
-                  _object: /cargo
                   volume:
                     value: 472.62
                     unit: cbm
-                    _object: /quantity/volume
                   weight:
                     value: 2300.4
                     unit: kg
-                    _object: /quantity/weight
                   marks_and_numbers: Fragile
                   shipping_units:
-                    - _object: /shipping_unit
-                      name: Watches
+                    - name: Watches
                       volume:
                         value: 472.62
                         unit: cbm
-                        _object: /quantity/volume
                       weight:
                         value: 2300.4
                         unit: kg
-                        _object: /quantity/weight
                       height:
-                        _object: /quantity/length
                         value: 472.62
                         unit: cm
                       length:
-                        _object: /quantity/length
                         value: 472.62
                         unit: cm
                       width:
-                        _object: /quantity/length
                         value: 472.62
                         unit: cm
                       count: 9
@@ -14062,19 +13538,9 @@ docs: Endpoints relating to Carbon Calculations
                       "_object": "/api/response",
                       "data": {
                         "_object": "/commercial_invoice",
-                        "currency": "USD",
                         "digitization_status": "complete",
                         "id": "abcxyz-23456-def",
-                        "invoice_date": "invoice_date",
                         "invoice_number": "ABCDEFGHIJKLMNOP",
-                        "involved_parties": [
-                          {
-                            "_object": "/customs/involved_party",
-                            "name": "The West Coast Company",
-                            "type": "consignee",
-                          },
-                        ],
-                        "is_related_parties": false,
                         "line_items": [
                           {
                             "_object": "/commercial_invoice_line_item",
@@ -14084,17 +13550,6 @@ docs: Endpoints relating to Carbon Calculations
                               "created_at": "2020-01-01T15:28:03Z",
                               "id": 123,
                               "updated_at": "2020-01-01T15:28:03Z",
-                            },
-                            "document_line_number": 4,
-                            "id": 12345,
-                            "manufacturer_name": "Company Name",
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
                             },
                             "price_per_unit": {
                               "amount": "12.34",
@@ -14139,15 +13594,6 @@ docs: Endpoints relating to Carbon Calculations
                             "zip": "56307",
                           },
                         ],
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
-                        },
-                        "order_number": "order_number",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -14246,11 +13692,9 @@ docs: Endpoints relating to Carbon Calculations
                         "data": [
                           {
                             "_object": "/commercial_invoices",
-                            "currency": "USD",
                             "digitization_status": "complete",
                             "id": "abcxyz-23456-def",
                             "invoice_number": "ABCDEFGHIJKLMNOP",
-                            "is_related_parties": false,
                             "line_items": [
                               {
                                 "_object": "/commercial_invoice_line_item",
@@ -14261,17 +13705,7 @@ docs: Endpoints relating to Carbon Calculations
                                   "id": 123,
                                   "updated_at": "2020-01-01T15:28:03Z",
                                 },
-                                "document_line_number": 4,
                                 "id": 12345,
-                                "manufacturer_name": "Company Name",
-                                "metadata": {
-                                  "purchase_order": [
-                                    "12345",
-                                  ],
-                                  "sku": [
-                                    "abc123",
-                                  ],
-                                },
                                 "price_per_unit": {
                                   "amount": "12.34",
                                   "currency_code": "USD",
@@ -14315,14 +13749,6 @@ docs: Endpoints relating to Carbon Calculations
                                 "zip": "56307",
                               },
                             ],
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
-                            },
                             "shipment": {
                               "_object": "/api/refs/object",
                               "id": 123456,
@@ -14426,19 +13852,9 @@ docs: Endpoints relating to Carbon Calculations
                       "_object": "/api/response",
                       "data": {
                         "_object": "/commercial_invoice",
-                        "currency": "USD",
                         "digitization_status": "complete",
                         "id": "abcxyz-23456-def",
-                        "invoice_date": "invoice_date",
                         "invoice_number": "ABCDEFGHIJKLMNOP",
-                        "involved_parties": [
-                          {
-                            "_object": "/customs/involved_party",
-                            "name": "The West Coast Company",
-                            "type": "consignee",
-                          },
-                        ],
-                        "is_related_parties": false,
                         "line_items": [
                           {
                             "_object": "/commercial_invoice_line_item",
@@ -14449,17 +13865,7 @@ docs: Endpoints relating to Carbon Calculations
                               "id": 123,
                               "updated_at": "2020-01-01T15:28:03Z",
                             },
-                            "document_line_number": 4,
                             "id": 12345,
-                            "manufacturer_name": "Company Name",
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
-                            },
                             "price_per_unit": {
                               "amount": "12.34",
                               "currency_code": "USD",
@@ -14503,15 +13909,6 @@ docs: Endpoints relating to Carbon Calculations
                             "zip": "56307",
                           },
                         ],
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
-                        },
-                        "order_number": "order_number",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -14573,19 +13970,9 @@ docs: Endpoints relating to Carbon Calculations
                       "_object": "/api/response",
                       "data": {
                         "_object": "/commercial_invoice",
-                        "currency": "USD",
                         "digitization_status": "complete",
                         "id": "abcxyz-23456-def",
-                        "invoice_date": "invoice_date",
                         "invoice_number": "ABCDEFGHIJKLMNOP",
-                        "involved_parties": [
-                          {
-                            "_object": "/customs/involved_party",
-                            "name": "The West Coast Company",
-                            "type": "consignee",
-                          },
-                        ],
-                        "is_related_parties": false,
                         "line_items": [
                           {
                             "_object": "/commercial_invoice_line_item",
@@ -14595,17 +13982,6 @@ docs: Endpoints relating to Carbon Calculations
                               "created_at": "2020-01-01T15:28:03Z",
                               "id": 123,
                               "updated_at": "2020-01-01T15:28:03Z",
-                            },
-                            "document_line_number": 4,
-                            "id": 12345,
-                            "manufacturer_name": "Company Name",
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
                             },
                             "price_per_unit": {
                               "amount": "12.34",
@@ -14650,15 +14026,6 @@ docs: Endpoints relating to Carbon Calculations
                             "zip": "56307",
                           },
                         ],
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
-                        },
-                        "order_number": "order_number",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -14906,7 +14273,6 @@ service:
                     line_items:
                       - _object: /commercial_invoice_line_item
                         id: 12345
-                        document_line_number: 4
                         price_per_unit:
                           amount: '12.34'
                           currency_code: USD
@@ -14929,18 +14295,11 @@ service:
                           value: 12.34
                           unit: cbm
                           _object: /quantity/volume
-                        manufacturer_name: Company Name
                         product:
                           _object: /api/refs/object
                           ref_type: /product
                           link: https://api.flexport.com/products/12345
                           id: 12345
-                        metadata:
-                          purchase_order:
-                            - '12345'
-                          sku:
-                            - abc123
-                    is_related_parties: false
                     manufacturer_addresses:
                       - _object: /address
                         street_address: 1641 Settlers Lane
@@ -14953,11 +14312,6 @@ service:
                         timezone: America/Los_Angeles
                         ref: id-3333
                         unlocode: US AL2
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
                     shipment:
                       _object: /api/refs/object
                       ref_type: /shipment
@@ -14975,7 +14329,6 @@ service:
                       value: 100
                       unit: kg
                       _object: /quantity/weight
-                    currency: USD
     create:
       path: /commercial_invoices
       method: POST
@@ -15058,8 +14411,6 @@ service:
                 digitization_status: complete
                 line_items:
                   - _object: /commercial_invoice_line_item
-                    id: 12345
-                    document_line_number: 4
                     price_per_unit:
                       amount: '12.34'
                       currency_code: USD
@@ -15082,22 +14433,11 @@ service:
                       value: 12.34
                       unit: cbm
                       _object: /quantity/volume
-                    manufacturer_name: Company Name
                     product:
                       _object: /api/refs/object
                       ref_type: /product
                       link: https://api.flexport.com/products/12345
                       id: 12345
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
-                involved_parties:
-                  - _object: /customs/involved_party
-                    name: The West Coast Company
-                    type: consignee
-                is_related_parties: false
                 manufacturer_addresses:
                   - _object: /address
                     street_address: 1641 Settlers Lane
@@ -15110,11 +14450,6 @@ service:
                     timezone: America/Los_Angeles
                     ref: id-3333
                     unlocode: US AL2
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 shipment:
                   _object: /api/refs/object
                   ref_type: /shipment
@@ -15132,9 +14467,6 @@ service:
                   value: 100
                   unit: kg
                   _object: /quantity/weight
-                order_number: order_number
-                currency: USD
-                invoice_date: invoice_date
     update:
       path: /commercial_invoices
       method: PATCH
@@ -15190,8 +14522,6 @@ service:
                 digitization_status: complete
                 line_items:
                   - _object: /commercial_invoice_line_item
-                    id: 12345
-                    document_line_number: 4
                     price_per_unit:
                       amount: '12.34'
                       currency_code: USD
@@ -15214,22 +14544,11 @@ service:
                       value: 12.34
                       unit: cbm
                       _object: /quantity/volume
-                    manufacturer_name: Company Name
                     product:
                       _object: /api/refs/object
                       ref_type: /product
                       link: https://api.flexport.com/products/12345
                       id: 12345
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
-                involved_parties:
-                  - _object: /customs/involved_party
-                    name: The West Coast Company
-                    type: consignee
-                is_related_parties: false
                 manufacturer_addresses:
                   - _object: /address
                     street_address: 1641 Settlers Lane
@@ -15242,11 +14561,6 @@ service:
                     timezone: America/Los_Angeles
                     ref: id-3333
                     unlocode: US AL2
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 shipment:
                   _object: /api/refs/object
                   ref_type: /shipment
@@ -15264,9 +14578,6 @@ service:
                   value: 100
                   unit: kg
                   _object: /quantity/weight
-                order_number: order_number
-                currency: USD
-                invoice_date: invoice_date
     show:
       path: /commercial_invoices/{id}
       method: GET
@@ -15301,7 +14612,6 @@ service:
                 line_items:
                   - _object: /commercial_invoice_line_item
                     id: 12345
-                    document_line_number: 4
                     price_per_unit:
                       amount: '12.34'
                       currency_code: USD
@@ -15324,22 +14634,11 @@ service:
                       value: 12.34
                       unit: cbm
                       _object: /quantity/volume
-                    manufacturer_name: Company Name
                     product:
                       _object: /api/refs/object
                       ref_type: /product
                       link: https://api.flexport.com/products/12345
                       id: 12345
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
-                involved_parties:
-                  - _object: /customs/involved_party
-                    name: The West Coast Company
-                    type: consignee
-                is_related_parties: false
                 manufacturer_addresses:
                   - _object: /address
                     street_address: 1641 Settlers Lane
@@ -15352,11 +14651,6 @@ service:
                     timezone: America/Los_Angeles
                     ref: id-3333
                     unlocode: US AL2
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 shipment:
                   _object: /api/refs/object
                   ref_type: /shipment
@@ -15374,9 +14668,6 @@ service:
                   value: 100
                   unit: kg
                   _object: /quantity/weight
-                order_number: order_number
-                currency: USD
-                invoice_date: invoice_date
   source:
     openapi: ../openapi.yml
   display-name: Commercial Invoices
@@ -15439,11 +14730,7 @@ docs: Endpoints relating to Commercial Invoice objects
                             "name": "Zoomit",
                             "ref": "id-123456",
                             "vat_numbers": [
-                              {
-                                "_object": "/company_entity/vat_number",
-                                "country_code": "GB",
-                                "number": "GB 123456789",
-                              },
+                              {},
                             ],
                           },
                         ],
@@ -15452,14 +14739,6 @@ docs: Endpoints relating to Commercial Invoice objects
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/network/locations?f.company.id=K67EZV1K8cQ5afQErZwk1Q",
                           "ref_type": "/network/location",
-                        },
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
                         },
                         "name": "Zoomit",
                         "ref": "zoomit_ref",
@@ -15665,11 +14944,7 @@ docs: Endpoints relating to Commercial Invoice objects
                             "name": "Zoomit",
                             "ref": "zoomit_ref",
                             "vat_numbers": [
-                              {
-                                "_object": "/company_entity/vat_number",
-                                "country_code": "GB",
-                                "number": "GB 123456789",
-                              },
+                              {},
                             ],
                           },
                         ],
@@ -15678,14 +14953,6 @@ docs: Endpoints relating to Commercial Invoice objects
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/network/locations/123456",
                           "ref_type": "/network/location",
-                        },
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
                         },
                         "name": "CompanyFoo",
                         "ref": "ref_for_company",
@@ -15836,11 +15103,7 @@ docs: Endpoints relating to Commercial Invoice objects
                             "name": "Zoomit",
                             "ref": "id-123456",
                             "vat_numbers": [
-                              {
-                                "_object": "/company_entity/vat_number",
-                                "country_code": "GB",
-                                "number": "GB 123456789",
-                              },
+                              {},
                             ],
                           },
                         ],
@@ -15849,14 +15112,6 @@ docs: Endpoints relating to Commercial Invoice objects
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/network/locations?f.company.id=K67EZV1K8cQ5afQErZwk1Q",
                           "ref_type": "/network/location",
-                        },
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
                         },
                         "name": "Updated Zoomit",
                         "ref": "zoomit_ref",
@@ -16173,11 +15428,6 @@ service:
               data:
                 _object: /network/company
                 id: K67EZV1K8cQ5afQErZwk1Q
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 name: Zoomit
                 ref: zoomit_ref
                 editable: true
@@ -16199,9 +15449,7 @@ service:
                       ref: zoomit_address_ref
                       unlocode: USAL2
                     vat_numbers:
-                      - _object: /company_entity/vat_number
-                        country_code: GB
-                        number: GB 123456789
+                      - {}
                 locations:
                   _object: /api/refs/collection
                   link: >-
@@ -16313,11 +15561,6 @@ service:
               data:
                 _object: /network/company
                 id: K67EZV1K8cQ5afQErZwk1Q
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 name: Updated Zoomit
                 ref: zoomit_ref
                 editable: true
@@ -16339,9 +15582,7 @@ service:
                       ref: zoomit_address_ref
                       unlocode: USAL2
                     vat_numbers:
-                      - _object: /company_entity/vat_number
-                        country_code: GB
-                        number: GB 123456789
+                      - {}
                 locations:
                   _object: /api/refs/collection
                   link: >-
@@ -16375,11 +15616,6 @@ service:
               data:
                 _object: /network/company
                 id: ABC123
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
                 name: CompanyFoo
                 ref: ref_for_company
                 editable: true
@@ -16401,9 +15637,7 @@ service:
                       ref: zoomit_address_ref
                       unlocode: USAL2
                     vat_numbers:
-                      - _object: /company_entity/vat_number
-                        country_code: GB
-                        number: GB 123456789
+                      - {}
                 locations:
                   _object: /api/refs/collection
                   link: https://api.flexport.com/network/locations/123456
@@ -17921,12 +17155,8 @@ docs: Endpoints relating to Contact objects
                                 "id": 29820,
                                 "product": {
                                   "_object": "/product",
-                                  "client_verified": true,
-                                  "country_of_origin": "China",
-                                  "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
                                   "name": "AC Adapter 12V",
-                                  "product_category": "Cosmetics",
                                   "sku": "WDVCDFD-RM00472",
                                 },
                                 "purchase_order_number": "PO002811",
@@ -18061,12 +17291,8 @@ docs: Endpoints relating to Contact objects
                             "id": 29820,
                             "product": {
                               "_object": "/product",
-                              "client_verified": true,
-                              "country_of_origin": "China",
-                              "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
-                              "product_category": "Cosmetics",
                               "sku": "WDVCDFD-RM00472",
                             },
                             "purchase_order_number": "PO002811",
@@ -18087,7 +17313,6 @@ docs: Endpoints relating to Contact objects
                         "metadata": {
                           "key": "value",
                         },
-                        "pickup_number": "ABCD1234",
                         "seal_number": "UE_WQ2934875",
                         "shipment": {
                           "_object": "/api/refs/object",
@@ -18310,10 +17535,6 @@ service:
                           id: 84291
                           name: AC Adapter 12V
                           sku: WDVCDFD-RM00472
-                          description: The best 12V AC Adapter on the market
-                          product_category: Cosmetics
-                          country_of_origin: China
-                          client_verified: true
     show:
       path: /ocean/shipment_containers/{id}
       method: GET
@@ -18349,7 +17570,6 @@ service:
                 container_number: BWSE3982156
                 container_size: fourty_ft
                 seal_number: UE_WQ2934875
-                pickup_number: ABCD1234
                 estimated_departure_date: '2019-02-06T19:28:25Z'
                 actual_departure_date: '2019-02-06T19:28:25Z'
                 estimated_arrival_date: '2019-02-06T19:28:25Z'
@@ -18392,10 +17612,6 @@ service:
                       id: 84291
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
-                      description: The best 12V AC Adapter on the market
-                      product_category: Cosmetics
-                      country_of_origin: China
-                      client_verified: true
   source:
     openapi: ../openapi.yml
   display-name: Container
@@ -19130,10 +18346,8 @@ docs: Endpoints relating to Customs Entry objects
                         "document": "SGVsbG8sIFdvcmxkIQ==",
                         "document_type": "packing_list",
                         "file_name": "Flexport-Booking.pdf",
-                        "memo": "memo",
                         "mime_type": "application/pdf",
                         "shipment_id": 1234567,
-                        "user_email": "johndoe@flexport.com",
                       },
                       "self": "https://api.flexport.com/documents",
                       "version": 3,
@@ -19573,9 +18787,7 @@ service:
                 file_name: Flexport-Booking.pdf
                 mime_type: application/pdf
                 document_type: packing_list
-                memo: memo
                 document: SGVsbG8sIFdvcmxkIQ==
-                user_email: johndoe@flexport.com
                 shipment_id: 1234567
     documents_show:
       path: /documents/{id}
@@ -19670,26 +18882,7 @@ docs: Endpoints relating to Document objects
                     "f.type": "/shipment_leg#departed",
                   },
                   "response": {
-                    "body": {
-                      "_object": "/api/response",
-                      "data": {
-                        "_object": "/api/collections/paginated",
-                        "data": [
-                          {
-                            "_object": "/event",
-                            "created_at": "2019-04-16T18:05:10.964Z",
-                            "id": 354987,
-                            "occurred_at": "2019-04-16T18:05:10.964Z",
-                            "type": "/shipment_leg#departed",
-                            "version": 2,
-                          },
-                        ],
-                        "next": "next",
-                        "prev": "prev",
-                      },
-                      "self": "https://api.flexport.com/events",
-                      "version": 2,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -19742,97 +18935,7 @@ docs: Endpoints relating to Document objects
                     "id": 1,
                   },
                   "response": {
-                    "body": {
-                      "_object": "/api/response",
-                      "data": {
-                        "_object": "/event",
-                        "created_at": "2019-04-16T18:05:10.964Z",
-                        "data": {
-                          "_object": "/shipment_event_data",
-                          "containers": [
-                            {
-                              "_object": "/ocean/shipment_container",
-                              "container_number": "BWSE3982156",
-                              "id": 283910,
-                              "metadata": {
-                                "purchase_order": [
-                                  "12345",
-                                ],
-                                "sku": [
-                                  "abc123",
-                                ],
-                              },
-                            },
-                          ],
-                          "exception": {
-                            "message": "US Customs Hold",
-                            "root_cause_name": "Government Agency",
-                          },
-                          "location": {
-                            "_object": "/shipment_node",
-                            "tags": [
-                              "port_of_loading",
-                            ],
-                          },
-                          "resource": {
-                            "_object": "/shipments",
-                            "id": 2983,
-                            "it_number": "V12345678",
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
-                            },
-                            "name": "ABC Shipment",
-                            "pieces": 8372,
-                            "visibility_only": true,
-                            "wants_commercial_invoice_transcription": true,
-                            "wants_delivery_service": true,
-                            "wants_export_customs_service": true,
-                            "wants_flexport_freight": true,
-                            "wants_flexport_insurance": true,
-                            "wants_freight_management_bco": true,
-                            "wants_import_customs_service": true,
-                            "wants_pickup_service": true,
-                            "wants_trade_declaration_service": true,
-                          },
-                          "shipment": {
-                            "_object": "/shipments",
-                            "id": 2983,
-                            "it_number": "V12345678",
-                            "metadata": {
-                              "purchase_order": [
-                                "12345",
-                              ],
-                              "sku": [
-                                "abc123",
-                              ],
-                            },
-                            "name": "ABC Shipment",
-                            "pieces": 8372,
-                            "visibility_only": true,
-                            "wants_commercial_invoice_transcription": true,
-                            "wants_delivery_service": true,
-                            "wants_export_customs_service": true,
-                            "wants_flexport_freight": true,
-                            "wants_flexport_insurance": true,
-                            "wants_freight_management_bco": true,
-                            "wants_import_customs_service": true,
-                            "wants_pickup_service": true,
-                            "wants_trade_declaration_service": true,
-                          },
-                        },
-                        "id": 354987,
-                        "occurred_at": "2019-04-16T18:05:10.964Z",
-                        "type": "/shipment_leg#departed",
-                        "version": 2,
-                      },
-                      "self": "https://api.flexport.com/events/123456",
-                      "version": 2,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -20020,21 +19123,7 @@ service:
             f.occurred_at.gte: '2020-01-10T20:00:00.000Z'
             f.occurred_at.lte: '2020-01-10T20:00:00.000Z'
           response:
-            body:
-              _object: /api/response
-              self: https://api.flexport.com/events
-              version: 2
-              data:
-                _object: /api/collections/paginated
-                prev: prev
-                next: next
-                data:
-                  - _object: /event
-                    id: 354987
-                    version: 2
-                    created_at: '2019-04-16T18:05:10.964Z'
-                    occurred_at: '2019-04-16T18:05:10.964Z'
-                    type: /shipment_leg#departed
+            body: {}
     events_show:
       path: /events/{id}
       method: GET
@@ -20056,77 +19145,7 @@ service:
         - path-parameters:
             id: 1
           response:
-            body:
-              _object: /api/response
-              self: https://api.flexport.com/events/123456
-              version: 2
-              data:
-                _object: /event
-                id: 354987
-                version: 2
-                created_at: '2019-04-16T18:05:10.964Z'
-                occurred_at: '2019-04-16T18:05:10.964Z'
-                type: /shipment_leg#departed
-                data:
-                  _object: /shipment_event_data
-                  resource:
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
-                    _object: /shipments
-                    id: 2983
-                    name: ABC Shipment
-                    pieces: 8372
-                    it_number: V12345678
-                    wants_freight_management_bco: true
-                    wants_flexport_freight: true
-                    wants_commercial_invoice_transcription: true
-                    wants_flexport_insurance: true
-                    wants_pickup_service: true
-                    wants_trade_declaration_service: true
-                    visibility_only: true
-                    wants_delivery_service: true
-                    wants_export_customs_service: true
-                    wants_import_customs_service: true
-                  shipment:
-                    metadata:
-                      purchase_order:
-                        - '12345'
-                      sku:
-                        - abc123
-                    _object: /shipments
-                    id: 2983
-                    name: ABC Shipment
-                    pieces: 8372
-                    it_number: V12345678
-                    wants_freight_management_bco: true
-                    wants_flexport_freight: true
-                    wants_commercial_invoice_transcription: true
-                    wants_flexport_insurance: true
-                    wants_pickup_service: true
-                    wants_trade_declaration_service: true
-                    visibility_only: true
-                    wants_delivery_service: true
-                    wants_export_customs_service: true
-                    wants_import_customs_service: true
-                  location:
-                    _object: /shipment_node
-                    tags:
-                      - port_of_loading
-                  containers:
-                    - _object: /ocean/shipment_container
-                      id: 283910
-                      metadata:
-                        purchase_order:
-                          - '12345'
-                        sku:
-                          - abc123
-                      container_number: BWSE3982156
-                  exception:
-                    message: US Customs Hold
-                    root_cause_name: Government Agency
+            body: {}
   source:
     openapi: ../openapi.yml
   display-name: Event
@@ -20192,7 +19211,6 @@ docs: Endpoints relating to Event objects
                                   "customs",
                                   "freight",
                                 ],
-                                "category": "additional",
                                 "credited_at": "2019-05-24T18:39:53Z",
                                 "reasons": [
                                   "reason for credit",
@@ -20387,7 +19405,6 @@ Other details about this invoice",
                             },
                             "shipments": {
                               "_object": "/api/refs/collection",
-                              "id": 123,
                               "link": "https://api.flexport.com/shipments?f.invoice_id=gwdpaYrhTI-T1ljn1M7o7w",
                               "ref_type": "/shipment",
                             },
@@ -20539,7 +19556,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "customs",
                               "freight",
                             ],
-                            "category": "additional",
                             "credited_at": "2019-05-24T18:39:53Z",
                             "reasons": [
                               "reason for credit",
@@ -20734,7 +19750,6 @@ Other details about this invoice",
                         },
                         "shipments": {
                           "_object": "/api/refs/collection",
-                          "id": 123,
                           "link": "https://api.flexport.com/shipments?f.invoice_id=abcdef123",
                           "ref_type": "/shipment",
                         },
@@ -21158,7 +20173,6 @@ service:
                         amount:
                           amount: '100'
                           currency_code: EUR
-                        category: additional
                         credited_at: '2019-05-24T18:39:53Z'
                         categories:
                           - customs
@@ -21171,7 +20185,6 @@ service:
                       ref_type: /shipment
                       link: >-
                         https://api.flexport.com/shipments?f.invoice_id=gwdpaYrhTI-T1ljn1M7o7w
-                      id: 123
     show:
       path: /invoices/{id}
       method: GET
@@ -21359,7 +20372,6 @@ service:
                     amount:
                       amount: '100'
                       currency_code: EUR
-                    category: additional
                     credited_at: '2019-05-24T18:39:53Z'
                     categories:
                       - customs
@@ -21371,7 +20383,6 @@ service:
                   _object: /api/refs/collection
                   ref_type: /shipment
                   link: https://api.flexport.com/shipments?f.invoice_id=abcdef123
-                  id: 123
   source:
     openapi: ../openapi.yml
   display-name: Invoices
@@ -21552,7 +20563,6 @@ docs: Endpoints relating to Invoice objects
                         },
                         "contacts": {
                           "_object": "/api/refs/collection",
-                          "id": "id",
                           "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                           "ref_type": "/network/contacts",
                         },
@@ -21562,7 +20572,6 @@ docs: Endpoints relating to Invoice objects
                           "key": "value",
                         },
                         "name": "Zoomit",
-                        "ref": "ref",
                       },
                       "self": "https://api.flexport.com/network/locations",
                       "version": 2,
@@ -21652,7 +20661,6 @@ docs: Endpoints relating to Invoice objects
                         },
                         "contacts": {
                           "_object": "/api/refs/collection",
-                          "id": "id",
                           "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                           "ref_type": "/network/contacts",
                         },
@@ -21662,7 +20670,6 @@ docs: Endpoints relating to Invoice objects
                           "key": "value",
                         },
                         "name": "Wayne Enterprises",
-                        "ref": "ref",
                       },
                       "self": "https://api.flexport.com/network/locations/abdef123",
                       "version": 2,
@@ -21726,7 +20733,6 @@ docs: Endpoints relating to Invoice objects
                         },
                         "contacts": {
                           "_object": "/api/refs/collection",
-                          "id": "id",
                           "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                           "ref_type": "/network/contacts",
                         },
@@ -21736,7 +20742,6 @@ docs: Endpoints relating to Invoice objects
                           "key": "value",
                         },
                         "name": "Zoomit V2",
-                        "ref": "ref",
                       },
                       "self": "https://api.flexport.com/network/locations/abdef123",
                       "version": 2,
@@ -22079,8 +21084,6 @@ service:
                   link: >-
                     https://api.flexport.com/network/contacts?f.location.id=abdef123
                   ref_type: /network/contacts
-                  id: id
-                ref: ref
     network_location_show:
       path: /network/locations/{id}
       method: GET
@@ -22136,8 +21139,6 @@ service:
                   link: >-
                     https://api.flexport.com/network/contacts?f.location.id=abdef123
                   ref_type: /network/contacts
-                  id: id
-                ref: ref
     update:
       path: /network/locations/{id}
       method: PATCH
@@ -22214,8 +21215,6 @@ service:
                   link: >-
                     https://api.flexport.com/network/contacts?f.location.id=abdef123
                   ref_type: /network/contacts
-                  id: id
-                ref: ref
   source:
     openapi: ../openapi.yml
   display-name: Location
@@ -22600,7 +21599,6 @@ docs: Endpoints relating to Ports objects
                           {
                             "_object": "/hs_code",
                             "code": "0301:00",
-                            "country_code": "US",
                           },
                         ],
                         "id": 84291,
@@ -22715,7 +21713,6 @@ docs: Endpoints relating to Ports objects
                               {
                                 "_object": "/hs_code",
                                 "code": "0301:00",
-                                "country_code": "US",
                               },
                             ],
                             "id": 84291,
@@ -22803,7 +21800,6 @@ docs: Endpoints relating to Ports objects
                           {
                             "_object": "/hs_code",
                             "code": "0301:00",
-                            "country_code": "US",
                           },
                         ],
                         "id": 84291,
@@ -22877,7 +21873,6 @@ docs: Endpoints relating to Ports objects
                           {
                             "_object": "/hs_code",
                             "code": "0301:00",
-                            "country_code": "US",
                           },
                         ],
                         "id": 84291,
@@ -23145,7 +22140,6 @@ service:
                     hs_codes:
                       - _object: /hs_code
                         code: '0301:00'
-                        country_code: US
                     classifications:
                       - _object: /product/classification
                         codes:
@@ -23233,7 +22227,6 @@ service:
                 hs_codes:
                   - _object: /hs_code
                     code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -23282,7 +22275,6 @@ service:
                 hs_codes:
                   - _object: /hs_code
                     code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -23371,7 +22363,6 @@ service:
                 hs_codes:
                   - _object: /hs_code
                     code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -23527,144 +22518,6 @@ docs: Endpoints relating to Product objects
                   "response": {
                     "body": {
                       "_object": "/api/response",
-                      "archived_at": "archived_at",
-                      "cargo_ready_date": "cargo_ready_date",
-                      "created_at": "created_at",
-                      "destination_addresses": [
-                        {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                      ],
-                      "destination_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "freight_paymnet_terms": "freight_collect",
-                      "id": 2983,
-                      "incoterm": "EXW",
-                      "issue_date": "issue_date",
-                      "line_items": {
-                        "_object": "/api/refs/collection",
-                        "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                        "ref_type": "/purchase_orders/line_item",
-                      },
-                      "memo": "This message is written in invisible ink",
-                      "metadata": {
-                        "purchase_order": [
-                          "12345",
-                        ],
-                        "sku": [
-                          "abc123",
-                        ],
-                      },
-                      "must_arrive_date": "must_arrive_date",
-                      "name": "PO 12345 - "shipment"",
-                      "order_class": "purchase_order",
-                      "order_type": "Apparel",
-                      "origin_address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "origin_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "parties": [
-                        {
-                          "company_entity": {
-                            "_object": "/company_entity",
-                            "id": 9281,
-                            "name": "Zoomit",
-                            "ref": "zoomit_ref",
-                          },
-                          "contacts": [
-                            {
-                              "department": "marketing",
-                              "email": "John.Doe@example.com",
-                              "fax": "1 323 555 1234",
-                              "name": "John Doe",
-                              "phone": "767 878 8888",
-                            },
-                          ],
-                          "location": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "role": "buyer",
-                        },
-                      ],
-                      "priority": "standard",
-                      "status": "open",
-                      "transportation_mode": "ocean",
-                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -23823,21 +22676,11 @@ docs: Endpoints relating to Product objects
                                   "name": "test",
                                   "ref": "id-754619",
                                   "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
+                                    {},
                                   ],
                                 },
                                 "contacts": [
-                                  {
-                                    "department": "marketing",
-                                    "email": "John.Doe@example.com",
-                                    "fax": "1 323 555 1234",
-                                    "name": "John Doe",
-                                    "phone": "767 878 8888",
-                                  },
+                                  {},
                                 ],
                                 "role": "buyer",
                               },
@@ -23848,11 +22691,7 @@ docs: Endpoints relating to Product objects
                                   "name": "75 Aero Camino Suite 203 Goleta",
                                   "ref": "id-677939",
                                   "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
+                                    {},
                                   ],
                                 },
                                 "contacts": [
@@ -23882,11 +22721,7 @@ docs: Endpoints relating to Product objects
                                   "name": "test",
                                   "ref": "id-754619",
                                   "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
+                                    {},
                                   ],
                                 },
                                 "contacts": [
@@ -24023,111 +22858,6 @@ docs: Endpoints relating to Product objects
                   "response": {
                     "body": {
                       "_object": "/purchase_order",
-                      "data": {
-                        "_object": "/booking",
-                        "archived_at": "archived_at",
-                        "cargo_ready_date": "cargo_ready_date",
-                        "created_at": "created_at",
-                        "destination_addresses": [
-                          {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                        ],
-                        "destination_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "freight_paymnet_terms": "freight_collect",
-                        "id": 2983,
-                        "incoterm": "EXW",
-                        "issue_date": "issue_date",
-                        "line_items": {
-                          "_object": "/api/refs/collection",
-                          "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                          "ref_type": "/purchase_orders/line_item",
-                        },
-                        "memo": "This message is written in invisible ink",
-                        "metadata": {
-                          "purchase_order": [
-                            "12345",
-                          ],
-                          "sku": [
-                            "abc123",
-                          ],
-                        },
-                        "must_arrive_date": "must_arrive_date",
-                        "name": "PO 12345 - "shipment"",
-                        "order_class": "purchase_order",
-                        "order_type": "Apparel",
-                        "origin_address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "origin_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "parties": [
-                          {},
-                        ],
-                        "priority": "standard",
-                        "status": "open",
-                        "transportation_mode": "ocean",
-                        "updated_at": "updated_at",
-                      },
-                      "self": "https://api.flexport.com/purchase_orders/1234",
-                      "version": 3,
                     },
                   },
                 },
@@ -24223,144 +22953,6 @@ docs: Endpoints relating to Product objects
                   "response": {
                     "body": {
                       "_object": "/api/response",
-                      "archived_at": "archived_at",
-                      "cargo_ready_date": "cargo_ready_date",
-                      "created_at": "created_at",
-                      "destination_addresses": [
-                        {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                      ],
-                      "destination_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "freight_paymnet_terms": "freight_collect",
-                      "id": 2983,
-                      "incoterm": "EXW",
-                      "issue_date": "issue_date",
-                      "line_items": {
-                        "_object": "/api/refs/collection",
-                        "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                        "ref_type": "/purchase_orders/line_item",
-                      },
-                      "memo": "This message is written in invisible ink",
-                      "metadata": {
-                        "purchase_order": [
-                          "12345",
-                        ],
-                        "sku": [
-                          "abc123",
-                        ],
-                      },
-                      "must_arrive_date": "must_arrive_date",
-                      "name": "PO 12345 - "shipment"",
-                      "order_class": "purchase_order",
-                      "order_type": "Apparel",
-                      "origin_address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "origin_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "parties": [
-                        {
-                          "company_entity": {
-                            "_object": "/company_entity",
-                            "id": 9281,
-                            "name": "Zoomit",
-                            "ref": "zoomit_ref",
-                          },
-                          "contacts": [
-                            {
-                              "department": "marketing",
-                              "email": "John.Doe@example.com",
-                              "fax": "1 323 555 1234",
-                              "name": "John Doe",
-                              "phone": "767 878 8888",
-                            },
-                          ],
-                          "location": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "role": "buyer",
-                        },
-                      ],
-                      "priority": "standard",
-                      "status": "open",
-                      "transportation_mode": "ocean",
-                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -24712,15 +23304,9 @@ service:
                             country_code: CN
                             timezone: Asia/Shanghai
                           vat_numbers:
-                            - _object: /company_entity/vat_number
-                              country_code: GB
-                              number: GB 123456789
+                            - {}
                         contacts:
-                          - name: John Doe
-                            phone: 767 878 8888
-                            email: John.Doe@example.com
-                            fax: 1 323 555 1234
-                            department: marketing
+                          - {}
                       - role: seller
                         company_entity:
                           _object: /company_entity
@@ -24728,9 +23314,7 @@ service:
                           name: 75 Aero Camino Suite 203 Goleta
                           ref: id-677939
                           vat_numbers:
-                            - _object: /company_entity/vat_number
-                              country_code: GB
-                              number: GB 123456789
+                            - {}
                         contacts:
                           - name: cds
                             phone: '123456789'
@@ -24752,9 +23336,7 @@ service:
                             country_code: CN
                             timezone: Asia/Shanghai
                           vat_numbers:
-                            - _object: /company_entity/vat_number
-                              country_code: GB
-                              number: GB 123456789
+                            - {}
                         contacts:
                           - name: abc
                             phone: '123456789'
@@ -24878,120 +23460,7 @@ service:
                   - {}
           response:
             body:
-              id: 2983
               _object: /api/response
-              name: PO 12345 - "shipment"
-              status: open
-              incoterm: EXW
-              order_type: Apparel
-              order_class: purchase_order
-              issue_date: issue_date
-              freight_paymnet_terms: freight_collect
-              priority: standard
-              transportation_mode: ocean
-              cargo_ready_date: cargo_ready_date
-              must_arrive_date: must_arrive_date
-              origin_port:
-                _object: /place
-                name: ORD - Chicago - IL
-                address:
-                  _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-                details:
-                  - _object: /air/port
-                    port_code: '3901'
-                    country_code: US
-                    iata_code: LAX
-                    icao_code: KLAX
-              origin_address:
-                _object: /address
-                street_address: 1641 Settlers Lane
-                street_address2: STE 2918
-                city: Albany
-                state: MN
-                country: United States of America
-                country_code: US
-                zip: '56307'
-                timezone: America/Los_Angeles
-                ref: address_ref_x
-                unlocode: US AL2
-              destination_port:
-                _object: /place
-                name: ORD - Chicago - IL
-                address:
-                  _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-                details:
-                  - _object: /air/port
-                    port_code: '3901'
-                    country_code: US
-                    iata_code: LAX
-                    icao_code: KLAX
-              destination_addresses:
-                - _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-              parties:
-                - role: buyer
-                  company_entity:
-                    _object: /company_entity
-                    id: 9281
-                    name: Zoomit
-                    ref: zoomit_ref
-                  location:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  contacts:
-                    - name: John Doe
-                      phone: 767 878 8888
-                      email: John.Doe@example.com
-                      fax: 1 323 555 1234
-                      department: marketing
-              memo: This message is written in invisible ink
-              archived_at: archived_at
-              created_at: created_at
-              updated_at: updated_at
-              line_items:
-                _object: /api/refs/collection
-                ref_type: /purchase_orders/line_item
-                link: >-
-                  https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123
-              metadata:
-                purchase_order:
-                  - '12345'
-                sku:
-                  - abc123
     purchase_order_show:
       path: /purchase_orders/{id}
       method: GET
@@ -25025,92 +23494,6 @@ service:
           response:
             body:
               _object: /purchase_order
-              self: https://api.flexport.com/purchase_orders/1234
-              version: 3
-              data:
-                id: 2983
-                _object: /booking
-                name: PO 12345 - "shipment"
-                status: open
-                incoterm: EXW
-                order_type: Apparel
-                order_class: purchase_order
-                issue_date: issue_date
-                freight_paymnet_terms: freight_collect
-                priority: standard
-                transportation_mode: ocean
-                cargo_ready_date: cargo_ready_date
-                must_arrive_date: must_arrive_date
-                origin_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
-                origin_address:
-                  _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-                destination_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
-                destination_addresses:
-                  - _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                parties:
-                  - {}
-                memo: This message is written in invisible ink
-                archived_at: archived_at
-                created_at: created_at
-                updated_at: updated_at
-                line_items:
-                  _object: /api/refs/collection
-                  ref_type: /purchase_orders/line_item
-                  link: >-
-                    https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123
-                metadata:
-                  purchase_order:
-                    - '12345'
-                  sku:
-                    - abc123
     purchase_order_update:
       path: /purchase_orders/{id}
       method: POST
@@ -25172,120 +23555,7 @@ service:
                 units: 100
           response:
             body:
-              id: 2983
               _object: /api/response
-              name: PO 12345 - "shipment"
-              status: open
-              incoterm: EXW
-              order_type: Apparel
-              order_class: purchase_order
-              issue_date: issue_date
-              freight_paymnet_terms: freight_collect
-              priority: standard
-              transportation_mode: ocean
-              cargo_ready_date: cargo_ready_date
-              must_arrive_date: must_arrive_date
-              origin_port:
-                _object: /place
-                name: ORD - Chicago - IL
-                address:
-                  _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-                details:
-                  - _object: /air/port
-                    port_code: '3901'
-                    country_code: US
-                    iata_code: LAX
-                    icao_code: KLAX
-              origin_address:
-                _object: /address
-                street_address: 1641 Settlers Lane
-                street_address2: STE 2918
-                city: Albany
-                state: MN
-                country: United States of America
-                country_code: US
-                zip: '56307'
-                timezone: America/Los_Angeles
-                ref: address_ref_x
-                unlocode: US AL2
-              destination_port:
-                _object: /place
-                name: ORD - Chicago - IL
-                address:
-                  _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-                details:
-                  - _object: /air/port
-                    port_code: '3901'
-                    country_code: US
-                    iata_code: LAX
-                    icao_code: KLAX
-              destination_addresses:
-                - _object: /address
-                  street_address: 1641 Settlers Lane
-                  street_address2: STE 2918
-                  city: Albany
-                  state: MN
-                  country: United States of America
-                  country_code: US
-                  zip: '56307'
-                  timezone: America/Los_Angeles
-                  ref: address_ref_x
-                  unlocode: US AL2
-              parties:
-                - role: buyer
-                  company_entity:
-                    _object: /company_entity
-                    id: 9281
-                    name: Zoomit
-                    ref: zoomit_ref
-                  location:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  contacts:
-                    - name: John Doe
-                      phone: 767 878 8888
-                      email: John.Doe@example.com
-                      fax: 1 323 555 1234
-                      department: marketing
-              memo: This message is written in invisible ink
-              archived_at: archived_at
-              created_at: created_at
-              updated_at: updated_at
-              line_items:
-                _object: /api/refs/collection
-                ref_type: /purchase_orders/line_item
-                link: >-
-                  https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123
-              metadata:
-                purchase_order:
-                  - '12345'
-                sku:
-                  - abc123
   source:
     openapi: ../openapi.yml
   display-name: PurchaseOrder
@@ -25363,7 +23633,6 @@ docs: >-
                             },
                             "destination_addresses": [
                               {
-                                "location_ref": "id-1234",
                                 "units": 1,
                               },
                             ],
@@ -25547,7 +23816,6 @@ docs: >-
                         },
                         "destination_addresses": [
                           {
-                            "location_ref": "id-1234",
                             "units": 1,
                           },
                         ],
@@ -25841,8 +24109,7 @@ service:
                       timezone: China/Shenzhen
                       ref: sellingcoaddress
                     destination_addresses:
-                      - location_ref: id-1234
-                        units: 1
+                      - units: 1
                     hs_codes:
                       - _object: /hs_code
                         code: 8309.90.10.00
@@ -25947,8 +24214,7 @@ service:
                   timezone: China/Shenzhen
                   ref: sellingcoaddress
                 destination_addresses:
-                  - location_ref: id-1234
-                    units: 1
+                  - units: 1
                 hs_codes:
                   - _object: /hs_code
                     code: 8309.90.10.00
@@ -26117,7 +24383,6 @@ docs: >-
                               "ref_type": "/customs_entry",
                             },
                             "dangerous_goods": {
-                              "_object": "/shipment/dangerous_goods",
                               "classifications": [
                                 "1.2",
                                 "2",
@@ -26173,12 +24438,8 @@ docs: >-
                                 "id": 29820,
                                 "product": {
                                   "_object": "/product",
-                                  "client_verified": true,
-                                  "country_of_origin": "China",
-                                  "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
                                   "name": "AC Adapter 12V",
-                                  "product_category": "Cosmetics",
                                   "sku": "WDVCDFD-RM00472",
                                 },
                                 "purchase_order_number": "PO002811",
@@ -26629,7 +24890,6 @@ docs: >-
                           "ref_type": "/customs_entry",
                         },
                         "dangerous_goods": {
-                          "_object": "/shipment/dangerous_goods",
                           "classifications": [
                             "1.2",
                             "2",
@@ -26685,12 +24945,8 @@ docs: >-
                             "id": 29820,
                             "product": {
                               "_object": "/product",
-                              "client_verified": true,
-                              "country_of_origin": "China",
-                              "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
-                              "product_category": "Cosmetics",
                               "sku": "WDVCDFD-RM00472",
                             },
                             "purchase_order_number": "PO002811",
@@ -26789,19 +25045,14 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "target_delivery_date",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
-                        "wants_commercial_invoice_transcription": true,
                         "wants_delivery_service": false,
                         "wants_export_customs_service": true,
                         "wants_flexport_freight": true,
-                        "wants_flexport_insurance": true,
                         "wants_freight_management_bco": true,
                         "wants_import_customs_service": true,
-                        "wants_pickup_service": true,
-                        "wants_trade_declaration_service": true,
                       },
                       "self": "https://api.flexport.com/shipments/1234",
                       "version": 2,
@@ -26850,7 +25101,6 @@ docs: >-
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
                         "arrival_date": "2019-02-06T19:28:25Z",
-                        "belongs_to_a_buyers_consol": true,
                         "booking": {
                           "_object": "api/refs/object",
                           "id": 12345,
@@ -26896,14 +25146,6 @@ docs: >-
                           "value": 2300.4,
                         },
                         "cargo_ready_date": "2019-02-06",
-                        "child_shipments": [
-                          {
-                            "_object": "/api/refs/object",
-                            "id": 123,
-                            "link": "https://api.flexport.com/shipments/123",
-                            "ref_type": "/shipment",
-                          },
-                        ],
                         "commercial_invoices": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -26944,7 +25186,6 @@ docs: >-
                           "ref_type": "/customs_entry",
                         },
                         "dangerous_goods": {
-                          "_object": "/shipment/dangerous_goods",
                           "classifications": [
                             "1.2",
                             "2",
@@ -27000,12 +25241,8 @@ docs: >-
                             "id": 29820,
                             "product": {
                               "_object": "/product",
-                              "client_verified": true,
-                              "country_of_origin": "China",
-                              "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
-                              "product_category": "Cosmetics",
                               "sku": "WDVCDFD-RM00472",
                             },
                             "purchase_order_number": "PO002811",
@@ -27045,12 +25282,6 @@ docs: >-
                           "house_bill_number": "TUWSANR18658",
                           "is_lcl": false,
                           "master_bill_number": "NEWO697216024",
-                        },
-                        "parent_shipment": {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
                         },
                         "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                         "pieces": 8372,
@@ -27112,19 +25343,14 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "target_delivery_date",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
-                        "wants_commercial_invoice_transcription": true,
                         "wants_delivery_service": false,
                         "wants_export_customs_service": true,
                         "wants_flexport_freight": true,
-                        "wants_flexport_insurance": true,
                         "wants_freight_management_bco": true,
                         "wants_import_customs_service": true,
-                        "wants_pickup_service": true,
-                        "wants_trade_declaration_service": true,
                       },
                       "self": "https://api.flexport.com/shipments/12345",
                       "version": 2,
@@ -27599,7 +25825,6 @@ service:
                         link: >-
                           https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
                     dangerous_goods:
-                      _object: /shipment/dangerous_goods
                       review_status: complete
                       classifications:
                         - '1.2'
@@ -27727,10 +25952,6 @@ service:
                           id: 84291
                           name: AC Adapter 12V
                           sku: WDVCDFD-RM00472
-                          description: The best 12V AC Adapter on the market
-                          product_category: Cosmetics
-                          country_of_origin: China
-                          client_verified: true
                     legs:
                       _object: /api/refs/collection
                       ref_type: /shipment_leg
@@ -27815,16 +26036,11 @@ service:
                 cargo_ready_date: '2019-02-06'
                 wants_freight_management_bco: true
                 wants_flexport_freight: true
-                wants_commercial_invoice_transcription: true
-                wants_flexport_insurance: true
-                wants_pickup_service: true
-                wants_trade_declaration_service: true
                 visibility_only: false
                 wants_delivery_service: false
                 belongs_to_a_buyers_consol: false
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: target_delivery_date
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -27842,7 +26058,6 @@ service:
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
                 dangerous_goods:
-                  _object: /shipment/dangerous_goods
                   review_status: complete
                   classifications:
                     - '1.2'
@@ -27970,10 +26185,6 @@ service:
                       id: 84291
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
-                      description: The best 12V AC Adapter on the market
-                      product_category: Cosmetics
-                      country_of_origin: China
-                      client_verified: true
                 legs:
                   _object: /api/refs/collection
                   ref_type: /shipment_leg
@@ -28068,26 +26279,10 @@ service:
                 cargo_ready_date: '2019-02-06'
                 wants_freight_management_bco: true
                 wants_flexport_freight: true
-                wants_commercial_invoice_transcription: true
-                wants_flexport_insurance: true
-                wants_pickup_service: true
-                wants_trade_declaration_service: true
                 visibility_only: false
                 wants_delivery_service: false
-                belongs_to_a_buyers_consol: true
-                child_shipments:
-                  - _object: /api/refs/object
-                    ref_type: /shipment
-                    link: https://api.flexport.com/shipments/123
-                    id: 123
-                parent_shipment:
-                  _object: /api/refs/object
-                  ref_type: /shipment
-                  link: https://api.flexport.com/shipments/123
-                  id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: target_delivery_date
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -28105,7 +26300,6 @@ service:
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
                 dangerous_goods:
-                  _object: /shipment/dangerous_goods
                   review_status: complete
                   classifications:
                     - '1.2'
@@ -28233,10 +26427,6 @@ service:
                       id: 84291
                       name: AC Adapter 12V
                       sku: WDVCDFD-RM00472
-                      description: The best 12V AC Adapter on the market
-                      product_category: Cosmetics
-                      country_of_origin: China
-                      client_verified: true
                 legs:
                   _object: /api/refs/collection
                   ref_type: /shipment_leg
@@ -28453,7 +26643,6 @@ docs: Endpoints relating to Shipment objects
                                   "unlocode": "US AL2",
                                   "zip": "56307",
                                 },
-                                "firms_code": "I092",
                                 "name": "Terminal 3",
                               },
                             },
@@ -28554,9 +26743,7 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
-                        "cargo_ready_date": "cargo_ready_date",
                         "carrier_name": "Liberty Carrier",
-                        "deleted_at": "2024-01-15T09:30:00Z",
                         "destination": {
                           "_object": "/shipment_node",
                           "place": {
@@ -28657,7 +26844,6 @@ docs: Endpoints relating to Shipment objects
                               "unlocode": "US AL2",
                               "zip": "56307",
                             },
-                            "firms_code": "I092",
                             "name": "Terminal 3",
                           },
                         },
@@ -28884,7 +27070,6 @@ service:
                       terminal:
                         _object: /shipment_node/terminal
                         name: Terminal 3
-                        firms_code: I092
                         address:
                           _object: /address
                           street_address: 1645 Settlers Lane
@@ -28979,7 +27164,6 @@ service:
                 actual_arrival_date: '2019-02-06T19:28:25Z'
                 estimated_departure_date: '2019-02-06T19:28:25Z'
                 actual_departure_date: '2019-02-06T19:28:25Z'
-                deleted_at: '2024-01-15T09:30:00Z'
                 additional_dates:
                   cargo_ready_date: '2019-02-06'
                   delivery_appointment_requested_at_date: '2019-07-09T04:00:00Z'
@@ -29018,7 +27202,6 @@ service:
                   terminal:
                     _object: /shipment_node/terminal
                     name: Terminal 3
-                    firms_code: I092
                     address:
                       _object: /address
                       street_address: 1645 Settlers Lane
@@ -29070,7 +27253,6 @@ service:
                     ref_type: /ocean/shipment_container_leg
                     link: >-
                       https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                cargo_ready_date: cargo_ready_date
   source:
     openapi: ../openapi.yml
   display-name: ShipmentLeg

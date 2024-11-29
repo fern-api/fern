@@ -15,11 +15,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "results": [
-                        "results",
-                      ],
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -166,9 +162,7 @@ service:
         type: SearchResponse
       examples:
         - response:
-            body:
-              results:
-                - results
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

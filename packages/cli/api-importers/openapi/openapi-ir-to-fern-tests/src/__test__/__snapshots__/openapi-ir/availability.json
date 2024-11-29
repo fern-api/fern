@@ -323,15 +323,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "fine_setting": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -405,15 +397,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "not_deprecated_setting": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -533,15 +517,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "not_deprecated_setting": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -641,15 +617,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "not_deprecated_setting": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -749,15 +717,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "not_deprecated_setting": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

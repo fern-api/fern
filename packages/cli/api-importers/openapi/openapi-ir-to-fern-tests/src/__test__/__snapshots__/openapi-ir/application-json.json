@@ -43,22 +43,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "foo": {
-                  "value": {
-                    "value": "foo",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "bar": {
-                  "value": {
-                    "value": "bar",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -109,22 +94,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "foo": {
-                  "value": {
-                    "value": "foo",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "bar": {
-                  "value": {
-                    "value": "bar",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

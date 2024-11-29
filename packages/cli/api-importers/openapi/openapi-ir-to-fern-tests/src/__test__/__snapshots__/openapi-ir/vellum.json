@@ -111,14 +111,6 @@
                   },
                   "type": "primitive"
                 },
-                "status": {
-                  "value": "ACTIVE",
-                  "type": "enum"
-                },
-                "environment": {
-                  "value": "DEVELOPMENT",
-                  "type": "enum"
-                },
                 "model_type": {
                   "value": "GENERATE",
                   "type": "enum"
@@ -484,14 +476,6 @@
                   },
                   "type": "primitive"
                 },
-                "status": {
-                  "value": "ACTIVE",
-                  "type": "enum"
-                },
-                "environment": {
-                  "value": "DEVELOPMENT",
-                  "type": "enum"
-                },
                 "indexing_config": {
                   "value": [
                     {
@@ -681,14 +665,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "status": {
-                  "value": "ACTIVE",
-                  "type": "enum"
-                },
-                "environment": {
-                  "value": "DEVELOPMENT",
-                  "type": "enum"
                 },
                 "indexing_config": {
                   "value": [
@@ -894,14 +870,6 @@
                   },
                   "type": "primitive"
                 },
-                "status": {
-                  "value": "ACTIVE",
-                  "type": "enum"
-                },
-                "environment": {
-                  "value": "DEVELOPMENT",
-                  "type": "enum"
-                },
                 "indexing_config": {
                   "value": [
                     {
@@ -1064,121 +1032,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "count": {
-                  "value": {
-                    "value": 123,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "next": {
-                  "value": {
-                    "value": "http://api.example.org/accounts/?offset=400&limit=100",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "previous": {
-                  "value": {
-                    "value": "http://api.example.org/accounts/?offset=200&limit=100",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "results": {
-                  "value": [
-                    {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "external_id": {
-                          "value": {
-                            "value": "external_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_uploaded_at": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "label": {
-                          "value": {
-                            "value": "label",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "processing_state": {
-                          "value": "QUEUED",
-                          "type": "enum"
-                        },
-                        "processing_failure_reason": {
-                          "value": {
-                            "value": "EXCEEDED_CHARACTER_LIMIT",
-                            "type": "string"
-                          },
-                          "type": "literal"
-                        },
-                        "status": {
-                          "value": {
-                            "value": "ACTIVE",
-                            "type": "string"
-                          },
-                          "type": "literal"
-                        },
-                        "keywords": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "keywords",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "document_to_document_indexes": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": "id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "document_index_id": {
-                                  "value": {
-                                    "value": "document_index_id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -1361,13 +1215,6 @@
                           "value": "INITIATED",
                           "type": "enum"
                         },
-                        "ts": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
                         "data": {
                           "value": {
                             "value": {
@@ -1430,22 +1277,6 @@
                             "type": "discriminated"
                           },
                           "type": "oneOf"
-                        },
-                        "error": {
-                          "properties": {
-                            "message": {
-                              "value": {
-                                "value": "message",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "code": {
-                              "value": "WORKFLOW_INITIALIZATION",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -1705,56 +1536,7 @@
                 "results": {
                   "value": [
                     {
-                      "properties": {
-                        "data": {
-                          "properties": {
-                            "completions": {
-                              "value": [
-                                {
-                                  "properties": {
-                                    "id": {
-                                      "value": {
-                                        "value": "id",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "text": {
-                                      "value": {
-                                        "value": "text",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "model_version_id": {
-                                      "value": {
-                                        "value": "model_version_id",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    }
-                                  },
-                                  "type": "object"
-                                }
-                              ],
-                              "type": "array"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "error": {
-                          "properties": {
-                            "message": {
-                              "value": {
-                                "value": "message",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     }
                   ],
@@ -2018,56 +1800,6 @@
                           "type": "int"
                         },
                         "type": "primitive"
-                      },
-                      "data": {
-                        "properties": {
-                          "completion_index": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
-                            },
-                            "type": "primitive"
-                          },
-                          "completion": {
-                            "properties": {
-                              "id": {
-                                "value": {
-                                  "value": "id",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "text": {
-                                "value": {
-                                  "value": "text",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "model_version_id": {
-                                "value": {
-                                  "value": "model_version_id",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "error": {
-                        "properties": {
-                          "message": {
-                            "value": {
-                              "value": "message",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          }
-                        },
-                        "type": "object"
                       }
                     },
                     "type": "object"
@@ -2202,39 +1934,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "sandbox_snapshot": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "prompt_index": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "prompt_id": {
-                          "value": {
-                            "value": "prompt_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "sandbox_id": {
-                          "value": {
-                            "value": "sandbox_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
                     }
                   },
                   "type": "object"
@@ -2277,25 +1976,6 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "stop": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "stop",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "top_k": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -2316,64 +1996,9 @@
                         }
                       ],
                       "type": "array"
-                    },
-                    "prompt_template": {
-                      "value": {
-                        "value": "prompt_template",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "prompt_block_data": {
-                      "properties": {
-                        "version": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "blocks": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": "id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "block_type": {
-                                  "value": "CHAT_MESSAGE",
-                                  "type": "enum"
-                                },
-                                "properties": {
-                                  "properties": {},
-                                  "type": "object"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "prompt_syntax_version": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
-                },
-                "status": {
-                  "value": "CREATING",
-                  "type": "enum"
                 }
               },
               "type": "object"
@@ -3076,13 +2701,6 @@
           "response": {
             "value": {
               "properties": {
-                "label": {
-                  "value": {
-                    "value": "label",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "inputs": {
                   "value": [
                     {
@@ -3093,38 +2711,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "type": {
-                          "value": "TEXT",
-                          "type": "enum"
-                        },
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_history": {
-                          "value": [
-                            {
-                              "properties": {
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "role": {
-                                  "value": "SYSTEM",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -3140,20 +2726,7 @@
                   "type": "primitive"
                 },
                 "metric_input_params": {
-                  "properties": {
-                    "params": {
-                      "properties": {
-                        "target": {
-                          "value": {
-                            "value": "target",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -3253,13 +2826,6 @@
           "response": {
             "value": {
               "properties": {
-                "label": {
-                  "value": {
-                    "value": "label",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "inputs": {
                   "value": [
                     {
@@ -3270,38 +2836,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "type": {
-                          "value": "TEXT",
-                          "type": "enum"
-                        },
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chat_history": {
-                          "value": [
-                            {
-                              "properties": {
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "role": {
-                                  "value": "SYSTEM",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -3317,20 +2851,7 @@
                   "type": "primitive"
                 },
                 "metric_input_params": {
-                  "properties": {
-                    "params": {
-                      "properties": {
-                        "target": {
-                          "value": {
-                            "value": "target",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -3967,20 +3488,6 @@
           "response": {
             "value": {
               "properties": {
-                "test_case_id": {
-                  "value": {
-                    "value": "test_case_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "label": {
-                  "value": {
-                    "value": "label",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "input_values": {
                   "value": [
                     {
@@ -4003,15 +3510,7 @@
                   "type": "map"
                 },
                 "evaluation_params": {
-                  "properties": {
-                    "target": {
-                      "value": {
-                        "value": "target",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },

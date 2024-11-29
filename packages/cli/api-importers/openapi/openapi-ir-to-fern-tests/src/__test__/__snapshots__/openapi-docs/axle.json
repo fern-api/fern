@@ -406,23 +406,7 @@
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "data": {
-                        "carrier": "carrier",
-                        "createdAt": "createdAt",
-                        "email": "email",
-                        "firstName": "firstName",
-                        "id": "id",
-                        "lastName": "lastName",
-                        "modifiedAt": "modifiedAt",
-                        "phone": "phone",
-                        "policies": [
-                          "policies",
-                        ],
-                        "refreshedAt": "refreshedAt",
-                      },
-                      "success": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -648,20 +632,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              success: true
-              data:
-                id: id
-                carrier: carrier
-                firstName: firstName
-                lastName: lastName
-                phone: phone
-                email: email
-                policies:
-                  - policies
-                createdAt: createdAt
-                modifiedAt: modifiedAt
-                refreshedAt: refreshedAt
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -687,25 +658,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "data": {
-                        "address": {
-                          "addressLine1": "addressLine1",
-                          "addressLine2": "addressLine2",
-                          "city": "city",
-                          "country": "country",
-                          "postalCode": "postalCode",
-                          "state": "state",
-                        },
-                        "domain": "domain",
-                        "id": "id",
-                        "logoUrl": "logoUrl",
-                        "modifiedAt": "modifiedAt",
-                        "name": "name",
-                        "phone": "phone",
-                      },
-                      "success": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -734,20 +687,7 @@ service:
                 {
                   "headers": {},
                   "response": {
-                    "body": {
-                      "data": [
-                        {
-                          "address": {},
-                          "domain": "domain",
-                          "id": "id",
-                          "logoUrl": "logoUrl",
-                          "modifiedAt": "modifiedAt",
-                          "name": "name",
-                          "phone": "phone",
-                        },
-                      ],
-                      "success": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -835,22 +775,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              success: true
-              data:
-                id: id
-                name: name
-                domain: domain
-                address:
-                  addressLine1: addressLine1
-                  country: country
-                  addressLine2: addressLine2
-                  state: state
-                  city: city
-                  postalCode: postalCode
-                phone: phone
-                logoUrl: logoUrl
-                modifiedAt: modifiedAt
+            body: {}
     GetCarriers:
       path: /carriers
       method: GET
@@ -865,16 +790,7 @@ service:
       examples:
         - headers: {}
           response:
-            body:
-              success: true
-              data:
-                - id: id
-                  name: name
-                  domain: domain
-                  address: {}
-                  phone: phone
-                  logoUrl: logoUrl
-                  modifiedAt: modifiedAt
+            body: {}
   source:
     openapi: ../openapi.yml
 ",
@@ -1082,74 +998,7 @@ service:
                     "id": "id",
                   },
                   "response": {
-                    "body": {
-                      "data": {
-                        "account": "account",
-                        "address": {
-                          "addressLine1": "addressLine1",
-                          "addressLine2": "addressLine2",
-                          "city": "city",
-                          "country": "country",
-                          "postalCode": "postalCode",
-                          "state": "state",
-                        },
-                        "carrier": "carrier",
-                        "coverages": [
-                          {
-                            "code": "BI",
-                            "label": "Bodily Injury Liability",
-                            "limitPerAccident": 500000,
-                            "limitPerPerson": 250000,
-                          },
-                        ],
-                        "createdAt": "createdAt",
-                        "effectiveDate": "effectiveDate",
-                        "expirationDate": "expirationDate",
-                        "id": "id",
-                        "insureds": [
-                          {
-                            "dateOfBirth": "",
-                            "dateOfBirthYear": "1993",
-                            "firstName": "Armaan",
-                            "lastName": "Sikand",
-                            "licenseNo": "•••••7259",
-                            "licenseState": "GA",
-                            "licenseStatus": "Valid",
-                            "type": "Primary named insured",
-                          },
-                        ],
-                        "isActive": true,
-                        "modifiedAt": "modifiedAt",
-                        "policyNumber": "policyNumber",
-                        "properties": [
-                          {
-                            "data": {
-                              "make": "TRIUMPH",
-                              "model": "STREET SCRAMBLER",
-                              "vin": "SMTD44GN3HT812287",
-                              "year": "2017",
-                            },
-                            "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
-                            "type": "vehicle",
-                          },
-                        ],
-                        "refreshedAt": "refreshedAt",
-                        "thirdParties": [
-                          {
-                            "address": {
-                              "addressLine1": "Po Box 105205",
-                              "city": "Atlanta",
-                              "postalCode": "30348-5205",
-                              "state": "GA",
-                            },
-                            "name": "Georgias Own Credit Union",
-                            "type": "lienholder",
-                          },
-                        ],
-                        "type": "auto",
-                      },
-                      "success": true,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -1246,57 +1095,7 @@ service:
             id: id
           headers: {}
           response:
-            body:
-              success: true
-              data:
-                id: id
-                account: account
-                type: auto
-                carrier: carrier
-                policyNumber: policyNumber
-                isActive: true
-                effectiveDate: effectiveDate
-                expirationDate: expirationDate
-                address:
-                  addressLine1: addressLine1
-                  country: country
-                  addressLine2: addressLine2
-                  state: state
-                  city: city
-                  postalCode: postalCode
-                coverages:
-                  - code: BI
-                    label: Bodily Injury Liability
-                    limitPerPerson: 250000
-                    limitPerAccident: 500000
-                properties:
-                  - id: prp_uSdzLVpi8c76H7kl6AQ-F
-                    type: vehicle
-                    data:
-                      vin: SMTD44GN3HT812287
-                      model: STREET SCRAMBLER
-                      year: '2017'
-                      make: TRIUMPH
-                insureds:
-                  - firstName: Armaan
-                    lastName: Sikand
-                    dateOfBirthYear: '1993'
-                    licenseNo: •••••7259
-                    licenseState: GA
-                    licenseStatus: Valid
-                    dateOfBirth: ''
-                    type: Primary named insured
-                thirdParties:
-                  - type: lienholder
-                    name: Georgias Own Credit Union
-                    address:
-                      addressLine1: Po Box 105205
-                      state: GA
-                      city: Atlanta
-                      postalCode: 30348-5205
-                createdAt: createdAt
-                modifiedAt: modifiedAt
-                refreshedAt: refreshedAt
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

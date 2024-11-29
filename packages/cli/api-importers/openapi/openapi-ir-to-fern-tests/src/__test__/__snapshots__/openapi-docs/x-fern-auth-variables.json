@@ -21,9 +21,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "id": "id",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -45,9 +43,7 @@
                 {
                   "response": {
                     "body": [
-                      {
-                        "id": "id",
-                      },
+                      {},
                     ],
                   },
                 },
@@ -139,8 +135,7 @@ service:
         type: UserGetResponse
       examples:
         - response:
-            body:
-              id: id
+            body: {}
     get_all:
       path: /users
       method: GET
@@ -153,7 +148,7 @@ service:
       examples:
         - response:
             body:
-              - id: id
+              - {}
   source:
     openapi: ../openapi.yml
 ",

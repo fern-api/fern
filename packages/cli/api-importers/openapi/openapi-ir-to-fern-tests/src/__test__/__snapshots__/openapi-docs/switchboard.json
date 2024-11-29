@@ -1269,27 +1269,16 @@ types:
                           "date_created": "2024-01-15T09:30:00Z",
                           "id": "73df0106-1781-4b03-a288-e749e1a43481",
                           "name": "Special Widget",
-                          "upload_uri": "upload_uri",
                         },
                       ],
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1340,26 +1329,15 @@ types:
                         "date_created": "2024-01-15T09:30:00Z",
                         "id": "73df0106-1781-4b03-a288-e749e1a43481",
                         "name": "Special Widget",
-                        "upload_uri": "upload_uri",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1402,26 +1380,15 @@ types:
                         "date_created": "2024-01-15T09:30:00Z",
                         "id": "73df0106-1781-4b03-a288-e749e1a43481",
                         "name": "Special Widget",
-                        "upload_uri": "upload_uri",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1493,19 +1460,11 @@ service:
                 - date_created: '2024-01-15T09:30:00Z'
                   id: 73df0106-1781-4b03-a288-e749e1a43481
                   name: Special Widget
-                  upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - beta
     post:
@@ -1535,19 +1494,11 @@ service:
                 date_created: '2024-01-15T09:30:00Z'
                 id: 73df0106-1781-4b03-a288-e749e1a43481
                 name: Special Widget
-                upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - beta
     delete:
@@ -1597,19 +1548,11 @@ service:
                 date_created: '2024-01-15T09:30:00Z'
                 id: 73df0106-1781-4b03-a288-e749e1a43481
                 name: Special Widget
-                upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - beta
   source:
@@ -1678,32 +1621,20 @@ service:
                       "data": [
                         {
                           "name": "Acme corp login",
-                          "status": "status",
                           "tags": [
                             "blue",
                             "red",
                           ],
-                          "upload_uri": "upload_uri",
                         },
                       ],
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1757,31 +1688,19 @@ service:
                     "body": {
                       "data": {
                         "name": "Acme corp login",
-                        "status": "status",
                         "tags": [
                           "blue",
                           "red",
                         ],
-                        "upload_uri": "upload_uri",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1822,31 +1741,19 @@ service:
                     "body": {
                       "data": {
                         "name": "Acme corp login",
-                        "status": "status",
                         "tags": [
                           "blue",
                           "red",
                         ],
-                        "upload_uri": "upload_uri",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -1932,23 +1839,14 @@ service:
             body:
               data:
                 - name: Acme corp login
-                  status: status
                   tags:
                     - blue
                     - red
-                  upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     post:
@@ -1982,23 +1880,14 @@ service:
             body:
               data:
                 name: Acme corp login
-                status: status
                 tags:
                   - blue
                   - red
-                upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - beta
     delete:
@@ -2052,23 +1941,14 @@ service:
             body:
               data:
                 name: Acme corp login
-                status: status
                 tags:
                   - blue
                   - red
-                upload_uri: upload_uri
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
   source:
@@ -2135,47 +2015,18 @@ service:
                   "response": {
                     "body": {
                       "data": {
-                        "cdp_url": "cdp_url",
-                        "cdp_ws_url": "cdp_ws_url",
-                        "chromedriver_url": "chromedriver_url",
-                        "configuration": {
-                          "persist_profile": true,
-                          "persist_profile_name": "default",
-                          "persist_profile_tags": [
-                            "persist_profile_tags",
-                          ],
-                          "profile_id": "linkedin",
-                          "timeoutMinutes": 10,
-                        },
-                        "current_usage": 1000000,
-                        "date_created": "2024-01-15T09:30:00Z",
+                        "configuration": {},
                         "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "last_activity": "2024-01-15T09:30:00Z",
-                        "live_view": {
-                          "airtop_browser_url": "airtop_browser_url",
-                          "token": "token",
-                        },
                         "status": "active",
-                        "url": "url",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -2233,12 +2084,7 @@ service:
                         },
                         "sessions": [
                           {
-                            "configuration": {
-                              "persist_profile": true,
-                              "persist_profile_name": "default",
-                              "profile_id": "linkedin",
-                              "timeoutMinutes": 10,
-                            },
+                            "configuration": {},
                             "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                             "status": "active",
                           },
@@ -2246,22 +2092,12 @@ service:
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -2315,47 +2151,18 @@ service:
                   "response": {
                     "body": {
                       "data": {
-                        "cdp_url": "cdp_url",
-                        "cdp_ws_url": "cdp_ws_url",
-                        "chromedriver_url": "chromedriver_url",
-                        "configuration": {
-                          "persist_profile": true,
-                          "persist_profile_name": "default",
-                          "persist_profile_tags": [
-                            "persist_profile_tags",
-                          ],
-                          "profile_id": "linkedin",
-                          "timeoutMinutes": 10,
-                        },
-                        "current_usage": 1000000,
-                        "date_created": "2024-01-15T09:30:00Z",
+                        "configuration": {},
                         "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "last_activity": "2024-01-15T09:30:00Z",
-                        "live_view": {
-                          "airtop_browser_url": "airtop_browser_url",
-                          "token": "token",
-                        },
                         "status": "active",
-                        "url": "url",
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -2592,25 +2399,14 @@ service:
                   numberOfPages: 1000000
                   totalItems: 1000000
                 sessions:
-                  - configuration:
-                      persist_profile: true
-                      persist_profile_name: default
-                      profile_id: linkedin
-                      timeoutMinutes: 10
+                  - configuration: {}
                     id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
                     status: active
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     post:
@@ -2636,37 +2432,14 @@ service:
           response:
             body:
               data:
-                cdp_url: cdp_url
-                cdp_ws_url: cdp_ws_url
-                chromedriver_url: chromedriver_url
-                configuration:
-                  persist_profile: true
-                  persist_profile_name: default
-                  persist_profile_tags:
-                    - persist_profile_tags
-                  profile_id: linkedin
-                  timeoutMinutes: 10
-                current_usage: 1000000
-                date_created: '2024-01-15T09:30:00Z'
+                configuration: {}
                 id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-                last_activity: '2024-01-15T09:30:00Z'
-                live_view:
-                  airtop_browser_url: airtop_browser_url
-                  token: token
                 status: active
-                url: url
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     getinfo:
@@ -2694,37 +2467,14 @@ service:
           response:
             body:
               data:
-                cdp_url: cdp_url
-                cdp_ws_url: cdp_ws_url
-                chromedriver_url: chromedriver_url
-                configuration:
-                  persist_profile: true
-                  persist_profile_name: default
-                  persist_profile_tags:
-                    - persist_profile_tags
-                  profile_id: linkedin
-                  timeoutMinutes: 10
-                current_usage: 1000000
-                date_created: '2024-01-15T09:30:00Z'
+                configuration: {}
                 id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-                last_activity: '2024-01-15T09:30:00Z'
-                live_view:
-                  airtop_browser_url: airtop_browser_url
-                  token: token
                 status: active
-                url: url
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     terminate:
@@ -2807,22 +2557,12 @@ service:
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
-                      "meta": {
-                        "requestId": "requestId",
-                      },
+                      "meta": {},
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -2891,19 +2631,10 @@ service:
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
                       "meta": {
-                        "clientProvided": {
-                          "clientRequestId": "clientRequestId",
-                          "timeThresholdMs": 1000000,
-                        },
-                        "requestId": "requestId",
                         "status": "success",
                         "usage": {
                           "credits": 1000000,
@@ -2912,10 +2643,6 @@ service:
                       },
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -2988,25 +2715,15 @@ service:
                             "contentType": "contentType",
                             "text": "text",
                           },
-                          "selectedText": "selectedText",
                           "title": "title",
                         },
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
                       "meta": {
-                        "clientProvided": {
-                          "clientRequestId": "clientRequestId",
-                          "timeThresholdMs": 1000000,
-                        },
-                        "requestId": "requestId",
                         "status": "success",
                         "usage": {
                           "credits": 1000000,
@@ -3015,10 +2732,6 @@ service:
                       },
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -3068,19 +2781,10 @@ service:
                       },
                       "errors": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
                       "meta": {
-                        "clientProvided": {
-                          "clientRequestId": "clientRequestId",
-                          "timeThresholdMs": 1000000,
-                        },
-                        "requestId": "requestId",
                         "status": "success",
                         "usage": {
                           "credits": 1000000,
@@ -3089,10 +2793,6 @@ service:
                       },
                       "warnings": [
                         {
-                          "code": "code",
-                          "details": {
-                            "key": "value",
-                          },
                           "message": "message",
                         },
                       ],
@@ -3200,17 +2900,10 @@ service:
                 token: token
                 windowId: windowId
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
-              meta:
-                requestId: requestId
+                - message: message
+              meta: {}
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     prompt-content:
@@ -3258,24 +2951,14 @@ service:
               data:
                 modelResponse: modelResponse
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
               meta:
-                clientProvided:
-                  clientRequestId: clientRequestId
-                  timeThresholdMs: 1000000
-                requestId: requestId
                 status: success
                 usage:
                   credits: 1000000
                   id: id
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     scrape-content:
@@ -3306,27 +2989,16 @@ service:
                   scrapedContent:
                     contentType: contentType
                     text: text
-                  selectedText: selectedText
                   title: title
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
               meta:
-                clientProvided:
-                  clientRequestId: clientRequestId
-                  timeThresholdMs: 1000000
-                requestId: requestId
                 status: success
                 usage:
                   credits: 1000000
                   id: id
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
     summarize-content:
@@ -3367,24 +3039,14 @@ service:
               data:
                 modelResponse: modelResponse
               errors:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
               meta:
-                clientProvided:
-                  clientRequestId: clientRequestId
-                  timeThresholdMs: 1000000
-                requestId: requestId
                 status: success
                 usage:
                   credits: 1000000
                   id: id
               warnings:
-                - code: code
-                  details:
-                    key: value
-                  message: message
+                - message: message
       audiences:
         - public
   source:

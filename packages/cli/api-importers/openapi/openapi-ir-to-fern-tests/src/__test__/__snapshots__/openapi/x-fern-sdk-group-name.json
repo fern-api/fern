@@ -53,14 +53,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "associatedPersons": [
-                        {
-                          "id": "id",
-                        },
-                      ],
-                      "id": "id",
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -99,10 +92,7 @@ service:
         type: user.User
       examples:
         - response:
-            body:
-              id: id
-              associatedPersons:
-                - id: id
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

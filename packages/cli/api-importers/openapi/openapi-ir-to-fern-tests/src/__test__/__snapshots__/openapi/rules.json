@@ -16,12 +16,7 @@
               "examples": [
                 {
                   "response": {
-                    "body": {
-                      "age": 1,
-                      "id": 1,
-                      "name": "name",
-                      "value": 1.1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -206,11 +201,7 @@ service:
         type: GetExampleResponse
       examples:
         - response:
-            body:
-              id: 1
-              age: 1
-              name: name
-              value: 1.1
+            body: {}
   source:
     openapi: ../openapi.yml
 ",

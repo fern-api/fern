@@ -97,20 +97,7 @@
                       "type": "primitive"
                     },
                     "authConfiguration": {
-                      "properties": {
-                        "google": {
-                          "properties": {
-                            "clientId": {
-                              "value": {
-                                "value": "clientId",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "appSecret": {
@@ -418,20 +405,7 @@
                   "type": "primitive"
                 },
                 "authConfiguration": {
-                  "properties": {
-                    "google": {
-                      "properties": {
-                        "clientId": {
-                          "value": {
-                            "value": "clientId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "appSecret": {
@@ -664,20 +638,7 @@
                   "type": "primitive"
                 },
                 "authConfiguration": {
-                  "properties": {
-                    "google": {
-                      "properties": {
-                        "clientId": {
-                          "value": {
-                            "value": "clientId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "appSecret": {
@@ -848,20 +809,7 @@
                   "type": "primitive"
                 },
                 "authConfiguration": {
-                  "properties": {
-                    "google": {
-                      "properties": {
-                        "clientId": {
-                          "value": {
-                            "value": "clientId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "appSecret": {
@@ -4179,27 +4127,6 @@
               "value": [
                 {
                   "properties": {
-                    "state": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
                     "initialConfig": {
                       "value": [
                         {
@@ -4628,27 +4555,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -5074,27 +4980,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -5520,27 +5405,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -6001,27 +5865,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -6197,27 +6040,6 @@
               "value": [
                 {
                   "properties": {
-                    "state": {
-                      "value": [
-                        {
-                          "key": {
-                            "value": "key",
-                            "type": "string"
-                          },
-                          "value": {
-                            "value": {
-                              "value": {
-                                "value": "value",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "unknown"
-                          }
-                        }
-                      ],
-                      "type": "map"
-                    },
                     "initialConfig": {
                       "value": [
                         {
@@ -6422,27 +6244,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -6744,27 +6545,6 @@
           "response": {
             "value": {
               "properties": {
-                "state": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": {
-                            "value": "value",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "unknown"
-                      }
-                    }
-                  ],
-                  "type": "map"
-                },
                 "initialConfig": {
                   "value": [
                     {
@@ -7480,104 +7260,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "cpu": {
-                  "value": [
-                    {
-                      "properties": {
-                        "value": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "timestamp": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "memory": {
-                  "value": [
-                    {
-                      "properties": {
-                        "value": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "timestamp": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "rate_egress": {
-                  "value": [
-                    {
-                      "properties": {
-                        "value": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "timestamp": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "total_egress": {
-                  "value": [
-                    {
-                      "properties": {
-                        "value": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "timestamp": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

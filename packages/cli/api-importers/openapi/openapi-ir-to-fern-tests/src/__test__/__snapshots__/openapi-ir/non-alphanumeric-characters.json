@@ -66,12 +66,7 @@
           },
           "response": {
             "value": {
-              "properties": {
-                "separator": {
-                  "value": "/",
-                  "type": "enum"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"

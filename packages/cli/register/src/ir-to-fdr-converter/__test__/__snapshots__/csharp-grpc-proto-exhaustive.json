@@ -886,14 +886,10 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "count": 1
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "count": 1
-                }
+                "value": {}
               }
             }
           ]
@@ -1092,28 +1088,10 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "namespaces": {
-                  "key": {
-                    "count": 1
-                  }
-                },
-                "dimension": 1,
-                "fullness": 1.1,
-                "totalCount": 1
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "namespaces": {
-                    "key": {
-                      "count": 1
-                    }
-                  },
-                  "dimension": 1,
-                  "fullness": 1.1,
-                  "totalCount": 1
-                }
+                "value": {}
               }
             }
           ]
@@ -1189,58 +1167,10 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "columns": {
-                  "key": {
-                    "id": "id",
-                    "values": [
-                      1.1
-                    ],
-                    "metadata": {
-                      "key": 1.1
-                    },
-                    "indexedData": {
-                      "indices": [
-                        1
-                      ],
-                      "values": [
-                        1.1
-                      ]
-                    }
-                  }
-                },
-                "namespace": "namespace",
-                "usage": {
-                  "units": 1
-                }
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "columns": {
-                    "key": {
-                      "id": "id",
-                      "values": [
-                        1.1
-                      ],
-                      "metadata": {
-                        "key": 1.1
-                      },
-                      "indexedData": {
-                        "indices": [
-                          1
-                        ],
-                        "values": [
-                          1.1
-                        ]
-                      }
-                    }
-                  },
-                  "namespace": "namespace",
-                  "usage": {
-                    "units": 1
-                  }
-                }
+                "value": {}
               }
             }
           ]
@@ -1340,36 +1270,10 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "columns": [
-                  {
-                    "id": "id"
-                  }
-                ],
-                "pagination": {
-                  "next": "next"
-                },
-                "namespace": "namespace",
-                "usage": {
-                  "units": 1
-                }
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "columns": [
-                    {
-                      "id": "id"
-                    }
-                  ],
-                  "pagination": {
-                    "next": "next"
-                  },
-                  "namespace": "namespace",
-                  "usage": {
-                    "units": 1
-                  }
-                }
+                "value": {}
               }
             }
           ]
@@ -1548,80 +1452,10 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "results": [
-                  {
-                    "matches": [
-                      {
-                        "id": "id"
-                      }
-                    ],
-                    "namespace": "namespace"
-                  }
-                ],
-                "matches": [
-                  {
-                    "id": "id",
-                    "score": 1.1,
-                    "values": [
-                      1.1
-                    ],
-                    "metadata": {
-                      "key": 1.1
-                    },
-                    "indexedData": {
-                      "indices": [
-                        1
-                      ],
-                      "values": [
-                        1.1
-                      ]
-                    }
-                  }
-                ],
-                "namespace": "namespace",
-                "usage": {
-                  "units": 1
-                }
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "matches": [
-                        {
-                          "id": "id"
-                        }
-                      ],
-                      "namespace": "namespace"
-                    }
-                  ],
-                  "matches": [
-                    {
-                      "id": "id",
-                      "score": 1.1,
-                      "values": [
-                        1.1
-                      ],
-                      "metadata": {
-                        "key": 1.1
-                      },
-                      "indexedData": {
-                        "indices": [
-                          1
-                        ],
-                        "values": [
-                          1.1
-                        ]
-                      }
-                    }
-                  ],
-                  "namespace": "namespace",
-                  "usage": {
-                    "units": 1
-                  }
-                }
+                "value": {}
               }
             }
           ]

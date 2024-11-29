@@ -21,21 +21,6 @@
                   "response": {
                     "body": [
                       {
-                        "error": "error",
-                        "results": {
-                          "errors": [
-                            {
-                              "file": "file",
-                              "message": "message",
-                            },
-                          ],
-                          "predictions": [
-                            {
-                              "file": "file",
-                              "models": {},
-                            },
-                          ],
-                        },
                         "source": {
                           "content_type": "source",
                           "filename": "source",
@@ -72,15 +57,10 @@
                       {
                         "job_id": "job_id",
                         "request": {
-                          "callback_url": "callback_url",
                           "files": [
                             {
                               "md5sum": "md5sum",
                             },
-                          ],
-                          "notify": true,
-                          "urls": [
-                            "urls",
                           ],
                         },
                         "state": {
@@ -1354,10 +1334,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               - user_id: user_id
                 job_id: job_id
                 request:
-                  urls:
-                    - urls
-                  callback_url: callback_url
-                  notify: true
                   files:
                     - md5sum: md5sum
                 state:
@@ -1435,14 +1411,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   filename: source
                   content_type: source
                   md5sum: source
-                results:
-                  predictions:
-                    - file: file
-                      models: {}
-                  errors:
-                    - message: message
-                      file: file
-                error: error
   source:
     openapi: ../openapi.yaml
 types:
@@ -2246,26 +2214,10 @@ types:
                     "body": {
                       "job_id": "job_id",
                       "request": {
-                        "callback_url": "callback_url",
                         "files": [
                           {
                             "md5sum": "md5sum",
                           },
-                        ],
-                        "models": {
-                          "burst": {
-                            "key": "value",
-                          },
-                          "facemesh": {
-                            "key": "value",
-                          },
-                        },
-                        "notify": true,
-                        "transcription": {
-                          "language": "zh",
-                        },
-                        "urls": [
-                          "urls",
                         ],
                       },
                       "state": {
@@ -2356,17 +2308,6 @@ types:
               user_id: user_id
               job_id: job_id
               request:
-                models:
-                  burst:
-                    key: value
-                  facemesh:
-                    key: value
-                transcription:
-                  language: zh
-                urls:
-                  - urls
-                callback_url: callback_url
-                notify: true
                 files:
                   - md5sum: md5sum
               state:

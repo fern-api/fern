@@ -7439,48 +7439,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                       "key": "na_based_employees",
                       "name": "US or Canada based employees",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                      "parent_id": "parent_id",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "resource": {
-                        "action_groups": {
-                          "key": [
-                            "value",
-                          ],
-                        },
-                        "actions": {
-                          "clone": {
-                            "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          },
-                          "push": {
-                            "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          },
-                          "read": {
-                            "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          },
-                        },
-                        "attributes": {
-                          "created": {
-                            "description": "the time (timestamp) the repository was created",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                            "type": "time",
-                          },
-                          "private": {
-                            "description": "whether the repo is private (if false, the repo is public)",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                            "type": "bool",
-                          },
-                        },
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "description": "a git repository stored on github",
-                        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "key": "repository",
-                        "name": "Repository",
-                        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                        "updated_at": "2019-08-24T14:15:22Z",
-                        "urn": "prn:github:scm:repository",
-                      },
                       "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                       "type": "userset",
                       "updated_at": "2019-08-24T14:15:22Z",
@@ -7648,48 +7607,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "key": "na_based_employees",
                       "name": "US or Canada based employees",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                      "parent_id": "parent_id",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "resource": {
-                        "action_groups": {
-                          "key": [
-                            "value",
-                          ],
-                        },
-                        "actions": {
-                          "clone": {
-                            "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          },
-                          "push": {
-                            "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          },
-                          "read": {
-                            "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          },
-                        },
-                        "attributes": {
-                          "created": {
-                            "description": "the time (timestamp) the repository was created",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                            "type": "time",
-                          },
-                          "private": {
-                            "description": "whether the repo is private (if false, the repo is public)",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                            "type": "bool",
-                          },
-                        },
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "description": "a git repository stored on github",
-                        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "key": "repository",
-                        "name": "Repository",
-                        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                        "updated_at": "2019-08-24T14:15:22Z",
-                        "urn": "prn:github:scm:repository",
-                      },
                       "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                       "type": "userset",
                       "updated_at": "2019-08-24T14:15:22Z",
@@ -7764,48 +7682,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "key": "na_based_employees",
                         "name": "US or Canada based employees",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                        "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                        "resource": {
-                          "action_groups": {
-                            "key": [
-                              "value",
-                            ],
-                          },
-                          "actions": {
-                            "clone": {
-                              "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                            },
-                            "push": {
-                              "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                            },
-                            "read": {
-                              "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                            },
-                          },
-                          "attributes": {
-                            "created": {
-                              "description": "the time (timestamp) the repository was created",
-                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                              "type": "time",
-                            },
-                            "private": {
-                              "description": "whether the repo is private (if false, the repo is public)",
-                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                              "type": "bool",
-                            },
-                          },
-                          "created_at": "2019-08-24T14:15:22Z",
-                          "description": "a git repository stored on github",
-                          "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "key": "repository",
-                          "name": "Repository",
-                          "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                          "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                          "updated_at": "2019-08-24T14:15:22Z",
-                          "urn": "prn:github:scm:repository",
-                        },
                         "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                         "type": "userset",
                         "updated_at": "2019-08-24T14:15:22Z",
@@ -7908,48 +7785,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "key": "na_based_employees",
                         "name": "US or Canada based employees",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                        "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                        "resource": {
-                          "action_groups": {
-                            "key": [
-                              "value",
-                            ],
-                          },
-                          "actions": {
-                            "clone": {
-                              "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                            },
-                            "push": {
-                              "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                            },
-                            "read": {
-                              "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                            },
-                          },
-                          "attributes": {
-                            "created": {
-                              "description": "the time (timestamp) the repository was created",
-                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                              "type": "time",
-                            },
-                            "private": {
-                              "description": "whether the repo is private (if false, the repo is public)",
-                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                              "type": "bool",
-                            },
-                          },
-                          "created_at": "2019-08-24T14:15:22Z",
-                          "description": "a git repository stored on github",
-                          "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "key": "repository",
-                          "name": "Repository",
-                          "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                          "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                          "updated_at": "2019-08-24T14:15:22Z",
-                          "urn": "prn:github:scm:repository",
-                        },
                         "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                         "type": "userset",
                         "updated_at": "2019-08-24T14:15:22Z",
@@ -8052,49 +7888,12 @@ This includes any permissions granted to said condition set (i.e: any matching c
                           "key": "na_based_employees",
                           "name": "US or Canada based employees",
                           "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                          "parent_id": "parent_id",
                           "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                          "resource": {
-                            "actions": {
-                              "clone": {
-                                "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                              },
-                              "push": {
-                                "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                              },
-                              "read": {
-                                "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                              },
-                            },
-                            "attributes": {
-                              "created": {
-                                "description": "the time (timestamp) the repository was created",
-                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                                "type": "time",
-                              },
-                              "private": {
-                                "description": "whether the repo is private (if false, the repo is public)",
-                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                                "type": "bool",
-                              },
-                            },
-                            "created_at": "2019-08-24T14:15:22Z",
-                            "description": "a git repository stored on github",
-                            "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                            "key": "repository",
-                            "name": "Repository",
-                            "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                            "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                            "updated_at": "2019-08-24T14:15:22Z",
-                            "urn": "prn:github:scm:repository",
-                          },
                           "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                           "type": "userset",
                           "updated_at": "2019-08-24T14:15:22Z",
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -8221,48 +8020,7 @@ Fields that will be provided will be completely overwritten.",
                       "key": "na_based_employees",
                       "name": "US or Canada based employees",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                      "parent_id": "parent_id",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "resource": {
-                        "action_groups": {
-                          "key": [
-                            "value",
-                          ],
-                        },
-                        "actions": {
-                          "clone": {
-                            "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          },
-                          "push": {
-                            "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          },
-                          "read": {
-                            "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          },
-                        },
-                        "attributes": {
-                          "created": {
-                            "description": "the time (timestamp) the repository was created",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                            "type": "time",
-                          },
-                          "private": {
-                            "description": "whether the repo is private (if false, the repo is public)",
-                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                            "type": "bool",
-                          },
-                        },
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "description": "a git repository stored on github",
-                        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "key": "repository",
-                        "name": "Repository",
-                        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                        "updated_at": "2019-08-24T14:15:22Z",
-                        "urn": "prn:github:scm:repository",
-                      },
                       "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                       "type": "userset",
                       "updated_at": "2019-08-24T14:15:22Z",
@@ -8430,35 +8188,6 @@ service:
                   environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
                   created_at: '2019-08-24T14:15:22Z'
                   updated_at: '2019-08-24T14:15:22Z'
-                  resource:
-                    key: repository
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                    project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                    environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                    created_at: '2019-08-24T14:15:22Z'
-                    updated_at: '2019-08-24T14:15:22Z'
-                    name: Repository
-                    urn: prn:github:scm:repository
-                    description: a git repository stored on github
-                    actions:
-                      clone:
-                        id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                      read:
-                        id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                      push:
-                        id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                    attributes:
-                      created:
-                        type: time
-                        description: the time (timestamp) the repository was created
-                        id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                      private:
-                        type: bool
-                        description: >-
-                          whether the repo is private (if false, the repo is
-                          public)
-                        id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
                   name: US or Canada based employees
                   description: All employees based in the US or Canada
                   conditions:
@@ -8469,9 +8198,7 @@ service:
                           in:
                             - US
                             - Canada
-                  parent_id: parent_id
               total_count: 1
-              page_count: 1
     create_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets
       method: POST
@@ -8567,36 +8294,6 @@ service:
               environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
               created_at: '2019-08-24T14:15:22Z'
               updated_at: '2019-08-24T14:15:22Z'
-              resource:
-                key: repository
-                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                created_at: '2019-08-24T14:15:22Z'
-                updated_at: '2019-08-24T14:15:22Z'
-                name: Repository
-                urn: prn:github:scm:repository
-                description: a git repository stored on github
-                actions:
-                  clone:
-                    id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  read:
-                    id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  push:
-                    id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                attributes:
-                  created:
-                    type: time
-                    description: the time (timestamp) the repository was created
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  private:
-                    type: bool
-                    description: whether the repo is private (if false, the repo is public)
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                action_groups:
-                  key:
-                    - value
               name: US or Canada based employees
               description: All employees based in the US or Canada
               conditions:
@@ -8607,7 +8304,6 @@ service:
                       in:
                         - US
                         - Canada
-              parent_id: parent_id
     get_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}
       method: GET
@@ -8654,36 +8350,6 @@ service:
               environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
               created_at: '2019-08-24T14:15:22Z'
               updated_at: '2019-08-24T14:15:22Z'
-              resource:
-                key: repository
-                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                created_at: '2019-08-24T14:15:22Z'
-                updated_at: '2019-08-24T14:15:22Z'
-                name: Repository
-                urn: prn:github:scm:repository
-                description: a git repository stored on github
-                actions:
-                  clone:
-                    id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  read:
-                    id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  push:
-                    id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                attributes:
-                  created:
-                    type: time
-                    description: the time (timestamp) the repository was created
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  private:
-                    type: bool
-                    description: whether the repo is private (if false, the repo is public)
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                action_groups:
-                  key:
-                    - value
               name: US or Canada based employees
               description: All employees based in the US or Canada
               conditions:
@@ -8694,7 +8360,6 @@ service:
                       in:
                         - US
                         - Canada
-              parent_id: parent_id
     delete_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}
       method: DELETE
@@ -8809,36 +8474,6 @@ service:
               environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
               created_at: '2019-08-24T14:15:22Z'
               updated_at: '2019-08-24T14:15:22Z'
-              resource:
-                key: repository
-                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                created_at: '2019-08-24T14:15:22Z'
-                updated_at: '2019-08-24T14:15:22Z'
-                name: Repository
-                urn: prn:github:scm:repository
-                description: a git repository stored on github
-                actions:
-                  clone:
-                    id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  read:
-                    id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  push:
-                    id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                attributes:
-                  created:
-                    type: time
-                    description: the time (timestamp) the repository was created
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  private:
-                    type: bool
-                    description: whether the repo is private (if false, the repo is public)
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                action_groups:
-                  key:
-                    - value
               name: US or Canada based employees
               description: All employees based in the US or Canada
               conditions:
@@ -8849,7 +8484,6 @@ service:
                       in:
                         - US
                         - Canada
-              parent_id: parent_id
     get_condition_set_ancestors:
       path: >-
         /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/ancestors
@@ -8911,38 +8545,6 @@ service:
                 environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
                 created_at: '2019-08-24T14:15:22Z'
                 updated_at: '2019-08-24T14:15:22Z'
-                resource:
-                  key: repository
-                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                  project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                  environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                  created_at: '2019-08-24T14:15:22Z'
-                  updated_at: '2019-08-24T14:15:22Z'
-                  name: Repository
-                  urn: prn:github:scm:repository
-                  description: a git repository stored on github
-                  actions:
-                    clone:
-                      id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                    read:
-                      id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                    push:
-                      id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  attributes:
-                    created:
-                      type: time
-                      description: the time (timestamp) the repository was created
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                    private:
-                      type: bool
-                      description: >-
-                        whether the repo is private (if false, the repo is
-                        public)
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  action_groups:
-                    key:
-                      - value
                 name: US or Canada based employees
                 description: All employees based in the US or Canada
                 conditions:
@@ -8953,7 +8555,6 @@ service:
                         in:
                           - US
                           - Canada
-                parent_id: parent_id
     get_condition_set_descendants:
       path: >-
         /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/descendants
@@ -9015,38 +8616,6 @@ service:
                 environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
                 created_at: '2019-08-24T14:15:22Z'
                 updated_at: '2019-08-24T14:15:22Z'
-                resource:
-                  key: repository
-                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-                  project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-                  environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-                  created_at: '2019-08-24T14:15:22Z'
-                  updated_at: '2019-08-24T14:15:22Z'
-                  name: Repository
-                  urn: prn:github:scm:repository
-                  description: a git repository stored on github
-                  actions:
-                    clone:
-                      id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                    read:
-                      id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                    push:
-                      id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  attributes:
-                    created:
-                      type: time
-                      description: the time (timestamp) the repository was created
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                    private:
-                      type: bool
-                      description: >-
-                        whether the repo is private (if false, the repo is
-                        public)
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  action_groups:
-                    key:
-                      - value
                 name: US or Canada based employees
                 description: All employees based in the US or Canada
                 conditions:
@@ -9057,7 +8626,6 @@ service:
                         in:
                           - US
                           - Canada
-                parent_id: parent_id
   source:
     openapi: ../openapi.json
   display-name: Condition Sets
@@ -9155,23 +8723,11 @@ allowed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "custom_branch_name": "custom_branch_name",
-                      "description": "description",
                       "id": "id",
-                      "jwks": {
-                        "keys": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -9241,23 +8797,11 @@ allowed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "custom_branch_name": "custom_branch_name",
-                      "description": "description",
                       "id": "id",
-                      "jwks": {
-                        "keys": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -9334,23 +8878,11 @@ allowed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "custom_branch_name": "custom_branch_name",
-                      "description": "description",
                       "id": "id",
-                      "jwks": {
-                        "keys": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -9393,23 +8925,11 @@ allowed.",
                     "body": [
                       {
                         "created_at": "2024-01-15T09:30:00Z",
-                        "custom_branch_name": "custom_branch_name",
-                        "description": "description",
                         "id": "id",
-                        "jwks": {
-                          "keys": [
-                            {
-                              "key": "value",
-                            },
-                          ],
-                        },
                         "key": "key",
                         "name": "name",
                         "organization_id": "organization_id",
                         "project_id": "project_id",
-                        "settings": {
-                          "key": "value",
-                        },
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
                     ],
@@ -9476,16 +8996,7 @@ allowed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "custom_branch_name": "custom_branch_name",
-                      "description": "description",
                       "id": "id",
-                      "jwks": {
-                        "keys": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
@@ -9494,15 +9005,11 @@ allowed.",
                           "client_secret": "client_secret",
                           "environment_id": "environment_id",
                           "id": "id",
-                          "name": "name",
                           "organization_id": "organization_id",
                           "project_id": "project_id",
                         },
                       ],
                       "project_id": "project_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "stats": {
                         "has_decision_logs": true,
                         "members": [
@@ -9605,23 +9112,11 @@ allowed.",
                   "response": {
                     "body": {
                       "created_at": "2024-01-15T09:30:00Z",
-                      "custom_branch_name": "custom_branch_name",
-                      "description": "description",
                       "id": "id",
-                      "jwks": {
-                        "keys": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -9740,16 +9235,8 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              custom_branch_name: custom_branch_name
-              jwks:
-                keys:
-                  - key: value
-              settings:
-                key: value
               pdp_configs:
                 - id: id
-                  name: name
                   organization_id: organization_id
                   project_id: project_id
                   environment_id: environment_id
@@ -9845,13 +9332,6 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 name: name
-                description: description
-                custom_branch_name: custom_branch_name
-                jwks:
-                  keys:
-                    - key: value
-                settings:
-                  key: value
     create_environment:
       path: /v2/projects/{proj_id}/envs
       method: POST
@@ -9890,13 +9370,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              custom_branch_name: custom_branch_name
-              jwks:
-                keys:
-                  - key: value
-              settings:
-                key: value
     get_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}
       method: GET
@@ -9936,13 +9409,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              custom_branch_name: custom_branch_name
-              jwks:
-                keys:
-                  - key: value
-              settings:
-                key: value
     delete_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}
       method: DELETE
@@ -10028,13 +9494,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              custom_branch_name: custom_branch_name
-              jwks:
-                keys:
-                  - key: value
-              settings:
-                key: value
     copy_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}/copy
       method: POST
@@ -10119,13 +9578,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              custom_branch_name: custom_branch_name
-              jwks:
-                keys:
-                  - key: value
-              settings:
-                key: value
   source:
     openapi: ../openapi.json
   display-name: Environments
@@ -10196,16 +9648,11 @@ authenticated actor (i.e: human team member or api key).",
                   },
                   "response": {
                     "body": {
-                      "api_key_id": "api_key_id",
-                      "api_key_secret": "api_key_secret",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_enterprise": true,
                       "key": "key",
                       "name": "name",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -10301,9 +9748,6 @@ if such org exists and can be accessed by the authenticated actor.",
                       "is_enterprise": true,
                       "key": "key",
                       "name": "name",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -10340,9 +9784,6 @@ if such org exists and can be accessed by the authenticated actor.",
                       "is_enterprise": true,
                       "key": "key",
                       "name": "name",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -10383,9 +9824,6 @@ authenticated actor (i.e: human team member or api key).",
                         "is_enterprise": true,
                         "key": "key",
                         "name": "name",
-                        "settings": {
-                          "key": "value",
-                        },
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
                     ],
@@ -10450,9 +9888,6 @@ authenticated actor (i.e: human team member or api key).",
                       "is_enterprise": true,
                       "key": "key",
                       "name": "name",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -10550,8 +9985,6 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 name: name
-                settings:
-                  key: value
     create_organization:
       path: /v2/orgs
       method: POST
@@ -10600,10 +10033,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              settings:
-                key: value
-              api_key_id: api_key_id
-              api_key_secret: api_key_secret
     get_organization:
       path: /v2/orgs/{org_id}
       method: GET
@@ -10638,8 +10067,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              settings:
-                key: value
     delete_organization:
       path: /v2/orgs/{org_id}
       method: DELETE
@@ -10703,8 +10130,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              settings:
-                key: value
     get_active_organization:
       path: /v2/orgs/active/org
       method: GET
@@ -10731,8 +10156,6 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              settings:
-                key: value
   source:
     openapi: ../openapi.json
   display-name: Organizations
@@ -10784,18 +10207,12 @@ Every project is a separate silo, and has its own unique set of environments and
                   },
                   "response": {
                     "body": {
-                      "active_policy_repo_id": "active_policy_repo_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "description": "description",
                       "id": "id",
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "urn_namespace": "urn_namespace",
                     },
                   },
                 },
@@ -10905,18 +10322,12 @@ Every project is a separate silo, and has its own unique set of environments and
                   },
                   "response": {
                     "body": {
-                      "active_policy_repo_id": "active_policy_repo_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "description": "description",
                       "id": "id",
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "urn_namespace": "urn_namespace",
                     },
                   },
                 },
@@ -10950,18 +10361,12 @@ Every project is a separate silo, and has its own unique set of environments and
                   "response": {
                     "body": [
                       {
-                        "active_policy_repo_id": "active_policy_repo_id",
                         "created_at": "2024-01-15T09:30:00Z",
-                        "description": "description",
                         "id": "id",
                         "key": "key",
                         "name": "name",
                         "organization_id": "organization_id",
-                        "settings": {
-                          "key": "value",
-                        },
                         "updated_at": "2024-01-15T09:30:00Z",
-                        "urn_namespace": "urn_namespace",
                       },
                     ],
                   },
@@ -11020,18 +10425,12 @@ Every project is a separate silo, and has its own unique set of environments and
                   "request": {},
                   "response": {
                     "body": {
-                      "active_policy_repo_id": "active_policy_repo_id",
                       "created_at": "2024-01-15T09:30:00Z",
-                      "description": "description",
                       "id": "id",
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
-                      "settings": {
-                        "key": "value",
-                      },
                       "updated_at": "2024-01-15T09:30:00Z",
-                      "urn_namespace": "urn_namespace",
                     },
                   },
                 },
@@ -11129,16 +10528,11 @@ service:
         - response:
             body:
               - key: key
-                urn_namespace: urn_namespace
                 id: id
                 organization_id: organization_id
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 name: name
-                description: description
-                settings:
-                  key: value
-                active_policy_repo_id: active_policy_repo_id
     create_project:
       path: /v2/projects
       method: POST
@@ -11193,16 +10587,11 @@ service:
           response:
             body:
               key: key
-              urn_namespace: urn_namespace
               id: id
               organization_id: organization_id
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              settings:
-                key: value
-              active_policy_repo_id: active_policy_repo_id
     get_project:
       path: /v2/projects/{proj_id}
       method: GET
@@ -11230,16 +10619,11 @@ service:
           response:
             body:
               key: key
-              urn_namespace: urn_namespace
               id: id
               organization_id: organization_id
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              settings:
-                key: value
-              active_policy_repo_id: active_policy_repo_id
     delete_project:
       path: /v2/projects/{proj_id}
       method: DELETE
@@ -11304,16 +10688,11 @@ service:
           response:
             body:
               key: key
-              urn_namespace: urn_namespace
               id: id
               organization_id: organization_id
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              description: description
-              settings:
-                key: value
-              active_policy_repo_id: active_policy_repo_id
   source:
     openapi: ../openapi.json
   display-name: Projects
@@ -11374,9 +10753,6 @@ to a role as one action.
                         "read",
                         "update",
                       ],
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -11516,9 +10892,6 @@ This includes any permissions granted to perform the action.",
                         "read",
                         "update",
                       ],
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -11583,9 +10956,6 @@ This includes any permissions granted to perform the action.",
                           "read",
                           "update",
                         ],
-                        "attributes": {
-                          "key": "value",
-                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "Writer Action Group",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -11676,9 +11046,6 @@ Fields that will be provided will be completely overwritten.",
                         "read",
                         "update",
                       ],
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -11812,8 +11179,6 @@ service:
             body:
               - name: Writer
                 description: Writer Action Group
-                attributes:
-                  key: value
                 actions:
                   - read
                   - update
@@ -11900,8 +11265,6 @@ service:
             body:
               name: Writer
               description: Writer Action Group
-              attributes:
-                key: value
               actions:
                 - read
                 - update
@@ -11960,8 +11323,6 @@ service:
             body:
               name: Writer
               description: Writer Action Group
-              attributes:
-                key: value
               actions:
                 - read
                 - update
@@ -12083,8 +11444,6 @@ service:
             body:
               name: Writer
               description: Writer Action Group
-              attributes:
-                key: value
               actions:
                 - read
                 - update
@@ -12141,9 +11500,6 @@ Each (resource, action) pair defines a unique permission level.
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -12277,9 +11633,6 @@ This includes any permissions granted to perform the action.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -12341,9 +11694,6 @@ This includes any permissions granted to perform the action.",
                   "response": {
                     "body": [
                       {
-                        "attributes": {
-                          "key": "value",
-                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "read a document",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -12433,9 +11783,6 @@ Fields that will be provided will be completely overwritten.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -12567,8 +11914,6 @@ service:
             body:
               - name: read
                 description: read a document
-                attributes:
-                  key: value
                 key: read
                 id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                 permission_name: document:read
@@ -12647,8 +11992,6 @@ service:
             body:
               name: read
               description: read a document
-              attributes:
-                key: value
               key: read
               id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
               permission_name: document:read
@@ -12703,8 +12046,6 @@ service:
             body:
               name: read
               description: read a document
-              attributes:
-                key: value
               key: read
               id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
               permission_name: document:read
@@ -12822,8 +12163,6 @@ service:
             body:
               name: read
               description: read a document
-              attributes:
-                key: value
               key: read
               id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
               permission_name: document:read
@@ -14298,9 +13637,6 @@ If some of the permissions specified are already assigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14383,9 +13719,6 @@ If some of the permissions specified are already assigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14532,9 +13865,6 @@ This includes any permissions granted to said role.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14603,9 +13933,6 @@ This includes any permissions granted to said role.",
                     "body": {
                       "roles": [
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "created_at": "2019-08-24T14:15:22Z",
                           "description": "the maintainer role can read from the repo and push changes",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14676,9 +14003,6 @@ This includes any permissions granted to said role.",
                     "body": {
                       "roles": [
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "created_at": "2019-08-24T14:15:22Z",
                           "description": "the maintainer role can read from the repo and push changes",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14747,9 +14071,6 @@ This includes any permissions granted to said role.",
                   "response": {
                     "body": [
                       {
-                        "attributes": {
-                          "key": "value",
-                        },
                         "created_at": "2019-08-24T14:15:22Z",
                         "description": "the maintainer role can read from the repo and push changes",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14847,9 +14168,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -14929,9 +14247,6 @@ Fields that will be provided will be completely overwritten.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -15078,8 +14393,6 @@ service:
                 description: the maintainer role can read from the repo and push changes
                 permissions:
                   - push
-                attributes:
-                  key: value
                 extends:
                   - contributor
                 key: maintainer
@@ -15176,8 +14489,6 @@ service:
               description: the maintainer role can read from the repo and push changes
               permissions:
                 - push
-              attributes:
-                key: value
               extends:
                 - contributor
               key: maintainer
@@ -15234,8 +14545,6 @@ service:
               description: the maintainer role can read from the repo and push changes
               permissions:
                 - push
-              attributes:
-                key: value
               extends:
                 - contributor
               key: maintainer
@@ -15368,8 +14677,6 @@ service:
               description: the maintainer role can read from the repo and push changes
               permissions:
                 - push
-              attributes:
-                key: value
               extends:
                 - contributor
               key: maintainer
@@ -15439,8 +14746,6 @@ service:
               description: the maintainer role can read from the repo and push changes
               permissions:
                 - push
-              attributes:
-                key: value
               extends:
                 - contributor
               key: maintainer
@@ -15510,8 +14815,6 @@ service:
               description: the maintainer role can read from the repo and push changes
               permissions:
                 - push
-              attributes:
-                key: value
               extends:
                 - contributor
               key: maintainer
@@ -15569,8 +14872,6 @@ service:
                   description: the maintainer role can read from the repo and push changes
                   permissions:
                     - push
-                  attributes:
-                    key: value
                   extends:
                     - contributor
                   key: maintainer
@@ -15628,8 +14929,6 @@ service:
                   description: the maintainer role can read from the repo and push changes
                   permissions:
                     - push
-                  attributes:
-                    key: value
                   extends:
                     - contributor
                   key: maintainer
@@ -15721,51 +15020,26 @@ A resource may also contain:
                   },
                   "response": {
                     "body": {
-                      "action_groups": {
-                        "key": [
-                          "value",
-                        ],
-                      },
                       "actions": {
                         "clone": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          "key": "key",
-                          "name": "name",
                         },
                         "push": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          "key": "key",
-                          "name": "name",
                         },
                         "read": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          "key": "key",
-                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -15901,51 +15175,26 @@ A resource may also contain:
                   },
                   "response": {
                     "body": {
-                      "action_groups": {
-                        "key": [
-                          "value",
-                        ],
-                      },
                       "actions": {
                         "clone": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          "key": "key",
-                          "name": "name",
                         },
                         "push": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          "key": "key",
-                          "name": "name",
                         },
                         "read": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          "key": "key",
-                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -16005,11 +15254,6 @@ A resource may also contain:
                     "body": {
                       "data": [
                         {
-                          "action_groups": {
-                            "key": [
-                              "value",
-                            ],
-                          },
                           "actions": {
                             "clone": {
                               "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -16045,7 +15289,6 @@ A resource may also contain:
                           "urn": "prn:github:scm:repository",
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -16139,51 +15382,26 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                   },
                   "response": {
                     "body": {
-                      "action_groups": {
-                        "key": [
-                          "value",
-                        ],
-                      },
                       "actions": {
                         "clone": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          "key": "key",
-                          "name": "name",
                         },
                         "push": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          "key": "key",
-                          "name": "name",
                         },
                         "read": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          "key": "key",
-                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -16278,51 +15496,26 @@ Fields that will be provided will be completely overwritten.",
                   "request": {},
                   "response": {
                     "body": {
-                      "action_groups": {
-                        "key": [
-                          "value",
-                        ],
-                      },
                       "actions": {
                         "clone": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
-                          "key": "key",
-                          "name": "name",
                         },
                         "push": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
-                          "key": "key",
-                          "name": "name",
                         },
                         "read": {
-                          "attributes": {
-                            "key": "value",
-                          },
-                          "description": "description",
                           "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
-                          "key": "key",
-                          "name": "name",
                         },
                       },
                       "attributes": {
                         "created": {
                           "description": "the time (timestamp) the repository was created",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                          "key": "key",
                           "type": "time",
                         },
                         "private": {
                           "description": "whether the repo is private (if false, the repo is public)",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                          "key": "key",
                           "type": "bool",
                         },
                       },
@@ -16518,11 +15711,7 @@ service:
                         whether the repo is private (if false, the repo is
                         public)
                       id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  action_groups:
-                    key:
-                      - value
               total_count: 1
-              page_count: 1
     create_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources
       method: POST
@@ -16619,40 +15808,20 @@ service:
               description: a git repository stored on github
               actions:
                 clone:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  key: key
                 read:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  key: key
                 push:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  key: key
               attributes:
                 created:
                   type: time
                   description: the time (timestamp) the repository was created
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  key: key
                 private:
                   type: bool
                   description: whether the repo is private (if false, the repo is public)
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  key: key
-              action_groups:
-                key:
-                  - value
     get_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: GET
@@ -16701,40 +15870,20 @@ service:
               description: a git repository stored on github
               actions:
                 clone:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  key: key
                 read:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  key: key
                 push:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  key: key
               attributes:
                 created:
                   type: time
                   description: the time (timestamp) the repository was created
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  key: key
                 private:
                   type: bool
                   description: whether the repo is private (if false, the repo is public)
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  key: key
-              action_groups:
-                key:
-                  - value
     replace_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: PUT
@@ -16831,40 +15980,20 @@ service:
               description: a git repository stored on github
               actions:
                 clone:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  key: key
                 read:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  key: key
                 push:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  key: key
               attributes:
                 created:
                   type: time
                   description: the time (timestamp) the repository was created
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  key: key
                 private:
                   type: bool
                   description: whether the repo is private (if false, the repo is public)
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  key: key
-              action_groups:
-                key:
-                  - value
     delete_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: DELETE
@@ -16977,40 +16106,20 @@ service:
               description: a git repository stored on github
               actions:
                 clone:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
-                  key: key
                 read:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: 2bc27751-6115-43c0-b68c-928cb46e34bc
-                  key: key
                 push:
-                  name: name
-                  description: description
-                  attributes:
-                    key: value
                   id: e06da336-6e03-41d6-a495-40b0d7537b2a
-                  key: key
               attributes:
                 created:
                   type: time
                   description: the time (timestamp) the repository was created
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
-                  key: key
                 private:
                   type: bool
                   description: whether the repo is private (if false, the repo is public)
                   id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
-                  key: key
-              action_groups:
-                key:
-                  - value
   source:
     openapi: ../openapi.json
   display-name: Resources
@@ -17144,9 +16253,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     },
                   ],
                   "response": {
-                    "body": {
-                      "assignments_created": 1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17198,9 +16305,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     },
                   ],
                   "response": {
-                    "body": {
-                      "assignments_removed": 1,
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -17598,8 +16703,7 @@ service:
               tenant: stripe-inc
               user: jane@coolcompany.com
           response:
-            body:
-              assignments_created: 1
+            body: {}
     bulk_unassign_role:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
       method: DELETE
@@ -17636,8 +16740,7 @@ service:
               tenant: google-inc
               user: jane@coolcompany.com
           response:
-            body:
-              assignments_removed: 1
+            body: {}
   source:
     openapi: ../openapi.json
   display-name: Role Assignments
@@ -17695,9 +16798,6 @@ If some of the permissions specified are already assigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the editor role can read and write to documents",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17774,9 +16874,6 @@ If some of the permissions specified are already assigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the editor role can read and write to documents",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17912,9 +17009,6 @@ This includes any permissions granted to said role.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the editor role can read and write to documents",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -17977,9 +17071,6 @@ This includes any permissions granted to said role.",
                     "body": {
                       "roles": [
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "created_at": "2019-08-24T14:15:22Z",
                           "description": "the editor role can read and write to documents",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -18044,9 +17135,6 @@ This includes any permissions granted to said role.",
                     "body": {
                       "roles": [
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "created_at": "2019-08-24T14:15:22Z",
                           "description": "the editor role can read and write to documents",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -18110,9 +17198,6 @@ This includes any permissions granted to said role.",
                     "body": {
                       "data": [
                         {
-                          "attributes": {
-                            "key": "value",
-                          },
                           "created_at": "2019-08-24T14:15:22Z",
                           "description": "the editor role can read and write to documents",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -18130,7 +17215,6 @@ This includes any permissions granted to said role.",
                           "updated_at": "2019-08-24T14:15:22Z",
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -18215,9 +17299,6 @@ If some of the permissions specified are already unassigned, will skip them.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the editor role can read and write to documents",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -18291,9 +17372,6 @@ Fields that will be provided will be completely overwritten.",
                   },
                   "response": {
                     "body": {
-                      "attributes": {
-                        "key": "value",
-                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the editor role can read and write to documents",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -18461,8 +17539,6 @@ service:
                   description: the editor role can read and write to documents
                   permissions:
                     - document:write
-                  attributes:
-                    key: value
                   extends:
                     - viewer
                   key: editor
@@ -18473,7 +17549,6 @@ service:
                   created_at: '2019-08-24T14:15:22Z'
                   updated_at: '2019-08-24T14:15:22Z'
               total_count: 1
-              page_count: 1
     create_role:
       path: /v2/schema/{proj_id}/{env_id}/roles
       method: POST
@@ -18554,8 +17629,6 @@ service:
               description: the editor role can read and write to documents
               permissions:
                 - document:write
-              attributes:
-                key: value
               extends:
                 - viewer
               key: editor
@@ -18605,8 +17678,6 @@ service:
               description: the editor role can read and write to documents
               permissions:
                 - document:write
-              attributes:
-                key: value
               extends:
                 - viewer
               key: editor
@@ -18726,8 +17797,6 @@ service:
               description: the editor role can read and write to documents
               permissions:
                 - document:write
-              attributes:
-                key: value
               extends:
                 - viewer
               key: editor
@@ -18789,8 +17858,6 @@ service:
               description: the editor role can read and write to documents
               permissions:
                 - document:write
-              attributes:
-                key: value
               extends:
                 - viewer
               key: editor
@@ -18852,8 +17919,6 @@ service:
               description: the editor role can read and write to documents
               permissions:
                 - document:write
-              attributes:
-                key: value
               extends:
                 - viewer
               key: editor
@@ -18903,8 +17968,6 @@ service:
                   description: the editor role can read and write to documents
                   permissions:
                     - document:write
-                  attributes:
-                    key: value
                   extends:
                     - viewer
                   key: editor
@@ -18954,8 +18017,6 @@ service:
                   description: the editor role can read and write to documents
                   permissions:
                     - document:write
-                  attributes:
-                    key: value
                   extends:
                     - viewer
                   key: editor
@@ -19042,7 +18103,6 @@ and will return the existing tenant object in the response body.",
                         ],
                       },
                       "created_at": "2019-08-24T14:15:22Z",
-                      "description": "description",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                       "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                       "key": "stripeinc",
@@ -19184,7 +18244,6 @@ and will return the existing tenant object in the response body.",
                         ],
                       },
                       "created_at": "2019-08-24T14:15:22Z",
-                      "description": "description",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                       "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                       "key": "stripeinc",
@@ -19284,7 +18343,6 @@ and will return the existing tenant object in the response body.",
                           ],
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -19374,7 +18432,6 @@ and will return the existing tenant object in the response body.",
                             ],
                           },
                           "created_at": "2019-08-24T14:15:22Z",
-                          "description": "description",
                           "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                           "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                           "key": "stripeinc",
@@ -19385,7 +18442,6 @@ and will return the existing tenant object in the response body.",
                           "updated_at": "2019-08-24T14:15:22Z",
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -19472,7 +18528,6 @@ Fields that will be provided will be completely overwritten.",
                         ],
                       },
                       "created_at": "2019-08-24T14:15:22Z",
-                      "description": "description",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                       "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                       "key": "stripeinc",
@@ -19647,7 +18702,6 @@ service:
                       tier: pro
                       expired: false
               total_count: 1
-              page_count: 1
     list_tenants:
       path: /v2/facts/{proj_id}/{env_id}/tenants
       method: GET
@@ -19708,13 +18762,11 @@ service:
                   updated_at: '2019-08-24T14:15:22Z'
                   last_action_at: '2019-08-24T14:15:22Z'
                   name: Stripe Inc
-                  description: description
                   attributes:
                     allowed_locations:
                       - US
                       - CA
               total_count: 1
-              page_count: 1
     create_tenant:
       path: /v2/facts/{proj_id}/{env_id}/tenants
       method: POST
@@ -19769,7 +18821,6 @@ service:
               updated_at: '2019-08-24T14:15:22Z'
               last_action_at: '2019-08-24T14:15:22Z'
               name: Stripe Inc
-              description: description
               attributes:
                 allowed_locations:
                   - US
@@ -19819,7 +18870,6 @@ service:
               updated_at: '2019-08-24T14:15:22Z'
               last_action_at: '2019-08-24T14:15:22Z'
               name: Stripe Inc
-              description: description
               attributes:
                 allowed_locations:
                   - US
@@ -19919,7 +18969,6 @@ service:
               updated_at: '2019-08-24T14:15:22Z'
               last_action_at: '2019-08-24T14:15:22Z'
               name: Stripe Inc
-              description: description
               attributes:
                 allowed_locations:
                   - US
@@ -21073,7 +20122,6 @@ and will return the existing user object in the response body.",
                           ],
                         },
                       ],
-                      "page_count": 1,
                       "total_count": 1,
                     },
                   },
@@ -21520,7 +20568,6 @@ service:
                       tier: pro
                       expired: false
               total_count: 1
-              page_count: 1
     create_user:
       path: /v2/facts/{proj_id}/{env_id}/users
       method: POST

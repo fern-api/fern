@@ -475,13 +475,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "AC",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -585,32 +578,6 @@
                         "type": "discriminated"
                       },
                       "type": "oneOf"
-                    },
-                    "vacation_info": {
-                      "properties": {
-                        "vacation_accrual_start_date": {
-                          "value": {
-                            "value": "vacation_accrual_start_date",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "vacation_yearly_policy": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "6733c95b-df52-419e-906d-6904d3117dab",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -803,246 +770,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "holiday": {
-                      "properties": {
-                        "min": {
-                          "value": {
-                            "value": "20",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "part_time_holiday": {
-                      "properties": {
-                        "type": {
-                          "value": "PRORATED",
-                          "type": "enum"
-                        },
-                        "min": {
-                          "value": {
-                            "value": "15",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "sick_days": {
-                      "properties": {
-                        "min": {
-                          "value": {
-                            "value": "0",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "max": {
-                          "value": {
-                            "value": "max",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "salary": {
-                      "properties": {
-                        "min": {
-                          "value": {
-                            "value": "14544.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "max": {
-                          "value": {
-                            "value": "2649300.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "probation": {
-                      "properties": {
-                        "min": {
-                          "value": {
-                            "value": "min",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "max": {
-                          "value": {
-                            "value": 90,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "part_time_probation": {
-                      "properties": {
-                        "min": {
-                          "value": {
-                            "value": 30,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "max": {
-                          "value": {
-                            "value": 60,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "work_schedule": {
-                      "properties": {
-                        "days": {
-                          "properties": {
-                            "max": {
-                              "value": {
-                                "value": "6",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "hours": {
-                          "properties": {
-                            "max": {
-                              "value": {
-                                "value": "10",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "insurance_fee": {
-                      "value": {
-                        "value": "15.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "currency": {
-                      "value": {
-                        "value": "BRL",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "hiring_guide_country_name": {
-                      "value": {
-                        "value": "brazil",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "start_date_buffer": {
-                      "value": {
-                        "value": 5,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "definite_contract": {
-                      "properties": {
-                        "type": {
-                          "value": "ALLOWED_WITHOUT_LIMITATION",
-                          "type": "enum"
-                        },
-                        "maximum_limitation": {
-                          "value": {
-                            "value": 36,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "adjustments_information_box": {
-                      "value": {
-                        "value": "Not allowed to contract people under 21.",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "health_insurance": {
-                      "properties": {
-                        "status": {
-                          "value": "REQUIRED",
-                          "type": "enum"
-                        },
-                        "providers": {
-                          "value": [
-                            {
-                              "properties": {
-                                "name": {
-                                  "value": {
-                                    "value": "United Healthcare VSP Vision & Delta Dental: Singles Only",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "home_page_url": {
-                                  "value": {
-                                    "value": "https://bit.ly/3uW72fp",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "currency": {
-                                  "value": {
-                                    "value": "USD",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": {
-                                  "value": {
-                                    "value": "PLAN",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "ending_rule": {
-                                  "value": {
-                                    "value": "END_OF_MONTH",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -1249,216 +977,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": {
-                      "value": "ongoing_time_based",
-                      "type": "enum"
-                    },
-                    "created_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "status": {
-                      "value": "new",
-                      "type": "enum"
-                    },
-                    "job_title": {
-                      "value": {
-                        "value": "Designer",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "employment": {
-                      "properties": {
-                        "scope_of_work": {
-                          "value": {
-                            "value": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "start_date": {
-                          "value": {
-                            "value": "1999-12-31",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "end_date": {
-                          "value": {
-                            "value": "1999-12-31",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "country",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "state",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "work_visa_required": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "time_off_type": {
-                          "value": {
-                            "value": "time_off_type",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "probation_period": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "calculated_holidays": {
-                          "value": {
-                            "value": "calculated_holidays",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "compensation_details": {
-                      "properties": {
-                        "salary": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "currency": {
-                          "value": {
-                            "value": "currency",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "variable_compensation": {
-                          "value": {
-                            "value": "variable_compensation",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "variable_compensation_type": {
-                          "value": {
-                            "value": "variable_compensation_type",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "employee": {
-                      "properties": {
-                        "legal_name": {
-                          "value": {
-                            "value": "legal_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "first_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "last_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "health_plan": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "seniority": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "Mid (Individual Contributor Level 2)",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -1884,27 +1403,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -2023,131 +1524,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -2294,61 +1672,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -2765,27 +2091,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -2904,131 +2212,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -3175,61 +2360,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -3646,27 +2779,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -3785,131 +2900,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -4056,61 +3048,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -4538,27 +3478,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -4677,131 +3599,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -4948,61 +3747,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -5580,24 +4327,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "notice_period": {
-                          "value": {
-                            "value": 15,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "who_reports": {
-                          "value": "both",
-                          "type": "enum"
-                        },
-                        "external_id": {
-                          "value": {
-                            "value": "external_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -6047,27 +4776,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -6186,131 +4897,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -6457,61 +5045,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -6831,27 +5367,9 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "level": {
-                          "value": {
-                            "value": 2,
-                            "type": "double"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "who_reports": {
-                      "value": "both",
-                      "type": "enum"
-                    },
-                    "scope_of_work": {
-                      "value": {
-                        "value": "scope_of_work",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "start_date": {
                       "value": {
@@ -6970,131 +5488,8 @@
                       },
                       "type": "object"
                     },
-                    "worker": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "alternate_email": {
-                          "value": [
-                            {
-                              "properties": {
-                                "isVerified": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "nationality": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "image": {
-                          "value": {
-                            "value": "image",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "legal_entity": {
-                          "properties": {
-                            "type": {
-                              "value": "individual",
-                              "type": "enum"
-                            },
-                            "personal_name": {
-                              "value": {
-                                "value": "personal_name",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "registration_number": {
-                              "value": {
-                                "value": "registration_number",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "date_of_birth": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "expected_email": {
-                          "value": {
-                            "value": "expected_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "John",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "invitations": {
-                      "properties": {
-                        "client_email": {
-                          "value": {
-                            "value": "client_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "worker_email": {
-                          "value": {
-                            "value": "worker_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "signatures": {
@@ -7241,61 +5636,9 @@
                             "type": "double"
                           },
                           "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "CO",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
-                    },
-                    "notice_period": {
-                      "value": {
-                        "value": 15,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_fields": {
-                      "value": [
-                        {
-                          "properties": {
-                            "name": {
-                              "value": {
-                                "value": "Employee ID",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "value": {
-                              "value": {
-                                "value": "54234",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "external_id": {
-                      "value": {
-                        "value": "external_id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -8774,25 +7117,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "attachment": {
-                          "properties": {
-                            "filename": {
-                              "value": {
-                                "value": "filename",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "key": {
-                              "value": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -9700,25 +8024,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "attachment": {
-                          "properties": {
-                            "filename": {
-                              "value": {
-                                "value": "filename",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "key": {
-                              "value": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -10085,25 +8390,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "attachment": {
-                          "properties": {
-                            "filename": {
-                              "value": {
-                                "value": "filename",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "key": {
-                              "value": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -11026,22 +9312,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "completion_date": {
-                      "value": {
-                        "value": "1999-12-31",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -12592,13 +10863,6 @@
                           },
                           "type": "primitive"
                         },
-                        "public_id": {
-                          "value": {
-                            "value": "00000000-0000-0000-0000-000000000000",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "type": {
                           "value": {
                             "value": "type",
@@ -12651,20 +10915,6 @@
                         "created_at": {
                           "value": {
                             "value": "2022-05-04T03:45:27.108Z",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "scale": {
-                          "value": {
-                            "value": "custom",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "custom_scale": {
-                          "value": {
-                            "value": "custom_scale",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -15102,13 +13352,6 @@
                           },
                           "type": "primitive"
                         },
-                        "public_id": {
-                          "value": {
-                            "value": "00000000-0000-0000-0000-000000000000",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "status": {
                           "value": {
                             "value": "status",
@@ -15823,13 +14066,6 @@
                       },
                       "type": "primitive"
                     },
-                    "public_id": {
-                      "value": {
-                        "value": "00000000-0000-0000-0000-000000000000",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": {
                         "value": "status",
@@ -16174,60 +14410,15 @@
                       "type": "primitive"
                     },
                     "misclassification_guarantee": {
-                      "properties": {
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "description": {
-                          "value": {
-                            "value": "description",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "penalties": {
-                      "properties": {
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "description": {
-                          "value": {
-                            "value": "description",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "third_party_liabilities": {
-                      "properties": {
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "description": {
-                          "value": {
-                            "value": "description",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     }
                   },
@@ -16849,29 +15040,7 @@
                       "type": "primitive"
                     },
                     "last_cycle": {
-                      "properties": {
-                        "start": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "end": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "completion_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "calculation_type": {
@@ -17105,84 +15274,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "pro_rata": {
-                      "properties": {
-                        "calculation_type": {
-                          "value": "CUSTOM_AMOUNT",
-                          "type": "enum"
-                        },
-                        "rate": {
-                          "value": {
-                            "value": 2500,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "daily_rate": {
-                          "value": {
-                            "value": 2500,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "total": {
-                          "value": {
-                            "value": 2500,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "cycle_work_days": {
-                          "value": {
-                            "value": 11,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "work_week_start": {
-                          "value": "Sunday",
-                          "type": "enum"
-                        },
-                        "work_week_end": {
-                          "value": "Sunday",
-                          "type": "enum"
-                        },
-                        "cycle_start": {
-                          "value": {
-                            "value": "1999-12-31",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "cycle_end": {
-                          "value": {
-                            "value": "1999-12-31",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "first_payment_dates": {
-                      "value": [
-                        {
-                          "properties": {
-                            "due": {
-                              "value": {
-                                "value": "1999-12-31",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -17376,13 +15468,6 @@
                   "value": [
                     {
                       "properties": {
-                        "reason": {
-                          "value": {
-                            "value": "I have a doctors appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "type": {
                           "value": "VACATION",
                           "type": "enum"
@@ -17394,141 +15479,9 @@
                           },
                           "type": "primitive"
                         },
-                        "reviewed_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "denial_reason": {
-                          "value": {
-                            "value": "No time off available",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "has_multiple_dates": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
                         "status": {
                           "value": "REQUESTED",
                           "type": "enum"
-                        },
-                        "other_timeoff_name": {
-                          "value": {
-                            "value": "This is time off for a doctor's appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "requester": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "reviewer": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "days_used_start_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "days_used_end_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_days_used": {
-                          "value": {
-                            "value": "4.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "start_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "end_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "single_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "attachments": {
-                          "value": [
-                            {
-                              "properties": {},
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         },
                         "id": {
                           "value": {
@@ -17537,21 +15490,7 @@
                           },
                           "type": "primitive"
                         },
-                        "contract_id": {
-                          "value": {
-                            "value": "abc123",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "created_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "updated_at": {
                           "value": {
                             "value": "2022-05-24T09:38:46.235Z",
                             "type": "datetime"
@@ -17564,114 +15503,6 @@
                             "type": "datetime"
                           },
                           "type": "primitive"
-                        },
-                        "end_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "can_request_changes": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_updated": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "change_request": {
-                          "properties": {
-                            "type": {
-                              "value": "VACATION",
-                              "type": "enum"
-                            },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "status": {
-                              "value": "REQUESTED",
-                              "type": "enum"
-                            },
-                            "days_used_start_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "days_used_end_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "total_days_used": {
-                              "value": {
-                                "value": "4.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "applied_changes": {
-                          "value": [
-                            {
-                              "properties": {
-                                "type": {
-                                  "value": "VACATION",
-                                  "type": "enum"
-                                },
-                                "requested_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "status": {
-                                  "value": "REQUESTED",
-                                  "type": "enum"
-                                },
-                                "days_used_start_year": {
-                                  "value": {
-                                    "value": "2.00",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "days_used_end_year": {
-                                  "value": {
-                                    "value": "2.00",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "total_days_used": {
-                                  "value": {
-                                    "value": "4.00",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -17908,13 +15739,6 @@
               "properties": {
                 "data": {
                   "properties": {
-                    "reason": {
-                      "value": {
-                        "value": "I have a doctors appointment",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "VACATION",
                       "type": "enum"
@@ -17926,169 +15750,9 @@
                       },
                       "type": "primitive"
                     },
-                    "reviewed_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "denial_reason": {
-                      "value": {
-                        "value": "No time off available",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "has_multiple_dates": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": "REQUESTED",
                       "type": "enum"
-                    },
-                    "other_timeoff_name": {
-                      "value": {
-                        "value": "This is time off for a doctor's appointment",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "requester": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 409222,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "Mr. Rogers",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pic_url": {
-                          "value": {
-                            "value": "pic_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "profile_type": {
-                          "value": "client",
-                          "type": "enum"
-                        },
-                        "is_employee": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "reviewer": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 409222,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "Mr. Rogers",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pic_url": {
-                          "value": {
-                            "value": "pic_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "profile_type": {
-                          "value": "client",
-                          "type": "enum"
-                        },
-                        "is_employee": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "days_used_start_year": {
-                      "value": {
-                        "value": "2.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "days_used_end_year": {
-                      "value": {
-                        "value": "2.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "total_days_used": {
-                      "value": {
-                        "value": "4.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "start_date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "end_date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "single_date": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "attachments": {
-                      "value": [
-                        {
-                          "properties": {},
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
                     },
                     "id": {
                       "value": {
@@ -18097,21 +15761,7 @@
                       },
                       "type": "primitive"
                     },
-                    "contract_id": {
-                      "value": {
-                        "value": "abc123",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "created_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "updated_at": {
                       "value": {
                         "value": "2022-05-24T09:38:46.235Z",
                         "type": "datetime"
@@ -18124,232 +15774,6 @@
                         "type": "datetime"
                       },
                       "type": "primitive"
-                    },
-                    "end_date": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "can_request_changes": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "is_updated": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "change_request": {
-                      "properties": {
-                        "reason": {
-                          "value": {
-                            "value": "I have a doctors appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": {
-                          "value": "VACATION",
-                          "type": "enum"
-                        },
-                        "requested_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "reviewed_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "denial_reason": {
-                          "value": {
-                            "value": "No time off available",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "has_multiple_dates": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "REQUESTED",
-                          "type": "enum"
-                        },
-                        "other_timeoff_name": {
-                          "value": {
-                            "value": "This is time off for a doctor's appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "requester": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "reviewer": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "days_used_start_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "days_used_end_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_days_used": {
-                          "value": {
-                            "value": "4.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "start_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "end_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "single_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "attachments": {
-                          "value": [
-                            {
-                              "properties": {},
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "applied_changes": {
-                      "value": [
-                        {
-                          "properties": {
-                            "type": {
-                              "value": "VACATION",
-                              "type": "enum"
-                            },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "status": {
-                              "value": "REQUESTED",
-                              "type": "enum"
-                            },
-                            "days_used_start_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "days_used_end_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "total_days_used": {
-                              "value": {
-                                "value": "4.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -18610,13 +16034,6 @@
               "properties": {
                 "data": {
                   "properties": {
-                    "reason": {
-                      "value": {
-                        "value": "I have a doctors appointment",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": "VACATION",
                       "type": "enum"
@@ -18628,169 +16045,9 @@
                       },
                       "type": "primitive"
                     },
-                    "reviewed_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "denial_reason": {
-                      "value": {
-                        "value": "No time off available",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "has_multiple_dates": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": "REQUESTED",
                       "type": "enum"
-                    },
-                    "other_timeoff_name": {
-                      "value": {
-                        "value": "This is time off for a doctor's appointment",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "requester": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 409222,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "Mr. Rogers",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pic_url": {
-                          "value": {
-                            "value": "pic_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "profile_type": {
-                          "value": "client",
-                          "type": "enum"
-                        },
-                        "is_employee": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "reviewer": {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 409222,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "Mr. Rogers",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pic_url": {
-                          "value": {
-                            "value": "pic_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "profile_type": {
-                          "value": "client",
-                          "type": "enum"
-                        },
-                        "is_employee": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "days_used_start_year": {
-                      "value": {
-                        "value": "2.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "days_used_end_year": {
-                      "value": {
-                        "value": "2.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "total_days_used": {
-                      "value": {
-                        "value": "4.00",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "start_date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "end_date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "single_date": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "date_is_half_day": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "attachments": {
-                      "value": [
-                        {
-                          "properties": {},
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
                     },
                     "id": {
                       "value": {
@@ -18799,21 +16056,7 @@
                       },
                       "type": "primitive"
                     },
-                    "contract_id": {
-                      "value": {
-                        "value": "abc123",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "created_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "updated_at": {
                       "value": {
                         "value": "2022-05-24T09:38:46.235Z",
                         "type": "datetime"
@@ -18826,232 +16069,6 @@
                         "type": "datetime"
                       },
                       "type": "primitive"
-                    },
-                    "end_date": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "can_request_changes": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "is_updated": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "change_request": {
-                      "properties": {
-                        "reason": {
-                          "value": {
-                            "value": "I have a doctors appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "type": {
-                          "value": "VACATION",
-                          "type": "enum"
-                        },
-                        "requested_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "reviewed_at": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "denial_reason": {
-                          "value": {
-                            "value": "No time off available",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "has_multiple_dates": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "status": {
-                          "value": "REQUESTED",
-                          "type": "enum"
-                        },
-                        "other_timeoff_name": {
-                          "value": {
-                            "value": "This is time off for a doctor's appointment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "requester": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "reviewer": {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 409222,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Mr. Rogers",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "profile_type": {
-                              "value": "client",
-                              "type": "enum"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "days_used_start_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "days_used_end_year": {
-                          "value": {
-                            "value": "2.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_days_used": {
-                          "value": {
-                            "value": "4.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "start_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "end_date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "single_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "date_is_half_day": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "attachments": {
-                          "value": [
-                            {
-                              "properties": {},
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "applied_changes": {
-                      "value": [
-                        {
-                          "properties": {
-                            "type": {
-                              "value": "VACATION",
-                              "type": "enum"
-                            },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "status": {
-                              "value": "REQUESTED",
-                              "type": "enum"
-                            },
-                            "days_used_start_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "days_used_end_year": {
-                              "value": {
-                                "value": "2.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "total_days_used": {
-                              "value": {
-                                "value": "4.00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
                     }
                   },
                   "type": "object"
@@ -19697,13 +16714,6 @@
                           },
                           "type": "primitive"
                         },
-                        "public_id": {
-                          "value": {
-                            "value": "00000000-0000-0000-0000-000000000000",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "type": {
                           "value": {
                             "value": "type",
@@ -19756,20 +16766,6 @@
                         "created_at": {
                           "value": {
                             "value": "2022-05-04T03:45:27.108Z",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "scale": {
-                          "value": {
-                            "value": "custom",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "custom_scale": {
-                          "value": {
-                            "value": "custom_scale",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -20217,34 +17213,6 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "public_id": {
-                      "value": {
-                        "value": "00000000-0000-0000-0000-000000000000",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -20550,13 +17518,6 @@
                       },
                       "type": "primitive"
                     },
-                    "public_id": {
-                      "value": {
-                        "value": "00000000-0000-0000-0000-000000000000",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "type": {
                       "value": {
                         "value": "type",
@@ -20609,20 +17570,6 @@
                     "created_at": {
                       "value": {
                         "value": "2022-05-04T03:45:27.108Z",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "scale": {
-                      "value": {
-                        "value": "custom",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "custom_scale": {
-                      "value": {
-                        "value": "custom_scale",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -20731,25 +17678,6 @@
                         "type": {
                           "value": "ongoing_time_based",
                           "type": "enum"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "payment_cycle": {
-                      "properties": {
-                        "start_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "end_date": {
-                          "value": {
-                            "value": "2022-05-24T09:38:46.235Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -22450,13 +19378,6 @@
                           },
                           "type": "primitive"
                         },
-                        "public_id": {
-                          "value": {
-                            "value": "00000000-0000-0000-0000-000000000000",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "type": {
                           "value": "accrued_holiday",
                           "type": "enum"
@@ -22507,20 +19428,6 @@
                           "value": {
                             "value": "2022-05-24T09:38:46.235Z",
                             "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "scale": {
-                          "value": {
-                            "value": "custom",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "custom_scale": {
-                          "value": {
-                            "value": "custom_scale",
-                            "type": "string"
                           },
                           "type": "primitive"
                         },
@@ -23161,13 +20068,6 @@
                           },
                           "type": "primitive"
                         },
-                        "public_id": {
-                          "value": {
-                            "value": "00000000-0000-0000-0000-000000000000",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "type": {
                           "value": "accrued_holiday",
                           "type": "enum"
@@ -23218,20 +20118,6 @@
                           "value": {
                             "value": "2022-05-24T09:38:46.235Z",
                             "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
-                        "scale": {
-                          "value": {
-                            "value": "custom",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "custom_scale": {
-                          "value": {
-                            "value": "custom_scale",
-                            "type": "string"
                           },
                           "type": "primitive"
                         },
@@ -23706,34 +20592,6 @@
                       "value": {
                         "value": true,
                         "type": "boolean"
-                      },
-                      "type": "primitive"
-                    },
-                    "id": {
-                      "value": {
-                        "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "public_id": {
-                      "value": {
-                        "value": "00000000-0000-0000-0000-000000000000",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "created_at": {
-                      "value": {
-                        "value": "2022-05-24T09:38:46.235Z",
-                        "type": "datetime"
                       },
                       "type": "primitive"
                     }
@@ -25172,43 +22030,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "data": {
-                  "value": [
-                    {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1.1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "entity_type": {
-                          "value": "individual",
-                          "type": "enum"
-                        },
-                        "entity_subtype": {
-                          "value": {
-                            "value": "entity_subtype",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -27774,18 +24596,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "page": {
-                  "properties": {
-                    "total_rows": {
-                      "value": {
-                        "value": 1.1,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
                 }
               },
               "type": "object"
@@ -27995,32 +24805,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "data": {
-                  "value": [
-                    {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": 1,
-                            "type": "double"
-                          },
-                          "type": "primitive"
-                        },
-                        "title": {
-                          "value": {
-                            "value": "UK Employment Contract 2022.",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -28212,120 +24997,7 @@
                     "entitlements": {
                       "value": [
                         {
-                          "properties": {
-                            "year": {
-                              "value": {
-                                "value": 2022,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "vacation_allowed": {
-                              "value": {
-                                "value": "16",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "sick_leave_allowed": {
-                              "value": {
-                                "value": "16",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "vacation_requested": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "vacation_approved": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "vacation_used": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "vacation_total": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "sick_leave_requested": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "sick_leave_approved": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "sick_leave_used": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "sick_leave_total": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "other_leave_requested": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "other_leave_approved": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "other_leave_used": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "other_leave_total": {
-                              "value": {
-                                "value": "5",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "max_rollover_yearly": {
-                              "value": {
-                                "value": "3",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
+                          "properties": {},
                           "type": "object"
                         }
                       ],
@@ -28530,13 +25202,6 @@
                               "value": [
                                 {
                                   "properties": {
-                                    "year": {
-                                      "value": {
-                                        "value": 2022,
-                                        "type": "double"
-                                      },
-                                      "type": "primitive"
-                                    },
                                     "requests": {
                                       "value": [
                                         {
@@ -28556,38 +25221,10 @@
                                               "value": "REQUESTED",
                                               "type": "enum"
                                             },
-                                            "days_used_start_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "days_used_end_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "total_days_used": {
-                                              "value": {
-                                                "value": "4.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
                                                 "type": "double"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "contract_id": {
-                                              "value": {
-                                                "value": "abc123",
-                                                "type": "string"
                                               },
                                               "type": "primitive"
                                             },
@@ -28614,13 +25251,6 @@
                               "value": [
                                 {
                                   "properties": {
-                                    "year": {
-                                      "value": {
-                                        "value": 2022,
-                                        "type": "double"
-                                      },
-                                      "type": "primitive"
-                                    },
                                     "requests": {
                                       "value": [
                                         {
@@ -28640,38 +25270,10 @@
                                               "value": "REQUESTED",
                                               "type": "enum"
                                             },
-                                            "days_used_start_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "days_used_end_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "total_days_used": {
-                                              "value": {
-                                                "value": "4.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
                                                 "type": "double"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "contract_id": {
-                                              "value": {
-                                                "value": "abc123",
-                                                "type": "string"
                                               },
                                               "type": "primitive"
                                             },
@@ -28698,13 +25300,6 @@
                               "value": [
                                 {
                                   "properties": {
-                                    "year": {
-                                      "value": {
-                                        "value": 2022,
-                                        "type": "double"
-                                      },
-                                      "type": "primitive"
-                                    },
                                     "requests": {
                                       "value": [
                                         {
@@ -28724,38 +25319,10 @@
                                               "value": "REQUESTED",
                                               "type": "enum"
                                             },
-                                            "days_used_start_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "days_used_end_year": {
-                                              "value": {
-                                                "value": "2.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "total_days_used": {
-                                              "value": {
-                                                "value": "4.00",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
                                                 "type": "double"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "contract_id": {
-                                              "value": {
-                                                "value": "abc123",
-                                                "type": "string"
                                               },
                                               "type": "primitive"
                                             },
@@ -29380,97 +25947,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "rows": {
-                      "value": [
-                        {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 5586317,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "invoice_id": {
-                              "value": {
-                                "value": "rhCTiRd9Mad41RwjsFWw-",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "status": {
-                              "value": "pending",
-                              "type": "enum"
-                            },
-                            "currency": {
-                              "value": {
-                                "value": "USD",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "payment_currency": {
-                              "value": {
-                                "value": "USD",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "contract": {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": "rhCTiRd9Mad41RwjsFWw-",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "name": {
-                                  "value": {
-                                    "value": "Lisandro Shanahan-Dynamic Web Specialist",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "contract_type": {
-                                  "value": {
-                                    "value": "pay_as_you_go_time_based",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            },
-                            "created_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "total": {
-                              "value": {
-                                "value": 1000,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "total": {
-                      "value": {
-                        "value": 1.1,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -29735,29 +26212,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "id": {
-                      "value": {
-                        "value": "12345",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "https://s3URL/letsdeel.com/invoices/12345.pdf",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "expires_at": {
-                      "value": {
-                        "value": "2020-03-31T10:58:49.780Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -30022,29 +26477,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "id": {
-                      "value": {
-                        "value": "12345",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "https://s3URL/letsdeel.com/invoices/12345.pdf",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "expires_at": {
-                      "value": {
-                        "value": "2020-03-31T10:58:49.780Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -30337,97 +26770,7 @@
             "value": {
               "properties": {
                 "data": {
-                  "properties": {
-                    "rows": {
-                      "value": [
-                        {
-                          "properties": {
-                            "id": {
-                              "value": {
-                                "value": 12345,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "payment_method": {
-                              "properties": {
-                                "type": {
-                                  "value": "stripe_bacs_debit",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            },
-                            "status": {
-                              "value": "paid",
-                              "type": "enum"
-                            },
-                            "payment_currency": {
-                              "value": {
-                                "value": "USD",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "label": {
-                              "value": {
-                                "value": "label",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "paid_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "created_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "total": {
-                              "value": {
-                                "value": 1015,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "workers": {
-                              "value": [
-                                {
-                                  "properties": {
-                                    "name": {
-                                      "value": {
-                                        "value": "Jane Doe",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    }
-                                  },
-                                  "type": "object"
-                                }
-                              ],
-                              "type": "array"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "total": {
-                      "value": {
-                        "value": 1.1,
-                        "type": "double"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 }
               },
@@ -30711,307 +27054,7 @@
                 "data": {
                   "value": [
                     {
-                      "properties": {
-                        "id": {
-                          "value": {
-                            "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "first_name": {
-                          "value": {
-                            "value": "first_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "last_name": {
-                          "value": {
-                            "value": "last_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "full_name": {
-                          "value": {
-                            "value": "full_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "email": {
-                          "value": {
-                            "value": "email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "work_email": {
-                          "value": {
-                            "value": "work_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "personal_email": {
-                          "value": {
-                            "value": "personal_email",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country_name": {
-                          "value": {
-                            "value": "country_name",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "birth_date": {
-                          "value": {
-                            "value": "birth_date",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pic_url": {
-                          "value": {
-                            "value": "pic_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "start_date": {
-                          "value": {
-                            "value": "start_date",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "payments": {
-                          "value": [
-                            {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": 12345,
-                                    "type": "double"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "payment_method": {
-                                  "properties": {
-                                    "type": {
-                                      "value": "stripe_bacs_debit",
-                                      "type": "enum"
-                                    }
-                                  },
-                                  "type": "object"
-                                },
-                                "status": {
-                                  "value": "paid",
-                                  "type": "enum"
-                                },
-                                "payment_currency": {
-                                  "value": {
-                                    "value": "USD",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "label": {
-                                  "value": {
-                                    "value": "label",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "paid_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "created_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "total": {
-                                  "value": {
-                                    "value": 1015,
-                                    "type": "double"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "workers": {
-                                  "value": [
-                                    {
-                                      "properties": {
-                                        "name": {
-                                          "value": {
-                                            "value": "Jane Doe",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        }
-                                      },
-                                      "type": "object"
-                                    }
-                                  ],
-                                  "type": "array"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "hourly_report_total": {
-                          "value": {
-                            "value": "hourly_report_total",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "state",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "seniority": {
-                          "value": {
-                            "value": "seniority",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "completion_date": {
-                          "value": {
-                            "value": "completion_date",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "direct_manager": {
-                          "value": {
-                            "value": "direct_manager",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "direct_reports": {
-                          "value": {
-                            "value": "direct_reports",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "direct_reports_count": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "employments": {
-                          "value": [
-                            {
-                              "properties": {},
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "hiring_status": {
-                          "value": {
-                            "value": "hiring_status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "hiring_type": {
-                          "value": {
-                            "value": "hiring_type",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "job_title": {
-                          "value": {
-                            "value": "job_title",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "country",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "team_id": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "team": {
-                          "value": {
-                            "value": "team",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timezone": {
-                          "value": {
-                            "value": "timezone",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "department": {
-                          "value": {
-                            "value": "department",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "work_location": {
-                          "value": {
-                            "value": "work_location",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contract_types": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "contract_types",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "has_deel_user": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     }
                   ],
@@ -31248,117 +27291,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "id": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "user_id": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "username": {
-                  "value": {
-                    "value": "username",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "first_name": {
-                  "value": {
-                    "value": "first_name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "middle_name": {
-                  "value": {
-                    "value": "middle_name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "last_name": {
-                  "value": {
-                    "value": "last_name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "full_name": {
-                  "value": {
-                    "value": "full_name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "email": {
-                  "value": {
-                    "value": "email",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "avatar_url": {
-                  "value": {
-                    "value": "avatar_url",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "profile_type": {
-                  "value": "client",
-                  "type": "enum"
-                },
-                "slack_user_id": {
-                  "value": {
-                    "value": "slack_user_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "slack_team_id": {
-                  "value": {
-                    "value": "slack_team_id",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "organization_id": {
-                  "value": {
-                    "value": 1.1,
-                    "type": "double"
-                  },
-                  "type": "primitive"
-                },
-                "organization_name": {
-                  "value": {
-                    "value": "organization_name",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "client_country": {
-                  "value": {
-                    "value": "US",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "contractor_country": {
-                  "value": {
-                    "value": "US",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -31664,13 +27597,6 @@
                           "value": {
                             "value": "updated_at",
                             "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "hidden": {
-                          "value": {
-                            "value": false,
-                            "type": "boolean"
                           },
                           "type": "primitive"
                         }
@@ -32040,13 +27966,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "hidden": {
-                      "value": {
-                        "value": false,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -32382,13 +28301,6 @@
                       "value": {
                         "value": "updated_at",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "hidden": {
-                      "value": {
-                        "value": false,
-                        "type": "boolean"
                       },
                       "type": "primitive"
                     }
@@ -33009,13 +28921,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "hidden": {
-                      "value": {
-                        "value": false,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -33283,204 +29188,7 @@
                 "data": {
                   "value": [
                     {
-                      "properties": {
-                        "date": {
-                          "value": {
-                            "value": "2022-10-01T00:59:28.482Z",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "general_ledger_account": {
-                          "value": {
-                            "value": "",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "team": {
-                          "value": {
-                            "value": "Deel Inc.",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contractor_unique_identifier": {
-                          "value": {
-                            "value": "12345",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contractor_employee_name": {
-                          "value": {
-                            "value": "Jane Doe",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contractor_email": {
-                          "value": {
-                            "value": "name@email.com",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "invoice_number": {
-                          "value": {
-                            "value": "5069872",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "currency": {
-                          "value": {
-                            "value": "USD",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "payment_currency": {
-                          "value": {
-                            "value": "USD",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "receipt_number": {
-                          "value": {
-                            "value": "5551621",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "work": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "bonus": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "expenses": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "commissions": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "deductions": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "overtime": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "pro_rata": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "others": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "processing_fee": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "adjustment": {
-                          "value": {
-                            "value": "0.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total": {
-                          "value": {
-                            "value": "1000.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "total_payment_currency": {
-                          "value": {
-                            "value": "1000.00",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "payment_date": {
-                          "value": {
-                            "value": "2022-11-01T17:20:32.837Z",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "frequency": {
-                          "value": {
-                            "value": "",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contract_country": {
-                          "value": {
-                            "value": "US",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "contract_start_date": {
-                          "value": {
-                            "value": "2020-03-31T10:58:49.780Z",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "approvers": {
-                          "value": {
-                            "value": "approvers",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "approve_date": {
-                          "value": {
-                            "value": "approve_date",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     }
                   ],

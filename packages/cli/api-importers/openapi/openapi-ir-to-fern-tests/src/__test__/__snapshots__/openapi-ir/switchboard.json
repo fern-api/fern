@@ -195,13 +195,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "upload_uri": {
-                          "value": {
-                            "value": "upload_uri",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -213,34 +206,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -255,49 +220,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -423,13 +352,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "upload_uri": {
-                      "value": {
-                        "value": "upload_uri",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -438,34 +360,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -480,49 +374,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -773,13 +631,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "upload_uri": {
-                      "value": {
-                        "value": "upload_uri",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -788,34 +639,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -830,49 +653,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1020,13 +807,6 @@
                           },
                           "type": "primitive"
                         },
-                        "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "tags": {
                           "value": [
                             {
@@ -1045,13 +825,6 @@
                             }
                           ],
                           "type": "array"
-                        },
-                        "upload_uri": {
-                          "value": {
-                            "value": "upload_uri",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -1063,34 +836,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1105,49 +850,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1261,13 +970,6 @@
                       },
                       "type": "primitive"
                     },
-                    "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "tags": {
                       "value": [
                         {
@@ -1286,13 +988,6 @@
                         }
                       ],
                       "type": "array"
-                    },
-                    "upload_uri": {
-                      "value": {
-                        "value": "upload_uri",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -1301,34 +996,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1343,49 +1010,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1650,13 +1281,6 @@
                       },
                       "type": "primitive"
                     },
-                    "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "tags": {
                       "value": [
                         {
@@ -1675,13 +1299,6 @@
                         }
                       ],
                       "type": "array"
-                    },
-                    "upload_uri": {
-                      "value": {
-                        "value": "upload_uri",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -1690,34 +1307,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -1732,49 +1321,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2117,36 +1670,7 @@
                         {
                           "properties": {
                             "configuration": {
-                              "properties": {
-                                "persist_profile": {
-                                  "value": {
-                                    "value": true,
-                                    "type": "boolean"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "persist_profile_name": {
-                                  "value": {
-                                    "value": "default",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "profile_id": {
-                                  "value": {
-                                    "value": "linkedin",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "timeoutMinutes": {
-                                  "value": {
-                                    "value": 10,
-                                    "type": "int"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
+                              "properties": {},
                               "type": "object"
                             },
                             "id": {
@@ -2176,34 +1700,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2218,49 +1714,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2359,85 +1819,9 @@
               "properties": {
                 "data": {
                   "properties": {
-                    "cdp_url": {
-                      "value": {
-                        "value": "cdp_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "cdp_ws_url": {
-                      "value": {
-                        "value": "cdp_ws_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "chromedriver_url": {
-                      "value": {
-                        "value": "chromedriver_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "configuration": {
-                      "properties": {
-                        "persist_profile": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "persist_profile_name": {
-                          "value": {
-                            "value": "default",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "persist_profile_tags": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "persist_profile_tags",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "profile_id": {
-                          "value": {
-                            "value": "linkedin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timeoutMinutes": {
-                          "value": {
-                            "value": 10,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
-                    },
-                    "current_usage": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "date_created": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
                     },
                     "id": {
                       "value": {
@@ -2446,42 +1830,9 @@
                       },
                       "type": "primitive"
                     },
-                    "last_activity": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "live_view": {
-                      "properties": {
-                        "airtop_browser_url": {
-                          "value": {
-                            "value": "airtop_browser_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "token": {
-                          "value": {
-                            "value": "token",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "status": {
                       "value": {
                         "value": "active",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "url",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -2493,34 +1844,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2535,49 +1858,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2739,85 +2026,9 @@
               "properties": {
                 "data": {
                   "properties": {
-                    "cdp_url": {
-                      "value": {
-                        "value": "cdp_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "cdp_ws_url": {
-                      "value": {
-                        "value": "cdp_ws_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "chromedriver_url": {
-                      "value": {
-                        "value": "chromedriver_url",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "configuration": {
-                      "properties": {
-                        "persist_profile": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "persist_profile_name": {
-                          "value": {
-                            "value": "default",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "persist_profile_tags": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": "persist_profile_tags",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "profile_id": {
-                          "value": {
-                            "value": "linkedin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timeoutMinutes": {
-                          "value": {
-                            "value": 10,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
-                    },
-                    "current_usage": {
-                      "value": {
-                        "value": 1000000,
-                        "type": "int64"
-                      },
-                      "type": "primitive"
-                    },
-                    "date_created": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
                     },
                     "id": {
                       "value": {
@@ -2826,42 +2037,9 @@
                       },
                       "type": "primitive"
                     },
-                    "last_activity": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "live_view": {
-                      "properties": {
-                        "airtop_browser_url": {
-                          "value": {
-                            "value": "airtop_browser_url",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "token": {
-                          "value": {
-                            "value": "token",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "status": {
                       "value": {
                         "value": "active",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "url",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -2873,34 +2051,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -2915,49 +2065,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -3535,34 +2649,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -3577,49 +2663,13 @@
                   "type": "array"
                 },
                 "meta": {
-                  "properties": {
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    }
-                  },
+                  "properties": {},
                   "type": "object"
                 },
                 "warnings": {
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -3798,34 +2848,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -3841,32 +2863,6 @@
                 },
                 "meta": {
                   "properties": {
-                    "clientProvided": {
-                      "properties": {
-                        "clientRequestId": {
-                          "value": {
-                            "value": "clientRequestId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timeThresholdMs": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": "success",
                       "type": "enum"
@@ -3897,34 +2893,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -4079,13 +3047,6 @@
                           },
                           "type": "object"
                         },
-                        "selectedText": {
-                          "value": {
-                            "value": "selectedText",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "title": {
                           "value": {
                             "value": "title",
@@ -4103,34 +3064,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -4146,32 +3079,6 @@
                 },
                 "meta": {
                   "properties": {
-                    "clientProvided": {
-                      "properties": {
-                        "clientRequestId": {
-                          "value": {
-                            "value": "clientRequestId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timeThresholdMs": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": "success",
                       "type": "enum"
@@ -4202,34 +3109,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -4400,34 +3279,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
@@ -4443,32 +3294,6 @@
                 },
                 "meta": {
                   "properties": {
-                    "clientProvided": {
-                      "properties": {
-                        "clientRequestId": {
-                          "value": {
-                            "value": "clientRequestId",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "timeThresholdMs": {
-                          "value": {
-                            "value": 1000000,
-                            "type": "int64"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "requestId": {
-                      "value": {
-                        "value": "requestId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "status": {
                       "value": "success",
                       "type": "enum"
@@ -4499,34 +3324,6 @@
                   "value": [
                     {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "value": {
-                                  "value": {
-                                    "value": "value",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "message": {
                           "value": {
                             "value": "message",
