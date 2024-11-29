@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Generated examples now omits all optional field values that are not explicitly set in specs.
+      type: fix
+  irVersion: 53
+  version: 0.45.1-rc1
+
+- changelogEntry:
+    - summary: |
         Generate valid examples using spec validation information; respect `null` entries during example generation.
       type: fix
   irVersion: 53

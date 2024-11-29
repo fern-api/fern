@@ -440,13 +440,13 @@ export class ExampleTypeFactory {
                     if (skipReadonly && schema.readonly) {
                         continue;
                     }
-
                     const required = property in requiredProperties;
+                    example = property in fullExample || required ? fullExample[property] : null;
                     const inExample = Object.keys(fullExample).includes(property);
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,
-                        example: fullExample[property],
+                        example,
                         visitedSchemaIds,
                         depth: depth + 1,
                         options: {
