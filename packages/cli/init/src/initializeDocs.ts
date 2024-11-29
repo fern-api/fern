@@ -1,5 +1,5 @@
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
-import { docsYml } from "@fern-api/configuration";
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";

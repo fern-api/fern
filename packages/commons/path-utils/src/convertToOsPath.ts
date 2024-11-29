@@ -1,5 +1,3 @@
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { RelativeFilePath } from "./RelativeFilePath";
 import { isBrowser } from "./isBrowser";
 
 // in this function, we ignore drive paths and roots, since many strings are passed as partial relative paths

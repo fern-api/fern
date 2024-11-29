@@ -22,7 +22,8 @@ export function buildHeader({
         schema: header.schema,
         context,
         fileContainingReference,
-        namespace
+        namespace,
+        declarationDepth: 0
     });
     const headerType = getTypeFromTypeReference(typeReference);
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");

@@ -1,4 +1,4 @@
-import { DEFINITION_DIRECTORY, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";

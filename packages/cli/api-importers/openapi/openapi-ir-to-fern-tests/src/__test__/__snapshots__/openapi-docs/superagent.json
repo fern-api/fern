@@ -262,6 +262,7 @@
         "types": {
           "HTTPValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
@@ -273,6 +274,7 @@
           },
           "ValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loc": {
                 "type": "list<ValidationErrorLocItem>",
@@ -288,6 +290,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -439,6 +442,7 @@ types:
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   ValidationError:
     properties:
       loc:

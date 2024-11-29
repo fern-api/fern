@@ -40,7 +40,13 @@ function addSchemas({
         }
 
         const declarationFile = getDeclarationFileForSchema(schema);
-        const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace });
+        const typeDeclaration = buildTypeDeclaration({
+            schema,
+            context,
+            declarationFile,
+            namespace,
+            declarationDepth: 0
+        });
 
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {

@@ -1,4 +1,4 @@
-import { GeneratorName } from "@fern-api/configuration";
+import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";

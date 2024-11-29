@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
