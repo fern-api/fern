@@ -6,7 +6,7 @@ on:
       - main
     paths: 
       - 'fern/**'
-      - 'packages/cli/docs-*'
+      - 'packages/cli/docs-**'
   workflow_dispatch:
     inputs:
       prNumber:
