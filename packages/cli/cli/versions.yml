@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Generate valid examples using spec validation information; respect `null` entries during example generation.
+      type: fix
+  irVersion: 53
+  version: 0.45.1-rc0
+
+- changelogEntry:
+    - summary: |
         Add `inline` field to type declarations in the Fern definition and IR.
         Add support for importing inline types from OpenAPI into Fern definition and IR.
       type: internal
