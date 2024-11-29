@@ -29401,7 +29401,6 @@ client.connect()
                         "current": 4523.48,
                       },
                       "balance_type": "ASSET",
-                      "bank_product_id": "bank_product_id",
                       "category": "CHECKING_ACCOUNT",
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
@@ -29418,27 +29417,11 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55Z",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
                       "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                       "institution": {
                         "name": "erebor_mx_retail",
                         "type": "bank",
                       },
-                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2022-02-01T20:25:47Z",
                       "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                       "loan_data": {
@@ -29579,7 +29562,6 @@ client.connect()
                         "current": 4049.85,
                       },
                       "balance_type": "LIABILITY",
-                      "bank_product_id": "bank_product_id",
                       "category": "CREDIT_CARD",
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
@@ -29589,34 +29571,16 @@ client.connect()
                         "cutting_date": "2021-04-11",
                         "end_date": "end_date",
                         "interest_rate": 4,
-                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 690,
-                        "monthly_payment": 1.1,
                         "next_payment_date": "2021-03-31",
                         "no_interest_payment": 11550.15,
                       },
                       "currency": "MXN",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55Z",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
                       "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                       "institution": {
                         "name": "erebor_mx_retail",
                         "type": "bank",
                       },
-                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2022-02-01T20:25:47Z",
                       "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                       "loan_data": {
@@ -29757,7 +29721,6 @@ client.connect()
                         "current": 34708.36,
                       },
                       "balance_type": "LIABILITY",
-                      "bank_product_id": "bank_product_id",
                       "category": "LOAN_ACCOUNT",
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
@@ -29774,27 +29737,11 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55Z",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
                       "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                       "institution": {
                         "name": "erebor_mx_retail",
                         "type": "bank",
                       },
-                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2022-02-01T20:25:47Z",
                       "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                       "loan_data": {
@@ -29936,7 +29883,6 @@ client.connect()
                         "current": 26305.33,
                       },
                       "balance_type": "ASSET",
-                      "bank_product_id": "bank_product_id",
                       "category": "PENSION_FUND_ACCOUNT",
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
@@ -29994,7 +29940,6 @@ client.connect()
                         "name": "erebor_br_retail",
                         "type": "bank",
                       },
-                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2021-03-09T08:19:05Z",
                       "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                       "loan_data": {
@@ -30135,7 +30080,6 @@ client.connect()
                         "current": 4978436.05,
                       },
                       "balance_type": "ASSET",
-                      "bank_product_id": "bank_product_id",
                       "category": "SAVINGS_ACCOUNT",
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
@@ -30152,27 +30096,11 @@ client.connect()
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "COP",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55Z",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
                       "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                       "institution": {
                         "name": "erebor_co_retail",
                         "type": "bank",
                       },
-                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2021-03-09T10:28:40Z",
                       "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                       "loan_data": {
@@ -30761,7 +30689,6 @@ client.connect()
                           "current": 4523.48,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "CHECKING_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -30778,17 +30705,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -30949,7 +30870,6 @@ client.connect()
                           "current": 4049.85,
                         },
                         "balance_type": "LIABILITY",
-                        "bank_product_id": "bank_product_id",
                         "category": "CREDIT_CARD",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -30959,24 +30879,16 @@ client.connect()
                           "cutting_date": "2021-04-11",
                           "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 690,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2021-03-31",
                           "no_interest_payment": 11550.15,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -31137,7 +31049,6 @@ client.connect()
                           "current": 34708.36,
                         },
                         "balance_type": "LIABILITY",
-                        "bank_product_id": "bank_product_id",
                         "category": "LOAN_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -31154,17 +31065,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -31326,7 +31231,6 @@ client.connect()
                           "current": 26305.33,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "PENSION_FUND_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -31384,7 +31288,6 @@ client.connect()
                           "name": "erebor_br_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T08:19:05Z",
                         "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                         "loan_data": {
@@ -31545,7 +31448,6 @@ client.connect()
                           "current": 4978436.05,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "SAVINGS_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -31562,17 +31464,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "COP",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                         "institution": {
                           "name": "erebor_co_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                         "loan_data": {
@@ -31777,7 +31673,6 @@ client.connect()
                           "current": 4523.48,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "CHECKING_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -31794,17 +31689,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "c21f3914-bcbe-44c4-a2e8-a5e33f6888d4",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -31956,7 +31845,6 @@ client.connect()
                           "current": 4049.85,
                         },
                         "balance_type": "LIABILITY",
-                        "bank_product_id": "bank_product_id",
                         "category": "CREDIT_CARD",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -31966,24 +31854,16 @@ client.connect()
                           "cutting_date": "2021-04-11",
                           "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 690,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2021-03-31",
                           "no_interest_payment": 11550.15,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -32135,7 +32015,6 @@ client.connect()
                           "current": 34708.36,
                         },
                         "balance_type": "LIABILITY",
-                        "bank_product_id": "bank_product_id",
                         "category": "LOAN_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -32152,17 +32031,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "0f82c5db-13a2-43c7-a69a-e036160aba3a",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2022-02-01T20:25:47Z",
                         "link": "57f212dc-1ba4-407f-b7f0-15a5e5ff17ae",
                         "loan_data": {
@@ -32315,7 +32188,6 @@ client.connect()
                           "current": 26305.33,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "PENSION_FUND_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -32373,7 +32245,6 @@ client.connect()
                           "name": "erebor_br_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T08:19:05Z",
                         "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                         "loan_data": {
@@ -32525,7 +32396,6 @@ client.connect()
                           "current": 4978436.05,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "SAVINGS_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -32542,17 +32412,11 @@ client.connect()
                           "no_interest_payment": 2690.83,
                         },
                         "currency": "COP",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "3d5b0f90-90df-455d-a647-5b74feb746f6",
                         "institution": {
                           "name": "erebor_co_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "fbbb5ea7-4605-437f-b5c5-667fd037a303",
                         "loan_data": {
@@ -33133,15 +32997,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -33249,8 +33109,6 @@ service:
                   no_interest_payment: 11550.15
                   interest_rate: 4
                   end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -33279,15 +33137,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -33426,15 +33280,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -33598,8 +33448,6 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -33737,15 +33585,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -33937,15 +33781,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34062,8 +33902,6 @@ service:
                   no_interest_payment: 11550.15
                   interest_rate: 4
                   end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -34092,15 +33930,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34248,15 +34082,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34429,8 +34259,6 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34577,15 +34405,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34782,22 +34606,11 @@ service:
                 cutting_date: cutting_date
                 last_payment_date: last_payment_date
                 no_interest_payment: 1.1
-              funds_data:
-                - collected_at: '2020-04-23T21:32:55Z'
-                  name: FIX X
-                  type: CNPJ
-                  public_identifications:
-                    - name: CNPJ
-                      value: 05.954.445/0221-68
-                  balance: 88427.94
-                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
                 anticipated: 1393.46
                 collected_at: '2022-02-09T08:45:50Z'
-              bank_product_id: bank_product_id
-              internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -34896,8 +34709,6 @@ service:
                 no_interest_payment: 11550.15
                 interest_rate: 4
                 end_date: end_date
-                monthly_payment: 1.1
-                last_payment_date: last_payment_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -34926,22 +34737,11 @@ service:
                 cutting_date: cutting_date
                 last_payment_date: last_payment_date
                 no_interest_payment: 1.1
-              funds_data:
-                - collected_at: '2020-04-23T21:32:55Z'
-                  name: FIX X
-                  type: CNPJ
-                  public_identifications:
-                    - name: CNPJ
-                      value: 05.954.445/0221-68
-                  balance: 88427.94
-                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
                 anticipated: 1393.46
                 collected_at: '2022-02-09T08:45:50Z'
-              bank_product_id: bank_product_id
-              internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -35071,22 +34871,11 @@ service:
                 cutting_date: cutting_date
                 last_payment_date: last_payment_date
                 no_interest_payment: 1.1
-              funds_data:
-                - collected_at: '2020-04-23T21:32:55Z'
-                  name: FIX X
-                  type: CNPJ
-                  public_identifications:
-                    - name: CNPJ
-                      value: 05.954.445/0221-68
-                  balance: 88427.94
-                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
                 anticipated: 1393.46
                 collected_at: '2022-02-09T08:45:50Z'
-              bank_product_id: bank_product_id
-              internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -35241,8 +35030,6 @@ service:
                 available: 800.37
                 anticipated: 1393.46
                 collected_at: '2022-02-09T08:45:50Z'
-              bank_product_id: bank_product_id
-              internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -35371,22 +35158,11 @@ service:
                 cutting_date: cutting_date
                 last_payment_date: last_payment_date
                 no_interest_payment: 1.1
-              funds_data:
-                - collected_at: '2020-04-23T21:32:55Z'
-                  name: FIX X
-                  type: CNPJ
-                  public_identifications:
-                    - name: CNPJ
-                      value: 05.954.445/0221-68
-                  balance: 88427.94
-                  percentage: 100
               receivables_data:
                 current: 2193.83
                 available: 800.37
                 anticipated: 1393.46
                 collected_at: '2022-02-09T08:45:50Z'
-              bank_product_id: bank_product_id
-              internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -35974,7 +35750,6 @@ client.connect()
                           "current": 146.81,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "CHECKING_ACCOUNT",
                         "collected_at": "2022-06-17T03:20:41Z",
                         "created_at": "2021-10-27T16:18:15Z",
@@ -36055,7 +35830,6 @@ client.connect()
                       "collected_at": "2022-04-06T23:30:51Z",
                       "current_balance": 4.25,
                       "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                      "statement": "statement",
                       "value_date": "2022-04-04",
                     },
                   },
@@ -36210,7 +35984,6 @@ client.connect()
                     "body": {
                       "count": 385,
                       "next": "https://sandbox.belvo.com/api/balances/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -36248,7 +36021,6 @@ client.connect()
                           "collected_at": "2022-04-06T23:30:51Z",
                           "current_balance": 4.25,
                           "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                          "statement": "statement",
                           "value_date": "2022-04-04",
                         },
                       ],
@@ -36533,7 +36305,6 @@ client.connect()
                             "current": 146.81,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2022-06-17T03:20:41Z",
                           "created_at": "2021-10-27T16:18:15Z",
@@ -36583,7 +36354,6 @@ client.connect()
                         "collected_at": "2022-04-06T23:30:51Z",
                         "current_balance": 4.25,
                         "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                        "statement": "statement",
                         "value_date": "2022-04-04",
                       },
                     ],
@@ -36739,7 +36509,6 @@ client.connect()
                             "current": 146.81,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2022-06-17T03:20:41Z",
                           "created_at": "2021-10-27T16:18:15Z",
@@ -36789,7 +36558,6 @@ client.connect()
                         "collected_at": "2022-04-06T23:30:51Z",
                         "current_balance": 4.25,
                         "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                        "statement": "statement",
                         "value_date": "2022-04-04",
                       },
                     ],
@@ -37086,7 +36854,6 @@ service:
             body:
               count: 385
               next: https://sandbox.belvo.com/api/balances/?page=2
-              previous: previous
               results:
                 - id: b834e69b-1aa4-465d-969c-07c886a4fbed
                   account:
@@ -37119,7 +36886,6 @@ service:
                   value_date: '2022-04-04'
                   balance: 4.25
                   current_balance: 4.25
-                  statement: statement
                   collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
@@ -37324,12 +37090,10 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
                   internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
                 value_date: '2022-04-04'
                 balance: 4.25
                 current_balance: 4.25
-                statement: statement
                 collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
@@ -37501,12 +37265,10 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
                   internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
                 value_date: '2022-04-04'
                 balance: 4.25
                 current_balance: 4.25
-                statement: statement
                 collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
@@ -37698,12 +37460,10 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
                 internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
               value_date: '2022-04-04'
               balance: 4.25
               current_balance: 4.25
-              statement: statement
               collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
@@ -38299,7 +38059,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38349,7 +38108,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38397,7 +38155,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "created_at": "2023-02-15T07:52:31Z",
@@ -38651,7 +38408,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   created_at: '2023-02-15T07:52:31Z'
@@ -38691,7 +38447,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2023-02-15T07:52:31Z'
@@ -38729,7 +38484,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2023-02-15T07:52:31Z'
@@ -39052,7 +38806,6 @@ types:
                           "currency": "BRL",
                           "description": "OXXO SP",
                           "institution": "BCO DO BRASIL",
-                          "mcc": 2345,
                           "merchant": {
                             "logo": "https://storage.googleapis.com/new-cdn.mercafacil.com/wl_assets/dynamic/65d84ba0-a2f3-11ed-8928-dd578f525074-MOBILE_1OCo1.png",
                             "merchant_name": "Merchants R Us Global",
@@ -39205,7 +38958,6 @@ service:
                   amount: 999.9
                   currency: BRL
                   institution: BCO DO BRASIL
-                  mcc: 2345
                   category: Income & Payments
                   subcategory: Freelance
                   merchant:
@@ -39463,7 +39215,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
@@ -39513,7 +39264,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
@@ -39563,7 +39313,6 @@ docs: >-
                     "body": {
                       "count": 110,
                       "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": "Calle Carlos Vives 432, 80300 Bogota",
@@ -39806,7 +39555,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -39847,7 +39595,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -39888,7 +39635,6 @@ service:
             body:
               count: 110
               next: https://api.belvo.com/payments/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
                   created_at: '2022-02-09T08:45:50Z'
@@ -45833,7 +45579,6 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Pago",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                      "payment_method": "PUE",
                       "payment_method_description": "payment_method_description",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
@@ -46394,7 +46139,6 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Traslado",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                      "payment_method": "PUE",
                       "payment_method_description": "payment_method_description",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
@@ -46611,7 +46355,6 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -46829,7 +46572,6 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -46869,7 +46611,6 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Pago",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                          "payment_method": "PUE",
                           "payment_method_description": "payment_method_description",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
@@ -47048,7 +46789,6 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47267,7 +47007,6 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47485,7 +47224,6 @@ client.connect()
                     "body": {
                       "count": 110,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cancelation_status": "cancelation_status",
@@ -47525,7 +47263,6 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Traslado",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                          "payment_method": "PUE",
                           "payment_method_description": "payment_method_description",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
@@ -48342,7 +48079,6 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Pago",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                        "payment_method": "PUE",
                         "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
@@ -48958,7 +48694,6 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Traslado",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                        "payment_method": "PUE",
                         "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
@@ -49374,7 +49109,6 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -49563,7 +49297,6 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -49586,7 +49319,6 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
-                  payment_method: PUE
                   payment_method_description: payment_method_description
                   usage: P01
                   version: '3.3'
@@ -49753,7 +49485,6 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -49943,7 +49674,6 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -50132,7 +49862,6 @@ service:
             body:
               count: 110
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
                   link: 1bd948f7-245d-4313-b604-34d1044cb908
@@ -50155,7 +49884,6 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
-                  payment_method: PUE
                   payment_method_description: payment_method_description
                   usage: G03
                   version: '3.3'
@@ -50576,7 +50304,6 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
-                payment_method: PUE
                 payment_method_description: payment_method_description
                 usage: P01
                 version: '3.3'
@@ -51096,7 +50823,6 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
-                payment_method: PUE
                 payment_method_description: payment_method_description
                 usage: G03
                 version: '3.3'
@@ -51667,7 +51393,6 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
-              payment_method: PUE
               payment_method_description: payment_method_description
               usage: P01
               version: '3.3'
@@ -52138,7 +51863,6 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
-              payment_method: PUE
               payment_method_description: payment_method_description
               usage: G03
               version: '3.3'
@@ -55363,13 +55087,10 @@ Cancun, COL 10447",
                         "document_type": "CPF",
                       },
                       "email": "maria@acme.com",
-                      "first_name": "first_name",
                       "id": "2b22f123-7c3a-4518-9ac2-863eb5d4613c",
                       "internal_identification": "7e5838e4",
-                      "last_name": "last_name",
                       "link": "c38fb126-fc98-4d6c-8c80-587a97dd56cf",
                       "phone_number": "90090508357",
-                      "second_last_name": "second_last_name",
                     },
                   },
                 },
@@ -55510,7 +55231,6 @@ client.connect()
                     "body": {
                       "count": 108,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": "Retorno Gran Canaria 453 723
@@ -55523,13 +55243,10 @@ Cancun, COL 10447",
                             "document_type": "CPF",
                           },
                           "email": "maria@acme.com",
-                          "first_name": "first_name",
                           "id": "c749315b-eec2-435d-a458-06912878564f",
                           "internal_identification": "7e5838e4",
-                          "last_name": "last_name",
                           "link": "c38fb126-fc98-4d6c-8c80-587a97dd56cf",
                           "phone_number": "90090508357",
-                          "second_last_name": "second_last_name",
                         },
                       ],
                     },
@@ -55747,13 +55464,10 @@ Cancun, COL 10447",
                           "document_type": "CPF",
                         },
                         "email": "maria@acme.com",
-                        "first_name": "first_name",
                         "id": "2b22f123-7c3a-4518-9ac2-863eb5d4613c",
                         "internal_identification": "7e5838e4",
-                        "last_name": "last_name",
                         "link": "c38fb126-fc98-4d6c-8c80-587a97dd56cf",
                         "phone_number": "90090508357",
-                        "second_last_name": "second_last_name",
                       },
                     ],
                   },
@@ -55901,13 +55615,10 @@ Cancun, COL 10447",
                           "document_type": "CPF",
                         },
                         "email": "maria@acme.com",
-                        "first_name": "first_name",
                         "id": "2b22f123-7c3a-4518-9ac2-863eb5d4613c",
                         "internal_identification": "7e5838e4",
-                        "last_name": "last_name",
                         "link": "c38fb126-fc98-4d6c-8c80-587a97dd56cf",
                         "phone_number": "90090508357",
-                        "second_last_name": "second_last_name",
                       },
                     ],
                   },
@@ -56069,7 +55780,6 @@ service:
             body:
               count: 108
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: c749315b-eec2-435d-a458-06912878564f
                   link: c38fb126-fc98-4d6c-8c80-587a97dd56cf
@@ -56085,9 +55795,6 @@ service:
                   document_id:
                     document_type: CPF
                     document_number: 235578435-S
-                  first_name: first_name
-                  last_name: last_name
-                  second_last_name: second_last_name
           code-samples:
             - language: cURL
               code: |
@@ -56212,9 +55919,6 @@ service:
                 document_id:
                   document_type: CPF
                   document_number: 235578435-S
-                first_name: first_name
-                last_name: last_name
-                second_last_name: second_last_name
           code-samples:
             - language: cURL
               code: |
@@ -56348,9 +56052,6 @@ service:
                 document_id:
                   document_type: CPF
                   document_number: 235578435-S
-                first_name: first_name
-                last_name: last_name
-                second_last_name: second_last_name
           code-samples:
             - language: cURL
               code: |
@@ -56488,9 +56189,6 @@ service:
               document_id:
                 document_type: CPF
                 document_number: 235578435-S
-              first_name: first_name
-              last_name: last_name
-              second_last_name: second_last_name
           code-samples:
             - language: cURL
               code: |
@@ -70729,7 +70427,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -71035,7 +70732,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -71195,7 +70891,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -71363,7 +71058,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "cifras_cierre_ejercicio": {
@@ -71636,7 +71330,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -73951,7 +73644,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 02589c41-ba22-4d44-8558-8111cc751318
                   link: 19697249-01b8-443e-a451-76bfc5fbeebf
@@ -74171,7 +73863,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74309,7 +74000,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74455,7 +74145,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 02589c41-ba22-4d44-8558-8111cc751318
                   collected_at: '2022-02-09T08:45:50Z'
@@ -74693,7 +74382,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
@@ -77881,7 +77569,6 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
-                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -77896,7 +77583,6 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Asalariado",
-                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -77907,13 +77593,11 @@ client.connect()
                       "link": "401d5a8e-79e2-472e-a1ca-8f4646f5cb24",
                       "obligations": [
                         {
-                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
-                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -77939,7 +77623,6 @@ client.connect()
                         "phone": "667507132",
                         "rfc": "GGTF770303G7",
                         "second_last_name": "Robin",
-                        "social_name": "John Doe SA DE CV",
                         "start_operations_date": "2000-06-01",
                         "status_padron": "ACTIVO",
                       },
@@ -78039,7 +77722,6 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
-                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -78054,7 +77736,6 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Otros servicios profesionales, científicos y técnicos",
-                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -78065,13 +77746,11 @@ client.connect()
                       "link": "0b2edc42-7214-4c68-b22e-ae6885bf7c07",
                       "obligations": [
                         {
-                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
-                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -78088,15 +77767,10 @@ client.connect()
                         },
                       ],
                       "tax_payer_information": {
-                        "commercial_name": "Jar Jar Transport",
-                        "curp": "curp",
                         "email": "contact@acne.com",
-                        "first_last_name": "DOE",
                         "last_status_change_date": "1995-08-01",
-                        "name": "JOHN",
                         "phone": "555507122",
                         "rfc": "GHTF980303F7",
-                        "second_last_name": "SCHMOE",
                         "social_name": "ACNE SA DE CV",
                         "start_operations_date": "1995-08-01",
                         "status_padron": "ACTIVO",
@@ -78237,7 +77911,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": {
@@ -78404,7 +78077,6 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "address": {
@@ -78675,7 +78347,6 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
-                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -78690,7 +78361,6 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Asalariado",
-                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -78701,13 +78371,11 @@ client.connect()
                       "link": "401d5a8e-79e2-472e-a1ca-8f4646f5cb24",
                       "obligations": [
                         {
-                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
-                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -78733,7 +78401,6 @@ client.connect()
                         "phone": "667507132",
                         "rfc": "GGTF770303G7",
                         "second_last_name": "Robin",
-                        "social_name": "John Doe SA DE CV",
                         "start_operations_date": "2000-06-01",
                         "status_padron": "ACTIVO",
                       },
@@ -78843,7 +78510,6 @@ client.connect()
                         ],
                         "exterior_number": "4360",
                         "interior_number": "PLANTA BAJA",
-                        "locality": "none",
                         "municipality": "ALTOS DE MIRAMAR",
                         "postal_code": "21255",
                         "state": "CIUDAD DE MEXICO",
@@ -78858,7 +78524,6 @@ client.connect()
                       "economic_activity": [
                         {
                           "economic_activity": "Otros servicios profesionales, científicos y técnicos",
-                          "end_date": "end_date",
                           "initial_date": "2014-11-05",
                           "order": "1",
                           "percentage": "100",
@@ -78869,13 +78534,11 @@ client.connect()
                       "link": "0b2edc42-7214-4c68-b22e-ae6885bf7c07",
                       "obligations": [
                         {
-                          "end_date": "end_date",
                           "expiration": "Conjuntamente con la declaración anual del ejercicio.",
                           "initial_date": "2004-03-31",
                           "obligation": "Declaración informativa de IVA con la anual de ISR",
                         },
                         {
-                          "end_date": "end_date",
                           "expiration": "A más tardar el día 17 del mes inmediato posterior al periodo que corresponda.",
                           "initial_date": "2004-03-31",
                           "obligation": "Pago definitivo mensual de IVA.",
@@ -78892,15 +78555,10 @@ client.connect()
                         },
                       ],
                       "tax_payer_information": {
-                        "commercial_name": "Jar Jar Transport",
-                        "curp": "curp",
                         "email": "contact@acne.com",
-                        "first_last_name": "DOE",
                         "last_status_change_date": "1995-08-01",
-                        "name": "JOHN",
                         "phone": "555507122",
                         "rfc": "GHTF980303F7",
-                        "second_last_name": "SCHMOE",
                         "social_name": "ACNE SA DE CV",
                         "start_operations_date": "1995-08-01",
                         "status_padron": "ACTIVO",
@@ -79124,7 +78782,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: e88d29d1-3dc6-407f-825c-a9b50453e349
                   link: 401d5a8e-79e2-472e-a1ca-8f4646f5cb24
@@ -79265,7 +78922,6 @@ service:
             body:
               count: 101
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 6de34cb3-bf0d-445d-b832-7ec7781e2c6f
                   link: 0b2edc42-7214-4c68-b22e-ae6885bf7c07
@@ -79462,7 +79118,6 @@ service:
                 status_padron: ACTIVO
                 last_status_change_date: '2000-06-01'
                 commercial_name: Alfredo Gonzalo Robin
-                social_name: John Doe SA DE CV
                 email: alfredo@robin.com
                 phone: '667507132'
               address:
@@ -79472,7 +79127,6 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
-                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79481,7 +79135,6 @@ service:
               economic_activity:
                 - economic_activity: Asalariado
                   initial_date: '2014-11-05'
-                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79494,13 +79147,11 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
-                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
-                  end_date: end_date
               digital_stamp: >-
                 ||2020/09/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79596,14 +79247,9 @@ service:
               id_cif: '2274235873432'
               tax_payer_information:
                 rfc: GHTF980303F7
-                curp: curp
-                name: JOHN
-                first_last_name: DOE
-                second_last_name: SCHMOE
                 start_operations_date: '1995-08-01'
                 status_padron: ACTIVO
                 last_status_change_date: '1995-08-01'
-                commercial_name: Jar Jar Transport
                 social_name: ACNE SA DE CV
                 email: contact@acne.com
                 phone: '555507122'
@@ -79614,7 +79260,6 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
-                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79623,7 +79268,6 @@ service:
               economic_activity:
                 - economic_activity: Otros servicios profesionales, científicos y técnicos
                   initial_date: '2014-11-05'
-                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79634,13 +79278,11 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
-                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
-                  end_date: end_date
               digital_stamp: >-
                 ||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79780,7 +79422,6 @@ service:
                 status_padron: ACTIVO
                 last_status_change_date: '2000-06-01'
                 commercial_name: Alfredo Gonzalo Robin
-                social_name: John Doe SA DE CV
                 email: alfredo@robin.com
                 phone: '667507132'
               address:
@@ -79790,7 +79431,6 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
-                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79799,7 +79439,6 @@ service:
               economic_activity:
                 - economic_activity: Asalariado
                   initial_date: '2014-11-05'
-                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79812,13 +79451,11 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
-                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
-                  end_date: end_date
               digital_stamp: >-
                 ||2020/09/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -79904,14 +79541,9 @@ service:
               id_cif: '2274235873432'
               tax_payer_information:
                 rfc: GHTF980303F7
-                curp: curp
-                name: JOHN
-                first_last_name: DOE
-                second_last_name: SCHMOE
                 start_operations_date: '1995-08-01'
                 status_padron: ACTIVO
                 last_status_change_date: '1995-08-01'
-                commercial_name: Jar Jar Transport
                 social_name: ACNE SA DE CV
                 email: contact@acne.com
                 phone: '555507122'
@@ -79922,7 +79554,6 @@ service:
                 exterior_number: '4360'
                 interior_number: PLANTA BAJA
                 suburb: BUENAVENTURA
-                locality: none
                 municipality: ALTOS DE MIRAMAR
                 state: CIUDAD DE MEXICO
                 between_street:
@@ -79931,7 +79562,6 @@ service:
               economic_activity:
                 - economic_activity: Otros servicios profesionales, científicos y técnicos
                   initial_date: '2014-11-05'
-                  end_date: end_date
                   order: '1'
                   percentage: '100'
               regimes:
@@ -79942,13 +79572,11 @@ service:
                 - obligation: Declaración informativa de IVA con la anual de ISR
                   expiration: Conjuntamente con la declaración anual del ejercicio.
                   initial_date: '2004-03-31'
-                  end_date: end_date
                 - obligation: Pago definitivo mensual de IVA.
                   expiration: >-
                     A más tardar el día 17 del mes inmediato posterior al
                     periodo que corresponda.
                   initial_date: '2004-03-31'
-                  end_date: end_date
               digital_stamp: >-
                 ||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN
                 FISCAL|2044441088666600000034||
@@ -80673,7 +80301,6 @@ client.connect()
                           "current": 4.09,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "bank_product_id",
                         "category": "SAVINGS_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -80871,7 +80498,6 @@ client.connect()
                           "current": 5874.13,
                         },
                         "balance_type": "LIABILITY",
-                        "bank_product_id": "bank_product_id",
                         "category": "CREDIT_CARD",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -80879,26 +80505,17 @@ client.connect()
                           "collected_at": "2022-02-09T08:45:50Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-01",
                           "no_interest_payment": 37390.83,
                         },
                         "currency": "MXN",
-                        "funds_data": [
-                          {
-                            "collected_at": "2020-04-23T21:32:55Z",
-                          },
-                        ],
                         "id": "02589c41-ba22-4d44-8558-8111cc751318",
                         "institution": {
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "internal_identification",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
@@ -81159,7 +80776,6 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -81361,7 +80977,6 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -81562,7 +81177,6 @@ client.connect()
                     "body": {
                       "count": 198,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                      "previous": "previous",
                       "results": [
                         {
                           "account": {
@@ -82220,7 +81834,6 @@ client.connect()
                             "current": 4.09,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "SAVINGS_ACCOUNT",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -82407,7 +82020,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "LIABILITY",
-                          "bank_product_id": "bank_product_id",
                           "category": "CREDIT_CARD",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -82421,17 +82033,11 @@ client.connect()
                             "no_interest_payment": 37390.83,
                           },
                           "currency": "MXN",
-                          "funds_data": [
-                            {
-                              "collected_at": "2020-04-23T21:32:55Z",
-                            },
-                          ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "institution": {
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -82833,7 +82439,6 @@ client.connect()
                             "current": 4.09,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "SAVINGS_ACCOUNT",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -83025,7 +82630,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "LIABILITY",
-                          "bank_product_id": "bank_product_id",
                           "category": "CREDIT_CARD",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -83039,17 +82643,11 @@ client.connect()
                             "no_interest_payment": 37390.83,
                           },
                           "currency": "MXN",
-                          "funds_data": [
-                            {
-                              "collected_at": "2020-04-23T21:32:55Z",
-                            },
-                          ],
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "institution": {
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -83679,7 +83277,6 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: e5588958-48f2-427c-9300-945207532f5d
                   internal_identification: LCzHexIyHi
@@ -83859,7 +83456,6 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: e5588958-48f2-427c-9300-945207532f5d
                   internal_identification: '0089608418'
@@ -84038,7 +83634,6 @@ service:
             body:
               count: 198
               next: https://sandbox.belvo.com/api/{endpoint}/?page=2
-              previous: previous
               results:
                 - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
                   internal_identification: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
@@ -84428,7 +84023,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
                   internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
@@ -84583,15 +84177,11 @@ service:
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     contract_end_date: '2027-10-01'
-                  funds_data:
-                    - collected_at: '2020-04-23T21:32:55Z'
                   receivables_data:
                     current: 2193.83
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
                 collected_at: '2022-02-09T08:45:50Z'
                 created_at: '2022-02-09T08:45:50Z'
                 value_date: '2019-10-23'
@@ -85096,7 +84686,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
                   internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
@@ -85246,15 +84835,11 @@ service:
                     outstanding_balance: 182000
                     monthly_payment: 1000
                     contract_end_date: '2027-10-01'
-                  funds_data:
-                    - collected_at: '2020-04-23T21:32:55Z'
                   receivables_data:
                     current: 2193.83
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
                 collected_at: '2022-02-09T08:45:50Z'
                 created_at: '2022-02-09T08:45:50Z'
                 value_date: '2019-10-23'
@@ -85634,7 +85219,6 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
                 internal_identification: '996685090015'
               collected_at: '2022-07-20T22:09:33Z'
               created_at: '2022-07-20T22:09:35Z'
@@ -85760,9 +85344,6 @@ service:
                   minimum_payment: 2400
                   no_interest_payment: 37390.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -85791,15 +85372,11 @@ service:
                   cutting_date: cutting_date
                   last_payment_date: last_payment_date
                   no_interest_payment: 1.1
-                funds_data:
-                  - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
                   current: 2193.83
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: bank_product_id
-                internal_identification: internal_identification
               collected_at: '2022-02-09T08:45:50Z'
               created_at: '2022-02-09T08:45:50Z'
               value_date: '2019-10-23'

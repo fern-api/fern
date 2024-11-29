@@ -2239,7 +2239,6 @@ Log.d("TAG", group.toString())
                     "body": {
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "datetime_created": "2018-09-12T10:03:38Z",
-                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files": [
                         {
                           "content_info": {
@@ -2441,7 +2440,6 @@ Log.d("TAG", group.toString())
                     "body": {
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "datetime_created": "2018-09-12T10:03:38Z",
-                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files": [
                         {
                           "content_info": {
@@ -2599,7 +2597,6 @@ service:
             body:
               id: 0d712319-b970-4602-850c-bae1ced521a6~1
               datetime_created: '2018-09-12T10:03:38Z'
-              datetime_stored: '2024-01-15T09:30:00Z'
               files_count: 1
               cdn_url: https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/
               url: >-
@@ -2781,7 +2778,6 @@ service:
             body:
               id: 0d712319-b970-4602-850c-bae1ced521a6~1
               datetime_created: '2018-09-12T10:03:38Z'
-              datetime_stored: '2024-01-15T09:30:00Z'
               files_count: 1
               cdn_url: https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/
               url: >-

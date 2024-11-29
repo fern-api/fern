@@ -125,6 +125,9 @@ export class ExampleTypeFactory {
                 ) {
                     return undefined;
                 }
+                if (Object.is(example, null)) {
+                    return undefined;
+                }
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,

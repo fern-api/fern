@@ -3265,7 +3265,6 @@ docs: Search
                         "columns": [
                           "id",
                         ],
-                        "lastInsertRowid": "lastInsertRowid",
                         "rows": [
                           [
                             1,
@@ -3636,7 +3635,6 @@ service:
                 rows:
                   - - 1
                 rowsAffected: 0
-                lastInsertRowid: lastInsertRowid
   source:
     openapi: ../openapi.yml
   display-name: sqlite

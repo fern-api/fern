@@ -1133,23 +1133,9 @@
                           },
                           "type": "primitive"
                         },
-                        "street_address2": {
-                          "value": {
-                            "value": "STE 2918",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "city": {
                           "value": {
                             "value": "Shanghai",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "MN",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1164,13 +1150,6 @@
                         "country_code": {
                           "value": {
                             "value": "CN",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "zip": {
-                          "value": {
-                            "value": "56307",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1215,23 +1194,9 @@
                           },
                           "type": "primitive"
                         },
-                        "street_address2": {
-                          "value": {
-                            "value": "STE 2918",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "city": {
                           "value": {
                             "value": "Shanghai",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "MN",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1246,13 +1211,6 @@
                         "country_code": {
                           "value": {
                             "value": "CN",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "zip": {
-                          "value": {
-                            "value": "56307",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -2398,13 +2356,6 @@
                     "prev": {
                       "value": {
                         "value": "https://api.flexport.com/booking_line_items?page=12&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/booking_line_items?page=3&per=10",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -4672,13 +4623,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/bookings?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "value": [
                         {
@@ -5134,13 +5078,6 @@
                                           },
                                           "type": "primitive"
                                         },
-                                        "ref": {
-                                          "value": {
-                                            "value": "address_ref_x",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
                                         "unlocode": {
                                           "value": {
                                             "value": "CNSZP",
@@ -5247,13 +5184,6 @@
                                         "timezone": {
                                           "value": {
                                             "value": "America/Los_Angeles",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
-                                        "ref": {
-                                          "value": {
-                                            "value": "address_ref_x",
                                             "type": "string"
                                           },
                                           "type": "primitive"
@@ -6868,10 +6798,6 @@
                       "value": "archived",
                       "type": "enum"
                     },
-                    "quote_status": {
-                      "value": "pending_quote",
-                      "type": "enum"
-                    },
                     "shipper_entity": {
                       "properties": {
                         "_object": {
@@ -7163,13 +7089,6 @@
                         }
                       },
                       "type": "object"
-                    },
-                    "notify_party": {
-                      "value": {
-                        "value": "John Doe | john@example.com | 905-555-1234",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "transportation_mode": {
                       "value": "ocean",
@@ -7553,142 +7472,6 @@
                             }
                           ],
                           "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "air_booking": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/air/booking",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "incoterm": {
-                          "value": "EXW",
-                          "type": "enum"
-                        },
-                        "wants_pickup_service": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "wants_delivery_service": {
-                          "value": {
-                            "value": false,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "origin_port": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/place",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "ORD - Chicago - IL",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "destination_port": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/place",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "ORD - Chicago - IL",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "product_descriptions": {
-                          "value": [
-                            {
-                              "properties": {
-                                "_object": {
-                                  "value": {
-                                    "value": "/bookings/product_descriptions",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description": {
-                                  "value": {
-                                    "value": "Wristwatches",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description_for_export_customs": {
-                                  "value": {
-                                    "value": "手表",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description_for_export_customs_locale": {
-                                  "value": {
-                                    "value": "zh_CN",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "trucking_booking": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/trucking/booking",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_ftl": {
-                          "value": {
-                            "value": false,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "payment_terms": {
-                          "value": "collect",
-                          "type": "enum"
-                        },
-                        "description_of_products": {
-                          "value": {
-                            "value": "Wristwatches",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -9547,142 +9330,6 @@
                       },
                       "type": "object"
                     },
-                    "air_booking": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/air/booking",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "incoterm": {
-                          "value": "EXW",
-                          "type": "enum"
-                        },
-                        "wants_pickup_service": {
-                          "value": {
-                            "value": true,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "wants_delivery_service": {
-                          "value": {
-                            "value": false,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "origin_port": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/place",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "ORD - Chicago - IL",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "destination_port": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/place",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "ORD - Chicago - IL",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "product_descriptions": {
-                          "value": [
-                            {
-                              "properties": {
-                                "_object": {
-                                  "value": {
-                                    "value": "/bookings/product_descriptions",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description": {
-                                  "value": {
-                                    "value": "Wristwatches",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description_for_export_customs": {
-                                  "value": {
-                                    "value": "手表",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "description_for_export_customs_locale": {
-                                  "value": {
-                                    "value": "zh_CN",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "trucking_booking": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/trucking/booking",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "is_ftl": {
-                          "value": {
-                            "value": false,
-                            "type": "boolean"
-                          },
-                          "type": "primitive"
-                        },
-                        "payment_terms": {
-                          "value": "collect",
-                          "type": "enum"
-                        },
-                        "description_of_products": {
-                          "value": {
-                            "value": "Wristwatches",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "origin_address": {
                       "properties": {
                         "_object": {
@@ -11232,13 +10879,6 @@
                     "prev": {
                       "value": {
                         "value": "https://api.flexport.com/commercial_invoices?page=1&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/commercial_invoices?page=3&per=10",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -15504,13 +15144,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/customs_entries?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "value": [
                         {
@@ -16754,13 +16387,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/documents?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "total_count": {
                       "value": {
                         "value": 121,
@@ -17762,24 +17388,10 @@
                       },
                       "type": "primitive"
                     },
-                    "memo": {
-                      "value": {
-                        "value": "memo",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "file_link": {
                       "value": {
                         "value": "https://api.flexport.com/documents/ABC123/download",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "archived_at": {
-                      "value": {
-                        "value": "2024-01-15T09:30:00Z",
-                        "type": "datetime"
                       },
                       "type": "primitive"
                     },
@@ -20771,13 +20383,6 @@
                     "_object": {
                       "value": {
                         "value": "/api/collections/paginated",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "https://api.flexport.com/invoices?page=1&per=10",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -24287,13 +23892,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/network/companies?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "total_count": {
                       "value": {
                         "value": 121,
@@ -27138,13 +26736,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/network/company_entities?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "total_count": {
                       "value": {
                         "value": 121,
@@ -29575,13 +29166,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/network/contacts?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "total_count": {
                       "value": {
                         "value": 121,
@@ -31868,13 +31452,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/network/locations?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "total_count": {
                       "value": {
                         "value": 11,
@@ -33781,13 +33358,6 @@
                         "street_address": {
                           "value": {
                             "value": "2 World Way",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "street_address2": {
-                          "value": {
-                            "value": "STE 2918",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -41921,13 +41491,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/purchase_order_line_items?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "value": [
                         {
@@ -42364,13 +41927,6 @@
                                     "timezone": {
                                       "value": {
                                         "value": "America/Los_Angeles",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "ref": {
-                                      "value": {
-                                        "value": "address_ref_x",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -43198,124 +42754,6 @@
                       },
                       "type": "primitive"
                     },
-                    "origin_port": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/place",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "ORD - Chicago - IL",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "address": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/address",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "street_address": {
-                              "value": {
-                                "value": "1641 Settlers Lane",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "city": {
-                              "value": {
-                                "value": "Albany",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country": {
-                              "value": {
-                                "value": "United States of America",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country_code": {
-                              "value": {
-                                "value": "US",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "timezone": {
-                              "value": {
-                                "value": "America/Los_Angeles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref": {
-                              "value": {
-                                "value": "address_ref_x",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "properties": {
-                                "_object": {
-                                  "value": {
-                                    "value": "/air/port",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "port_code": {
-                                  "value": {
-                                    "value": "3901",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "country_code": {
-                                  "value": {
-                                    "value": "US",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "iata_code": {
-                                  "value": {
-                                    "value": "LAX",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "icao_code": {
-                                  "value": {
-                                    "value": "KLAX",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "origin_location": {
                       "properties": {
                         "_object": {
@@ -43328,13 +42766,6 @@
                         "street_address": {
                           "value": {
                             "value": "10th YouSong Industrial District",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "street_address2": {
-                          "value": {
-                            "value": "STE 2918",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -43367,13 +42798,6 @@
                           },
                           "type": "primitive"
                         },
-                        "zip": {
-                          "value": {
-                            "value": "56307",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "timezone": {
                           "value": {
                             "value": "China/Shenzhen",
@@ -43387,131 +42811,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "unlocode": {
-                          "value": {
-                            "value": "US AL2",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "destination_port": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/place",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "name": {
-                          "value": {
-                            "value": "ORD - Chicago - IL",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "address": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/address",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "street_address": {
-                              "value": {
-                                "value": "1641 Settlers Lane",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "city": {
-                              "value": {
-                                "value": "Albany",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country": {
-                              "value": {
-                                "value": "United States of America",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country_code": {
-                              "value": {
-                                "value": "US",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "timezone": {
-                              "value": {
-                                "value": "America/Los_Angeles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref": {
-                              "value": {
-                                "value": "address_ref_x",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "details": {
-                          "value": [
-                            {
-                              "properties": {
-                                "_object": {
-                                  "value": {
-                                    "value": "/air/port",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "port_code": {
-                                  "value": {
-                                    "value": "3901",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "country_code": {
-                                  "value": {
-                                    "value": "US",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "iata_code": {
-                                  "value": {
-                                    "value": "LAX",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "icao_code": {
-                                  "value": {
-                                    "value": "KLAX",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
                         }
                       },
                       "type": "object"
@@ -43570,13 +42869,6 @@
                         }
                       ],
                       "type": "array"
-                    },
-                    "parent_line_key": {
-                      "value": {
-                        "value": "parent_line_key",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     },
                     "assigned_party": {
                       "properties": {
@@ -43669,13 +42961,6 @@
                             "timezone": {
                               "value": {
                                 "value": "America/Los_Angeles",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref": {
-                              "value": {
-                                "value": "address_ref_x",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -44983,13 +44268,6 @@
                       },
                       "type": "primitive"
                     },
-                    "next": {
-                      "value": {
-                        "value": "https://api.flexport.com/purchase_orders?page=3&per=10",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "value": [
                         {
@@ -45084,13 +44362,6 @@
                                       },
                                       "type": "primitive"
                                     },
-                                    "street_address": {
-                                      "value": {
-                                        "value": "1641 Settlers Lane",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
                                     "city": {
                                       "value": {
                                         "value": "Fairburn",
@@ -45150,13 +44421,6 @@
                                         "_object": {
                                           "value": "/ocean/railport",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45166,13 +44430,6 @@
                                         "_object": {
                                           "value": "/trucking/port",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45182,13 +44439,6 @@
                                         "_object": {
                                           "value": "/ocean/port",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45285,13 +44535,6 @@
                                       },
                                       "type": "primitive"
                                     },
-                                    "street_address": {
-                                      "value": {
-                                        "value": "1641 Settlers Lane",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
                                     "city": {
                                       "value": {
                                         "value": "Fairburn",
@@ -45351,13 +44594,6 @@
                                         "_object": {
                                           "value": "/ocean/railport",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45367,13 +44603,6 @@
                                         "_object": {
                                           "value": "/trucking/port",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45383,13 +44612,6 @@
                                         "_object": {
                                           "value": "/ocean/port",
                                           "type": "enum"
-                                        },
-                                        "port_code": {
-                                          "value": {
-                                            "value": "3901",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
                                         }
                                       },
                                       "type": "object"
@@ -45558,13 +44780,6 @@
                                             "timezone": {
                                               "value": {
                                                 "value": "Asia/Shanghai",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "ref": {
-                                              "value": {
-                                                "value": "address_ref_x",
                                                 "type": "string"
                                               },
                                               "type": "primitive"
@@ -45855,13 +45070,6 @@
                                             "timezone": {
                                               "value": {
                                                 "value": "Asia/Shanghai",
-                                                "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "ref": {
-                                              "value": {
-                                                "value": "address_ref_x",
                                                 "type": "string"
                                               },
                                               "type": "primitive"
@@ -53302,32 +52510,6 @@
                             }
                           },
                           "type": "object"
-                        },
-                        "terminal": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/shipment_node/terminal",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "name": {
-                              "value": {
-                                "value": "Terminal 3",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "firms_code": {
-                              "value": {
-                                "value": "I092",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -53342,39 +52524,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "air_leg": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/air/shipment_leg",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "iata_code": {
-                          "value": {
-                            "value": "2Q",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "icao_code": {
-                          "value": {
-                            "value": "SNC",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "flight_number": {
-                          "value": {
-                            "value": "Y8 1234",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
                     },
                     "ocean_leg": {
                       "properties": {
@@ -53409,107 +52558,6 @@
                         "voyage_number": {
                           "value": {
                             "value": "059E",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "container_legs": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/api/refs/collection",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref_type": {
-                              "value": {
-                                "value": "/ocean/shipment_container_leg",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "link": {
-                              "value": {
-                                "value": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "trucking_leg": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/trucking/shipment_leg",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tracking_number": {
-                          "value": {
-                            "value": "FBA123456789",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "service_type": {
-                          "value": "ltl",
-                          "type": "enum"
-                        },
-                        "pieces": {
-                          "value": {
-                            "value": 32,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "scac_code": {
-                          "value": {
-                            "value": "ABCD",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "container_legs": {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/api/refs/collection",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref_type": {
-                              "value": {
-                                "value": "/ocean/shipment_container_leg",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "link": {
-                              "value": {
-                                "value": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "rail_leg": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/rail/shipment_leg",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -55020,20 +54068,6 @@
                     "_object": {
                       "value": {
                         "value": "/api/collections/paginated",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "prev": {
-                      "value": {
-                        "value": "prev",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "next": {
-                      "value": {
-                        "value": "next",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -57389,77 +56423,6 @@
                       },
                       "type": "primitive"
                     },
-                    "child_shipments": {
-                      "value": [
-                        {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/api/refs/object",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "ref_type": {
-                              "value": {
-                                "value": "/shipment",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "link": {
-                              "value": {
-                                "value": "https://api.flexport.com/shipments/123",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "id": {
-                              "value": {
-                                "value": 123,
-                                "type": "int"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "parent_shipment": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/api/refs/object",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "ref_type": {
-                          "value": {
-                            "value": "/shipment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "link": {
-                          "value": {
-                            "value": "https://api.flexport.com/shipments/123",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "id": {
-                          "value": {
-                            "value": 123,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
                     "estimated_picked_up_in_full_date": {
                       "value": {
                         "value": "2019-02-06T19:28:25+00:00",
@@ -57572,70 +56535,6 @@
                             "link": {
                               "value": {
                                 "value": "https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "air_shipment": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/air/shipment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "house_airway_bill": {
-                          "value": {
-                            "value": "HWXJKE67732",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "master_airway_bill": {
-                          "value": {
-                            "value": "22831046871",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chargeable_weight": {
-                          "properties": {
-                            "value": {
-                              "value": {
-                                "value": 2300.4,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "_object": {
-                              "value": {
-                                "value": "/quantity/weight",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "chargeable_volume": {
-                          "properties": {
-                            "value": {
-                              "value": {
-                                "value": 472.62,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "_object": {
-                              "value": {
-                                "value": "/quantity/volume",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -59816,70 +58715,6 @@
                             "link": {
                               "value": {
                                 "value": "https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "air_shipment": {
-                      "properties": {
-                        "_object": {
-                          "value": {
-                            "value": "/air/shipment",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "house_airway_bill": {
-                          "value": {
-                            "value": "HWXJKE67732",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "master_airway_bill": {
-                          "value": {
-                            "value": "22831046871",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "chargeable_weight": {
-                          "properties": {
-                            "value": {
-                              "value": {
-                                "value": 2300.4,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "_object": {
-                              "value": {
-                                "value": "/quantity/weight",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "chargeable_volume": {
-                          "properties": {
-                            "value": {
-                              "value": {
-                                "value": 472.62,
-                                "type": "double"
-                              },
-                              "type": "primitive"
-                            },
-                            "_object": {
-                              "value": {
-                                "value": "/quantity/volume",
                                 "type": "string"
                               },
                               "type": "primitive"
