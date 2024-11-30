@@ -1,4 +1,5 @@
 import { AstNode } from "./core/AstNode";
+import { Comment } from "./Comment";
 import { Writer } from "./core/Writer";
 import { Reference } from "./Reference";
 import { ModulePath } from "./core/types";
@@ -11,6 +12,8 @@ export declare namespace PythonFile {
         statements?: AstNode[];
         /* Whether or not this represents the root of a Python module */
         isInitFile?: boolean;
+        /* Any comments that should be at the top of the file */
+        topOfFileComments?: Comment[];
     }
 }
 
@@ -18,13 +21,16 @@ export class PythonFile extends AstNode {
     public readonly path: ModulePath;
     public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
+    private readonly topOfFileComments: Comment[];
 
-    constructor({ path, statements, isInitFile = false }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false, topOfFileComments }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
 
         statements?.forEach((statement) => this.addStatement(statement));
+
+        this.topOfFileComments = topOfFileComments ?? [];
     }
 
     public addStatement(statement: AstNode): void {
@@ -33,6 +39,7 @@ export class PythonFile extends AstNode {
     }
 
     public write(writer: Writer): void {
+        this.writeTopOfFileComments(writer);
         this.writeImports(writer);
         this.statements.forEach((statement, idx) => {
             statement.write(writer);
@@ -46,6 +53,16 @@ export class PythonFile extends AstNode {
     /*******************************
      * Helper Methods
      *******************************/
+
+    private writeTopOfFileComments(writer: Writer): void {
+        this.topOfFileComments.forEach((comment) => {
+            comment.write(writer);
+        });
+
+        if (this.topOfFileComments.length > 0) {
+            writer.newLine();
+        }
+    }
 
     private getImportName(reference: Reference): string {
         const name = reference.name;

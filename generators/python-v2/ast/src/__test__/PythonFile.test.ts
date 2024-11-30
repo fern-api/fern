@@ -278,4 +278,24 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(1);
     });
+
+    it("Write top of file comments", async () => {
+        const file = python.file({
+            path: ["root"],
+            topOfFileComments: [
+                python.comment({ docs: "!/usr/bin/env python" }),
+                python.comment({ docs: "flake8: noqa: F401, F403" })
+            ],
+            statements: [
+                python.field({
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
+                })
+            ]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(1);
+    });
 });
