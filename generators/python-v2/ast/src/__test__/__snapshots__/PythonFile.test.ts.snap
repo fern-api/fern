@@ -84,6 +84,13 @@ var_b: List[str]
 "
 `;
 
+exports[`PythonFile > Initialize with a statement containing a reference 1`] = `
+"from uuid import UUID
+
+my_id = UUID("1234")
+"
+`;
+
 exports[`PythonFile > Multiple imports from the same module should work 1`] = `
 "from typing import Union, List, Set
 

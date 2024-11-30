@@ -2,6 +2,7 @@ import { python } from "..";
 import { Writer } from "../core/Writer";
 import { Method } from "../Method";
 import { CodeBlock } from "../CodeBlock";
+import { expect } from "vitest";
 
 describe("PythonFile", () => {
     let writer: Writer;
@@ -260,5 +261,21 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Initialize with a statement containing a reference", async () => {
+        const field = python.field({
+            name: "my_id",
+            initializer: python.TypeInstantiation.uuid("1234")
+        });
+
+        const file = python.file({
+            path: ["root"],
+            statements: [field]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(1);
     });
 });

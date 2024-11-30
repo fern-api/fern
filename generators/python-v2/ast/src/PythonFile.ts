@@ -7,6 +7,8 @@ export declare namespace PythonFile {
     interface Args {
         /* The path of the Python file relative to the module */
         path: ModulePath;
+        /* The list of statements in the Python file. More can be added following initialization. */
+        statements?: AstNode[];
         /* Whether or not this represents the root of a Python module */
         isInitFile?: boolean;
     }
@@ -17,10 +19,12 @@ export class PythonFile extends AstNode {
     public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
 
-    constructor({ path, isInitFile = false }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
+
+        statements?.forEach((statement) => this.addStatement(statement));
     }
 
     public addStatement(statement: AstNode): void {
