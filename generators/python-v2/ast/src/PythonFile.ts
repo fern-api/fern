@@ -3,6 +3,7 @@ import { Comment } from "./Comment";
 import { Writer } from "./core/Writer";
 import { Reference } from "./Reference";
 import { ModulePath } from "./core/types";
+import { StarImport } from "./StarImport";
 
 export declare namespace PythonFile {
     interface Args {
@@ -14,6 +15,8 @@ export declare namespace PythonFile {
         isInitFile?: boolean;
         /* Any comments that should be at the top of the file */
         topOfFileComments?: Comment[];
+        /* Any star imports that should be included */
+        starImports?: StarImport[];
     }
 }
 
@@ -23,7 +26,7 @@ export class PythonFile extends AstNode {
     private readonly statements: AstNode[] = [];
     private readonly topOfFileComments: Comment[];
 
-    constructor({ path, statements, isInitFile = false, topOfFileComments }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false, topOfFileComments, starImports }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
@@ -31,6 +34,8 @@ export class PythonFile extends AstNode {
         statements?.forEach((statement) => this.addStatement(statement));
 
         this.topOfFileComments = topOfFileComments ?? [];
+
+        starImports?.forEach((starImport) => this.addReference(starImport));
     }
 
     public addStatement(statement: AstNode): void {

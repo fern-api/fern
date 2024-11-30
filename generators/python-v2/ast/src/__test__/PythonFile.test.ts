@@ -298,4 +298,22 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(1);
     });
+
+    it("Write star imports", async () => {
+        const file = python.file({
+            path: ["root"],
+            topOfFileComments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
+            starImports: [python.starImport({ modulePath: ["root", "my_module"] })],
+            statements: [
+                python.field({
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
+                })
+            ]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(2);
+    });
 });

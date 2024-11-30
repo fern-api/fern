@@ -11,6 +11,7 @@ import { Parameter } from "./Parameter";
 import { PythonFile } from "./PythonFile";
 import { Operator } from "./Operator";
 import { Reference } from "./Reference";
+import { StarImport } from "./StarImport";
 
 export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
@@ -26,6 +27,7 @@ export { Parameter } from "./Parameter";
 export { PythonFile } from "./PythonFile";
 export { Operator } from "./Operator";
 export { Reference } from "./Reference";
+export { StarImport } from "./StarImport";
 export { Type } from "./Type";
 export { TypeInstantiation } from "./TypeInstantiation";
 
@@ -47,6 +49,10 @@ export function decorator(args: Decorator.Args): Decorator {
 
 export function reference(args: Reference.Args): Reference {
     return new Reference(args);
+}
+
+export function starImport(args: StarImport.Args): StarImport {
+    return new StarImport(args);
 }
 
 export function field(args: Field.Args): Field {
