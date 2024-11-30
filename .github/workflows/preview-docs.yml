@@ -41,7 +41,7 @@ jobs:
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
           echo "Preview URL: $URL"
-          echo "🌿 Preview your docs: $URL" > preview_url.txt
+          echo "$URL" > preview_url.txt
 
       - name: Comment or Update URL in PR
         env:
