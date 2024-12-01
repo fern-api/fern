@@ -1,6 +1,6 @@
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
 import {
     ExampleType,
     HttpEndpoint,
@@ -45,7 +45,7 @@ import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
-import { SourceResolver, NopSourceResolver } from "@fern-api/source-resolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
 import { isGeneric } from "@fern-api/fern-definition-schema";
