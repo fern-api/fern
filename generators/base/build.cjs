@@ -19,7 +19,7 @@ async function lib_main() {
                 type: "module",
                 files: ["*.js", "*.d.ts", "ast/", "project/", "readme/", "reference/", "utils/"],
                 dependencies: {
-                    "@fern-api/browser-compatible-base-generator": "0.0.1",
+                    "@fern-api/browser-compatible-base-generator": "0.0.2",
                     "@fern-api/core-utils": "^0.15.0-rc63",
                     "@fern-api/fs-utils": "^0.15.0-rc63",
                     "@fern-api/logger": "^0.4.24-rc1",
