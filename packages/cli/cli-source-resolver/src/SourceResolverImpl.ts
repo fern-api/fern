@@ -2,20 +2,8 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernFileContext } from "../FernFileContext";
-import { ProtobufParser } from "../parsers/ProtobufParser";
-import { ResolvedSource } from "./ResolvedSource";
-
-export interface SourceResolver {
-    resolveSource: (args: {
-        source: RawSchemas.SourceSchema;
-        file: FernFileContext;
-    }) => Promise<ResolvedSource | undefined>;
-    resolveSourceOrThrow: (args: {
-        source: RawSchemas.SourceSchema;
-        file: FernFileContext;
-    }) => Promise<ResolvedSource | undefined>;
-}
+import { ProtobufParser } from "./parsers/ProtobufParser";
+import { ResolvedSource, SourceResolver } from "@fern-api/source-resolver";
 
 export class SourceResolverImpl implements SourceResolver {
     private readonly context: TaskContext;
@@ -30,41 +18,33 @@ export class SourceResolverImpl implements SourceResolver {
 
     public async resolveSourceOrThrow({
         source,
-        file
+        relativeFilepath
     }: {
         source: RawSchemas.SourceSchema;
-        file: FernFileContext;
+        relativeFilepath: RelativeFilePath;
     }): Promise<ResolvedSource | undefined> {
-        const resolvedType = await this.resolveSource({ source, file });
+        const resolvedType = await this.resolveSource({ source });
         if (resolvedType == null) {
             if (isRawProtobufSourceSchema(source)) {
-                throw new Error(`Cannot resolve source ${source.proto} from file ${file.relativeFilepath}`);
+                throw new Error(`Cannot resolve source ${source.proto} from file ${relativeFilepath}`);
             }
             // Do not throw if OpenAPI since the source is not actually required.
-            this.context.logger.warn(`Cannot resolve source ${source.openapi} from file ${file.relativeFilepath}`);
+            this.context.logger.warn(`Cannot resolve source ${source.openapi} from file ${relativeFilepath}`);
         }
         return resolvedType;
     }
 
-    public async resolveSource({
-        source,
-        file
-    }: {
-        source: RawSchemas.SourceSchema;
-        file: FernFileContext;
-    }): Promise<ResolvedSource | undefined> {
+    public async resolveSource({ source }: { source: RawSchemas.SourceSchema }): Promise<ResolvedSource | undefined> {
         if (isRawProtobufSourceSchema(source)) {
-            return await this.resolveProtobufSource({ source, file });
+            return await this.resolveProtobufSource({ source });
         }
-        return await this.resolveOpenAPISource({ source, file });
+        return await this.resolveOpenAPISource({ source });
     }
 
     private async resolveProtobufSource({
-        source,
-        file
+        source
     }: {
         source: RawSchemas.ProtobufSourceSchema;
-        file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.proto));
         if (this.sourceCache.has(absoluteFilepath)) {
@@ -88,11 +68,9 @@ export class SourceResolverImpl implements SourceResolver {
     }
 
     private async resolveOpenAPISource({
-        source,
-        file
+        source
     }: {
         source: RawSchemas.OpenApiSourceSchema;
-        file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.openapi));
         if (this.sourceCache.has(absoluteFilepath)) {

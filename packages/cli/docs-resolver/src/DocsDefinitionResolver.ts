@@ -25,6 +25,7 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 dayjs.extend(utc);
 
@@ -553,7 +554,8 @@ export class DocsDefinitionResolver {
             readme: undefined,
             version: undefined,
             packageName: undefined,
-            context: this.taskContext
+            context: this.taskContext,
+            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
         });
         const apiDefinitionId = await this.registerApi({
             ir,

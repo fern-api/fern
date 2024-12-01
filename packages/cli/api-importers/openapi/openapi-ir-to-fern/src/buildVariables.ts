@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { Schema } from "@fern-api/openapi-ir";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";

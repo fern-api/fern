@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";

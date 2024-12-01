@@ -23,7 +23,6 @@ export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
-export { SourceResolverImpl, type SourceResolver } from "./resolvers/SourceResolver";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
 export {

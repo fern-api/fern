@@ -6,6 +6,7 @@ import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 describe("convertIRtoJsonSchema", async () => {
     const TEST_DEFINITIONS_DIR = join(
@@ -39,7 +40,8 @@ describe("convertIRtoJsonSchema", async () => {
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
-                context
+                context,
+                sourceResolver: new SourceResolverImpl(context, fernWorkspace)
             });
 
             for (const [typeId, _] of Object.entries(intermediateRepresentation.types)) {
