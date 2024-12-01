@@ -15,8 +15,8 @@ export declare namespace PythonFile {
         isInitFile?: boolean;
         /* Any comments that should be at the top of the file */
         comments?: Comment[];
-        /* Any star imports that should be included */
-        starImports?: StarImport[];
+        /* Any explicit imports that should be included */
+        imports?: StarImport[];
     }
 }
 
@@ -26,7 +26,7 @@ export class PythonFile extends AstNode {
     private readonly statements: AstNode[] = [];
     private readonly comments: Comment[];
 
-    constructor({ path, statements, isInitFile = false, comments, starImports }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false, comments, imports }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
@@ -35,7 +35,7 @@ export class PythonFile extends AstNode {
 
         this.comments = comments ?? [];
 
-        starImports?.forEach((starImport) => this.addReference(starImport));
+        imports?.forEach((import_) => this.addReference(import_));
     }
 
     public addStatement(statement: AstNode): void {

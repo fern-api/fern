@@ -303,7 +303,7 @@ describe("PythonFile", () => {
         const file = python.file({
             path: ["root"],
             comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
-            starImports: [python.starImport({ modulePath: ["root", "my_module"] })],
+            imports: [python.starImport({ modulePath: ["root", "my_module"] })],
             statements: [
                 python.field({
                     name: "my_id",
