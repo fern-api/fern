@@ -57,8 +57,8 @@ async function lib_main() {
                 type: "module",
                 files: ["*.js", "*.d.ts", "core/", ],
                 dependencies: {
+                    "@fern-api/base-generator": "0.0.4",
                     "@fern-api/core-utils": "^0.15.0-rc63",
-                    "@fern-api/generator-commons": "0.0.3",
                     "@wasm-fmt/ruff_fmt": "^0.6.1"
                 }
             },

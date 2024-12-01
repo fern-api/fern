@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/python-ast",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",

@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: Publish @fern-api/generator-commons
+name: Publish @fern-api/base-generator
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
   #       type: string
 
 env:
-  PACKAGE_NAME: "@fern-api/generator-commons"
+  PACKAGE_NAME: "@fern-api/base-generator"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
@@ -38,9 +38,9 @@ jobs:
         run: pnpm --filter=${{ env.PACKAGE_NAME }} test
 
       - name: Run publish
-        working-directory: generators/commons
+        working-directory: generators/base
         run: |
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.3
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.4
           cd lib
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public
