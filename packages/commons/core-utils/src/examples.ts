@@ -23,3 +23,18 @@ export const UINT64 = 1000000;
 export const UUID = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
 
 export const BIG_INTEGER = "123456789123456789";
+
+export const SAMPLE_STRINGS = [
+    "x",
+    "xy",
+    "foo",
+    "buzz",
+    "alpha",
+    "banana",
+    "apricot",
+    "mandarin",
+    "nectarine",
+    "strawberry",
+    "pomegranate",
+    "blackcurrant"
+];

@@ -3,8 +3,8 @@
  */
 
 export class SeedBearerTokenEnvironmentVariableTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, SeedBearerTokenEnvironmentVariableTimeoutError.prototype);
     }
 }

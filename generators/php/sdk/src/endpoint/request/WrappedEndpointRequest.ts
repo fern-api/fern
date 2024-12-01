@@ -31,7 +31,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
-import { CodeBlock } from "@fern-api/generator-commons";
+import { CodeBlock } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FileUploadBodyProperty } from "@fern-fern/ir-sdk/serialization";
 

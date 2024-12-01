@@ -33,6 +33,7 @@ import { getPropertyName } from "../type-declarations/convertObjectTypeDeclarati
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
 import urlJoin from "url-join";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 
 function hashJSON(obj: unknown): string {
     const jsonString = JSON.stringify(obj);
@@ -184,10 +185,11 @@ function convertPathParameters({
     };
 
     if (example["path-parameters"] != null) {
+        const rawEndpointPathParameters = getEndpointPathParameters(endpoint);
         for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
             const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key];
             const servicePathParameterDeclaration = service["path-parameters"]?.[key];
-            const endpointPathParameterDeclaration = endpoint["path-parameters"]?.[key];
+            const endpointPathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (rootPathParameterDeclaration != null) {
                 rootPathParameters.push(

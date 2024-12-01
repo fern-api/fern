@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMixedFileDirectory", "SeedMixedFileDirectory\SeedMixedFileDirectory.csproj", "{75D28B36-3760-42B8-96C9-8B7D30BE4B67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMixedFileDirectory.Test", "SeedMixedFileDirectory.Test\SeedMixedFileDirectory.Test.csproj", "{F48891C5-E08F-4682-A3B9-E8225A5640D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75D28B36-3760-42B8-96C9-8B7D30BE4B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D28B36-3760-42B8-96C9-8B7D30BE4B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D28B36-3760-42B8-96C9-8B7D30BE4B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D28B36-3760-42B8-96C9-8B7D30BE4B67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F48891C5-E08F-4682-A3B9-E8225A5640D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F48891C5-E08F-4682-A3B9-E8225A5640D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F48891C5-E08F-4682-A3B9-E8225A5640D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F48891C5-E08F-4682-A3B9-E8225A5640D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

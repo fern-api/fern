@@ -7,8 +7,9 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration";
+    OPENAPI_DIRECTORY,
+    loadProjectConfig
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -30,6 +31,7 @@ export declare namespace loadProject {
         context: TaskContext;
         nameOverride?: string;
         sdkLanguage?: generatorsYml.GenerationLanguage;
+        preserveSchemaIds?: boolean;
     }
 
     export interface LoadProjectFromDirectoryArgs extends Args {
@@ -81,7 +83,7 @@ export async function loadProjectFromDirectory({
     }
 
     return {
-        config: await fernConfigJson.loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
+        config: await loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {

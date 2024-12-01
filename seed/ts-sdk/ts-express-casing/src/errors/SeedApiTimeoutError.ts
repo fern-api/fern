@@ -3,8 +3,8 @@
  */
 
 export class SeedApiTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, SeedApiTimeoutError.prototype);
     }
 }

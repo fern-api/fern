@@ -40,7 +40,7 @@
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"decimal\": 1.1,\n    \"even\": 1,\n    \"name\": \"name\",\n    \"shape\": \"SQUARE\"\n}",
+          "raw": "{\n    \"decimal\": 2.2,\n    \"even\": 100,\n    \"name\": \"foo\",\n    \"shape\": \"SQUARE\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -77,7 +77,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"decimal\": 1.1,\n    \"even\": 1,\n    \"name\": \"name\",\n    \"shape\": \"SQUARE\"\n}",
+              "raw": "{\n    \"decimal\": 2.2,\n    \"even\": 100,\n    \"name\": \"foo\",\n    \"shape\": \"SQUARE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -86,7 +86,7 @@
             }
           },
           "description": null,
-          "body": "{\n    \"decimal\": 1.1,\n    \"even\": 1,\n    \"name\": \"name\",\n    \"shape\": \"SQUARE\"\n}",
+          "body": "{\n    \"decimal\": 2.2,\n    \"even\": 100,\n    \"name\": \"foo\",\n    \"shape\": \"SQUARE\"\n}",
           "_postman_previewlanguage": "json"
         }
       ]
@@ -97,7 +97,7 @@
       "request": {
         "description": null,
         "url": {
-          "raw": "{{baseUrl}}?decimal=1.1&even=1&name=name",
+          "raw": "{{baseUrl}}?decimal=2.2&even=100&name=foo",
           "host": [
             "{{baseUrl}}"
           ],
@@ -106,17 +106,17 @@
             {
               "key": "decimal",
               "description": null,
-              "value": "1.1"
+              "value": "2.2"
             },
             {
               "key": "even",
               "description": null,
-              "value": "1"
+              "value": "100"
             },
             {
               "key": "name",
               "description": null,
-              "value": "name"
+              "value": "foo"
             }
           ],
           "variable": []
@@ -140,7 +140,7 @@
           "originalRequest": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}?decimal=1.1&even=1&name=name",
+              "raw": "{{baseUrl}}?decimal=2.2&even=100&name=foo",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -149,17 +149,17 @@
                 {
                   "key": "decimal",
                   "description": null,
-                  "value": "1.1"
+                  "value": "2.2"
                 },
                 {
                   "key": "even",
                   "description": null,
-                  "value": "1"
+                  "value": "100"
                 },
                 {
                   "key": "name",
                   "description": null,
-                  "value": "name"
+                  "value": "foo"
                 }
               ],
               "variable": []
@@ -176,7 +176,7 @@
             "body": null
           },
           "description": null,
-          "body": "{\n    \"decimal\": 1.1,\n    \"even\": 1,\n    \"name\": \"name\",\n    \"shape\": \"SQUARE\"\n}",
+          "body": "{\n    \"decimal\": 2.2,\n    \"even\": 100,\n    \"name\": \"foo\",\n    \"shape\": \"SQUARE\"\n}",
           "_postman_previewlanguage": "json"
         }
       ]

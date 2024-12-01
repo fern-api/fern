@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
@@ -67,6 +67,7 @@ export interface SpecImportSettings {
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
     onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -103,9 +104,13 @@ export declare namespace OSSWorkspace {
          */
         cooerceEnumsToLiterals?: boolean;
         /*
-         * Whehter or not to parse object query parameters.
+         * Whether or not to parse object query parameters.
          */
         objectQueryParameters?: boolean;
+        /*
+         * Whether or not to preserve original schema ids.
+         */
+        preserveSchemaIds?: boolean;
     }
 }
 
@@ -115,6 +120,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
 
     private respectReadonlySchemas: boolean;
     private onlyIncludeReferencedSchemas: boolean;
+    private inlinePathParameters: boolean;
 
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
@@ -124,6 +130,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         this.onlyIncludeReferencedSchemas = this.specs.every(
             (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
         );
+        this.inlinePathParameters = this.specs.every((spec) => spec.settings?.inlinePathParameters ?? false);
     }
 
     public async getOpenAPIIr(
@@ -183,7 +190,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
             objectQueryParameters,
             respectReadonlySchemas: this.respectReadonlySchemas,
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            inlinePathParameters: this.inlinePathParameters
         });
 
         return {
@@ -297,6 +305,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     }
     if (settings.cooerceEnumsToLiterals) {
         result.cooerceEnumsToLiterals = true;
+    }
+    if (settings.preserveSchemaIds) {
+        result.preserveSchemaIds = true;
     }
     return result;
 }

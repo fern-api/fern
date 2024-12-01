@@ -20,7 +20,7 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "add-workspace": "yarn mrlint add-workspace",
@@ -96,6 +96,7 @@
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
+    "cross-spawn": "7.0.5",
     "json5": "2.2.2",
     "micromatch": "4.0.8",
     "yaml": "2.3.3"

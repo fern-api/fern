@@ -130,7 +130,6 @@ func (r *Retrier) run(
 func (r *Retrier) shouldRetry(response *http.Response) bool {
 	return response.StatusCode == http.StatusTooManyRequests ||
 		response.StatusCode == http.StatusRequestTimeout ||
-		response.StatusCode == http.StatusConflict ||
 		response.StatusCode >= http.StatusInternalServerError
 }
 

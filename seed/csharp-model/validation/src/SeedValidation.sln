@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedValidation", "SeedValidation\SeedValidation.csproj", "{5ED25903-98A6-4604-9DAA-CEA7912C4C31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedValidation.Test", "SeedValidation.Test\SeedValidation.Test.csproj", "{A9AFC68D-BEA9-45B4-8698-44C291995B69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5ED25903-98A6-4604-9DAA-CEA7912C4C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED25903-98A6-4604-9DAA-CEA7912C4C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED25903-98A6-4604-9DAA-CEA7912C4C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED25903-98A6-4604-9DAA-CEA7912C4C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9AFC68D-BEA9-45B4-8698-44C291995B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9AFC68D-BEA9-45B4-8698-44C291995B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9AFC68D-BEA9-45B4-8698-44C291995B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9AFC68D-BEA9-45B4-8698-44C291995B69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

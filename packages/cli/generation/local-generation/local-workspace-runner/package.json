@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
@@ -45,13 +45,15 @@
     "@fern-api/sdk": "0.12.3",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
-    "tmp-promise": "^3.0.3"
+    "tmp-promise": "^3.0.3",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@types/decompress": "^4.2.7",
     "@types/jest": "^29.5.12",
     "@types/node": "18.7.18",
     "@types/tmp": "^0.2.4",
+    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",

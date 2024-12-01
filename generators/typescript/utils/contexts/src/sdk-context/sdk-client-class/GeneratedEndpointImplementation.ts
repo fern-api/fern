@@ -21,4 +21,5 @@ export interface GeneratedEndpointImplementation {
         clientReference: ts.Identifier;
     }) => ts.Expression | undefined;
     maybeLeverageInvocation: (args: { invocation: ts.Expression; context: SdkContext }) => ts.Node[] | undefined;
+    isPaginated: (context: SdkContext) => boolean;
 }

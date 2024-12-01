@@ -571,7 +571,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     generatedName: property.key,
                     nameOverride: undefined,
                     availability: undefined,
-                    readonly: undefined
+                    readonly: undefined,
+                    inline: undefined
                 };
             })
             .filter(isNonNullish),

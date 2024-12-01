@@ -1,4 +1,9 @@
-import { generatorsYml } from "@fern-api/configuration";
+import {
+    generatorsYml,
+    getLatestGeneratorVersion,
+    getGeneratorNameOrThrow,
+    loadGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -59,9 +64,9 @@ export async function getLatestGeneratorVersions({
                     versions.versions[group] = {};
                 }
 
-                const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
+                const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
 
-                const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                const latestVersion = await getLatestGeneratorVersion({
                     generatorName: normalizedGeneratorName,
                     cliVersion: cliContext.environment.packageVersion,
                     currentGeneratorVersion: generator.version,
@@ -102,8 +107,8 @@ export async function getLatestGeneratorVersions({
                 versions.versions[api]![group] = {};
             }
 
-            const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
+            const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
                 cliVersion: cliContext.environment.packageVersion,
                 currentGeneratorVersion: generator.version,
@@ -148,7 +153,7 @@ async function processGeneratorsYml({
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // If there are no groups in the configuration, skip this workspace
-                const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+                const generatorsConfiguration = await loadGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });

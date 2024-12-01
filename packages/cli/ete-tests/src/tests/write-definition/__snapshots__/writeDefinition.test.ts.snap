@@ -67,6 +67,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -172,6 +174,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -308,6 +312,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: neopetsRoot.Pets
@@ -601,6 +607,7 @@ channel:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
       currency specified in the payment.
+    inline: true
     properties:
       account_type:
         docs: >-
@@ -645,6 +652,7 @@ channel:
       openapi: openapi/trains/openapi.yml
   Card:
     docs: A card (debit or credit) to take payment from.
+    inline: true
     properties:
       address_city:
         type: optional<string>
@@ -915,6 +923,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1277,6 +1286,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1350,6 +1360,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1390,6 +1401,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1462,12 +1474,16 @@ service:
           destination:
             docs: The ID of the destination station
             type: string
+            validation:
+              format: uuid
           dogs:
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
             docs: The ID of the origin station
             type: string
+            validation:
+              format: uuid
       response:
         docs: A list of available train trips
         type: GetTripsResponse

@@ -149,6 +149,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 access: csharp.Access.Public,
                 body: csharp.codeblock((writer) => {
                     writer.writeLine("Server.Stop();");
+                    writer.writeLine("Server.Dispose();");
                 }),
                 isAsync: false,
                 parameters: [],

@@ -2,7 +2,7 @@ import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/a
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { ConjureImporter } from "@fern-api/conjure-to-fern";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import yaml from "js-yaml";
 import { mapValues } from "./utils/mapValues";
 

@@ -1,0 +1,1452 @@
+{
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "multi-url-environment-no-default",
+        "camelCase": {
+            "unsafeName": "multiURLEnvironmentNoDefault",
+            "safeName": "multiURLEnvironmentNoDefault"
+        },
+        "snakeCase": {
+            "unsafeName": "multi_url_environment_no_default",
+            "safeName": "multi_url_environment_no_default"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MULTI_URL_ENVIRONMENT_NO_DEFAULT",
+            "safeName": "MULTI_URL_ENVIRONMENT_NO_DEFAULT"
+        },
+        "pascalCase": {
+            "unsafeName": "MultiURLEnvironmentNoDefault",
+            "safeName": "MultiURLEnvironmentNoDefault"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
+                "tokenEnvVar": null,
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_ec2": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ec2",
+                            "camelCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EC2",
+                                "safeName": "EC2"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ec2",
+                                "safeName": "Ec2"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/ec2",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_ec2.bootInstance",
+                    "name": {
+                        "originalName": "bootInstance",
+                        "camelCase": {
+                            "unsafeName": "bootInstance",
+                            "safeName": "bootInstance"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "boot_instance",
+                            "safeName": "boot_instance"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BOOT_INSTANCE",
+                            "safeName": "BOOT_INSTANCE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BootInstance",
+                            "safeName": "BootInstance"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": "ec2",
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/boot",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/ec2/boot",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "BootInstanceRequest",
+                            "camelCase": {
+                                "unsafeName": "bootInstanceRequest",
+                                "safeName": "bootInstanceRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "boot_instance_request",
+                                "safeName": "boot_instance_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BOOT_INSTANCE_REQUEST",
+                                "safeName": "BOOT_INSTANCE_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "BootInstanceRequest",
+                                "safeName": "BootInstanceRequest"
+                            }
+                        },
+                        "extends": [],
+                        "contentType": null,
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "size",
+                                        "camelCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SIZE",
+                                            "safeName": "SIZE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Size",
+                                            "safeName": "Size"
+                                        }
+                                    },
+                                    "wireValue": "size"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "BootInstanceRequest",
+                                "camelCase": {
+                                    "unsafeName": "bootInstanceRequest",
+                                    "safeName": "bootInstanceRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "boot_instance_request",
+                                    "safeName": "boot_instance_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BOOT_INSTANCE_REQUEST",
+                                    "safeName": "BOOT_INSTANCE_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "BootInstanceRequest",
+                                    "safeName": "BootInstanceRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "a13d6778da233cb9ef715e2436ee1931b735f5cb",
+                                "url": "/ec2/boot",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "size",
+                                                    "camelCase": {
+                                                        "unsafeName": "size",
+                                                        "safeName": "size"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "size",
+                                                        "safeName": "size"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SIZE",
+                                                        "safeName": "SIZE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Size",
+                                                        "safeName": "Size"
+                                                    }
+                                                },
+                                                "wireValue": "size"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "size"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "size"
+                                            }
+                                        }
+                                    ],
+                                    "jsonExample": {
+                                        "size": "size"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        },
+        "service_s3": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "s3",
+                            "camelCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/s3",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_s3.getPresignedUrl",
+                    "name": {
+                        "originalName": "getPresignedUrl",
+                        "camelCase": {
+                            "unsafeName": "getPresignedURL",
+                            "safeName": "getPresignedURL"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_presigned_url",
+                            "safeName": "get_presigned_url"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PRESIGNED_URL",
+                            "safeName": "GET_PRESIGNED_URL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetPresignedURL",
+                            "safeName": "GetPresignedURL"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": "s3",
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/presigned-url",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/s3/presigned-url",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "GetPresignedUrlRequest",
+                            "camelCase": {
+                                "unsafeName": "getPresignedURLRequest",
+                                "safeName": "getPresignedURLRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "get_presigned_url_request",
+                                "safeName": "get_presigned_url_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GET_PRESIGNED_URL_REQUEST",
+                                "safeName": "GET_PRESIGNED_URL_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GetPresignedURLRequest",
+                                "safeName": "GetPresignedURLRequest"
+                            }
+                        },
+                        "extends": [],
+                        "contentType": null,
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "s3Key",
+                                        "camelCase": {
+                                            "unsafeName": "s3Key",
+                                            "safeName": "s3Key"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "s3key",
+                                            "safeName": "s3key"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "S3KEY",
+                                            "safeName": "S3KEY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "S3Key",
+                                            "safeName": "S3Key"
+                                        }
+                                    },
+                                    "wireValue": "s3Key"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "GetPresignedUrlRequest",
+                                "camelCase": {
+                                    "unsafeName": "getPresignedURLRequest",
+                                    "safeName": "getPresignedURLRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "get_presigned_url_request",
+                                    "safeName": "get_presigned_url_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "GET_PRESIGNED_URL_REQUEST",
+                                    "safeName": "GET_PRESIGNED_URL_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "GetPresignedURLRequest",
+                                    "safeName": "GetPresignedURLRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "a72a7c70f863a88be924745c308e0475a1833003",
+                                "url": "/s3/presigned-url",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "s3Key",
+                                                    "camelCase": {
+                                                        "unsafeName": "s3Key",
+                                                        "safeName": "s3Key"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "s3key",
+                                                        "safeName": "s3key"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "S3KEY",
+                                                        "safeName": "S3KEY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "S3Key",
+                                                        "safeName": "S3Key"
+                                                    }
+                                                },
+                                                "wireValue": "s3Key"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "s3Key"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "s3Key"
+                                            }
+                                        }
+                                    ],
+                                    "jsonExample": {
+                                        "s3Key": "s3Key"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": {
+        "defaultEnvironment": null,
+        "environments": {
+            "type": "multipleBaseUrls",
+            "baseUrls": [
+                {
+                    "id": "ec2",
+                    "name": {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
+                },
+                {
+                    "id": "s3",
+                    "name": {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
+                }
+            ],
+            "environments": [
+                {
+                    "id": "Production",
+                    "name": {
+                        "originalName": "Production",
+                        "camelCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTION",
+                            "safeName": "PRODUCTION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Production",
+                            "safeName": "Production"
+                        }
+                    },
+                    "urls": {
+                        "ec2": "https://ec2.aws.com",
+                        "s3": "https://s3.aws.com"
+                    },
+                    "docs": null
+                },
+                {
+                    "id": "Staging",
+                    "name": {
+                        "originalName": "Staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    },
+                    "urls": {
+                        "ec2": "https://staging.ec2.aws.com",
+                        "s3": "https://staging.s3.aws.com"
+                    },
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_ec2.bootInstance": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "bootInstance",
+                        "camelCase": {
+                            "unsafeName": "bootInstance",
+                            "safeName": "bootInstance"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "boot_instance",
+                            "safeName": "boot_instance"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BOOT_INSTANCE",
+                            "safeName": "BOOT_INSTANCE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BootInstance",
+                            "safeName": "BootInstance"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "ec2",
+                                "camelCase": {
+                                    "unsafeName": "ec2",
+                                    "safeName": "ec2"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "ec2",
+                                    "safeName": "ec2"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EC2",
+                                    "safeName": "EC2"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Ec2",
+                                    "safeName": "Ec2"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "ec2",
+                            "camelCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EC2",
+                                "safeName": "EC2"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ec2",
+                                "safeName": "Ec2"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/ec2/boot"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "BootInstanceRequest",
+                            "camelCase": {
+                                "unsafeName": "bootInstanceRequest",
+                                "safeName": "bootInstanceRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "boot_instance_request",
+                                "safeName": "boot_instance_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BOOT_INSTANCE_REQUEST",
+                                "safeName": "BOOT_INSTANCE_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "BootInstanceRequest",
+                                "safeName": "BootInstanceRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "ec2",
+                                    "camelCase": {
+                                        "unsafeName": "ec2",
+                                        "safeName": "ec2"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "ec2",
+                                        "safeName": "ec2"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EC2",
+                                        "safeName": "EC2"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Ec2",
+                                        "safeName": "Ec2"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "ec2",
+                                "camelCase": {
+                                    "unsafeName": "ec2",
+                                    "safeName": "ec2"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "ec2",
+                                    "safeName": "ec2"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EC2",
+                                    "safeName": "EC2"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Ec2",
+                                    "safeName": "Ec2"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "size",
+                                        "camelCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SIZE",
+                                            "safeName": "SIZE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Size",
+                                            "safeName": "Size"
+                                        }
+                                    },
+                                    "wireValue": "size"
+                                },
+                                "typeReference": {
+                                    "_type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                }
+            },
+            "endpoint_s3.getPresignedUrl": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "getPresignedUrl",
+                        "camelCase": {
+                            "unsafeName": "getPresignedURL",
+                            "safeName": "getPresignedURL"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_presigned_url",
+                            "safeName": "get_presigned_url"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PRESIGNED_URL",
+                            "safeName": "GET_PRESIGNED_URL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetPresignedURL",
+                            "safeName": "GetPresignedURL"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "s3",
+                                "camelCase": {
+                                    "unsafeName": "s3",
+                                    "safeName": "s3"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "s3",
+                                    "safeName": "s3"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "S3",
+                                    "safeName": "S3"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "S3",
+                                    "safeName": "S3"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "s3",
+                            "camelCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/s3/presigned-url"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "GetPresignedUrlRequest",
+                            "camelCase": {
+                                "unsafeName": "getPresignedURLRequest",
+                                "safeName": "getPresignedURLRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "get_presigned_url_request",
+                                "safeName": "get_presigned_url_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GET_PRESIGNED_URL_REQUEST",
+                                "safeName": "GET_PRESIGNED_URL_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GetPresignedURLRequest",
+                                "safeName": "GetPresignedURLRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "s3",
+                                    "camelCase": {
+                                        "unsafeName": "s3",
+                                        "safeName": "s3"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "s3",
+                                        "safeName": "s3"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "S3",
+                                        "safeName": "S3"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "S3",
+                                        "safeName": "S3"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "s3",
+                                "camelCase": {
+                                    "unsafeName": "s3",
+                                    "safeName": "s3"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "s3",
+                                    "safeName": "s3"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "S3",
+                                    "safeName": "S3"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "S3",
+                                    "safeName": "S3"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "s3Key",
+                                        "camelCase": {
+                                            "unsafeName": "s3Key",
+                                            "safeName": "s3Key"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "s3key",
+                                            "safeName": "s3key"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "S3KEY",
+                                            "safeName": "S3KEY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "S3Key",
+                                            "safeName": "S3Key"
+                                        }
+                                    },
+                                    "wireValue": "s3Key"
+                                },
+                                "typeReference": {
+                                    "_type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                }
+            }
+        }
+    },
+    "subpackages": {
+        "subpackage_ec2": {
+            "name": {
+                "originalName": "ec2",
+                "camelCase": {
+                    "unsafeName": "ec2",
+                    "safeName": "ec2"
+                },
+                "snakeCase": {
+                    "unsafeName": "ec2",
+                    "safeName": "ec2"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "EC2",
+                    "safeName": "EC2"
+                },
+                "pascalCase": {
+                    "unsafeName": "Ec2",
+                    "safeName": "Ec2"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "ec2",
+                    "camelCase": {
+                        "unsafeName": "ec2",
+                        "safeName": "ec2"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ec2",
+                        "safeName": "ec2"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EC2",
+                        "safeName": "EC2"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Ec2",
+                        "safeName": "Ec2"
+                    }
+                }
+            },
+            "service": "service_ec2",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_s3": {
+            "name": {
+                "originalName": "s3",
+                "camelCase": {
+                    "unsafeName": "s3",
+                    "safeName": "s3"
+                },
+                "snakeCase": {
+                    "unsafeName": "s3",
+                    "safeName": "s3"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "S3",
+                    "safeName": "S3"
+                },
+                "pascalCase": {
+                    "unsafeName": "S3",
+                    "safeName": "S3"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "s3",
+                    "camelCase": {
+                        "unsafeName": "s3",
+                        "safeName": "s3"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "s3",
+                        "safeName": "s3"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "S3",
+                        "safeName": "S3"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "S3",
+                        "safeName": "S3"
+                    }
+                }
+            },
+            "service": "service_s3",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_ec2",
+            "subpackage_s3"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

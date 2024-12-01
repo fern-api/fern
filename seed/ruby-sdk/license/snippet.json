@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_.get"
+            },
+            "snippet": {
+                "client": "require \"fern_license\"\n\nlicense = SeedLicenseClient::Client.new(base_url: \"https://api.example.com\")\nlicense.get",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_.get"
+            },
+            "snippet": {
+                "client": "require \"fern_license\"\n\nlicense = SeedLicenseClient::Client.new(base_url: \"https://api.example.com\")\nlicense.get",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

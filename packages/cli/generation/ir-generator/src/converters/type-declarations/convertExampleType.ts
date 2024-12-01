@@ -13,6 +13,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
+    isRawAliasDefinition,
     isRawObjectDefinition,
     RawSchemas,
     visitRawTypeDeclaration,
@@ -141,7 +142,8 @@ export function convertTypeExample({
                     exampleResolver,
                     file: fileContainingType,
                     workspace,
-                    breadcrumbs: []
+                    breadcrumbs: [],
+                    depth: 0
                 });
                 if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({
@@ -664,10 +666,19 @@ function convertSingleUnionType({
                 throw new Error("Example is not an object");
             }
             const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
-            const rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+            let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
                 file: fileContainingType
             });
+            while (isRawAliasDefinition(rawDeclaration.declaration)) {
+                rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType:
+                        typeof rawDeclaration.declaration === "string"
+                            ? rawDeclaration.declaration
+                            : rawDeclaration.declaration.type,
+                    file: fileContainingType
+                });
+            }
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
                 throw new Error(`${rawValueType} is not an object`);
             }

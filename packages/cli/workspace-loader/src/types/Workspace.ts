@@ -1,4 +1,4 @@
-import { docsYml, generatorsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/api-workspace-commons";
 
@@ -69,6 +69,7 @@ export interface SpecImportSettings {
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
     onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export interface OpenAPIFile {

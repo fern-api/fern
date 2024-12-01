@@ -19,6 +19,8 @@ export declare namespace Foo {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,63 +38,70 @@ export class Foo {
      *         privateProperty: 1
      *     })
      */
-    public async find(
+    public find(
         request: SeedCrossPackageTypeNames.FindRequest = {},
         requestOptions?: Foo.RequestOptions
-    ): Promise<SeedCrossPackageTypeNames.ImportingType> {
-        const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (optionalString != null) {
-            _queryParams["optionalString"] = optionalString;
-        }
-
-        const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/cross-package-type-names",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/cross-package-type-names/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.ImportingType.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedCrossPackageTypeNamesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedCrossPackageTypeNamesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedCrossPackageTypeNames.ImportingType> {
+        return core.APIPromise.from(
+            (async () => {
+                const { optionalString, ..._body } = request;
+                const _queryParams: Record<string, string | string[] | object | object[]> = {};
+                if (optionalString != null) {
+                    _queryParams["optionalString"] = optionalString;
+                }
+                const _response = await core.fetcher({
+                    url: await core.Supplier.get(this._options.environment),
+                    method: "POST",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/cross-package-type-names",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/cross-package-type-names/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedCrossPackageTypeNamesTimeoutError();
-            case "unknown":
-                throw new errors.SeedCrossPackageTypeNamesError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.ImportingType.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedCrossPackageTypeNamesError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedCrossPackageTypeNamesError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling POST /.");
+                    case "unknown":
+                        throw new errors.SeedCrossPackageTypeNamesError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

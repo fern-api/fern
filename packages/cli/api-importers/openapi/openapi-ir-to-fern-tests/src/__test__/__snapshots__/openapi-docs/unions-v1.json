@@ -8,6 +8,7 @@
         "types": {
           "EnticingTitle": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",

@@ -5,8 +5,9 @@ import {
     generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
+    loadProjectConfig,
     PROJECT_CONFIG_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
@@ -194,7 +195,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
+            loadProjectConfig({ directory: fernDirectory, context })
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
@@ -472,6 +473,10 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the IR for certain audiences"
+                })
+                .option("smart-casing", {
+                    boolean: true,
+                    description: "Whether to use smart casing"
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -486,7 +491,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: false,
+                smartCasing: argv.smartCasing ?? false,
                 readme: undefined
             });
         }
@@ -555,6 +560,10 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the IR for certain audiences"
+                })
+                .option("smart-casing", {
+                    boolean: true,
+                    description: "Whether to use smart casing"
                 }),
         async (argv) => {
             await generateDynamicIrForWorkspaces({
@@ -569,7 +578,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 audiences: { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: false
+                smartCasing: argv.smartCasing ?? false
             });
         }
     );
@@ -921,8 +930,13 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 .option("language", {
                     choices: Object.values(generatorsYml.GenerationLanguage),
                     description: "Write the definition for a particular SDK language"
+                })
+                .option("preserve-schemas", {
+                    string: true,
+                    description: "Preserve potentially unsafe schema Ids in the generated fern definition"
                 }),
         async (argv) => {
+            const preserveSchemaIds = argv.preserveSchemas != null;
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
@@ -930,10 +944,12 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true,
-                    sdkLanguage: argv.language
+                    sdkLanguage: argv.language,
+                    preserveSchemaIds
                 }),
                 cliContext,
-                sdkLanguage: argv.language
+                sdkLanguage: argv.language,
+                preserveSchemaIds
             });
         }
     );

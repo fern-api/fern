@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovie(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovie(\"string\");\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieDocs(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieDocs(\"string\");\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieName(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieName(\"string\");\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieMetadata(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieMetadata(\"string\");\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovie(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovie(\"string\");\n"
             }
         },
         {
@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieDocs(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieDocs(\"string\");\n"
             }
         },
         {
@@ -74,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient, SeedResponseProperty } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieName(\"string\");\n"
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieName(\"string\");\n"
             }
         }
     ],

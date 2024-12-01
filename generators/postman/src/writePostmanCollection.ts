@@ -14,7 +14,7 @@ import {
     LogLevel,
     parseGeneratorConfig,
     parseIR
-} from "@fern-api/generator-commons";
+} from "@fern-api/base-generator";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 import { startCase } from "lodash";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";

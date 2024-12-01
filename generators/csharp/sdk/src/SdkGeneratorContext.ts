@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
@@ -148,6 +148,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
+        if (this.hasPagination()) {
+            files.push(AsIsFiles.Page);
+            files.push(AsIsFiles.Pager);
+        }
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
@@ -158,12 +162,19 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return files;
     }
 
+    public hasPagination(): boolean {
+        return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
+    }
+
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.RawClientTests];
+        const files = [AsIsFiles.Test.RawClientTests];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.EnumSerializerTests);
+            files.push(AsIsFiles.Test.EnumSerializerTests);
+        }
+        if (this.hasPagination()) {
+            AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
         return files;
     }
@@ -490,6 +501,56 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
+    }
+
+    public getPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "Pager",
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        offsetType,
+        stepType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
+        responseType: csharp.Type;
+        offsetType: csharp.Type;
+        stepType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OffsetPager",
+            generics: [requestType, requestOptionsType, responseType, offsetType, stepType, itemType]
+        });
+    }
+
+    public getCursorPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        cursorType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
+        responseType: csharp.Type;
+        cursorType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "CursorPager",
+            generics: [requestType, requestOptionsType, responseType, cursorType, itemType]
+        });
     }
 
     public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {

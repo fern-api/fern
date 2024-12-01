@@ -11,6 +11,7 @@ import { PythonFile } from "./PythonFile";
 import { Decorator } from "./Decorator";
 import { Operator } from "./Operator";
 
+export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
 export { Field } from "./Field";
 export { Reference } from "./Reference";

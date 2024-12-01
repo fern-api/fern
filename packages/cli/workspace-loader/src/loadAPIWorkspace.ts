@@ -1,4 +1,9 @@
-import { DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
+import {
+    DEFINITION_DIRECTORY,
+    generatorsYml,
+    loadGeneratorsConfiguration,
+    OPENAPI_DIRECTORY
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
@@ -73,7 +78,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false
+                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false
                 }
             });
             continue;
@@ -117,7 +123,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false
+                onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                inlinePathParameters: definition.settings?.inlinePathParameters ?? false
             },
             source: {
                 type: "openapi",
@@ -141,7 +148,7 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+    const generatorsConfiguration = await loadGeneratorsConfiguration({
         absolutePathToWorkspace,
         context
     });

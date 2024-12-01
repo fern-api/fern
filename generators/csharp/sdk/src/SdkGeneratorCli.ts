@@ -5,7 +5,7 @@ import {
     generateWellKnownProtobufFiles,
     generateVersion
 } from "@fern-api/fern-csharp-model";
-import { File, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";

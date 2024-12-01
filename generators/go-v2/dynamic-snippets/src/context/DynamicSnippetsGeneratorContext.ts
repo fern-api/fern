@@ -1,22 +1,25 @@
-import { FernGeneratorExec } from "@fern-api/generator-commons";
+import { assertNever } from "@fern-api/core-utils";
+import {
+    AbstractDynamicSnippetsGeneratorContext,
+    FernGeneratorExec
+} from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
-import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, dynamic, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { go } from "@fern-api/go-ast";
-import path from "path";
 import { ErrorReporter, Severity } from "./ErrorReporter";
+import { FilePropertyMapper } from "./FilePropertyMapper";
 
-export class DynamicSnippetsGeneratorContext {
-    public ir: DynamicSnippets.DynamicIntermediateRepresentation;
-    public config: FernGeneratorExec.config.GeneratorConfig;
+export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext<dynamic.DynamicIntermediateRepresentation> {
     public customConfig: BaseGoCustomConfigSchema | undefined;
     public errors: ErrorReporter;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
+    public filePropertyMapper: FilePropertyMapper;
     public rootImportPath: string;
 
     private httpEndpointReferenceParser: HttpEndpointReferenceParser;
@@ -25,15 +28,15 @@ export class DynamicSnippetsGeneratorContext {
         ir,
         config
     }: {
-        ir: DynamicSnippets.DynamicIntermediateRepresentation;
-        config: FernGeneratorExec.config.GeneratorConfig;
+        ir: dynamic.DynamicIntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
     }) {
-        this.ir = ir;
-        this.config = config;
+        super(ir, config);
         this.customConfig = config.customConfig != null ? (config.customConfig as BaseGoCustomConfigSchema) : undefined;
         this.errors = new ErrorReporter();
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
+        this.filePropertyMapper = new FilePropertyMapper({ context: this });
         this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
@@ -42,8 +45,8 @@ export class DynamicSnippetsGeneratorContext {
         parameters,
         values
     }: {
-        parameters: DynamicSnippets.NamedParameter[];
-        values: DynamicSnippets.Values;
+        parameters: dynamic.NamedParameter[];
+        values: dynamic.Values;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
@@ -74,8 +77,8 @@ export class DynamicSnippetsGeneratorContext {
         values,
         ignoreMissingParameters
     }: {
-        parameters: DynamicSnippets.NamedParameter[];
-        values: DynamicSnippets.Values;
+        parameters: dynamic.NamedParameter[];
+        values: dynamic.Values;
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
@@ -107,6 +110,92 @@ export class DynamicSnippetsGeneratorContext {
         return instances;
     }
 
+    public isFileUploadRequestBody(body: dynamic.InlinedRequestBody): body is dynamic.InlinedRequestBody.FileUpload {
+        switch (body.type) {
+            case "fileUpload":
+                return true;
+            case "properties":
+            case "referenced":
+                return false;
+            default:
+                assertNever(body);
+        }
+    }
+
+    public needsRequestParameter({ request }: { request: dynamic.InlinedRequest }): boolean {
+        if (this.includePathParametersInWrappedRequest({ request })) {
+            return true;
+        }
+        if (request.queryParameters != null && request.queryParameters.length > 0) {
+            return true;
+        }
+        if (request.headers != null && request.headers.length > 0) {
+            return true;
+        }
+        if (request.body != null) {
+            return this.includeRequestBodyInWrappedRequest({ body: request.body });
+        }
+        if (request.metadata?.onlyPathParameters) {
+            return false;
+        }
+        return true;
+    }
+
+    public includePathParametersInWrappedRequest({ request }: { request: dynamic.InlinedRequest }): boolean {
+        return (this.customConfig?.inlinePathParameters ?? false) && (request.metadata?.includePathParameters ?? false);
+    }
+
+    private includeRequestBodyInWrappedRequest({ body }: { body: dynamic.InlinedRequestBody }): boolean {
+        switch (body.type) {
+            case "properties":
+            case "referenced":
+                return true;
+            case "fileUpload":
+                return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body });
+            default:
+                assertNever(body);
+        }
+    }
+
+    private includeFileUploadBodyInWrappedRequest({
+        fileUpload
+    }: {
+        fileUpload: dynamic.FileUploadRequestBody;
+    }): boolean {
+        return (
+            this.fileUploadHasBodyProperties({ fileUpload }) ||
+            ((this.customConfig?.inlineFileProperties ?? false) && this.fileUploadHasFileProperties({ fileUpload }))
+        );
+    }
+
+    private fileUploadHasBodyProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return false;
+                case "bodyProperty":
+                    return true;
+                default:
+                    assertNever(property);
+            }
+        });
+    }
+
+    private fileUploadHasFileProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return true;
+                case "bodyProperty":
+                    return false;
+                default:
+                    assertNever(property);
+            }
+        });
+    }
+
     public getRecord(value: unknown): Record<string, unknown> | undefined {
         if (typeof value !== "object" || Array.isArray(value)) {
             this.errors.add({
@@ -123,7 +212,7 @@ export class DynamicSnippetsGeneratorContext {
         return value as Record<string, unknown>;
     }
 
-    public resolveNamedType({ typeId }: { typeId: TypeId }): DynamicSnippets.NamedType | undefined {
+    public resolveNamedType({ typeId }: { typeId: TypeId }): dynamic.NamedType | undefined {
         const namedType = this.ir.types[typeId];
         if (namedType == null) {
             this.errors.add({
@@ -139,7 +228,7 @@ export class DynamicSnippetsGeneratorContext {
         discriminatedUnion,
         value
     }: {
-        discriminatedUnion: DynamicSnippets.DiscriminatedUnionType;
+        discriminatedUnion: dynamic.DiscriminatedUnionType;
         value: unknown;
     }): DiscriminatedUnionTypeInstance | undefined {
         const record = this.getRecord(value);
@@ -213,15 +302,32 @@ export class DynamicSnippetsGeneratorContext {
         });
     }
 
+    public getIoReaderTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Reader",
+            importPath: "io"
+        });
+    }
+
+    public getNewStringsReaderFunctionInvocation(s: string): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewReader",
+                importPath: "strings"
+            }),
+            arguments_: [go.TypeInstantiation.string(s)]
+        });
+    }
+
     public getClientImportPath(): string {
-        return path.join(this.rootImportPath, "client");
+        return `${this.rootImportPath}/client`;
     }
 
     public getOptionImportPath(): string {
-        return path.join(this.rootImportPath, "option");
+        return `${this.rootImportPath}/option`;
     }
 
-    public resolveEndpointOrThrow(rawEndpoint: string): DynamicSnippets.Endpoint[] {
+    public resolveEndpointOrThrow(rawEndpoint: string): dynamic.Endpoint[] {
         const parsedEndpoint = this.httpEndpointReferenceParser.tryParse(rawEndpoint);
         if (parsedEndpoint == null) {
             throw new Error(`Failed to parse endpoint reference "${rawEndpoint}"`);
@@ -229,8 +335,8 @@ export class DynamicSnippetsGeneratorContext {
         return this.resolveEndpointLocationOrThrow(parsedEndpoint);
     }
 
-    public resolveEndpointLocationOrThrow(location: DynamicSnippets.EndpointLocation): DynamicSnippets.Endpoint[] {
-        const endpoints: DynamicSnippets.Endpoint[] = [];
+    public resolveEndpointLocationOrThrow(location: dynamic.EndpointLocation): dynamic.Endpoint[] {
+        const endpoints: dynamic.Endpoint[] = [];
         for (const endpoint of Object.values(this.ir.endpoints)) {
             if (this.parsedEndpointMatches({ endpoint, parsedEndpoint: location })) {
                 endpoints.push(endpoint);
@@ -242,18 +348,18 @@ export class DynamicSnippetsGeneratorContext {
         return endpoints;
     }
 
-    public getGoTypeReferenceFromDeclaration({
-        declaration
-    }: {
-        declaration: DynamicSnippets.Declaration;
-    }): go.TypeReference {
+    public getGoTypeReferenceFromDeclaration({ declaration }: { declaration: dynamic.Declaration }): go.TypeReference {
         return go.typeReference({
             name: declaration.name.pascalCase.unsafeName,
             importPath: this.getImportPath(declaration.fernFilepath)
         });
     }
 
-    private isListTypeReference(typeReference: DynamicSnippets.TypeReference): boolean {
+    public newParameterNotRecognizedError(parameterName: string): Error {
+        return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
+    }
+
+    private isListTypeReference(typeReference: dynamic.TypeReference): boolean {
         if (typeReference.type === "optional") {
             return this.isListTypeReference(typeReference.value);
         }
@@ -264,13 +370,9 @@ export class DynamicSnippetsGeneratorContext {
         endpoint,
         parsedEndpoint
     }: {
-        endpoint: DynamicSnippets.Endpoint;
+        endpoint: dynamic.Endpoint;
         parsedEndpoint: HttpEndpointReferenceParser.Parsed;
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;
-    }
-
-    private newParameterNotRecognizedError(parameterName: string): Error {
-        return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
     }
 }

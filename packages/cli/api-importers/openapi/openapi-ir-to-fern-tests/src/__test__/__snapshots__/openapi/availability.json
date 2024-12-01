@@ -124,6 +124,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineBetaBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -160,6 +161,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineObjectDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -199,6 +201,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlinePropertyDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -238,6 +241,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Settings",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -257,6 +261,7 @@
           "DeprecatedParam": "string",
           "NotDeprecatedSettings": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "not_deprecated_setting": "optional<boolean>",
             },
@@ -267,6 +272,7 @@
           "WholeDeprecatedSettings": {
             "availability": "deprecated",
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "fine_setting": "optional<boolean>",
             },

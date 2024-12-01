@@ -138,6 +138,9 @@ types:
       only-include-referenced-schemas:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
+      inline-path-parameters:
+        type: optional<boolean>
+        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
   
   UnionSettingsSchema:
     enum: 
@@ -228,6 +231,9 @@ types:
       only-include-referenced-schemas:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
+      inline-path-parameters:
+        type: optional<boolean>
+        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
 
   OpenAPISpecSchema:
     properties:

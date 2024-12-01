@@ -1,4 +1,4 @@
-imports: 
+imports:
   commons: commons.yml
   types: types.yml
   examples: examples.yml
@@ -6,37 +6,37 @@ imports:
   source: source.yml
   variables: variables.yml
 
-types: 
-  HttpServiceSchema: 
-    extends: 
+types:
+  HttpServiceSchema:
+    extends:
       - commons.DeclarationWithoutDocsSchema
       - commons.WithDisplayName
-    properties: 
+    properties:
       auth: boolean
       url: optional<string>
       base-path: string
       path-parameters: optional<map<string, string>>
       idempotent: optional<boolean>
       headers: optional<map<string, types.TypeReferenceSchema>>
-      transport: optional<ServiceTransport> 
+      transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
       endpoints: map<string, HttpEndpointSchema>
 
-  ServiceTransport: 
-    properties: 
-      grpc: optional<GrpcTransport>        
-  
-  GrpcTransport: 
-    properties: 
-      service-name: 
+  ServiceTransport:
+    properties:
+      grpc: optional<GrpcTransport>
+
+  GrpcTransport:
+    properties:
+      service-name:
         type: string
         docs: "The name of the gRPC service."
-  
-  HttpEndpointSchema:   
-    extends: 
+
+  HttpEndpointSchema:
+    extends:
       - commons.WithDisplayName
       - commons.DeclarationSchema
-    properties: 
+    properties:
       method: optional<HttpMethodSchema>
       base-path: optional<string>
       path: string
@@ -51,142 +51,145 @@ types:
       errors: optional<ResponseErrorsSchema>
       examples: optional<list<examples.ExampleEndpointCallSchema>>
       pagination: optional<Pagination>
-  
-  HttpMethodSchema: 
-    enum: 
+      transport: optional<ServiceTransport>
+      source: optional<source.SourceSchema>
+
+  HttpMethodSchema:
+    enum:
       - GET
       - POST
       - PUT
       - PATCH
       - DELETE
-  
-  HttpRequest: 
+
+  HttpRequest:
     discriminated: false
-    union: 
+    union:
       - string
       - HttpRequestSchema
 
   HttpRequestSchema:
-    extends: 
+    extends:
       - commons.WithName
       - commons.WithDocsSchema
-    properties: 
+    properties:
       content-type: optional<string>
+      path-parameters: optional<map<string, HttpPathParameterSchema>>
       query-parameters: optional<map<string, HttpQueryParameterSchema>>
       headers: optional<map<string, HttpHeaderSchema>>
       body: optional<HttpRequestBodySchema>
-  
+
   TypeReferenceDeclarationWithEnvOverride:
     discriminated: false
-    union: 
+    union:
       - string
       - TypeReferenceDeclarationWithEnvOverrideSchema
 
-  TypeReferenceDeclarationWithEnvOverrideSchema: 
+  TypeReferenceDeclarationWithEnvOverrideSchema:
     extends: types.TypeReferenceDeclarationWithName
-    properties: 
+    properties:
       env: optional<string>
 
   HttpHeaderSchema: TypeReferenceDeclarationWithEnvOverride
-  
-  HttpRequestBodySchema: 
+
+  HttpRequestBodySchema:
     discriminated: false
-    union: 
+    union:
       - string
       - HttpReferencedRequestBodySchema
       - HttpInlineRequestBodySchema
-  
-  HttpReferencedRequestBodySchema: 
-    extends: 
+
+  HttpReferencedRequestBodySchema:
+    extends:
       - commons.WithDocsSchema
     properties:
       type: string
 
-  HttpInlineRequestBodySchema: 
-    properties: 
+  HttpInlineRequestBodySchema:
+    properties:
       extends: optional<types.ObjectExtendsSchema>
       extra-properties: optional<boolean>
       properties: optional<map<string, HttpInlineRequestBodyPropertySchema>>
-  
-  HttpInlineRequestBodyPropertySchema: 
+
+  HttpInlineRequestBodyPropertySchema:
     discriminated: false
-    union: 
+    union:
       - string
       - TypeReferenceDeclarationWithContentTypeSchema
-  
-  TypeReferenceDeclarationWithContentTypeSchema: 
+
+  TypeReferenceDeclarationWithContentTypeSchema:
     extends: types.TypeReferenceDeclarationWithName
-    properties: 
+    properties:
       content-type: optional<string>
-  
-  HttpQueryParameterSchema: 
+
+  HttpQueryParameterSchema:
     discriminated: false
-    union: 
+    union:
       - string
       - QueryParameterTypeReferenceDetailed
-  
-  QueryParameterTypeReferenceDetailed: 
-    extends: 
+
+  QueryParameterTypeReferenceDetailed:
+    extends:
       - types.TypeReferenceDeclarationWithName
-    properties: 
+    properties:
       allow-multiple: optional<boolean>
-  
-  HttpResponseSchema: 
+
+  HttpResponseSchema:
     discriminated: false
-    union: 
+    union:
       - string
       - HttpResponseSchemaDetailed
-  
-  HttpResponseSchemaDetailed: 
-    extends: 
+
+  HttpResponseSchemaDetailed:
+    extends:
       - commons.WithDocsSchema
-    properties: 
+    properties:
       type: string
       property: optional<string>
       status-code: optional<integer>
 
-  HttpResponseStreamSchema: 
+  HttpResponseStreamSchema:
     discriminated: false
-    union: 
+    union:
       - string
       - HttpResponseStreamSchemaDetailed
-  
-  HttpResponseStreamSchemaDetailed: 
-    extends: 
+
+  HttpResponseStreamSchemaDetailed:
+    extends:
       - commons.WithDocsSchema
-    properties: 
+    properties:
       type: string
       format: optional<StreamFormat>
       terminator: optional<string>
 
-  StreamFormat: 
-    enum: 
+  StreamFormat:
+    enum:
       - sse
       - json
-  
-  HttpPathParameterSchema: 
+
+  HttpPathParameterSchema:
     discriminated: false
-    union: 
+    union:
       - types.TypeReferenceSchema
       - variables.VariableReferenceSchema
-  
-  Pagination: 
+
+  Pagination:
     discriminated: false
-    union: 
+    union:
       - pagination.PaginationSchema
       - boolean
-  
-  ResponseErrorsSchema: 
+
+  ResponseErrorsSchema:
     type: list<ResponseError>
 
-  ResponseError: 
+  ResponseError:
     discriminated: false
-    union: 
+    union:
       - string
       - ResponseErrorWithDocsSchema
-  
-  ResponseErrorWithDocsSchema: 
-    extends: 
+
+  ResponseErrorWithDocsSchema:
+    extends:
       - commons.WithDocsSchema
-    properties: 
+    properties:
       error: string

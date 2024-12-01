@@ -50,6 +50,11 @@ export interface OpenApiIrConverterContextOpts {
      * If true, the converter will only include schemas referenced by endpoints.
      */
     onlyIncludeReferencedSchemas: boolean;
+
+    /**
+     * If true, the converter will include path parameters in the in-lined request.
+     */
+    inlinePathParameters: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -64,6 +69,7 @@ export class OpenApiIrConverterContext {
     public objectQueryParameters: boolean;
     public respectReadonlySchemas: boolean;
     public onlyIncludeReferencedSchemas: boolean;
+    public inlinePathParameters: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -100,7 +106,8 @@ export class OpenApiIrConverterContext {
         authOverrides,
         objectQueryParameters,
         respectReadonlySchemas,
-        onlyIncludeReferencedSchemas
+        onlyIncludeReferencedSchemas,
+        inlinePathParameters
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -117,6 +124,7 @@ export class OpenApiIrConverterContext {
         this.objectQueryParameters = objectQueryParameters;
         this.respectReadonlySchemas = respectReadonlySchemas;
         this.onlyIncludeReferencedSchemas = onlyIncludeReferencedSchemas;
+        this.inlinePathParameters = inlinePathParameters;
         this.referencedSchemaIds = onlyIncludeReferencedSchemas ? new Set() : undefined;
 
         const schemaByStatusCode: Record<number, Schema> = {};

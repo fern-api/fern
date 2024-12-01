@@ -7,15 +7,59 @@ paths:
     get:
       summary: Get Example
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/responses/NotFound/content/application~1json/schema"
                   - $ref: "#/components/schemas/Schema1"
                   - $ref: "#/components/schemas/Schema2"
+  /root:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                foo:
+                  type: string
+                bar:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    inner_bar:
+                      type: object
+                      properties:
+                        foo:
+                          type: string
+                        bar:
+                          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foo:
+                    type: string
+                  bar:
+                    type: object
+                    properties:
+                      foo:
+                        type: string
+                      inner_bar:
+                        type: object
+                        properties:
+                          foo:
+                            type: string
+                          bar:
+                            type: string
+
 components:
   responses:
     NotFound:
@@ -42,3 +86,31 @@ components:
           type: string
         age:
           type: integer
+        testEnum:
+          type: string
+          enum:
+            - test1
+            - test2
+            - test3
+        testDiscriminatedUnion:
+          discriminator:
+            propertyName: objectType
+          oneOf:
+            - type: object
+              properties:
+                objectType:
+                  type: string
+            - type: object
+              properties:
+                objectType:
+                  type: string
+        testUnion:
+          oneOf:
+            - type: object
+              properties:
+                a:
+                  type: string
+            - type: object
+              properties:
+                b:
+                  type: string

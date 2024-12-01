@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.22.0] - 2024-11-04
+
+- Internal: Add the `dynamic` property to the IR. This should be
+  made requried in IRv54.
+
+## [v53.21.0] - 2024-11-04
+
+- Internal: Add the `includePathParameters` and `onlyPathParameters` properties to the dynamic
+  IR within the `InlinedRequestMetadata` type.
+
+## [v53.20.0] - 2024-11-04
+
+- Internal: Add `includePathParameters` and `onlyPathParameters` property to the wrapped request.
+
+  With this, the generator can determine whether or not the path parameters should be included in
+  the wrapped request, or if the wrapped request can be omitted entirely.
+
 ## [v53.19.0] - 2024-11-04
 
 - Internal: Add errors property to dynamic `EndpointSnippetResponse`.

@@ -2474,6 +2474,7 @@
         "types": {
           "AlertRule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "strategy": "AlertStrategy",
             },
@@ -2493,6 +2494,7 @@
           },
           "ApiErrorResponse": {
             "docs": "Error response model",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Error code",
@@ -2514,6 +2516,7 @@
           },
           "ApiErrorResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2521,6 +2524,7 @@
           },
           "ApiKeyIntegrationConfigs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "api_key": "string",
               "header_key": "string",
@@ -2531,6 +2535,7 @@
           },
           "AttachedIntegrationToSource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "success": "boolean",
             },
@@ -2604,6 +2609,7 @@
           },
           "BasicAuthIntegrationConfigs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": "string",
               "password": "string",
@@ -2614,6 +2620,7 @@
           },
           "BatchOperation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cancelled_at": {
                 "docs": "Date the bulk retry was cancelled",
@@ -2679,6 +2686,7 @@
           },
           "BatchOperationPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<BatchOperation>>",
@@ -2690,6 +2698,7 @@
           },
           "BatchOperationPlan": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "estimated_batch": {
                 "docs": "Number of batches required to complete the bulk retry",
@@ -2712,6 +2721,7 @@
             "discriminated": false,
             "docs": "Query object to filter records",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2722,6 +2732,7 @@
           },
           "Bookmark": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alias": {
                 "docs": "Alternate alias for the bookmark",
@@ -2767,6 +2778,7 @@
           },
           "BookmarkPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Bookmark>>",
@@ -2778,6 +2790,7 @@
           },
           "Connection": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "archived_at": {
                 "docs": "Date the connection was archived",
@@ -2827,6 +2840,7 @@
             "discriminated": false,
             "docs": "JSON using our filter syntax to filter on request headers",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2839,6 +2853,7 @@
           },
           "ConnectionFilterPropertyThree": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2846,6 +2861,7 @@
           },
           "ConnectionPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Connection>>",
@@ -2857,6 +2873,7 @@
           },
           "ConsoleLine": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": "string",
               "type": "ConsoleLineType",
@@ -2879,6 +2896,7 @@
           },
           "DelayRule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delay": {
                 "docs": "Delay to introduce in MS",
@@ -2891,6 +2909,7 @@
           },
           "DeletedBookmarkResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Bookmark ID",
@@ -2903,6 +2922,7 @@
           },
           "DeletedIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "string",
             },
@@ -2912,6 +2932,7 @@
           },
           "DeletedIssueTriggerResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "string",
             },
@@ -2921,6 +2942,7 @@
           },
           "DeliveryIssue": {
             "docs": "Delivery issue",
+            "inline": undefined,
             "properties": {
               "aggregation_keys": "DeliveryIssueAggregationKeys",
               "auto_resolved_at": "optional<datetime>",
@@ -2970,6 +2992,7 @@
           },
           "DeliveryIssueAggregationKeys": {
             "docs": "Keys used as the aggregation keys a 'delivery' type issue",
+            "inline": undefined,
             "properties": {
               "error_code": "list<AttemptErrorCodes>",
               "response_status": "list<float>",
@@ -2981,6 +3004,7 @@
           },
           "DeliveryIssueData": {
             "docs": "Delivery issue data",
+            "inline": undefined,
             "properties": {
               "trigger_attempt": "optional<EventAttempt>",
               "trigger_event": "optional<Event>",
@@ -2991,6 +3015,7 @@
           },
           "DeliveryIssueReference": {
             "docs": "Reference to the event and attempt an issue is being created for.",
+            "inline": undefined,
             "properties": {
               "attempt_id": "string",
               "event_id": "string",
@@ -3001,6 +3026,7 @@
           },
           "DeliveryIssueWithData": {
             "docs": "Delivery issue",
+            "inline": undefined,
             "properties": {
               "aggregation_keys": "DeliveryIssueAggregationKeys",
               "auto_resolved_at": "optional<datetime>",
@@ -3051,6 +3077,7 @@
           },
           "Destination": {
             "docs": "Associated [Destination](#destination-object) object",
+            "inline": undefined,
             "properties": {
               "archived_at": {
                 "docs": "Date the destination was archived",
@@ -3097,6 +3124,7 @@
           },
           "DestinationPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Destination>>",
@@ -3120,6 +3148,7 @@
           },
           "DetachedIntegrationFromSource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3127,6 +3156,7 @@
           },
           "Event": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attempts": {
                 "docs": "Number of delivery attempts made",
@@ -3200,6 +3230,7 @@
           "EventArray": "list<Event>",
           "EventAttempt": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "archived_at": {
                 "docs": "Date the attempt was archived",
@@ -3277,6 +3308,7 @@
           },
           "EventAttemptBody": {
             "docs": "Response body from the destination",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3284,6 +3316,7 @@
           },
           "EventAttemptPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<optional<EventAttempt>>>",
@@ -3295,6 +3328,7 @@
           },
           "EventData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "body": "optional<EventDataBody>",
               "headers": "optional<EventDataHeaders>",
@@ -3311,6 +3345,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3322,6 +3357,7 @@
           },
           "EventDataBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3331,6 +3367,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3343,6 +3380,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3353,6 +3391,7 @@
           },
           "EventDataParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3360,6 +3399,7 @@
           },
           "EventPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Event>>",
@@ -3383,6 +3423,7 @@
           },
           "FilterRule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "body": "optional<ConnectionFilterProperty>",
               "headers": "optional<ConnectionFilterProperty>",
@@ -3406,6 +3447,7 @@
           },
           "HandledHmacConfigs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "webhook_secret_key": "string",
             },
@@ -3426,6 +3468,7 @@
           },
           "HmacIntegrationConfigs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "algorithm": "HmacAlgorithms",
               "encoding": "HmacIntegrationConfigsEncoding",
@@ -3447,6 +3490,7 @@
           },
           "IgnoredEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cause": "IgnoredEventCause",
               "created_at": "datetime",
@@ -3476,6 +3520,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3486,6 +3531,7 @@
           },
           "IgnoredEventPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<IgnoredEvent>>",
@@ -3497,6 +3543,7 @@
           },
           "Integration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "configs": {
                 "docs": "Decrypted Key/Value object of the associated configuration for that provider",
@@ -3540,6 +3587,7 @@
             "discriminated": false,
             "docs": "Decrypted Key/Value object of the associated configuration for that provider",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3563,6 +3611,7 @@
           },
           "IntegrationPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Integration>>",
@@ -3622,6 +3671,7 @@
           },
           "IssueCount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "Number of issues",
@@ -3646,6 +3696,7 @@
           },
           "IssueTrigger": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "channels": "optional<IssueTriggerChannels>",
               "configs": "IssueTriggerReference",
@@ -3685,6 +3736,7 @@
           },
           "IssueTriggerBackpressureConfigs": {
             "docs": "Configurations for a 'Backpressure' issue trigger",
+            "inline": undefined,
             "properties": {
               "delay": "IssueTriggerBackpressureDelay",
               "destinations": {
@@ -3700,6 +3752,7 @@
             "discriminated": false,
             "docs": "A pattern to match on the destination name or array of destination IDs. Use `*` as wildcard.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3721,6 +3774,7 @@
           },
           "IssueTriggerChannels": {
             "docs": "Notification channels object for the specific channel type",
+            "inline": undefined,
             "properties": {
               "email": "optional<IssueTriggerEmailChannel>",
               "opsgenie": "optional<IssueTriggerIntegrationChannel>",
@@ -3732,6 +3786,7 @@
           },
           "IssueTriggerDeliveryConfigs": {
             "docs": "Configurations for a 'delivery' issue trigger",
+            "inline": undefined,
             "properties": {
               "connections": {
                 "docs": "A pattern to match on the connection name or array of connection IDs. Use `*` as wildcard.",
@@ -3747,6 +3802,7 @@
             "discriminated": false,
             "docs": "A pattern to match on the connection name or array of connection IDs. Use `*` as wildcard.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3757,6 +3813,7 @@
           },
           "IssueTriggerEmailChannel": {
             "docs": "Email channel for an issue trigger",
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3764,6 +3821,7 @@
           },
           "IssueTriggerIntegrationChannel": {
             "docs": "Integration channel for an issue trigger",
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3771,6 +3829,7 @@
           },
           "IssueTriggerPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<IssueTrigger>>",
@@ -3784,6 +3843,7 @@
             "discriminated": false,
             "docs": "Configuration object for the specific issue type selected",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3795,6 +3855,7 @@
           },
           "IssueTriggerSlackChannel": {
             "docs": "Slack channel for an issue trigger",
+            "inline": undefined,
             "properties": {
               "channel_name": {
                 "docs": "Channel name",
@@ -3817,6 +3878,7 @@
           },
           "IssueTriggerTransformationConfigs": {
             "docs": "Configurations for a 'Transformation' issue trigger",
+            "inline": undefined,
             "properties": {
               "log_level": "TransformationExecutionLogLevel",
               "transformations": {
@@ -3832,6 +3894,7 @@
             "discriminated": false,
             "docs": "A pattern to match on the transformation name or array of transformation IDs. Use `*` as wildcard.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3867,6 +3930,7 @@
           },
           "IssueWithDataPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<IssueWithData>>",
@@ -3887,6 +3951,7 @@
           },
           "RawBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "body": "string",
             },
@@ -3896,6 +3961,7 @@
           },
           "Request": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cli_events_count": {
                 "docs": "The count of CLI events created from this request",
@@ -3960,6 +4026,7 @@
           },
           "RequestData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "body": "optional<RequestDataBody>",
               "headers": "optional<RequestDataHeaders>",
@@ -3976,6 +4043,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3987,6 +4055,7 @@
           },
           "RequestDataBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3996,6 +4065,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4008,6 +4078,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4018,6 +4089,7 @@
           },
           "RequestDataParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4035,6 +4107,7 @@
           },
           "RequestPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Request>>",
@@ -4062,6 +4135,7 @@
           },
           "RetriedEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attempt": "optional<EventAttempt>",
               "event": "Event",
@@ -4072,6 +4146,7 @@
           },
           "RetryRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "events": "optional<list<Event>>",
               "request": "Request",
@@ -4082,6 +4157,7 @@
           },
           "RetryRule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "Maximum number of retries to attempt",
@@ -4126,6 +4202,7 @@
           },
           "Ruleset": {
             "docs": "Associated [Ruleset](#ruleset-object) object",
+            "inline": undefined,
             "properties": {
               "archived_at": {
                 "docs": "Date the ruleset was archived",
@@ -4166,6 +4243,7 @@
           },
           "RulesetPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<optional<Ruleset>>>",
@@ -4177,6 +4255,7 @@
           },
           "SeekPagination": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dir": "optional<SeekPaginationDir>",
               "limit": "optional<integer>",
@@ -4192,6 +4271,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4204,6 +4284,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4214,6 +4295,7 @@
           },
           "ShopifyIntegrationConfigs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "api_key": "optional<string>",
               "api_secret": "optional<string>",
@@ -4237,6 +4319,7 @@
           },
           "ShortEventData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "body": "optional<ShortEventDataBody>",
               "headers": "optional<ShortEventDataHeaders>",
@@ -4253,6 +4336,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4264,6 +4348,7 @@
           },
           "ShortEventDataBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4273,6 +4358,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4285,6 +4371,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4295,6 +4382,7 @@
           },
           "ShortEventDataParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4302,6 +4390,7 @@
           },
           "Source": {
             "docs": "Associated [Source](#source-object) object",
+            "inline": undefined,
             "properties": {
               "archived_at": {
                 "docs": "Date the source was archived",
@@ -4346,6 +4435,7 @@
           },
           "SourceIntegration": {
             "docs": "Integration object",
+            "inline": true,
             "properties": {
               "features": {
                 "docs": "List of enabled features",
@@ -4367,6 +4457,7 @@
           },
           "SourcePaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Source>>",
@@ -4378,6 +4469,7 @@
           },
           "ToggleWebhookNotifications": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "enabled": "boolean",
               "source_id": "string",
@@ -4413,6 +4505,7 @@
           },
           "TransformFull": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transformation": {
                 "docs": "You can optionally define a new transformation while creating a transform rule",
@@ -4433,6 +4526,7 @@
           },
           "TransformFullTransformation": {
             "docs": "You can optionally define a new transformation while creating a transform rule",
+            "inline": true,
             "properties": {
               "code": {
                 "docs": "A string representation of your JavaScript (ES6) code to run",
@@ -4453,6 +4547,7 @@
           },
           "TransformReference": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transformation_id": {
                 "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
@@ -4471,6 +4566,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4481,6 +4577,7 @@
           },
           "Transformation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "JavaScript code to be executed",
@@ -4519,6 +4616,7 @@
           },
           "TransformationExecution": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": "datetime",
               "id": "string",
@@ -4553,6 +4651,7 @@
           },
           "TransformationExecutionPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<TransformationExecution>>",
@@ -4564,6 +4663,7 @@
           },
           "TransformationExecutorOutput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "console": "optional<list<ConsoleLine>>",
               "execution_id": "optional<string>",
@@ -4578,6 +4678,7 @@
           },
           "TransformationExecutorOutputRequest": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "body": "optional<TransformationExecutorOutputRequestBody>",
               "headers": "optional<TransformationExecutorOutputRequestHeaders>",
@@ -4593,6 +4694,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4603,6 +4705,7 @@
           },
           "TransformationExecutorOutputRequestBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4612,6 +4715,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4624,6 +4728,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4634,6 +4739,7 @@
           },
           "TransformationExecutorOutputRequestParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4643,6 +4749,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4653,6 +4760,7 @@
           },
           "TransformationExecutorOutputRequestQueryZero": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4660,6 +4768,7 @@
           },
           "TransformationFailedMeta": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transformation_id": "string",
             },
@@ -4669,6 +4778,7 @@
           },
           "TransformationIssue": {
             "docs": "Transformation issue",
+            "inline": undefined,
             "properties": {
               "aggregation_keys": "TransformationIssueAggregationKeys",
               "auto_resolved_at": "optional<datetime>",
@@ -4718,6 +4828,7 @@
           },
           "TransformationIssueAggregationKeys": {
             "docs": "Keys used as the aggregation keys a 'transformation' type issue",
+            "inline": undefined,
             "properties": {
               "log_level": "TransformationExecutionLogLevel",
               "transformation_id": "list<string>",
@@ -4728,6 +4839,7 @@
           },
           "TransformationIssueData": {
             "docs": "Transformation issue data",
+            "inline": undefined,
             "properties": {
               "transformation_execution": "TransformationExecution",
               "trigger_attempt": "optional<EventAttempt>",
@@ -4738,6 +4850,7 @@
           },
           "TransformationIssueReference": {
             "docs": "Reference to the event request transformation an issue is being created for.",
+            "inline": undefined,
             "properties": {
               "transformation_execution_id": "string",
               "trigger_event_request_transformation_id": {
@@ -4751,6 +4864,7 @@
           },
           "TransformationIssueWithData": {
             "docs": "Transformation issue",
+            "inline": undefined,
             "properties": {
               "aggregation_keys": "TransformationIssueAggregationKeys",
               "auto_resolved_at": "optional<datetime>",
@@ -4801,6 +4915,7 @@
           },
           "TransformationPaginatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "models": "optional<list<Transformation>>",
@@ -6213,6 +6328,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   SeekPaginationDir:
     discriminated: false
     union:
@@ -6220,6 +6336,7 @@ types:
       - list<OrderByDirection>
     source:
       openapi: ../openapi.yml
+    inline: true
   SeekPagination:
     properties:
       order_by: optional<SeekPaginationOrderBy>
@@ -6254,6 +6371,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   IssueTriggerDeliveryConfigs:
     docs: Configurations for a 'delivery' issue trigger
     properties:
@@ -6285,6 +6403,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   IssueTriggerTransformationConfigs:
     docs: Configurations for a 'Transformation' issue trigger
     properties:
@@ -6314,6 +6433,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   IssueTriggerBackpressureConfigs:
     docs: Configurations for a 'Backpressure' issue trigger
     properties:
@@ -6399,6 +6519,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ApiErrorResponse:
     docs: Error response model
     properties:
@@ -6476,6 +6597,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   EventAttempt:
     properties:
       id:
@@ -6548,6 +6670,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ShortEventDataParsedQuery:
     discriminated: false
     union:
@@ -6555,6 +6678,7 @@ types:
       - ShortEventDataParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   ShortEventDataHeaders:
     discriminated: false
     union:
@@ -6562,10 +6686,12 @@ types:
       - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShortEventDataBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ShortEventDataBody:
     discriminated: false
     union:
@@ -6574,6 +6700,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShortEventData:
     properties:
       path: string
@@ -6636,6 +6763,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   EventDataParsedQuery:
     discriminated: false
     union:
@@ -6643,6 +6771,7 @@ types:
       - EventDataParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   EventDataHeaders:
     discriminated: false
     union:
@@ -6650,10 +6779,12 @@ types:
       - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   EventDataBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   EventDataBody:
     discriminated: false
     union:
@@ -6662,6 +6793,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   EventData:
     properties:
       path: string
@@ -6672,6 +6804,7 @@ types:
       is_large_payload: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   Event:
     properties:
       id:
@@ -6811,6 +6944,7 @@ types:
       - optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   BatchOperation:
     properties:
       id:
@@ -6982,6 +7116,7 @@ types:
       - ShopifyIntegrationConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
   Integration:
     properties:
       id:
@@ -7327,6 +7462,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   RequestDataParsedQuery:
     discriminated: false
     union:
@@ -7334,6 +7470,7 @@ types:
       - RequestDataParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   RequestDataHeaders:
     discriminated: false
     union:
@@ -7341,10 +7478,12 @@ types:
       - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   RequestDataBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   RequestDataBody:
     discriminated: false
     union:
@@ -7353,6 +7492,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   RequestData:
     properties:
       path: string
@@ -7363,6 +7503,7 @@ types:
       is_large_payload: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   Request:
     properties:
       id:
@@ -7453,6 +7594,7 @@ types:
       - TransformationFailedMeta
     source:
       openapi: ../openapi.yml
+    inline: true
   IgnoredEvent:
     properties:
       id: string
@@ -7506,6 +7648,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ConnectionFilterProperty:
     discriminated: false
     docs: JSON using our filter syntax to filter on request headers
@@ -7554,6 +7697,7 @@ types:
           your transformation code
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformFull:
     properties:
       type:
@@ -7647,6 +7791,7 @@ types:
         type: list<IntegrationFeature>
     source:
       openapi: ../openapi.yml
+    inline: true
   Source:
     docs: Associated [Source](#source-object) object
     properties:
@@ -7747,10 +7892,12 @@ types:
       - map<string, unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestQueryZero:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestQuery:
     discriminated: false
     union:
@@ -7758,10 +7905,12 @@ types:
       - string
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestParsedQueryOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestParsedQuery:
     discriminated: false
     union:
@@ -7769,10 +7918,12 @@ types:
       - TransformationExecutorOutputRequestParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequestBody:
     discriminated: false
     union:
@@ -7780,6 +7931,7 @@ types:
       - TransformationExecutorOutputRequestBodyOne
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutputRequest:
     properties:
       headers: optional<TransformationExecutorOutputRequestHeaders>
@@ -7789,6 +7941,7 @@ types:
       body: optional<TransformationExecutorOutputRequestBody>
     source:
       openapi: ../openapi.yml
+    inline: true
   TransformationExecutorOutput:
     properties:
       request_id: optional<string>
@@ -7971,6 +8124,12 @@ types:
                   "event_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "next": "optional<string>",
@@ -8033,6 +8192,8 @@ service:
           event_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           order_by: optional<GetAttemptsRequestOrderBy>
           dir: optional<GetAttemptsRequestDir>
           limit: optional<integer>
@@ -8222,6 +8383,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8364,20 +8526,44 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   "event_data_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "label": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "last_used_at": "optional<datetime>",
                   "limit": "optional<integer>",
                   "name": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
                   },
                   "next": "optional<string>",
                   "order_by": "optional<GetBookmarksRequestOrderBy>",
@@ -8385,6 +8571,12 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8463,6 +8655,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TriggerBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8565,6 +8758,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8639,18 +8833,29 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name:
             type: optional<string>
             allow-multiple: true
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           webhook_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           event_data_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           label:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           last_used_at: optional<datetime>
           order_by: optional<GetBookmarksRequestOrderBy>
           dir: optional<GetBookmarksRequestDir>
@@ -9042,6 +9247,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateEventBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9140,6 +9346,12 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "in_progress": "optional<boolean>",
                   "limit": "optional<integer>",
@@ -9214,6 +9426,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
         "types": {
           "CreateEventBulkRetryRequestQuery": {
             "docs": "Filter properties for the events to be included in the bulk retry",
+            "inline": true,
             "properties": {
               "attempts": {
                 "docs": "Filter by number of attempts",
@@ -9289,6 +9502,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by number of attempts",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9308,6 +9522,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryAttemptsAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "contains": {
@@ -9369,6 +9584,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the data body",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9379,6 +9595,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -9388,6 +9605,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9408,6 +9626,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9419,6 +9638,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryCliIdAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
             },
@@ -9430,6 +9650,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9442,6 +9663,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by `created_at` date using a date operator",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9452,6 +9674,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryCreatedAtAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "gt": "optional<datetime>",
@@ -9467,6 +9690,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by destination IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9488,6 +9712,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9508,6 +9733,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9528,6 +9754,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the data headers",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9538,6 +9765,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryHeadersOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -9547,6 +9775,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by event IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9568,6 +9797,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9588,6 +9818,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by `last_attempt_at` date using a date operator",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9598,6 +9829,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryLastAttemptAtAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "gt": "optional<datetime>",
@@ -9613,6 +9845,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9623,6 +9856,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -9632,6 +9866,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by HTTP response status code",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9652,6 +9887,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQueryResponseStatusAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "contains": {
@@ -9713,6 +9949,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by source IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9734,6 +9971,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Lifecyle status of the event",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9746,6 +9984,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by `successful_at` date using a date operator",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9756,6 +9995,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           },
           "CreateEventBulkRetryRequestQuerySuccessfulAtAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "gt": "optional<datetime>",
@@ -9771,6 +10011,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
             "discriminated": false,
             "docs": "Filter by webhook connection IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9820,6 +10061,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryStatus:
     discriminated: false
     docs: Lifecyle status of the event
@@ -9828,6 +10070,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<root.EventStatus>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryIssueId:
     discriminated: false
     union:
@@ -9837,6 +10080,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryWebhookId:
     discriminated: false
     docs: Filter by webhook connection IDs
@@ -9848,6 +10092,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryDestinationId:
     discriminated: false
     docs: Filter by destination IDs
@@ -9859,6 +10104,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQuerySourceId:
     discriminated: false
     docs: Filter by source IDs
@@ -9870,6 +10116,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryAttemptsAny:
     properties:
       gt:
@@ -9895,6 +10142,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           min: 0
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryAttempts:
     discriminated: false
     docs: Filter by number of attempts
@@ -9905,6 +10153,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryAttemptsAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryResponseStatusAny:
     properties:
       gt:
@@ -9935,6 +10184,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
           max: 600
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryResponseStatus:
     discriminated: false
     docs: Filter by HTTP response status code
@@ -9947,6 +10197,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<integer>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQuerySuccessfulAtAny:
     properties:
       gt: optional<datetime>
@@ -9956,6 +10207,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQuerySuccessfulAt:
     discriminated: false
     docs: Filter by `successful_at` date using a date operator
@@ -9964,6 +10216,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQuerySuccessfulAtAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryCreatedAtAny:
     properties:
       gt: optional<datetime>
@@ -9973,6 +10226,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryCreatedAt:
     discriminated: false
     docs: Filter by `created_at` date using a date operator
@@ -9981,6 +10235,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryCreatedAtAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryErrorCode:
     discriminated: false
     union:
@@ -9990,11 +10245,13 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryCliIdAny:
     properties:
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryCliId:
     discriminated: false
     docs: Filter by CLI IDs. `?[any]=true` operator for any CLI.
@@ -10004,6 +10261,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryCliUserId:
     discriminated: false
     union:
@@ -10011,6 +10269,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryLastAttemptAtAny:
     properties:
       gt: optional<datetime>
@@ -10020,6 +10279,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryLastAttemptAt:
     discriminated: false
     docs: Filter by `last_attempt_at` date using a date operator
@@ -10028,6 +10288,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryLastAttemptAtAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryEventDataId:
     discriminated: false
     union:
@@ -10037,10 +10298,12 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryHeadersOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryHeaders:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data headers
@@ -10049,10 +10312,12 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryHeadersOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryBody:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data body
@@ -10061,10 +10326,12 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryBodyOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryParsedQueryOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryParsedQuery:
     discriminated: false
     docs: >-
@@ -10075,6 +10342,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - CreateEventBulkRetryRequestQueryParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQueryBulkRetryId:
     discriminated: false
     union:
@@ -10084,6 +10352,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateEventBulkRetryRequestQuery:
     docs: Filter properties for the events to be included in the bulk retry
     properties:
@@ -10141,6 +10410,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
         docs: URL Encoded string of the string to match partially to the path
     source:
       openapi: ../openapi.yml
+    inline: true
 imports:
   root: __package__.yml
 service:
@@ -10164,6 +10434,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
           order_by: optional<GetEventBulkRetriesRequestOrderBy>
@@ -10456,6 +10728,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIgnoredEventBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10554,6 +10827,12 @@ docs: ''
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "in_progress": "optional<boolean>",
                   "limit": "optional<integer>",
@@ -10628,6 +10907,7 @@ docs: ''
         "types": {
           "CreateIgnoredEventBulkRetryRequestQuery": {
             "docs": "Filter by the bulk retry ignored event query object",
+            "inline": true,
             "properties": {
               "cause": {
                 "docs": "The cause of the ignored event",
@@ -10656,6 +10936,7 @@ docs: ''
             "discriminated": false,
             "docs": "The cause of the ignored event",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10676,6 +10957,7 @@ docs: ''
             "discriminated": false,
             "docs": "Connection ID of the ignored event",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10723,6 +11005,7 @@ docs: ''
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateIgnoredEventBulkRetryRequestQueryWebhookId:
     discriminated: false
     docs: Connection ID of the ignored event
@@ -10733,6 +11016,7 @@ docs: ''
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateIgnoredEventBulkRetryRequestQuery:
     docs: Filter by the bulk retry ignored event query object
     properties:
@@ -10751,6 +11035,7 @@ docs: ''
           maxLength: 255
     source:
       openapi: ../openapi.yml
+    inline: true
 imports:
   root: __package__.yml
 service:
@@ -10774,6 +11059,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
           order_by: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
@@ -11064,6 +11351,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRequestBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11162,6 +11450,12 @@ docs: ''
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "in_progress": "optional<boolean>",
                   "limit": "optional<integer>",
@@ -11236,6 +11530,7 @@ docs: ''
         "types": {
           "CreateRequestBulkRetryRequestQuery": {
             "docs": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
+            "inline": true,
             "properties": {
               "body": {
                 "docs": "URL Encoded string of the JSON to match to the data body",
@@ -11284,6 +11579,7 @@ docs: ''
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the data body",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11294,6 +11590,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryBodyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -11303,6 +11600,7 @@ docs: ''
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11323,6 +11621,7 @@ docs: ''
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11333,6 +11632,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryCreatedAtAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "gt": "optional<datetime>",
@@ -11348,6 +11648,7 @@ docs: ''
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11368,6 +11669,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryEventsCountAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "contains": {
@@ -11429,6 +11731,7 @@ docs: ''
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the data headers",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11439,6 +11742,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryHeadersOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -11448,6 +11752,7 @@ docs: ''
             "discriminated": false,
             "docs": "Filter by requests IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11469,6 +11774,7 @@ docs: ''
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11489,6 +11795,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryIgnoredCountAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "contains": {
@@ -11550,6 +11857,7 @@ docs: ''
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11560,6 +11868,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryIngestedAtAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "gt": "optional<datetime>",
@@ -11575,6 +11884,7 @@ docs: ''
             "discriminated": false,
             "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11585,6 +11895,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryParsedQueryOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -11594,6 +11905,7 @@ docs: ''
             "discriminated": false,
             "docs": "Filter by rejection cause",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11605,6 +11917,7 @@ docs: ''
           },
           "CreateRequestBulkRetryRequestQueryRejectionCauseAny": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "any": "optional<boolean>",
               "contains": "optional<root.RequestRejectionCause>",
@@ -11621,6 +11934,7 @@ docs: ''
             "discriminated": false,
             "docs": "Filter by source IDs",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11679,6 +11993,7 @@ docs: ''
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryStatus:
     enum:
       - accepted
@@ -11695,6 +12010,7 @@ docs: ''
       contains: optional<root.RequestRejectionCause>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryRejectionCause:
     discriminated: false
     docs: Filter by rejection cause
@@ -11704,6 +12020,7 @@ docs: ''
       - list<root.RequestRejectionCause>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryIgnoredCountAny:
     properties:
       gt:
@@ -11729,6 +12046,7 @@ docs: ''
           min: 0
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryIgnoredCount:
     discriminated: false
     union:
@@ -11739,6 +12057,7 @@ docs: ''
       - list<integer>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryEventsCountAny:
     properties:
       gt:
@@ -11764,6 +12083,7 @@ docs: ''
           min: 0
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryEventsCount:
     discriminated: false
     union:
@@ -11774,6 +12094,7 @@ docs: ''
       - list<integer>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQuerySourceId:
     discriminated: false
     docs: Filter by source IDs
@@ -11785,10 +12106,12 @@ docs: ''
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryHeadersOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryHeaders:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data headers
@@ -11797,10 +12120,12 @@ docs: ''
       - CreateRequestBulkRetryRequestQueryHeadersOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryBodyOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryBody:
     discriminated: false
     docs: URL Encoded string of the JSON to match to the data body
@@ -11809,10 +12134,12 @@ docs: ''
       - CreateRequestBulkRetryRequestQueryBodyOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryParsedQueryOne:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryParsedQuery:
     discriminated: false
     docs: >-
@@ -11823,6 +12150,7 @@ docs: ''
       - CreateRequestBulkRetryRequestQueryParsedQueryOne
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryCreatedAtAny:
     properties:
       gt: optional<datetime>
@@ -11832,6 +12160,7 @@ docs: ''
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryCreatedAt:
     discriminated: false
     union:
@@ -11839,6 +12168,7 @@ docs: ''
       - CreateRequestBulkRetryRequestQueryCreatedAtAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryIngestedAtAny:
     properties:
       gt: optional<datetime>
@@ -11848,6 +12178,7 @@ docs: ''
       any: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryIngestedAt:
     discriminated: false
     union:
@@ -11855,6 +12186,7 @@ docs: ''
       - CreateRequestBulkRetryRequestQueryIngestedAtAny
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQueryBulkRetryId:
     discriminated: false
     union:
@@ -11864,6 +12196,7 @@ docs: ''
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateRequestBulkRetryRequestQuery:
     docs: >-
       Filter properties for the events to be included in the bulk retry, use
@@ -11903,6 +12236,7 @@ docs: ''
       bulk_retry_id: optional<CreateRequestBulkRetryRequestQueryBulkRetryId>
     source:
       openapi: ../openapi.yml
+    inline: true
 imports:
   root: __package__.yml
 service:
@@ -11926,6 +12260,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           in_progress: optional<boolean>
           query_partial_match: optional<boolean>
           order_by: optional<GetRequestBulkRetriesRequestOrderBy>
@@ -12368,6 +12704,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12562,12 +12899,24 @@ docs: ''
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "dir": "optional<GetConnectionsRequestDir>",
                   "full_name": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "name": "optional<string>",
@@ -12578,6 +12927,12 @@ docs: ''
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -13008,6 +13363,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13169,6 +13525,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13187,6 +13544,7 @@ docs: ''
         "types": {
           "CreateConnectionRequestDestination": {
             "docs": "Destination input object",
+            "inline": true,
             "properties": {
               "cli_path": {
                 "docs": "Path for the CLI destination",
@@ -13233,6 +13591,7 @@ docs: ''
           },
           "CreateConnectionRequestRuleset": {
             "docs": "Ruleset input object",
+            "inline": true,
             "properties": {
               "is_team_default": "optional<boolean>",
               "name": {
@@ -13256,6 +13615,7 @@ docs: ''
           },
           "CreateConnectionRequestSource": {
             "docs": "Source input object",
+            "inline": true,
             "properties": {
               "name": {
                 "docs": "A unique name for the source",
@@ -13285,6 +13645,7 @@ docs: ''
           },
           "UpdateConnectionRequestRuleset": {
             "docs": "Ruleset input object",
+            "inline": true,
             "properties": {
               "is_team_default": "optional<boolean>",
               "name": {
@@ -13308,6 +13669,7 @@ docs: ''
           },
           "UpsertConnectionRequestDestination": {
             "docs": "Destination input object",
+            "inline": true,
             "properties": {
               "cli_path": {
                 "docs": "Path for the CLI destination",
@@ -13354,6 +13716,7 @@ docs: ''
           },
           "UpsertConnectionRequestRuleset": {
             "docs": "Ruleset input object",
+            "inline": true,
             "properties": {
               "is_team_default": "optional<boolean>",
               "name": {
@@ -13377,6 +13740,7 @@ docs: ''
           },
           "UpsertConnectionRequestSource": {
             "docs": "Source input object",
+            "inline": true,
             "properties": {
               "name": {
                 "docs": "A unique name for the source",
@@ -13435,6 +13799,7 @@ docs: ''
       path_forwarding_disabled: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateConnectionRequestSource:
     docs: Source input object
     properties:
@@ -13446,6 +13811,7 @@ docs: ''
           maxLength: 155
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateConnectionRequestRuleset:
     docs: Ruleset input object
     properties:
@@ -13461,6 +13827,7 @@ docs: ''
       is_team_default: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   UpsertConnectionRequestDestinationRateLimitPeriod:
     enum:
       - second
@@ -13493,6 +13860,7 @@ docs: ''
       path_forwarding_disabled: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   UpsertConnectionRequestSource:
     docs: Source input object
     properties:
@@ -13504,6 +13872,7 @@ docs: ''
           maxLength: 155
     source:
       openapi: ../openapi.yml
+    inline: true
   UpsertConnectionRequestRuleset:
     docs: Ruleset input object
     properties:
@@ -13519,6 +13888,7 @@ docs: ''
       is_team_default: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   UpdateConnectionRequestRuleset:
     docs: Ruleset input object
     properties:
@@ -13534,6 +13904,7 @@ docs: ''
       is_team_default: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
 imports:
   root: __package__.yml
 service:
@@ -13554,13 +13925,19 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name: optional<string>
           destination_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           source_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           archived: optional<boolean>
           archived_at: optional<datetime>
           full_name: optional<string>
@@ -14427,6 +14804,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14532,6 +14910,12 @@ docs: >-
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "name": "optional<string>",
@@ -14674,6 +15058,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14752,6 +15137,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14866,6 +15252,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name: optional<string>
           archived: optional<boolean>
           archived_at: optional<datetime>
@@ -15305,6 +15693,12 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "cli_id": "optional<string>",
                   "cli_user_id": {
@@ -15315,25 +15709,55 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "dir": "optional<GetEventsRequestDir>",
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "event_data_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "include": "optional<literal<"data">>",
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "last_attempt_at": "optional<datetime>",
                   "limit": "optional<integer>",
@@ -15346,12 +15770,24 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "status": "optional<root.EventStatus>",
                   "successful_at": "optional<datetime>",
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -15587,19 +16023,29 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           status: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           webhook_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           destination_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           source_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           attempts: optional<integer>
           response_status: optional<integer>
           successful_at: optional<datetime>
@@ -15607,6 +16053,8 @@ service:
           error_code:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           cli_id: optional<string>
           cli_user_id:
             type: optional<string>
@@ -15615,12 +16063,16 @@ service:
           event_data_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           headers: optional<string>
           body: optional<string>
           parsed_query: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
           order_by: optional<GetEventsRequestOrderBy>
@@ -15968,6 +16420,7 @@ docs: An event is any request that Hookdeck receives from a source.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIntegrationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16225,6 +16678,7 @@ docs: An event is any request that Hookdeck receives from a source.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIntegrationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16245,6 +16699,7 @@ docs: An event is any request that Hookdeck receives from a source.
             "discriminated": false,
             "docs": "Decrypted Key/Value object of the associated configuration for that provider",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16260,6 +16715,7 @@ docs: An event is any request that Hookdeck receives from a source.
             "discriminated": false,
             "docs": "Decrypted Key/Value object of the associated configuration for that provider",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16561,6 +17017,7 @@ types:
       - root.ShopifyIntegrationConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
   UpdateIntegrationRequestConfigs:
     discriminated: false
     docs: >-
@@ -16574,6 +17031,7 @@ types:
       - root.ShopifyIntegrationConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
 ",
     },
     "issueTriggers.yml": {
@@ -16651,6 +17109,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16975,6 +17434,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17049,6 +17509,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17069,6 +17530,7 @@ types:
             "discriminated": false,
             "docs": "Configuration object for the specific issue type selected",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17094,6 +17556,7 @@ types:
             "discriminated": false,
             "docs": "Configuration object for the specific issue type selected",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17107,6 +17570,7 @@ types:
             "discriminated": false,
             "docs": "Configuration object for the specific issue type selected",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17138,6 +17602,7 @@ types:
       - root.IssueTriggerBackpressureConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
   UpsertIssueTriggerRequestConfigs:
     discriminated: false
     docs: Configuration object for the specific issue type selected
@@ -17147,6 +17612,7 @@ types:
       - root.IssueTriggerBackpressureConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
   UpdateIssueTriggerRequestConfigs:
     discriminated: false
     docs: Configuration object for the specific issue type selected
@@ -17156,6 +17622,7 @@ types:
       - root.IssueTriggerBackpressureConfigs
     source:
       openapi: ../openapi.yml
+    inline: true
 service:
   auth: false
   base-path: ''
@@ -17692,10 +18159,22 @@ docs: >-
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "issue_trigger_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "last_seen_at": "optional<datetime>",
                   "limit": "optional<integer>",
@@ -17805,10 +18284,22 @@ docs: >-
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "issue_trigger_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "last_seen_at": "optional<datetime>",
                   "limit": "optional<integer>",
@@ -17894,6 +18385,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18058,9 +18550,13 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           issue_trigger_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           type: optional<GetIssuesRequestType>
           status: optional<GetIssuesRequestStatus>
           merged_with:
@@ -18143,9 +18639,13 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           issue_trigger_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           type: optional<GetIssueCountRequestType>
           status: optional<GetIssueCountRequestStatus>
           merged_with:
@@ -18405,6 +18905,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToggleWebhookNotificationsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18601,6 +19102,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "cli_id": "optional<string>",
                   "cli_user_id": {
@@ -18611,25 +19118,55 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "dir": "optional<GetRequestEventsRequestDir>",
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "event_data_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "include": "optional<literal<"data">>",
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "last_attempt_at": "optional<datetime>",
                   "limit": "optional<integer>",
@@ -18642,12 +19179,24 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "status": "optional<root.EventStatus>",
                   "successful_at": "optional<datetime>",
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -18712,6 +19261,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "next": "optional<string>",
@@ -18817,6 +19372,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "created_at": "optional<datetime>",
                   "dir": "optional<GetRequestsRequestDir>",
@@ -18825,6 +19386,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "ignored_count": "optional<integer>",
                   "include": "optional<literal<"data">>",
@@ -18839,6 +19406,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "status": "optional<GetRequestsRequestStatus>",
                   "verified": "optional<boolean>",
@@ -18946,6 +19519,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RetryRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19060,6 +19634,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           status: optional<GetRequestsRequestStatus>
           rejection_cause: optional<root.RequestRejectionCause>
           ignored_count: optional<integer>
@@ -19067,6 +19643,8 @@ service:
           source_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           verified: optional<boolean>
           headers: optional<string>
           body: optional<string>
@@ -19077,6 +19655,8 @@ service:
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           include: optional<literal<"data">>
           order_by: optional<GetRequestsRequestOrderBy>
           dir: optional<GetRequestsRequestDir>
@@ -19278,19 +19858,29 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           status: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           webhook_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           destination_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           source_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           attempts: optional<integer>
           response_status: optional<integer>
           successful_at: optional<datetime>
@@ -19298,6 +19888,8 @@ service:
           error_code:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           cli_id: optional<string>
           cli_user_id:
             type: optional<string>
@@ -19306,12 +19898,16 @@ service:
           event_data_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           headers: optional<string>
           body: optional<string>
           parsed_query: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
           order_by: optional<GetRequestEventsRequestOrderBy>
@@ -19375,6 +19971,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           order_by: optional<GetRequestIgnoredEventsRequestOrderBy>
           dir: optional<GetRequestIgnoredEventsRequestDir>
           limit: optional<integer>
@@ -19529,6 +20127,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19637,6 +20236,12 @@ docs: A request represent a webhook received by Hookdeck.
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "name": "optional<string>",
@@ -19765,6 +20370,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19833,6 +20439,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19890,6 +20497,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name: optional<string>
           archived: optional<boolean>
           archived_at: optional<datetime>
@@ -20276,6 +20885,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20390,6 +21000,12 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "integration_id": "optional<string>",
                   "limit": "optional<integer>",
@@ -20520,6 +21136,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20586,6 +21203,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20643,6 +21261,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name: optional<string>
           archived: optional<boolean>
           archived_at: optional<datetime>
@@ -21002,6 +21622,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21188,6 +21809,12 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
@@ -21197,6 +21824,12 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -21254,6 +21887,12 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": "optional<integer>",
                   "name": "optional<string>",
@@ -21335,6 +21974,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21409,6 +22049,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21479,6 +22120,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21499,6 +22141,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21540,6 +22183,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
           },
           "TestTransformationRequestEnv": {
             "docs": "Key-value environment variables to be passed to the transformation",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -21547,6 +22191,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
           },
           "TestTransformationRequestRequest": {
             "docs": "Request input to use for the transformation execution",
+            "inline": true,
             "properties": {
               "body": {
                 "docs": "Body of the request",
@@ -21577,6 +22222,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
             "discriminated": false,
             "docs": "Body of the request",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21587,6 +22233,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
           },
           "TestTransformationRequestRequestBodyZero": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -21594,6 +22241,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
           },
           "TestTransformationRequestRequestParsedQuery": {
             "docs": "JSON representation of the query params",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -21603,6 +22251,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21615,6 +22264,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21640,6 +22290,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
       - float
     source:
       openapi: ../openapi.yml
+    inline: true
   UpsertTransformationRequestEnvValue:
     discriminated: false
     union:
@@ -21647,6 +22298,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
       - float
     source:
       openapi: ../openapi.yml
+    inline: true
   UpdateTransformationRequestEnvValue:
     discriminated: false
     union:
@@ -21654,15 +22306,18 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
       - float
     source:
       openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestEnv:
     docs: Key-value environment variables to be passed to the transformation
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestRequestBodyZero:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestRequestBody:
     discriminated: false
     docs: Body of the request
@@ -21671,11 +22326,13 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
       - string
     source:
       openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestRequestParsedQuery:
     docs: JSON representation of the query params
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TestTransformationRequestRequest:
     docs: Request input to use for the transformation execution
     properties:
@@ -21696,6 +22353,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
         docs: JSON representation of the query params
     source:
       openapi: ../openapi.yml
+    inline: true
   GetTransformationExecutionsRequestLogLevel:
     enum:
       - debug
@@ -21730,6 +22388,8 @@ service:
           id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           name: optional<string>
           order_by: optional<GetTransformationsRequestOrderBy>
           dir: optional<GetTransformationsRequestDir>
@@ -22011,9 +22671,13 @@ service:
           webhook_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           issue_id:
             type: optional<string>
             allow-multiple: true
+            validation:
+              maxLength: 255
           created_at: optional<datetime>
           order_by: optional<GetTransformationExecutionsRequestOrderBy>
           dir: optional<GetTransformationExecutionsRequestDir>

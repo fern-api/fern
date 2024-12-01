@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload", "SeedFileDownload\SeedFileDownload.csproj", "{0D10A66D-D6BE-4391-B825-9E66DA614CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload.Test", "SeedFileDownload.Test\SeedFileDownload.Test.csproj", "{C2368B19-E8F1-4E86-9072-8DA0E57B12CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D10A66D-D6BE-4391-B825-9E66DA614CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D10A66D-D6BE-4391-B825-9E66DA614CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D10A66D-D6BE-4391-B825-9E66DA614CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D10A66D-D6BE-4391-B825-9E66DA614CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2368B19-E8F1-4E86-9072-8DA0E57B12CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2368B19-E8F1-4E86-9072-8DA0E57B12CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2368B19-E8F1-4E86-9072-8DA0E57B12CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2368B19-E8F1-4E86-9072-8DA0E57B12CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

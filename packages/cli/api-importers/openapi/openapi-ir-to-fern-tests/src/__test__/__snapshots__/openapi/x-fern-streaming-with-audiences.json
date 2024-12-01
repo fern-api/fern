@@ -8,6 +8,7 @@
         "types": {
           "StreamUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -26,6 +27,7 @@
           },
           "User": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -115,6 +117,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -167,6 +170,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {

@@ -14,7 +14,7 @@ type SendResponse struct {
 	success bool
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (s *SendResponse) GetMessage() string {
@@ -55,14 +55,12 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, true, unmarshaler.Success)
 	}
 	s.success = unmarshaler.Success
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s, "success")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -79,8 +77,8 @@ func (s *SendResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendResponse) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}

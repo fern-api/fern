@@ -8,6 +8,7 @@
         "types": {
           "Completion": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "text": "optional<string>",
             },
@@ -17,6 +18,7 @@
           },
           "CompletionChunk": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "text": "optional<string>",
             },
@@ -78,6 +80,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatCompletionsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -119,6 +122,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatCompletionsCreateStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {

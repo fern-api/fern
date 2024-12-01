@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { mapKeys } from "lodash-es";
 import { ParsedFernFile } from "../FernFile";

@@ -497,6 +497,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -694,6 +704,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1033,6 +1053,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1189,6 +1219,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1268,6 +1308,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1868,6 +1918,19 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpPathParameterSchema"
+              }
             },
             {
               "type": "null"
@@ -2651,6 +2714,26 @@
           "oneOf": [
             {
               "$ref": "#/definitions/service.Pagination"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transport": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.ServiceTransport"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
             },
             {
               "type": "null"

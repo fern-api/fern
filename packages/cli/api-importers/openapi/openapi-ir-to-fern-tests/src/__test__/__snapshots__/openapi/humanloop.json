@@ -22,6 +22,7 @@
         "types": {
           "AgentConfigResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "agent_class": {
                 "docs": "Class of the agent.",
@@ -67,6 +68,7 @@
           "BooleanEvaluatorVersionStats": {
             "docs": "Base attributes for stats for an Evaluator Version-Evaluated Version pair
 in the Evaluation Report.",
+            "inline": undefined,
             "properties": {
               "evaluator_version_id": {
                 "docs": "Unique identifier for the Evaluator Version.",
@@ -103,6 +105,7 @@ in the Evaluation Report.",
           },
           "CategoricalFeedbackLabel": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sentiment": {
                 "docs": "Whether the feedback sentiment is positive or negative.",
@@ -120,6 +123,7 @@ in the Evaluation Report.",
           },
           "ChatMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "content": {
                 "docs": "The content of the message.",
@@ -166,6 +170,7 @@ in the Evaluation Report.",
           },
           "ChatMessageWithToolCall": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "content": {
                 "docs": "The content of the message.",
@@ -229,6 +234,7 @@ in the Evaluation Report.",
           },
           "CodeEvaluatorRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "arguments_type": {
                 "docs": "Whether this evaluator is target-free or target-required.",
@@ -249,6 +255,7 @@ in the Evaluation Report.",
           },
           "CommitRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "commit_message": {
                 "docs": "Message describing the changes made.",
@@ -290,6 +297,7 @@ in the Evaluation Report.",
             "discriminated": false,
             "docs": "The content of the message.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -300,6 +308,7 @@ in the Evaluation Report.",
           },
           "CreateDatapointRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "inputs": {
                 "docs": "The inputs to the prompt template.",
@@ -322,6 +331,7 @@ in the Evaluation Report.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -340,6 +350,7 @@ in the Evaluation Report.",
 Evaluation benchmark your Prompt/Tool Versions. With the Datapoints in a Dataset Version,
 Logs corresponding to the Datapoint and each Evaluated Version are evaluated by the specified Evaluator Versions.
 Aggregated statistics are then calculated and presented in the Evaluation.",
+            "inline": undefined,
             "properties": {
               "dataset": {
                 "docs": "The Dataset Version to use in this Evaluation.",
@@ -360,6 +371,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           },
           "CreatePromptLogResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "String ID of log.",
@@ -384,6 +396,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           },
           "CreateToolLogResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "String ID of log.",
@@ -408,6 +421,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           },
           "DashboardConfiguration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "model_config_ids": {
                 "type": "list<string>",
@@ -423,6 +437,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           },
           "DatapointResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique identifier for the Datapoint. Starts with `dp_`.",
@@ -449,6 +464,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -463,6 +479,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           },
           "DatasetRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "version_id": {
                 "docs": "Unique identifier for the Dataset Version to use in this evaluation. Starts with `dsv_`.",
@@ -478,6 +495,7 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
 
 Attributes defined here are common to all File Responses and should be overridden
 in the inheriting classes with documentation and appropriate Field definitions.",
+            "inline": undefined,
             "properties": {
               "commit_message": {
                 "docs": "Message describing the changes made. If provided, a committed version of the Dataset is created. Otherwise, an uncommitted version is created.",
@@ -531,6 +549,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
           },
           "EnvironmentResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "type": "datetime",
@@ -559,6 +578,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -573,6 +593,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
           },
           "EvaluateeRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "batch_id": {
                 "docs": "Unique identifier for the batch of Logs to include in the Evaluation Report.",
@@ -594,6 +615,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
           },
           "EvaluateeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "batch_id": {
                 "docs": "Unique identifier for the batch of Logs to include in the Evaluation Report. ",
@@ -615,6 +637,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "docs": "This is similar to an `EvaluationResult` but is ephemeral as it is only for synchronous
 debug runs. It does not have an ID, or a reference to an evaluation run or even an evaluation
 function.",
+            "inline": undefined,
             "properties": {
               "datapoint_id": {
                 "type": "optional<string>",
@@ -639,6 +662,7 @@ function.",
           },
           "EvaluationEvaluatorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "orchestrated": {
                 "docs": "Whether the Evaluator is orchestrated by Humanloop. Default is `True`. If `False`, a log for the Evaluator should be submitted by the user via the API.",
@@ -654,6 +678,7 @@ function.",
           },
           "EvaluationResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "type": "datetime",
@@ -697,6 +722,7 @@ function.",
           },
           "EvaluationResultResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "type": "datetime",
@@ -736,6 +762,7 @@ function.",
           },
           "EvaluationStats": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "overall_stats": {
                 "docs": "Stats for the Evaluation Report as a whole.",
@@ -765,6 +792,7 @@ function.",
           },
           "EvaluatorActivationDeactivationRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "evaluators_to_activate": {
                 "docs": "Monitoring Evaluators to activate. These will be automatically run on new Logs.",
@@ -783,6 +811,7 @@ function.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -799,6 +828,7 @@ function.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -823,6 +853,7 @@ function.",
           },
           "EvaluatorConfigResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "arguments_type": {
                 "docs": "Whether this evaluator is target-free or target-required.",
@@ -875,6 +906,7 @@ function.",
           },
           "EvaluatorRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "orchestrated": {
                 "default": true,
@@ -892,6 +924,7 @@ function.",
           },
           "EvaluatorResponse": {
             "docs": "Request model for creating a new Evaluator",
+            "inline": undefined,
             "properties": {
               "commit_message": {
                 "docs": "Message describing the changes made.",
@@ -989,6 +1022,7 @@ function.",
           },
           "FeedbackResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "User defined timestamp for when the feedback was created. ",
@@ -1025,6 +1059,7 @@ function.",
             "discriminated": false,
             "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1039,6 +1074,7 @@ function.",
             "discriminated": false,
             "docs": "The feedback value to set. This would be the appropriate text for 'correction' or 'comment', or a label to apply for 'rating', 'action', or 'issue'.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1062,6 +1098,7 @@ function.",
           },
           "FeedbackTypeModel": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "display-name": "Feedback type",
@@ -1081,6 +1118,7 @@ function.",
             "discriminated": false,
             "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1098,6 +1136,7 @@ function.",
             "discriminated": false,
             "docs": "The File that the deployed Version belongs to.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1118,6 +1157,7 @@ function.",
           },
           "FunctionTool": {
             "docs": "A function tool to be called by the model where user owns runtime.",
+            "inline": undefined,
             "properties": {
               "arguments": {
                 "type": "optional<string>",
@@ -1130,6 +1170,7 @@ function.",
           },
           "FunctionToolChoice": {
             "docs": "A function tool to be called by the model where user owns runtime.",
+            "inline": undefined,
             "properties": {
               "name": "string",
             },
@@ -1139,6 +1180,7 @@ function.",
           },
           "GenericConfigResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_by": {
                 "docs": "The user who created the config.",
@@ -1171,6 +1213,7 @@ function.",
           },
           "HTTPValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
@@ -1182,6 +1225,7 @@ function.",
           },
           "HumanEvaluatorRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "arguments_type": {
                 "docs": "Whether this evaluator is target-free or target-required.",
@@ -1198,6 +1242,7 @@ function.",
           },
           "ImageChatContent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "image_url": {
                 "docs": "The message's image content.",
@@ -1210,6 +1255,7 @@ function.",
           },
           "ImageUrl": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "docs": "Specify the detail level of the image provided to the model. For more details see: https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding",
@@ -1237,6 +1283,7 @@ function.",
           },
           "InputResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Type of input.",
@@ -1251,6 +1298,7 @@ function.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1261,6 +1309,7 @@ function.",
           },
           "LLMEvaluatorRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "arguments_type": {
                 "docs": "Whether this evaluator is target-free or target-required.",
@@ -1295,6 +1344,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "LinkedToolRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The description of the linked tool.",
@@ -1323,6 +1373,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "LinkedToolResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Description of the tool referenced by the model",
@@ -1351,6 +1402,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "ListDatasets": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "records": {
                 "docs": "The list of Datasets.",
@@ -1363,6 +1415,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "ListEvaluators": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "records": {
                 "docs": "The list of Evaluators.",
@@ -1375,6 +1428,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "ListPrompts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "records": {
                 "docs": "The list of Prompts.",
@@ -1387,6 +1441,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "ListTools": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "records": {
                 "docs": "The list of Tools.",
@@ -1399,6 +1454,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "LogResponse": {
             "docs": "Request model for logging a datapoint.",
+            "inline": undefined,
             "properties": {
               "batch_ids": {
                 "docs": "List of batch IDs the log belongs to.",
@@ -1574,6 +1630,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "discriminated": false,
             "docs": "Controls how the model uses tools. The following options are supported: 'none' forces the model to not call a tool; the default when no tools are provided as part of the model config. 'auto' the model can decide to call one of the provided tools; the default when tools are provided as part of the model config. Providing {'type': 'function', 'function': {name': <TOOL_NAME>}} forces the model to use the named function.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1588,6 +1645,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "MetricValueResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "metric_id": "string",
               "metric_name": "string",
@@ -1599,6 +1657,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "ModelConfigRequest": {
             "docs": "Model config used for logging both chat and completion.",
+            "inline": undefined,
             "properties": {
               "chat_template": {
                 "docs": "Messages prepended to the list of messages sent to the provider. These messages that will take your specified inputs to form your final request to the provider model. Input variables within the template should be specified with syntax: {{INPUT_NAME}}.",
@@ -1685,6 +1744,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "discriminated": false,
             "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1697,6 +1757,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1713,6 +1774,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "Model config request.
 
 Contains fields that are common to all (i.e. both chat and complete) endpoints.",
+            "inline": undefined,
             "properties": {
               "chat_template": {
                 "docs": "Messages prepended to the list of messages sent to the provider. These messages that will take your specified inputs to form your final request to the provider model. NB: Input variables within the template should be specified with syntax: {{INPUT_NAME}}.",
@@ -1805,6 +1867,7 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
             "discriminated": false,
             "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1818,6 +1881,7 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
 
 The subset of ToolConfig parameters received by the chat endpoint.
 Does not have things like the signature or setup schema.",
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The description of the tool shown to the model.",
@@ -1883,6 +1947,7 @@ Does not have things like the signature or setup schema.",
           },
           "MonitoringEvaluatorEnvironmentRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "environment_id": {
                 "docs": "Unique identifier for the Environment. The Evaluator Version deployed to this Environment will be used for monitoring.",
@@ -1899,6 +1964,7 @@ Does not have things like the signature or setup schema.",
           },
           "MonitoringEvaluatorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "type": "datetime",
@@ -1935,6 +2001,7 @@ Does not have things like the signature or setup schema.",
           },
           "MonitoringEvaluatorVersionRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "evaluator_version_id": {
                 "docs": "Unique identifier for the Evaluator Version to be used for monitoring.",
@@ -1948,6 +2015,7 @@ Does not have things like the signature or setup schema.",
           "NumericEvaluatorVersionStats": {
             "docs": "Base attributes for stats for an Evaluator Version-Evaluated Version pair
 in the Evaluation Report.",
+            "inline": undefined,
             "properties": {
               "evaluator_version_id": {
                 "docs": "Unique identifier for the Evaluator Version.",
@@ -1999,6 +2067,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "OverallStats": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "num_datapoints": {
                 "docs": "The total number of Datapoints in the Evaluation Report's Dataset Version.",
@@ -2019,6 +2088,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PaginatedDataDatapointResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "page": "integer",
               "records": {
@@ -2033,6 +2103,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PaginatedDataDatasetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "page": "integer",
               "records": {
@@ -2047,6 +2118,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PaginatedDataEvaluationResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "page": "integer",
               "records": {
@@ -2061,6 +2133,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PaginatedDataPromptLogResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "page": "integer",
               "records": {
@@ -2075,6 +2148,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PaginatedDataSessionResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "page": "integer",
               "records": {
@@ -2111,6 +2185,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptCallLogResponse": {
             "docs": "Sample specific response details for a Prompt call",
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "User defined timestamp for when the log was created. ",
@@ -2167,6 +2242,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptCallResponse": {
             "docs": "Response model for a Prompt call with potentially multiple log samples.",
+            "inline": undefined,
             "properties": {
               "batches": {
                 "docs": "Array of Batch Ids that this log is part of. Batches are used to group Logs together for offline Evaluations",
@@ -2246,6 +2322,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - `'required'` means the model can decide to call one or more of the provided tools. 
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2260,6 +2337,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptCallStreamResponse": {
             "docs": "Response model for calling Prompt in streaming mode.",
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "User defined timestamp for when the log was created. ",
@@ -2328,6 +2406,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptKernelRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endpoint": {
                 "docs": "The provider model endpoint used.",
@@ -2403,6 +2482,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "discriminated": false,
             "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2413,6 +2493,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptLogResponse": {
             "docs": "Request for creating a Prompt log.",
+            "inline": undefined,
             "properties": {
               "batches": {
                 "docs": "Array of Batch Ids that this log is part of. Batches are used to group Logs together for offline Evaluations",
@@ -2540,6 +2621,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - `'required'` means the model can decide to call one or more of the provided tools. 
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2554,6 +2636,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptResponse": {
             "docs": "Request model for creating a new Prompt",
+            "inline": undefined,
             "properties": {
               "commit_message": {
                 "docs": "Message describing the changes made.",
@@ -2682,6 +2765,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "discriminated": false,
             "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2692,6 +2776,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "ProviderApiKeys": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ai21": {
                 "type": "optional<string>",
@@ -2721,6 +2806,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "ResponseFormat": {
             "docs": "Response format of the model.",
+            "inline": undefined,
             "properties": {
               "type": {
                 "type": "literal<"json_object">",
@@ -2732,6 +2818,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "SessionResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "type": "datetime",
@@ -2787,6 +2874,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "discriminated": false,
             "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2797,6 +2885,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "TextChatContent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "text": {
                 "docs": "The message's text content.",
@@ -2820,6 +2909,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "ToolCall": {
             "docs": "A tool call to be made.",
+            "inline": undefined,
             "properties": {
               "function": {
                 "type": "FunctionTool",
@@ -2835,6 +2925,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "ToolChoice": {
             "docs": "Tool choice to force the model to use a tool.",
+            "inline": undefined,
             "properties": {
               "function": {
                 "type": "FunctionToolChoice",
@@ -2852,6 +2943,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 
 The subset of ToolConfig parameters received by the chat endpoint.
 Does not have things like the signature or setup schema.",
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The description of the tool shown to the model.",
@@ -2891,6 +2983,7 @@ Does not have things like the signature or setup schema.",
           },
           "ToolConfigResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_by": {
                 "docs": "The user who created the config.",
@@ -2951,6 +3044,7 @@ Does not have things like the signature or setup schema.",
           },
           "ToolFunction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Description of the tool referenced by the model",
@@ -2971,6 +3065,7 @@ Does not have things like the signature or setup schema.",
           },
           "ToolKernelRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "function": {
                 "docs": "Callable function specification of the Tool shown to the model for tool calling.",
@@ -2991,6 +3086,7 @@ Does not have things like the signature or setup schema.",
           },
           "ToolResponse": {
             "docs": "Request to create a new Tool.",
+            "inline": undefined,
             "properties": {
               "commit_message": {
                 "docs": "Message describing the changes made.",
@@ -3072,6 +3168,7 @@ Does not have things like the signature or setup schema.",
           },
           "ToolResultResponse": {
             "docs": "A result from a tool used to populate the prompt template",
+            "inline": undefined,
             "properties": {
               "id": "string",
               "name": "string",
@@ -3096,6 +3193,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "ToolTemplateResponse": {
             "docs": "Template for a Humanloop runnable tool.",
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Description of the tool referenced by the model",
@@ -3149,6 +3247,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "UserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email_address": {
                 "docs": "The User's email address.",
@@ -3169,6 +3268,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "ValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loc": {
                 "type": "list<ValidationErrorLocItem>",
@@ -3184,6 +3284,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3196,6 +3297,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3208,6 +3310,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "discriminated": false,
             "docs": "The specific Version being referenced.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3228,6 +3331,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "VersionDeploymentResponse": {
             "docs": "A variable reference to the Version deployed to an Environment",
+            "inline": undefined,
             "properties": {
               "environment": {
                 "docs": "The Environment that the Version is deployed to.",
@@ -3245,6 +3349,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "VersionIdResponse": {
             "docs": "A reference to a specific Version by its ID",
+            "inline": undefined,
             "properties": {
               "version": {
                 "display-name": "Version",
@@ -3276,6 +3381,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           },
           "VersionStats": {
             "docs": "Stats for an Evaluated Version in the Evaluation Report.",
+            "inline": undefined,
             "properties": {
               "evaluator_version_stats": {
                 "docs": "Stats for each Evaluator Version used to evaluate this Evaluated Version.",
@@ -3298,6 +3404,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3425,6 +3532,7 @@ types:
       - list<ChatMessageWithToolCallContentItem>
     source:
       openapi: ../openapi.yml
+    inline: true
   ChatMessage:
     properties:
       content:
@@ -3537,6 +3645,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateDatapointRequest:
     properties:
       inputs:
@@ -3631,6 +3740,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   DatapointResponse:
     properties:
       inputs:
@@ -3773,6 +3883,7 @@ types:
       - double
     source:
       openapi: ../openapi.yml
+    inline: true
   EvaluationDebugResultResponse:
     docs: >-
       This is similar to an `EvaluationResult` but is ephemeral as it is only
@@ -3899,6 +4010,7 @@ types:
       - type: MonitoringEvaluatorEnvironmentRequest
     source:
       openapi: ../openapi.yml
+    inline: true
   EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem:
     discriminated: false
     union:
@@ -3906,6 +4018,7 @@ types:
       - type: MonitoringEvaluatorEnvironmentRequest
     source:
       openapi: ../openapi.yml
+    inline: true
   EvaluatorActivationDeactivationRequest:
     properties:
       evaluators_to_activate:
@@ -4062,6 +4175,7 @@ types:
       - string
     source:
       openapi: ../openapi.yml
+    inline: true
   FeedbackResponseValue:
     discriminated: false
     docs: >-
@@ -4073,6 +4187,7 @@ types:
       - string
     source:
       openapi: ../openapi.yml
+    inline: true
   FeedbackResponse:
     properties:
       type:
@@ -4112,6 +4227,7 @@ types:
       - string
     source:
       openapi: ../openapi.yml
+    inline: true
   FeedbackTypeModel:
     properties:
       type:
@@ -4321,6 +4437,7 @@ types:
       - double
     source:
       openapi: ../openapi.yml
+    inline: true
   LogResponseToolChoice:
     discriminated: false
     docs: >-
@@ -4337,6 +4454,7 @@ types:
       - type: ToolChoice
     source:
       openapi: ../openapi.yml
+    inline: true
   LogResponse:
     docs: Request model for logging a datapoint.
     properties:
@@ -4503,6 +4621,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ModelConfigRequestToolsItem:
     discriminated: false
     union:
@@ -4510,6 +4629,7 @@ types:
       - type: ModelConfigToolRequest
     source:
       openapi: ../openapi.yml
+    inline: true
   ModelConfigRequest:
     docs: Model config used for logging both chat and completion.
     properties:
@@ -4610,6 +4730,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ModelConfigResponse:
     docs: >-
       Model config request.
@@ -5006,6 +5127,7 @@ types:
       - type: ToolChoice
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptCallResponse:
     docs: Response model for a Prompt call with potentially multiple log samples.
     properties:
@@ -5150,6 +5272,7 @@ types:
       - list<ChatMessage>
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptKernelRequestStop:
     discriminated: false
     docs: >-
@@ -5160,6 +5283,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptKernelRequest:
     properties:
       model:
@@ -5266,6 +5390,7 @@ types:
       - type: ToolChoice
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptLogResponse:
     docs: Request for creating a Prompt log.
     properties:
@@ -5395,6 +5520,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptResponse:
     docs: Request model for creating a new Prompt
     properties:
@@ -5781,6 +5907,7 @@ types:
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   ValidationError:
     properties:
       loc:
@@ -5799,6 +5926,7 @@ types:
       - type: EvaluatorResponse
     source:
       openapi: ../openapi.yml
+    inline: true
   VersionDeploymentResponse:
     docs: A variable reference to the Version deployed to an Environment
     properties:
@@ -5821,6 +5949,7 @@ types:
       - type: EvaluatorResponse
     source:
       openapi: ../openapi.yml
+    inline: true
   VersionIdResponse:
     docs: A reference to a specific Version by its ID
     properties:
@@ -5847,6 +5976,7 @@ types:
       - type: BooleanEvaluatorVersionStats
     source:
       openapi: ../openapi.yml
+    inline: true
   VersionStats:
     docs: Stats for an Evaluated Version in the Evaluation Report.
     properties:
@@ -6230,6 +6360,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DatasetRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag to identify a deployed Version to base the created Version on. Only used when `action` is `"add"` or `"remove"`.",
@@ -6531,10 +6662,24 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Datasets to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort_by": {
                     "docs": "Field to sort Datasets by",
@@ -6610,10 +6755,24 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Datapoints to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "version_id": {
                     "docs": "A specific Version ID of the Dataset to retrieve.",
@@ -6786,6 +6945,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDatasetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -6822,9 +6982,13 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Datasets to fetch.
+            validation:
+              min: 0
           name:
             type: optional<string>
             docs: Case-insensitive filter for Dataset name.
@@ -7176,9 +7340,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Datapoints to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataDatapointResponse
@@ -7913,10 +8081,24 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Evaluations to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -8204,6 +8386,7 @@ as completed.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyEvaluationsUpdateStatus",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8250,9 +8433,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Evaluations to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataEvaluationResponse
@@ -9000,6 +9187,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EvaluatorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9262,6 +9450,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RunSyncEvaluationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9542,6 +9731,13 @@ By default the deployed version of the Evaluator is returned. Use the query para
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Evaluators to fetch.",
@@ -9791,6 +9987,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateEvaluatorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9871,6 +10068,8 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Evaluators to fetch.
@@ -10916,6 +11115,13 @@ You can manually create Logs through the API.
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "If provided, only Logs that contain the provided string in its inputs and output will be returned.",
@@ -10924,6 +11130,13 @@ You can manually create Logs through the API.
                   "size": {
                     "docs": "Page size for pagination. Number of Logs to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "start_date": {
                     "docs": "If provided, only Logs created after the specified date will be returned.",
@@ -10976,9 +11189,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Logs to fetch.
+            validation:
+              min: 0
           version_id:
             type: optional<string>
             docs: >-
@@ -11503,6 +11720,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptCallRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -11816,6 +12034,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12186,10 +12405,24 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Prompts to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort_by": {
                     "docs": "Field to sort Prompts by",
@@ -12479,6 +12712,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptLogRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -12608,6 +12842,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdatePromptRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12740,6 +12975,7 @@ within the Prompt for monitoring purposes.",
 - `'required'` means the model can decide to call one or more of the provided tools. 
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12760,6 +12996,7 @@ within the Prompt for monitoring purposes.",
 - `'required'` means the model can decide to call one or more of the provided tools. 
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12776,6 +13013,7 @@ within the Prompt for monitoring purposes.",
             "discriminated": false,
             "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12788,6 +13026,7 @@ within the Prompt for monitoring purposes.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12804,6 +13043,7 @@ within the Prompt for monitoring purposes.",
             "discriminated": false,
             "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12834,9 +13074,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Prompts to fetch.
+            validation:
+              min: 0
           name:
             type: optional<string>
             docs: Case-insensitive filter for Prompt name.
@@ -14081,6 +14325,7 @@ types:
       - list<root.ChatMessage>
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptRequestStop:
     discriminated: false
     docs: >-
@@ -14091,6 +14336,7 @@ types:
       - list<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptLogRequestToolChoice:
     discriminated: false
     docs: >-
@@ -14115,6 +14361,7 @@ types:
       - type: root.ToolChoice
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptCallRequestToolChoice:
     discriminated: false
     docs: >-
@@ -14139,6 +14386,7 @@ types:
       - type: root.ToolChoice
     source:
       openapi: ../openapi.yml
+    inline: true
   PromptsCallResponse:
     discriminated: false
     union:
@@ -14359,10 +14607,24 @@ Log is in, nested within the evaluated Log.
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Sessions to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "version_id": {
                     "docs": "Unique identifier for Version to return Sessions for. Sessions that contain any Logs associated to this Version will be returned.",
@@ -14503,9 +14765,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Sessions to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataSessionResponse
@@ -14768,6 +15034,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15069,6 +15336,13 @@ By default the deployed version of the Tool is returned. Use the query parameter
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Tools to fetch.",
@@ -15351,6 +15625,7 @@ in the case where you are storing or deriving your Tool details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToolLogRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -15456,6 +15731,7 @@ in the case where you are storing or deriving your Tool details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateToolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15576,6 +15852,8 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Tools to fetch.

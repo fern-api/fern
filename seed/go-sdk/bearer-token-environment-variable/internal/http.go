@@ -11,6 +11,17 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
+// ResolveBaseURL resolves the base URL from the given arguments,
+// preferring the first non-empty value.
+func ResolveBaseURL(values ...string) string {
+	for _, value := range values {
+		if value != "" {
+			return value
+		}
+	}
+	return ""
+}
+
 // EncodeURL encodes the given arguments into the URL, escaping
 // values as needed.
 func EncodeURL(urlFormat string, args ...interface{}) string {

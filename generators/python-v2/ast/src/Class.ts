@@ -33,7 +33,11 @@ export class Class extends AstNode {
         this.docs = docs;
 
         this.extends_.forEach((parentClassReference) => {
-            this.addReference(parentClassReference);
+            this.inheritReferences(parentClassReference);
+        });
+
+        this.decorators.forEach((decorator) => {
+            this.inheritReferences(decorator);
         });
     }
 
