@@ -25,7 +25,7 @@ async function lib_main() {
                     "@fern-api/logging-execa": "^0.15.0-rc63",
                     // Maybe we don't need these?
                     // "@fern-fern/generator-cli-sdk": "0.0.17",
-                    // "@fern-fern/generator-exec-sdk": "^0.0.898",
+                    // "@fern-api/browser-compatible-base-generator": "^0.0.898",
                     "js-yaml": "^4.1.0",
                     "lodash-es": "^4.17.21",
                     "tmp-promise": "^3.0.3"
