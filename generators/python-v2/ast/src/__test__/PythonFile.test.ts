@@ -282,7 +282,7 @@ describe("PythonFile", () => {
     it("Write top of file comments", async () => {
         const file = python.file({
             path: ["root"],
-            topOfFileComments: [
+            comments: [
                 python.comment({ docs: "!/usr/bin/env python" }),
                 python.comment({ docs: "flake8: noqa: F401, F403" })
             ],
@@ -302,7 +302,7 @@ describe("PythonFile", () => {
     it("Write star imports", async () => {
         const file = python.file({
             path: ["root"],
-            topOfFileComments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
+            comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
             starImports: [python.starImport({ modulePath: ["root", "my_module"] })],
             statements: [
                 python.field({

@@ -14,7 +14,7 @@ export declare namespace PythonFile {
         /* Whether or not this represents the root of a Python module */
         isInitFile?: boolean;
         /* Any comments that should be at the top of the file */
-        topOfFileComments?: Comment[];
+        comments?: Comment[];
         /* Any star imports that should be included */
         starImports?: StarImport[];
     }
@@ -24,16 +24,16 @@ export class PythonFile extends AstNode {
     public readonly path: ModulePath;
     public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
-    private readonly topOfFileComments: Comment[];
+    private readonly comments: Comment[];
 
-    constructor({ path, statements, isInitFile = false, topOfFileComments, starImports }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false, comments, starImports }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
 
         statements?.forEach((statement) => this.addStatement(statement));
 
-        this.topOfFileComments = topOfFileComments ?? [];
+        this.comments = comments ?? [];
 
         starImports?.forEach((starImport) => this.addReference(starImport));
     }
@@ -44,7 +44,7 @@ export class PythonFile extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.writeTopOfFileComments(writer);
+        this.writeComments(writer);
         this.writeImports(writer);
         this.statements.forEach((statement, idx) => {
             statement.write(writer);
@@ -59,12 +59,12 @@ export class PythonFile extends AstNode {
      * Helper Methods
      *******************************/
 
-    private writeTopOfFileComments(writer: Writer): void {
-        this.topOfFileComments.forEach((comment) => {
+    private writeComments(writer: Writer): void {
+        this.comments.forEach((comment) => {
             comment.write(writer);
         });
 
-        if (this.topOfFileComments.length > 0) {
+        if (this.comments.length > 0) {
             writer.newLine();
         }
     }
