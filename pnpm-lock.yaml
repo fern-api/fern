@@ -4123,7 +4123,7 @@ importers:
         version: link:../../commons/fs-utils
       '@fern-api/source-resolver':
         specifier: workspace:*
-        version: link:../source-resolver
+        version: link:../generation/source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -4919,7 +4919,7 @@ importers:
         version: link:../../../commons/path-utils
       '@fern-api/source-resolver':
         specifier: workspace:*
-        version: link:../../source-resolver
+        version: link:../source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -5497,6 +5497,37 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/generation/source-resolver:
+    dependencies:
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../commons/path-utils
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/init:
     dependencies:
       '@fern-api/auth':
@@ -6015,37 +6046,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/source-resolver:
-    dependencies:
-      '@fern-api/fern-definition-schema':
-        specifier: workspace:*
-        version: link:../fern-definition/schema
-      '@fern-api/path-utils':
-        specifier: workspace:*
-        version: link:../../commons/path-utils
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
