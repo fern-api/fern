@@ -1,3 +1,9 @@
+- version: 0.0.5
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Add browser-compatible-base-generator as a dependency.
+  irVersion: 33
 - version: 0.0.4
   createdAt: '2024-12-01'
   changelogEntry:
