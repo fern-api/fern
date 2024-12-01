@@ -1,3 +1,9 @@
+- version: 0.0.4
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Rename to base-generator.
+  irVersion: 33
 - version: 0.0.3
   createdAt: '2024-11-05'
   changelogEntry:
