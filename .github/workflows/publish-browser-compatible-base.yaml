@@ -40,7 +40,7 @@ jobs:
       - name: Run publish
         working-directory: generators/browser-compatible-base
         run: |
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.2
           cd lib
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public

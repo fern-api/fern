@@ -17,7 +17,7 @@ async function lib_main() {
                 main: "index.js",
                 types: "index.d.ts",
                 type: "module",
-                files: ["*.js", "*.d.ts", "ast/", "project/", "readme/", "reference/", "utils/"],
+                files: ["*.js", "*.d.ts", "ast/", "dynamic-snippets/", "project/", "readme/", "reference/", "utils/"],
                 dependencies: {
                     "@fern-api/logger": "^0.4.24-rc1",
                     // Maybe we don't need these?

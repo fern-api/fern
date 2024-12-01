@@ -1,3 +1,9 @@
+- version: 0.0.6
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Patch browser-compatible-base-generator@0.0.2 dependency.
+  irVersion: 33
 - version: 0.0.5
   createdAt: '2024-12-01'
   changelogEntry:
