@@ -43,9 +43,9 @@ import { EndpointResolverImpl } from "./resolvers/EndpointResolver";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
-import { SourceResolverImpl } from "./resolvers/SourceResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
+import { SourceResolver, NopSourceResolver } from "@fern-api/source-resolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
 import { isGeneric } from "@fern-api/fern-definition-schema";
@@ -54,31 +54,33 @@ import { generateEndpointExample } from "./examples/generator/generateSuccessEnd
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 
 export async function generateIntermediateRepresentation({
-    fdrApiDefinitionId,
     workspace,
     generationLanguage,
     keywords,
     smartCasing,
     disableExamples,
-    includeOptionalRequestPropertyExamples,
     audiences,
     readme,
     packageName,
     version,
-    context
+    context,
+    fdrApiDefinitionId,
+    includeOptionalRequestPropertyExamples,
+    sourceResolver
 }: {
-    fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
-    includeOptionalRequestPropertyExamples?: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
     packageName: string | undefined;
     version: string | undefined;
     context: TaskContext;
+    sourceResolver: SourceResolver;
+    fdrApiDefinitionId?: string;
+    includeOptionalRequestPropertyExamples?: boolean;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -104,7 +106,6 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl(context, workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,

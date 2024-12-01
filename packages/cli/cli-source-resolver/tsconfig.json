@@ -16,28 +16,16 @@
       "path": "../../commons/fs-utils"
     },
     {
-      "path": "../../ir-sdk"
+      "path": "../fern-definition/schema"
     },
     {
-      "path": "../cli-source-resolver"
-    },
-    {
-      "path": "../configuration-loader"
-    },
-    {
-      "path": "../docs-markdown-utils"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../register"
+      "path": "../source-resolver"
     },
     {
       "path": "../task-context"
     },
     {
-      "path": "../workspace-loader"
+      "path": "../workspace-commons"
     }
   ]
 }

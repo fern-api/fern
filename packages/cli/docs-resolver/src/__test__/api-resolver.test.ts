@@ -8,6 +8,7 @@ import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
 import { NodeIdGenerator } from "../NodeIdGenerator";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 const context = createMockTaskContext();
 
@@ -66,7 +67,8 @@ it.skip("converts to api reference node", async () => {
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, apiWorkspace)
     });
 
     const apiDefinition = convertIrToApiDefinition(ir, apiDefinitionId);
