@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "baz": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "baz"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

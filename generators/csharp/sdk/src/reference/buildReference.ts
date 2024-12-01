@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";

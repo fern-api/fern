@@ -1,4 +1,4 @@
-import { GeneratorName } from "@fern-api/configuration";
+import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";

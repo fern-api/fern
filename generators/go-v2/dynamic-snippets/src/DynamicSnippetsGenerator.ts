@@ -1,4 +1,8 @@
-import { AbstractDynamicSnippetsGenerator, AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
+import {
+    AbstractDynamicSnippetsGenerator,
+    AbstractFormatter,
+    FernGeneratorExec
+} from "@fern-api/browser-compatible-base-generator";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";

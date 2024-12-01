@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,

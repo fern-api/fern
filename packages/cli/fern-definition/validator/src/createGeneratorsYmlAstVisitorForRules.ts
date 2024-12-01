@@ -3,7 +3,7 @@ import { NodePath } from "@fern-api/fern-definition-schema";
 import { GeneratorsYmlFileAstNodeTypes, GeneratorsYmlFileAstNodeVisitor } from "./ast";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { GeneratorsYmlFileAstVisitor } from "./ast/GeneratorsYmlAstVisitor";
 
 export function createGeneratorsYmlAstVisitorForRules({

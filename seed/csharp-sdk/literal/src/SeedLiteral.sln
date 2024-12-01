@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedLiteral", "SeedLiteral\SeedLiteral.csproj", "{2528A7A9-5700-46E9-86B1-24D74B3C7A5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedLiteral.Test", "SeedLiteral.Test\SeedLiteral.Test.csproj", "{42258FF3-0B72-460D-AF73-FEA00A542337}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2528A7A9-5700-46E9-86B1-24D74B3C7A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2528A7A9-5700-46E9-86B1-24D74B3C7A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2528A7A9-5700-46E9-86B1-24D74B3C7A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2528A7A9-5700-46E9-86B1-24D74B3C7A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42258FF3-0B72-460D-AF73-FEA00A542337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42258FF3-0B72-460D-AF73-FEA00A542337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42258FF3-0B72-460D-AF73-FEA00A542337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42258FF3-0B72-460D-AF73-FEA00A542337}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

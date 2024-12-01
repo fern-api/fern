@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPathParametersClient, SeedPathParameters } from "@fern/path-parameters";
+import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.getOrganization("organizationId");
@@ -56,17 +56,6 @@ try {
         console.log(err.body);
     }
 }
-```
-
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedPathParametersClient, SeedPathParameters } from "@fern/path-parameters";
-
-const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getOrganization("organizationId");
 ```
 
 ## Advanced

@@ -45,6 +45,7 @@
         "types": {
           "ExampleResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "custom_fields": "optional<map<string, string>>",
               "message": "optional<string>",

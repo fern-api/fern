@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/generator-commons";
-import path from "path";
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { basename } from "@fern-api/path-utils";
 import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema";
 
 const DEFAULT_MODULE_PATH = "sdk";
@@ -65,7 +65,7 @@ function maybeAppendMajorVersionSuffix({
     importPath: string;
     majorVersion: string;
 }): string {
-    if (path.basename(importPath) === majorVersion) {
+    if (basename(importPath) === majorVersion) {
         return importPath;
     }
     return `${importPath}/${majorVersion}`;

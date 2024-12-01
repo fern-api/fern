@@ -1,13 +1,17 @@
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
 import { RelativeFilePath } from "./RelativeFilePath";
 
-// in this function, we ignore drive paths and roots, since many strings are passed as partial relative paths
-export function convertToOsPath(path: string): string {
-    if (process.platform === "win32") {
-        return path.replace(/\//g, "\\");
-    } else {
-        return path.replace(/\\/g, "/");
-    }
+// For convenience, we re-export the convertToOsPath type for any caller
+// that requires fs-utils.
+export { convertToOsPath } from "@fern-api/path-utils";
+
+export function convertToFernHostAbsoluteFilePath(path: AbsoluteFilePath): AbsoluteFilePath {
+    // Don't use 'of' here, as it will use OS path, we want fern path
+    return convertToFernHostPath(path) as AbsoluteFilePath;
+}
+export function convertToFernHostRelativeFilePath(path: RelativeFilePath): RelativeFilePath {
+    // Don't use 'of' here, as it will use OS path, we want fern path
+    return convertToFernHostPath(path) as RelativeFilePath;
 }
 
 function convertToFernHostPath(path: string): string {
@@ -17,13 +21,4 @@ function convertToFernHostPath(path: string): string {
     }
 
     return unixPath.replace(/\\/g, "/");
-}
-
-export function convertToFernHostAbsoluteFilePath(path: AbsoluteFilePath): AbsoluteFilePath {
-    // Don't use 'of' here, as it will use OS path, we want fern path
-    return convertToFernHostPath(path) as AbsoluteFilePath;
-}
-export function convertToFernHostRelativeFilePath(path: RelativeFilePath): RelativeFilePath {
-    // Don't use 'of' here, as it will use OS path, we want fern path
-    return convertToFernHostPath(path) as RelativeFilePath;
 }

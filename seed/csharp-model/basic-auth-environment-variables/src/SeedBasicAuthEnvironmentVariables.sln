@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables", "SeedBasicAuthEnvironmentVariables\SeedBasicAuthEnvironmentVariables.csproj", "{AC2F38C7-F995-4278-9474-342933E2FE46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables.Test", "SeedBasicAuthEnvironmentVariables.Test\SeedBasicAuthEnvironmentVariables.Test.csproj", "{C980AAA6-5A1D-4418-9871-DF2DF2C86D3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC2F38C7-F995-4278-9474-342933E2FE46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC2F38C7-F995-4278-9474-342933E2FE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC2F38C7-F995-4278-9474-342933E2FE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC2F38C7-F995-4278-9474-342933E2FE46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C980AAA6-5A1D-4418-9871-DF2DF2C86D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C980AAA6-5A1D-4418-9871-DF2DF2C86D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C980AAA6-5A1D-4418-9871-DF2DF2C86D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C980AAA6-5A1D-4418-9871-DF2DF2C86D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -4,7 +4,7 @@ import {
     GeneratorNotificationService,
     parseGeneratorConfig,
     parseIR
-} from "@fern-api/generator-commons";
+} from "@fern-api/base-generator";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";

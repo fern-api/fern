@@ -16,7 +16,7 @@ export interface FernFileContext {
     imports: Record<string, RelativeFilePath>;
     definitionFile: DefinitionFileSchema;
     parseTypeReference: (
-        type: string | { type: string; default?: unknown; validation?: RawSchemas.ValidationSchema }
+        type: string | { type: string; inline?: boolean; default?: unknown; validation?: RawSchemas.ValidationSchema }
     ) => TypeReference;
     casingsGenerator: CasingsGenerator;
     rootApiFile: RootApiFileSchema;
@@ -59,10 +59,15 @@ export function constructFernFileContext({
         imports: mapValues(definitionFile.imports ?? {}, RelativeFilePath.of),
         definitionFile,
         parseTypeReference: (type) => {
-            const typeAsString = typeof type === "string" ? type : type.type;
-            const _default = typeof type === "string" ? undefined : type.default;
-            const validation = typeof type === "string" ? undefined : type.validation;
-            return parseInlineType({ type: typeAsString, _default, validation, file });
+            if (typeof type === "string") {
+                return parseInlineType({ type, _default: undefined, validation: undefined, file });
+            }
+            return parseInlineType({
+                type: type.type,
+                _default: type.default,
+                validation: type.validation,
+                file
+            });
         },
         casingsGenerator,
         rootApiFile

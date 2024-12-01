@@ -82,6 +82,7 @@
         "types": {
           "GetOrganizationUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "optional<list<string>>",
             },
@@ -218,6 +219,7 @@ types:
           },
           "SearchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "optional<list<string>>",
             },

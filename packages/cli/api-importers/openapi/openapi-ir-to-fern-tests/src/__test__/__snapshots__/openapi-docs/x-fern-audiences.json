@@ -51,6 +51,7 @@
         "types": {
           "BaseUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "audiences": [

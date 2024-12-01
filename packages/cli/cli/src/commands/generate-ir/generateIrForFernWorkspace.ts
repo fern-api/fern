@@ -1,4 +1,4 @@
-import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";

@@ -72,6 +72,7 @@
           },
           "Settings": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "separator": "optional<DocumentIdSeparators>",
             },

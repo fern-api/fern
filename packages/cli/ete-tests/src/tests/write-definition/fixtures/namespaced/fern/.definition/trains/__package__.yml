@@ -90,6 +90,7 @@ types:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
       currency specified in the payment.
+    inline: true
     properties:
       account_type:
         docs: >-
@@ -134,6 +135,7 @@ types:
       openapi: openapi/trains/openapi.yml
   Card:
     docs: A card (debit or credit) to take payment from.
+    inline: true
     properties:
       address_city:
         type: optional<string>

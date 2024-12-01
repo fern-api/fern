@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation, IdGenerator } from "@fern-api/ir-generator";
@@ -24,7 +24,7 @@ it.skip("converts to api reference node", async () => {
         throw new Error("Workspace is null");
     }
 
-    const parsedDocsConfig = await docsYml.parseDocsConfiguration({
+    const parsedDocsConfig = await parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,

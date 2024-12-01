@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCrossPackageTypeNames", "SeedCrossPackageTypeNames\SeedCrossPackageTypeNames.csproj", "{DB95B7E4-79BA-4A96-BBA2-8EDFBF327481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCrossPackageTypeNames.Test", "SeedCrossPackageTypeNames.Test\SeedCrossPackageTypeNames.Test.csproj", "{4AEC202A-A8F0-4EEF-9F97-AE7E63C29EE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB95B7E4-79BA-4A96-BBA2-8EDFBF327481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB95B7E4-79BA-4A96-BBA2-8EDFBF327481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB95B7E4-79BA-4A96-BBA2-8EDFBF327481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB95B7E4-79BA-4A96-BBA2-8EDFBF327481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEC202A-A8F0-4EEF-9F97-AE7E63C29EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEC202A-A8F0-4EEF-9F97-AE7E63C29EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEC202A-A8F0-4EEF-9F97-AE7E63C29EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEC202A-A8F0-4EEF-9F97-AE7E63C29EE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -3,7 +3,7 @@ import {
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";

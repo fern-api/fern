@@ -1,4 +1,8 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
+import {
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/browser-compatible-base-generator";
 import {
     IntermediateRepresentation,
     Literal,
@@ -13,10 +17,11 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { GoTypeMapper } from "./GoTypeMapper";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { go } from "..";
 import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
+
 export interface FileLocation {
     importPath: string;
     directory: RelativeFilePath;

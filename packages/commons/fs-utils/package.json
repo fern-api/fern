@@ -28,12 +28,15 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
     "glob": "^11.0.0",
     "json-stream-stringify": "^3.1.4",
     "stream-json": "^1.8.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/node": "18.7.18",
     "@types/stream-json": "^1.7.7",

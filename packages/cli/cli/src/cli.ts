@@ -5,8 +5,9 @@ import {
     generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
+    loadProjectConfig,
     PROJECT_CONFIG_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
@@ -194,7 +195,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
+            loadProjectConfig({ directory: fernDirectory, context })
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;

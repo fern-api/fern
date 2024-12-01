@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedServerSentEvents", "SeedServerSentEvents\SeedServerSentEvents.csproj", "{774B6038-9A06-40A9-83E8-654F2BF6DB36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedServerSentEvents.Test", "SeedServerSentEvents.Test\SeedServerSentEvents.Test.csproj", "{FDC46CE8-F6B5-4C98-9962-F0939D18D4C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{774B6038-9A06-40A9-83E8-654F2BF6DB36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774B6038-9A06-40A9-83E8-654F2BF6DB36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774B6038-9A06-40A9-83E8-654F2BF6DB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774B6038-9A06-40A9-83E8-654F2BF6DB36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC46CE8-F6B5-4C98-9962-F0939D18D4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC46CE8-F6B5-4C98-9962-F0939D18D4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC46CE8-F6B5-4C98-9962-F0939D18D4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC46CE8-F6B5-4C98-9962-F0939D18D4C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

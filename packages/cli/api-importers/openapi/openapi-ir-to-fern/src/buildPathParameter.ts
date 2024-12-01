@@ -21,7 +21,8 @@ export function buildPathParameter({
         schema: pathParameter.schema,
         context,
         fileContainingReference,
-        namespace
+        namespace,
+        declarationDepth: 0
     });
     if (
         pathParameter.variableReference == null &&

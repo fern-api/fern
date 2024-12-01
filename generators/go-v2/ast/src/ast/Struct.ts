@@ -1,7 +1,5 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Comment } from "./Comment";

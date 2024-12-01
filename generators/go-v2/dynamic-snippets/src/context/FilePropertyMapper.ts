@@ -1,6 +1,6 @@
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 import { assertNever } from "@fern-api/core-utils";
 import { Severity } from "./ErrorReporter";
 
@@ -20,7 +20,7 @@ export class FilePropertyMapper {
         body,
         value
     }: {
-        body: DynamicSnippets.FileUploadRequestBody;
+        body: dynamic.FileUploadRequestBody;
         value: unknown;
     }): FilePropertyInfo {
         const result: FilePropertyInfo = {
@@ -59,7 +59,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: DynamicSnippets.FileUploadRequestBodyProperty.File_;
+        property: dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
         const fileValue = record[property.wireValue];
@@ -80,7 +80,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: DynamicSnippets.FileUploadRequestBodyProperty.FileArray;
+        property: dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
         const fileArrayValue = record[property.wireValue];
@@ -116,7 +116,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: DynamicSnippets.NamedParameter;
+        property: dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
         const bodyPropertyValue = record[property.name.wireValue];
