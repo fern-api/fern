@@ -19,6 +19,9 @@
       "path": "../fern-definition/schema"
     },
     {
+      "path": "../source-resolver"
+    },
+    {
       "path": "../task-context"
     },
     {
