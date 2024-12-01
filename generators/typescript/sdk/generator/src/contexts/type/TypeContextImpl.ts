@@ -1,12 +1,13 @@
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
+import { GeneratedType, GeneratedTypeReferenceExample, ModelContext, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -87,6 +88,25 @@ export class TypeContextImpl implements TypeContext {
             useBigInt
         });
     }
+    public getReferenceToTypeFromProperty(objectProperty: ObjectProperty): TypeReferenceNode {
+        const ref = this.typeReferenceToParsedTypeNodeConverter.convert(objectProperty.valueType);
+        switch (objectProperty.valueType.type) {
+            case "named":
+                const declaration = this.getTypeDeclaration(objectProperty.valueType);
+                if (declaration.inline) {
+                    return {
+                        isOptional: ref.isOptional,
+                        typeNode: ts.factory.createTypeReferenceNode(
+                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNode.getText()}`
+                        ),
+                        typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(
+                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNodeWithoutUndefined.getText()}`
+                        )
+                    };
+                }
+        }
+        return ref;
+    }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
@@ -131,7 +151,7 @@ export class TypeContextImpl implements TypeContext {
         return this.getGeneratedType(typeDeclaration.name);
     }
 
-    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+    public getGeneratedType(typeName: DeclaredTypeName, typeNameOverride?: string): GeneratedType {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -140,12 +160,13 @@ export class TypeContextImpl implements TypeContext {
         return this.typeGenerator.generateType({
             shape: typeDeclaration.shape,
             docs: typeDeclaration.docs ?? undefined,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+            typeName: typeNameOverride ?? this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
             examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            inline: typeDeclaration.inline ?? false
         });
     }
 

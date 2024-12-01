@@ -26,6 +26,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile } from "ts-morph";
+import { Logger } from "../../../../utils/commons/node_modules/@fern-api/logger/src";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
@@ -45,6 +46,7 @@ import { TypeContextImpl } from "./type/TypeContextImpl";
 
 export declare namespace ExpressContextImpl {
     export interface Init {
+        logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -82,6 +84,7 @@ export declare namespace ExpressContextImpl {
 }
 
 export class ExpressContextImpl implements ExpressContext {
+    public readonly logger: Logger;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -101,6 +104,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly expressErrorSchema: ExpressErrorSchemaContext;
 
     constructor({
+        logger,
         typeResolver,
         typeGenerator,
         typeDeclarationReferencer,
@@ -134,6 +138,7 @@ export class ExpressContextImpl implements ExpressContext {
         retainOriginalCasing,
         useBigInt
     }: ExpressContextImpl.Init) {
+        this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({

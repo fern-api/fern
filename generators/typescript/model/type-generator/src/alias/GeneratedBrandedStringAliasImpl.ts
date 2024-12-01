@@ -1,7 +1,14 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { BrandedGeneratedAliasType, ModelContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import {
+    FunctionDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    ts,
+    TypeAliasDeclarationStructure,
+    WriterFunction
+} from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
@@ -12,8 +19,14 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
     public readonly isBranded = true;
 
     public writeToFile(context: Context): void {
-        this.writeTypeAlias(context);
-        this.writeBuilder(context);
+        context.sourceFile.addTypeAlias(this.generateTypeAliasStructure(context));
+        context.sourceFile.addFunction(this.generateBuilderFunction(context));
+    }
+
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+        return [this.generateTypeAliasStructure(context)];
     }
 
     public getReferenceToCreator(context: Context, opts?: GetReferenceOpts): ts.Expression {
@@ -29,10 +42,11 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
         ]);
     }
 
-    private writeTypeAlias(context: Context) {
+    private generateTypeAliasStructure(context: Context): TypeAliasDeclarationStructure {
         const referenceToAliasedType = context.type.getReferenceToType(this.shape).typeNode;
-        const typeAlias = context.sourceFile.addTypeAlias({
+        const typeAlias: TypeAliasDeclarationStructure = {
             name: this.typeName,
+            kind: StructureKind.TypeAlias,
             type: getTextOfTsNode(
                 ts.factory.createIntersectionTypeNode([
                     referenceToAliasedType,
@@ -47,13 +61,15 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                 ])
             ),
             isExported: true
-        });
+        };
         maybeAddDocs(typeAlias, this.getDocs(context));
+        return typeAlias;
     }
 
-    private writeBuilder(context: Context) {
+    private generateBuilderFunction(context: Context): FunctionDeclarationStructure {
         const VALUE_PARAMETER_NAME = "value";
-        context.sourceFile.addFunction({
+        const builderFunction: FunctionDeclarationStructure = {
+            kind: StructureKind.Function,
             name: this.typeName,
             parameters: [
                 {
@@ -76,7 +92,8 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                 )
             ],
             isExported: true
-        });
+        };
+        return builderFunction;
     }
 
     private getStringBrand(): string {

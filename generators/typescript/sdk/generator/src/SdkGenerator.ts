@@ -7,7 +7,9 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
-    OAuthScheme
+    OAuthScheme,
+    TypeDeclaration,
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
@@ -540,6 +542,14 @@ export class SdkGenerator {
               });
     }
 
+    private getRootTypes(): Record<TypeId, TypeDeclaration> {
+        return Object.fromEntries(
+            Object.entries(this.intermediateRepresentation.types).filter(
+                ([_, typeDeclaration]) => typeDeclaration.inline !== true
+            )
+        );
+    }
+
     public async copyCoreUtilities({
         pathToSrc,
         pathToRoot
@@ -551,7 +561,7 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getRootTypes())) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -564,7 +574,7 @@ export class SdkGenerator {
 
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getRootTypes())) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {

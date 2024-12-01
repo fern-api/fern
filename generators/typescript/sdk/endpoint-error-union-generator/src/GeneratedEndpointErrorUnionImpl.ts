@@ -16,6 +16,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        inline: boolean;
     }
 }
 
@@ -73,7 +74,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             includeOtherInUnionTypes: true,
             includeSerdeLayer,
             noOptionalProperties,
-            retainOriginalCasing
+            retainOriginalCasing,
+            inline: false
         });
     }
 

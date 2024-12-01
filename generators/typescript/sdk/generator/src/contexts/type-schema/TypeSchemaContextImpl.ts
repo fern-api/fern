@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
@@ -101,10 +101,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     docs: typeDeclaration.docs ?? undefined,
                     examples,
                     fernFilepath: typeDeclaration.name.fernFilepath,
-                    typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+                    typeName: this.getTypeNameForDeclaration(typeDeclaration),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                     includeSerdeLayer: this.includeSerdeLayer,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    inline: typeDeclaration.inline ?? false
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer
@@ -128,6 +129,15 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
                 })
         });
+    }
+
+    private getTypeNameForDeclaration(typeDeclaration: TypeDeclaration): string {
+        if (typeDeclaration.inline) {
+            const inlineParents = this.typeResolver.getInlineParentTypeNames(typeDeclaration.name.typeId);
+            return this.typeDeclarationReferencer.getExportedNameForInlineType(inlineParents);
+        } else {
+            return this.typeDeclarationReferencer.getExportedName(typeDeclaration.name);
+        }
     }
 
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {

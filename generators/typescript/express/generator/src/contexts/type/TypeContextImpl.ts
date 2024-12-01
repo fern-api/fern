@@ -1,6 +1,7 @@
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
@@ -79,6 +80,25 @@ export class TypeContextImpl implements TypeContext {
             useBigInt
         });
     }
+    public getReferenceToTypeFromProperty(objectProperty: ObjectProperty): TypeReferenceNode {
+        const ref = this.typeReferenceToParsedTypeNodeConverter.convert(objectProperty.valueType);
+        switch (objectProperty.valueType.type) {
+            case "named":
+                const declaration = this.getTypeDeclaration(objectProperty.valueType);
+                if (declaration.inline) {
+                    return {
+                        isOptional: ref.isOptional,
+                        typeNode: ts.factory.createTypeReferenceNode(
+                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNode.getText()}`
+                        ),
+                        typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(
+                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNodeWithoutUndefined.getText()}`
+                        )
+                    };
+                }
+        }
+        return ref;
+    }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
@@ -125,7 +145,8 @@ export class TypeContextImpl implements TypeContext {
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            inline: typeDeclaration.inline ?? false
         });
     }
 

@@ -206,6 +206,10 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  inline-types:
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: default
 scripts:
   - docker: fernapi/ts-seed
     commands:

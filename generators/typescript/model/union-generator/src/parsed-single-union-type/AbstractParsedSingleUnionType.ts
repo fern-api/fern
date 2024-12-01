@@ -32,13 +32,15 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         return {
             name: this.getInterfaceName(),
             extends: this.singleUnionType.getExtendsForInterface(context),
-            jsonProperties: [
+            properties: [
                 {
                     name: generatedUnion.discriminant,
                     type: getTextOfTsNode(this.getDiscriminantValueType())
                 },
+                ...this.singleUnionType.getDiscriminantPropertiesForInterface(context),
                 ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
-            ]
+            ],
+            inlineModule: this.singleUnionType.getInlineModuleForInterface(context)
         };
     }
 

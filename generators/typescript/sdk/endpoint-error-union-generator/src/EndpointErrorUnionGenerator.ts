@@ -53,7 +53,8 @@ export class EndpointErrorUnionGenerator {
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            inline: false
         });
     }
 }

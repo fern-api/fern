@@ -1,6 +1,7 @@
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
@@ -22,7 +23,7 @@ export interface TypeContext {
     resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
     resolveTypeName: (typeName: DeclaredTypeName) => ResolvedTypeReference;
     getTypeDeclaration: (typeName: DeclaredTypeName) => TypeDeclaration;
-    getGeneratedType: (typeName: DeclaredTypeName) => GeneratedType;
+    getGeneratedType: (typeName: DeclaredTypeName, typeNameOverride?: string) => GeneratedType;
     getGeneratedTypeById: (typeId: TypeId) => GeneratedType;
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
 }

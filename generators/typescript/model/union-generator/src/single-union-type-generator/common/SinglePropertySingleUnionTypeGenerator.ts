@@ -1,5 +1,5 @@
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
@@ -29,6 +29,14 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
 
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
+    }
+
+    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+        return [];
+    }
+
+    public getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined {
+        return;
     }
 
     public getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {

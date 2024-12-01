@@ -22,6 +22,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
+        inline: boolean;
     }
 }
 
@@ -29,6 +30,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
     private singleUnionTypeFromUnion: SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private inline: boolean;
     protected union: UnionTypeDeclaration;
 
     constructor({
@@ -37,7 +39,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
         includeUtilsOnUnionMembers,
         includeSerdeLayer,
         retainOriginalCasing,
-        noOptionalProperties
+        noOptionalProperties,
+        inline
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -68,6 +71,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inline = inline;
     }
 
     public getDocs(): string | null | undefined {

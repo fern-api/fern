@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
@@ -32,6 +32,10 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
 
     public getFilename(typeName: DeclaredTypeName): string {
         return `${this.getExportedName(typeName)}.ts`;
+    }
+
+    public getExportedNameForInlineType(inlineParentNames: string[]): string {
+        return inlineParentNames.join(".");
     }
 
     public getExportedName(typeName: DeclaredTypeName): string {

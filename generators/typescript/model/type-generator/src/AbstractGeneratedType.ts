@@ -1,7 +1,7 @@
 import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseGeneratedType } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import { StatementStructures, ts, WriterFunction } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> {
@@ -14,6 +14,7 @@ export declare namespace AbstractGeneratedType {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        inline: boolean;
     }
 }
 
@@ -28,6 +29,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     protected includeSerdeLayer: boolean;
     protected noOptionalProperties: boolean;
     protected retainOriginalCasing: boolean;
+    protected inline: boolean;
 
     private docs: string | undefined;
 
@@ -40,7 +42,8 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         fernFilepath,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inline
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -51,6 +54,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inline = inline;
     }
 
     protected getDocs(context: Context): string | undefined {
@@ -73,5 +77,8 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     }
 
     public abstract writeToFile(context: Context): void;
+    public abstract generateStatements(
+        context: Context
+    ): string | WriterFunction | ReadonlyArray<string | WriterFunction | StatementStructures>;
     public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
 }

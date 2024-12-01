@@ -1,7 +1,7 @@
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { ModelContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {
@@ -21,7 +21,38 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
     }
 
     public getExtendsForInterface(context: Context): ts.TypeNode[] {
+        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
+        if (typeDeclaration.inline) {
+            // inline types don't inherit the properties from the interface, but have the properties directly on the parent interface
+            return [];
+        }
         return [context.type.getReferenceToNamedType(this.extended).getTypeNode()];
+    }
+
+    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
+        if (typeDeclaration.inline) {
+            const type = context.type.getGeneratedType(typeDeclaration.name);
+            if ("getNamedStructures" in type) {
+                const { interface_ } = type.getNamedStructures(context);
+                return interface_.properties ?? [];
+            }
+            return [];
+        }
+        return [];
+    }
+
+    public getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined {
+        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
+        if (typeDeclaration.inline) {
+            const type = context.type.getGeneratedType(typeDeclaration.name);
+            if ("getNamedStructures" in type) {
+                const { inlineModule } = type.getNamedStructures(context);
+                return inlineModule;
+            }
+            return;
+        }
+        return;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {

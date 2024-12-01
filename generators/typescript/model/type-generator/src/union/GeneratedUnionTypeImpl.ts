@@ -7,7 +7,7 @@ import {
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedUnion, GeneratedUnionType, ModelContext } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ts } from "ts-morph";
+import { StatementStructures, ts, WriterFunction } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
@@ -44,7 +44,8 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
-                    noOptionalProperties: this.noOptionalProperties
+                    noOptionalProperties: this.noOptionalProperties,
+                    inline: this.inline
                 })
         );
 
@@ -67,12 +68,19 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            inline: this.inline
         });
     }
 
     public writeToFile(context: Context): void {
         this.generatedUnion.writeToFile(context);
+    }
+
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+        return this.generatedUnion.generateStatements(context);
     }
 
     public getGeneratedUnion(): GeneratedUnion<Context> {

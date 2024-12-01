@@ -1,7 +1,7 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ModelContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import { StatementStructures, StructureKind, ts, TypeAliasDeclarationStructure, WriterFunction } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedAliasTypeImpl<Context extends ModelContext>
@@ -12,7 +12,24 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
     public readonly isBranded = false;
 
     public writeToFile(context: Context): void {
-        this.writeTypeAlias(context);
+        context.sourceFile.addTypeAlias(this.generateTypeAlias(context));
+    }
+
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+        return [this.generateTypeAlias(context)];
+    }
+
+    private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {
+        const typeAlias: TypeAliasDeclarationStructure = {
+            kind: StructureKind.TypeAlias,
+            name: this.typeName,
+            type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
+            isExported: true
+        };
+        maybeAddDocs(typeAlias, this.getDocs(context));
+        return typeAlias;
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
@@ -20,14 +37,5 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
             throw new Error("Example is not for an alias");
         }
         return context.type.getGeneratedExample(example.value).build(context, opts);
-    }
-
-    private writeTypeAlias(context: Context) {
-        const typeAlias = context.sourceFile.addTypeAlias({
-            name: this.typeName,
-            type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
-            isExported: true
-        });
-        maybeAddDocs(typeAlias, this.getDocs(context));
     }
 }

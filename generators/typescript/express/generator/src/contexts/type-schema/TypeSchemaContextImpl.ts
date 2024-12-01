@@ -104,7 +104,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                     includeSerdeLayer: this.includeSerdeLayer,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    inline: typeDeclaration.inline ?? false
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer
