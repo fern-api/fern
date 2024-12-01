@@ -1,18 +1,5 @@
-import {
-    EnumValue,
-    ObjectSchema,
-    OneOfSchema,
-    PrimitiveSchemaValue,
-    Schema,
-    SchemaWithExample
-} from "@fern-api/openapi-ir";
+import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "..";
 import { isEqual } from "lodash-es";
-import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSchema";
-
-// only diffs the schema, not the example
-export function isSchemaWithExampleEqual(a: SchemaWithExample, b: SchemaWithExample): boolean {
-    return isSchemaEqual(convertSchemaWithExampleToSchema(a), convertSchemaWithExampleToSchema(b));
-}
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {
     if (a.type === "primitive" && b.type === "primitive") {
