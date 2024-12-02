@@ -1,8 +1,8 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
-import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { isNonNullish, mergeWithOverrides } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { parse, ParseOpenAPIOptions, Document } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { v4 as uuidv4 } from "uuid";
@@ -14,7 +14,8 @@ import {
     IdentifiableSource
 } from "@fern-api/api-workspace-commons";
 import { mapValues } from "./utils/mapValues";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
+import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir";
+import { OpenAPILoader } from "./loaders/OpenAPILoader";
 
 export type Spec = OpenAPISpec | ProtobufSpec;
 
@@ -118,6 +119,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public specs: Spec[];
     public sources: IdentifiableSource[];
 
+    private loader: OpenAPILoader;
     private respectReadonlySchemas: boolean;
     private onlyIncludeReferencedSchemas: boolean;
     private inlinePathParameters: boolean;
@@ -126,6 +128,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
+        this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
         this.onlyIncludeReferencedSchemas = this.specs.every(
             (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
@@ -146,10 +149,12 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
         const optionOverrides = getOptionsOverridesFromSettings(settings);
         return await parse({
-            absoluteFilePathToWorkspace: this.absoluteFilePath,
-            specs: openApiSpecs,
-            taskContext: context,
-            optionOverrides: {
+            context,
+            documents: await this.loader.loadDocuments({
+                context,
+                specs: openApiSpecs
+            }),
+            options: {
                 ...optionOverrides,
                 respectReadonlySchemas: this.respectReadonlySchemas,
                 onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
