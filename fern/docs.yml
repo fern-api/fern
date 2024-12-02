@@ -476,6 +476,9 @@ navigation:
           - page: Endpoint Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/fern-docs/config/endpoint-errors.mdx
+          - page: Audiences
+            icon: fa-duotone fa-users
+            path: ./pages/fern-docs/config/audiences.mdx
           - page: Customize API Reference Layout
             icon: fa-regular fa-arrow-up-arrow-down
             path: ./pages/fern-docs/content/customize-api-ref.mdx
