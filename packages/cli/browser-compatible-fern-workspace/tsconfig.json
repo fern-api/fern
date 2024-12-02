@@ -14,7 +14,7 @@
       "path": "../../commons/core-utils"
     },
     {
-      "path": "../../commons/fs-utils"
+      "path": "../../commons/path-utils"
     },
     {
       "path": "../../commons/logging-execa"
@@ -24,9 +24,6 @@
     },
     {
       "path": "../../core"
-    },
-    {
-      "path": "../browser-compatible-fern-workspace"
     },
     {
       "path": "../configuration-loader"
@@ -54,9 +51,6 @@
     },
     {
       "path": "../workspace-commons"
-    },
-    {
-      "path": "../fern-definition/schema"
     }
   ]
 }

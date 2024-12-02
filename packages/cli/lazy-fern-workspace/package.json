@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/browser-compatible-fern-workspace": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core": "workspace:*",

@@ -3,10 +3,11 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir } from "fs/promises";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { InMemoryOpenAPILoader } from "@fern-api/openapi-ir-parser";
+import { InMemoryOpenAPILoader } from "@fern-api/browser-compatible-fern-workspace";
 import fs from "fs/promises";
 import { OpenAPI } from "openapi-types";
 import yaml from "js-yaml";
+
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises

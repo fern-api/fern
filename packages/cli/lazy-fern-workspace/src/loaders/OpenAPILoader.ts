@@ -9,6 +9,7 @@ import { OpenAPISpec } from "../OSSWorkspace";
 import { bundle, Config, Source } from "@redocly/openapi-core";
 import { BundleOptions } from "@redocly/openapi-core/lib/bundle";
 import yaml from "js-yaml";
+import { DEFAULT_BUNDLE_OPTIONS } from "@fern-api/browser-compatible-fern-workspace";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
@@ -136,34 +137,17 @@ export class OpenAPILoader {
         absolutePathToOpenAPI: AbsoluteFilePath;
         parsed?: OpenAPI.Document;
     }): Promise<OpenAPI.Document> {
-        const options: BundleOptions = {
-            config: new Config(
-                {
-                    apis: {},
-                    styleguide: {
-                        plugins: [FERN_TYPE_EXTENSIONS],
-                        rules: {
-                            spec: "warn"
-                        }
-                    }
-                },
-                undefined
-            ),
-            dereference: false,
-            removeUnusedComponents: false,
-            keepUrlRefs: true
-        };
         const result =
             parsed != null
                 ? await bundle({
-                      ...options,
+                      ...DEFAULT_BUNDLE_OPTIONS,
                       doc: {
                           source: new Source(absolutePathToOpenAPI, "<openapi>"),
                           parsed
                       }
                   })
                 : await bundle({
-                      ...options,
+                      ...DEFAULT_BUNDLE_OPTIONS,
                       ref: absolutePathToOpenAPI
                   });
         return result.bundle.parsed;

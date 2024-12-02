@@ -1,8 +1,8 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
-import { isNonNullish, mergeWithOverrides } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { isNonNullish } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse, ParseOpenAPIOptions, Document } from "@fern-api/openapi-ir-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { v4 as uuidv4 } from "uuid";
@@ -13,8 +13,9 @@ import {
     FernDefinition,
     IdentifiableSource
 } from "@fern-api/api-workspace-commons";
+import { OpenAPISettings, getOptionsOverridesFromSettings } from "@fern-api/browser-compatible-fern-workspace";
 import { mapValues } from "./utils/mapValues";
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 
 export type Spec = OpenAPISpec | ProtobufSpec;
@@ -78,41 +79,7 @@ export declare namespace OSSWorkspace {
         cliVersion: string;
     }
 
-    export interface Settings {
-        /*
-         * Whether or not to parse unique errors for OpenAPI operation. This is
-         * an option that is typically enabled for docs generation.
-         */
-        enableUniqueErrorsPerEndpoint?: boolean;
-        /*
-         * Whether or not to parse discriminated unions as undiscriminated unions with literals.
-         * Typically enabled for duck typed languages like Python / TypeScript.
-         */
-        enableDiscriminatedUnionV2?: boolean;
-        /*
-         * Whether or not to extract frequently used headers out of the endpoints into a
-         * global header. This is primarily used for generating SDKs, but disabled for docs
-         * as it allows the documentation to more closely mirror the OpenAPI spec.
-         */
-        detectGlobalHeaders?: boolean;
-        /*
-         * Whether or not to let additional property values in OpenAPI come through as
-         * optional.
-         */
-        optionalAdditionalProperties?: boolean;
-        /*
-         * Whether or not to cooerce enums to undiscriminated union literals.
-         */
-        cooerceEnumsToLiterals?: boolean;
-        /*
-         * Whether or not to parse object query parameters.
-         */
-        objectQueryParameters?: boolean;
-        /*
-         * Whether or not to preserve original schema ids.
-         */
-        preserveSchemaIds?: boolean;
-    }
+    export type Settings = OpenAPISettings;
 }
 
 export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
@@ -294,25 +261,5 @@ export function getOSSWorkspaceSettingsFromGeneratorInvocation(
         result.enableDiscriminatedUnionV2 = true;
     }
 
-    return result;
-}
-
-function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Partial<ParseOpenAPIOptions> | undefined {
-    if (settings == null) {
-        return undefined;
-    }
-    const result: Partial<ParseOpenAPIOptions> = {};
-    if (settings.enableDiscriminatedUnionV2) {
-        result.discriminatedUnionV2 = true;
-    }
-    if (settings.optionalAdditionalProperties) {
-        result.optionalAdditionalProperties = true;
-    }
-    if (settings.cooerceEnumsToLiterals) {
-        result.cooerceEnumsToLiterals = true;
-    }
-    if (settings.preserveSchemaIds) {
-        result.preserveSchemaIds = true;
-    }
     return result;
 }

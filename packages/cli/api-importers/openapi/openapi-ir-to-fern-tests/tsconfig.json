@@ -19,6 +19,9 @@
       "path": "../../../../commons/fs-utils"
     },
     {
+      "path": "../../../browser-compatible-fern-workspace"
+    },
+    {
       "path": "../../../task-context"
     },
     {
@@ -26,9 +29,6 @@
     },
     {
       "path": "../../../lazy-fern-workspace"
-    },
-    {
-      "path": "../openapi-ir-parser"
     }
   ]
 }

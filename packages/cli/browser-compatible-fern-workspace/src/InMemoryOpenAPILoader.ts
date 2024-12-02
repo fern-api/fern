@@ -1,9 +1,8 @@
-import { OpenAPIDocument, SpecImportSettings } from "../parse";
+import { OpenAPIDocument, SpecImportSettings } from "@fern-api/openapi-ir-parser";
 import { OpenAPI } from "openapi-types";
-import { bundle, Config, Source } from "@redocly/openapi-core";
-import { BundleOptions } from "@redocly/openapi-core/lib/bundle";
+import { bundle, Source } from "@redocly/openapi-core";
+import { DEFAULT_BUNDLE_OPTIONS } from "./constants";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
-import { FERN_TYPE_EXTENSIONS } from "./v3/extensions/fernExtensions";
 
 export interface Spec {
     parsed: OpenAPI.Document;
@@ -43,25 +42,8 @@ export class InMemoryOpenAPILoader {
     }
 
     private async parseOpenAPI({ parsed }: { parsed: OpenAPI.Document }): Promise<OpenAPI.Document> {
-        const options: BundleOptions = {
-            config: new Config(
-                {
-                    apis: {},
-                    styleguide: {
-                        plugins: [FERN_TYPE_EXTENSIONS],
-                        rules: {
-                            spec: "warn"
-                        }
-                    }
-                },
-                undefined
-            ),
-            dereference: false,
-            removeUnusedComponents: false,
-            keepUrlRefs: true
-        };
         const result = await bundle({
-            ...options,
+            ...DEFAULT_BUNDLE_OPTIONS,
             doc: {
                 source: new Source("<memory>", "<openapi>"),
                 parsed
