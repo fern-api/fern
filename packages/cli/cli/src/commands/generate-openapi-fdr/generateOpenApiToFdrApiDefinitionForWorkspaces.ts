@@ -63,7 +63,7 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
                             pathId: workspace.workspaceName ?? "openapi parser"
                         });
 
-                        const fdrApiDefinition = await openApiFdrJson.convert();
+                        const fdrApiDefinition = openApiFdrJson.convert();
 
                         const resolvedOutputFilePath = path.resolve(outputFilepath);
                         await writeFile(
