@@ -11,7 +11,7 @@ import {
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
-import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
+import { isSchemaEqual } from "@fern-api/openapi-ir";
 import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {

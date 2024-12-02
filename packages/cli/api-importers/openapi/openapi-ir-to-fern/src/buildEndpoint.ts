@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
@@ -179,7 +179,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -194,7 +195,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -207,7 +209,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -289,7 +292,8 @@ export function buildEndpoint({
                 context,
                 fileContainingReference: errorDeclarationFile,
                 declarationFile: errorDeclarationFile,
-                namespace: maybeEndpointNamespace
+                namespace: maybeEndpointNamespace,
+                declarationDepth: 0
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
             errorDeclaration.docs = httpError.description;
@@ -412,7 +416,8 @@ function getRequest({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
-                namespace
+                namespace,
+                declarationDepth: 0
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
@@ -465,7 +470,8 @@ function getRequest({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        declarationDepth: 1 // 1 level deep for request body properties
                     });
 
                     // TODO: clean up conditional logic
@@ -523,7 +529,8 @@ function getRequest({
                 schema: Schema.reference(referencedSchema),
                 fileContainingReference: declarationFile,
                 context,
-                namespace
+                namespace,
+                declarationDepth: 0
             });
             return getTypeFromTypeReference(allOfTypeReference);
         });
@@ -589,7 +596,8 @@ function getRequest({
                         schema: property.schema.value,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        declarationDepth: 1 // 1 level deep for request body properties
                     });
                     if (property.contentType != null) {
                         if (typeof propertyTypeReference === "string") {

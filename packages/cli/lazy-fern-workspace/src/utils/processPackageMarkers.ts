@@ -1,4 +1,4 @@
-import { dependenciesYml } from "@fern-api/configuration";
+import { dependenciesYml } from "@fern-api/configuration-loader";
 import { entries, keys } from "@fern-api/core-utils";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";

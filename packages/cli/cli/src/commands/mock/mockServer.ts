@@ -5,6 +5,7 @@ import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 import { CliContext } from "../../cli-context/CliContext";
 import { API_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function mockServer({
     cliContext,
@@ -45,7 +46,8 @@ export async function mockServer({
             readme: undefined,
             version: undefined,
             packageName: undefined,
-            context
+            context,
+            sourceResolver: new SourceResolverImpl(context, fernWorkspace)
         });
 
         const mockServer = new MockServer({

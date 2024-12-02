@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "$ref": "#/definitions/InlineType1"
+    }
+  },
+  "required": [
+    "foo",
+    "bar"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "InlineEnum": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    },
+    "NestedInlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        },
+        "myEnum": {
+          "$ref": "#/definitions/InlineEnum"
+        }
+      },
+      "required": [
+        "foo",
+        "bar",
+        "myEnum"
+      ],
+      "additionalProperties": false
+    },
+    "InlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "$ref": "#/definitions/NestedInlineType1"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

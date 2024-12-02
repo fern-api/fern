@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { FernDefinitionDirectory } from "../utils/FernDefinitionDirectory";
 
 interface TestCase {

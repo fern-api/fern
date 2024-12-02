@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_imdb:CreateMovieRequest": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "CreateMovieRequest",

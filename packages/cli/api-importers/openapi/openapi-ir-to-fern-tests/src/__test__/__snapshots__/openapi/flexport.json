@@ -395,6 +395,7 @@
         "types": {
           "AdditionalDates": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cargo_ready_date": {
                 "docs": "Represents the date when the cargo on the leg is ready for pickup.",
@@ -437,6 +438,7 @@
           },
           "Address": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -459,6 +461,7 @@
           },
           "AddressForRequestBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "city": "optional<string>",
               "country_code": "optional<string>",
@@ -474,6 +477,7 @@
           },
           "AirBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -511,6 +515,7 @@
           },
           "AirShipmentDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -527,6 +532,7 @@
           },
           "AirShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "flight_number": "optional<string>",
@@ -539,6 +545,7 @@
           },
           "Airport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -555,6 +562,7 @@
           },
           "BadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -568,6 +576,7 @@
           },
           "Booking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -631,6 +640,7 @@
           },
           "BookingAmendment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -713,6 +723,7 @@
           },
           "BookingAmendmentHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/booking_amendment_product_description` for this object.",
@@ -734,6 +745,7 @@
           },
           "BookingHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/product_descriptions` for this object.",
@@ -759,6 +771,7 @@
           },
           "BookingLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -781,6 +794,7 @@
           },
           "BookingLineItemCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -818,6 +832,7 @@
           },
           "BookingRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -842,6 +857,7 @@
           },
           "CarbonCalculation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -855,6 +871,7 @@
           },
           "Cargo": {
             "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, `shipping_units` is required, and `weight` and `volume` is required in the `cargo` object or the `shipping_units` object. For simple cargo, `shipping_units` is required, but only one should be specified, and `weight` and `volume` are required in the `cargo` object.",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/cargo` for this object.",
@@ -909,6 +926,7 @@
           },
           "CommercialInvoice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /commercial_invoice for this object.",
@@ -958,6 +976,7 @@
           },
           "CommercialInvoiceCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -980,6 +999,7 @@
           },
           "CommercialInvoiceLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /commercial_invoice_line_item for this object.",
@@ -1022,6 +1042,7 @@
           },
           "CommercialInvoiceLineItemContainerNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "commercial_invoice_line_item_id": "optional<integer>",
               "container_number": "optional<string>",
@@ -1036,6 +1057,7 @@
           },
           "Company": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/company for this object.",
@@ -1059,6 +1081,7 @@
           },
           "CompanyEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1076,6 +1099,7 @@
           },
           "CompanyEntityRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -1088,6 +1112,7 @@
           },
           "Contact": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/contact for this object.",
@@ -1112,6 +1137,7 @@
           },
           "ContactCompany": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<string>",
@@ -1124,6 +1150,7 @@
           },
           "ContainerCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1144,6 +1171,7 @@
           },
           "ContainerCounts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/container_counts` for this object.",
@@ -1172,6 +1200,7 @@
           },
           "ContainerLegCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1192,6 +1221,7 @@
           },
           "ContainerRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -1204,6 +1234,7 @@
           },
           "CoordinatesCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "latitude": "optional<string>",
               "longitude": "optional<string>",
@@ -1214,6 +1245,7 @@
           },
           "CreateAirBooking": {
             "docs": "If a non-null value is passed in for 'air_booking', then the new booking will be assumed to be an air booking, even if the 'ocean_booking' or 'trucking_booking' fields are set.",
+            "inline": undefined,
             "properties": {
               "destination_port_iata_code": {
                 "docs": "Optional, provide one of `destination_port_us_cbp_port_code`, `destination_port_loc_code`, `destination_port_iata_code`, or `destination_port_icao_code`. Unique airport reference code used by IATA.",
@@ -1283,6 +1315,7 @@
           },
           "CreateBookingAmendmentHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Always required. English description of product in booking.",
@@ -1303,6 +1336,7 @@
           },
           "CreateBookingHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Always required. English description of product in booking.",
@@ -1327,6 +1361,7 @@
           },
           "CreateCargo": {
             "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, `shipping_units` is required, and `weight` and `volume` is required in the `cargo` object or the `shipping_units` object. For simple cargo, `shipping_units` is required, but only one should be specified, and `weight` and `volume` are required in the `cargo` object.",
+            "inline": undefined,
             "properties": {
               "contains_hazmat": {
                 "docs": "Required. Whether the cargo contains hazardous materials.",
@@ -1377,6 +1412,7 @@
           },
           "CreateCommercialInvoiceLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "container_number": "optional<string>",
               "country_of_origin": "optional<string>",
@@ -1416,6 +1452,7 @@
           },
           "CreateContainerCounts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "forty_five_ft_hc": {
                 "docs": "Quantity of 45 ft HC containers requested.",
@@ -1440,6 +1477,7 @@
           },
           "CreateDocument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document": {
                 "docs": "Document represented in a strict Base64-encoded string.",
@@ -1476,6 +1514,7 @@
           },
           "CreateInvolvedParty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "company_entity_ref": {
                 "docs": "Your custom string used to refer to the company entity. Can be used to look up or reference the company entity later on.",
@@ -1489,6 +1528,7 @@
           },
           "CreateLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "assigned_party_ref": {
                 "docs": "The party that this line item is assigned to. Useful if assigning line items to different factories under a vendor, for example.",
@@ -1585,6 +1625,7 @@
           },
           "CreateLineItemDestinationLocation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "location_ref": {
                 "docs": "Location ref",
@@ -1632,6 +1673,7 @@
           },
           "CreateLineItemMeasurement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "measure_type": {
                 "docs": "The type of measure",
@@ -1823,6 +1865,7 @@
           },
           "CreateOceanBooking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "container_counts": "CreateContainerCounts",
               "destination_port_loc_code": {
@@ -1885,6 +1928,7 @@
           },
           "CreateOrUpdatePurchaseOrder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
@@ -2069,6 +2113,7 @@
           },
           "CreateParty": {
             "docs": "A party is a company entity that is tied to a purchase order and has a specific role.",
+            "inline": undefined,
             "properties": {
               "contacts": {
                 "docs": "A list of contact data for who should be contacted should there be questions about this order. For example, if your supplier needs to contact someone, who should they contact?",
@@ -2093,6 +2138,7 @@
           },
           "CreatePartyContactsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "department": "optional<string>",
               "email": "optional<string>",
@@ -2126,6 +2172,7 @@
           },
           "CreatePurchaseOrderHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "The indentifying code on the hs code",
@@ -2142,6 +2189,7 @@
           },
           "CreatePurchaseOrderPort": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique identifier for this port",
@@ -2170,6 +2218,7 @@
           },
           "CreatePurchaseOrderProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the product",
@@ -2226,6 +2275,7 @@
           },
           "CreateQuantity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement.",
@@ -2257,6 +2307,7 @@
           },
           "CreateTruckingBooking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description_of_products": {
                 "docs": "General description of the products in the shipment.",
@@ -2287,6 +2338,7 @@
           },
           "CreditMemo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -2317,6 +2369,7 @@
           },
           "CustomsEntry": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /customs_entry for this object.",
@@ -2349,6 +2402,7 @@
           },
           "CustomsEntryCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -2371,6 +2425,7 @@
           },
           "CustomsInvolvedParty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -2393,6 +2448,7 @@
           },
           "DistanceCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "km" for kilometers. "mi" for miles.",
@@ -2419,6 +2475,7 @@
           },
           "Document": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /document for this object.",
@@ -2460,6 +2517,7 @@
           },
           "DocumentCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -2471,6 +2529,7 @@
           },
           "Error": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always /api/error for this object.",
@@ -2495,6 +2554,7 @@
           },
           "Exception": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "message": {
@@ -2539,6 +2599,7 @@
           },
           "FileMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /file_metadata for this object.",
@@ -2570,6 +2631,7 @@
           },
           "GenericCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -2581,6 +2643,7 @@
           },
           "GenericObjectRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<GenericObjectRefId>",
@@ -2595,6 +2658,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2605,6 +2669,7 @@
           },
           "HsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/hs_code` for this object.",
@@ -2626,6 +2691,7 @@
           },
           "Invoice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always '/invoice' for this object.",
@@ -2699,6 +2765,7 @@
           },
           "InvoiceItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object.",
@@ -2744,6 +2811,7 @@
           },
           "InvoiceQuantity": {
             "docs": "Describes the number of units used to calculate the price of a line item",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -2764,6 +2832,7 @@
           },
           "InvoiceRate": {
             "docs": "Describes the rate per unit used to calculate the price of a line item",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -2807,6 +2876,7 @@
           },
           "LegCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -2827,6 +2897,7 @@
           },
           "LegRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -2839,6 +2910,7 @@
           },
           "Length": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/quantity/length` for this object.",
@@ -2859,6 +2931,7 @@
           },
           "LengthCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
@@ -2895,6 +2968,7 @@
           },
           "LineItemMeasurement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "measure_type": {
                 "docs": "The type of measure",
@@ -2931,6 +3005,7 @@
           },
           "Location": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/location for this object.",
@@ -2954,6 +3029,7 @@
           },
           "Manufacturer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -2974,6 +3050,7 @@
             "discriminated": false,
             "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2990,6 +3067,7 @@
           },
           "MetadataCreateExampleKey": {
             "docs": "Object format.",
+            "inline": true,
             "properties": {
               "example_key": "optional<list<string>>",
             },
@@ -2999,6 +3077,7 @@
           },
           "MetadataCreateItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": "optional<string>",
               "value": "optional<list<string>>",
@@ -3012,6 +3091,7 @@
             "extends": [
               "MoneyCreate",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3019,6 +3099,7 @@
           },
           "MoneyCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "optional<string>",
               "currency_code": "optional<string>",
@@ -3029,6 +3110,7 @@
           },
           "OceanBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3068,6 +3150,7 @@
           },
           "OceanShipmentContainerLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3083,6 +3166,7 @@
           },
           "OceanShipmentDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3104,6 +3188,7 @@
           },
           "OceanShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -3118,6 +3203,7 @@
           },
           "Parties": {
             "docs": "A party is a company entity that is tied to a purchase order that has a specific role.",
+            "inline": undefined,
             "properties": {
               "company_entity": "optional<CompanyEntity>",
               "contacts": {
@@ -3139,6 +3225,7 @@
           },
           "PartiesContactsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "department": "optional<string>",
               "email": "optional<string>",
@@ -3172,6 +3259,7 @@
           },
           "Place": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3192,6 +3280,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3203,6 +3292,7 @@
           },
           "Placeport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3236,6 +3326,7 @@
           },
           "Product": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3291,6 +3382,7 @@
           },
           "ProductClassification": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3311,6 +3403,7 @@
           },
           "ProductProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3331,6 +3424,7 @@
           },
           "ProductRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -3343,6 +3437,7 @@
           },
           "PurchaseOrder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3450,6 +3545,7 @@
           },
           "PurchaseOrderLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3510,6 +3606,7 @@
           },
           "PurchaseOrderLineItemCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3530,6 +3627,7 @@
           },
           "PurchaseOrderLineItemDestinationAddress": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "location_ref": {
                 "docs": "Location ref",
@@ -3576,6 +3674,7 @@
           },
           "PurchaseOrderLineItemRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -3662,6 +3761,7 @@
           },
           "PurchaseOrderProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the product",
@@ -3718,6 +3818,7 @@
           },
           "PurchaseOrderRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -3742,6 +3843,7 @@
           },
           "RailShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -3752,6 +3854,7 @@
           },
           "Shipment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3930,6 +4033,7 @@
           },
           "ShipmentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4012,6 +4116,7 @@
           },
           "ShipmentDangerousGoods": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of this object",
@@ -4042,6 +4147,7 @@
           },
           "ShipmentEventData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4067,6 +4173,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4097,6 +4204,7 @@
           },
           "ShipmentItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4115,6 +4223,7 @@
           },
           "ShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4156,6 +4265,7 @@
           },
           "ShipmentNode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4181,6 +4291,7 @@
           },
           "ShipmentRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of Object Returned. In this case, /api/refs/object.",
@@ -4225,6 +4336,7 @@
           },
           "ShippingUnit": {
             "docs": "For detailed cargo, `shipping_units` is required. For simple cargo, `shipping_units` is required, but only one should be specified.",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/shipping_unit` for this object.",
@@ -4258,6 +4370,7 @@
           },
           "ShippingUnitCreate": {
             "docs": "For detailed cargo, `shipping_units` is required. For simple cargo, `shipping_units` is required, but only one should be specified.",
+            "inline": undefined,
             "properties": {
               "atomic_count": {
                 "docs": "Required if `unit_type` = `pallet`. The number of atomic units, i.e. units that will not be unpacked and broken up during shipping, contained in each shipping unit.",
@@ -4287,6 +4400,7 @@
           },
           "Terminal": {
             "docs": "Name and address of a specific terminal within a port or airport.  Possibly null",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4323,6 +4437,7 @@
           },
           "TruckingBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4347,6 +4462,7 @@
           },
           "TruckingShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -4372,6 +4488,7 @@
           },
           "VatNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4392,6 +4509,7 @@
             "extends": [
               "VolumeCreate",
             ],
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4404,6 +4522,7 @@
           },
           "VolumeCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "unit of measurement. "cbm" for cubic meters. "cbft" for cubic feet.",
@@ -4430,6 +4549,7 @@
           },
           "WebhookEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4451,6 +4571,7 @@
             "extends": [
               "WeightCreate",
             ],
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/quantity/weight` for this object.",
@@ -4463,6 +4584,7 @@
           },
           "WeightCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "kg" for kilograms, "lbs" for pounds",
@@ -4489,6 +4611,7 @@
           },
           "WriteProductClassification": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "codes": {
                 "docs": "Always required. An array of HS codes for this product in the provided region",
@@ -4505,6 +4628,7 @@
           },
           "WriteProductProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "Always required. User defined type of this property",
@@ -4521,6 +4645,7 @@
           },
           "WriteProductSupplier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country_of_origin": {
                 "docs": "Always required. ISO Alpha-2 country in which the product is manufactured",
@@ -4541,6 +4666,7 @@
           },
           "WriteVatNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country_code": {
                 "docs": "ISO 3166 two-letter country code",
@@ -4739,12 +4865,14 @@
       example_key: optional<list<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   MetadataCreateItem:
     properties:
       name: optional<string>
       value: optional<list<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   MetadataCreate:
     discriminated: false
     docs: >-
@@ -5180,6 +5308,7 @@
       - Manufacturer
     source:
       openapi: ../openapi.yml
+    inline: true
   Place:
     properties:
       _object:
@@ -5940,6 +6069,7 @@
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   GenericObjectRef:
     docs: '[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)'
     properties:
@@ -6630,6 +6760,7 @@
       - OceanShipmentContainerLeg
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentEventData:
     properties:
       _object:
@@ -6859,6 +6990,7 @@
       id: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Contact:
     properties:
       _object:
@@ -7165,6 +7297,7 @@
       department: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Parties:
     docs: >-
       A party is a company entity that is tied to a purchase order that has a
@@ -7341,6 +7474,7 @@
       department: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateParty:
     docs: >-
       A party is a company entity that is tied to a purchase order and has a
@@ -8214,7 +8348,6 @@ errors:
                                   "city": "Los Angeles",
                                   "country": "United States",
                                   "country_code": "US",
-                                  "ref": "address_ref_x",
                                   "street_address": "123 Queen St",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "USLA",
@@ -8240,7 +8373,6 @@ errors:
                                   "city": "Shanghai",
                                   "country": "China",
                                   "country_code": "CN",
-                                  "ref": "address_ref_x",
                                   "street_address": "123 Queen St",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "CNSZP",
@@ -8305,7 +8437,6 @@ errors:
                             "wants_import_customs_service": true,
                           },
                         ],
-                        "next": "https://api.flexport.com/bookings?page=3&per=10",
                         "prev": "https://api.flexport.com/bookings?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/bookings?page=13&per=10",
@@ -8518,28 +8649,6 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "air_booking": {
-                          "_object": "/air/booking",
-                          "destination_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "incoterm": "EXW",
-                          "origin_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "product_descriptions": [
-                            {
-                              "_object": "/bookings/product_descriptions",
-                              "description": "Wristwatches",
-                              "description_for_export_customs": "手表",
-                              "description_for_export_customs_locale": "zh_CN",
-                            },
-                          ],
-                          "wants_delivery_service": false,
-                          "wants_pickup_service": true,
-                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -8653,7 +8762,6 @@ errors:
                           ],
                         },
                         "name": "PO 123",
-                        "notify_party": "John Doe | john@example.com | 905-555-1234",
                         "ocean_booking": {
                           "_object": "/ocean/booking",
                           "container_counts": {
@@ -8743,7 +8851,6 @@ errors:
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "quote_status": "pending_quote",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123,
@@ -8779,12 +8886,6 @@ errors:
                         "special_instructions": "Handle carefully",
                         "status": "archived",
                         "transportation_mode": "ocean",
-                        "trucking_booking": {
-                          "_object": "/trucking/booking",
-                          "description_of_products": "Wristwatches",
-                          "is_ftl": false,
-                          "payment_terms": "collect",
-                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -8917,28 +9018,6 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "air_booking": {
-                          "_object": "/air/booking",
-                          "destination_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "incoterm": "EXW",
-                          "origin_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "product_descriptions": [
-                            {
-                              "_object": "/bookings/product_descriptions",
-                              "description": "Wristwatches",
-                              "description_for_export_customs": "手表",
-                              "description_for_export_customs_locale": "zh_CN",
-                            },
-                          ],
-                          "wants_delivery_service": false,
-                          "wants_pickup_service": true,
-                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -9172,12 +9251,6 @@ errors:
                         "special_instructions": "",
                         "status": "archived",
                         "transportation_mode": "ocean",
-                        "trucking_booking": {
-                          "_object": "/trucking/booking",
-                          "description_of_products": "Wristwatches",
-                          "is_ftl": false,
-                          "payment_terms": "collect",
-                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -9212,6 +9285,7 @@ errors:
         "types": {
           "BookingCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Booking>",
@@ -9224,6 +9298,7 @@ errors:
           },
           "BookingShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Booking>",
@@ -9264,6 +9339,7 @@ errors:
           },
           "BookingsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<BookingsIndexResponseData>",
@@ -9276,6 +9352,7 @@ errors:
           },
           "BookingsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Booking>>",
@@ -9327,6 +9404,7 @@ errors:
       data: optional<list<root.Booking>>
     source:
       openapi: ../openapi.yml
+    inline: true
   BookingsIndexResponse:
     properties:
       _object: optional<string>
@@ -9485,7 +9563,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/bookings?page=12&per=10
-                next: https://api.flexport.com/bookings?page=3&per=10
                 data:
                   - _object: /booking
                     id: 123
@@ -9555,7 +9632,6 @@ service:
                           country: China
                           country_code: CN
                           timezone: America/Los_Angeles
-                          ref: address_ref_x
                           unlocode: CNSZP
                         details:
                           - _object: /trucking/port
@@ -9572,7 +9648,6 @@ service:
                           country: United States
                           country_code: US
                           timezone: America/Los_Angeles
-                          ref: address_ref_x
                           unlocode: USLA
                         details:
                           - _object: /trucking/port
@@ -9832,7 +9907,6 @@ service:
                   link: https://api.flexport.com/shipments/123
                   id: 123
                 status: archived
-                quote_status: pending_quote
                 shipper_entity:
                   _object: /company_entity
                   id: 9281
@@ -9875,7 +9949,6 @@ service:
                     - _object: company_entity/vat_number
                       country_code: US
                       number: US 123746396
-                notify_party: John Doe | john@example.com | 905-555-1234
                 transportation_mode: ocean
                 ocean_booking:
                   _object: /ocean/booking
@@ -9935,27 +10008,6 @@ service:
                           36177-92-1) (provided for in subheading 2933.39.91)
                         code: '9101.00'
                         country_code: US
-                air_booking:
-                  _object: /air/booking
-                  incoterm: EXW
-                  wants_pickup_service: true
-                  wants_delivery_service: false
-                  origin_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  destination_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  product_descriptions:
-                    - _object: /bookings/product_descriptions
-                      description: Wristwatches
-                      description_for_export_customs: 手表
-                      description_for_export_customs_locale: zh_CN
-                trucking_booking:
-                  _object: /trucking/booking
-                  is_ftl: false
-                  payment_terms: collect
-                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -10172,27 +10224,6 @@ service:
                       description: Wristwatches
                       description_for_export_customs: 手表
                       description_for_export_customs_locale: zh_CN
-                air_booking:
-                  _object: /air/booking
-                  incoterm: EXW
-                  wants_pickup_service: true
-                  wants_delivery_service: false
-                  origin_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  destination_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  product_descriptions:
-                    - _object: /bookings/product_descriptions
-                      description: Wristwatches
-                      description_for_export_customs: 手表
-                      description_for_export_customs_locale: zh_CN
-                trucking_booking:
-                  _object: /trucking/booking
-                  is_ftl: false
-                  payment_terms: collect
-                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -10457,12 +10488,9 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
-                          "state": "MN",
                           "street_address": "123 Queen St",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
-                          "zip": "56307",
                         },
                         "new_port_of_loading": {
                           "_object": "/address",
@@ -10470,12 +10498,9 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
-                          "state": "MN",
                           "street_address": "123 Queen St",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
-                          "zip": "56307",
                         },
                         "new_port_of_unloading": {
                           "_object": "/address",
@@ -10595,6 +10620,7 @@ docs: Endpoints relating to Booking objects
         "types": {
           "BookingAmendmentCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingAmendment>",
@@ -10776,24 +10802,18 @@ service:
                 new_origin_address:
                   _object: /address
                   street_address: 123 Queen St
-                  street_address2: STE 2918
                   city: Shanghai
-                  state: MN
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
                 new_port_of_loading:
                   _object: /address
                   street_address: 123 Queen St
-                  street_address2: STE 2918
                   city: Shanghai
-                  state: MN
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
@@ -11000,7 +11020,6 @@ docs: >-
                             "units": 200,
                           },
                         ],
-                        "next": "https://api.flexport.com/booking_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/booking_line_items?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/booking_line_items?page=13&per=10",
@@ -11127,6 +11146,7 @@ docs: >-
         "types": {
           "BookingLineItemCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingLineItem>",
@@ -11149,6 +11169,7 @@ docs: >-
           },
           "BookingLineItemIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<BookingLineItemIndexResponseData>",
@@ -11161,6 +11182,7 @@ docs: >-
           },
           "BookingLineItemIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.BookingLineItem>>",
@@ -11173,6 +11195,7 @@ docs: >-
           },
           "BookingLineItemShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingLineItem>",
@@ -11201,6 +11224,7 @@ docs: >-
       data: optional<list<root.BookingLineItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   BookingLineItemIndexResponse:
     properties:
       _object: optional<string>
@@ -11290,7 +11314,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/booking_line_items?page=12&per=10
-                next: https://api.flexport.com/booking_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/booking_line_item
                     id: 123456
@@ -11554,6 +11577,7 @@ docs: >-
         "types": {
           "CarbonCalculationCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CarbonCalculation>",
@@ -12119,7 +12143,6 @@ docs: Endpoints relating to Carbon Calculations
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/commercial_invoices?page=3&per=10",
                         "prev": "https://api.flexport.com/commercial_invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/commercial_invoices?page=2&per=10",
@@ -12507,6 +12530,7 @@ docs: Endpoints relating to Carbon Calculations
         "types": {
           "CommercialInvoicesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -12519,6 +12543,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<CommercialInvoicesIndexResponseData>",
@@ -12531,6 +12556,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CommercialInvoice>>",
@@ -12543,6 +12569,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -12555,6 +12582,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -12578,6 +12606,7 @@ types:
       data: optional<list<root.CommercialInvoice>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CommercialInvoicesIndexResponse:
     properties:
       _object: optional<string>
@@ -12666,7 +12695,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/commercial_invoices?page=1&per=10
-                next: https://api.flexport.com/commercial_invoices?page=3&per=10
                 data:
                   - _object: /commercial_invoices
                     id: abcxyz-23456-def
@@ -13338,7 +13366,6 @@ docs: Endpoints relating to Commercial Invoice objects
                             "ref": "ref_for_company",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/companies?page=3&per=10",
                         "prev": "https://api.flexport.com/network/companies?page=12&per=10",
                         "total_count": 121,
                       },
@@ -13681,6 +13708,7 @@ docs: Endpoints relating to Commercial Invoice objects
         "types": {
           "NetworkCompanyCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -13693,6 +13721,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<NetworkCompanyIndexResponseData>",
@@ -13705,6 +13734,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Company>>",
@@ -13718,6 +13748,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyMeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -13730,6 +13761,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -13742,6 +13774,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -13766,6 +13799,7 @@ types:
       data: optional<list<root.Company>>
     source:
       openapi: ../openapi.yml
+    inline: true
   NetworkCompanyIndexResponse:
     properties:
       _object: optional<string>
@@ -13863,7 +13897,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/companies?page=12&per=10
-                next: https://api.flexport.com/network/companies?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/company
@@ -14241,7 +14274,6 @@ docs: Endpoints relating to Company objects
                             ],
                           },
                         ],
-                        "next": "https://api.flexport.com/network/company_entities?page=3&per=10",
                         "prev": "https://api.flexport.com/network/company_entities?page=12&per=10",
                         "total_count": 121,
                       },
@@ -14559,6 +14591,7 @@ docs: Endpoints relating to Company objects
         "types": {
           "CompanyEntityIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<CompanyEntityIndexResponseData>",
@@ -14571,6 +14604,7 @@ docs: Endpoints relating to Company objects
           },
           "CompanyEntityIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CompanyEntity>>",
@@ -14584,6 +14618,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -14596,6 +14631,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -14608,6 +14644,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -14632,6 +14669,7 @@ types:
       data: optional<list<root.CompanyEntity>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CompanyEntityIndexResponse:
     properties:
       _object: optional<string>
@@ -14720,8 +14758,6 @@ service:
                 _object: /api/collections/paginated
                 prev: >-
                   https://api.flexport.com/network/company_entities?page=12&per=10
-                next: >-
-                  https://api.flexport.com/network/company_entities?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /company_entity
@@ -15068,7 +15104,6 @@ docs: Endpoints relating to CompanyEntity objects
                             "phone_number": "6789998212",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/contacts?page=3&per=10",
                         "prev": "https://api.flexport.com/network/contacts?page=12&per=10",
                         "total_count": 121,
                       },
@@ -15274,6 +15309,7 @@ docs: Endpoints relating to CompanyEntity objects
         "types": {
           "NetworkContactCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -15286,6 +15322,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<NetworkContactIndexResponseData>",
@@ -15298,6 +15335,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Contact>>",
@@ -15311,6 +15349,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -15323,6 +15362,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -15347,6 +15387,7 @@ types:
       data: optional<list<root.Contact>>
     source:
       openapi: ../openapi.yml
+    inline: true
   NetworkContactIndexResponse:
     properties:
       _object: optional<string>
@@ -15434,7 +15475,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/contacts?page=12&per=10
-                next: https://api.flexport.com/network/contacts?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/contact
@@ -15884,6 +15924,7 @@ docs: Endpoints relating to Contact objects
         "types": {
           "ContainerListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<ContainerListResponseData>",
@@ -15896,6 +15937,7 @@ docs: Endpoints relating to Contact objects
           },
           "ContainerListResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentContainer>>",
@@ -15908,6 +15950,7 @@ docs: Endpoints relating to Contact objects
           },
           "ContainerShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.ShipmentContainer>",
@@ -15931,6 +15974,7 @@ types:
       data: optional<list<root.ShipmentContainer>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ContainerListResponse:
     properties:
       _object: optional<string>
@@ -16334,6 +16378,7 @@ docs: Endpoints relating to Container objects
         "types": {
           "OceanContainerLegsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<OceanContainerLegsIndexResponseData>",
@@ -16346,6 +16391,7 @@ docs: Endpoints relating to Container objects
           },
           "OceanContainerLegsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.OceanShipmentContainerLeg>>",
@@ -16358,6 +16404,7 @@ docs: Endpoints relating to Container objects
           },
           "OceanContainerLegsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.OceanShipmentContainerLeg>",
@@ -16381,6 +16428,7 @@ types:
       data: optional<list<root.OceanShipmentContainerLeg>>
     source:
       openapi: ../openapi.yml
+    inline: true
   OceanContainerLegsIndexResponse:
     properties:
       _object: optional<string>
@@ -16563,7 +16611,6 @@ docs: Endpoints relating to ContainerLeg objects
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/customs_entries?page=3&per=10",
                         "prev": "https://api.flexport.com/customs_entries?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/customs_entries?page=13&per=10",
@@ -16674,6 +16721,7 @@ docs: Endpoints relating to ContainerLeg objects
         "types": {
           "CustomsEntriesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CustomsEntry>",
@@ -16686,6 +16734,7 @@ docs: Endpoints relating to ContainerLeg objects
           },
           "CustomsEntryIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<CustomsEntryIndexResponseData>",
@@ -16698,6 +16747,7 @@ docs: Endpoints relating to ContainerLeg objects
           },
           "CustomsEntryIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CustomsEntry>>",
@@ -16721,6 +16771,7 @@ types:
       data: optional<list<root.CustomsEntry>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CustomsEntryIndexResponse:
     properties:
       _object: optional<string>
@@ -16786,7 +16837,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/customs_entries?page=12&per=10
-                next: https://api.flexport.com/customs_entries?page=3&per=10
                 data:
                   - _object: /customs_entries
                     id: ABC123
@@ -16966,7 +17016,6 @@ docs: Endpoints relating to Customs Entry objects
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/documents?page=3&per=10",
                         "prev": "https://api.flexport.com/documents?page=12&per=10",
                         "total_count": 121,
                       },
@@ -17060,7 +17109,6 @@ docs: Endpoints relating to Customs Entry objects
                       "_object": "/api/response",
                       "data": {
                         "_object": "/document",
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "document_type": "billing_packet",
                         "file_link": "https://api.flexport.com/documents/ABC123/download",
                         "file_metadata": {
@@ -17070,7 +17118,6 @@ docs: Endpoints relating to Customs Entry objects
                         },
                         "file_name": "readme.txt",
                         "id": "ABC123",
-                        "memo": "memo",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -17109,6 +17156,7 @@ docs: Endpoints relating to Customs Entry objects
         "types": {
           "DocumentsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CreateDocument>",
@@ -17121,6 +17169,7 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<DocumentsIndexResponseData>",
@@ -17133,6 +17182,7 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Document>>",
@@ -17146,6 +17196,7 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Document>",
@@ -17170,6 +17221,7 @@ types:
       data: optional<list<root.Document>>
     source:
       openapi: ../openapi.yml
+    inline: true
   DocumentsIndexResponse:
     properties:
       _object: optional<string>
@@ -17269,7 +17321,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/documents?page=12&per=10
-                next: https://api.flexport.com/documents?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /document
@@ -17354,9 +17405,7 @@ service:
                 id: ABC123
                 file_name: readme.txt
                 document_type: billing_packet
-                memo: memo
                 file_link: https://api.flexport.com/documents/ABC123/download
-                archived_at: '2024-01-15T09:30:00Z'
                 file_metadata:
                   _object: file/metadata
                   size: 20000
@@ -17640,6 +17689,7 @@ docs: Endpoints relating to Document objects
           },
           "EventsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<EventsIndexResponseData>",
@@ -17652,6 +17702,7 @@ docs: Endpoints relating to Document objects
           },
           "EventsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.WebhookEvent>>",
@@ -17664,6 +17715,7 @@ docs: Endpoints relating to Document objects
           },
           "EventsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.WebhookEvent>",
@@ -17701,6 +17753,7 @@ docs: Endpoints relating to Document objects
       data: optional<list<root.WebhookEvent>>
     source:
       openapi: ../openapi.yml
+    inline: true
   EventsIndexResponse:
     properties:
       _object: optional<string>
@@ -18145,7 +18198,6 @@ Other details about this invoice",
                           },
                         ],
                         "next": "https://api.flexport.com/invoices?page=2&per=10",
-                        "prev": "https://api.flexport.com/invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/invoices",
                       "version": 2,
@@ -18543,6 +18595,7 @@ Other details about this invoice",
           },
           "InvoiceIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<InvoiceIndexResponseData>",
@@ -18555,6 +18608,7 @@ Other details about this invoice",
           },
           "InvoiceIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Invoice>>",
@@ -18567,6 +18621,7 @@ Other details about this invoice",
           },
           "InvoicesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Invoice>",
@@ -18603,6 +18658,7 @@ Other details about this invoice",
       data: optional<list<root.Invoice>>
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoiceIndexResponse:
     properties:
       _object: optional<string>
@@ -18737,7 +18793,6 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
-                prev: https://api.flexport.com/invoices?page=1&per=10
                 next: https://api.flexport.com/invoices?page=2&per=10
                 data:
                   - _object: /invoice
@@ -19186,7 +19241,6 @@ docs: Endpoints relating to Invoice objects
                             "name": "Wayne Enterprises",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/locations?page=3&per=10",
                         "prev": "https://api.flexport.com/network/locations?page=1&per=10",
                         "total_count": 11,
                       },
@@ -19457,7 +19511,6 @@ docs: Endpoints relating to Invoice objects
                           "ref": "zoomit-management-co",
                           "state": "CA",
                           "street_address": "2 World Way",
-                          "street_address2": "STE 2918",
                           "timezone": "America/Los_Angeles",
                           "unlocode": "USLAX",
                           "zip": "90045",
@@ -19541,6 +19594,7 @@ docs: Endpoints relating to Invoice objects
         "types": {
           "LocationIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<LocationIndexResponseData>",
@@ -19553,6 +19607,7 @@ docs: Endpoints relating to Invoice objects
           },
           "LocationIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Location>>",
@@ -19566,6 +19621,7 @@ docs: Endpoints relating to Invoice objects
           },
           "LocationUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -19578,6 +19634,7 @@ docs: Endpoints relating to Invoice objects
           },
           "NetworkLocationCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -19590,6 +19647,7 @@ docs: Endpoints relating to Invoice objects
           },
           "NetworkLocationShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -19614,6 +19672,7 @@ types:
       data: optional<list<root.Location>>
     source:
       openapi: ../openapi.yml
+    inline: true
   LocationIndexResponse:
     properties:
       _object: optional<string>
@@ -19712,7 +19771,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/locations?page=1&per=10
-                next: https://api.flexport.com/network/locations?page=3&per=10
                 total_count: 11
                 data:
                   - _object: /network/location
@@ -19934,7 +19992,6 @@ service:
                 address:
                   _object: /address
                   street_address: 2 World Way
-                  street_address2: STE 2918
                   city: Los Angeles
                   state: CA
                   country: United States of America
@@ -20131,6 +20188,7 @@ docs: Endpoints relating to Location objects
           },
           "PortsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<PortsIndexResponseData>",
@@ -20143,6 +20201,7 @@ docs: Endpoints relating to Location objects
           },
           "PortsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<optional<root.Place>>>",
@@ -20174,6 +20233,7 @@ docs: Endpoints relating to Location objects
       data: optional<list<optional<root.Place>>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PortsIndexResponse:
     properties:
       _object: optional<string>
@@ -20707,6 +20767,7 @@ docs: Endpoints relating to Ports objects
         "types": {
           "ProductCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -20719,6 +20780,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<ProductIndexResponseData>",
@@ -20731,6 +20793,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Product>>",
@@ -20743,6 +20806,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -20755,6 +20819,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -20778,6 +20843,7 @@ types:
       data: optional<list<root.Product>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ProductIndexResponse:
     properties:
       _object: optional<string>
@@ -21469,22 +21535,18 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
-                                "street_address": "1641 Settlers Lane",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -21525,22 +21587,18 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
-                                "street_address": "1641 Settlers Lane",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -21555,7 +21613,6 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
-                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
                                     "timezone": "Asia/Shanghai",
@@ -21615,7 +21672,6 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
-                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
                                     "timezone": "Asia/Shanghai",
@@ -21648,7 +21704,6 @@ docs: Endpoints relating to Product objects
                             "updated_at": "2020-07-31T19:52:58.161Z",
                           },
                         ],
-                        "next": "https://api.flexport.com/purchase_orders?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -22175,6 +22230,7 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<PurchaseOrderIndexResponseData>",
@@ -22187,6 +22243,7 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.PurchaseOrder>>",
@@ -22199,6 +22256,7 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.PurchaseOrder>",
@@ -22250,6 +22308,7 @@ docs: Endpoints relating to Product objects
       data: optional<list<root.PurchaseOrder>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PurchaseOrderIndexResponse:
     properties:
       _object: optional<string>
@@ -22371,7 +22430,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
-                next: https://api.flexport.com/purchase_orders?page=3&per=10
                 data:
                   - id: 109771
                     _object: /purchase_order
@@ -22389,7 +22447,6 @@ service:
                       name: Fairburn
                       address:
                         _object: /address
-                        street_address: 1641 Settlers Lane
                         city: Fairburn
                         state: GA
                         country: United States
@@ -22399,11 +22456,8 @@ service:
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
-                          port_code: '3901'
                         - _object: /trucking/port
-                          port_code: '3901'
                         - _object: /ocean/port
-                          port_code: '3901'
                     origin_address:
                       _object: /address
                       street_address: No 1, 123 St
@@ -22418,7 +22472,6 @@ service:
                       name: Fairburn
                       address:
                         _object: /address
-                        street_address: 1641 Settlers Lane
                         city: Fairburn
                         state: GA
                         country: United States
@@ -22428,11 +22481,8 @@ service:
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
-                          port_code: '3901'
                         - _object: /trucking/port
-                          port_code: '3901'
                         - _object: /ocean/port
-                          port_code: '3901'
                     destination_addresses:
                       - _object: /address
                         street_address: Vandelay street 1
@@ -22458,7 +22508,6 @@ service:
                             country: China
                             country_code: CN
                             timezone: Asia/Shanghai
-                            ref: address_ref_x
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -22499,7 +22548,6 @@ service:
                             country: China
                             country_code: CN
                             timezone: Asia/Shanghai
-                            ref: address_ref_x
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -23088,7 +23136,6 @@ docs: >-
                                 "city": "Albany",
                                 "country": "United States of America",
                                 "country_code": "US",
-                                "ref": "address_ref_x",
                                 "state": "MN",
                                 "street_address": "1641 Settlers Lane",
                                 "street_address2": "STE 2918",
@@ -23181,7 +23228,6 @@ docs: >-
                             "units": 20,
                           },
                         ],
-                        "next": "https://api.flexport.com/purchase_order_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -23274,7 +23320,6 @@ docs: >-
                             "city": "Albany",
                             "country": "United States of America",
                             "country_code": "US",
-                            "ref": "address_ref_x",
                             "state": "MN",
                             "street_address": "1641 Settlers Lane",
                             "street_address2": "STE 2918",
@@ -23303,28 +23348,6 @@ docs: >-
                             "units": 1,
                           },
                         ],
-                        "destination_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
                         "hs_codes": [
                           {
                             "_object": "/hs_code",
@@ -23358,34 +23381,8 @@ docs: >-
                           "ref": "sellingcoaddress",
                           "state": "44",
                           "street_address": "10th YouSong Industrial District",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shenzhen",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
                         },
-                        "origin_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "parent_line_key": "parent_line_key",
                         "product": {
                           "color": "red",
                           "country_of_origin": "US",
@@ -23455,6 +23452,7 @@ docs: >-
           },
           "PurchaseOrderLineItemIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<PurchaseOrderLineItemIndexResponseData>",
@@ -23467,6 +23465,7 @@ docs: >-
           },
           "PurchaseOrderLineItemIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.PurchaseOrderLineItem>>",
@@ -23479,6 +23478,7 @@ docs: >-
           },
           "PurchaseOrderLineItemShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.PurchaseOrderLineItem>",
@@ -23507,6 +23507,7 @@ docs: >-
       data: optional<list<root.PurchaseOrderLineItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PurchaseOrderLineItemIndexResponse:
     properties:
       _object: optional<string>
@@ -23590,8 +23591,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
-                next: >-
-                  https://api.flexport.com/purchase_order_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/line_item
                     id: 123456
@@ -23660,7 +23659,6 @@ service:
                         country_code: US
                         zip: '56307'
                         timezone: America/Los_Angeles
-                        ref: address_ref_x
                         unlocode: US AL2
                       vat_numbers:
                         - _object: company_entity/vat_number
@@ -23736,52 +23734,15 @@ service:
                 transportation_mode: air
                 unit_of_measure: HUN
                 must_arrive_date: '2019-03-11'
-                origin_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
                 origin_location:
                   _object: /address
                   street_address: 10th YouSong Industrial District
-                  street_address2: STE 2918
                   city: Shenzhen
                   state: '44'
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shenzhen
                   ref: sellingcoaddress
-                  unlocode: US AL2
-                destination_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
                 destination_addresses:
                   - location_ref: id-1234
                     units: 1
@@ -23789,7 +23750,6 @@ service:
                   - _object: /hs_code
                     code: 8309.90.10.00
                     country_code: US
-                parent_line_key: parent_line_key
                 assigned_party:
                   _object: /company_entity
                   id: 9281
@@ -23805,7 +23765,6 @@ service:
                     country_code: US
                     zip: '56307'
                     timezone: America/Los_Angeles
-                    ref: address_ref_x
                     unlocode: US AL2
                   vat_numbers:
                     - _object: company_entity/vat_number
@@ -24129,8 +24088,6 @@ docs: >-
                             "wants_trade_declaration_service": false,
                           },
                         ],
-                        "next": "next",
-                        "prev": "prev",
                       },
                       "self": "https://api.flexport.com/shipments?page=1&per=20&sort=id&direction=desc",
                       "version": 2,
@@ -24382,19 +24339,6 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                        "air_shipment": {
-                          "_object": "/air/shipment",
-                          "chargeable_volume": {
-                            "_object": "/quantity/volume",
-                            "value": 472.62,
-                          },
-                          "chargeable_weight": {
-                            "_object": "/quantity/weight",
-                            "value": 2300.4,
-                          },
-                          "house_airway_bill": "HWXJKE67732",
-                          "master_airway_bill": "22831046871",
-                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": false,
                         "booking": {
@@ -24442,14 +24386,6 @@ docs: >-
                           "value": 2300.4,
                         },
                         "cargo_ready_date": "2019-02-06",
-                        "child_shipments": [
-                          {
-                            "_object": "/api/refs/object",
-                            "id": 123,
-                            "link": "https://api.flexport.com/shipments/123",
-                            "ref_type": "/shipment",
-                          },
-                        ],
                         "commercial_invoices": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -24590,12 +24526,6 @@ docs: >-
                           "is_lcl": false,
                           "master_bill_number": "NEWO697216024",
                         },
-                        "parent_shipment": {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
                         "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                         "pieces": 8372,
                         "priority": "high",
@@ -24716,19 +24646,6 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                        "air_shipment": {
-                          "_object": "/air/shipment",
-                          "chargeable_volume": {
-                            "_object": "/quantity/volume",
-                            "value": 472.62,
-                          },
-                          "chargeable_weight": {
-                            "_object": "/quantity/weight",
-                            "value": 2300.4,
-                          },
-                          "house_airway_bill": "HWXJKE67732",
-                          "master_airway_bill": "22831046871",
-                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": true,
                         "booking": {
@@ -25075,6 +24992,7 @@ docs: >-
           },
           "ShipmentIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<ShipmentIndexResponseData>",
@@ -25087,6 +25005,7 @@ docs: >-
           },
           "ShipmentIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Shipment>>",
@@ -25099,6 +25018,7 @@ docs: >-
           },
           "ShipmentShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Shipment>",
@@ -25111,6 +25031,7 @@ docs: >-
           },
           "ShipmentUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Shipment>",
@@ -25123,6 +25044,7 @@ docs: >-
           },
           "ShipmentsShareableResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<ShipmentsShareableResponseData>",
@@ -25135,6 +25057,7 @@ docs: >-
           },
           "ShipmentsShareableResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "shipments": "optional<list<ShipmentsShareableResponseDataShipmentsItem>>",
@@ -25145,6 +25068,7 @@ docs: >-
           },
           "ShipmentsShareableResponseDataShipmentsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "expiration_date": "optional<string>",
               "shareable_url": "optional<string>",
@@ -25182,6 +25106,7 @@ docs: >-
       data: optional<list<root.Shipment>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentIndexResponse:
     properties:
       _object: optional<string>
@@ -25213,12 +25138,14 @@ docs: >-
       expiration_date: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentsShareableResponseData:
     properties:
       _object: optional<string>
       shipments: optional<list<ShipmentsShareableResponseDataShipmentsItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentsShareableResponse:
     properties:
       _object: optional<string>
@@ -25408,8 +25335,6 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
-                prev: prev
-                next: next
                 data:
                   - metadata:
                       key: value
@@ -25694,16 +25619,6 @@ service:
                 visibility_only: false
                 wants_delivery_service: false
                 belongs_to_a_buyers_consol: false
-                child_shipments:
-                  - _object: /api/refs/object
-                    ref_type: /shipment
-                    link: https://api.flexport.com/shipments/123
-                    id: 123
-                parent_shipment:
-                  _object: /api/refs/object
-                  ref_type: /shipment
-                  link: https://api.flexport.com/shipments/123
-                  id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 target_delivery_date: target_delivery_date
@@ -25723,16 +25638,6 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
-                air_shipment:
-                  _object: /air/shipment
-                  house_airway_bill: HWXJKE67732
-                  master_airway_bill: '22831046871'
-                  chargeable_weight:
-                    value: 2300.4
-                    _object: /quantity/weight
-                  chargeable_volume:
-                    value: 472.62
-                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -25996,16 +25901,6 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
-                air_shipment:
-                  _object: /air/shipment
-                  house_airway_bill: HWXJKE67732
-                  master_airway_bill: '22831046871'
-                  chargeable_weight:
-                    value: 2300.4
-                    _object: /quantity/weight
-                  chargeable_volume:
-                    value: 472.62
-                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -26456,12 +26351,6 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
-                        "air_leg": {
-                          "_object": "/air/shipment_leg",
-                          "flight_number": "Y8 1234",
-                          "iata_code": "2Q",
-                          "icao_code": "SNC",
-                        },
                         "cargo_ready_date": "cargo_ready_date",
                         "carrier_name": "Liberty Carrier",
                         "deleted_at": "2024-01-15T09:30:00Z",
@@ -26500,11 +26389,6 @@ docs: Endpoints relating to Shipment objects
                           "tags": [
                             "port_of_loading",
                           ],
-                          "terminal": {
-                            "_object": "/shipment_node/terminal",
-                            "firms_code": "I092",
-                            "name": "Terminal 3",
-                          },
                         },
                         "estimated_arrival_date": "2019-02-06T19:28:25Z",
                         "estimated_departure_date": "2019-02-06T19:28:25Z",
@@ -26574,14 +26458,6 @@ docs: Endpoints relating to Shipment objects
                             "name": "Terminal 3",
                           },
                         },
-                        "rail_leg": {
-                          "_object": "/rail/shipment_leg",
-                          "container_legs": {
-                            "_object": "/api/refs/collection",
-                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                            "ref_type": "/ocean/shipment_container_leg",
-                          },
-                        },
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123,
@@ -26589,18 +26465,6 @@ docs: Endpoints relating to Shipment objects
                           "ref_type": "/shipment",
                         },
                         "transportation_mode": "ocean",
-                        "trucking_leg": {
-                          "_object": "/trucking/shipment_leg",
-                          "container_legs": {
-                            "_object": "/api/refs/collection",
-                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                            "ref_type": "/ocean/shipment_container_leg",
-                          },
-                          "pieces": 32,
-                          "scac_code": "ABCD",
-                          "service_type": "ltl",
-                          "tracking_number": "FBA123456789",
-                        },
                       },
                       "self": "https://api.flexport.com/shipment_legs/948211",
                       "version": 2,
@@ -26642,6 +26506,7 @@ docs: Endpoints relating to Shipment objects
         "types": {
           "ShipmentLegIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<ShipmentLegIndexResponseData>",
@@ -26654,6 +26519,7 @@ docs: Endpoints relating to Shipment objects
           },
           "ShipmentLegIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentLeg>>",
@@ -26666,6 +26532,7 @@ docs: Endpoints relating to Shipment objects
           },
           "ShipmentLegShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.ShipmentLeg>",
@@ -26689,6 +26556,7 @@ types:
       data: optional<list<root.ShipmentLeg>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentLegIndexResponse:
     properties:
       _object: optional<string>
@@ -26986,41 +26854,14 @@ service:
                         icao_code: KORD
                       - _object: /trucking/port
                         port_code: '3901'
-                  terminal:
-                    _object: /shipment_node/terminal
-                    name: Terminal 3
-                    firms_code: I092
                 transportation_mode: ocean
                 carrier_name: Liberty Carrier
-                air_leg:
-                  _object: /air/shipment_leg
-                  iata_code: 2Q
-                  icao_code: SNC
-                  flight_number: Y8 1234
                 ocean_leg:
                   _object: /ocean/shipment_leg
                   scac_code: XJAE
                   vessel_name: Lenox
                   vessel_imo: IMO9074729
                   voyage_number: 059E
-                  container_legs:
-                    _object: /api/refs/collection
-                    ref_type: /ocean/shipment_container_leg
-                    link: >-
-                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                trucking_leg:
-                  _object: /trucking/shipment_leg
-                  tracking_number: FBA123456789
-                  service_type: ltl
-                  pieces: 32
-                  scac_code: ABCD
-                  container_legs:
-                    _object: /api/refs/collection
-                    ref_type: /ocean/shipment_container_leg
-                    link: >-
-                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                rail_leg:
-                  _object: /rail/shipment_leg
                   container_legs:
                     _object: /api/refs/collection
                     ref_type: /ocean/shipment_container_leg

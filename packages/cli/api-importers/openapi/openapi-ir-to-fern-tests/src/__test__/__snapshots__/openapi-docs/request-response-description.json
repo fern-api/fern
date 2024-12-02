@@ -42,6 +42,7 @@
         "types": {
           "Schema1": {
             "docs": "Schema 1 description",
+            "inline": undefined,
             "properties": {
               "id": "optional<integer>",
               "name": "optional<string>",

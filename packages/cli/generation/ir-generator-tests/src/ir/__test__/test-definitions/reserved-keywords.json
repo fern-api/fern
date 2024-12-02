@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_package:Package": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Package",
@@ -154,7 +154,7 @@
             "docs": null
         },
         "type_package:Record": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Record",

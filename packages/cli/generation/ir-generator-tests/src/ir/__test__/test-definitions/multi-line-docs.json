@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Operand": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Operand",
@@ -252,7 +252,7 @@
             "docs": "Tests enum name and value can be\ndifferent."
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",

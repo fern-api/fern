@@ -8,6 +8,7 @@
         "types": {
           "BaseUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "name": "renamed_id",

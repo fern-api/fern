@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:SmallInteger": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SmallInteger",
@@ -102,7 +102,7 @@
             "docs": null
         },
         "type_:LargeInteger": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "LargeInteger",
@@ -173,7 +173,7 @@
             "docs": null
         },
         "type_:Double": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Double",
@@ -244,7 +244,7 @@
             "docs": null
         },
         "type_:Word": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Word",
@@ -314,7 +314,7 @@
             "docs": null
         },
         "type_:Sentence": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Sentence",
@@ -384,7 +384,7 @@
             "docs": null
         },
         "type_:Shape": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Shape",
@@ -533,7 +533,7 @@
             "docs": null
         },
         "type_:Type": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Type",

@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_imdb:MovieId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MovieId",
@@ -134,7 +134,7 @@
             "docs": "The unique identifier for a Movie in the database"
         },
         "type_imdb:CreateMovieRequest": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "CreateMovieRequest",
@@ -294,7 +294,7 @@
             "docs": null
         },
         "type_webhooks:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",

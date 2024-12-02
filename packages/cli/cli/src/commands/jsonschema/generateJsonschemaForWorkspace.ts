@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, RelativeFilePath, dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
@@ -11,6 +11,7 @@ import {
 } from "@fern-api/ir-generator";
 import { mkdir, writeFile } from "fs/promises";
 import chalk from "chalk";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function generateJsonschemaForWorkspaces({
     typeLocator,
@@ -39,7 +40,8 @@ export async function generateJsonschemaForWorkspaces({
                     disableExamples: true,
                     version: undefined,
                     packageName: undefined,
-                    readme: undefined
+                    readme: undefined,
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                 });
 
                 const splitTypeLocator = typeLocator.split(".");

@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ImportingA": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ImportingA",
@@ -182,7 +182,7 @@
             "docs": null
         },
         "type_:RootType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "RootType",
@@ -267,7 +267,7 @@
             "docs": null
         },
         "type_a:A": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "A",
@@ -420,7 +420,7 @@
             "docs": null
         },
         "type_ast:FieldValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "FieldValue",
@@ -865,7 +865,7 @@
             "docs": null
         },
         "type_ast:ContainerValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ContainerValue",
@@ -1229,7 +1229,7 @@
             "docs": null
         },
         "type_ast:PrimitiveValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "PrimitiveValue",
@@ -1365,7 +1365,7 @@
             "docs": null
         },
         "type_ast:ObjectValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ObjectValue",
@@ -1450,7 +1450,7 @@
             "docs": null
         },
         "type_ast:JsonLike": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "JsonLike",

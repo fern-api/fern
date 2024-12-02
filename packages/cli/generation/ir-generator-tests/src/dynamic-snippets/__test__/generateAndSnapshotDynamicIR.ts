@@ -1,10 +1,11 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function generateAndSnapshotDynamicIR({
     workspace,
@@ -32,7 +33,8 @@ export async function generateAndSnapshotDynamicIR({
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 
     const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(intermediateRepresentation);

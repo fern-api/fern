@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:TelemetryResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TelemetryResponse",
@@ -250,7 +250,7 @@
             "docs": null
         },
         "type_:TelemetryData": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TelemetryData",

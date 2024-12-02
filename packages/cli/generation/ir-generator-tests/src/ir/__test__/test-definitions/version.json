@@ -179,7 +179,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_user:UserId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserId",
@@ -282,7 +282,7 @@
             "docs": null
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",

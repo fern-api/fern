@@ -497,6 +497,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -694,6 +704,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1033,6 +1053,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1189,6 +1219,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1268,6 +1308,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

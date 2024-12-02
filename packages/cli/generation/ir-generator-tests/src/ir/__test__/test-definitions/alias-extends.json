@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:AliasType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "AliasType",
@@ -269,7 +269,7 @@
             "docs": null
         },
         "type_:Parent": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Parent",
@@ -448,7 +448,7 @@
             "docs": null
         },
         "type_:Child": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Child",

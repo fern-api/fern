@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { WebsocketChannel } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
@@ -94,7 +94,8 @@ export function buildChannel({
                     schema: channel.subscribe,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace
+                    namespace: maybeChannelNamespace,
+                    declarationDepth: 0
                 })
             }
         });
@@ -109,7 +110,8 @@ export function buildChannel({
                     schema: channel.publish,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace
+                    namespace: maybeChannelNamespace,
+                    declarationDepth: 0
                 })
             }
         });

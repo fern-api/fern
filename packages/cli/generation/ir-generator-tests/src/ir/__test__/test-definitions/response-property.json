@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:StringResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "StringResponse",
@@ -116,7 +116,7 @@
             "docs": null
         },
         "type_:OptionalStringResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "OptionalStringResponse",
@@ -233,7 +233,7 @@
             "docs": null
         },
         "type_:WithMetadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithMetadata",
@@ -335,7 +335,7 @@
             "docs": null
         },
         "type_service:WithDocs": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithDocs",
@@ -458,7 +458,7 @@
             "docs": null
         },
         "type_service:OptionalWithDocs": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "OptionalWithDocs",
@@ -689,7 +689,7 @@
             "docs": null
         },
         "type_service:Movie": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Movie",
@@ -849,7 +849,7 @@
             "docs": null
         },
         "type_service:Response": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Response",

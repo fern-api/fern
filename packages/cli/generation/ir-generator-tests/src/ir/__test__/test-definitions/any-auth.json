@@ -283,7 +283,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_auth:TokenResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TokenResponse",
@@ -486,7 +486,7 @@
             "docs": "An OAuth token response."
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",

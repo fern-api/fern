@@ -3,7 +3,7 @@ import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";

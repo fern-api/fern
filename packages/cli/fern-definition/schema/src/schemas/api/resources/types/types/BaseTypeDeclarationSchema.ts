@@ -11,4 +11,5 @@ export interface BaseTypeDeclarationSchema
     examples?: FernDefinition.ExampleTypeSchema[];
     encoding?: FernDefinition.EncodingSchema;
     source?: FernDefinition.SourceSchema;
+    inline?: boolean;
 }

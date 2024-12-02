@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Type": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Type",
@@ -170,7 +170,7 @@
             "docs": null
         },
         "type_:Identifier": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Identifier",
@@ -352,7 +352,7 @@
             "docs": null
         },
         "type_:BasicType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "BasicType",
@@ -450,7 +450,7 @@
             "docs": null
         },
         "type_:ComplexType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ComplexType",
@@ -574,7 +574,7 @@
             "docs": null
         },
         "type_commons/types:Tag": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Tag",
@@ -755,7 +755,7 @@
             "docs": null
         },
         "type_commons/types:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -1612,7 +1612,7 @@
             "docs": null
         },
         "type_commons/types:EventInfo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "EventInfo",
@@ -2668,7 +2668,7 @@
             "docs": null
         },
         "type_commons/types:Data": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Data",
@@ -3025,7 +3025,7 @@
             "docs": null
         },
         "type_file/service:Filename": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Filename",
@@ -3206,7 +3206,7 @@
             "docs": null
         },
         "type_types:MovieId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MovieId",
@@ -3348,7 +3348,7 @@
             "docs": null
         },
         "type_types:Movie": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Movie",
@@ -5430,7 +5430,7 @@
             "docs": null
         },
         "type_types:CastMember": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "CastMember",
@@ -6353,7 +6353,7 @@
             "docs": null
         },
         "type_types:Actor": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Actor",
@@ -6513,7 +6513,7 @@
             "docs": null
         },
         "type_types:Actress": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Actress",
@@ -6907,7 +6907,7 @@
             "docs": null
         },
         "type_types:StuntDouble": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "StuntDouble",
@@ -7067,7 +7067,7 @@
             "docs": null
         },
         "type_types:ExtendedMovie": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ExtendedMovie",
@@ -9143,7 +9143,7 @@
             "docs": null
         },
         "type_types:Moment": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Moment",
@@ -9641,7 +9641,7 @@
             "docs": null
         },
         "type_types:File": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "File",
@@ -10268,7 +10268,7 @@
             "docs": null
         },
         "type_types:Directory": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Directory",
@@ -12295,7 +12295,7 @@
             "docs": null
         },
         "type_types:Node": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Node",
@@ -14651,7 +14651,7 @@
             "docs": null
         },
         "type_types:Tree": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Tree",
@@ -15507,7 +15507,7 @@
             "docs": null
         },
         "type_types:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -15935,7 +15935,7 @@
             "docs": null
         },
         "type_types:Exception": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Exception",
@@ -16556,7 +16556,7 @@
             "docs": null
         },
         "type_types:ExceptionInfo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ExceptionInfo",
@@ -17089,7 +17089,7 @@
             "docs": null
         },
         "type_types:MigrationStatus": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MigrationStatus",
@@ -17348,7 +17348,7 @@
             "docs": null
         },
         "type_types:Migration": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Migration",
@@ -17867,7 +17867,7 @@
             "docs": null
         },
         "type_types:Request": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Request",
@@ -18109,7 +18109,7 @@
             "docs": null
         },
         "type_types:Response": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Response",
@@ -19199,7 +19199,7 @@
             "docs": null
         },
         "type_types:ResponseType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ResponseType",
@@ -19345,7 +19345,7 @@
             "docs": null
         },
         "type_types:Test": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Test",
@@ -19743,7 +19743,7 @@
             "docs": null
         },
         "type_types:Entity": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Entity",
@@ -20243,7 +20243,7 @@
             "docs": null
         },
         "type_types:BigEntity": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "BigEntity",

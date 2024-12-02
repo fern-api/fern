@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 

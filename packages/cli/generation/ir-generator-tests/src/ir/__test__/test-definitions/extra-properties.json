@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Failure": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Failure",
@@ -115,7 +115,7 @@
             "docs": null
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
