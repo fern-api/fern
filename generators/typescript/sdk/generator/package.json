@@ -53,10 +53,10 @@
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
     "@types/uuid": "^9.0.8",
-    "ts-morph": "^15.1.0",
+    "ts-morph": "^24.0.0",
     "ts-poet": "^6.7.0",
     "url-join": "^5.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

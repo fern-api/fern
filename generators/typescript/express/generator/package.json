@@ -45,7 +45,7 @@
     "@fern-typescript/type-reference-converters": "workspace:*",
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^24.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
