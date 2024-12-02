@@ -19,7 +19,7 @@
       "path": "../fern-definition/schema"
     },
     {
-      "path": "../source-resolver"
+      "path": "../generation/source-resolver"
     },
     {
       "path": "../task-context"
