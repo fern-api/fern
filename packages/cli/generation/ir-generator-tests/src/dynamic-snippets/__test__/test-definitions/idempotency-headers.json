@@ -304,7 +304,7 @@
                                 "wireValue": "amount"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         },
@@ -332,7 +332,7 @@
                                 "wireValue": "currency"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_payment:Currency"
                             }
                         }
@@ -465,7 +465,7 @@
                             "wireValue": "paymentId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }

@@ -54,7 +54,7 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -82,7 +82,7 @@
                         "wireValue": "bar"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:InlineType1"
                     }
                 }
@@ -141,7 +141,7 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -169,7 +169,7 @@
                         "wireValue": "bar"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:NestedInlineType1"
                     }
                 }
@@ -228,7 +228,7 @@
                         "wireValue": "baz"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -287,7 +287,7 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -315,7 +315,7 @@
                         "wireValue": "bar"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -343,7 +343,7 @@
                         "wireValue": "myEnum"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:InlineEnum"
                     }
                 }
@@ -486,11 +486,11 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:InlineType1"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:InlineType2"
                 }
             ]
@@ -707,7 +707,7 @@
                                 "wireValue": "bar"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:InlineType1"
                             }
                         },
@@ -735,7 +735,7 @@
                                 "wireValue": "foo"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }

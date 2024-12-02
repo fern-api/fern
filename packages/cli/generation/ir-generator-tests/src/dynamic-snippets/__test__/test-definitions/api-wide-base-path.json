@@ -100,7 +100,7 @@
                             "wireValue": "pathParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -128,7 +128,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -156,7 +156,7 @@
                             "wireValue": "resourceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -184,7 +184,7 @@
                             "wireValue": "endpointParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }

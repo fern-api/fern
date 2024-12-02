@@ -203,11 +203,11 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Color"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Operand"
                 }
             ]
@@ -381,7 +381,7 @@
                                 "wireValue": "operand"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:Operand"
                             }
                         },
@@ -409,9 +409,9 @@
                                 "wireValue": "maybeOperand"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Operand"
                                 }
                             }
@@ -440,7 +440,7 @@
                                 "wireValue": "operandOrColor"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
                         },
@@ -468,9 +468,9 @@
                                 "wireValue": "maybeOperandOrColor"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
                             }
@@ -583,7 +583,7 @@
                             "wireValue": "operand"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Operand"
                         }
                     },
@@ -611,7 +611,7 @@
                             "wireValue": "operandOrColor"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ColorOrOperand"
                         }
                     }
@@ -784,7 +784,7 @@
                             "wireValue": "operand"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Operand"
                         }
                     },
@@ -812,9 +812,9 @@
                             "wireValue": "maybeOperand"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:Operand"
                             }
                         }
@@ -843,7 +843,7 @@
                             "wireValue": "operandOrColor"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ColorOrOperand"
                         }
                     },
@@ -871,9 +871,9 @@
                             "wireValue": "maybeOperandOrColor"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
                         }
@@ -1052,9 +1052,9 @@
                             "wireValue": "operand"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:Operand"
                             }
                         }
@@ -1083,11 +1083,11 @@
                             "wireValue": "maybeOperand"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Operand"
                                 }
                             }
@@ -1117,9 +1117,9 @@
                             "wireValue": "operandOrColor"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ColorOrOperand"
                             }
                         }
@@ -1148,11 +1148,11 @@
                             "wireValue": "maybeOperandOrColor"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
                             }

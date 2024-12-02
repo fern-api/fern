@@ -92,7 +92,7 @@
                         "wireValue": "delta"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -120,9 +120,9 @@
                         "wireValue": "tokens"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -298,7 +298,7 @@
                                 "wireValue": "query"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }

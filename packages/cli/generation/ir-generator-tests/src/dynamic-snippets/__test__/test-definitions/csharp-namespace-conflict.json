@@ -348,7 +348,7 @@
                         "wireValue": "a"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_a/aa:A"
                     }
                 },
@@ -376,7 +376,7 @@
                         "wireValue": "b"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_a/aa:B"
                     }
                 }
@@ -475,7 +475,7 @@
                         "wireValue": "a"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_a/aa:A"
                     }
                 },
@@ -503,7 +503,7 @@
                         "wireValue": "b"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_a/aa:B"
                     }
                 }
@@ -600,7 +600,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
