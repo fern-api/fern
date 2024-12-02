@@ -3795,8 +3795,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.5
-        version: 0.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
+        specifier: ^0.0.6
+        version: 0.0.6(@fern-fern/fdr-cjs-sdk@0.126.1-444264056)(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -3884,6 +3884,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
+      '@fern-fern/fdr-cjs-sdk':
+        specifier: 0.126.1-444264056
+        version: 0.126.1-444264056
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -7659,11 +7662,10 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.5':
-    resolution: {integrity: sha512-YJ+VedXuAjfqEn4Wn7oI1TBfqv44voeYGtqVqdwGY8MAZ1SoQ7i1MH9sJeNNYQU6AYLLvvxpEINH8nlvc+RV1w==}
-
-  '@fern-api/fdr-sdk@0.0.0':
-    resolution: {integrity: sha512-aifmZ3QzO+WOaKWza/c/FrUGsX05/gjXY8U2iz3/dbra/i1RKyn5EcROw41NKaIafVoAAiWK5cppC4vBWayn2w==}
+  '@fern-api/docs-parsers@0.0.6':
+    resolution: {integrity: sha512-ZWgVEMyCL8G3jupzsgR9R8iVdf3xDYa/Pn4APg4qSREkQKL3q5/kXlY5CcQYTBWFNSUb6gZum3/cnMKr/sZTdg==}
+    peerDependencies:
+      '@fern-fern/fdr-cjs-sdk': 0.116.5-873e41db0
 
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
@@ -8601,9 +8603,6 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@ungap/url-search-params@0.2.2':
-    resolution: {integrity: sha512-qQsguKXZVKdCixOHX9jqnX/K/1HekPDpGKyEcXHT+zR6EjGA7S4boSuelL4uuPv6YfhN0n8c4UxW+v/Z3gM2iw==}
-
   '@vitejs/plugin-react@4.2.1':
     resolution: {integrity: sha512-oojO9IDc4nCUUi8qIR11KoQm0XFFLIwsRBwHRR4d/88IWghn1y6ckz/bJ8GHDCsYEJee8mDzqtJxh15/cisJNQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -8937,9 +8936,6 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
-
-  axios@0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
@@ -14672,11 +14668,11 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
+  '@fern-api/docs-parsers@0.0.6(@fern-fern/fdr-cjs-sdk@0.126.1-444264056)(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
     dependencies:
-      '@fern-api/fdr-sdk': 0.0.0
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
+      '@fern-fern/fdr-cjs-sdk': 0.126.1-444264056
       openapi-types: 12.1.3
       ts-essentials: 10.0.1(typescript@4.6.4)
       uuid: 9.0.1
@@ -14687,7 +14683,6 @@ snapshots:
       - '@types/node'
       - '@vitest/browser'
       - '@vitest/ui'
-      - debug
       - happy-dom
       - jsdom
       - less
@@ -14700,15 +14695,6 @@ snapshots:
       - supports-color
       - terser
       - typescript
-
-  '@fern-api/fdr-sdk@0.0.0':
-    dependencies:
-      '@ungap/url-search-params': 0.2.2
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
 
   '@fern-api/fdr-sdk@0.126.1-444264056(typescript@4.6.4)':
     dependencies:
@@ -15876,8 +15862,6 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@ungap/url-search-params@0.2.2': {}
-
   '@vitejs/plugin-react@4.2.1(vite@5.4.10(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5))':
     dependencies:
       '@babel/core': 7.25.2
@@ -16296,13 +16280,6 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.0.0
-
-  axios@0.27.2:
-    dependencies:
-      follow-redirects: 1.15.6
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
 
   axios@1.7.7:
     dependencies:

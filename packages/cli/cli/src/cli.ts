@@ -153,7 +153,6 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
-    addOpenAPIFdrCommand(cli, cliContext);
     addOpenAPIIrCommand(cli, cliContext);
     addDynamicIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
@@ -605,45 +604,32 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the FDR API definition for certain audiences"
-                }),
-        async (argv) => {
-            await generateFdrApiDefinitionForWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
-                }),
-                outputFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext,
-                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-            });
-        }
-    );
-}
-
-function addOpenAPIFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "openapi-fdr <path-to-output>",
-        false,
-        (yargs) =>
-            yargs
-                .positional("path-to-output", {
-                    type: "string",
-                    description: "Path to write fern definition registry shape (FDR)",
-                    demandOption: true
                 })
-                .option("api", {
-                    string: true,
-                    description: "Only run the command on the provided API"
+                .option("v2", {
+                    boolean: true,
+                    description: "Use v2 format"
                 }),
         async (argv) => {
-            await generateOpenApiToFdrApiDefinitionForWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
-                }),
-                outputFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext
-            });
+            if (argv.v2) {
+                await generateOpenApiToFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext
+                });
+            } else {
+                await generateFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
+                });
+            }
         }
     );
 }

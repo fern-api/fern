@@ -31,9 +31,19 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
                     } else if (!(workspace instanceof OSSWorkspace)) {
                         return;
                     }
-                    const openAPISpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
+                    const openApiSpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
 
-                    const openApi = openAPISpecs[0];
+                    if (openApiSpecs.length === 0) {
+                        context.logger.error("No OpenAPI specs found in the workspace");
+                        return;
+                    }
+
+                    if (openApiSpecs.length > 1) {
+                        context.logger.error("Found multiple OpenAPI specs in the workspace.");
+                        return;
+                    }
+
+                    const openApi = openApiSpecs[0];
 
                     if (openApi != null) {
                         const input = yaml.load(
