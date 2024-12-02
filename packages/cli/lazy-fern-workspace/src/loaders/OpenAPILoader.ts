@@ -80,9 +80,9 @@ export class OpenAPILoader {
         let overridesFilepath = undefined;
         if (absolutePathToOpenAPIOverrides != null) {
             overridesFilepath = absolutePathToOpenAPIOverrides;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } else if (
             typeof parsed === "object" &&
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
         ) {
             overridesFilepath = join(
