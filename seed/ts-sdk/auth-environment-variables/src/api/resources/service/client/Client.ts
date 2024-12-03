@@ -45,66 +45,57 @@ export class Service {
      * @example
      *     await client.service.getWithApiKey()
      */
-    public getWithApiKey(requestOptions?: Service.RequestOptions): core.APIPromise<string> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
-                    method: "GET",
-                    headers: {
-                        "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                        "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/auth-environment-variables",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/auth-environment-variables/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...(await this._getCustomAuthorizationHeaders()),
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
+            method: "GET",
+            headers: {
+                "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/auth-environment-variables/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedAuthEnvironmentVariablesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedAuthEnvironmentVariablesError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedAuthEnvironmentVariablesError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
-                            "Timeout exceeded when calling GET /apiKey."
-                        );
-                    case "unknown":
-                        throw new errors.SeedAuthEnvironmentVariablesError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedAuthEnvironmentVariablesTimeoutError("Timeout exceeded when calling GET /apiKey.");
+            case "unknown":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -118,71 +109,64 @@ export class Service {
      *         xEndpointHeader: "X-Endpoint-Header"
      *     })
      */
-    public getWithHeader(
+    public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
         requestOptions?: Service.RequestOptions
-    ): core.APIPromise<string> {
-        return core.APIPromise.from(
-            (async () => {
-                const { xEndpointHeader } = request;
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "apiKeyInHeader"),
-                    method: "GET",
-                    headers: {
-                        "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                        "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/auth-environment-variables",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/auth-environment-variables/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        "X-Endpoint-Header": xEndpointHeader,
-                        ...(await this._getCustomAuthorizationHeaders()),
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<string> {
+        const { xEndpointHeader } = request;
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKeyInHeader"),
+            method: "GET",
+            headers: {
+                "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/auth-environment-variables/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "X-Endpoint-Header": xEndpointHeader,
+                ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedAuthEnvironmentVariablesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedAuthEnvironmentVariablesError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedAuthEnvironmentVariablesError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
-                            "Timeout exceeded when calling GET /apiKeyInHeader."
-                        );
-                    case "unknown":
-                        throw new errors.SeedAuthEnvironmentVariablesError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
+                    "Timeout exceeded when calling GET /apiKeyInHeader."
+                );
+            case "unknown":
+                throw new errors.SeedAuthEnvironmentVariablesError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getCustomAuthorizationHeaders() {

@@ -36,67 +36,60 @@ export class Service {
      * @example
      *     await client.service.post("serviceParam", "resourceParam", 1)
      */
-    public post(
+    public async post(
         serviceParam: string,
         resourceParam: string,
         endpointParam: number,
         requestOptions?: Service.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
-                            serviceParam
-                        )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/api-wide-base-path",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/api-wide-base-path/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
+                    serviceParam
+                )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
+            ),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/api-wide-base-path",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/api-wide-base-path/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiWideBasePathError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedApiWideBasePathError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedApiWideBasePathError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedApiWideBasePathError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedApiWideBasePathTimeoutError(
-                            "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedApiWideBasePathError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedApiWideBasePathTimeoutError(
+                    "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}."
+                );
+            case "unknown":
+                throw new errors.SeedApiWideBasePathError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }
