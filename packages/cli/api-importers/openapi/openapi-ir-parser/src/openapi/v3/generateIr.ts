@@ -190,7 +190,11 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants, context);
+    const exampleTypeFactory = new ExampleTypeFactory(
+        schemasWithDiscriminants,
+        context.nonRequestReferencedSchemas,
+        context
+    );
 
     const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
         const extensionExamples = webhookWithExample.examples;

@@ -30,7 +30,7 @@ export class ExampleEndpointFactory {
 
     constructor(schemas: Record<string, SchemaWithExample>, context: OpenAPIV3ParserContext) {
         this.schemas = schemas;
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context);
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
         this.logger = context.logger;
     }
 

@@ -11,7 +11,7 @@ import {
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+    public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
