@@ -44,7 +44,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
             inlinedRequestBody: endpoint.requestBody,
             typeName,
             includeSerdeLayer: this.includeSerdeLayer,
-            allowExtraFields: this.allowExtraFields,
+            allowExtraFields: this.allowExtraFields ?? endpoint.requestBody.extraProperties,
             omitUndefined: this.omitUndefined
         });
     }

@@ -222,11 +222,14 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "unknown":
                 return referenceToParsedRequest;
             case "named":
+                const typeDeclaration = context.type.getTypeDeclaration(this.endpoint.requestBody.requestBodyType);
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields,
+                            allowExtraFields:
+                                this.allowExtraFields ??
+                                (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
                             omitUndefined: this.omitUndefined
                         })
                     });
