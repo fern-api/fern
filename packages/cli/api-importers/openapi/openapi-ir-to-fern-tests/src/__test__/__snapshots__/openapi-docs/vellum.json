@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "DocumentsUploadRequestBadRequestError": {
@@ -4547,7 +4548,7 @@ types:
 ",
     },
     "deployments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -4656,7 +4657,7 @@ service:
 ",
     },
     "documentIndexes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -4999,7 +5000,7 @@ service:
 ",
     },
     "documents.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5297,7 +5298,7 @@ service:
 ",
     },
     "modelVersions.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5565,7 +5566,7 @@ service:
 ",
     },
     "registeredPrompts.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5849,7 +5850,7 @@ service:
 ",
     },
     "sandboxes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -6192,7 +6193,7 @@ service:
 ",
     },
     "testSuites.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/vellum/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",

@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "BadRequestError": {
@@ -3915,7 +3916,7 @@ types:
 ",
     },
     "accountHolders.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Account Holder API allows you to retrieve, create and modify account holders. An account holder represents an
@@ -4459,7 +4460,7 @@ docs: >
 ",
     },
     "bankStatements.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Bank Statements API allows you to manage and extract information from bank statements. We support extraction of
@@ -5286,7 +5287,7 @@ docs: >
 ",
     },
     "batches.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5975,7 +5976,7 @@ service:
 ",
     },
     "categories.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -6521,7 +6522,7 @@ service:
 ",
     },
     "entities.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -6789,7 +6790,7 @@ service:
 ",
     },
     "personalization.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Personalization API allows you to customize the output of enrichment by
@@ -7397,7 +7398,7 @@ docs: |
 ",
     },
     "recurrence.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Recurrence API allows you to identify and categorize recurring patterns found in the transactions of an 
@@ -7609,7 +7610,7 @@ docs: >
 ",
     },
     "reports.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Reports API allows you to flag transactions with incorrect fields. You can also track the progress of each
@@ -8136,7 +8137,7 @@ docs: >
 ",
     },
     "transactions.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Transaction API allows you to manage, retrieve and search through enriched transactions. A transaction contains
@@ -9224,7 +9225,7 @@ docs: >
 ",
     },
     "webhooks.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/ntropy/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Webhooks API allows you to receive notifications when certain events occur,

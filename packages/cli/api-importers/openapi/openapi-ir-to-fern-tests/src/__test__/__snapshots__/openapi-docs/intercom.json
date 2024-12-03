@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "AttachContactToACompanyRequestBadRequestError": {
@@ -13611,7 +13612,7 @@ imports:
 ",
     },
     "admins.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Admins",
         "imports": {
@@ -14415,7 +14416,7 @@ types:
 ",
     },
     "aiAgent.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -14524,7 +14525,7 @@ imports:
 ",
     },
     "aiContentSource.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
           "ContentSource": {
@@ -14598,7 +14599,7 @@ imports:
 ",
     },
     "articles.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Articles",
         "imports": {
@@ -19834,7 +19835,7 @@ types:
 ",
     },
     "companies.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Companies",
         "imports": {
@@ -21981,7 +21982,7 @@ types:
 ",
     },
     "contacts.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your contacts",
         "imports": {
@@ -24528,7 +24529,7 @@ types:
 ",
     },
     "conversations.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Conversations",
         "imports": {
@@ -32067,7 +32068,7 @@ types:
 ",
     },
     "customObjectInstances.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
           "CustomObjectInstance": {
@@ -32125,7 +32126,7 @@ types:
 ",
     },
     "dataAttributes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Data Attributes",
         "imports": {
@@ -34017,7 +34018,7 @@ docs: Everything about your Data Attributes
 ",
     },
     "dataEvents.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Data Events",
         "imports": {
@@ -34630,7 +34631,7 @@ docs: Everything about your Data Events
 ",
     },
     "dataExport.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Data Exports",
         "service": {
@@ -35070,7 +35071,7 @@ types:
 ",
     },
     "helpCenter.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Help Center",
         "imports": {
@@ -37784,7 +37785,7 @@ types:
 ",
     },
     "messages.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your messages",
         "imports": {
@@ -38244,7 +38245,7 @@ types:
 ",
     },
     "news.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your News",
         "imports": {
@@ -39362,7 +39363,7 @@ types:
 ",
     },
     "notes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Notes",
         "imports": {
@@ -40097,7 +40098,7 @@ types:
 ",
     },
     "segments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Segments",
         "imports": {
@@ -40388,7 +40389,7 @@ types:
 ",
     },
     "subscriptionTypes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about subscription types",
         "imports": {
@@ -40994,7 +40995,7 @@ types:
 ",
     },
     "switch.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about Switch",
         "imports": {
@@ -41188,7 +41189,7 @@ docs: Everything about Switch
 ",
     },
     "tags.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about tags",
         "imports": {
@@ -42650,7 +42651,7 @@ types:
 ",
     },
     "teams.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Teams",
         "imports": {
@@ -42879,7 +42880,7 @@ types:
 ",
     },
     "ticketTypeAttributes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your ticket type attributes",
         "imports": {
@@ -43385,7 +43386,7 @@ docs: Everything about your ticket type attributes
 ",
     },
     "ticketTypes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your ticket types",
         "imports": {
@@ -43911,7 +43912,7 @@ docs: Everything about your ticket types
 ",
     },
     "tickets.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your tickets",
         "imports": {
@@ -47339,7 +47340,7 @@ docs: Everything about your tickets
 ",
     },
     "visitors.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/intercom/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Visitors",
         "imports": {

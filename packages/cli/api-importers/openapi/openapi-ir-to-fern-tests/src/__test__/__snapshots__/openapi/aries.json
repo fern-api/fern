@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "service": {
           "auth": false,
@@ -11626,7 +11627,7 @@ types:
 ",
     },
     "actionMenu.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Menu interaction over connection",
         "imports": {
@@ -11991,7 +11992,7 @@ docs: Menu interaction over connection
 ",
     },
     "basicmessage.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Simple messaging",
         "imports": {
@@ -12102,7 +12103,7 @@ docs: Simple messaging
 ",
     },
     "connection.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Connection management",
         "imports": {
@@ -13738,7 +13739,7 @@ docs: Connection management
 ",
     },
     "credentialDefinition.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Credential definition operations",
         "imports": {
@@ -14170,7 +14171,7 @@ docs: Credential definition operations
 ",
     },
     "credentials.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Holder credential management",
         "imports": {
@@ -15049,7 +15050,7 @@ docs: Holder credential management
 ",
     },
     "didExchange.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Connection management via DID exchange",
         "imports": {
@@ -15676,7 +15677,7 @@ docs: Connection management via DID exchange
 ",
     },
     "discoverFeatures.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Feature discovery",
         "imports": {
@@ -15873,7 +15874,7 @@ docs: Feature discovery
 ",
     },
     "discoverFeaturesV20.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Feature discovery v2",
         "imports": {
@@ -16097,7 +16098,7 @@ docs: Feature discovery v2
 ",
     },
     "endorseTransaction.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Endorse a Transaction",
         "imports": {
@@ -17114,7 +17115,7 @@ types:
 ",
     },
     "introduction.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Introduction of known parties",
         "imports": {
@@ -17224,7 +17225,7 @@ docs: Introduction of known parties
 ",
     },
     "issueCredentialV10.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Credential issue v1.0",
         "imports": {
@@ -19287,7 +19288,7 @@ types:
 ",
     },
     "issueCredentialV20.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Credential issue v2.0",
         "imports": {
@@ -21112,7 +21113,7 @@ types:
 ",
     },
     "jsonld.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Sign and verify json-ld data",
         "imports": {
@@ -21305,7 +21306,7 @@ docs: Sign and verify json-ld data
 ",
     },
     "ledger.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Interaction with ledger",
         "imports": {
@@ -21983,7 +21984,7 @@ docs: Interaction with ledger
 ",
     },
     "mediation.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Mediation management",
         "imports": {
@@ -23356,7 +23357,7 @@ types:
 ",
     },
     "multitenancy.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Multitenant wallet management",
         "imports": {
@@ -24069,7 +24070,7 @@ docs: Multitenant wallet management
 ",
     },
     "outOfBand.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Out-of-band connections",
         "imports": {
@@ -24690,7 +24691,7 @@ docs: Out-of-band connections
 ",
     },
     "presentProofV10.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Proof presentation v1.0",
         "imports": {
@@ -26154,7 +26155,7 @@ types:
 ",
     },
     "presentProofV20.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Proof presentation v2.0",
         "imports": {
@@ -27472,7 +27473,7 @@ types:
 ",
     },
     "resolver.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "did resolver interface.",
         "imports": {
@@ -27557,7 +27558,7 @@ docs: did resolver interface.
 ",
     },
     "revocation.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Revocation registry management",
         "imports": {
@@ -29414,7 +29415,7 @@ types:
 ",
     },
     "schema.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Schema operations",
         "imports": {
@@ -29801,7 +29802,7 @@ docs: Schema operations
 ",
     },
     "server.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -30097,7 +30098,7 @@ service:
 ",
     },
     "trustping.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Trust-ping over connection",
         "imports": {
@@ -30208,7 +30209,7 @@ docs: Trust-ping over connection
 ",
     },
     "wallet.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/aries/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "DID and tag policy management",
         "imports": {

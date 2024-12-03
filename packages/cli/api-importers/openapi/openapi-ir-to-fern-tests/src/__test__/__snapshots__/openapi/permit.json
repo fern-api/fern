@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "UnprocessableEntityError": {
@@ -4419,7 +4420,7 @@ types:
 ",
     },
     "bulkOperations.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "None",
         "imports": {
@@ -4992,7 +4993,7 @@ docs: None
 ",
     },
     "conditionSetRules.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
@@ -5529,7 +5530,7 @@ docs: |
 ",
     },
     "conditionSets.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Condition sets are sets of objects that are dynamically defined based on conditions on the objects' attributes.
@@ -7282,7 +7283,7 @@ docs: >
 ",
     },
     "environments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Environments are silos contained within projects that enables you to safely iterate on changes.
@@ -8344,7 +8345,7 @@ types:
 ",
     },
     "organizations.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 The Organizations API gives you access to control and manage your Permit organizations.
@@ -8934,7 +8935,7 @@ docs: >
 ",
     },
     "projects.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Projects let you manage permissions for different business objectives from a single Permit account.
@@ -9512,7 +9513,7 @@ docs: >
 ",
     },
     "resourceActionGroups.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Resource Action Groups are groups of actions that are assigned
@@ -10287,7 +10288,7 @@ docs: |
 ",
     },
     "resourceActions.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Actions are the various ways you can interact with a resource or affect the resource.
@@ -11026,7 +11027,7 @@ docs: >
 ",
     },
     "resourceAttributes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Resource attributes allow you to specify an arbitrary schema attributes that are part
@@ -11736,7 +11737,7 @@ docs: >
 ",
     },
     "resourceInstances.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Resource instances are instances of resource types.
@@ -12435,7 +12436,7 @@ docs: >
 ",
     },
     "resourceRoles.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Roles allow you to associate permissions indirectly via a job function.
@@ -13845,7 +13846,7 @@ docs: >
 ",
     },
     "resources.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Resources are *types* of objects or feature names that you wish to protect (or gate) with permissions.
@@ -15224,7 +15225,7 @@ docs: >
 ",
     },
     "roleAssignments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
@@ -15834,7 +15835,7 @@ docs: >
 ",
     },
     "roles.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Roles allow you to associate permissions indirectly via a job function.
@@ -17167,7 +17168,7 @@ docs: >
 ",
     },
     "tenants.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 A tenant is a group of users that share a common organizational identity.
@@ -18178,7 +18179,7 @@ types:
 ",
     },
     "userAttributes.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 User attributes allow you to specify an arbitrary schema attributes that are part
@@ -18863,7 +18864,7 @@ docs: >
 ",
     },
     "users.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/permit/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "
 Users represent human end-users of your applications that you'd like to enforce permissions on.

@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "UnprocessableEntityError": {
@@ -6133,7 +6134,7 @@ types:
 ",
     },
     "datasets.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Datasets are collections of input-output pairs that you can use within Humanloop for Evaluations.
 
@@ -7590,7 +7591,7 @@ docs: >+
 ",
     },
     "evaluations.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Evaluations help you measure the performance of your Prompts, Tools and LLM Evaluators.
 
@@ -9003,7 +9004,7 @@ docs: >+
 ",
     },
     "evaluators.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -10801,7 +10802,7 @@ types:
 ",
     },
     "logs.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.
 
@@ -11442,7 +11443,7 @@ docs: >+
 ",
     },
     "prompts.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Prompts define how a large language model behaves.
 
@@ -14396,7 +14397,7 @@ types:
 ",
     },
     "sessions.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Sessions are groups of Logs that track sequences of LLM actions.
 
@@ -14828,7 +14829,7 @@ docs: >+
 ",
     },
     "tools.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/humanloop/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",

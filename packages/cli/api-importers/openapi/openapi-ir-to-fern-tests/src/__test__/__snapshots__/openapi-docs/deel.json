@@ -1,8 +1,9 @@
 {
+  "absoluteFilePath": "/DUMMY_PATH",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
           "AddContractDocumentRequestBadRequestError": {
@@ -20545,7 +20546,7 @@ errors:
 ",
     },
     "accounting.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "End-points to retrieve paid invoices and reciepts.",
         "imports": {
@@ -21145,7 +21146,7 @@ docs: End-points to retrieve paid invoices and reciepts.
 ",
     },
     "attachments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -21277,7 +21278,7 @@ service:
 ",
     },
     "contract.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -21585,7 +21586,7 @@ service:
 ",
     },
     "contractors.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
         "imports": {
@@ -23593,7 +23594,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
 ",
     },
     "contracts.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
         "imports": {
@@ -25180,7 +25181,7 @@ types:
 ",
     },
     "eor.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Employee of Record (EOR).",
         "imports": {
@@ -25539,7 +25540,7 @@ docs: Employee of Record (EOR).
 ",
     },
     "hris.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "API end-points related to HRIS data.",
         "imports": {
@@ -25743,7 +25744,7 @@ docs: API end-points related to HRIS data.
 ",
     },
     "invoices.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
         "imports": {
@@ -26803,7 +26804,7 @@ docs: >-
 ",
     },
     "lookups.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Helper end-points for choosing options for other operations",
         "imports": {
@@ -27240,7 +27241,7 @@ docs: Helper end-points for choosing options for other operations
 ",
     },
     "milestones.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Helper end-points for managing milestones of Deel contracts",
         "imports": {
@@ -27912,7 +27913,7 @@ docs: Helper end-points for managing milestones of Deel contracts
 ",
     },
     "offCyclePayments.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "End-points to manage off-cycle payments for a given contract",
         "imports": {
@@ -28284,7 +28285,7 @@ docs: End-points to manage off-cycle payments for a given contract
 ",
     },
     "organizations.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Helper end-points for additional information about your organizations",
         "imports": {
@@ -28647,7 +28648,7 @@ docs: Helper end-points for additional information about your organizations
 ",
     },
     "tasks.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "End-points to manage tasks for a given contract",
         "imports": {
@@ -29243,7 +29244,7 @@ docs: End-points to manage tasks for a given contract
 ",
     },
     "timeOff.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Manage time off requests.",
         "imports": {
@@ -30390,7 +30391,7 @@ docs: Manage time off requests.
 ",
     },
     "timesheets.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
         "imports": {
@@ -31530,7 +31531,7 @@ docs: >-
 ",
     },
     "webhooks.yml": {
-      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/deel/fern",
+      "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
           "root": "__package__.yml",

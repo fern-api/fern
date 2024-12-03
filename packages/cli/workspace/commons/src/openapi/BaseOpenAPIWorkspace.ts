@@ -36,9 +36,11 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public async getDefinition(
         {
             context,
+            absoluteFilePath,
             relativePathToDependency
         }: {
             context: TaskContext;
+            absoluteFilePath?: AbsoluteFilePath;
             relativePathToDependency?: RelativeFilePath;
         },
         settings?: BaseOpenAPIWorkspace.Settings
@@ -66,7 +68,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         });
 
         return {
-            absoluteFilePath: this.absoluteFilePath,
+            absoluteFilePath: absoluteFilePath ?? this.absoluteFilePath,
             rootApiFile: {
                 defaultUrl: definition.rootApiFile["default-url"],
                 contents: definition.rootApiFile,
@@ -74,12 +76,12 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
             },
             namedDefinitionFiles: {
                 ...mapValues(definition.definitionFiles, (definitionFile) => ({
-                    absoluteFilepath: this.absoluteFilePath,
+                    absoluteFilepath: absoluteFilePath ?? this.absoluteFilePath,
                     rawContents: yaml.dump(definitionFile),
                     contents: definitionFile
                 })),
                 [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
-                    absoluteFilepath: this.absoluteFilePath,
+                    absoluteFilepath: absoluteFilePath ?? this.absoluteFilePath,
                     rawContents: yaml.dump(definition.packageMarkerFile),
                     contents: definition.packageMarkerFile
                 }

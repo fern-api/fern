@@ -28,16 +28,17 @@ describe("openapi-ir-to-fern docs", async () => {
                         `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                     );
                 }
+
                 const definition = await workspace.workspace.getDefinition(
-                    { context },
+                    {
+                        context,
+                        absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
+                    },
                     { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
                 );
 
-                // The absoluteFilePath is not stable across environments, so we remove it from the snapshot.
-                const { absoluteFilePath, ...filteredDefinition } = definition;
-
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(filteredDefinition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
             },
             90_000
         );
