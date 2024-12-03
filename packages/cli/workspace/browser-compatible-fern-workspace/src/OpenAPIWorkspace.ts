@@ -5,11 +5,12 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { SpecImportSettings } from "@fern-api/openapi-ir-parser";
 import { OpenAPI } from "openapi-types";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
+import { generatorsYml } from "@fern-api/configuration";
 
 const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of("/<memory>");
 
@@ -20,8 +21,9 @@ const DEFAULT_WORKSPACE_ARGS = {
 };
 
 export declare namespace OpenAPIWorkspace {
-    export interface Args extends AbstractAPIWorkspace.Args {
+    export interface Args {
         spec: Spec;
+        generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     }
 
     export interface Spec {
