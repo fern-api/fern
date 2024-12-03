@@ -1,7 +1,6 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { parse } from "@fern-api/openapi-ir-parser";
+import { parse, SpecImportSettings } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { v4 as uuidv4 } from "uuid";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
@@ -54,20 +53,6 @@ export interface ProtobufSource {
     relativePathToDependency?: RelativeFilePath;
     root: AbsoluteFilePath;
     file: AbsoluteFilePath;
-}
-
-// TODO: Import this from @fern-api/openapi-ir-parser
-export interface SpecImportSettings {
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    optionalAdditionalProperties: boolean;
-    asyncApiNaming?: "v1" | "v2";
-    cooerceEnumsToLiterals: boolean;
-    objectQueryParameters: boolean;
-    respectReadonlySchemas: boolean;
-    onlyIncludeReferencedSchemas: boolean;
-    inlinePathParameters: boolean;
 }
 
 export declare namespace OSSWorkspace {

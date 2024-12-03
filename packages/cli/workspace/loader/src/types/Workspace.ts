@@ -1,6 +1,7 @@
 import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { SpecImportSettings } from "@fern-api/openapi-ir-parser";
 
 export type Workspace = DocsWorkspace | AbstractAPIWorkspace<unknown>;
 
@@ -57,19 +58,6 @@ export interface ProtobufSource {
     relativePathToDependency?: RelativeFilePath;
     root: AbsoluteFilePath;
     file: AbsoluteFilePath;
-}
-
-export interface SpecImportSettings {
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    optionalAdditionalProperties: boolean;
-    asyncApiNaming?: "v1" | "v2";
-    cooerceEnumsToLiterals: boolean;
-    objectQueryParameters: boolean;
-    respectReadonlySchemas: boolean;
-    onlyIncludeReferencedSchemas: boolean;
-    inlinePathParameters: boolean;
 }
 
 export interface OpenAPIFile {
