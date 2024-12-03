@@ -1,6 +1,7 @@
 import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace";
+import { IdentifiableSource } from "./Source";
 
 export declare namespace FernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -8,12 +9,6 @@ export declare namespace FernWorkspace {
         definition: FernDefinition;
         sources?: IdentifiableSource[];
     }
-}
-
-export interface IdentifiableSource {
-    type: "asyncapi" | "openapi" | "protobuf";
-    id: string;
-    absoluteFilePath: AbsoluteFilePath;
 }
 
 export class FernWorkspace extends AbstractAPIWorkspace<void> {

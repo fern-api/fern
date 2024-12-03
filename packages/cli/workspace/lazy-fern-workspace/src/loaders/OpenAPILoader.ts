@@ -5,10 +5,9 @@ import { AsyncAPIV2, Document, FernOpenAPIExtension, FERN_TYPE_EXTENSIONS } from
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { readFile } from "fs/promises";
 import { OpenAPI } from "openapi-types";
-import { OpenAPISpec } from "../OSSWorkspace";
 import { bundle, Source } from "@redocly/openapi-core";
 import yaml from "js-yaml";
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec } from "@fern-api/api-workspace-commons";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}

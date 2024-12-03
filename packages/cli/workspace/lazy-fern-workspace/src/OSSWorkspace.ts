@@ -5,55 +5,15 @@ import { TaskContext } from "@fern-api/task-context";
 import { v4 as uuidv4 } from "uuid";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 import {
-    FernWorkspace,
     AbstractAPIWorkspace,
+    BaseOpenAPIWorkspace,
+    FernWorkspace,
     getOptionsOverridesFromSettings,
     IdentifiableSource,
-    BaseOpenAPIWorkspace
+    Spec
 } from "@fern-api/api-workspace-commons";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
-
-export type Spec = OpenAPISpec | ProtobufSpec;
-
-export interface OpenAPISpec {
-    type: "openapi";
-    absoluteFilepath: AbsoluteFilePath;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
-    source: Source;
-    namespace?: string;
-    settings?: SpecImportSettings;
-}
-
-export interface ProtobufSpec {
-    type: "protobuf";
-    absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
-    generateLocally: boolean;
-    settings?: SpecImportSettings;
-}
-
-export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
-
-export interface AsyncAPISource {
-    type: "asyncapi";
-    relativePathToDependency?: RelativeFilePath;
-    file: AbsoluteFilePath;
-}
-
-export interface OpenAPISource {
-    type: "openapi";
-    relativePathToDependency?: RelativeFilePath;
-    file: AbsoluteFilePath;
-}
-
-export interface ProtobufSource {
-    type: "protobuf";
-    relativePathToDependency?: RelativeFilePath;
-    root: AbsoluteFilePath;
-    file: AbsoluteFilePath;
-}
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {

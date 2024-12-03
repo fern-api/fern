@@ -7,7 +7,7 @@ import {
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
-import { Spec } from "./types/Workspace";
+import { Spec } from "@fern-api/api-workspace-commons";
 import {
     OSSWorkspace,
     LazyFernWorkspace,
