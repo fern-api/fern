@@ -1,9 +1,6 @@
 name: Publish @fern-api/snippets-core
 
 on:
-  push:
-    branches:
-      - amckinney/publish-snippets-core
   workflow_dispatch:
     inputs:
       version:
@@ -19,7 +16,7 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # if: ${{ inputs.version != null }}
+    if: ${{ inputs.version != null }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -49,7 +46,7 @@ jobs:
       - name: Publish @fern-api/snippets-core
         run: |
           cd packages/snippets/core
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public
