@@ -3,7 +3,7 @@
         Example generation now respects read-only schemas when generating request examples.
       type: fix
   irVersion: 53
-  version: 0.45.1
+  version: 0.45.2
 
 - changelogEntry:
     - summary: |
