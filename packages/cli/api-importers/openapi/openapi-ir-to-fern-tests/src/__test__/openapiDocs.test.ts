@@ -32,8 +32,12 @@ describe("openapi-ir-to-fern docs", async () => {
                     { context },
                     { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
                 );
+
+                // The absoluteFilePath is not stable across environments, so we remove it from the snapshot.
+                const { absoluteFilePath, ...filteredDefinition } = definition;
+
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+                expect(filteredDefinition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
             },
             90_000
         );

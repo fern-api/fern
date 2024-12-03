@@ -29,8 +29,12 @@ describe("openapi-ir-to-fern", async () => {
                     );
                 }
                 const definition = await workspace.workspace.getDefinition({ context });
+
+                // The absoluteFilePath is not stable across environments, so we remove it from the snapshot.
+                const { absoluteFilePath, ...filteredDefinition } = definition;
+
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
+                expect(filteredDefinition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
             },
             90_000
         );
