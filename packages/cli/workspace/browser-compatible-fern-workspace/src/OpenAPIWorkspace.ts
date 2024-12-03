@@ -52,7 +52,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
 
     public async getOpenAPIIr(
         {
-            context,
+            context
         }: {
             context: TaskContext;
         },

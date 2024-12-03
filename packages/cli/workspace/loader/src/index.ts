@@ -13,5 +13,9 @@ export {
     type Source,
     type Workspace
 } from "./types/Workspace";
-export { AbstractAPIWorkspace, FernWorkspace, type FernDefinition } from "@fern-api/api-workspace-commons";
-export { getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/lazy-fern-workspace";
+export {
+    AbstractAPIWorkspace,
+    FernWorkspace,
+    type FernDefinition,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/api-workspace-commons";

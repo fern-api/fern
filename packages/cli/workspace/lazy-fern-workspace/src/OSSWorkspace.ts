@@ -177,19 +177,3 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }, result);
     }
 }
-
-export function getOSSWorkspaceSettingsFromGeneratorInvocation(
-    generatorInvocation: generatorsYml.GeneratorInvocation
-): OSSWorkspace.Settings | undefined {
-    if (generatorInvocation.settings == null) {
-        return undefined;
-    }
-    const result: OSSWorkspace.Settings = {
-        detectGlobalHeaders: true
-    };
-    if (generatorInvocation.settings.unions === "v1") {
-        result.enableDiscriminatedUnionV2 = true;
-    }
-
-    return result;
-}
