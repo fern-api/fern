@@ -20,19 +20,10 @@
       "path": "../../../commons/logging-execa"
     },
     {
-      "path": "../../../api-importers/conjure/conjure-to-fern"
-    },
-    {
       "path": "../../../core"
     },
     {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../cli-logger"
-    },
-    {
-      "path": "../../logger"
+      "path": "../../api-importers/conjure/conjure-to-fern"
     },
     {
       "path": "../../api-importers/openapi/openapi-ir-to-fern"
@@ -42,6 +33,15 @@
     },
     {
       "path": "../../api-importers/openapi/openapi-ir"
+    },
+    {
+      "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../cli-logger"
+    },
+    {
+      "path": "../../logger"
     },
     {
       "path": "../../semver-utils"

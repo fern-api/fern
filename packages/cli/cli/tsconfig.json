@@ -88,13 +88,13 @@
       "path": "../task-context"
     },
     {
-      "path": "../workspace-loader"
+      "path": "../workspace/loader"
     },
     {
-      "path": "../workspace-commons"
+      "path": "../workspace/commons"
     },
     {
-      "path": "../lazy-fern-workspace"
+      "path": "../workspace/lazy-fern-workspace"
     },
     {
       "path": "../yaml/docs-validator"

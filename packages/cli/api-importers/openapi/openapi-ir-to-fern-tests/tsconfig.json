@@ -19,16 +19,16 @@
       "path": "../../../../commons/fs-utils"
     },
     {
-      "path": "../../../browser-compatible-fern-workspace"
-    },
-    {
       "path": "../../../task-context"
     },
     {
-      "path": "../../../workspace-loader"
+      "path": "../../../workspace/browser-compatible-fern-workspace"
     },
     {
-      "path": "../../../lazy-fern-workspace"
+      "path": "../../../workspace/loader"
+    },
+    {
+      "path": "../../../workspace/lazy-fern-workspace"
     }
   ]
 }

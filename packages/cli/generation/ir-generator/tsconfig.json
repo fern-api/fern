@@ -25,7 +25,7 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-commons"
+      "path": "../../workspace/commons"
     },
     {
       "path": "../../fern-definition/schema"
