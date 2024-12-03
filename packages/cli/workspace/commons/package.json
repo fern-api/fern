@@ -30,13 +30,19 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/openapi-ir": "workspace:*",
+    "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "@redocly/openapi-core": "^1.4.1",
+    "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

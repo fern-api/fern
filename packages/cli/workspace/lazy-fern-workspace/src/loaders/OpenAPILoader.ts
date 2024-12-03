@@ -6,10 +6,9 @@ import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { readFile } from "fs/promises";
 import { OpenAPI } from "openapi-types";
 import { OpenAPISpec } from "../OSSWorkspace";
-import { bundle, Config, Source } from "@redocly/openapi-core";
-import { BundleOptions } from "@redocly/openapi-core/lib/bundle";
+import { bundle, Source } from "@redocly/openapi-core";
 import yaml from "js-yaml";
-import { DEFAULT_BUNDLE_OPTIONS } from "@fern-api/browser-compatible-fern-workspace";
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
@@ -140,14 +139,14 @@ export class OpenAPILoader {
         const result =
             parsed != null
                 ? await bundle({
-                      ...DEFAULT_BUNDLE_OPTIONS,
+                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                       doc: {
                           source: new Source(absolutePathToOpenAPI, "<openapi>"),
                           parsed
                       }
                   })
                 : await bundle({
-                      ...DEFAULT_BUNDLE_OPTIONS,
+                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                       ref: absolutePathToOpenAPI
                   });
         return result.bundle.parsed;

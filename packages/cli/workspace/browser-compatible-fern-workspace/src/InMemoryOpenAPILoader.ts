@@ -1,7 +1,7 @@
 import { OpenAPIDocument, SpecImportSettings } from "@fern-api/openapi-ir-parser";
 import { OpenAPI } from "openapi-types";
 import { bundle, Source } from "@redocly/openapi-core";
-import { DEFAULT_BUNDLE_OPTIONS } from "./constants";
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 
 export interface Spec {
@@ -43,7 +43,7 @@ export class InMemoryOpenAPILoader {
 
     private async parseOpenAPI({ parsed }: { parsed: OpenAPI.Document }): Promise<OpenAPI.Document> {
         const result = await bundle({
-            ...DEFAULT_BUNDLE_OPTIONS,
+            ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
             doc: {
                 source: new Source("<memory>", "<openapi>"),
                 parsed

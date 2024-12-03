@@ -6059,12 +6059,27 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
+      '@fern-api/openapi-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir
+      '@fern-api/openapi-ir-parser':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-ir-to-fern':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-to-fern
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../commons/path-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@redocly/openapi-core':
+        specifier: ^1.4.1
+        version: 1.4.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6072,6 +6087,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12

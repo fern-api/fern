@@ -1,20 +1,17 @@
-import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { parse } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
-import yaml from "js-yaml";
 import { v4 as uuidv4 } from "uuid";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 import {
     FernWorkspace,
     AbstractAPIWorkspace,
-    FernDefinition,
-    IdentifiableSource
+    getOptionsOverridesFromSettings,
+    IdentifiableSource,
+    BaseOpenAPIWorkspace
 } from "@fern-api/api-workspace-commons";
-import { OpenAPISettings, getOptionsOverridesFromSettings } from "@fern-api/browser-compatible-fern-workspace";
-import { mapValues } from "./utils/mapValues";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 
@@ -59,6 +56,7 @@ export interface ProtobufSource {
     file: AbsoluteFilePath;
 }
 
+// TODO: Import this from @fern-api/openapi-ir-parser
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
@@ -74,33 +72,29 @@ export interface SpecImportSettings {
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        workspaceName: string | undefined;
         specs: Spec[];
-        cliVersion: string;
     }
 
-    export type Settings = OpenAPISettings;
+    export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
-export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
+export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public specs: Spec[];
     public sources: IdentifiableSource[];
 
     private loader: OpenAPILoader;
-    private respectReadonlySchemas: boolean;
-    private onlyIncludeReferencedSchemas: boolean;
-    private inlinePathParameters: boolean;
 
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
-        super(superArgs);
+        super({
+            ...superArgs,
+            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false),
+            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false),
+            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters ?? false),
+            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters ?? false)
+        });
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
-        this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
-        this.onlyIncludeReferencedSchemas = this.specs.every(
-            (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
-        );
-        this.inlinePathParameters = this.specs.every((spec) => spec.settings?.inlinePathParameters ?? false);
     }
 
     public async getOpenAPIIr(
@@ -127,70 +121,6 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                 onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
             }
         });
-    }
-
-    public async getDefinition(
-        {
-            context,
-            relativePathToDependency
-        }: {
-            context: TaskContext;
-            relativePathToDependency?: RelativeFilePath;
-        },
-        settings?: OSSWorkspace.Settings
-    ): Promise<FernDefinition> {
-        const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
-
-        // Ideally you are still at the individual spec level here, so you can still modify the fern definition
-        // file paths with the inputted namespace, however given auth and other shared settings I think we have to
-        // resolve to the IR first, and namespace there.
-        const objectQueryParameters = this.specs.every((spec) => spec.settings?.objectQueryParameters);
-        const definition = convert({
-            authOverrides:
-                this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
-            environmentOverrides:
-                this.generatorsConfiguration?.api?.environments != null
-                    ? { ...this.generatorsConfiguration?.api }
-                    : undefined,
-            globalHeaderOverrides:
-                this.generatorsConfiguration?.api?.headers != null
-                    ? { ...this.generatorsConfiguration?.api }
-                    : undefined,
-            taskContext: context,
-            ir: openApiIr,
-            enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
-            objectQueryParameters,
-            respectReadonlySchemas: this.respectReadonlySchemas,
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
-            inlinePathParameters: this.inlinePathParameters
-        });
-
-        return {
-            // these files doesn't live on disk, so there's no absolute filepath
-            absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
-            rootApiFile: {
-                defaultUrl: definition.rootApiFile["default-url"],
-                contents: definition.rootApiFile,
-                rawContents: yaml.dump(definition.rootApiFile)
-            },
-            namedDefinitionFiles: {
-                ...mapValues(definition.definitionFiles, (definitionFile) => ({
-                    // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-                    rawContents: yaml.dump(definitionFile),
-                    contents: definitionFile
-                })),
-                [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
-                    // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-                    rawContents: yaml.dump(definition.packageMarkerFile),
-                    contents: definition.packageMarkerFile
-                }
-            },
-            packageMarkers: {},
-            importedDefinitions: {}
-        };
     }
 
     public async toFernWorkspace(
