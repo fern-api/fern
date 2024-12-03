@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { TestCase } from "./utils/TestCase";
 
 it.skip("TODO: Remove this!", () => {});
