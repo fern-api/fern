@@ -92,7 +92,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -120,9 +120,9 @@
                         "wireValue": "tags"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -220,7 +220,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -248,9 +248,9 @@
                         "wireValue": "tags"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -357,7 +357,7 @@
                             "wireValue": "organizationId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -529,7 +529,7 @@
                             "wireValue": "userId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -707,7 +707,7 @@
                             "wireValue": "organizationId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -735,7 +735,7 @@
                             "wireValue": "userId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -913,7 +913,7 @@
                             "wireValue": "userId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -943,9 +943,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -1123,7 +1123,7 @@
                             "wireValue": "organizationId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1153,9 +1153,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }

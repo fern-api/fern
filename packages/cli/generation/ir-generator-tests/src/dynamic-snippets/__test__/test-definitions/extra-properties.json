@@ -54,7 +54,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "failure"
@@ -154,7 +154,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -329,7 +329,7 @@
                                 "wireValue": "_type"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "string",
                                     "value": "CreateUserRequest"
@@ -360,7 +360,7 @@
                                 "wireValue": "_version"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "string",
                                     "value": "v1"
@@ -391,7 +391,7 @@
                                 "wireValue": "name"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }

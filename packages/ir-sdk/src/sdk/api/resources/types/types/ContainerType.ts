@@ -55,7 +55,7 @@ export const ContainerType = {
         return {
             list: value,
             type: "list",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.ContainerType.List,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
@@ -68,7 +68,7 @@ export const ContainerType = {
         return {
             ...value,
             type: "map",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.ContainerType.Map,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
@@ -81,7 +81,7 @@ export const ContainerType = {
         return {
             optional: value,
             type: "optional",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.ContainerType.Optional,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
@@ -94,7 +94,7 @@ export const ContainerType = {
         return {
             set: value,
             type: "set",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.ContainerType.Set,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
@@ -107,7 +107,7 @@ export const ContainerType = {
         return {
             literal: value,
             type: "literal",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.ContainerType.Literal,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
