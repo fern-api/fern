@@ -19,7 +19,7 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: ${{ inputs.version != null }}
+    # if: ${{ inputs.version != null }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
