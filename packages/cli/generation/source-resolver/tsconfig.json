@@ -10,7 +10,10 @@
   ],
   "references": [
     {
-      "path": "../../../commons/core-utils"
-    }
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
   ]
 }

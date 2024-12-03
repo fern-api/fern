@@ -29,12 +29,6 @@
     },
     {
       "path": "../../ir-sdk"
-    },
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../../commons/path-utils"
-    },
+    }
   ]
 }
