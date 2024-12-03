@@ -25,10 +25,13 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace/commons"
+      "path": "../../fern-definition/schema"
     },
     {
-      "path": "../../fern-definition/schema"
-    }
+      "path": "../source-resolver"
+    },
+    {
+      "path": "../../workspace/commons"
+    },
   ]
 }
