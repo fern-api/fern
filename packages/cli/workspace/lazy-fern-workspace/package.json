@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
-    "@fern-api/browser-compatible-fern-workspace": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core": "workspace:*",
@@ -38,7 +37,6 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
-    "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",

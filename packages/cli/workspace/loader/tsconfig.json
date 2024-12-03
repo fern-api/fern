@@ -31,9 +31,6 @@
       "path": "../../logger"
     },
     {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
       "path": "../../semver-utils"
     },
     {

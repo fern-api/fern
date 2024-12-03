@@ -37,7 +37,6 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",

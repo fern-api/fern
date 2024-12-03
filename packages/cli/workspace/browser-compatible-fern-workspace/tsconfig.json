@@ -35,9 +35,6 @@
       "path": "../../logger"
     },
     {
-      "path": "../../api-importers/openapi/openapi-ir-to-fern"
-    },
-    {
       "path": "../../api-importers/openapi/openapi-ir-parser"
     },
     {
