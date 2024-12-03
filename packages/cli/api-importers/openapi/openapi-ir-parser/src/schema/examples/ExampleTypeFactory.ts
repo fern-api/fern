@@ -36,6 +36,7 @@ export declare namespace ExampleTypeFactory {
 export class ExampleTypeFactory {
     constructor(
         private readonly schemas: Record<SchemaId, SchemaWithExample>,
+        private readonly nonRequestReferencedSchemas: Set<SchemaId>,
         private readonly context: SchemaParserContext
     ) {}
 
@@ -104,7 +105,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                    skipReadonly
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -135,7 +136,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                    skipReadonly
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -156,6 +157,11 @@ export class ExampleTypeFactory {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
                 if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
                     visitedSchemaIds.add(schema.schema);
+
+                    const isInlinedRequest =
+                        referencedSchemaWithExample?.type === "object" &&
+                        !this.nonRequestReferencedSchemas.has(schema.schema);
+
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
@@ -163,7 +169,9 @@ export class ExampleTypeFactory {
                         visitedSchemaIds,
                         depth,
                         options,
-                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                        // by default we respect readonly on inlined requests
+                        skipReadonly:
+                            isInlinedRequest || this.context.options.respectReadonlySchemas ? skipReadonly : false
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -235,7 +243,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                                    skipReadonly
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -250,7 +258,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                                    skipReadonly
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -272,7 +280,7 @@ export class ExampleTypeFactory {
                                 visitedSchemaIds,
                                 depth,
                                 options,
-                                skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                                skipReadonly
                             });
                         }
                         break;
@@ -311,7 +319,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                            skipReadonly
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -327,7 +335,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                            skipReadonly
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -342,7 +350,7 @@ export class ExampleTypeFactory {
                         depth: depth + 1,
                         visitedSchemaIds,
                         options,
-                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                        skipReadonly
                     });
                     if (itemExample != null) {
                         itemExamples.push(itemExample);
@@ -368,7 +376,7 @@ export class ExampleTypeFactory {
                             visitedSchemaIds,
                             depth: depth + 1,
                             options,
-                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                            skipReadonly
                         });
                         if (valueExample != null) {
                             kvs.push({
@@ -412,7 +420,7 @@ export class ExampleTypeFactory {
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
                         name: "value"
                     },
-                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                    skipReadonly
                 });
                 if (valueExample != null) {
                     return FullExample.map([
@@ -440,7 +448,6 @@ export class ExampleTypeFactory {
                     if (skipReadonly && schema.readonly) {
                         continue;
                     }
-
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
                     const propertyExample = this.buildExampleHelper({
@@ -453,7 +460,7 @@ export class ExampleTypeFactory {
                             ...options,
                             name: property
                         },
-                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
+                        skipReadonly
                     });
                     if (required && propertyExample != null) {
                         result[property] = propertyExample;
