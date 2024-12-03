@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "errors": {
           "BadRequestError": {
@@ -5081,7 +5081,7 @@ types:
 ",
     },
     "artifacts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Artifact (file) management APIs.",
         "imports": {
@@ -5280,7 +5280,7 @@ docs: Artifact (file) management APIs.
 ",
     },
     "authConnection.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Auth Connections of DevOrg.",
         "imports": {
@@ -5811,7 +5811,7 @@ docs: Auth Connections of DevOrg.
 ",
     },
     "authTokens.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Security token interactions.",
         "imports": {
@@ -6624,7 +6624,7 @@ docs: Security token interactions.
 ",
     },
     "devUsers.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Dev user interactions.",
         "imports": {
@@ -6962,7 +6962,7 @@ docs: Dev user interactions.
 ",
     },
     "parts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "DevRev part interactions.",
         "imports": {
@@ -7757,7 +7757,7 @@ docs: DevRev part interactions.
 ",
     },
     "revOrgs.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Rev organization interactions.",
         "imports": {
@@ -8594,7 +8594,7 @@ docs: Rev organization interactions.
 ",
     },
     "tags.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "DevRev tag interactions.",
         "imports": {
@@ -9304,7 +9304,7 @@ docs: DevRev tag interactions.
 ",
     },
     "timelineEntries.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "APIs to manage timeline entries for objects.",
         "imports": {
@@ -9915,7 +9915,7 @@ docs: APIs to manage timeline entries for objects.
 ",
     },
     "webhooks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "Webhook event APIs.",
         "imports": {
@@ -10635,7 +10635,7 @@ docs: Webhook event APIs.
 ",
     },
     "works.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/devrev/fern",
       "contents": {
         "docs": "DevRev work interactions.",
         "imports": {

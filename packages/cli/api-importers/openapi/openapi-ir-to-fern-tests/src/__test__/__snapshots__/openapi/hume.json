@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hume/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hume/fern",
       "contents": {
         "service": {
           "auth": false,
@@ -2223,7 +2223,7 @@ types:
 ",
     },
     "getJobPredictions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hume/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

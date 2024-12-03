@@ -1,15 +1,15 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-auth-variables/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-auth-variables/fern",
       "contents": {},
       "rawContents": "{}
 ",
     },
     "user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-auth-variables/fern",
       "contents": {
         "service": {
           "auth": false,

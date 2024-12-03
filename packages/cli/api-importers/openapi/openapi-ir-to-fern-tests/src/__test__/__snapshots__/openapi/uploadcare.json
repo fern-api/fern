@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/uploadcare/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/uploadcare/fern",
       "contents": {
         "errors": {
           "BadRequestError": {
@@ -2108,7 +2108,7 @@ errors:
 ",
     },
     "groups.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/uploadcare/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -2915,7 +2915,7 @@ service:
 ",
     },
     "upload.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/uploadcare/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

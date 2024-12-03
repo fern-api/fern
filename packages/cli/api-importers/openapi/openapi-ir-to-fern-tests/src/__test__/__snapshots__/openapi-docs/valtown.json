@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "errors": {
           "EmailsSendRequestInternalServerError": {
@@ -1004,7 +1004,7 @@ navigation:
 ",
     },
     "alias.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "Many API endpoints
 accept IDs instead of user-facing names. The alias
@@ -1498,7 +1498,7 @@ types:
 ",
     },
     "blobs.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "Blobs",
         "service": {
@@ -1743,7 +1743,7 @@ docs: Blobs
 ",
     },
     "emails.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "Emails",
         "imports": {
@@ -2055,7 +2055,7 @@ docs: Emails
 ",
     },
     "me.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "These endpoints
 give access to details and data from the requesting user.",
@@ -3092,7 +3092,7 @@ imports:
 ",
     },
     "search.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "Search",
         "imports": {
@@ -3292,7 +3292,7 @@ docs: Search
 ",
     },
     "sqlite.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "SQLite",
         "imports": {
@@ -3700,7 +3700,7 @@ docs: SQLite
 ",
     },
     "users.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "Users",
         "imports": {
@@ -3962,7 +3962,7 @@ types:
 ",
     },
     "vals.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/valtown/fern",
       "contents": {
         "docs": "These endpoints
 let you get, create, and run vals.",

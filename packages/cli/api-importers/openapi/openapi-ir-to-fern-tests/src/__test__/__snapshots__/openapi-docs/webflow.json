@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "errors": {
           "AccessGroupsListRequestBadRequestError": {
@@ -8812,7 +8812,7 @@ errors:
 ",
     },
     "accessGroups.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -9113,7 +9113,7 @@ service:
 ",
     },
     "assets.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -10936,7 +10936,7 @@ service:
 ",
     },
     "collections.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -11851,7 +11851,7 @@ service:
 ",
     },
     "collections/fields.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "../__package__.yml",
@@ -12405,7 +12405,7 @@ service:
 ",
     },
     "collections/items.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "../__package__.yml",
@@ -15461,7 +15461,7 @@ service:
 ",
     },
     "ecommerce.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -15606,7 +15606,7 @@ service:
 ",
     },
     "forms.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -17190,7 +17190,7 @@ webhooks:
 ",
     },
     "inventory.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -17660,7 +17660,7 @@ webhooks:
 ",
     },
     "items.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "types": {
           "CollectionItemChangedPayload": {
@@ -18196,7 +18196,7 @@ webhooks:
 ",
     },
     "orders.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -35989,7 +35989,7 @@ webhooks:
 ",
     },
     "pages.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -38204,7 +38204,7 @@ webhooks:
 ",
     },
     "pages/scripts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "../__package__.yml",
@@ -38822,7 +38822,7 @@ service:
 ",
     },
     "products.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -46014,7 +46014,7 @@ service:
 ",
     },
     "scripts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -46749,7 +46749,7 @@ service:
 ",
     },
     "sites.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -48223,7 +48223,7 @@ webhooks:
 ",
     },
     "sites/activityLogs.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "../__package__.yml",
@@ -48509,7 +48509,7 @@ service:
 ",
     },
     "sites/scripts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "../__package__.yml",
@@ -49511,7 +49511,7 @@ service:
 ",
     },
     "token.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -49851,7 +49851,7 @@ service:
 ",
     },
     "users.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -52753,7 +52753,7 @@ webhooks:
 ",
     },
     "webhooks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/webflow/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

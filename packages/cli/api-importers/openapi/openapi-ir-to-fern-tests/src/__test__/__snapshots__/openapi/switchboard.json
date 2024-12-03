@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "errors": {
           "InternalServerError": {
@@ -1032,7 +1032,7 @@ types:
 ",
     },
     "auth.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "service": {
           "auth": false,
@@ -1103,7 +1103,7 @@ types:
 ",
     },
     "extensions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1509,7 +1509,7 @@ service:
 ",
     },
     "profiles.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1968,7 +1968,7 @@ service:
 ",
     },
     "sessions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -2665,7 +2665,7 @@ service:
 ",
     },
     "windows.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/switchboard/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

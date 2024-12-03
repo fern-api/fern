@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "types": {
           "Address": {
@@ -386,7 +386,7 @@
 ",
     },
     "accounts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -667,7 +667,7 @@ service:
 ",
     },
     "carriers.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -880,7 +880,7 @@ service:
 ",
     },
     "ignition.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1061,7 +1061,7 @@ service:
 ",
     },
     "policies.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "imports": {
           "accounts": "accounts.yml",
@@ -1302,7 +1302,7 @@ service:
 ",
     },
     "tokens.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/axle/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

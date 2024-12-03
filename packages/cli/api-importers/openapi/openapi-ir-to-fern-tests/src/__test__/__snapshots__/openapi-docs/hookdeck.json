@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "errors": {
           "ArchiveConnectionRequestNotFoundError": {
@@ -8003,7 +8003,7 @@ types:
 ",
     },
     "attempts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "An attempt is any request that Hookdeck makes on behalf of an event.",
         "imports": {
@@ -8283,7 +8283,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
 ",
     },
     "bookmarks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A bookmark lets you conveniently store and replay a specific request.",
         "imports": {
@@ -9138,7 +9138,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
 ",
     },
     "bulkRetryEvents.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "",
         "imports": {
@@ -10619,7 +10619,7 @@ docs: ''
 ",
     },
     "bulkRetryIgnoredEvents.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "",
         "imports": {
@@ -11242,7 +11242,7 @@ docs: ''
 ",
     },
     "bulkRetryRequests.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "",
         "imports": {
@@ -12445,7 +12445,7 @@ docs: ''
 ",
     },
     "connections.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A connection lets you route webhooks from a source to a destination, using a ruleset.",
         "imports": {
@@ -14682,7 +14682,7 @@ docs: >-
 ",
     },
     "destinations.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A destination is any endpoint to which your webhooks can be routed.",
         "imports": {
@@ -15564,7 +15564,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
 ",
     },
     "events.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "An event is any request that Hookdeck receives from a source.",
         "imports": {
@@ -16302,7 +16302,7 @@ docs: An event is any request that Hookdeck receives from a source.
 ",
     },
     "integrations.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "An integration configures platform-specific behaviors, such as signature verification.",
         "imports": {
@@ -17035,7 +17035,7 @@ types:
 ",
     },
     "issueTriggers.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "Issue Triggers lets you setup rules that trigger issues when certain conditions are met.",
         "imports": {
@@ -17956,7 +17956,7 @@ docs: >-
 ",
     },
     "issues.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "Issues lets you track problems in your workspace and communicate resolution steps with your team.",
         "imports": {
@@ -18853,7 +18853,7 @@ docs: >-
 ",
     },
     "notifications.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "Notifications let your team receive alerts anytime an issue changes.",
         "imports": {
@@ -18968,7 +18968,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
 ",
     },
     "requests.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A request represent a webhook received by Hookdeck.",
         "imports": {
@@ -20013,7 +20013,7 @@ docs: A request represent a webhook received by Hookdeck.
 ",
     },
     "rulesets.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A ruleset defines a group of rules that can be used across many connections.",
         "imports": {
@@ -20770,7 +20770,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
 ",
     },
     "sources.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A source represents any third party that sends webhooks to Hookdeck.",
         "imports": {
@@ -21551,7 +21551,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
 ",
     },
     "transformations.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/hookdeck/fern",
       "contents": {
         "docs": "A transformation represents JavaScript code that will be executed on a connection's requests. Transformations are applied to connections using Rules.",
         "imports": {

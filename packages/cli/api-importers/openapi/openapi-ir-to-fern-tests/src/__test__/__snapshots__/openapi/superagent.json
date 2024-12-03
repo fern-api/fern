@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "errors": {
           "UnprocessableEntityError": {
@@ -94,7 +94,7 @@ types:
 ",
     },
     "agent.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -524,7 +524,7 @@ imports:
 ",
     },
     "apiToken.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -764,7 +764,7 @@ imports:
 ",
     },
     "auth.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -940,7 +940,7 @@ service:
 ",
     },
     "documents.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1213,7 +1213,7 @@ imports:
 ",
     },
     "prompts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1533,7 +1533,7 @@ imports:
 ",
     },
     "tools.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -1782,7 +1782,7 @@ imports:
 ",
     },
     "traces.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "service": {
           "auth": false,
@@ -1842,7 +1842,7 @@ imports:
 ",
     },
     "user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/superagent/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

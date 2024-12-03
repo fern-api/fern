@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
       "contents": {
         "types": {
           "Person": {
@@ -38,7 +38,7 @@
 ",
     },
     "auth/user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
       "contents": {
         "imports": {
           "user": "../user.yml",
@@ -108,7 +108,7 @@ service:
 ",
     },
     "ids/person.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
       "contents": {
         "types": {
           "PersonId": "string",
@@ -119,7 +119,7 @@ service:
 ",
     },
     "ids/user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
       "contents": {
         "types": {
           "UserId": "string",
@@ -130,7 +130,7 @@ service:
 ",
     },
     "user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/x-fern-sdk-group-name/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",

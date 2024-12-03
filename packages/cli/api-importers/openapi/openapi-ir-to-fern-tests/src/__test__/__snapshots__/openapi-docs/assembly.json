@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
       "contents": {
         "errors": {
           "FilesUploadRequestBadRequestError": {
@@ -4937,7 +4937,7 @@ types:
 ",
     },
     "files.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5015,7 +5015,7 @@ service:
 ",
     },
     "lemur.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
       "contents": {
         "docs": "LeMUR related operations",
         "imports": {
@@ -5515,7 +5515,7 @@ docs: LeMUR related operations
 ",
     },
     "realtime.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
       "contents": {
         "docs": "Real-time transcription",
         "imports": {
@@ -5638,7 +5638,7 @@ docs: Real-time transcription
 ",
     },
     "transcript.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/assembly/fern",
       "contents": {
         "docs": "Transcript related operations",
         "imports": {

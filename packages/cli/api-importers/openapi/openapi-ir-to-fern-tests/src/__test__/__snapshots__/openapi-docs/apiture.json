@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "errors": {
           "AccountJointOwnersListAccountJointOwnersRequestBadRequestError": {
@@ -13191,7 +13191,7 @@ types:
 ",
     },
     "accountJointOwners.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Account Joint Owners",
         "imports": {
@@ -13297,7 +13297,7 @@ docs: Account Joint Owners
 ",
     },
     "accounts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Banking Accounts",
         "imports": {
@@ -13955,7 +13955,7 @@ docs: Banking Accounts
 ",
     },
     "institutions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Banking Institutions",
         "imports": {
@@ -14838,7 +14838,7 @@ docs: Banking Institutions
 ",
     },
     "jointOwners.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -14991,7 +14991,7 @@ service:
 ",
     },
     "overdraftProtection.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Overdraft Protection Settings",
         "imports": {
@@ -15370,7 +15370,7 @@ docs: Overdraft Protection Settings
 ",
     },
     "transactionCategories.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Banking Account Transaction Categories",
         "imports": {
@@ -15495,7 +15495,7 @@ docs: Banking Account Transaction Categories
 ",
     },
     "transactions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Banking Account Transactions",
         "imports": {
@@ -15942,7 +15942,7 @@ docs: Banking Account Transactions
 ",
     },
     "transfers.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/apiture/fern",
       "contents": {
         "docs": "Banking Transfers",
         "imports": {

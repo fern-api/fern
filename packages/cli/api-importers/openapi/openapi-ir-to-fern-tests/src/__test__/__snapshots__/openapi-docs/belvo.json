@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "errors": {
           "CategorizeTransactionsRequestBadRequestError": {
@@ -29099,7 +29099,7 @@ types:
 ",
     },
     "accounts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "An **account** is the representation of a bank account inside a financial institution. A user can have one or more accounts in an institution. 
 
@@ -35458,7 +35458,7 @@ docs: >-
 ",
     },
     "balances.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **balance** represents the amount of funds available in a checking or savings account over a period of time.
 
@@ -37750,7 +37750,7 @@ docs: >-
 ",
     },
     "bankAccounts.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "To receive inflow payments to your organization's bank account, you must register the bank accounts (individual and business) using Belvo's Payments API.
 
@@ -38724,7 +38724,7 @@ types:
 ",
     },
     "categorization.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Our Categorization resource provides you with categorized information for a transaction. You’ll need to send a POST Categorize Transactions request with raw transactional information (such as amount, description, and holder information) to which Belvo:
 - assigns a standardized category to each transaction
@@ -38981,7 +38981,7 @@ docs: >-
 ",
     },
     "customers.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **customer** is the payer that's going to push funds into your bank account. You need to create a customer in order to receive inflow payments to your organization's bank account.
 ",
@@ -39841,7 +39841,7 @@ types:
 ",
     },
     "employmentRecords.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "# Employment Records
 
@@ -40521,7 +40521,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
 ",
     },
     "incomeVerification.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Verify your users' income and forecast their future income potential with Belvo. Your only need to send trough a your raw transaction data and Belvo returns:
 
@@ -40865,7 +40865,7 @@ docs: >-
 ",
     },
     "incomes.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Use the Incomes endpoint to gather insights on an account's income sources for the past 365 days. The endpoint is particularly useful when you want to verify a person's income.
 
@@ -42632,7 +42632,7 @@ docs: >-
 ",
     },
     "institutions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "An **institution** is an entity that Belvo can access information from. It can be a:
 
@@ -43453,7 +43453,7 @@ docs: >-
 ",
     },
     "investmentPortfolios.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "At the moment we only support the following institutions and investment products:
 
@@ -45079,7 +45079,7 @@ docs: >-
 ",
     },
     "invoices.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "An **invoice** is the representation of an electronic invoice, that can be received or sent, by a business or an individual and has been uploaded to the fiscal institution's website. Multiple INFLOW (invoice received) and OUTFLOW (invoice sent) invoices can be retrieved inside each link coming from a fiscal institution.
 
@@ -52218,7 +52218,7 @@ types:
 ",
     },
     "links.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **Link** is a set of credentials associated to an end-user's access to an **institution**.
 
@@ -54825,7 +54825,7 @@ docs: >-
 ",
     },
     "owners.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "An **owner** represents the person who has access to a Link and is the owner of all the accounts inside the Link.
 
@@ -56420,7 +56420,7 @@ docs: >-
 ",
     },
     "paymentInstitutions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **payment institution** is an entity that Belvo can access information from. You can see a complete list of institutions available for payments by making a List request to this endpoint.
 ",
@@ -56771,7 +56771,7 @@ docs: >
 ",
     },
     "paymentIntents.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "
 A **payment intent** is a single point of access to create payments using any payment method offered by Belvo.
@@ -58138,7 +58138,7 @@ types:
 ",
     },
     "paymentLinks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "This is a Payment link.
 ",
@@ -58984,7 +58984,7 @@ docs: |
 ",
     },
     "paymentTransactions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Each time you receive an inflow payment from your customer, a **transaction** is created in the Belvo database.
 
@@ -59420,7 +59420,7 @@ docs: >
 ",
     },
     "paymentWebhooks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Registering a webhook will let you know about any relevant updates that occur during the payment process. To set up a webhook, you need to make a [POST Register a new payment webhook](https://api.belvo.com/payments/webhooks/) request, providing some key details such as the name of the webhook and a URL where webhook events should be sent to.
 
@@ -59782,7 +59782,7 @@ docs: >+
 ",
     },
     "receivableTransactions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "With our receivable transactions resource, you can gain access to every transaction processed by the end user (business) conducted through a POS terminal. For each transaction, we return the:
 
@@ -60630,7 +60630,7 @@ docs: >-
 ",
     },
     "recurringExpenses.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Belvo's Recurring Expenses API allows you to identify a user's regular payments for subscription services, such as Netflix or gym memberships, as well as utility payments, such as electricity or phone bills. We return information for up to 365 days.
 
@@ -62517,7 +62517,7 @@ docs: >-
 ",
     },
     "riskInsights.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Belvo's Risk Insights endpoint exposes a set of features that can be used to improve your company's credit risk and opportunity decisions. This set of features can be used as building blocks to create or iterate on your credit score using transactional banking data to improve the predictive power of your models. You can use these components as you require and make the most sense for your specific use case. 
 
@@ -64535,7 +64535,7 @@ docs: >-
 ",
     },
     "secretKeys.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "# Get your Payments API keys
 
@@ -64779,7 +64779,7 @@ docs: >
 ",
     },
     "taxComplianceStatus.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **tax compliance status** indicates about whether a person or business is complying with their tax obligations at the moment of the request. The information is extracted from SAT's _Opinion de cumplimiento de Obligaciones Fiscales_ document.
 
@@ -66097,7 +66097,7 @@ docs: >-
 ",
     },
     "taxDeclarations.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Our Tax declarations endpoint lets you retrieve the electronic representation of the tax declaration document emitted by a country's tax authority.
 
@@ -67810,7 +67810,7 @@ docs: >-
 ",
     },
     "taxRetentions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **tax retention** is the amount of money that the payer must deduct from the total amount of a purchase invoice, according to the fiscal institution’s regulations.
 
@@ -68725,7 +68725,7 @@ docs: >-
 ",
     },
     "taxReturns.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **tax return** is the representation of the tax return document sent every year by a person or a business to the tax authority in the country.
 
@@ -77314,7 +77314,7 @@ docs: >-
 ",
     },
     "taxStatus.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "Our **Tax status** endpoint lets you retrieve information about a person's or business's tax situation, according to the country's tax authority. 
 
@@ -79820,7 +79820,7 @@ types:
 ",
     },
     "transactions.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/belvo/fern",
       "contents": {
         "docs": "A **transaction** contains the detailed information of each movement inside an account. For example, a purchase at a store or a restaurant.
 

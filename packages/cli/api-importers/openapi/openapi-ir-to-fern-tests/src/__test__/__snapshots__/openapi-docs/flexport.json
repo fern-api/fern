@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "errors": {
           "BookingAmendmentCreateRequestBadRequestError": {
@@ -10405,7 +10405,7 @@ errors:
 ",
     },
     "booking.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Booking objects",
         "imports": {
@@ -12517,7 +12517,7 @@ docs: Endpoints relating to Booking objects
 ",
     },
     "bookingAmendment.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
         "imports": {
@@ -13095,7 +13095,7 @@ docs: >-
 ",
     },
     "bookingLineItem.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
   your Flexport Sales representative if you are interested in using these endpoints.**",
@@ -13636,7 +13636,7 @@ docs: >-
 ",
     },
     "carbonCalculation.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Carbon Calculations",
         "imports": {
@@ -14020,7 +14020,7 @@ docs: Endpoints relating to Carbon Calculations
 ",
     },
     "commercialInvoices.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Commercial Invoice objects",
         "imports": {
@@ -15384,7 +15384,7 @@ docs: Endpoints relating to Commercial Invoice objects
 ",
     },
     "company.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Company objects",
         "imports": {
@@ -16419,7 +16419,7 @@ docs: Endpoints relating to Company objects
 ",
     },
     "companyEntity.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to CompanyEntity objects",
         "imports": {
@@ -17177,7 +17177,7 @@ docs: Endpoints relating to CompanyEntity objects
 ",
     },
     "contact.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Contact objects",
         "imports": {
@@ -17860,7 +17860,7 @@ docs: Endpoints relating to Contact objects
 ",
     },
     "container.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Container objects",
         "imports": {
@@ -18403,7 +18403,7 @@ docs: Endpoints relating to Container objects
 ",
     },
     "containerLeg.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to ContainerLeg objects",
         "imports": {
@@ -18769,7 +18769,7 @@ docs: Endpoints relating to ContainerLeg objects
 ",
     },
     "customsEntries.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Customs Entry objects",
         "imports": {
@@ -19095,7 +19095,7 @@ docs: Endpoints relating to Customs Entry objects
 ",
     },
     "document.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Document objects",
         "imports": {
@@ -19644,7 +19644,7 @@ docs: Endpoints relating to Document objects
 ",
     },
     "event.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Event objects",
         "imports": {
@@ -20134,7 +20134,7 @@ docs: Endpoints relating to Event objects
 ",
     },
     "invoices.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Invoice objects",
         "imports": {
@@ -21379,7 +21379,7 @@ docs: Endpoints relating to Invoice objects
 ",
     },
     "location.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Location objects",
         "imports": {
@@ -22223,7 +22223,7 @@ docs: Endpoints relating to Location objects
 ",
     },
     "ports.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Ports objects",
         "imports": {
@@ -22551,7 +22551,7 @@ docs: Endpoints relating to Ports objects
 ",
     },
     "product.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Product objects",
         "imports": {
@@ -23384,7 +23384,7 @@ docs: Endpoints relating to Product objects
 ",
     },
     "purchaseOrder.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
         "imports": {
@@ -25296,7 +25296,7 @@ docs: >-
 ",
     },
     "purchaseOrderLineItem.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
         "imports": {
@@ -25990,7 +25990,7 @@ docs: >-
 ",
     },
     "shipment.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to Shipment objects",
         "imports": {
@@ -28308,7 +28308,7 @@ docs: Endpoints relating to Shipment objects
 ",
     },
     "shipmentLeg.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/flexport/fern",
       "contents": {
         "docs": "Endpoints relating to ShipmentLeg objects",
         "imports": {

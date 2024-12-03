@@ -1,9 +1,9 @@
 {
-  "absoluteFilePath": "/DUMMY_PATH",
+  "absoluteFilePath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
   "importedDefinitions": {},
   "namedDefinitionFiles": {
     "__package__.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "errors": {
           "BadRequestError": {
@@ -4173,7 +4173,7 @@ types:
 ",
     },
     "chat.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -5445,7 +5445,7 @@ types:
 ",
     },
     "collection.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -6995,7 +6995,7 @@ types:
 ",
     },
     "compose.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -7523,7 +7523,7 @@ service:
 ",
     },
     "datasourceBox.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -8311,7 +8311,7 @@ service:
 ",
     },
     "datasourceConfluence.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -9104,7 +9104,7 @@ service:
 ",
     },
     "datasourceDropbox.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -9897,7 +9897,7 @@ service:
 ",
     },
     "datasourceGdrive.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -10689,7 +10689,7 @@ service:
 ",
     },
     "datasourceNotion.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -11481,7 +11481,7 @@ service:
 ",
     },
     "datasourceOnedrive.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -12274,7 +12274,7 @@ service:
 ",
     },
     "datasourceSharepoint.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -13067,7 +13067,7 @@ service:
 ",
     },
     "document.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -14625,7 +14625,7 @@ service:
 ",
     },
     "internal.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -14999,7 +14999,7 @@ service:
 ",
     },
     "listings.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -15330,7 +15330,7 @@ service:
 ",
     },
     "org.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -16760,7 +16760,7 @@ service:
 ",
     },
     "project.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -18130,7 +18130,7 @@ types:
 ",
     },
     "scrape.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -18543,7 +18543,7 @@ service:
 ",
     },
     "taskForwarders.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -19178,7 +19178,7 @@ service:
 ",
     },
     "tasks.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
@@ -21392,7 +21392,7 @@ types:
 ",
     },
     "user.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
+      "absoluteFilepath": "/Users/alex/code/fern/fern/packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/rightbrain/fern",
       "contents": {
         "imports": {
           "root": "__package__.yml",
