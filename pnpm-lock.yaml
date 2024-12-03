@@ -3500,7 +3500,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../../workspace-loader
+        version: link:../../../workspace/loader
     devDependencies:
       '@types/node':
         specifier: 18.7.18
@@ -3669,19 +3669,19 @@ importers:
     dependencies:
       '@fern-api/browser-compatible-fern-workspace':
         specifier: workspace:*
-        version: link:../../../browser-compatible-fern-workspace
+        version: link:../../../workspace/browser-compatible-fern-workspace
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
-        version: link:../../../lazy-fern-workspace
+        version: link:../../../workspace/lazy-fern-workspace
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../../workspace-loader
+        version: link:../../../workspace/loader
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -3766,81 +3766,11 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/browser-compatible-fern-workspace:
-    dependencies:
-      '@fern-api/api-workspace-commons':
-        specifier: workspace:*
-        version: link:../workspace-commons
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
-      '@fern-api/openapi-ir':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir
-      '@fern-api/openapi-ir-parser':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir-parser
-      '@fern-api/openapi-ir-to-fern':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir-to-fern
-      '@fern-api/path-utils':
-        specifier: workspace:*
-        version: link:../../commons/path-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../task-context
-      '@redocly/openapi-core':
-        specifier: ^1.4.1
-        version: 1.4.1
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
   packages/cli/cli:
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../workspace-commons
+        version: link:../workspace/commons
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
@@ -3900,7 +3830,7 @@ importers:
         version: link:../fern-definition/ir-to-jsonschema
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
-        version: link:../lazy-fern-workspace
+        version: link:../workspace/lazy-fern-workspace
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
@@ -3948,7 +3878,7 @@ importers:
         version: 0.10.2
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../workspace-loader
+        version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4184,7 +4114,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../workspace-commons
+        version: link:../workspace/commons
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -4645,7 +4575,7 @@ importers:
     devDependencies:
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../workspace-loader
+        version: link:../workspace/loader
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -4745,7 +4675,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../workspace-commons
+        version: link:../../workspace/commons
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
@@ -4889,7 +4819,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../workspace-commons
+        version: link:../../workspace/commons
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader
@@ -4913,7 +4843,7 @@ importers:
         version: link:../../../ir-sdk
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
-        version: link:../../lazy-fern-workspace
+        version: link:../../workspace/lazy-fern-workspace
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
@@ -4971,7 +4901,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../workspace-commons
+        version: link:../../workspace/commons
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
@@ -5059,7 +4989,7 @@ importers:
         version: link:../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../workspace-loader
+        version: link:../../workspace/loader
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
@@ -5114,7 +5044,7 @@ importers:
         version: link:../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../workspace-loader
+        version: link:../../workspace/loader
       '@fern-fern/ir-v1-model':
         specifier: 0.0.2
         version: 0.0.2
@@ -5344,7 +5274,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../../workspace-commons
+        version: link:../../../workspace/commons
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../../cli-source-resolver
@@ -5383,7 +5313,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../../workspace-loader
+        version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -5483,7 +5413,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../../workspace-loader
+        version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.126.1-444264056
         version: 0.126.1-444264056
@@ -5658,133 +5588,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/lazy-fern-workspace:
-    dependencies:
-      '@fern-api/api-workspace-commons':
-        specifier: workspace:*
-        version: link:../workspace-commons
-      '@fern-api/browser-compatible-fern-workspace':
-        specifier: workspace:*
-        version: link:../browser-compatible-fern-workspace
-      '@fern-api/cli-logger':
-        specifier: workspace:*
-        version: link:../cli-logger
-      '@fern-api/configuration-loader':
-        specifier: workspace:*
-        version: link:../configuration-loader
-      '@fern-api/conjure-to-fern':
-        specifier: workspace:*
-        version: link:../api-importers/conjure/conjure-to-fern
-      '@fern-api/core':
-        specifier: workspace:*
-        version: link:../../core
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
-      '@fern-api/fern-definition-schema':
-        specifier: workspace:*
-        version: link:../fern-definition/schema
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../commons/logging-execa
-      '@fern-api/openapi-ir':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir
-      '@fern-api/openapi-ir-parser':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir-parser
-      '@fern-api/openapi-ir-to-fern':
-        specifier: workspace:*
-        version: link:../api-importers/openapi/openapi-ir-to-fern
-      '@fern-api/semver-utils':
-        specifier: workspace:*
-        version: link:../semver-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../task-context
-      '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
-      '@redocly/openapi-core':
-        specifier: ^1.4.1
-        version: 1.4.1
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
-      axios:
-        specifier: ^1.7.7
-        version: 1.7.7
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      object-hash:
-        specifier: ^3.0.0
-        version: 3.0.0
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-      tar:
-        specifier: ^6.2.1
-        version: 6.2.1
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
-      '@types/object-hash':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/tar':
-        specifier: ^6.1.11
-        version: 6.1.11
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -6004,7 +5807,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../workspace-commons
+        version: link:../workspace/commons
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -6016,7 +5819,7 @@ importers:
         version: link:../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../workspace-loader
+        version: link:../workspace/loader
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -6050,7 +5853,7 @@ importers:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../workspace-commons
+        version: link:../workspace/commons
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
@@ -6175,23 +5978,93 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/workspace-commons:
+  packages/cli/workspace/browser-compatible-fern-workspace:
+    dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../commons
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/openapi-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir
+      '@fern-api/openapi-ir-parser':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-ir-to-fern':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-to-fern
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../commons/path-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@redocly/openapi-core':
+        specifier: ^1.4.1
+        version: 1.4.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/workspace/commons:
     dependencies:
       '@fern-api/configuration':
         specifier: workspace:*
-        version: link:../configuration
+        version: link:../../configuration
       '@fern-api/core-utils':
         specifier: workspace:*
-        version: link:../../commons/core-utils
+        version: link:../../../commons/core-utils
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
-        version: link:../fern-definition/schema
+        version: link:../../fern-definition/schema
       '@fern-api/path-utils':
         specifier: workspace:*
-        version: link:../../commons/path-utils
+        version: link:../../../commons/path-utils
       '@fern-api/task-context':
         specifier: workspace:*
-        version: link:../task-context
+        version: link:../../task-context
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6221,38 +6094,165 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/workspace-loader:
+  packages/cli/workspace/lazy-fern-workspace:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../workspace-commons
+        version: link:../commons
+      '@fern-api/browser-compatible-fern-workspace':
+        specifier: workspace:*
+        version: link:../browser-compatible-fern-workspace
       '@fern-api/cli-logger':
         specifier: workspace:*
-        version: link:../cli-logger
+        version: link:../../cli-logger
       '@fern-api/configuration-loader':
         specifier: workspace:*
-        version: link:../configuration-loader
+        version: link:../../configuration-loader
+      '@fern-api/conjure-to-fern':
+        specifier: workspace:*
+        version: link:../../api-importers/conjure/conjure-to-fern
+      '@fern-api/core':
+        specifier: workspace:*
+        version: link:../../../core
       '@fern-api/core-utils':
         specifier: workspace:*
-        version: link:../../commons/core-utils
+        version: link:../../../commons/core-utils
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
-        version: link:../fern-definition/schema
+        version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
-        version: link:../../commons/fs-utils
+        version: link:../../../commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../commons/logging-execa
+      '@fern-api/openapi-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir
+      '@fern-api/openapi-ir-parser':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-ir-to-fern':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-ir-to-fern
+      '@fern-api/semver-utils':
+        specifier: workspace:*
+        version: link:../../semver-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-fern/fiddle-sdk':
+        specifier: 0.0.584
+        version: 0.0.584
+      '@redocly/openapi-core':
+        specifier: ^1.4.1
+        version: 1.4.1
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
+      axios:
+        specifier: ^1.7.7
+        version: 1.7.7
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      object-hash:
+        specifier: ^3.0.0
+        version: 3.0.0
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+      tar:
+        specifier: ^6.2.1
+        version: 6.2.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@types/object-hash':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/tar':
+        specifier: ^6.1.11
+        version: 6.1.11
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/workspace/loader:
+    dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../commons
+      '@fern-api/cli-logger':
+        specifier: workspace:*
+        version: link:../../cli-logger
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../../configuration-loader
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../lazy-fern-workspace
       '@fern-api/logger':
         specifier: workspace:*
-        version: link:../logger
+        version: link:../../logger
       '@fern-api/logging-execa':
         specifier: workspace:*
-        version: link:../../commons/logging-execa
+        version: link:../../../commons/logging-execa
       '@fern-api/task-context':
         specifier: workspace:*
-        version: link:../task-context
+        version: link:../../task-context
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -6264,7 +6264,7 @@ importers:
         version: 3.0.3
       zod:
         specifier: ^3.22.3
-        version: 3.22.4
+        version: 3.23.8
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -6322,7 +6322,7 @@ importers:
         version: link:../../task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../../workspace-loader
+        version: link:../../workspace/loader
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -6664,7 +6664,7 @@ importers:
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../cli/workspace-commons
+        version: link:../cli/workspace/commons
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../cli/configuration
@@ -6694,7 +6694,7 @@ importers:
         version: link:../cli/task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
-        version: link:../cli/workspace-loader
+        version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584

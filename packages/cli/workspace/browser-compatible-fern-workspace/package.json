@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/browser-compatible-fern-workspace"
+    "directory": "packages/cli/workspace/browser-compatible-fern-workspace"
   },
   "private": true,
   "files": [
