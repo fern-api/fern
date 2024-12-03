@@ -5,4 +5,5 @@ export type API = OpenAPI;
 export interface OpenAPI {
     type: "openapi";
     openapi: OpenAPITypes.Document;
+    overrides?: OpenAPITypes.Document;
 }

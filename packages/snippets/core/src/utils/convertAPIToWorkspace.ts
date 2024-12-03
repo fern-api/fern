@@ -18,7 +18,10 @@ export async function convertAPIToWorkspace({
     switch (api.type) {
         case "openapi": {
             const openapi = new OpenAPIWorkspace({
-                spec: { parsed: api.openapi },
+                spec: {
+                    parsed: api.openapi,
+                    overrides: api.overrides
+                },
                 generatorsConfiguration
             });
             return await openapi.toFernWorkspace({ context }, settings);

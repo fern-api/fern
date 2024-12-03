@@ -6781,7 +6781,7 @@ importers:
         version: 17.7.2
 
   packages/snippets/core:
-    dependencies:
+    devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../cli/workspace/commons
@@ -6803,10 +6803,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../cli/task-context
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -6816,6 +6812,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
