@@ -1,41 +1,33 @@
 import { NopLogger } from "./NopLogger";
+import { TaskContext, PosthogEvent } from "@fern-api/task-context";
 
 export enum TaskResult {
     Success,
     Failure
 }
 
-export function createTaskContext() {
-    const context = {
+export function createTaskContext(): TaskContext {
+    const context: TaskContext = {
         logger: new NopLogger(),
-        takeOverTerminal: () => {
+        takeOverTerminal: async (run: () => void | Promise<void>) => {
+            // no-op
+        },
+        failAndThrow: (_message?: string, _error?: unknown) => {
             throw new Error("unimplemented");
         },
-        failAndThrow: (message?: string, error?: unknown) => {
-            const parts = [];
-            if (message != null) {
-                parts.push(message);
-            }
-            if (error != null) {
-                parts.push(JSON.stringify(error));
-            }
-            if (parts.length > 0) {
-                context.logger.error(...parts);
-            }
-            throw new Error("unimplemented");
-        },
-        failWithoutThrowing: (message?: string, error?: unknown) => {
-            context.failAndThrow(message, error);
+        failWithoutThrowing: (_message?: string, _error?: unknown) => {
+            // no-op
         },
         getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
             throw new Error("unimplemented");
         },
-        runInteractiveTask: () => {
-            throw new Error("unimplemented");
+        runInteractiveTask: async (_params, _run) => {
+            // no-op
+            return false;
         },
-        instrumentPostHogEvent: () => {
-            throw new Error("unimplemented");
+        instrumentPostHogEvent: async (_event: PosthogEvent) => {
+            // no-op
         }
     };
     return context;
