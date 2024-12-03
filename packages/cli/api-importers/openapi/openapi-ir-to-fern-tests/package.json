@@ -28,10 +28,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/browser-compatible-fern-workspace": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
-    "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "js-yaml": "^4.1.0",
     "openapi-types": "^12.1.3"

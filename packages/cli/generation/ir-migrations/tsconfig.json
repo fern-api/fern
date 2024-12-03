@@ -34,7 +34,7 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-loader"
+      "path": "../../workspace/loader"
     },
     {
       "path": "../ir-generator"

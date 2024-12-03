@@ -31,10 +31,10 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-commons"
+      "path": "../../workspace/commons"
     },
     {
-      "path": "../../lazy-fern-workspace"
+      "path": "../../workspace/lazy-fern-workspace"
     },
     {
       "path": "../schema"
