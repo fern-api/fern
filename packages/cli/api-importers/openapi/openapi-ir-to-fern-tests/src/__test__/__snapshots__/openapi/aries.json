@@ -12802,7 +12802,6 @@ docs: Simple messaging
                 {
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                     "did": "WgWxqztrNooG92RXvxSTWv",
                     "imageUrl": "http://192.168.56.101/img/logo.jpg",
                     "label": "Bob",
@@ -13436,7 +13435,6 @@ service:
       examples:
         - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-            '@type': https://didcomm.org/my-family/1.0/my-message-type
             did: WgWxqztrNooG92RXvxSTWv
             imageUrl: http://192.168.56.101/img/logo.jpg
             label: Bob
@@ -15310,7 +15308,6 @@ docs: Holder credential management
                 {
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                     "did": "WgWxqztrNooG92RXvxSTWv",
                     "label": "Request to connect with Bob",
                   },
@@ -15540,7 +15537,6 @@ service:
       examples:
         - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
-            '@type': https://didcomm.org/my-family/1.0/my-message-type
             did: WgWxqztrNooG92RXvxSTWv
             label: Request to connect with Bob
           response:
