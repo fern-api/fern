@@ -221,7 +221,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToParsedRequest;
-            case "named":
+            case "named": {
                 const typeDeclaration = context.type.getTypeDeclaration(this.endpoint.requestBody.requestBodyType);
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
@@ -233,6 +233,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             omitUndefined: this.omitUndefined
                         })
                     });
+            }
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
