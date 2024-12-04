@@ -151,6 +151,9 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("useInMemoryPgpKeys(signingKeyId, signingPassword)");
                 writer.addLine("sign publishing.publications.maven");
                 writer.endControlFlow();
+
+                writer.addNewLine();
+                writer.addLine("sonatypeCentralUpload.dependsOn build");
             }
         }
         return writer.getContents();

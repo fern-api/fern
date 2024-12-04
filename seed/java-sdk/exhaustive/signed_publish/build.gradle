@@ -126,3 +126,5 @@ signing {
     useInMemoryPgpKeys(signingKeyId, signingPassword)
     sign publishing.publications.maven
 }
+
+sonatypeCentralUpload.dependsOn build
