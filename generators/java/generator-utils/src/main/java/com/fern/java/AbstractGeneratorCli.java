@@ -363,11 +363,17 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
 
         addGeneratedFile(buildGradle.build());
+        String settingsGradleContents = "";
+        if (maybeMavenCoordinate.isPresent()) {
+            settingsGradleContents += "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+        }
+        settingsGradleContents += getSubProjects().stream()
+                .map(project -> "include '" + project + "'")
+                .collect(Collectors.joining("\n"));
+        
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
-                .contents(getSubProjects().stream()
-                        .map(project -> "include '" + project + "'")
-                        .collect(Collectors.joining("\n")))
+                .contents(settingsGradleContents)
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }
