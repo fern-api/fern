@@ -86,6 +86,54 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         );
     }
 
+    public generateSync(request: DynamicSnippets.EndpointSnippetRequest): DynamicSnippets.EndpointSnippetResponse {
+        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+        if (endpoints.length === 0) {
+            throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
+        }
+
+        let bestReporter: ErrorReporter | undefined;
+        let bestSnippet: string | undefined;
+        let err: Error | undefined;
+        for (const endpoint of endpoints) {
+            this.context.errors.reset();
+            try {
+                const code = this.buildCodeBlock({ endpoint, snippet: request });
+                const snippet = code.toStringSync({
+                    packageName: SNIPPET_PACKAGE_NAME,
+                    importPath: SNIPPET_IMPORT_PATH,
+                    rootImportPath: this.context.rootImportPath,
+                    customConfig: this.context.customConfig ?? {},
+                    formatter: this.formatter
+                });
+                if (this.context.errors.empty()) {
+                    return {
+                        snippet,
+                        errors: undefined
+                    };
+                }
+                if (bestReporter == null || bestReporter.size() > this.context.errors.size()) {
+                    bestReporter = this.context.errors.clone();
+                    bestSnippet = snippet;
+                }
+            } catch (error) {
+                if (err == null) {
+                    err = error as Error;
+                }
+            }
+        }
+        if (bestSnippet != null && bestReporter != null) {
+            return {
+                snippet: bestSnippet,
+                errors: bestReporter.toDynamicSnippetErrors()
+            };
+        }
+        throw (
+            err ??
+            new Error(`Failed to generate snippet for endpoint "${request.endpoint.method} ${request.endpoint.path}"`)
+        );
+    }
+
     private buildCodeBlock({
         endpoint,
         snippet
