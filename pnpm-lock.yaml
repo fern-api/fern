@@ -3793,8 +3793,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.6
-        version: 0.0.6(@fern-fern/fdr-cjs-sdk@0.126.1-444264056)(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
+        specifier: ^0.0.10
+        version: 0.0.10(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -3882,9 +3882,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
-      '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.126.1-444264056
-        version: 0.126.1-444264056
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -7795,10 +7792,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.6':
-    resolution: {integrity: sha512-ZWgVEMyCL8G3jupzsgR9R8iVdf3xDYa/Pn4APg4qSREkQKL3q5/kXlY5CcQYTBWFNSUb6gZum3/cnMKr/sZTdg==}
-    peerDependencies:
-      '@fern-fern/fdr-cjs-sdk': 0.116.5-873e41db0
+  '@fern-api/docs-parsers@0.0.10':
+    resolution: {integrity: sha512-TO+XxWDSEq2PIirkNTWdsIX5zTrQMjVg+sdTmdTIICpQVAboupC0bG6IfAU+D933VYoy4ajrkqZbCYQSUjMOhg==}
 
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
@@ -14801,11 +14796,11 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.6(@fern-fern/fdr-cjs-sdk@0.126.1-444264056)(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
+  '@fern-api/docs-parsers@0.0.10(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
-      '@fern-fern/fdr-cjs-sdk': 0.126.1-444264056
+      es-toolkit: 1.26.0
       openapi-types: 12.1.3
       ts-essentials: 10.0.1(typescript@4.6.4)
       uuid: 9.0.1
