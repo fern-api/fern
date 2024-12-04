@@ -3,27 +3,27 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { mapValues } from "lodash-es";
-import { convert } from "@fern-api/openapi-ir-to-fern";
+import { convert, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { OpenAPISettings } from "./OpenAPISettings";
 import yaml from "js-yaml";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        inlinePathParameters: boolean;
-        objectQueryParameters: boolean;
-        onlyIncludeReferencedSchemas: boolean;
-        respectReadonlySchemas: boolean;
+        inlinePathParameters: boolean | undefined;
+        objectQueryParameters: boolean | undefined;
+        onlyIncludeReferencedSchemas: boolean | undefined;
+        respectReadonlySchemas: boolean | undefined;
     }
 
-    export type Settings = OpenAPISettings;
+    export type Settings = Partial<OpenAPISettings>;
 }
 
 export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpenAPIWorkspace.Settings> {
-    public inlinePathParameters: boolean;
-    public objectQueryParameters: boolean;
-    public onlyIncludeReferencedSchemas: boolean;
-    public respectReadonlySchemas: boolean;
+    public inlinePathParameters: boolean | undefined;
+    public objectQueryParameters: boolean | undefined;
+    public onlyIncludeReferencedSchemas: boolean | undefined;
+    public respectReadonlySchemas: boolean | undefined;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
         super(args);
@@ -47,6 +47,18 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     ): Promise<FernDefinition> {
         const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
         const definition = convert({
+            taskContext: context,
+            ir: openApiIr,
+            options: getConvertOptions({
+                overrides: {
+                    ...settings,
+                    respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
+                    onlyIncludeReferencedSchemas:
+                        settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
+                    inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
+                    objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters
+                }
+            }),
             authOverrides:
                 this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
             environmentOverrides:
@@ -56,15 +68,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
             globalHeaderOverrides:
                 this.generatorsConfiguration?.api?.headers != null
                     ? { ...this.generatorsConfiguration?.api }
-                    : undefined,
-            taskContext: context,
-            ir: openApiIr,
-            enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
-            objectQueryParameters: this.objectQueryParameters,
-            respectReadonlySchemas: this.respectReadonlySchemas,
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
-            inlinePathParameters: this.inlinePathParameters
+                    : undefined
         });
 
         return {

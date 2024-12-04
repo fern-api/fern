@@ -71,7 +71,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 generateLocally: definition.schema.localGeneration,
                 settings: {
                     audiences: definition.audiences ?? [],
-                    shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
@@ -79,7 +79,11 @@ export async function loadSingleNamespaceAPIWorkspace({
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
                     onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false
+                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                    disableExamples: false,
+                    discriminatedUnionV2: false,
+                    preserveSchemaIds: false,
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1"
                 }
             });
             continue;
@@ -115,16 +119,19 @@ export async function loadSingleNamespaceAPIWorkspace({
             absoluteFilepathToOverrides,
             settings: {
                 audiences: definition.audiences ?? [],
-                shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                asyncApiNaming: definition.settings?.asyncApiMessageNaming,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                 cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
                 onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                inlinePathParameters: definition.settings?.inlinePathParameters ?? false
+                inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                disableExamples: false,
+                discriminatedUnionV2: false,
+                preserveSchemaIds: false,
+                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1"
             },
             source: {
                 type: "openapi",

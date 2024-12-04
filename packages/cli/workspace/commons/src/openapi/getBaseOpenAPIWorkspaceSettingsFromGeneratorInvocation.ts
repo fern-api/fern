@@ -3,15 +3,15 @@ import { type BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
 
 export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
     generatorInvocation: generatorsYml.GeneratorInvocation
-): BaseOpenAPIWorkspace.Settings | undefined {
+): Partial<BaseOpenAPIWorkspace.Settings> | undefined {
     if (generatorInvocation.settings == null) {
         return undefined;
     }
-    const result: BaseOpenAPIWorkspace.Settings = {
+    const result: Partial<BaseOpenAPIWorkspace.Settings> = {
         detectGlobalHeaders: true
     };
     if (generatorInvocation.settings.unions === "v1") {
-        result.enableDiscriminatedUnionV2 = true;
+        result.discriminatedUnionV2 = true;
     }
 
     return result;
