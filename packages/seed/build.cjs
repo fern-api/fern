@@ -7,7 +7,7 @@ async function main() {
     await tsup.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
-        minify: true,
+        minify: false,
         outDir: 'dist',
         env: {
             CLI_NAME: "seed",
