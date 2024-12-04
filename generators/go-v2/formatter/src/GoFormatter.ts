@@ -6,4 +6,8 @@ export class GoFormatter extends AbstractFormatter {
         await init();
         return format(content);
     }
+
+    public formatSync(content: string): string {
+        return content;
+    }
 }
