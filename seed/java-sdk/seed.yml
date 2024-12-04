@@ -73,10 +73,10 @@ fixtures:
           password: "test_password"
           secretKey: "test_secretkey"
       publishMetadata:
-        packageDescription: My very good and lengthy description
-        publisherEmail: "me@gmail.com"
-        publisherName: "Fern"
-        referenceUrl: "https://buildwithfern.com"
+        package_description: My very good and lengthy description
+        publisher_email: "me@gmail.com"
+        publisher_name: "Fern"
+        reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
   imdb:
     - customConfig:

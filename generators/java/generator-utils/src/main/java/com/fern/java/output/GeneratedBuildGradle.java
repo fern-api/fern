@@ -90,7 +90,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addLine("targetCompatibility = 1.8");
         writer.addNewLine();
 
-        customBlocks().forEach(writer::addLine);
+        customBlocks().forEach((block) -> {
+            writer.addLine((block));
+            writer.addNewLine();
+        });
 
         // add publishing
         if (gradlePublishingConfig().isPresent() ) {
@@ -127,23 +130,24 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("username = \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
                 writer.addLine("password = \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
                 writer.addNewLine();
-                writer.beginControlFlow("archives = files(");
-                writer.addLine("\"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \".jar\",");
-                writer.addLine("\"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-sources.jar\",");
-                writer.addLine("\"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-javadoc.jar\"");
-                writer.endControlFlow();
+                writer.addLine("archives = files(");
+                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \".jar\",");
+                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-sources.jar\",");
+                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-javadoc.jar\"");
+                writer.addLine(")");
                 writer.addNewLine();
                 writer.addLine("pom = file(\"$buildDir/publications/maven/pom-default.xml\")");
                 writer.addLine("signingKey = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
                 writer.addLine("signingKeyPassphrase = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
                 writer.endControlFlow();
+                writer.addNewLine();
 
-            writer.beginControlFlow("signing");
-            writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
-            writer.addLine("def signingPassword = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
-            writer.addLine("useInMemoryPgpKeys(signingKeyId, signingPassword)");
-            writer.addLine("sign publishing.publications.maven");
-            writer.endControlFlow();
+                writer.beginControlFlow("signing");
+                writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
+                writer.addLine("def signingPassword = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
+                writer.addLine("useInMemoryPgpKeys(signingKeyId, signingPassword)");
+                writer.addLine("sign publishing.publications.maven");
+                writer.endControlFlow();
             }
         }
         return writer.getContents();

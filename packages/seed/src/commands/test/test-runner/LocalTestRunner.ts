@@ -59,7 +59,7 @@ export class LocalTestRunner extends TestRunner {
         const localOutputDirectory = await tmp.dir();
         const absolutePathToLocalOutputDirectory = AbsoluteFilePath.of(localOutputDirectory.path);
 
-        const generatorInvocation = getGeneratorInvocation({
+        const generatorInvocation = await getGeneratorInvocation({
             absolutePathToOutput: absolutePathToLocalOutputDirectory,
             docker: this.getParsedDockerName(),
             language,
