@@ -96,7 +96,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         });
 
         // add publishing
-        if (gradlePublishingConfig().isPresent() ) {
+        if (gradlePublishingConfig().isPresent()) {
             writer.beginControlFlow("publishing");
 
             writer.beginControlFlow("publications");
@@ -121,7 +121,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.endControlFlow();
                 writer.endControlFlow();
                 writer.endControlFlow();
-            } 
+            }
             writer.endControlFlow();
             writer.addNewLine();
 
@@ -131,9 +131,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("password = \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
                 writer.addNewLine();
                 writer.addLine("archives = files(");
-                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \".jar\",");
-                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-sources.jar\",");
-                writer.addLine("    \"$buildDir/libs/" + gradlePublishingConfig().get().artifact() + "-\" + version + \"-javadoc.jar\"");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \".jar\",");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \"-sources.jar\",");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \"-javadoc.jar\"");
                 writer.addLine(")");
                 writer.addNewLine();
                 writer.addLine("pom = file(\"$buildDir/publications/maven/pom-default.xml\")");
@@ -210,7 +213,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.endControlFlow();
         } else {
             writer.beginControlFlow("licenses");
-            writer.beginControlFlow("license"); 
+            writer.beginControlFlow("license");
             writer.addLine("name = 'The MIT License (MIT)'");
             writer.addLine("url = 'https://mit-license.org/'");
             writer.endControlFlow();
