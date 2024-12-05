@@ -27,7 +27,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Directory, Project, SourceFile } from "ts-morph";
-import { Logger } from "../../../utils/commons/node_modules/@fern-api/logger/src";
+import { Logger } from "@fern-api/logger";
 import { ExpressContextImpl } from "./contexts/ExpressContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "./declaration-referencers/ExpressErrorDeclarationReferencer";
