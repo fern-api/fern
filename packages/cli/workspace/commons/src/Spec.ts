@@ -1,6 +1,6 @@
+import { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { Source } from "./Source";
-import { SpecImportSettings } from "@fern-api/openapi-ir-parser";
 
 export type Spec = OpenAPISpec | ProtobufSpec;
 
@@ -10,7 +10,7 @@ export interface OpenAPISpec {
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     source: Source;
     namespace?: string;
-    settings?: SpecImportSettings;
+    settings?: ParseOpenAPIOptions;
 }
 
 export interface ProtobufSpec {
@@ -19,5 +19,5 @@ export interface ProtobufSpec {
     absoluteFilepathToProtobufTarget: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     generateLocally: boolean;
-    settings?: SpecImportSettings;
+    settings?: ParseOpenAPIOptions;
 }

@@ -1,6 +1,6 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { parse, SpecImportSettings } from "@fern-api/openapi-ir-parser";
+import { parse } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { v4 as uuidv4 } from "uuid";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
@@ -8,7 +8,6 @@ import {
     AbstractAPIWorkspace,
     BaseOpenAPIWorkspace,
     FernWorkspace,
-    getOptionsOverridesFromSettings,
     IdentifiableSource,
     Spec
 } from "@fern-api/api-workspace-commons";
@@ -32,10 +31,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super({
             ...superArgs,
-            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false),
-            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false),
-            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters ?? false),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters ?? false)
+            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
+            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
+            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
+            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters)
         });
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
@@ -53,7 +52,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
-        const optionOverrides = getOptionsOverridesFromSettings(settings);
         return await parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -61,9 +59,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs: openApiSpecs
             }),
             options: {
-                ...optionOverrides,
-                respectReadonlySchemas: this.respectReadonlySchemas,
-                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
+                ...settings,
+                respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
+                onlyIncludeReferencedSchemas:
+                    settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
+                inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
+                objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters
             }
         });
     }

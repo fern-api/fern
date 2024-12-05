@@ -1,30 +1,33 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { OpenAPIWorkspace } from "@fern-api/browser-compatible-fern-workspace";
-import { API } from "../API";
+import { Spec } from "../Spec";
 import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
-export async function convertAPIToWorkspace({
+export async function convertSpecToWorkspace({
     context,
-    api,
-    generatorsConfiguration,
-    settings
+    spec,
+    generatorsConfiguration
 }: {
     context: TaskContext;
-    api: API;
+    spec: Spec;
     generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
-    settings: OpenAPIWorkspace.Settings | undefined;
 }): Promise<FernWorkspace> {
-    switch (api.type) {
+    switch (spec.type) {
         case "openapi": {
             const openapi = new OpenAPIWorkspace({
                 spec: {
-                    parsed: api.openapi,
-                    overrides: api.overrides
+                    parsed: spec.openapi,
+                    overrides: spec.overrides
                 },
                 generatorsConfiguration
             });
-            return await openapi.toFernWorkspace({ context }, settings);
+            return await openapi.toFernWorkspace(
+                {
+                    context
+                },
+                spec.settings
+            );
         }
     }
 }

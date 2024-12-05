@@ -4,28 +4,26 @@ import { NopSourceResolver } from "@fern-api/source-resolver";
 import { createTaskContext } from "./utils/createTaskContext";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { dynamic } from "@fern-api/ir-sdk";
-import { API } from "./API";
-import { convertAPIToWorkspace } from "./utils/convertAPIToWorkspace";
+import { Spec } from "./Spec";
+import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
 
 export async function generateDynamicIR({
-    api,
+    spec,
     language,
     generatorsConfiguration,
-    settings,
     audiences,
     keywords,
     smartCasing
 }: {
-    api: API;
+    spec: Spec;
     language: generatorsYml.GenerationLanguage;
     generatorsConfiguration?: generatorsYml.GeneratorsConfiguration;
-    settings?: OpenAPIWorkspace.Settings;
     audiences?: Audiences;
     keywords?: string[];
     smartCasing?: boolean;
 }): Promise<dynamic.DynamicIntermediateRepresentation> {
     const context = createTaskContext();
-    const workspace = await convertAPIToWorkspace({ context, api, generatorsConfiguration, settings });
+    const workspace = await convertSpecToWorkspace({ context, spec, generatorsConfiguration });
     const ir = await generateIntermediateRepresentation({
         context,
         workspace,
