@@ -12,7 +12,6 @@ import {
     InterfaceDeclarationStructure,
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
-    OptionalKind,
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
@@ -22,6 +21,14 @@ import {
 } from "ts-morph";
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
+
+type Property = {
+    name: string;
+    type: ts.TypeNode;
+    hasQuestionToken: boolean;
+    docs: string | undefined;
+    irProperty: ObjectProperty;
+};
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
@@ -47,23 +54,17 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     public generateForInlineUnion(context: Context): ts.TypeNode {
         const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
         return ts.factory.createTypeLiteralNode(
-            this.shape.properties.map((property) => {
-                const value = this.getTypeForObjectProperty(context, property);
-                const hasOptionalToken = !this.noOptionalProperties && value.isOptional;
-                let propertyValue: ts.TypeNode;
-                if (inlineProperties.has(property)) {
-                    const typeDeclaration = inlineProperties.get(property)!;
+            this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
+                let propertyValue: ts.TypeNode = type;
+                if (inlineProperties.has(irProperty)) {
+                    const typeDeclaration = inlineProperties.get(irProperty)!;
                     const generatedType = context.type.getGeneratedType(typeDeclaration.name);
                     propertyValue = generatedType.generateForInlineUnion(context);
-                } else {
-                    propertyValue = ts.factory.createTypeReferenceNode(
-                        getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined)
-                    );
                 }
                 return ts.factory.createPropertySignature(
                     undefined,
-                    ts.factory.createIdentifier(this.getPropertyKeyFromProperty(property)),
-                    hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    ts.factory.createIdentifier(name),
+                    hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     propertyValue
                 );
             })
@@ -71,16 +72,29 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public generateProperties(context: Context): PropertySignatureStructure[] {
-        return this.shape.properties.map((property) => {
-            const value = this.getTypeForObjectProperty(context, property);
+        return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
             const propertyNode: PropertySignatureStructure = {
                 kind: StructureKind.PropertySignature,
-                name: `"${this.getPropertyKeyFromProperty(property)}"`,
-                type: getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined),
-                hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                docs: property.docs != null ? [{ description: property.docs }] : undefined
+                name: name,
+                type: getTextOfTsNode(type),
+                hasQuestionToken: hasQuestionToken,
+                docs: docs != null ? [{ description: docs }] : undefined
             };
 
+            return propertyNode;
+        });
+    }
+
+    private generatePropertiesInternal(context: Context): Property[] {
+        return this.shape.properties.map((property) => {
+            const value = this.getTypeForObjectProperty(context, property);
+            const propertyNode: Property = {
+                name: `"${this.getPropertyKeyFromProperty(property)}"`,
+                type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
+                hasQuestionToken: !this.noOptionalProperties && value.isOptional,
+                docs: property.docs,
+                irProperty: property
+            };
             return propertyNode;
         });
     }
