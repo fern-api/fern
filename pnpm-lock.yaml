@@ -3581,9 +3581,6 @@ importers:
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
-      swagger2openapi:
-        specifier: 7.0.8
-        version: 7.0.8
       zod:
         specifier: ^3.22.3
         version: 3.23.8
