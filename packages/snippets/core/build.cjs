@@ -13,6 +13,11 @@ async function main() {
         minify: true,
         dts: true,
         outDir: 'dist',
+        external: [
+            // Exclude the optional dependencies that aren't supported in the browser.
+            'prettier',
+            '@redocly/openapi-core'
+        ],
         tsconfig: "./build.tsconfig.json"
     });
 
