@@ -13,6 +13,9 @@
       "path": "../../cli/configuration"
     },
     {
+      "path": "../../cli/generation/docs-formatter"
+    },
+    {
       "path": "../../cli/generation/ir-generator"
     },
     {

@@ -52,6 +52,7 @@ import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
 import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
+import { DocsFormatter } from "@fern-api/docs-formatter";
 
 export async function generateIntermediateRepresentation({
     workspace,
@@ -66,6 +67,7 @@ export async function generateIntermediateRepresentation({
     context,
     fdrApiDefinitionId,
     includeOptionalRequestPropertyExamples,
+    docsFormatter,
     sourceResolver
 }: {
     workspace: FernWorkspace;
@@ -78,6 +80,7 @@ export async function generateIntermediateRepresentation({
     packageName: string | undefined;
     version: string | undefined;
     context: TaskContext;
+    docsFormatter: DocsFormatter;
     sourceResolver: SourceResolver;
     fdrApiDefinitionId?: string;
     includeOptionalRequestPropertyExamples?: boolean;
@@ -115,7 +118,7 @@ export async function generateIntermediateRepresentation({
         }),
         apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
+        apiDocs: await docsFormatter.format(workspace.definition.rootApiFile.contents.docs),
         auth: await convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,

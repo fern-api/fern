@@ -28,6 +28,9 @@
       "path": "../../fern-definition/schema"
     },
     {
+      "path": "../docs-formatter"
+    },
+    {
       "path": "../source-resolver"
     },
     {

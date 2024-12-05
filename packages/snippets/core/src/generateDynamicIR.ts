@@ -6,6 +6,7 @@ import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { dynamic } from "@fern-api/ir-sdk";
 import { API } from "./API";
 import { convertAPIToWorkspace } from "./utils/convertAPIToWorkspace";
+import { NopFormatter } from "@fern-api/docs-formatter";
 
 export async function generateDynamicIR({
     api,
@@ -32,12 +33,13 @@ export async function generateDynamicIR({
         generationLanguage: language,
         audiences: audiences ?? { type: "all" },
         keywords,
+        docsFormatter: new NopFormatter(),
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
         disableExamples: true,
         version: undefined,
         packageName: undefined,
-        readme: undefined
+        readme: undefined,
     });
     if (ir.dynamic == null) {
         throw new Error("Internal error; failed to generate dynamic intermediate representation");

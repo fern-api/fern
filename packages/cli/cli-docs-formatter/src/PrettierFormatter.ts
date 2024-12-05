@@ -1,7 +1,8 @@
-import * as prettier from "prettier";
+import { DocsFormatter } from "@fern-api/cli-docs-formatter";
+import prettier from "prettier";
 
-export async function formatDocs(docs: string | undefined): Promise<string | undefined> {
-    if (docs != null) {
+export class PrettierFormatter implements DocsFormatter {
+    public async format(docs: string): Promise<string> {
         const formattedDocs = prettier.format(docs, {
             parser: "markdown"
         });
@@ -10,5 +11,5 @@ export async function formatDocs(docs: string | undefined): Promise<string | und
         }
         return formattedDocs;
     }
-    return docs;
 }
+

@@ -4000,6 +4000,37 @@ importers:
         specifier: ^17.4.1
         version: 17.7.2
 
+  packages/cli/cli-docs-formatter:
+    dependencies:
+      '@fern-api/docs-formatter':
+        specifier: workspace:*
+        version: link:../generation/docs-formatter
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/cli-logger:
     dependencies:
       chalk:
@@ -4897,6 +4928,33 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/generation/docs-formatter:
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/generation/ir-generator:
     dependencies:
       '@fern-api/api-workspace-commons':
@@ -4908,6 +4966,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/docs-formatter':
+        specifier: workspace:*
+        version: link:../docs-formatter
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -4929,9 +4990,6 @@ importers:
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -4957,6 +5015,9 @@ importers:
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -6791,6 +6852,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../cli/configuration
+      '@fern-api/docs-formatter':
+        specifier: workspace:*
+        version: link:../../cli/generation/docs-formatter
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../cli/generation/ir-generator
