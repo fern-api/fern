@@ -1,11 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import { OpenApiIntermediateRepresentation, Schemas, Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from "openapi-types";
 import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
-import { generateIr as generateIrFromV2 } from "./openapi/v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
 import { getParseOptions, ParseOpenAPIOptions } from "./options";
 
@@ -13,7 +12,7 @@ export type Document = OpenAPIDocument | AsyncAPIDocument;
 
 export interface OpenAPIDocument {
     type: "openapi";
-    value: OpenAPI.Document;
+    value: OpenAPIV3.Document;
     source?: OpenApiIrSource;
     namespace?: string;
     settings?: ParseOpenAPIOptions;
@@ -65,25 +64,14 @@ export async function parse({
         const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
         switch (document.type) {
             case "openapi": {
-                if (isOpenApiV3(document.value)) {
-                    const openapiIr = generateIrFromV3({
-                        taskContext: context,
-                        openApi: document.value,
-                        options: getParseOptions({ options: document.settings, overrides: options }),
-                        source,
-                        namespace: document.namespace
-                    });
-                    ir = merge(ir, openapiIr);
-                } else if (isOpenApiV2(document.value)) {
-                    const openapiIr = await generateIrFromV2({
-                        taskContext: context,
-                        openApi: document.value,
-                        options: getParseOptions({ options: document.settings, overrides: options }),
-                        source,
-                        namespace: document.namespace
-                    });
-                    ir = merge(ir, openapiIr);
-                }
+                const openapiIr = generateIrFromV3({
+                    taskContext: context,
+                    openApi: document.value,
+                    options: getParseOptions({ options: document.settings, overrides: options }),
+                    source,
+                    namespace: document.namespace
+                });
+                ir = merge(ir, openapiIr);
                 break;
             }
             case "asyncapi": {
@@ -183,14 +171,4 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
     }
 
     return schemas1;
-}
-
-function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV3.Document).openapi != null;
-}
-
-function isOpenApiV2(openApi: OpenAPI.Document): openApi is OpenAPIV2.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV2.Document).swagger != null;
 }
