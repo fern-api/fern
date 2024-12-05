@@ -35,7 +35,10 @@ async function main() {
                 repository: packageJson.repository,
                 main: "index.cjs",
                 types: "index.d.ts",
-                files: ["index.cjs", "index.d.ts"]
+                files: ["index.cjs", "index.d.ts"],
+                dependencies: {
+                    '@redocly/openapi-core': '^1.4.1',
+                }
             },
             undefined,
             2
