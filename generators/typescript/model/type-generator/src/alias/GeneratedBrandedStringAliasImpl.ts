@@ -25,15 +25,10 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     public readonly type = "alias";
     public readonly isBranded = true;
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addTypeAlias(this.generateTypeAliasStructure(context));
-        context.sourceFile.addFunction(this.generateBuilderFunction(context));
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        return [this.generateTypeAliasStructure(context)];
+        return [this.generateTypeAliasStructure(context), this.generateBuilderFunction(context)];
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {

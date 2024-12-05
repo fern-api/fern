@@ -73,10 +73,6 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         });
     }
 
-    public writeToFile(context: Context): void {
-        this.generatedUnion.writeToFile(context);
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {

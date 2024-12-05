@@ -105,17 +105,6 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.inline = inline;
     }
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addTypeAlias(this.generateTypeAlias(context));
-        context.sourceFile.addModule(this.generateModule(context));
-        if (this.includeConstBuilders) {
-            const consts = this.generateConst(context);
-            if (consts) {
-                context.sourceFile.addVariableStatement(consts);
-            }
-        }
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {

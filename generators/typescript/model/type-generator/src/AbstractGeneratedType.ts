@@ -1,6 +1,6 @@
 import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
-import { BaseGeneratedType } from "@fern-typescript/contexts";
+import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, Node, StatementStructures, ts, TypeLiteralNode, WriterFunction } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
@@ -20,7 +20,7 @@ export declare namespace AbstractGeneratedType {
 
 const EXAMPLE_PREFIX = "    ";
 
-export abstract class AbstractGeneratedType<Shape, Context> implements BaseGeneratedType<Context> {
+export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
     protected typeName: string;
     protected shape: Shape;
     protected examples: ExampleType[];
@@ -76,7 +76,10 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         return groups.join("\n\n");
     }
 
-    public abstract writeToFile(context: Context): void;
+    public writeToFile(context: Context): void {
+        context.sourceFile.addStatements(this.generateStatements(context));
+    }
+
     public abstract generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[];

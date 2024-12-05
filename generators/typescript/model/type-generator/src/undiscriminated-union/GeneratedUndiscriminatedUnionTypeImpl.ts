@@ -21,10 +21,6 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 {
     public readonly type = "undiscriminatedUnion";
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addStatements(this.generateStatements(context));
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {

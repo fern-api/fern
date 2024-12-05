@@ -18,10 +18,6 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
     public readonly type = "alias";
     public readonly isBranded = false;
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addTypeAlias(this.generateTypeAlias(context));
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {

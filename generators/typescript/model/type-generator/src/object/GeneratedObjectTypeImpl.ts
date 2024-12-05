@@ -36,10 +36,6 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
 {
     public readonly type = "object";
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addStatements(this.generateStatements(context));
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {

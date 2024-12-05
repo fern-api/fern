@@ -97,7 +97,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     }
 
     public writeToFile(context: SdkContext): void {
-        this.errorUnion.writeToFile(context);
+        context.sourceFile.addStatements(this.errorUnion.generateStatements(context));
     }
 
     public getErrorUnion(): GeneratedUnion<SdkContext> {

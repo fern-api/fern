@@ -46,15 +46,6 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         this.includeEnumUtils = includeEnumUtils;
     }
 
-    public writeToFile(context: Context): void {
-        context.sourceFile.addTypeAlias(this.generateEnumType(context));
-        context.sourceFile.addVariableStatement(this.generateConst(context));
-
-        if (this.includeEnumUtils) {
-            context.sourceFile.addModule(this.generateModule());
-        }
-    }
-
     private generateEnumType(context: Context): TypeAliasDeclarationStructure {
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
