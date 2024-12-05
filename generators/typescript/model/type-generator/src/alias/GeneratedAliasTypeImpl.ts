@@ -1,10 +1,17 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, writerToString } from "@fern-typescript/commons";
-import { ModelContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
-import { StatementStructures, StructureKind, ts, TypeAliasDeclarationStructure, WriterFunction } from "ts-morph";
+import { BaseContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
+import {
+    ModuleDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    ts,
+    TypeAliasDeclarationStructure,
+    WriterFunction
+} from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedAliasTypeImpl<Context extends ModelContext>
+export class GeneratedAliasTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements NotBrandedGeneratedAliasType<Context>
 {
@@ -35,6 +42,10 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
         };
         maybeAddDocs(typeAlias, this.getDocs(context));
         return typeAlias;
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {

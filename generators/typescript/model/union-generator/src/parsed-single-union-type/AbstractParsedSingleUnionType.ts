@@ -40,7 +40,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                 ...this.singleUnionType.getDiscriminantPropertiesForInterface(context),
                 ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
             ],
-            inlineModule: this.singleUnionType.getInlineModuleForInterface(context)
+            module: this.singleUnionType.generateModule(context)
         };
     }
 

@@ -17,7 +17,7 @@ import {
     GeneratedType,
     GeneratedUndiscriminatedUnionType,
     GeneratedUnionType,
-    ModelContext
+    BaseContext
 } from "@fern-typescript/contexts";
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
 import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
@@ -51,7 +51,7 @@ export declare namespace TypeGenerator {
     }
 }
 
-export class TypeGenerator<Context extends ModelContext = ModelContext> {
+export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private useBrandedStringAliases: boolean;
     private includeUtilsOnUnionMembers: boolean;
     private includeOtherInUnionTypes: boolean;

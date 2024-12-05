@@ -53,16 +53,16 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
 
     protected override named(
         typeName: DeclaredTypeName,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+        params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
         const resolvedType = this.typeResolver.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {
                     list: this.list.bind(this),
-                    optional: (optionalType) => this.optional(optionalType, inlineType),
+                    optional: (optionalType) => this.optional(optionalType, params),
                     set: this.set.bind(this),
-                    map: (mapType) => this.map(mapType, inlineType),
+                    map: (mapType) => this.map(mapType, params),
                     literal: this.literal.bind(this),
                     _other: () => {
                         throw new Error("Unknown ContainerType: " + containerType.type);
@@ -145,9 +145,9 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
 
     protected override optional(
         itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+        params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        return (reference) => this.convert({ typeReference: itemType, inlineType })(reference);
+        return (reference) => this.convert({ ...params, typeReference: itemType })(reference);
     }
 
     protected override unknown(): (reference: ts.Expression) => ts.Expression {

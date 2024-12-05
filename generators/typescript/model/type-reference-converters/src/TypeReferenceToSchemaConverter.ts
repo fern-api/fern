@@ -19,10 +19,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         this.zurg = zurg;
     }
 
-    protected override named(
-        typeName: DeclaredTypeName,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
+    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): Zurg.Schema {
         return this.getSchemaOfNamedType(typeName);
     }
 
@@ -56,11 +53,8 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.date();
     }
 
-    protected override optional(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
-        return this.convert({ typeReference: itemType, inlineType }).optional();
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.convert({ ...params, typeReference: itemType }).optional();
     }
 
     protected override unknown(): Zurg.Schema {
@@ -71,11 +65,8 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.any();
     }
 
-    protected override list(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
-        return this.zurg.list(this.convert({ typeReference: itemType, inlineType }));
+    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.zurg.list(this.convert({ ...params, typeReference: itemType }));
     }
 
     protected override literal(literal: Literal): Zurg.Schema {
@@ -88,42 +79,33 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         });
     }
 
-    protected override mapWithEnumKeys(
-        map: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
-        return this.mapWithOptionalValues(map, inlineType);
+    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.mapWithOptionalValues(map, params);
     }
 
     protected override mapWithNonEnumKeys(
         { keyType, valueType }: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+        params: ConvertTypeReferenceParams
     ): Zurg.Schema {
         return this.zurg.record({
-            keySchema: this.convert({ typeReference: keyType, inlineType }),
-            valueSchema: this.convert({ typeReference: valueType, inlineType })
+            keySchema: this.convert({ ...params, typeReference: keyType }),
+            valueSchema: this.convert({ ...params, typeReference: valueType })
         });
     }
 
-    protected mapWithOptionalValues(
-        { keyType, valueType }: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
-        const valueSchema = this.convert({ typeReference: valueType, inlineType });
+    protected mapWithOptionalValues({ keyType, valueType }: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+        const valueSchema = this.convert({ ...params, typeReference: valueType });
         return this.zurg.record({
-            keySchema: this.convert({ typeReference: keyType, inlineType }),
+            keySchema: this.convert({ ...params, typeReference: keyType }),
             valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional()
         });
     }
 
-    protected override set(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): Zurg.Schema {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
         if (this.isTypeReferencePrimitive(itemType)) {
-            return this.zurg.set(this.convert({ typeReference: itemType, inlineType }));
+            return this.zurg.set(this.convert({ ...params, typeReference: itemType }));
         } else {
-            return this.list(itemType, inlineType);
+            return this.list(itemType, params);
         }
     }
 }

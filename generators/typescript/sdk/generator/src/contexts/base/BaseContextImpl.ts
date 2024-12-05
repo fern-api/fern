@@ -8,7 +8,7 @@ import {
     ImportsManager
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
-import { BaseContext } from "@fern-typescript/contexts";
+import { BaseContext, TypeContext, TypeSchemaContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
 export declare namespace BaseContextImpl {
@@ -19,6 +19,9 @@ export declare namespace BaseContextImpl {
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
+        type: TypeContext;
+        typeSchema: TypeSchemaContext;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -28,6 +31,9 @@ export class BaseContextImpl implements BaseContext {
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: Constants;
+    public readonly type: TypeContext;
+    public readonly typeSchema: TypeSchemaContext;
+    public readonly includeSerdeLayer: boolean;
 
     constructor({
         logger,
@@ -35,10 +41,17 @@ export class BaseContextImpl implements BaseContext {
         importsManager,
         dependencyManager,
         coreUtilitiesManager,
-        fernConstants
+        fernConstants,
+        type,
+        typeSchema,
+        includeSerdeLayer
     }: BaseContextImpl.Init) {
         this.logger = logger;
         this.sourceFile = sourceFile;
+        this.fernConstants = fernConstants;
+        this.type = type;
+        this.typeSchema = typeSchema;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager
@@ -47,6 +60,5 @@ export class BaseContextImpl implements BaseContext {
             sourceFile,
             importsManager
         });
-        this.fernConstants = fernConstants;
     }
 }

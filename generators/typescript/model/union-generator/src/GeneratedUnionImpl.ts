@@ -359,8 +359,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 extends: interface_.extends.map(getTextOfTsNode),
                 properties: interface_.properties
             });
-            if (interface_.inlineModule) {
-                statements.push(interface_.inlineModule);
+            if (interface_.module) {
+                statements.push(interface_.module);
             }
         }
         return statements;

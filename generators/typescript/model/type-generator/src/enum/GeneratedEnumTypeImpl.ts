@@ -51,7 +51,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         context.sourceFile.addVariableStatement(this.generateConst(context));
 
         if (this.includeEnumUtils) {
-            context.sourceFile.addModule(this.generateModule(context));
+            context.sourceFile.addModule(this.generateModule());
         }
     }
 
@@ -91,7 +91,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         ];
 
         if (this.includeEnumUtils) {
-            statements.push(this.generateModule(context));
+            statements.push(this.generateModule());
         }
         return statements;
     }
@@ -219,7 +219,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         };
     }
 
-    private generateModule(context: Context): ModuleDeclarationStructure {
+    public generateModule(): ModuleDeclarationStructure {
         const enumModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.typeName,

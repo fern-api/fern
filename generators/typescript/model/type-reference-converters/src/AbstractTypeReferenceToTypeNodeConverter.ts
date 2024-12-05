@@ -6,31 +6,32 @@ import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./Ab
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
-        getReferenceToNamedType: (
-            typeName: DeclaredTypeName,
-            inlineType: ConvertTypeReferenceParams.InlineType | undefined
-        ) => ts.EntityName;
+        getReferenceToNamedType: (typeName: DeclaredTypeName, params: ConvertTypeReferenceParams) => ts.EntityName;
+        generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode;
     }
 }
 
 export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractTypeReferenceConverter<TypeReferenceNode> {
     protected getReferenceToNamedType: (
         typeName: DeclaredTypeName,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+        params: ConvertTypeReferenceParams
     ) => ts.EntityName;
+    protected generateForInlineUnion: (typeName: DeclaredTypeName) => ts.TypeNode;
 
-    constructor({ getReferenceToNamedType, ...superInit }: AbstractTypeReferenceToTypeNodeConverter.Init) {
+    constructor({
+        getReferenceToNamedType,
+        generateForInlineUnion,
+        ...superInit
+    }: AbstractTypeReferenceToTypeNodeConverter.Init) {
         super(superInit);
         this.getReferenceToNamedType = getReferenceToNamedType;
+        this.generateForInlineUnion = generateForInlineUnion;
     }
 
-    protected override named(
-        typeName: DeclaredTypeName,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
+    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const resolvedType = this.typeResolver.resolveTypeName(typeName);
         const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
-            container: (container) => this.container(container, inlineType).isOptional,
+            container: (container) => this.container(container, params).isOptional,
             primitive: (primitive) => this.primitive(primitive).isOptional,
             named: () => false,
             unknown: () => this.unknown().isOptional,
@@ -39,18 +40,21 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             }
         });
 
-        let typeNodeWithoutUndefined: ts.TypeReferenceNode;
+        let typeNodeWithoutUndefined: ts.TypeNode;
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.inline && inlineType) {
-            // if (!inlineType) {
-            //     throw new Error(
-            //         "ConvertTypeReferenceParams.inlineType is required for converting type to type reference"
-            //     );
-            // }
-            typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedType(inlineType);
+        if (typeDeclaration.inline) {
+            if ("inlineType" in params) {
+                typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedType(params.inlineType);
+            } else if ("forInlineUnion" in params) {
+                typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedTypeForInlineUnion(typeName);
+            } else {
+                typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(
+                    this.getReferenceToNamedType(typeName, params)
+                );
+            }
         } else {
             typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(
-                this.getReferenceToNamedType(typeName, inlineType)
+                this.getReferenceToNamedType(typeName, params)
             );
         }
 
@@ -65,11 +69,15 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         }
     }
 
+    private createTypeRefenceForInlineNamedTypeForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        return this.generateForInlineUnion(typeName);
+    }
+
     private createTypeRefenceForInlineNamedType({
         parentTypeName,
         propertyName,
         genericIn
-    }: ConvertTypeReferenceParams.InlineType): ts.TypeReferenceNode {
+    }: ConvertTypeReferenceParams.InlineType): ts.TypeNode {
         let name = ts.factory.createQualifiedName(
             ts.factory.createIdentifier(parentTypeName),
             ts.factory.createIdentifier(propertyName)
@@ -125,11 +133,8 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
-    protected override optional(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
-        const referencedToValueType = this.convert({ typeReference: itemType, inlineType }).typeNode;
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         return {
             isOptional: true,
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
@@ -162,23 +167,9 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         };
     }
 
-    protected override list(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
-        if (inlineType) {
-            inlineType = {
-                ...inlineType,
-                genericIn: "list"
-            };
-        }
+    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(
-                this.convert({
-                    typeReference: itemType,
-                    inlineType
-                }).typeNode
-            )
+            ts.factory.createArrayTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
         );
     }
 
@@ -208,34 +199,25 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected override mapWithEnumKeys(
-        map: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
-        return this.mapWithOptionalValues(map, inlineType);
+    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        return this.mapWithOptionalValues(map, params);
     }
 
-    protected override mapWithNonEnumKeys(
-        map: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
+    protected override mapWithNonEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createTypeReferenceNode("Record", [
-                this.convert({ typeReference: map.keyType, inlineType }).typeNode,
-                this.convert({ typeReference: map.valueType, inlineType }).typeNode
+                this.convert({ ...params, typeReference: map.keyType }).typeNode,
+                this.convert({ ...params, typeReference: map.valueType }).typeNode
             ])
         );
     }
 
-    protected mapWithOptionalValues(
-        map: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
-        const valueType = this.convert({ typeReference: map.valueType, inlineType });
+    protected mapWithOptionalValues(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const valueType = this.convert({ ...params, typeReference: map.valueType });
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createTypeReferenceNode("Record", [
-                this.convert({ typeReference: map.keyType, inlineType }).typeNode,
-                (valueType.isOptional ? valueType : this.optional(map.valueType, inlineType)).typeNode
+                this.convert({ ...params, typeReference: map.keyType }).typeNode,
+                (valueType.isOptional ? valueType : this.optional(map.valueType, params)).typeNode
             ])
         );
     }

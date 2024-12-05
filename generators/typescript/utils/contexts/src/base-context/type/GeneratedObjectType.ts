@@ -1,7 +1,6 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { InterfaceDeclarationStructure, ModuleDeclarationStructure, OptionalKind, ts } from "ts-morph";
-import { GeneratedUnionInlineMemberNode } from "../../commons/GeneratedUnionInlineMemberNode";
+import { InterfaceDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 import { BaseGeneratedType } from "./BaseGeneratedType";
 
 export interface GeneratedObjectType<Context> extends BaseGeneratedType<Context> {
@@ -9,10 +8,8 @@ export interface GeneratedObjectType<Context> extends BaseGeneratedType<Context>
     getAllPropertiesIncludingExtensions: (
         context: Context
     ) => { wireKey: string; propertyKey: string; type: TypeReference }[];
-    getNamedStructures: (context: Context) => {
-        interface_: InterfaceDeclarationStructure;
-        inlineModule: ModuleDeclarationStructure | undefined;
-    };
+    generateInterface(context: Context): InterfaceDeclarationStructure;
+    generateProperties(context: Context): PropertySignatureStructure[];
     getPropertyKey: (args: { propertyWireKey: string }) => string;
     buildExampleProperties: (
         example: ExampleTypeShape,

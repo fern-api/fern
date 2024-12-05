@@ -6,14 +6,8 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import {
-    GetReferenceOpts,
-    getTextOfTsNode,
-    maybeAddDocs,
-    TypeReferenceNode,
-    writerToString
-} from "@fern-typescript/commons";
-import { BaseContext, GeneratedObjectType, GeneratedType, ModelContext } from "@fern-typescript/contexts";
+import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, TypeReferenceNode } from "@fern-typescript/commons";
+import { GeneratedObjectType, BaseContext } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationKind,
@@ -24,16 +18,12 @@ import {
     StructureKind,
     ts,
     TypeAliasDeclarationStructure,
-    TypeLiteralNode,
     WriterFunction
 } from "ts-morph";
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
-import { renameTypeReferenceNode } from "../utils/renameTypeReferenceNode";
 
-type InlinePropertyMap = Map<ObjectProperty, TypeDeclaration>;
-
-export class GeneratedObjectTypeImpl<Context extends ModelContext>
+export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
@@ -46,30 +36,19 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const { interface_, inlineModule } = this.getNamedStructures(context);
-        const statements: (string | WriterFunction | StatementStructures)[] = [interface_];
+        const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)];
+        const inlineModule = this.generateModule(context);
         if (inlineModule) {
             statements.push(inlineModule);
         }
         return statements;
     }
 
-    public getNamedStructures(context: Context): {
-        interface_: InterfaceDeclarationStructure;
-        inlineModule: ModuleDeclarationStructure | undefined;
-    } {
-        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
-        return {
-            interface_: this.generateInterface(context, inlineProperties),
-            inlineModule: this.generateModuleForInlineTypes(context, inlineProperties)
-        };
-    }
-
     public generateForInlineUnion(context: Context): ts.TypeNode {
         const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
         return ts.factory.createTypeLiteralNode(
             this.shape.properties.map((property) => {
-                const value = this.getTypeForObjectProperty(context, property, inlineProperties);
+                const value = this.getTypeForObjectProperty(context, property);
                 const hasOptionalToken = !this.noOptionalProperties && value.isOptional;
                 let propertyValue: ts.TypeNode;
                 if (inlineProperties.has(property)) {
@@ -91,13 +70,11 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         );
     }
 
-    private getPropertyStructures(
-        context: Context,
-        inlineProperties: InlinePropertyMap
-    ): OptionalKind<PropertySignatureStructure>[] {
+    public generateProperties(context: Context): PropertySignatureStructure[] {
         return this.shape.properties.map((property) => {
-            const value = this.getTypeForObjectProperty(context, property, inlineProperties);
-            const propertyNode: OptionalKind<PropertySignatureStructure> = {
+            const value = this.getTypeForObjectProperty(context, property);
+            const propertyNode: PropertySignatureStructure = {
+                kind: StructureKind.PropertySignature,
                 name: `"${this.getPropertyKeyFromProperty(property)}"`,
                 type: getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined),
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
@@ -108,11 +85,11 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         });
     }
 
-    private generateInterface(context: Context, inlineProperties: InlinePropertyMap): InterfaceDeclarationStructure {
+    public generateInterface(context: Context): InterfaceDeclarationStructure {
         const interfaceNode: InterfaceDeclarationStructure = {
             kind: StructureKind.Interface,
             name: this.typeName,
-            properties: [...this.getPropertyStructures(context, inlineProperties)],
+            properties: [...this.generateProperties(context)],
             isExported: true
         };
 
@@ -125,11 +102,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         return interfaceNode;
     }
 
-    private getTypeForObjectProperty(
-        context: Context,
-        property: ObjectProperty,
-        inlineProperties: InlinePropertyMap
-    ): TypeReferenceNode {
+    private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
         return context.type.getReferenceToInlineType(
             property.valueType,
             this.typeName,
@@ -233,10 +206,8 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         ];
     }
 
-    private generateModuleForInlineTypes(
-        context: Context,
-        inlineProperties: Map<ObjectProperty, TypeDeclaration>
-    ): ModuleDeclarationStructure | undefined {
+    public generateModule(context: Context): ModuleDeclarationStructure | undefined {
+        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
         if (inlineProperties.size === 0) {
             return;
         }

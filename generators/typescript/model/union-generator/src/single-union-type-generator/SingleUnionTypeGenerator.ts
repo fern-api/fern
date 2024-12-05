@@ -3,7 +3,7 @@ import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, t
 export interface SingleUnionTypeGenerator<Context> {
     generateForInlineUnion(context: Context): ts.TypeNode;
     getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[];
-    getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined;
+    generateModule(context: Context): ModuleDeclarationStructure | undefined;
     getExtendsForInterface(context: Context): ts.TypeNode[];
     getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[];
     getVisitorArguments(args: { localReferenceToUnionValue: ts.Expression }): ts.Expression[];

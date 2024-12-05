@@ -250,7 +250,8 @@ export class SdkContextImpl implements SdkContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,

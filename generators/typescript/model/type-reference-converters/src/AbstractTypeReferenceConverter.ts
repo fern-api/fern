@@ -21,10 +21,17 @@ export declare namespace AbstractTypeReferenceConverter {
     }
 }
 
-export type ConvertTypeReferenceParams = {
-    typeReference: TypeReference;
-    inlineType: ConvertTypeReferenceParams.InlineType | undefined;
-};
+export type ConvertTypeReferenceParams =
+    | {
+          typeReference: TypeReference;
+      } & (
+          | {
+                inlineType: ConvertTypeReferenceParams.InlineType;
+            }
+          | {
+                forInlineUnion?: true;
+            }
+      );
 
 export namespace ConvertTypeReferenceParams {
     /**
@@ -66,48 +73,42 @@ export abstract class AbstractTypeReferenceConverter<T> {
         this.useBigInt = useBigInt;
     }
 
-    public convert({ typeReference, inlineType }: ConvertTypeReferenceParams): T {
-        return TypeReference._visit<T>(typeReference, {
-            named: (type) => this.named(type, inlineType),
+    public convert(params: ConvertTypeReferenceParams): T {
+        return TypeReference._visit<T>(params.typeReference, {
+            named: (type) => this.named(type, params),
             primitive: (type) => this.primitive(type),
-            container: (type) => this.container(type, inlineType),
+            container: (type) => this.container(type, params),
             unknown: () => (this.treatUnknownAsAny ? this.any() : this.unknown()),
             _other: () => {
-                throw new Error("Unexpected type reference: " + typeReference.type);
+                throw new Error("Unexpected type reference: " + params.typeReference.type);
             }
         });
     }
 
-    protected container(container: ContainerType, inlineType: ConvertTypeReferenceParams.InlineType | undefined): T {
+    protected container(container: ContainerType, params: ConvertTypeReferenceParams): T {
         return ContainerType._visit<T>(container, {
-            map: (type) => this.map(type, addGenericIn(inlineType, genericIn.Map)),
-            list: (type) => this.list(type, addGenericIn(inlineType, genericIn.List)),
-            set: (type) => this.set(type, addGenericIn(inlineType, genericIn.Set)),
-            optional: (type) => this.optional(type, inlineType),
-            literal: (type) => this.literal(type, inlineType),
+            map: (type) => this.map(type, addGenericIn(params, genericIn.Map)),
+            list: (type) => this.list(type, addGenericIn(params, genericIn.List)),
+            set: (type) => this.set(type, addGenericIn(params, genericIn.Set)),
+            optional: (type) => this.optional(type, params),
+            literal: (type) => this.literal(type, params),
             _other: () => {
                 throw new Error("Unexpected container type: " + container.type);
             }
         });
     }
 
-    protected abstract named(
-        typeName: DeclaredTypeName,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): T;
+    protected abstract named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): T;
     protected abstract string(): T;
     protected abstract number(): T;
     protected abstract long(): T;
     protected abstract bigInteger(): T;
     protected abstract boolean(): T;
     protected abstract dateTime(): T;
-    protected abstract list(itemType: TypeReference, inlineType: ConvertTypeReferenceParams.InlineType | undefined): T;
-    protected abstract set(itemType: TypeReference, inlineType: ConvertTypeReferenceParams.InlineType | undefined): T;
-    protected abstract optional(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): T;
-    protected abstract literal(literal: Literal, inlineType: ConvertTypeReferenceParams.InlineType | undefined): T;
+    protected abstract list(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract set(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract optional(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract literal(literal: Literal, params: ConvertTypeReferenceParams): T;
     protected abstract unknown(): T;
     protected abstract any(): T;
 
@@ -132,23 +133,17 @@ export abstract class AbstractTypeReferenceConverter<T> {
         });
     }
 
-    protected map(mapType: MapType, inlineType: ConvertTypeReferenceParams.InlineType | undefined): T {
+    protected map(mapType: MapType, params: ConvertTypeReferenceParams): T {
         const resolvdKeyType = this.typeResolver.resolveTypeReference(mapType.keyType);
         if (resolvdKeyType.type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
-            return this.mapWithEnumKeys(mapType, inlineType);
+            return this.mapWithEnumKeys(mapType, params);
         } else {
-            return this.mapWithNonEnumKeys(mapType, inlineType);
+            return this.mapWithNonEnumKeys(mapType, params);
         }
     }
 
-    protected abstract mapWithEnumKeys(
-        mapType: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): T;
-    protected abstract mapWithNonEnumKeys(
-        mapType: MapType,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): T;
+    protected abstract mapWithEnumKeys(mapType: MapType, params: ConvertTypeReferenceParams): T;
+    protected abstract mapWithNonEnumKeys(mapType: MapType, params: ConvertTypeReferenceParams): T;
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
@@ -171,14 +166,14 @@ export abstract class AbstractTypeReferenceConverter<T> {
 }
 
 function addGenericIn(
-    inlineType: ConvertTypeReferenceParams.InlineType | undefined,
+    params: ConvertTypeReferenceParams,
     genericIn: ConvertTypeReferenceParams.InlineType.GenericIn
-): ConvertTypeReferenceParams.InlineType | undefined {
-    if (inlineType) {
-        return {
-            ...inlineType,
+): ConvertTypeReferenceParams {
+    if ("inlineType" in params) {
+        params.inlineType = {
+            ...params.inlineType,
             genericIn
         };
     }
-    return undefined;
+    return params;
 }

@@ -38,8 +38,8 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [];
     }
 
-    public getInlineModuleForInterface(): ModuleDeclarationStructure | undefined {
-        return;
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {

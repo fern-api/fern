@@ -9,15 +9,12 @@ export declare namespace TypeReferenceToParsedTypeNodeConverter {
 }
 
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
-            const itemTypeNode = this.convert({ typeReference: itemType, inlineType }).typeNode;
+            const itemTypeNode = this.convert({ ...params, typeReference: itemType }).typeNode;
             return this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Set", [itemTypeNode]));
         } else {
-            return this.list(itemType, inlineType);
+            return this.list(itemType, params);
         }
     }
 

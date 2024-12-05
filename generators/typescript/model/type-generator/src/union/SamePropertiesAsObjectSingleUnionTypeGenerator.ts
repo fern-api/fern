@@ -1,5 +1,5 @@
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
-import { ModelContext } from "@fern-typescript/contexts";
+import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -9,7 +9,7 @@ export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     }
 }
 
-export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends ModelContext>
+export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends BaseContext>
     implements SingleUnionTypeGenerator<Context>
 {
     private static BUILDER_PARAMETER_NAME = "value";
@@ -42,26 +42,20 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
-            if ("getNamedStructures" in type) {
-                const { interface_ } = type.getNamedStructures(context);
-                return interface_.properties ?? [];
+            if (type.type === "object") {
+                return type.generateProperties(context);
             }
-            return [];
         }
         return [];
     }
 
-    public getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined {
+    public generateModule(context: Context): ModuleDeclarationStructure | undefined {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
-            if ("getNamedStructures" in type) {
-                const { inlineModule } = type.getNamedStructures(context);
-                return inlineModule;
-            }
-            return;
+            return type.generateModule(context);
         }
-        return;
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {

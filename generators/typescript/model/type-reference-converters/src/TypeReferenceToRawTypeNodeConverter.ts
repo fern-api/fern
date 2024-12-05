@@ -5,20 +5,14 @@ import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(this.convert({ typeReference: itemType, inlineType }).typeNode)
+            ts.factory.createArrayTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
         );
     }
 
-    protected override optional(
-        itemType: TypeReference,
-        inlineType: ConvertTypeReferenceParams.InlineType | undefined
-    ): TypeReferenceNode {
-        const referencedToValueType = this.convert({ typeReference: itemType, inlineType }).typeNode;
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         return {
             isOptional: true,
             typeNode: ts.factory.createUnionTypeNode([

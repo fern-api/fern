@@ -5,7 +5,7 @@ import {
     SingleUnionTypeProperty,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { ModelContext } from "@fern-typescript/contexts";
+import { BaseContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
@@ -26,7 +26,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     }
 }
 
-export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends AbstractKnownSingleUnionType<Context> {
+export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends AbstractKnownSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
@@ -51,13 +51,14 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                         new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
-                            propertyType: singleProperty.type,
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                                 includeSerdeLayer,
                                 retainOriginalCasing
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
+                            getReferenceToPropertyTypeForInlineUnion: (context) =>
+                                context.type.getReferenceToTypeForInlineUnion(singleProperty.type),
                             noOptionalProperties
                         }),
                     _other: () => {

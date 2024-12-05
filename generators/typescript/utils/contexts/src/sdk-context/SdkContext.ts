@@ -2,7 +2,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { ModelContext } from "../model-context/ModelContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
@@ -16,8 +15,9 @@ import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
+import { BaseContext } from "../base-context";
 
-export interface SdkContext extends ModelContext {
+export interface SdkContext extends BaseContext {
     logger: Logger;
     version: string | undefined;
     ir: IntermediateRepresentation;

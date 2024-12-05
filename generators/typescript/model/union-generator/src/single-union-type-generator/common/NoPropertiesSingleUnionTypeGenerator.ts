@@ -14,8 +14,8 @@ export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnio
         return [];
     }
 
-    public getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined {
-        return;
+    public generateModule(context: Context): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {

@@ -19,6 +19,7 @@ export interface TypeContext {
         parentTypeName: string,
         propertyName: string
     ) => TypeReferenceNode;
+    getReferenceToTypeForInlineUnion: (typeReference: TypeReference) => TypeReferenceNode;
     stringify: (
         valueToStringify: ts.Expression,
         valueType: TypeReference,

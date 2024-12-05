@@ -1,7 +1,7 @@
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { ModelContext } from "../ModelContext";
+import { BaseContext } from "../../base-context";
 
 export interface GeneratedTypeReferenceExample {
-    build: (context: ModelContext, opts: GetReferenceOpts) => ts.Expression;
+    build: (context: BaseContext, opts: GetReferenceOpts) => ts.Expression;
 }

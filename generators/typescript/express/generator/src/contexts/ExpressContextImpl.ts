@@ -161,7 +161,8 @@ export class ExpressContextImpl implements ExpressContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,

@@ -6,9 +6,10 @@ import {
     maybeAddDocs,
     writerToString
 } from "@fern-typescript/commons";
-import { BrandedGeneratedAliasType, ModelContext } from "@fern-typescript/contexts";
+import { BrandedGeneratedAliasType, BaseContext } from "@fern-typescript/contexts";
 import {
     FunctionDeclarationStructure,
+    ModuleDeclarationStructure,
     StatementStructures,
     StructureKind,
     ts,
@@ -17,7 +18,7 @@ import {
 } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
+export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements BrandedGeneratedAliasType<Context>
 {
@@ -38,6 +39,10 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
     public generateForInlineUnion(context: Context): ts.TypeNode {
         const type = writerToString(this.generateTypeAliasStructure(context).type);
         return ts.factory.createTypeReferenceNode(type);
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getReferenceToCreator(context: Context, opts?: GetReferenceOpts): ts.Expression {

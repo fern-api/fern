@@ -109,9 +109,9 @@ function getSingleUnionTypeGenerator({
     });
 
     return new SinglePropertySingleUnionTypeGenerator<SdkContext>({
-        propertyType: type,
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
+        getReferenceToPropertyTypeForInlineUnion: (context) => context.type.getReferenceToTypeForInlineUnion(type),
         noOptionalProperties
     });
 }

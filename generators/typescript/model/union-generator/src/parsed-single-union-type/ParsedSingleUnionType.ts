@@ -31,6 +31,6 @@ export declare namespace ParsedSingleUnionType {
         name: string;
         extends: ts.TypeNode[];
         properties: OptionalKind<PropertySignatureStructure>[];
-        inlineModule: ModuleDeclarationStructure | undefined;
+        module: ModuleDeclarationStructure | undefined;
     }
 }

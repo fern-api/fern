@@ -9,7 +9,7 @@ import {
     TypeReferenceToSchemaConverter
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { SourceFile } from "ts-morph";
+import { ts, SourceFile } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
@@ -63,6 +63,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         this.importsManager = importsManager;
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -157,6 +158,10 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             importsManager: this.importsManager,
             referencedIn: this.sourceFile
         });
+    }
+
+    private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        throw new Error("Not implemented");
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {

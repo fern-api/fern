@@ -7,7 +7,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { GeneratedType, GeneratedTypeReferenceExample, ModelContext, TypeContext } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -32,6 +32,7 @@ export declare namespace TypeContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        context: BaseContext;
     }
 }
 
@@ -48,6 +49,7 @@ export class TypeContextImpl implements TypeContext {
     private retainOriginalCasing: boolean;
     private isForSnippet: boolean;
     private npmPackage: NpmPackage | undefined;
+    private context: BaseContext;
 
     constructor({
         npmPackage,
@@ -61,7 +63,8 @@ export class TypeContextImpl implements TypeContext {
         treatUnknownAsAny,
         includeSerdeLayer,
         retainOriginalCasing,
-        useBigInt
+        useBigInt,
+        context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -73,9 +76,11 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.context = context;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -90,7 +95,7 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference, inlineType: undefined });
+        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference });
     }
 
     public getReferenceToInlineType(
@@ -104,6 +109,13 @@ export class TypeContextImpl implements TypeContext {
                 parentTypeName,
                 propertyName
             }
+        });
+    }
+
+    public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            forInlineUnion: true
         });
     }
 
@@ -131,6 +143,11 @@ export class TypeContextImpl implements TypeContext {
                 importsManager: this.importsManager
             });
         }
+    }
+
+    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        const generatedType = this.getGeneratedType(typeName);
+        return generatedType.generateForInlineUnion(this.context);
     }
 
     public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
