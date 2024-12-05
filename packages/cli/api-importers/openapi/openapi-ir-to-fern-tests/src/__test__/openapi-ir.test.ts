@@ -57,13 +57,17 @@ describe("openapi-ir-in-memory", async () => {
         it(
             fixture.name,
             async () => {
+                const snapshotFilepath = `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`;
+                if (shouldSkipInMemory(fixture.name)) {
+                    expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(snapshotFilepath);
+                    return;
+                }
+
                 const fixtureFilePath = await getTestFixturePath(join(FIXTURES_DIR, RelativeFilePath.of(fixture.name)));
                 const document = await loader.loadDocument({
                     parsed: await readAndParseOpenAPI(fixtureFilePath)
                 });
-                expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`
-                );
+                expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);
             },
             90_000
         );
@@ -87,4 +91,12 @@ async function getTestFixturePath(fixtureFilePath: AbsoluteFilePath): Promise<Ab
         : (await doesPathExist(jsonFixturePath))
         ? jsonFixturePath
         : swaggerFixturePath;
+}
+
+const SWAGGER_OPENAPI_FIXTURES = new Set([
+    "suger",
+])
+
+function shouldSkipInMemory(fixtureName: string): boolean {
+    return SWAGGER_OPENAPI_FIXTURES.has(fixtureName);
 }

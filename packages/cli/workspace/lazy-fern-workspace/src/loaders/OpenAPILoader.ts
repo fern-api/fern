@@ -1,13 +1,14 @@
 import { TaskContext } from "@fern-api/task-context";
 import { mergeWithOverrides } from "./mergeWithOverrides";
 import { AbsoluteFilePath, dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { AsyncAPIV2, Document, FernOpenAPIExtension, FERN_TYPE_EXTENSIONS } from "@fern-api/openapi-ir-parser";
+import { AsyncAPIV2, Document, FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { readFile } from "fs/promises";
-import { OpenAPI } from "openapi-types";
+import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { bundle, Source } from "@redocly/openapi-core";
 import yaml from "js-yaml";
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec } from "@fern-api/api-workspace-commons";
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec, isOpenAPIV3, isOpenAPIV2 } from "@fern-api/api-workspace-commons";
+import { convertObj } from "swagger2openapi";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
@@ -36,13 +37,24 @@ export class OpenAPILoader {
                     context,
                     absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
                 });
-                documents.push({
-                    type: "openapi",
-                    value: openAPI,
-                    source,
-                    namespace: spec.namespace,
-                    settings: spec.settings
-                });
+                if (isOpenAPIV3(openAPI)) {
+                    documents.push({
+                        type: "openapi",
+                        value: openAPI,
+                        source,
+                        namespace: spec.namespace,
+                        settings: spec.settings
+                    });
+                } else if (isOpenAPIV2(openAPI)) {
+                    const convertedOpenAPI = await this.convertOpenAPIV2ToV3(openAPI);
+                    documents.push({
+                        type: "openapi",
+                        value: convertedOpenAPI,
+                        source,
+                        namespace: spec.namespace,
+                        settings: spec.settings
+                    });
+                }
             } else if (contents.includes("asyncapi")) {
                 const asyncAPI = await this.loadAsyncAPI({
                     context,
@@ -149,5 +161,10 @@ export class OpenAPILoader {
                       ref: absolutePathToOpenAPI
                   });
         return result.bundle.parsed;
+    }
+
+    private async convertOpenAPIV2ToV3(openAPI: OpenAPIV2.Document): Promise<OpenAPIV3.Document> {
+        const conversionResult = await convertObj(openAPI, {});
+        return conversionResult.openapi;
     }
 }
