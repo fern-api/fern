@@ -93,9 +93,7 @@ async function getTestFixturePath(fixtureFilePath: AbsoluteFilePath): Promise<Ab
         : swaggerFixturePath;
 }
 
-const SWAGGER_OPENAPI_FIXTURES = new Set([
-    "suger",
-])
+const SWAGGER_OPENAPI_FIXTURES = new Set(["suger"]);
 
 function shouldSkipInMemory(fixtureName: string): boolean {
     return SWAGGER_OPENAPI_FIXTURES.has(fixtureName);
