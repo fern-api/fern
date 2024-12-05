@@ -1,2 +1,2 @@
-export { type API } from "./API";
+export { type Spec } from "./Spec";
 export { generateDynamicIR } from "./generateDynamicIR";

@@ -7,7 +7,7 @@ import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
 import { generateIr as generateIrFromV2 } from "./openapi/v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { DEFAULT_PARSE_OPENAPI_SETTINGS, ParseOpenAPIOptions } from "./options";
+import { getParseOptions, ParseOpenAPIOptions } from "./options";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 
@@ -16,7 +16,7 @@ export interface OpenAPIDocument {
     value: OpenAPI.Document;
     source?: OpenApiIrSource;
     namespace?: string;
-    settings?: SpecImportSettings;
+    settings?: ParseOpenAPIOptions;
 }
 
 export interface AsyncAPIDocument {
@@ -24,20 +24,7 @@ export interface AsyncAPIDocument {
     value: AsyncAPIV2.Document;
     source?: OpenApiIrSource;
     namespace?: string;
-    settings?: SpecImportSettings;
-}
-
-export interface SpecImportSettings {
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    asyncApiNaming?: "v1" | "v2";
-    optionalAdditionalProperties: boolean;
-    cooerceEnumsToLiterals: boolean;
-    objectQueryParameters: boolean;
-    respectReadonlySchemas: boolean;
-    onlyIncludeReferencedSchemas: boolean;
-    inlinePathParameters: boolean;
+    settings?: ParseOpenAPIOptions;
 }
 
 export async function parse({
@@ -82,7 +69,7 @@ export async function parse({
                     const openapiIr = generateIrFromV3({
                         taskContext: context,
                         openApi: document.value,
-                        options: getParseOptions({ specSettings: document.settings, overrides: options }),
+                        options: getParseOptions({ options: document.settings, overrides: options }),
                         source,
                         namespace: document.namespace
                     });
@@ -91,7 +78,7 @@ export async function parse({
                     const openapiIr = await generateIrFromV2({
                         taskContext: context,
                         openApi: document.value,
-                        options: getParseOptions({ specSettings: document.settings }),
+                        options: getParseOptions({ options: document.settings, overrides: options }),
                         source,
                         namespace: document.namespace
                     });
@@ -103,9 +90,9 @@ export async function parse({
                 const parsedAsyncAPI = parseAsyncAPI({
                     document: document.value,
                     taskContext: context,
-                    options: getParseOptions({ specSettings: document.settings }),
+                    options: getParseOptions({ options: document.settings, overrides: options }),
                     source,
-                    asyncApiOptions: getParseAsyncOptions({ specSettings: document.settings }),
+                    asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
                     namespace: document.namespace
                 });
                 if (parsedAsyncAPI.channel != null) {
@@ -126,57 +113,15 @@ export async function parse({
     return ir;
 }
 
-export function getParseOptions({
-    specSettings,
-    overrides
-}: {
-    specSettings?: SpecImportSettings;
-    overrides?: Partial<ParseOpenAPIOptions>;
-}): ParseOpenAPIOptions {
-    return {
-        disableExamples: overrides?.disableExamples ?? DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
-        discriminatedUnionV2:
-            overrides?.discriminatedUnionV2 ??
-            specSettings?.shouldUseUndiscriminatedUnionsWithLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
-        useTitlesAsName:
-            overrides?.useTitlesAsName ??
-            specSettings?.shouldUseTitleAsName ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
-        optionalAdditionalProperties:
-            overrides?.optionalAdditionalProperties ??
-            specSettings?.optionalAdditionalProperties ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        cooerceEnumsToLiterals:
-            overrides?.cooerceEnumsToLiterals ??
-            specSettings?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
-        respectReadonlySchemas:
-            overrides?.respectReadonlySchemas ??
-            specSettings?.respectReadonlySchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
-        onlyIncludeReferencedSchemas:
-            overrides?.onlyIncludeReferencedSchemas ??
-            specSettings?.onlyIncludeReferencedSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
-        inlinePathParameters:
-            overrides?.inlinePathParameters ??
-            specSettings?.inlinePathParameters ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
-        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds
-    };
-}
-
 function getParseAsyncOptions({
-    specSettings,
+    options,
     overrides
 }: {
-    specSettings?: SpecImportSettings;
+    options?: ParseOpenAPIOptions;
     overrides?: Partial<ParseAsyncAPIOptions>;
 }): ParseAsyncAPIOptions {
     return {
-        naming: overrides?.naming ?? specSettings?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
+        naming: overrides?.naming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
     };
 }
 
