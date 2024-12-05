@@ -29,9 +29,9 @@ export interface GetUndiscriminatedUnionRequest {
 
 export namespace GetUndiscriminatedUnionRequest {
     export type Bar =
-        | /**
+        /**
          * lorem ipsum */
-        {
+        | {
               foo: string;
               bar: {
                   foo: string;

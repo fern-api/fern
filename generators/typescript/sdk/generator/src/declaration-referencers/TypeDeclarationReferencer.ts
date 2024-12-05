@@ -34,10 +34,6 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
         return `${this.getExportedName(typeName)}.ts`;
     }
 
-    public getExportedNameForInlineType(inlineParentNames: string[]): string {
-        return inlineParentNames.join(".");
-    }
-
     public getExportedName(typeName: DeclaredTypeName): string {
         return typeName.name.pascalCase.safeName;
     }

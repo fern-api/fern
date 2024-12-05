@@ -132,16 +132,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private getTypeNameForDeclaration(typeDeclaration: TypeDeclaration): string {
-        if (typeDeclaration.inline) {
-            const inlineParents = this.typeResolver.getInlineParentTypeNames(typeDeclaration.name.typeId);
-            return this.typeDeclarationReferencer.getExportedNameForInlineType(inlineParents);
-        } else {
-            return this.typeDeclarationReferencer.getExportedName(typeDeclaration.name);
-        }
+        return this.typeDeclarationReferencer.getExportedName(typeDeclaration.name);
     }
 
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToRawTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference, inlineType: undefined });
     }
 
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
@@ -165,7 +160,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
-        return this.typeReferenceToSchemaConverter.convert(typeReference);
+        return this.typeReferenceToSchemaConverter.convert({ typeReference, inlineType: undefined });
     }
 
     public getSchemaOfNamedType(

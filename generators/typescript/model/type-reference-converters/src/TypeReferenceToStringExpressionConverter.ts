@@ -7,17 +7,19 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
-import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToStringExpressionConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {}
 }
 
 export class TypeReferenceToStringExpressionConverter extends AbstractTypeReferenceConverter<
-    (reference: ts.Expression) => ts.Expression,
-    void
+    (reference: ts.Expression) => ts.Expression
 > {
-    public convertWithNullCheckIfOptional(type: TypeReference): (reference: ts.Expression) => ts.Expression {
+    public convertWithNullCheckIfOptional(
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        const type = params.typeReference;
         const isNullable = TypeReference._visit(type, {
             named: (typeName) => {
                 const resolvedType = this.typeResolver.resolveTypeName(typeName);
@@ -32,7 +34,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         });
 
         if (!isNullable) {
-            return this.convert(type);
+            return this.convert(params);
         }
 
         return (reference) =>
@@ -43,21 +45,24 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     ts.factory.createNull()
                 ),
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                this.convert(type)(reference),
+                this.convert(params)(reference),
                 ts.factory.createToken(ts.SyntaxKind.ColonToken),
                 ts.factory.createIdentifier("undefined")
             );
     }
 
-    protected override named(typeName: DeclaredTypeName): (reference: ts.Expression) => ts.Expression {
+    protected override named(
+        typeName: DeclaredTypeName,
+        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+    ): (reference: ts.Expression) => ts.Expression {
         const resolvedType = this.typeResolver.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {
                     list: this.list.bind(this),
-                    optional: this.optional.bind(this),
+                    optional: (optionalType) => this.optional(optionalType, inlineType),
                     set: this.set.bind(this),
-                    map: this.map.bind(this),
+                    map: (mapType) => this.map(mapType, inlineType),
                     literal: this.literal.bind(this),
                     _other: () => {
                         throw new Error("Unknown ContainerType: " + containerType.type);
@@ -138,8 +143,11 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return (reference) => reference;
     }
 
-    protected override optional(itemType: TypeReference): (reference: ts.Expression) => ts.Expression {
-        return (reference) => this.convert(itemType)(reference);
+    protected override optional(
+        itemType: TypeReference,
+        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+    ): (reference: ts.Expression) => ts.Expression {
+        return (reference) => this.convert({ typeReference: itemType, inlineType })(reference);
     }
 
     protected override unknown(): (reference: ts.Expression) => ts.Expression {

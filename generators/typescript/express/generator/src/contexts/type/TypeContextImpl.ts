@@ -67,7 +67,7 @@ export class TypeContextImpl implements TypeContext {
         this.retainOriginalCasing = retainOriginalCasing;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
-            getReferenceToNamedType: (typeName) => this.getReferenceToNamedTypeWithInline(typeName).getEntityName(),
+            getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -82,12 +82,20 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference, inlineType: undefined });
     }
 
-    public getReferenceToInlineType(typeReference: TypeReference, parentInlineTypeName: string): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference, {
-            parentInlineTypeName
+    public getReferenceToInlineType(
+        typeReference: TypeReference,
+        parentTypeName: string,
+        propertyName: string
+    ): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            inlineType: {
+                parentTypeName,
+                propertyName
+            }
         });
     }
 
@@ -102,24 +110,6 @@ export class TypeContextImpl implements TypeContext {
             referencedIn: this.sourceFile,
             importsManager: this.importsManager
         });
-    }
-
-    public getReferenceToNamedTypeWithInline(
-        typeName: DeclaredTypeName,
-        options?: TypeReferenceToParsedTypeNodeConverter.ConvertOptions
-    ): Reference {
-        if (options?.parentInlineTypeName) {
-            return this.typeDeclarationReferencer.getReferenceToType({
-                name: typeName,
-                importStrategy: {
-                    type: "direct",
-                    alias: options.parentInlineTypeName
-                },
-                referencedIn: this.sourceFile,
-                importsManager: this.importsManager
-            });
-        }
-        return this.getReferenceToNamedType(typeName);
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
@@ -170,11 +160,15 @@ export class TypeContextImpl implements TypeContext {
         { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
-            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional(valueType)(
-                valueToStringify
-            );
+            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         } else {
-            return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify);
+            return this.typeReferenceToStringExpressionConverter.convert({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         }
     }
 

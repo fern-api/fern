@@ -130,33 +130,11 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         property: ObjectProperty,
         inlineProperties: InlinePropertyMap
     ): TypeReferenceNode {
-        if (inlineProperties.has(property)) {
-            const propName = property.name.name.pascalCase.safeName;
-            const suffix = generateTypeVisitor(property.valueType, {
-                list: () => ".Item",
-                map: () => ".Value",
-                named: () => "",
-                set: () => ".Item",
-                other: () => {
-                    throw new Error(`Only named, list, map, and set properties can be inlined.
-                        Property: ${JSON.stringify(property)}`);
-                }
-            });
-            let typeReference = context.type.getReferenceToType(property.valueType);
-            typeReference = {
-                isOptional: typeReference.isOptional,
-                typeNode: renameTypeReferenceNode(typeReference.typeNode, this.typeName, propName + suffix),
-                typeNodeWithoutUndefined: renameTypeReferenceNode(
-                    typeReference.typeNode,
-                    this.typeName,
-                    propName + suffix
-                )
-            };
-
-            return typeReference;
-        } else {
-            return context.type.getReferenceToType(property.valueType);
-        }
+        return context.type.getReferenceToInlineType(
+            property.valueType,
+            this.typeName,
+            property.name.name.pascalCase.safeName
+        );
     }
 
     private getInlinePropertiesWithTypeDeclaration(context: Context): Map<ObjectProperty, TypeDeclaration> {

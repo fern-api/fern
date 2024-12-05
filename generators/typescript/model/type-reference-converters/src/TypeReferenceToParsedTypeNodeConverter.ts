@@ -1,25 +1,23 @@
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export declare namespace TypeReferenceToParsedTypeNodeConverter {
-    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init<ConvertOptions> {}
-    export interface ConvertOptions {
-        parentInlineTypeName: string | undefined;
-    }
+    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init {}
 }
-type ConvertOptions = TypeReferenceToParsedTypeNodeConverter.ConvertOptions;
 
-export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter<
-    ConvertOptions | undefined
-> {
-    protected override set(itemType: TypeReference, options?: ConvertOptions): TypeReferenceNode {
+export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
+    protected override set(
+        itemType: TypeReference,
+        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+    ): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
-            const itemTypeNode = this.convert(itemType, options).typeNode;
+            const itemTypeNode = this.convert({ typeReference: itemType, inlineType }).typeNode;
             return this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Set", [itemTypeNode]));
         } else {
-            return this.list(itemType, options);
+            return this.list(itemType, inlineType);
         }
     }
 

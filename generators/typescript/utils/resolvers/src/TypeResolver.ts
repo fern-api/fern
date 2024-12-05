@@ -24,28 +24,14 @@ type InlineType = {
  */
 export class TypeResolver {
     private allTypes: Record<TypeId, TypeDeclaration> = {};
-    private inlineTypes: Record<TypeId, InlineType> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         this.setAllTypes(intermediateRepresentation);
-        this.setInlineTypes(intermediateRepresentation);
     }
 
     private setAllTypes(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of Object.values(intermediateRepresentation.types)) {
             this.allTypes[type.name.typeId] = type;
-        }
-    }
-
-    private setInlineTypes(intermediateRepresentation: IntermediateRepresentation): void {
-        for (const [typeId, typeDeclaration] of Object.entries(intermediateRepresentation.types)) {
-            if (typeDeclaration.inline !== true) continue;
-            const parentNames = getParentNames(typeId, intermediateRepresentation);
-            this.inlineTypes[typeId] = {
-                typeId: typeId,
-                declaration: typeDeclaration,
-                parentNames
-            };
         }
     }
 
@@ -114,71 +100,6 @@ export class TypeResolver {
     public doesTypeExist(typeName: DeclaredTypeName): boolean {
         return this.allTypes[typeName.typeId] != null;
     }
-
-    private getInlineType(typeId: TypeId): InlineType {
-        const inlineType = this.inlineTypes[typeId];
-        if (!inlineType) {
-            throw new Error(`${typeId} not found in inline types.`);
-        }
-        return inlineType;
-    }
-
-    public getInlineParentTypeNames(typeId: TypeId): string[] {
-        return this.getInlineType(typeId).parentNames;
-    }
-}
-
-function getParentNames(typeIdToFind: string, intermediateRepresentation: IntermediateRepresentation): string[] {
-    const parentNames: string[] = [];
-    for (const typeDeclaration of Object.values(intermediateRepresentation.types)) {
-        if (!typeDeclaration.referencedTypes?.has(typeIdToFind)) {
-            continue;
-        }
-        switch (typeDeclaration.shape.type) {
-            case "alias":
-                continue;
-            case "enum":
-                continue;
-            case "object":
-                for (const prop of typeDeclaration.shape.properties) {
-                    if (handleObjectTypeReference(typeIdToFind, prop.valueType, parentNames)) {
-                        return parentNames;
-                    }
-                }
-                break;
-            case "undiscriminatedUnion":
-                for (const member of typeDeclaration.shape.members) {
-                    if (handleObjectTypeReference(typeIdToFind, member.type, parentNames)) {
-                        return parentNames;
-                    }
-                }
-                break;
-            case "union":
-                for (const unionType of typeDeclaration.shape.types) {
-                    switch (unionType.shape.propertiesType) {
-                        case "noProperties":
-                            break;
-                        case "samePropertiesAsObject":
-                            if (unionType.shape.typeId === typeIdToFind) {
-                                parentNames.push(unionType.discriminantValue.name.pascalCase.safeName);
-                                return parentNames;
-                            }
-                            break;
-                        case "singleProperty":
-                            if (handleObjectTypeReference(typeIdToFind, unionType.shape.type, parentNames)) {
-                                return parentNames;
-                            }
-                            break;
-                        default:
-                            assertNever(unionType.shape);
-                    }
-                }
-                break;
-            default:
-                assertNever(typeDeclaration.shape);
-        }
-    }
-    return parentNames;
 }
 
 function handleObjectTypeReference(typeIdToFind: TypeId, type: TypeReference, parentNames: string[]): boolean {

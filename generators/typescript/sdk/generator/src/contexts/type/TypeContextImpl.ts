@@ -75,8 +75,7 @@ export class TypeContextImpl implements TypeContext {
         this.retainOriginalCasing = retainOriginalCasing;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
-            getReferenceToNamedType: (typeName, options) =>
-                this.getReferenceToNamedTypeWithInline(typeName, options).getEntityName(),
+            getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -89,54 +88,27 @@ export class TypeContextImpl implements TypeContext {
             useBigInt
         });
     }
-    public getReferenceToTypeFromProperty(objectProperty: ObjectProperty): TypeReferenceNode {
-        const ref = this.typeReferenceToParsedTypeNodeConverter.convert(objectProperty.valueType);
-        switch (objectProperty.valueType.type) {
-            case "named":
-                const declaration = this.getTypeDeclaration(objectProperty.valueType);
-                if (declaration.inline) {
-                    return {
-                        isOptional: ref.isOptional,
-                        typeNode: ts.factory.createTypeReferenceNode(
-                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNode.getText()}`
-                        ),
-                        typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(
-                            `${objectProperty.name.name.pascalCase.safeName}.${ref.typeNodeWithoutUndefined.getText()}`
-                        )
-                    };
-                }
-        }
-        return ref;
-    }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference, inlineType: undefined });
     }
 
-    public getReferenceToInlineType(typeReference: TypeReference, parentInlineTypeName: string): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference, { parentInlineTypeName });
+    public getReferenceToInlineType(
+        typeReference: TypeReference,
+        parentTypeName: string,
+        propertyName: string
+    ): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            inlineType: {
+                parentTypeName,
+                propertyName
+            }
+        });
     }
 
     public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
         return this.typeResolver.getTypeDeclarationFromName(typeName);
-    }
-
-    public getReferenceToNamedTypeWithInline(
-        typeName: DeclaredTypeName,
-        options?: TypeReferenceToParsedTypeNodeConverter.ConvertOptions
-    ): Reference {
-        if (options?.parentInlineTypeName) {
-            return this.typeDeclarationReferencer.getReferenceToType({
-                name: typeName,
-                importStrategy: {
-                    type: "direct",
-                    alias: options.parentInlineTypeName
-                },
-                referencedIn: this.sourceFile,
-                importsManager: this.importsManager
-            });
-        }
-        return this.getReferenceToNamedType(typeName);
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
@@ -199,11 +171,15 @@ export class TypeContextImpl implements TypeContext {
         { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
-            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional(valueType)(
-                valueToStringify
-            );
+            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         } else {
-            return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify);
+            return this.typeReferenceToStringExpressionConverter.convert({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         }
     }
 

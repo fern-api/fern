@@ -30,9 +30,9 @@ export interface GetDiscriminatedUnionRequest {
 
 export namespace GetDiscriminatedUnionRequest {
     export type Bar =
-        | /**
+        /**
          * lorem ipsum */
-        Bar.Type1
+        | Bar.Type1
         /**
          * lorem ipsum */
         | Bar.Type2

@@ -1,25 +1,24 @@
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
-export namespace TypeReferenceToRawTypeNodeConverter {
-    export interface Options {
-        parentInlineTypeName: string | undefined;
-    }
-}
-
-type Options = TypeReferenceToRawTypeNodeConverter.Options;
-
-export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter<Options> {
-    protected override set(itemType: TypeReference, options: Options): TypeReferenceNode {
+export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
+    protected override set(
+        itemType: TypeReference,
+        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+    ): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(this.convert(itemType, options).typeNode)
+            ts.factory.createArrayTypeNode(this.convert({ typeReference: itemType, inlineType }).typeNode)
         );
     }
 
-    protected override optional(itemType: TypeReference, options: Options): TypeReferenceNode {
-        const referencedToValueType = this.convert(itemType, options).typeNode;
+    protected override optional(
+        itemType: TypeReference,
+        inlineType: ConvertTypeReferenceParams.InlineType | undefined
+    ): TypeReferenceNode {
+        const referencedToValueType = this.convert({ typeReference: itemType, inlineType }).typeNode;
         return {
             isOptional: true,
             typeNode: ts.factory.createUnionTypeNode([
