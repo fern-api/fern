@@ -11,6 +11,7 @@ import {
     InlinedRequestBody,
     InlinedRequestBodyProperty,
     NameAndWireValue,
+    NamedType,
     ObjectProperty,
     QueryParameter,
     TypeDeclaration,
@@ -223,15 +224,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     ): TypeReferenceNode {
         const inlineProps = this.getInlinePropertiesWithTypeDeclaration(requestBody, context);
         if (inlineProps.has(property)) {
-            return {
-                isOptional: false,
-                typeNode: ts.factory.createTypeReferenceNode(
-                    `${requestBody.name.pascalCase.safeName}.${property.name.name.pascalCase.safeName}`
-                ),
-                typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(
-                    `${requestBody.name.pascalCase.safeName}.${property.name.name.pascalCase.safeName}`
-                )
-            };
+            const propParentTypeName = requestBody.name.pascalCase.safeName;
+            const propName = property.name.name.pascalCase.safeName;
+            return context.type.getReferenceToInlineType(property.valueType, propParentTypeName, propName);
         } else {
             return context.type.getReferenceToType(property.valueType);
         }
@@ -267,44 +262,28 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestBody: InlinedRequestBody | FileUploadRequest,
         context: SdkContext
     ): Map<ObjectProperty, TypeDeclaration> {
-        const properties = requestBody.properties
-            .map((prop) => {
-                if ("type" in prop) {
-                    // fileupload prop
-                    switch (prop.type) {
-                        case "bodyProperty":
-                            return prop as InlinedRequestBodyProperty;
-                        case "file":
-                            return undefined;
-                        default:
-                            assertNever(prop);
-                    }
-                } else {
-                    return prop;
-                }
-            })
-            .filter((prop): prop is InlinedRequestBodyProperty => prop !== undefined);
         const inlineProperties = new Map<ObjectProperty, TypeDeclaration>(
-            properties
-                .map((property) => {
-                    switch (property.valueType.type) {
-                        case "named":
-                            return [property, property.valueType];
-                        case "container":
-                            if (
-                                property.valueType.container.type === "optional" &&
-                                property.valueType.container.optional.type === "named"
-                            ) {
-                                return [property, property.valueType.container.optional];
-                            }
-                            return undefined;
-                        case "primitive":
-                            return undefined;
-                        case "unknown":
-                            return undefined;
-                        default:
-                            assertNever(property.valueType);
+            requestBody.properties
+                .map((prop) => {
+                    if ("type" in prop) {
+                        // fileupload prop
+                        switch (prop.type) {
+                            case "bodyProperty":
+                                return prop as InlinedRequestBodyProperty;
+                            case "file":
+                                return undefined;
+                            default:
+                                assertNever(prop);
+                        }
+                    } else {
+                        return prop;
                     }
+                })
+                .filter((prop): prop is InlinedRequestBodyProperty => prop !== undefined)
+                .map((property): [ObjectProperty, NamedType] | undefined => {
+                    const namedType = getNamedType(property?.valueType);
+                    if (namedType) return [property, namedType];
+                    return undefined;
                 })
                 .filter((x): x is [ObjectProperty, TypeReference.Named] => x != null)
                 .map(([property, type]): [ObjectProperty, TypeDeclaration] => {
@@ -612,5 +591,33 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+    }
+}
+
+function getNamedType(typeReference: TypeReference): NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    assertNever(typeReference.container);
+            }
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            assertNever(typeReference);
     }
 }

@@ -137,7 +137,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference, inlineType: undefined });
+        return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference });
     }
 
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
@@ -165,7 +165,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
-        return this.typeReferenceToSchemaConverter.convert({ typeReference, inlineType: undefined });
+        return this.typeReferenceToSchemaConverter.convert({ typeReference });
     }
 
     public getSchemaOfNamedType(
