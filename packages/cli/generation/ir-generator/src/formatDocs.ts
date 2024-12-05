@@ -1,7 +1,11 @@
-import * as prettier from "prettier";
+const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
 
 export async function formatDocs(docs: string | undefined): Promise<string | undefined> {
+    if (docs == null || isBrowser) {
+        return undefined;
+    }
     if (docs != null) {
+        const prettier = await import("prettier");
         const formattedDocs = prettier.format(docs, {
             parser: "markdown"
         });
