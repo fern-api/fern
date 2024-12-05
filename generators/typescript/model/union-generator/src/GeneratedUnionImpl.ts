@@ -118,7 +118,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: (string | WriterFunction | StatementStructures)[] = [
             this.generateTypeAlias(context),
             this.generateModule(context)
@@ -131,6 +131,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             }
         }
         return statements;
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createParenthesizedType(
+            ts.factory.createUnionTypeNode(
+                this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
+                    singleUnionType.generateForInlineUnion(context, this)
+                )
+            )
+        );
     }
 
     public getReferenceTo(context: Context): ts.TypeNode {

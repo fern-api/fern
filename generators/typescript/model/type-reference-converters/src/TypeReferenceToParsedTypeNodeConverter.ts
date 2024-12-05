@@ -4,16 +4,22 @@ import { ts } from "ts-morph";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export declare namespace TypeReferenceToParsedTypeNodeConverter {
-    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init {}
+    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init<ConvertOptions> {}
+    export interface ConvertOptions {
+        parentInlineTypeName: string | undefined;
+    }
 }
+type ConvertOptions = TypeReferenceToParsedTypeNodeConverter.ConvertOptions;
 
-export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference): TypeReferenceNode {
+export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter<
+    ConvertOptions | undefined
+> {
+    protected override set(itemType: TypeReference, options?: ConvertOptions): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
-            const itemTypeNode = this.convert(itemType).typeNode;
+            const itemTypeNode = this.convert(itemType, options).typeNode;
             return this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Set", [itemTypeNode]));
         } else {
-            return this.list(itemType);
+            return this.list(itemType, options);
         }
     }
 

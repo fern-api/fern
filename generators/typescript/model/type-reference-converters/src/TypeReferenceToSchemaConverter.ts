@@ -9,7 +9,7 @@ export declare namespace TypeReferenceToSchemaConverter {
     }
 }
 
-export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConverter<Zurg.Schema> {
+export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConverter<Zurg.Schema, void> {
     private getSchemaOfNamedType: (typeName: DeclaredTypeName) => Zurg.Schema;
     private zurg: Zurg;
 

@@ -19,6 +19,17 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         this.discriminant = discriminant;
     }
 
+    public generateForInlineUnion(context: SdkContext): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode([
+            ts.factory.createPropertySignature(
+                undefined,
+                UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
+                undefined,
+                context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
+            )
+        ]);
+    }
+
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }

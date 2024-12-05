@@ -3,15 +3,23 @@ import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
-export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference): TypeReferenceNode {
+export namespace TypeReferenceToRawTypeNodeConverter {
+    export interface Options {
+        parentInlineTypeName: string | undefined;
+    }
+}
+
+type Options = TypeReferenceToRawTypeNodeConverter.Options;
+
+export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter<Options> {
+    protected override set(itemType: TypeReference, options: Options): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
+            ts.factory.createArrayTypeNode(this.convert(itemType, options).typeNode)
         );
     }
 
-    protected override optional(itemType: TypeReference): TypeReferenceNode {
-        const referencedToValueType = this.convert(itemType).typeNode;
+    protected override optional(itemType: TypeReference, options: Options): TypeReferenceNode {
+        const referencedToValueType = this.convert(itemType, options).typeNode;
         return {
             isOptional: true,
             typeNode: ts.factory.createUnionTypeNode([

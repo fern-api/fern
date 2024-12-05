@@ -22,6 +22,12 @@ await client.getDiscriminatedUnion(
 			type : "type1", 
 			foo: "foo",
 			bar: {
+					foo: "foo",
+					ref: {
+						foo: "foo"
+					}
+				},
+			ref: {
 					foo: "foo"
 				}
 		},

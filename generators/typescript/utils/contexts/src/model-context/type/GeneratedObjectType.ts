@@ -1,6 +1,7 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, ModuleDeclarationStructure, OptionalKind, ts } from "ts-morph";
+import { GeneratedUnionInlineMemberNode } from "../../commons/GeneratedUnionInlineMemberNode";
 import { BaseGeneratedType } from "./BaseGeneratedType";
 
 export interface GeneratedObjectType<Context> extends BaseGeneratedType<Context> {

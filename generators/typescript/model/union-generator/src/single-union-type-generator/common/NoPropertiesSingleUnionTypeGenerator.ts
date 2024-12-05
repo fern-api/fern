@@ -2,6 +2,10 @@ import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, t
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode([]);
+    }
+
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }

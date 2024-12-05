@@ -75,7 +75,8 @@ export class TypeContextImpl implements TypeContext {
         this.retainOriginalCasing = retainOriginalCasing;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
-            getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
+            getReferenceToNamedType: (typeName, options) =>
+                this.getReferenceToNamedTypeWithInline(typeName, options).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -112,8 +113,30 @@ export class TypeContextImpl implements TypeContext {
         return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
     }
 
+    public getReferenceToInlineType(typeReference: TypeReference, parentInlineTypeName: string): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference, { parentInlineTypeName });
+    }
+
     public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
         return this.typeResolver.getTypeDeclarationFromName(typeName);
+    }
+
+    public getReferenceToNamedTypeWithInline(
+        typeName: DeclaredTypeName,
+        options?: TypeReferenceToParsedTypeNodeConverter.ConvertOptions
+    ): Reference {
+        if (options?.parentInlineTypeName) {
+            return this.typeDeclarationReferencer.getReferenceToType({
+                name: typeName,
+                importStrategy: {
+                    type: "direct",
+                    alias: options.parentInlineTypeName
+                },
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager
+            });
+        }
+        return this.getReferenceToNamedType(typeName);
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {

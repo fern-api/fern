@@ -1,5 +1,5 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, writerToString } from "@fern-typescript/commons";
 import { ModelContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
 import { StatementStructures, StructureKind, ts, TypeAliasDeclarationStructure, WriterFunction } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
@@ -17,8 +17,13 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
 
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         return [this.generateTypeAlias(context)];
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const type = writerToString(this.generateTypeAlias(context).type);
+        return ts.factory.createTypeReferenceNode(type);
     }
 
     private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {

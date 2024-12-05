@@ -6,8 +6,14 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, TypeReferenceNode } from "@fern-typescript/commons";
-import { GeneratedObjectType, ModelContext } from "@fern-typescript/contexts";
+import {
+    GetReferenceOpts,
+    getTextOfTsNode,
+    maybeAddDocs,
+    TypeReferenceNode,
+    writerToString
+} from "@fern-typescript/commons";
+import { BaseContext, GeneratedObjectType, GeneratedType, ModelContext } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationKind,
@@ -17,10 +23,15 @@ import {
     StatementStructures,
     StructureKind,
     ts,
+    TypeAliasDeclarationStructure,
+    TypeLiteralNode,
     WriterFunction
 } from "ts-morph";
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { renameTypeReferenceNode } from "../utils/renameTypeReferenceNode";
+
+type InlinePropertyMap = Map<ObjectProperty, TypeDeclaration>;
 
 export class GeneratedObjectTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
@@ -29,16 +40,12 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     public readonly type = "object";
 
     public writeToFile(context: Context): void {
-        context.sourceFile.addInterface(this.generateInterface(context));
-        const inlineTypesModule = this.generateModuleForInlineTypes(context);
-        if (inlineTypesModule) {
-            context.sourceFile.addModule(inlineTypesModule);
-        }
+        context.sourceFile.addStatements(this.generateStatements(context));
     }
 
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const { interface_, inlineModule } = this.getNamedStructures(context);
         const statements: (string | WriterFunction | StatementStructures)[] = [interface_];
         if (inlineModule) {
@@ -51,15 +58,45 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         interface_: InterfaceDeclarationStructure;
         inlineModule: ModuleDeclarationStructure | undefined;
     } {
+        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
         return {
-            interface_: this.generateInterface(context),
-            inlineModule: this.generateModuleForInlineTypes(context)
+            interface_: this.generateInterface(context, inlineProperties),
+            inlineModule: this.generateModuleForInlineTypes(context, inlineProperties)
         };
     }
 
-    private getPropertyStructures(context: Context): OptionalKind<PropertySignatureStructure>[] {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
+        return ts.factory.createTypeLiteralNode(
+            this.shape.properties.map((property) => {
+                const value = this.getTypeForObjectProperty(context, property, inlineProperties);
+                const hasOptionalToken = !this.noOptionalProperties && value.isOptional;
+                let propertyValue: ts.TypeNode;
+                if (inlineProperties.has(property)) {
+                    const typeDeclaration = inlineProperties.get(property)!;
+                    const generatedType = context.type.getGeneratedType(typeDeclaration.name);
+                    propertyValue = generatedType.generateForInlineUnion(context);
+                } else {
+                    propertyValue = ts.factory.createTypeReferenceNode(
+                        getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined)
+                    );
+                }
+                return ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier(this.getPropertyKeyFromProperty(property)),
+                    hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    propertyValue
+                );
+            })
+        );
+    }
+
+    private getPropertyStructures(
+        context: Context,
+        inlineProperties: InlinePropertyMap
+    ): OptionalKind<PropertySignatureStructure>[] {
         return this.shape.properties.map((property) => {
-            const value = this.getTypeForObjectProperty(context, property);
+            const value = this.getTypeForObjectProperty(context, property, inlineProperties);
             const propertyNode: OptionalKind<PropertySignatureStructure> = {
                 name: `"${this.getPropertyKeyFromProperty(property)}"`,
                 type: getTextOfTsNode(this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined),
@@ -71,11 +108,11 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         });
     }
 
-    private generateInterface(context: Context): InterfaceDeclarationStructure {
+    private generateInterface(context: Context, inlineProperties: InlinePropertyMap): InterfaceDeclarationStructure {
         const interfaceNode: InterfaceDeclarationStructure = {
             kind: StructureKind.Interface,
             name: this.typeName,
-            properties: [...this.getPropertyStructures(context)],
+            properties: [...this.getPropertyStructures(context, inlineProperties)],
             isExported: true
         };
 
@@ -88,18 +125,35 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         return interfaceNode;
     }
 
-    private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
-        const inlineProps = this.getInlinePropertiesWithTypeDeclaration(context);
-        if (inlineProps.has(property)) {
-            return {
-                isOptional: false,
-                typeNode: ts.factory.createTypeReferenceNode(
-                    `${this.typeName}.${property.name.name.pascalCase.safeName}`
-                ),
-                typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(
-                    `${this.typeName}.${property.name.name.pascalCase.safeName}`
+    private getTypeForObjectProperty(
+        context: Context,
+        property: ObjectProperty,
+        inlineProperties: InlinePropertyMap
+    ): TypeReferenceNode {
+        if (inlineProperties.has(property)) {
+            const propName = property.name.name.pascalCase.safeName;
+            const suffix = generateTypeVisitor(property.valueType, {
+                list: () => ".Item",
+                map: () => ".Value",
+                named: () => "",
+                set: () => ".Item",
+                other: () => {
+                    throw new Error(`Only named, list, map, and set properties can be inlined.
+                        Property: ${JSON.stringify(property)}`);
+                }
+            });
+            let typeReference = context.type.getReferenceToType(property.valueType);
+            typeReference = {
+                isOptional: typeReference.isOptional,
+                typeNode: renameTypeReferenceNode(typeReference.typeNode, this.typeName, propName + suffix),
+                typeNodeWithoutUndefined: renameTypeReferenceNode(
+                    typeReference.typeNode,
+                    this.typeName,
+                    propName + suffix
                 )
             };
+
+            return typeReference;
         } else {
             return context.type.getReferenceToType(property.valueType);
         }
@@ -108,27 +162,12 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     private getInlinePropertiesWithTypeDeclaration(context: Context): Map<ObjectProperty, TypeDeclaration> {
         const inlineProperties = new Map<ObjectProperty, TypeDeclaration>(
             this.shape.properties
-                .map((property) => {
-                    switch (property.valueType.type) {
-                        case "named":
-                            return [property, property.valueType];
-                        case "container":
-                            if (
-                                property.valueType.container.type === "optional" &&
-                                property.valueType.container.optional.type === "named"
-                            ) {
-                                return [property, property.valueType.container.optional];
-                            }
-                            return undefined;
-                        case "primitive":
-                            return undefined;
-                        case "unknown":
-                            return undefined;
-                        default:
-                            assertNever(property.valueType);
-                    }
+                .map((property): [ObjectProperty, NamedType] | undefined => {
+                    const namedType = getNamedType(property.valueType);
+                    if (namedType) return [property, namedType];
+                    return undefined;
                 })
-                .filter((x): x is [ObjectProperty, TypeReference.Named] => x != null)
+                .filter((x): x is [ObjectProperty, NamedType] => x !== undefined)
                 .map(([property, type]): [ObjectProperty, TypeDeclaration] => {
                     return [property, context.type.getTypeDeclaration(type)];
                 })
@@ -216,8 +255,10 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
         ];
     }
 
-    private generateModuleForInlineTypes(context: Context): ModuleDeclarationStructure | undefined {
-        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
+    private generateModuleForInlineTypes(
+        context: Context,
+        inlineProperties: Map<ObjectProperty, TypeDeclaration>
+    ): ModuleDeclarationStructure | undefined {
         if (inlineProperties.size === 0) {
             return;
         }
@@ -229,13 +270,117 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             declarationKind: ModuleDeclarationKind.Namespace,
             statements: Array.from(inlineProperties.entries()).flatMap(
                 ([objectProperty, typeDeclaration]: [ObjectProperty, TypeDeclaration]) => {
-                    const generatedType = context.type.getGeneratedType(
-                        typeDeclaration.name,
-                        objectProperty.name.name.pascalCase.safeName
-                    );
-                    return generatedType.generateStatements(context);
+                    const typeName = objectProperty.name.name.pascalCase.safeName;
+                    const listOrMapStatementGenerator = () => {
+                        const itemTypeName = "Item";
+                        const statements: (string | WriterFunction | StatementStructures)[] = [];
+                        const listType: TypeAliasDeclarationStructure = {
+                            kind: StructureKind.TypeAlias,
+                            name: typeName,
+                            type: `${typeName}.${itemTypeName}[]`
+                        };
+                        statements.push(listType);
+
+                        const generatedType = context.type.getGeneratedType(typeDeclaration.name, itemTypeName);
+
+                        const listModule: ModuleDeclarationStructure = {
+                            kind: StructureKind.Module,
+                            declarationKind: ModuleDeclarationKind.Namespace,
+                            isExported: true,
+                            hasDeclareKeyword: false,
+                            name: typeName,
+                            statements: generatedType.generateStatements(context)
+                        };
+
+                        statements.push(listModule);
+                        return statements;
+                    };
+                    return generateTypeVisitor(objectProperty.valueType, {
+                        named: () => {
+                            const generatedType = context.type.getGeneratedType(typeDeclaration.name, typeName);
+                            return generatedType.generateStatements(context);
+                        },
+                        list: listOrMapStatementGenerator,
+                        set: listOrMapStatementGenerator,
+                        map: () => {
+                            const valueTypeName = "Value";
+                            const statements: (string | WriterFunction | StatementStructures)[] = [];
+                            const generatedType = context.type.getGeneratedType(typeDeclaration.name, valueTypeName);
+
+                            const mapModule: ModuleDeclarationStructure = {
+                                kind: StructureKind.Module,
+                                declarationKind: ModuleDeclarationKind.Namespace,
+                                isExported: true,
+                                hasDeclareKeyword: false,
+                                name: typeName,
+                                statements: generatedType.generateStatements(context)
+                            };
+
+                            statements.push(mapModule);
+                            return statements;
+                        },
+                        other: () => {
+                            throw new Error(`Only named, list, map, and set properties can be inlined.
+                                Property: ${JSON.stringify(objectProperty)}`);
+                        }
+                    });
                 }
             )
         };
+    }
+}
+
+function generateTypeVisitor<TOut>(
+    typeReference: TypeReference,
+    visitor: {
+        named: () => TOut;
+        list: () => TOut;
+        map: () => TOut;
+        set: () => TOut;
+        other: () => TOut;
+    }
+): TOut {
+    return typeReference._visit({
+        named: visitor.named,
+        primitive: visitor.other,
+        unknown: visitor.other,
+        container: (containerType) =>
+            containerType._visit({
+                list: visitor.list,
+                literal: visitor.other,
+                map: visitor.map,
+                set: visitor.set,
+                optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                _other: visitor.other
+            }),
+        _other: visitor.other
+    });
+}
+
+function getNamedType(typeReference: TypeReference): NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    assertNever(typeReference.container);
+            }
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            assertNever(typeReference);
     }
 }

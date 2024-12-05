@@ -79,8 +79,12 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
 
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         return this.generatedUnion.generateStatements(context);
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return this.generatedUnion.generateForInlineUnion(context);
     }
 
     public getGeneratedUnion(): GeneratedUnion<Context> {

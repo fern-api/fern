@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedObjectClient } from \"@fern/inline-types\";\n\nconst client = new SeedObjectClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getDiscriminatedUnion({\n    bar: {\n        type: \"type1\",\n        foo: \"foo\",\n        bar: {\n            foo: \"foo\"\n        }\n    },\n    foo: \"foo\"\n});\n"
+                "client": "import { SeedObjectClient } from \"@fern/inline-types\";\n\nconst client = new SeedObjectClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getDiscriminatedUnion({\n    bar: {\n        type: \"type1\",\n        foo: \"foo\",\n        bar: {\n            foo: \"foo\",\n            ref: {\n                foo: \"foo\"\n            }\n        },\n        ref: {\n            foo: \"foo\"\n        }\n    },\n    foo: \"foo\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedObjectClient } from \"@fern/inline-types\";\n\nconst client = new SeedObjectClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUndiscriminatedUnion({\n    bar: {\n        foo: \"foo\",\n        bar: {\n            foo: \"foo\"\n        }\n    },\n    foo: \"foo\"\n});\n"
+                "client": "import { SeedObjectClient } from \"@fern/inline-types\";\n\nconst client = new SeedObjectClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUndiscriminatedUnion({\n    bar: {\n        foo: \"foo\",\n        bar: {\n            foo: \"foo\",\n            ref: {\n                foo: \"foo\"\n            }\n        },\n        ref: {\n            foo: \"foo\"\n        }\n    },\n    foo: \"foo\"\n});\n"
             }
         }
     ],

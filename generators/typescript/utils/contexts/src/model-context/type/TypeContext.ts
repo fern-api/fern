@@ -14,6 +14,7 @@ import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
 
 export interface TypeContext {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
+    getReferenceToInlineType: (typeReference: TypeReference, parentInlineTypeName: string) => TypeReferenceNode;
     stringify: (
         valueToStringify: ts.Expression,
         valueType: TypeReference,

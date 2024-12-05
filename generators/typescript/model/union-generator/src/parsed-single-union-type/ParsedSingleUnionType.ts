@@ -13,6 +13,7 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
         context: Context,
         generatedUnion: GeneratedUnionImpl<Context>
     ): ParsedSingleUnionType.InterfaceDeclaration;
+    generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode;
     getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction;
     getBuilderName(): string;
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];

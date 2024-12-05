@@ -1,5 +1,11 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import {
+    GetReferenceOpts,
+    getTextOfTsKeyword,
+    getTextOfTsNode,
+    maybeAddDocs,
+    writerToString
+} from "@fern-typescript/commons";
 import { BrandedGeneratedAliasType, ModelContext } from "@fern-typescript/contexts";
 import {
     FunctionDeclarationStructure,
@@ -25,8 +31,13 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
 
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         return [this.generateTypeAliasStructure(context)];
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const type = writerToString(this.generateTypeAliasStructure(context).type);
+        return ts.factory.createTypeReferenceNode(type);
     }
 
     public getReferenceToCreator(context: Context, opts?: GetReferenceOpts): ts.Expression {

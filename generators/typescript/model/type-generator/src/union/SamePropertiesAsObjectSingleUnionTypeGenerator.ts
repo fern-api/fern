@@ -20,6 +20,15 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
         this.extended = extended;
     }
 
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
+        if (typeDeclaration.inline) {
+            const type = context.type.getGeneratedType(typeDeclaration.name);
+            return type.generateForInlineUnion(context);
+        }
+        return context.type.getReferenceToNamedType(this.extended).getTypeNode();
+    }
+
     public getExtendsForInterface(context: Context): ts.TypeNode[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (typeDeclaration.inline) {

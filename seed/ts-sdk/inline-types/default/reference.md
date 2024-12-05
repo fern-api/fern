@@ -18,6 +18,12 @@ await client.getUndiscriminatedUnion({
         foo: "foo",
         bar: {
             foo: "foo",
+            ref: {
+                foo: "foo",
+            },
+        },
+        ref: {
+            foo: "foo",
         },
     },
     foo: "foo",

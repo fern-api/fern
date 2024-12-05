@@ -5,6 +5,10 @@ import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, t
 export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<ModelContext> {
     private static BUILDER_PARAMETER_NAME = "value";
 
+    public generateForInlineUnion(context: ModelContext): ts.TypeNode {
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+    }
+
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }

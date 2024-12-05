@@ -18,6 +18,7 @@ export interface PostRootRequest {
 
 export namespace PostRootRequest {
     export interface Bar {
+        /** lorem ipsum */
         foo: string;
     }
 }

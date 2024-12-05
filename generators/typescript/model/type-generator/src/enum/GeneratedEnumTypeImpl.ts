@@ -16,7 +16,8 @@ import {
     TypeAliasDeclarationStructure,
     VariableDeclarationKind,
     VariableStatementStructure,
-    WriterFunction
+    WriterFunction,
+    WriterFunctionOrValue
 } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
@@ -62,7 +63,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             type: getWriterForMultiLineUnionType(
                 this.shape.values.map((value) => ({
                     docs: value.docs,
-                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                    node: ts.factory.createStringLiteral(value.name.wireValue)
                 }))
             )
         };
@@ -71,9 +72,19 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return type;
     }
 
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createParenthesizedType(
+            ts.factory.createUnionTypeNode(
+                this.shape.values.map((value) =>
+                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                )
+            )
+        );
+    }
+
     public generateStatements(
         context: Context
-    ): string | WriterFunction | readonly (string | WriterFunction | StatementStructures)[] {
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: (string | WriterFunction | StatementStructures)[] = [
             this.generateEnumType(context),
             this.generateConst(context)

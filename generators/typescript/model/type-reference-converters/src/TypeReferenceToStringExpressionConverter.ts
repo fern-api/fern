@@ -14,7 +14,8 @@ export declare namespace TypeReferenceToStringExpressionConverter {
 }
 
 export class TypeReferenceToStringExpressionConverter extends AbstractTypeReferenceConverter<
-    (reference: ts.Expression) => ts.Expression
+    (reference: ts.Expression) => ts.Expression,
+    void
 > {
     public convertWithNullCheckIfOptional(type: TypeReference): (reference: ts.Expression) => ts.Expression {
         const isNullable = TypeReference._visit(type, {

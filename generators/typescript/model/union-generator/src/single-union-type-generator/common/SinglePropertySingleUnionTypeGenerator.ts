@@ -1,30 +1,67 @@
+import { assertNever } from "@fern-api/core-utils";
+import { NamedType, ObjectProperty, SingleUnionTypeProperty, TypeReference } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
     export interface Init<Context> {
+        propertyType: TypeReference;
         propertyName: string;
         getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
         noOptionalProperties: boolean;
     }
 }
 
-export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {
+export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext>
+    implements SingleUnionTypeGenerator<Context>
+{
     private static BUILDER_PARAMETER_NAME = "value";
 
     private propertyName: string;
+    private propertyType: TypeReference;
     private getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
     private noOptionalProperties: boolean;
 
     constructor({
+        propertyType,
         propertyName,
         getReferenceToPropertyType,
         noOptionalProperties
     }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
+        this.propertyType = propertyType;
         this.propertyName = propertyName;
         this.getReferenceToPropertyType = getReferenceToPropertyType;
         this.noOptionalProperties = noOptionalProperties;
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const typeReference = this.getReferenceToPropertyType(context);
+        const hasOptionalToken = !this.noOptionalProperties && typeReference.isOptional;
+        const namedProp = getNamedType(this.propertyType);
+        if (namedProp) {
+            const declaration = context.type.getTypeDeclaration(namedProp);
+            if (declaration.inline) {
+                const type = context.type.getGeneratedType(namedProp);
+                return ts.factory.createTypeLiteralNode([
+                    ts.factory.createPropertySignature(
+                        undefined,
+                        this.propertyName,
+                        hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                        type.generateForInlineUnion(context)
+                    )
+                ]);
+            }
+        }
+        return ts.factory.createTypeLiteralNode([
+            ts.factory.createPropertySignature(
+                undefined,
+                this.propertyName,
+                hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
+            )
+        ]);
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
@@ -87,5 +124,32 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
         return [ts.factory.createPropertyAccessExpression(existingValue, this.propertyName)];
+    }
+}
+function getNamedType(typeReference: TypeReference): NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    assertNever(typeReference.container);
+            }
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            assertNever(typeReference);
     }
 }

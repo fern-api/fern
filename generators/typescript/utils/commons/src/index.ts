@@ -4,6 +4,8 @@ export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 export { maybeAddDocs } from "./codegen-utils/maybeAddDocs";
+export { writerToString } from "./codegen-utils/writerToString";
+export { getTextOfStructure } from "./codegen-utils/getTextOfStructure";
 export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";
 export { DependencyManager, DependencyType, type PackageDependencies } from "./dependency-manager/DependencyManager";

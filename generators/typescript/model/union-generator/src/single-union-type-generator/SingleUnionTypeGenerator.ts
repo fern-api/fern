@@ -1,6 +1,7 @@
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export interface SingleUnionTypeGenerator<Context> {
+    generateForInlineUnion(context: Context): ts.TypeNode;
     getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[];
     getInlineModuleForInterface(context: Context): ModuleDeclarationStructure | undefined;
     getExtendsForInterface(context: Context): ts.TypeNode[];

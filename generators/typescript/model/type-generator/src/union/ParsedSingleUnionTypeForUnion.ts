@@ -51,6 +51,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                         new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
+                            propertyType: singleProperty.type,
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                                 includeSerdeLayer,
                                 retainOriginalCasing

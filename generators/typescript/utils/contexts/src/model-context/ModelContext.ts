@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import { BaseContext } from "../base-context";
 import { TypeContext } from "./type";
 import { TypeSchemaContext } from "./type-schema";

@@ -44,6 +44,10 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         };
     }
 
+    generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode {
+        return this.singleUnionType.generateForInlineUnion(context);
+    }
+
     public getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction {
         const referenceToBuiltType = generatedUnion.getReferenceToSingleUnionType(this, context);
 

@@ -21,7 +21,7 @@ export declare namespace AbstractTypeReferenceConverter {
     }
 }
 
-export abstract class AbstractTypeReferenceConverter<T> {
+export abstract class AbstractTypeReferenceConverter<T, TConvertOptions> {
     protected typeResolver: TypeResolver;
     protected treatUnknownAsAny: boolean;
     protected includeSerdeLayer: boolean;
@@ -39,44 +39,44 @@ export abstract class AbstractTypeReferenceConverter<T> {
         this.useBigInt = useBigInt;
     }
 
-    public convert(typeReference: TypeReference): T {
+    public convert(typeReference: TypeReference, options?: TConvertOptions): T {
         return TypeReference._visit<T>(typeReference, {
-            named: this.named.bind(this),
-            primitive: this.primitive.bind(this),
-            container: this.container.bind(this),
-            unknown: this.treatUnknownAsAny ? this.any.bind(this) : this.unknown.bind(this),
+            named: (type) => this.named(type, options),
+            primitive: (type) => this.primitive(type),
+            container: (type) => this.container(type, options),
+            unknown: () => (this.treatUnknownAsAny ? this.any(options) : this.unknown(options)),
             _other: () => {
                 throw new Error("Unexpected type reference: " + typeReference.type);
             }
         });
     }
 
-    protected container(container: ContainerType): T {
+    protected container(container: ContainerType, options?: TConvertOptions): T {
         return ContainerType._visit<T>(container, {
-            map: this.map.bind(this),
-            list: this.list.bind(this),
-            set: this.set.bind(this),
-            optional: this.optional.bind(this),
-            literal: this.literal.bind(this),
+            map: (type) => this.map(type, options),
+            list: (type) => this.list(type, options),
+            set: (type) => this.set(type, options),
+            optional: (type) => this.optional(type, options),
+            literal: (type) => this.literal(type, options),
             _other: () => {
                 throw new Error("Unexpected container type: " + container.type);
             }
         });
     }
 
-    protected abstract named(typeName: DeclaredTypeName): T;
+    protected abstract named(typeName: DeclaredTypeName, options?: TConvertOptions): T;
     protected abstract string(): T;
     protected abstract number(): T;
     protected abstract long(): T;
     protected abstract bigInteger(): T;
     protected abstract boolean(): T;
     protected abstract dateTime(): T;
-    protected abstract list(itemType: TypeReference): T;
-    protected abstract set(itemType: TypeReference): T;
-    protected abstract optional(itemType: TypeReference): T;
-    protected abstract literal(literal: Literal): T;
-    protected abstract unknown(): T;
-    protected abstract any(): T;
+    protected abstract list(itemType: TypeReference, options?: TConvertOptions): T;
+    protected abstract set(itemType: TypeReference, options?: TConvertOptions): T;
+    protected abstract optional(itemType: TypeReference, options?: TConvertOptions): T;
+    protected abstract literal(literal: Literal, options?: TConvertOptions): T;
+    protected abstract unknown(options?: TConvertOptions): T;
+    protected abstract any(options?: TConvertOptions): T;
 
     protected primitive(primitive: PrimitiveType): T {
         return PrimitiveTypeV1._visit<T>(primitive.v1, {
@@ -99,17 +99,17 @@ export abstract class AbstractTypeReferenceConverter<T> {
         });
     }
 
-    protected map(mapType: MapType): T {
+    protected map(mapType: MapType, options?: TConvertOptions): T {
         const resolvdKeyType = this.typeResolver.resolveTypeReference(mapType.keyType);
         if (resolvdKeyType.type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
-            return this.mapWithEnumKeys(mapType);
+            return this.mapWithEnumKeys(mapType, options);
         } else {
-            return this.mapWithNonEnumKeys(mapType);
+            return this.mapWithNonEnumKeys(mapType, options);
         }
     }
 
-    protected abstract mapWithEnumKeys(mapType: MapType): T;
-    protected abstract mapWithNonEnumKeys(mapType: MapType): T;
+    protected abstract mapWithEnumKeys(mapType: MapType, options?: TConvertOptions): T;
+    protected abstract mapWithNonEnumKeys(mapType: MapType, options?: TConvertOptions): T;
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
