@@ -55,6 +55,31 @@ describe("imdb (success)", () => {
     });
 });
 
+describe("imdb (sync)", () => {
+    it("GET /movies/{movieId}", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
+            config: buildGeneratorConfig()
+        });
+        const response = generator.generateSync({
+            endpoint: {
+                method: "GET",
+                path: "/movies/{movieId}"
+            },
+            auth: dynamic.AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: {
+                movieId: "movie_xyz"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+        expect(response.snippet).toMatchSnapshot();
+    });
+});
+
 describe("imdb (errors)", () => {
     it("invalid path parameter", async () => {
         const generator = buildDynamicSnippetsGenerator({

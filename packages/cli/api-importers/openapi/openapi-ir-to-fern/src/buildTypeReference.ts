@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import {
     ArraySchema,
     DoubleSchema,

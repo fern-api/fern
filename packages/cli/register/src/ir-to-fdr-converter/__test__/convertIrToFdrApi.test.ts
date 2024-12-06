@@ -9,6 +9,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
 import { readdir } from "fs/promises";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 describe("fdr", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
@@ -63,7 +64,8 @@ describe("fdr", async () => {
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
-                context
+                context,
+                sourceResolver: new SourceResolverImpl(context, fernWorkspace)
             });
 
             const fdr = convertIrToFdrApi({

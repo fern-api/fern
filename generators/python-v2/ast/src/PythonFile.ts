@@ -1,14 +1,22 @@
 import { AstNode } from "./core/AstNode";
+import { Comment } from "./Comment";
 import { Writer } from "./core/Writer";
 import { Reference } from "./Reference";
 import { ModulePath } from "./core/types";
+import { StarImport } from "./StarImport";
 
 export declare namespace PythonFile {
     interface Args {
         /* The path of the Python file relative to the module */
         path: ModulePath;
+        /* The list of statements in the Python file. More can be added following initialization. */
+        statements?: AstNode[];
         /* Whether or not this represents the root of a Python module */
         isInitFile?: boolean;
+        /* Any comments that should be at the top of the file */
+        comments?: Comment[];
+        /* Any explicit imports that should be included */
+        imports?: StarImport[];
     }
 }
 
@@ -16,11 +24,18 @@ export class PythonFile extends AstNode {
     public readonly path: ModulePath;
     public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
+    private readonly comments: Comment[];
 
-    constructor({ path, isInitFile = false }: PythonFile.Args) {
+    constructor({ path, statements, isInitFile = false, comments, imports }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;
+
+        statements?.forEach((statement) => this.addStatement(statement));
+
+        this.comments = comments ?? [];
+
+        imports?.forEach((import_) => this.addReference(import_));
     }
 
     public addStatement(statement: AstNode): void {
@@ -29,6 +44,7 @@ export class PythonFile extends AstNode {
     }
 
     public write(writer: Writer): void {
+        this.writeComments(writer);
         this.writeImports(writer);
         this.statements.forEach((statement, idx) => {
             statement.write(writer);
@@ -42,6 +58,16 @@ export class PythonFile extends AstNode {
     /*******************************
      * Helper Methods
      *******************************/
+
+    private writeComments(writer: Writer): void {
+        this.comments.forEach((comment) => {
+            comment.write(writer);
+        });
+
+        if (this.comments.length > 0) {
+            writer.newLine();
+        }
+    }
 
     private getImportName(reference: Reference): string {
         const name = reference.name;

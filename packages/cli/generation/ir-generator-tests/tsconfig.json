@@ -19,7 +19,10 @@
       "path": "../../../ir-sdk"
     },
     {
-      "path": "../../configuration"
+      "path": "../../cli-source-resolver"
+    },
+    {
+      "path": "../../configuration-loader"
     },
     {
       "path": "../../project-loader"
@@ -28,10 +31,10 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-loader"
+      "path": "../../workspace/loader"
     },
     {
-      "path": "../../workspace-commons"
+      "path": "../../workspace/commons"
     },
     {
       "path": "../../fern-definition/schema"

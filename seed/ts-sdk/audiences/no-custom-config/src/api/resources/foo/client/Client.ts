@@ -39,70 +39,64 @@ export class Foo {
      *         privateProperty: 1
      *     })
      */
-    public find(
+    public async find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions
-    ): core.APIPromise<SeedAudiences.ImportingType> {
-        return core.APIPromise.from(
-            (async () => {
-                const { optionalString, ..._body } = request;
-                const _queryParams: Record<string, string | string[] | object | object[]> = {};
-                if (optionalString != null) {
-                    _queryParams["optionalString"] = optionalString;
-                }
-                const _response = await core.fetcher({
-                    url: await core.Supplier.get(this._options.environment),
-                    method: "POST",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/audiences",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/audiences/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    queryParameters: _queryParams,
-                    requestType: "json",
-                    body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedAudiences.ImportingType> {
+        const { optionalString, ..._body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (optionalString != null) {
+            _queryParams["optionalString"] = optionalString;
+        }
+
+        const _response = await core.fetcher({
+            url: await core.Supplier.get(this._options.environment),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/audiences",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/audiences/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.ImportingType.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedAudiencesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedAudiencesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.ImportingType.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedAudiencesError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedAudiencesError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling POST /.");
-                    case "unknown":
-                        throw new errors.SeedAudiencesError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown":
+                throw new errors.SeedAudiencesError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

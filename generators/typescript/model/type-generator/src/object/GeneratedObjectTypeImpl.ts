@@ -27,7 +27,7 @@ type Property = {
     type: ts.TypeNode;
     hasQuestionToken: boolean;
     docs: string | undefined;
-    irProperty: ObjectProperty;
+    irProperty: ObjectProperty | undefined;
 };
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
@@ -52,7 +52,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return ts.factory.createTypeLiteralNode(
             this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
                 let propertyValue: ts.TypeNode = type;
-                if (inlineProperties.has(irProperty)) {
+                if (irProperty && inlineProperties.has(irProperty)) {
                     const typeDeclaration = inlineProperties.get(irProperty)!;
                     const generatedType = context.type.getGeneratedType(typeDeclaration.name);
                     propertyValue = generatedType.generateForInlineUnion(context);
@@ -82,7 +82,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     private generatePropertiesInternal(context: Context): Property[] {
-        return this.shape.properties.map((property) => {
+        const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
             const propertyNode: Property = {
                 name: `"${this.getPropertyKeyFromProperty(property)}"`,
@@ -93,6 +93,16 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             };
             return propertyNode;
         });
+        if (this.shape.extraProperties) {
+            props.push({
+                name: "[key: string]", // This is the simpler way to add an index signature
+                type: ts.factory.createTypeReferenceNode("any"),
+                hasQuestionToken: false,
+                docs: "Accepts any additional properties",
+                irProperty: undefined
+            });
+        }
+        return props;
     }
 
     public generateInterface(context: Context): InterfaceDeclarationStructure {

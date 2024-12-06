@@ -19,9 +19,6 @@ types:
       undiscriminatedUnion: UndiscriminatedUnionType
 
   TypeReference:
-    discriminant:
-      value: _type
-      name: type
     union:
       list: TypeReference
       literal: LiteralType

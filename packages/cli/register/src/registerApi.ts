@@ -8,6 +8,7 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function registerApi({
     organization,
@@ -36,7 +37,8 @@ export async function registerApi({
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, workspace)
     });
 
     const fdrService = createFdrService({

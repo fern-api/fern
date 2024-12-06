@@ -190,7 +190,7 @@
                                 "wireValue": "size"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -392,7 +392,7 @@
                                 "wireValue": "s3Key"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }

@@ -1,4 +1,5 @@
 export interface ParseOpenAPIOptions {
+    /* Whether or not to disable OpenAPI example generation */
     disableExamples: boolean;
     /*
      * Parses discriminated unions as undiscriminated unions with literals.
@@ -21,6 +22,14 @@ export interface ParseOpenAPIOptions {
     inlinePathParameters: boolean;
     /* Whether or not to preserve original schema Ids in the IR */
     preserveSchemaIds: boolean;
+    /* Whether or not to parse object query parameters. */
+    objectQueryParameters: boolean;
+    /* Whether or not to use undiscriminated unions with literals. */
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+
+    // For now, we include an AsyncAPI-specific option here, but this is better
+    // handled with a discriminated union.
+    asyncApiNaming: "v1" | "v2";
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -33,5 +42,58 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectReadonlySchemas: false,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
-    preserveSchemaIds: false
+    preserveSchemaIds: false,
+    objectQueryParameters: false,
+    shouldUseUndiscriminatedUnionsWithLiterals: false,
+    asyncApiNaming: "v1"
 };
+
+export function getParseOptions({
+    options,
+    overrides
+}: {
+    options?: ParseOpenAPIOptions;
+    overrides?: Partial<ParseOpenAPIOptions>;
+}): ParseOpenAPIOptions {
+    return {
+        disableExamples: overrides?.disableExamples ?? DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
+        discriminatedUnionV2:
+            overrides?.discriminatedUnionV2 ??
+            options?.discriminatedUnionV2 ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
+        useTitlesAsName:
+            overrides?.useTitlesAsName ?? options?.useTitlesAsName ?? DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
+        audiences: overrides?.audiences ?? options?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
+        optionalAdditionalProperties:
+            overrides?.optionalAdditionalProperties ??
+            options?.optionalAdditionalProperties ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
+        cooerceEnumsToLiterals:
+            overrides?.cooerceEnumsToLiterals ??
+            options?.cooerceEnumsToLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
+        respectReadonlySchemas:
+            overrides?.respectReadonlySchemas ??
+            options?.respectReadonlySchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
+        onlyIncludeReferencedSchemas:
+            overrides?.onlyIncludeReferencedSchemas ??
+            options?.onlyIncludeReferencedSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
+        inlinePathParameters:
+            overrides?.inlinePathParameters ??
+            options?.inlinePathParameters ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
+        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds,
+        shouldUseUndiscriminatedUnionsWithLiterals:
+            overrides?.shouldUseUndiscriminatedUnionsWithLiterals ??
+            options?.shouldUseUndiscriminatedUnionsWithLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseUndiscriminatedUnionsWithLiterals,
+        objectQueryParameters:
+            overrides?.objectQueryParameters ??
+            options?.objectQueryParameters ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.objectQueryParameters,
+        asyncApiNaming:
+            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming
+    };
+}

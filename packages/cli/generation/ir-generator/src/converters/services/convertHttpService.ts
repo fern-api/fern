@@ -19,7 +19,7 @@ import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { SourceResolver } from "../../resolvers/SourceResolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";

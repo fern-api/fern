@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";

@@ -106,17 +106,16 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         for (const key of keys) {
             if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return {
-                    "x-fern-type": "unknown",
-                    additionalProperties: true
+                    "x-fern-type": "unknown"
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any as OpenAPIV3.SchemaObject;
             }
             resolvedSchema = resolvedSchema[key];
         }
         if (resolvedSchema == null) {
+            this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
             return {
-                "x-fern-type": "unknown",
-                additionalProperties: true
+                "x-fern-type": "unknown"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any as OpenAPIV3.SchemaObject;
         }

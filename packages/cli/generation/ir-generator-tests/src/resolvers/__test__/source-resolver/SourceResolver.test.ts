@@ -1,7 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { constructCasingsGenerator, constructFernFileContext, SourceResolverImpl } from "@fern-api/ir-generator";
+import { constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 describe("SourceResolver", () => {
     it("non-existant proto source throws", async () => {
@@ -45,7 +46,7 @@ describe("SourceResolver", () => {
                 source: {
                     proto: "proto/cool-spec.proto"
                 },
-                file: fernFileContext
+                relativeFilepath: fernFileContext.relativeFilepath
             });
         }).rejects.toThrow(new Error("Cannot resolve source proto/cool-spec.proto from file foo.yml"));
     });
@@ -90,7 +91,7 @@ describe("SourceResolver", () => {
             source: {
                 openapi: "openapi/openapi.yaml"
             },
-            file: fernFileContext
+            relativeFilepath: fernFileContext.relativeFilepath
         });
         expect(resolved).toBeUndefined();
     });

@@ -30,7 +30,7 @@
                 }
             },
             "typeReference": {
-                "_type": "named",
+                "type": "named",
                 "value": "type_:Parent"
             }
         },
@@ -87,7 +87,7 @@
                         "wireValue": "parent"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -146,7 +146,7 @@
                         "wireValue": "parent"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -174,7 +174,7 @@
                         "wireValue": "child"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -273,7 +273,7 @@
                                 "wireValue": "parent"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -301,7 +301,7 @@
                                 "wireValue": "child"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }

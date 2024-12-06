@@ -1,79 +1,39 @@
-import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Schema, Schemas, Source as OpenApiIrSource } from "@fern-api/openapi-ir";
+import { assertNever } from "@fern-api/core-utils";
+import { OpenApiIntermediateRepresentation, Schemas, Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from "openapi-types";
 import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
-import { loadOpenAPI } from "./loadOpenAPI";
-import { mergeWithOverrides } from "./mergeWithOverrides";
-import { generateIr as generateIrFromV2 } from "./openapi/v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { DEFAULT_PARSE_OPENAPI_SETTINGS, ParseOpenAPIOptions } from "./options";
+import { getParseOptions, ParseOpenAPIOptions } from "./options";
 
-export interface Spec {
-    absoluteFilepath: AbsoluteFilePath;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
-    source: Source;
-    namespace?: string;
-    settings?: SpecImportSettings;
-}
+export type Document = OpenAPIDocument | AsyncAPIDocument;
 
-export interface SpecImportSettings {
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    asyncApiNaming?: "v1" | "v2";
-    optionalAdditionalProperties: boolean;
-    cooerceEnumsToLiterals: boolean;
-    objectQueryParameters: boolean;
-    respectReadonlySchemas: boolean;
-    onlyIncludeReferencedSchemas: boolean;
-    inlinePathParameters: boolean;
-}
-
-export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
-
-export interface AsyncAPISource {
-    type: "asyncapi";
-    relativePathToDependency?: RelativeFilePath;
-    file: AbsoluteFilePath;
-}
-
-export interface OpenAPISource {
+export interface OpenAPIDocument {
     type: "openapi";
-    relativePathToDependency?: RelativeFilePath;
-    file: AbsoluteFilePath;
+    value: OpenAPIV3.Document;
+    source?: OpenApiIrSource;
+    namespace?: string;
+    settings?: ParseOpenAPIOptions;
 }
 
-export interface ProtobufSource {
-    type: "protobuf";
-    relativePathToDependency?: RelativeFilePath;
-    file: AbsoluteFilePath;
-}
-
-export interface RawOpenAPIFile {
-    absoluteFilepath: AbsoluteFilePath;
-    contents: string;
-}
-
-export interface RawAsyncAPIFile {
-    absoluteFilepath: AbsoluteFilePath;
-    contents: string;
+export interface AsyncAPIDocument {
+    type: "asyncapi";
+    value: AsyncAPIV2.Document;
+    source?: OpenApiIrSource;
+    namespace?: string;
+    settings?: ParseOpenAPIOptions;
 }
 
 export async function parse({
-    absoluteFilePathToWorkspace,
-    specs,
-    taskContext,
-    optionOverrides
+    context,
+    documents,
+    options
 }: {
-    absoluteFilePathToWorkspace: AbsoluteFilePath;
-    specs: Spec[];
-    taskContext: TaskContext;
-    optionOverrides?: Partial<ParseOpenAPIOptions>;
+    context: TaskContext;
+    documents: Document[];
+    options?: Partial<ParseOpenAPIOptions>;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
@@ -100,126 +60,56 @@ export async function parse({
         idempotencyHeaders: [],
         groups: {}
     };
-
-    for (const spec of specs) {
-        const contents = (await readFile(spec.absoluteFilepath)).toString();
-        let sourceRelativePath = relative(absoluteFilePathToWorkspace, spec.source.file);
-        if (spec.source.relativePathToDependency != null) {
-            sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath);
-        }
-        const source =
-            spec.source.type === "protobuf"
-                ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
-                : OpenApiIrSource.openapi({ file: sourceRelativePath });
-
-        if (contents.includes("openapi") || contents.includes("swagger")) {
-            const openApiDocument = await loadOpenAPI({
-                absolutePathToOpenAPI: spec.absoluteFilepath,
-                context: taskContext,
-                absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
-            });
-            if (isOpenApiV3(openApiDocument)) {
+    for (const document of documents) {
+        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
+        switch (document.type) {
+            case "openapi": {
                 const openapiIr = generateIrFromV3({
-                    openApi: openApiDocument,
-                    taskContext,
-                    options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides }),
+                    taskContext: context,
+                    openApi: document.value,
+                    options: getParseOptions({ options: document.settings, overrides: options }),
                     source,
-                    namespace: spec.namespace
+                    namespace: document.namespace
                 });
                 ir = merge(ir, openapiIr);
-            } else if (isOpenApiV2(openApiDocument)) {
-                const openapiIr = await generateIrFromV2({
-                    openApi: openApiDocument,
-                    taskContext,
-                    options: getParseOptions({ specSettings: spec.settings }),
+                break;
+            }
+            case "asyncapi": {
+                const parsedAsyncAPI = parseAsyncAPI({
+                    document: document.value,
+                    taskContext: context,
+                    options: getParseOptions({ options: document.settings, overrides: options }),
                     source,
-                    namespace: spec.namespace
+                    asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
+                    namespace: document.namespace
                 });
-                ir = merge(ir, openapiIr);
+                if (parsedAsyncAPI.channel != null) {
+                    ir.channel.push(parsedAsyncAPI.channel);
+                }
+                if (parsedAsyncAPI.groupedSchemas != null) {
+                    ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
+                }
+                if (parsedAsyncAPI.basePath != null) {
+                    ir.basePath = parsedAsyncAPI.basePath;
+                }
+                break;
             }
-            // is openapi file
-        } else if (contents.includes("asyncapi")) {
-            const asyncAPI = await loadAsyncAPI({
-                absoluteFilePathToAsyncAPI: spec.absoluteFilepath,
-                context: taskContext,
-                absoluteFilePathToAsyncAPIOverrides: spec.absoluteFilepathToOverrides
-            });
-            const parsedAsyncAPI = parseAsyncAPI({
-                document: asyncAPI,
-                taskContext,
-                options: getParseOptions({ specSettings: spec.settings }),
-                source,
-                asyncApiOptions: getParseAsyncOptions({ specSettings: spec.settings }),
-                namespace: spec.namespace
-            });
-            if (parsedAsyncAPI.channel != null) {
-                ir.channel.push(parsedAsyncAPI.channel);
-            }
-            if (parsedAsyncAPI.groupedSchemas != null) {
-                ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
-            }
-            if (parsedAsyncAPI.basePath != null) {
-                ir.basePath = parsedAsyncAPI.basePath;
-            }
-        } else {
-            taskContext.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
+            default:
+                assertNever(document);
         }
     }
-
     return ir;
 }
 
-function getParseOptions({
-    specSettings,
-    overrides
-}: {
-    specSettings?: SpecImportSettings;
-    overrides?: Partial<ParseOpenAPIOptions>;
-}): ParseOpenAPIOptions {
-    return {
-        disableExamples: overrides?.disableExamples ?? DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
-        discriminatedUnionV2:
-            overrides?.discriminatedUnionV2 ??
-            specSettings?.shouldUseUndiscriminatedUnionsWithLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
-        useTitlesAsName:
-            overrides?.useTitlesAsName ??
-            specSettings?.shouldUseTitleAsName ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
-        optionalAdditionalProperties:
-            overrides?.optionalAdditionalProperties ??
-            specSettings?.optionalAdditionalProperties ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        cooerceEnumsToLiterals:
-            overrides?.cooerceEnumsToLiterals ??
-            specSettings?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
-        respectReadonlySchemas:
-            overrides?.respectReadonlySchemas ??
-            specSettings?.respectReadonlySchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
-        onlyIncludeReferencedSchemas:
-            overrides?.onlyIncludeReferencedSchemas ??
-            specSettings?.onlyIncludeReferencedSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
-        inlinePathParameters:
-            overrides?.inlinePathParameters ??
-            specSettings?.inlinePathParameters ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
-        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds
-    };
-}
-
 function getParseAsyncOptions({
-    specSettings,
+    options,
     overrides
 }: {
-    specSettings?: SpecImportSettings;
+    options?: ParseOpenAPIOptions;
     overrides?: Partial<ParseAsyncAPIOptions>;
 }): ParseAsyncAPIOptions {
     return {
-        naming: overrides?.naming ?? specSettings?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
+        naming: overrides?.naming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
     };
 }
 
@@ -281,35 +171,4 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
     }
 
     return schemas1;
-}
-
-async function loadAsyncAPI({
-    absoluteFilePathToAsyncAPI,
-    absoluteFilePathToAsyncAPIOverrides,
-    context
-}: {
-    absoluteFilePathToAsyncAPI: AbsoluteFilePath;
-    absoluteFilePathToAsyncAPIOverrides: AbsoluteFilePath | undefined;
-    context: TaskContext;
-}): Promise<AsyncAPIV2.Document> {
-    const contents = (await readFile(absoluteFilePathToAsyncAPI)).toString();
-    const parsed = (await yaml.load(contents)) as AsyncAPIV2.Document;
-    if (absoluteFilePathToAsyncAPIOverrides != null) {
-        return await mergeWithOverrides<AsyncAPIV2.Document>({
-            absoluteFilepathToOverrides: absoluteFilePathToAsyncAPIOverrides,
-            context,
-            data: parsed
-        });
-    }
-    return parsed;
-}
-
-function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV3.Document).openapi != null;
-}
-
-function isOpenApiV2(openApi: OpenAPI.Document): openApi is OpenAPIV2.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV2.Document).swagger != null;
 }

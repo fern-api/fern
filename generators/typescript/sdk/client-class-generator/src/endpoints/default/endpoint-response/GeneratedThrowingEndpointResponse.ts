@@ -421,7 +421,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         ts.NodeFlags.Const
                     )
                 ),
-                this.getSuccessResponse(
+                ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
                         [
                             ts.factory.createPropertyAssignment(
@@ -482,7 +482,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 }
             });
             return [
-                this.getSuccessResponse(
+                ts.factory.createReturnStatement(
                     context.coreUtilities.streamUtils.Stream._construct({
                         stream: ts.factory.createPropertyAccessChain(
                             ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -535,10 +535,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             context
         );
-        if (this.getPaginationInfo(context) != null) {
-            return [ts.factory.createReturnStatement(deserializeToResponse)];
-        }
-        return [this.getSuccessResponse(deserializeToResponse)];
+        return [ts.factory.createReturnStatement(deserializeToResponse)];
     }
 
     private getSuccessResponse(body: ts.Expression): ts.ReturnStatement {
@@ -812,7 +809,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
         return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
-            : [this.getSuccessResponse(ts.factory.createIdentifier("undefined"))];
+            : [ts.factory.createReturnStatement(undefined)];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {

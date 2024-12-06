@@ -7394,13 +7394,6 @@
                   },
                   "type": "primitive"
                 },
-                "datetime_stored": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
                 "files_count": {
                   "value": {
                     "value": 1,
@@ -8304,13 +8297,6 @@
                 "datetime_created": {
                   "value": {
                     "value": "2018-09-12T10:03:38.686710Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
-                "datetime_stored": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
                     "type": "datetime"
                   },
                   "type": "primitive"

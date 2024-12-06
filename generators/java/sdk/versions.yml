@@ -1,5 +1,21 @@
 - changelogEntry:
     - summary: |
+        The rootProject.name is now set in settings.gradle and ci.yml uses ./gradlew sonatypeCentralUpload for publishing.
+      type: fix
+  createdAt: '2024-12-04'
+  irVersion: 46
+  version: 2.3.1
+
+- changelogEntry:
+    - summary: |
+        Fix publishing to Maven Central with proper signing configuration and metadata.
+      type: feat
+  createdAt: '2024-12-04'
+  irVersion: 46
+  version: 2.3.0
+
+- changelogEntry:
+    - summary: |
         We now provide endpoint methods for streaming byte array requests in addition to the previous methods accepting
         byte array directly.
       type: feat

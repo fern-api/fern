@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildEndpointExample } from "./buildEndpointExample";

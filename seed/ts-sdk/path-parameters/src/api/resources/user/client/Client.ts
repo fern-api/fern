@@ -35,69 +35,62 @@ export class User {
      * @example
      *     await client.user.getOrganization("organizationId")
      */
-    public getOrganization(
+    public async getOrganization(
         organizationId: string,
         requestOptions?: User.RequestOptions
-    ): core.APIPromise<SeedPathParameters.Organization> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/user/organizations/${encodeURIComponent(organizationId)}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/path-parameters",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/path-parameters/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedPathParameters.Organization> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.Organization.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.Organization.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPathParametersError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPathParametersError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/organizations/{organizationId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedPathParametersError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -108,70 +101,63 @@ export class User {
      * @example
      *     await client.user.getUser("userId")
      */
-    public getUser(
+    public async getUser(
         userId: string,
         request: SeedPathParameters.GetUsersRequest = {},
         requestOptions?: User.RequestOptions
-    ): core.APIPromise<SeedPathParameters.User> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/user/users/${encodeURIComponent(userId)}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/path-parameters",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/path-parameters/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedPathParameters.User> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/users/${encodeURIComponent(userId)}`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.User.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.User.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPathParametersError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPathParametersError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/users/{userId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedPathParametersError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/users/{userId}."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -183,71 +169,64 @@ export class User {
      * @example
      *     await client.user.getOrganizationUser("organizationId", "userId")
      */
-    public getOrganizationUser(
+    public async getOrganizationUser(
         organizationId: string,
         userId: string,
         request: SeedPathParameters.GetOrganizationUserRequest = {},
         requestOptions?: User.RequestOptions
-    ): core.APIPromise<SeedPathParameters.User> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/user/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/path-parameters",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/path-parameters/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedPathParameters.User> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.User.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.User.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPathParametersError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPathParametersError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/organizations/{organizationId}/users/{userId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedPathParametersError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}/users/{userId}."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -260,76 +239,70 @@ export class User {
      *         limit: 1
      *     })
      */
-    public searchUsers(
+    public async searchUsers(
         userId: string,
         request: SeedPathParameters.SearchUsersRequest = {},
         requestOptions?: User.RequestOptions
-    ): core.APIPromise<SeedPathParameters.User[]> {
-        return core.APIPromise.from(
-            (async () => {
-                const { limit } = request;
-                const _queryParams: Record<string, string | string[] | object | object[]> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/user/users/${encodeURIComponent(userId)}/search`
-                    ),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/path-parameters",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/path-parameters/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    queryParameters: _queryParams,
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedPathParameters.User[]> {
+        const { limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/users/${encodeURIComponent(userId)}/search`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPathParametersError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPathParametersError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/users/{userId}/search."
-                        );
-                    case "unknown":
-                        throw new errors.SeedPathParametersError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/users/{userId}/search."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -342,75 +315,69 @@ export class User {
      *         limit: 1
      *     })
      */
-    public searchOrganizations(
+    public async searchOrganizations(
         organizationId: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: User.RequestOptions
-    ): core.APIPromise<SeedPathParameters.Organization[]> {
-        return core.APIPromise.from(
-            (async () => {
-                const { limit } = request;
-                const _queryParams: Record<string, string | string[] | object | object[]> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        await core.Supplier.get(this._options.environment),
-                        `/user/organizations/${encodeURIComponent(organizationId)}/search`
-                    ),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/path-parameters",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/path-parameters/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    queryParameters: _queryParams,
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedPathParameters.Organization[]> {
+        const { limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}/search`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.user.searchOrganizations.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.user.searchOrganizations.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPathParametersError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPathParametersError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/organizations/{organizationId}/search."
-                        );
-                    case "unknown":
-                        throw new errors.SeedPathParametersError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}/search."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

@@ -93,7 +93,7 @@
                 "and": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -123,7 +123,7 @@
                 "or": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -219,7 +219,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -290,7 +290,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -361,7 +361,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -809,7 +809,7 @@
                         "wireValue": "valueType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 },
@@ -837,9 +837,9 @@
                         "wireValue": "isFixedLength"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BOOLEAN"
                         }
                     }
@@ -937,7 +937,7 @@
                         "wireValue": "keyType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 },
@@ -965,7 +965,7 @@
                         "wireValue": "valueType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -1063,7 +1063,7 @@
                 "integerValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     },
                     "discriminantValue": {
@@ -1093,7 +1093,7 @@
                 "booleanValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -1123,7 +1123,7 @@
                 "doubleValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     },
                     "discriminantValue": {
@@ -1153,7 +1153,7 @@
                 "stringValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -1183,7 +1183,7 @@
                 "charValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -1240,9 +1240,9 @@
                 "listValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableValue"
                         }
                     },
@@ -1471,7 +1471,7 @@
                 "integerValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     },
                     "discriminantValue": {
@@ -1501,7 +1501,7 @@
                 "booleanValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -1531,7 +1531,7 @@
                 "doubleValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     },
                     "discriminantValue": {
@@ -1561,7 +1561,7 @@
                 "stringValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -1591,7 +1591,7 @@
                 "charValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -1648,9 +1648,9 @@
                 "listValue": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DebugVariableValue"
                         }
                     },
@@ -1931,9 +1931,9 @@
                         "wireValue": "stringifiedType"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1962,7 +1962,7 @@
                         "wireValue": "stringifiedValue"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -2059,9 +2059,9 @@
                         "wireValue": "keyValuePairs"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:KeyValuePair"
                         }
                     }
@@ -2159,7 +2159,7 @@
                         "wireValue": "key"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     }
                 },
@@ -2187,7 +2187,7 @@
                         "wireValue": "value"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     }
                 }
@@ -2284,9 +2284,9 @@
                         "wireValue": "root"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -2315,13 +2315,13 @@
                         "wireValue": "nodes"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:BinaryTreeNodeValue"
                         }
                     }
@@ -2419,7 +2419,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -2447,7 +2447,7 @@
                         "wireValue": "val"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -2475,9 +2475,9 @@
                         "wireValue": "right"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -2506,9 +2506,9 @@
                         "wireValue": "left"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -2606,7 +2606,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -2634,7 +2634,7 @@
                         "wireValue": "fullTree"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:BinaryTreeValue"
                     }
                 }
@@ -2731,9 +2731,9 @@
                         "wireValue": "head"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -2762,13 +2762,13 @@
                         "wireValue": "nodes"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:SinglyLinkedListNodeValue"
                         }
                     }
@@ -2866,7 +2866,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -2894,7 +2894,7 @@
                         "wireValue": "val"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -2922,9 +2922,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -3022,7 +3022,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -3050,7 +3050,7 @@
                         "wireValue": "fullList"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:SinglyLinkedListValue"
                     }
                 }
@@ -3147,9 +3147,9 @@
                         "wireValue": "head"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -3178,13 +3178,13 @@
                         "wireValue": "nodes"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DoublyLinkedListNodeValue"
                         }
                     }
@@ -3282,7 +3282,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -3310,7 +3310,7 @@
                         "wireValue": "val"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -3338,9 +3338,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -3369,9 +3369,9 @@
                         "wireValue": "prev"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:NodeId"
                         }
                     }
@@ -3469,7 +3469,7 @@
                         "wireValue": "nodeId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:NodeId"
                     }
                 },
@@ -3497,7 +3497,7 @@
                         "wireValue": "fullList"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:DoublyLinkedListValue"
                     }
                 }
@@ -3594,9 +3594,9 @@
                         "wireValue": "keyValuePairs"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DebugKeyValuePairs"
                         }
                     }
@@ -3694,7 +3694,7 @@
                         "wireValue": "key"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:DebugVariableValue"
                     }
                 },
@@ -3722,7 +3722,7 @@
                         "wireValue": "value"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:DebugVariableValue"
                     }
                 }
@@ -3819,7 +3819,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -3847,9 +3847,9 @@
                         "wireValue": "params"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableValue"
                         }
                     }
@@ -3947,7 +3947,7 @@
                         "wireValue": "testCase"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:TestCase"
                     }
                 },
@@ -3975,7 +3975,7 @@
                         "wireValue": "expectedResult"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     }
                 }
@@ -4072,7 +4072,7 @@
                         "wireValue": "filename"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -4100,7 +4100,7 @@
                         "wireValue": "contents"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -4332,7 +4332,7 @@
                         "wireValue": "request"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -4428,7 +4428,7 @@
                         "wireValue": "response"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -4659,7 +4659,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -4687,7 +4687,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_migration:MigrationStatus"
                     }
                 }
@@ -4760,7 +4760,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -4855,7 +4855,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -4883,9 +4883,9 @@
                         "wireValue": "problems"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -4914,7 +4914,7 @@
                         "wireValue": "playlist_id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_playlist:PlaylistId"
                     }
                 },
@@ -4942,7 +4942,7 @@
                         "wireValue": "owner-id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:UserId"
                     }
                 }
@@ -5039,7 +5039,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -5067,9 +5067,9 @@
                         "wireValue": "problems"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -5167,7 +5167,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -5195,9 +5195,9 @@
                         "wireValue": "problems"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -5296,7 +5296,7 @@
                 "playlistId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_playlist:PlaylistId"
                     },
                     "discriminantValue": {
@@ -5529,7 +5529,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -5557,7 +5557,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -5585,7 +5585,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -5613,7 +5613,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -5641,13 +5641,13 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:ProblemFiles"
                         }
                     }
@@ -5676,9 +5676,9 @@
                         "wireValue": "inputParams"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:VariableTypeAndName"
                         }
                     }
@@ -5707,7 +5707,7 @@
                         "wireValue": "outputType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 },
@@ -5735,9 +5735,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:TestCaseWithExpectedResult"
                         }
                     }
@@ -5766,7 +5766,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -5794,7 +5794,7 @@
                         "wireValue": "supportsCustomTestCases"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -5891,9 +5891,9 @@
                         "wireValue": "boards"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:ProblemDescriptionBoard"
                         }
                     }
@@ -5992,7 +5992,7 @@
                 "html": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -6022,7 +6022,7 @@
                 "variable": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     },
                     "discriminantValue": {
@@ -6052,7 +6052,7 @@
                 "testCaseId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -6172,7 +6172,7 @@
                         "wireValue": "solutionFile"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:FileInfo"
                     }
                 },
@@ -6200,9 +6200,9 @@
                         "wireValue": "readOnlyFiles"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:FileInfo"
                         }
                     }
@@ -6300,7 +6300,7 @@
                         "wireValue": "variableType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 },
@@ -6328,7 +6328,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -6425,7 +6425,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -6453,7 +6453,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -6481,13 +6481,13 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:ProblemFiles"
                         }
                     }
@@ -6516,9 +6516,9 @@
                         "wireValue": "inputParams"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:VariableTypeAndName"
                         }
                     }
@@ -6547,7 +6547,7 @@
                         "wireValue": "outputType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 },
@@ -6575,9 +6575,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:TestCaseWithExpectedResult"
                         }
                     }
@@ -6606,7 +6606,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -6704,7 +6704,7 @@
                 "success": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     },
                     "discriminantValue": {
@@ -6734,7 +6734,7 @@
                 "error": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:CreateProblemError"
                     },
                     "discriminantValue": {
@@ -6854,7 +6854,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -7069,7 +7069,7 @@
                         "wireValue": "message"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -7097,7 +7097,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -7125,7 +7125,7 @@
                         "wireValue": "stacktrace"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -7222,13 +7222,13 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_problem:ProblemFiles"
                         }
                     }
@@ -7302,7 +7302,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "UUID"
             }
         },
@@ -7373,7 +7373,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -7693,7 +7693,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -7721,9 +7721,9 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -7821,7 +7821,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -7849,7 +7849,7 @@
                         "wireValue": "language"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -7877,9 +7877,9 @@
                         "wireValue": "submissionFiles"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionFileInfo"
                         }
                     }
@@ -7908,7 +7908,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -7936,9 +7936,9 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -7967,9 +7967,9 @@
                         "wireValue": "userId"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -8067,7 +8067,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -8095,7 +8095,7 @@
                         "wireValue": "language"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -8123,9 +8123,9 @@
                         "wireValue": "submissionFiles"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionFileInfo"
                         }
                     }
@@ -8154,9 +8154,9 @@
                         "wireValue": "userId"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -8254,7 +8254,7 @@
                         "wireValue": "directory"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -8282,7 +8282,7 @@
                         "wireValue": "filename"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -8310,7 +8310,7 @@
                         "wireValue": "contents"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -8498,7 +8498,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -8622,7 +8622,7 @@
                 "problemInitialized": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     },
                     "discriminantValue": {
@@ -8705,7 +8705,7 @@
                 "codeExecutionUpdate": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:CodeExecutionUpdate"
                     },
                     "discriminantValue": {
@@ -9240,7 +9240,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -9268,7 +9268,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
@@ -9365,7 +9365,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -9393,7 +9393,7 @@
                         "wireValue": "state"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     }
                 }
@@ -9669,7 +9669,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -9697,7 +9697,7 @@
                         "wireValue": "errorInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ErrorInfo"
                     }
                 }
@@ -9966,7 +9966,7 @@
                         "wireValue": "message"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -10063,7 +10063,7 @@
                         "wireValue": "message"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -10160,7 +10160,7 @@
                         "wireValue": "exceptionInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ExceptionInfo"
                     }
                 }
@@ -10257,7 +10257,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -10354,7 +10354,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -10382,7 +10382,7 @@
                         "wireValue": "runDetails"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:WorkspaceRunDetails"
                     }
                 }
@@ -10479,9 +10479,9 @@
                         "wireValue": "exceptionV2"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExceptionV2"
                         }
                     }
@@ -10510,9 +10510,9 @@
                         "wireValue": "exception"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExceptionInfo"
                         }
                     }
@@ -10541,7 +10541,7 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -10638,7 +10638,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -10666,13 +10666,13 @@
                         "wireValue": "testCases"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TestCaseResultWithStdout"
                         }
                     }
@@ -10770,7 +10770,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -10798,13 +10798,13 @@
                         "wireValue": "testCases"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TestCaseGrade"
                         }
                     }
@@ -11047,7 +11047,7 @@
                         "wireValue": "passed"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -11144,7 +11144,7 @@
                         "wireValue": "passed"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 },
@@ -11172,9 +11172,9 @@
                         "wireValue": "actualResult"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableValue"
                         }
                     }
@@ -11203,9 +11203,9 @@
                         "wireValue": "exception"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExceptionV2"
                         }
                     }
@@ -11234,7 +11234,7 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -11331,7 +11331,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -11359,7 +11359,7 @@
                         "wireValue": "traceResponsesSize"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -11387,9 +11387,9 @@
                         "wireValue": "testCaseId"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -11487,7 +11487,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -11515,9 +11515,9 @@
                         "wireValue": "testCaseId"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -11546,7 +11546,7 @@
                         "wireValue": "lineNumber"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -11574,7 +11574,7 @@
                         "wireValue": "lightweightStackInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:LightweightStackframeInformation"
                     }
                 },
@@ -11602,9 +11602,9 @@
                         "wireValue": "tracedFile"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TracedFile"
                         }
                     }
@@ -11702,7 +11702,7 @@
                         "wireValue": "numStackFrames"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -11730,7 +11730,7 @@
                         "wireValue": "topStackFrameMethodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -11827,7 +11827,7 @@
                         "wireValue": "result"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestCaseResult"
                     }
                 },
@@ -11855,7 +11855,7 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -11952,7 +11952,7 @@
                         "wireValue": "expectedResult"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     }
                 },
@@ -11980,7 +11980,7 @@
                         "wireValue": "actualResult"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ActualResult"
                     }
                 },
@@ -12008,7 +12008,7 @@
                         "wireValue": "passed"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -12106,7 +12106,7 @@
                 "value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableValue"
                     },
                     "discriminantValue": {
@@ -12163,7 +12163,7 @@
                 "exceptionV2": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ExceptionV2"
                     },
                     "discriminantValue": {
@@ -12427,7 +12427,7 @@
                         "wireValue": "exceptionType"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -12455,7 +12455,7 @@
                         "wireValue": "exceptionMessage"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -12483,7 +12483,7 @@
                         "wireValue": "exceptionStacktrace"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -12580,7 +12580,7 @@
                         "wireValue": "request"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionRequest"
                     }
                 },
@@ -12608,7 +12608,7 @@
                         "wireValue": "cause"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:InvalidRequestCause"
                     }
                 }
@@ -12877,7 +12877,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -12974,7 +12974,7 @@
                         "wireValue": "missingSubmissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -13071,7 +13071,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -13099,7 +13099,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -13196,7 +13196,7 @@
                         "wireValue": "expectedLanguage"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -13224,7 +13224,7 @@
                         "wireValue": "actualLanguage"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 }
@@ -13389,7 +13389,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 }
@@ -13486,7 +13486,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -13514,7 +13514,7 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -13611,7 +13611,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -13639,7 +13639,7 @@
                         "wireValue": "stderr"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -13736,7 +13736,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -13764,7 +13764,7 @@
                         "wireValue": "lineNumber"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -13792,9 +13792,9 @@
                         "wireValue": "returnValue"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DebugVariableValue"
                         }
                     }
@@ -13823,9 +13823,9 @@
                         "wireValue": "expressionLocation"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExpressionLocation"
                         }
                     }
@@ -13854,7 +13854,7 @@
                         "wireValue": "stack"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:StackInformation"
                     }
                 },
@@ -13882,9 +13882,9 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -13982,7 +13982,7 @@
                         "wireValue": "submissionId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionId"
                     }
                 },
@@ -14010,7 +14010,7 @@
                         "wireValue": "lineNumber"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -14038,7 +14038,7 @@
                         "wireValue": "file"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TracedFile"
                     }
                 },
@@ -14066,9 +14066,9 @@
                         "wireValue": "returnValue"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DebugVariableValue"
                         }
                     }
@@ -14097,9 +14097,9 @@
                         "wireValue": "expressionLocation"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExpressionLocation"
                         }
                     }
@@ -14128,7 +14128,7 @@
                         "wireValue": "stack"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:StackInformation"
                     }
                 },
@@ -14156,9 +14156,9 @@
                         "wireValue": "stdout"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -14256,7 +14256,7 @@
                         "wireValue": "filename"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -14284,7 +14284,7 @@
                         "wireValue": "directory"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -14381,7 +14381,7 @@
                         "wireValue": "start"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -14409,7 +14409,7 @@
                         "wireValue": "offset"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -14506,7 +14506,7 @@
                         "wireValue": "numStackFrames"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -14534,9 +14534,9 @@
                         "wireValue": "topStackFrame"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:StackFrame"
                         }
                     }
@@ -14634,7 +14634,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -14662,7 +14662,7 @@
                         "wireValue": "lineNumber"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -14690,9 +14690,9 @@
                         "wireValue": "scopes"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:Scope"
                         }
                     }
@@ -14790,13 +14790,13 @@
                         "wireValue": "variables"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:DebugVariableValue"
                         }
                     }
@@ -14894,7 +14894,7 @@
                         "wireValue": "sessionId"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -14922,9 +14922,9 @@
                         "wireValue": "executionSessionUrl"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -14953,7 +14953,7 @@
                         "wireValue": "language"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -14981,7 +14981,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
@@ -15424,9 +15424,9 @@
                         "wireValue": "updates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TestSubmissionUpdate"
                         }
                     }
@@ -15455,7 +15455,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -15483,7 +15483,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -15511,7 +15511,7 @@
                         "wireValue": "problemInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:ProblemInfoV2"
                     }
                 }
@@ -15608,9 +15608,9 @@
                         "wireValue": "updates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:WorkspaceSubmissionUpdate"
                         }
                     }
@@ -15708,7 +15708,7 @@
                         "wireValue": "updateTime"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     }
                 },
@@ -15736,7 +15736,7 @@
                         "wireValue": "updateInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestSubmissionUpdateInfo"
                     }
                 }
@@ -15834,7 +15834,7 @@
                 "running": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     },
                     "discriminantValue": {
@@ -15890,7 +15890,7 @@
                 "errored": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ErrorInfo"
                     },
                     "discriminantValue": {
@@ -16090,7 +16090,7 @@
                         "wireValue": "updateTime"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     }
                 },
@@ -16118,7 +16118,7 @@
                         "wireValue": "updateInfo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:WorkspaceSubmissionUpdateInfo"
                     }
                 }
@@ -16216,7 +16216,7 @@
                 "running": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     },
                     "discriminantValue": {
@@ -16352,7 +16352,7 @@
                 "errored": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ErrorInfo"
                     },
                     "discriminantValue": {
@@ -16498,7 +16498,7 @@
                         "wireValue": "testCaseId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     }
                 },
@@ -16526,7 +16526,7 @@
                         "wireValue": "grade"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestCaseGrade"
                     }
                 }
@@ -16623,7 +16623,7 @@
                         "wireValue": "testCaseId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     }
                 },
@@ -16651,7 +16651,7 @@
                         "wireValue": "traceResponsesSize"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -16748,7 +16748,7 @@
                         "wireValue": "traceResponsesSize"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -16990,7 +16990,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:WorkspaceSubmissionStatus"
                     }
                 }
@@ -17114,7 +17114,7 @@
                 "errored": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ErrorInfo"
                     },
                     "discriminantValue": {
@@ -17144,7 +17144,7 @@
                 "running": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     },
                     "discriminantValue": {
@@ -17318,7 +17318,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -17346,9 +17346,9 @@
                         "wireValue": "defaultTestCases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:TestCase"
                         }
                     }
@@ -17377,9 +17377,9 @@
                         "wireValue": "customTestCases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:TestCase"
                         }
                     }
@@ -17408,7 +17408,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestSubmissionStatus"
                     }
                 }
@@ -17532,7 +17532,7 @@
                 "errored": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ErrorInfo"
                     },
                     "discriminantValue": {
@@ -17562,7 +17562,7 @@
                 "running": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     },
                     "discriminantValue": {
@@ -17592,13 +17592,13 @@
                 "testCaseIdToState": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionStatusForTestCase"
                         }
                     },
@@ -17747,7 +17747,7 @@
                 "gradedV2": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestCaseGrade"
                     },
                     "discriminantValue": {
@@ -17894,7 +17894,7 @@
                         "wireValue": "result"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestCaseResultWithStdout"
                     }
                 },
@@ -17922,7 +17922,7 @@
                         "wireValue": "traceResponsesSize"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -18019,9 +18019,9 @@
                         "wireValue": "offset"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -18050,9 +18050,9 @@
                         "wireValue": "traceResponses"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TraceResponse"
                         }
                     }
@@ -18150,9 +18150,9 @@
                         "wireValue": "offset"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -18181,9 +18181,9 @@
                         "wireValue": "traceResponses"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TraceResponseV2"
                         }
                     }
@@ -18281,9 +18281,9 @@
                         "wireValue": "offset"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -18381,13 +18381,13 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:WorkspaceFiles"
                         }
                     }
@@ -18485,13 +18485,13 @@
                         "wireValue": "filesByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     }
@@ -18589,7 +18589,7 @@
                         "wireValue": "mainFile"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:FileInfo"
                     }
                 },
@@ -18617,9 +18617,9 @@
                         "wireValue": "readOnlyFiles"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:FileInfo"
                         }
                     }
@@ -18717,9 +18717,9 @@
                         "wireValue": "lastTimeContacted"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -18748,7 +18748,7 @@
                         "wireValue": "sessionId"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -18776,7 +18776,7 @@
                         "wireValue": "isWarmInstance"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 },
@@ -18804,9 +18804,9 @@
                         "wireValue": "awsTaskId"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -18835,7 +18835,7 @@
                         "wireValue": "language"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -18863,7 +18863,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
@@ -18960,13 +18960,13 @@
                         "wireValue": "states"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:ExecutionSessionState"
                         }
                     }
@@ -18995,9 +18995,9 @@
                         "wireValue": "numWarmingInstances"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -19026,9 +19026,9 @@
                         "wireValue": "warmingSessionIds"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -19126,9 +19126,9 @@
                         "wireValue": "timeSubmitted"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE_TIME"
                         }
                     }
@@ -19157,7 +19157,7 @@
                         "wireValue": "submission"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -19185,7 +19185,7 @@
                         "wireValue": "language"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Language"
                     }
                 },
@@ -19213,7 +19213,7 @@
                         "wireValue": "submissionTypeState"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:SubmissionTypeState"
                     }
                 }
@@ -19325,7 +19325,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -19435,7 +19435,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -19545,7 +19545,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -19679,7 +19679,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -19707,7 +19707,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -19735,7 +19735,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -19763,7 +19763,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -19791,9 +19791,9 @@
                         "wireValue": "supportedLanguages"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     }
@@ -19822,7 +19822,7 @@
                         "wireValue": "customFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:CustomFiles"
                     }
                 },
@@ -19850,7 +19850,7 @@
                         "wireValue": "generatedFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:GeneratedFiles"
                     }
                 },
@@ -19878,9 +19878,9 @@
                         "wireValue": "customTestCaseTemplates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     }
@@ -19909,9 +19909,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseV2"
                         }
                     }
@@ -19940,7 +19940,7 @@
                         "wireValue": "isPublic"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -20076,7 +20076,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -20104,7 +20104,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -20132,7 +20132,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -20160,9 +20160,9 @@
                         "wireValue": "variableTypes"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableType"
                         }
                     }
@@ -20299,7 +20299,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -20327,7 +20327,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -20355,7 +20355,7 @@
                         "wireValue": "customFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:CustomFiles"
                     }
                 },
@@ -20383,9 +20383,9 @@
                         "wireValue": "customTestCaseTemplates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     }
@@ -20414,9 +20414,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseV2"
                         }
                     }
@@ -20445,9 +20445,9 @@
                         "wireValue": "supportedLanguages"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     }
@@ -20476,7 +20476,7 @@
                         "wireValue": "isPublic"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -20612,7 +20612,7 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseMetadata"
                     }
                 },
@@ -20640,7 +20640,7 @@
                         "wireValue": "implementation"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationReference"
                     }
                 },
@@ -20668,13 +20668,13 @@
                         "wireValue": "arguments"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:ParameterId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableValue"
                         }
                     }
@@ -20703,9 +20703,9 @@
                         "wireValue": "expects"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseExpects"
                         }
                     }
@@ -20842,9 +20842,9 @@
                         "wireValue": "expectedStdout"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -20982,7 +20982,7 @@
                 "templateId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseTemplateId"
                     },
                     "discriminantValue": {
@@ -21168,7 +21168,7 @@
                         "wireValue": "templateId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseTemplateId"
                     }
                 },
@@ -21196,7 +21196,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -21224,7 +21224,7 @@
                         "wireValue": "description"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationDescription"
                     }
                 },
@@ -21252,7 +21252,7 @@
                         "wireValue": "expectedValueParameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     }
                 }
@@ -21388,7 +21388,7 @@
                         "wireValue": "templateId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseTemplateId"
                     }
                 },
@@ -21416,7 +21416,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -21444,7 +21444,7 @@
                         "wireValue": "implementation"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseImplementation"
                     }
                 }
@@ -21580,7 +21580,7 @@
                         "wireValue": "description"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationDescription"
                     }
                 },
@@ -21608,7 +21608,7 @@
                         "wireValue": "function"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseFunction"
                     }
                 }
@@ -21928,7 +21928,7 @@
                         "wireValue": "getActualResult"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionDefinition"
                     }
                 },
@@ -21956,7 +21956,7 @@
                         "wireValue": "assertCorrectnessCheck"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:AssertCorrectnessCheck"
                     }
                 }
@@ -22092,9 +22092,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Parameter"
                         }
                     }
@@ -22123,7 +22123,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -22259,7 +22259,7 @@
                         "wireValue": "parameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     }
                 },
@@ -22287,7 +22287,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -22315,7 +22315,7 @@
                         "wireValue": "variableType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -22451,7 +22451,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     }
                 },
@@ -22479,7 +22479,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -22615,9 +22615,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Parameter"
                         }
                     }
@@ -22754,9 +22754,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Parameter"
                         }
                     }
@@ -22785,7 +22785,7 @@
                         "wireValue": "returnType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -22921,9 +22921,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Parameter"
                         }
                     }
@@ -22952,7 +22952,7 @@
                         "wireValue": "actualResultType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -23272,7 +23272,7 @@
                         "wireValue": "expectedValueParameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     }
                 }
@@ -23408,9 +23408,9 @@
                         "wireValue": "additionalParameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Parameter"
                         }
                     }
@@ -23439,7 +23439,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -23575,9 +23575,9 @@
                         "wireValue": "boards"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseImplementationDescriptionBoard"
                         }
                     }
@@ -23715,7 +23715,7 @@
                 "html": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -23745,7 +23745,7 @@
                 "paramId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     },
                     "discriminantValue": {
@@ -23904,7 +23904,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     }
                 },
@@ -23932,7 +23932,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -23960,7 +23960,7 @@
                         "wireValue": "hidden"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -24096,13 +24096,13 @@
                         "wireValue": "codeByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:FunctionImplementation"
                         }
                     }
@@ -24239,7 +24239,7 @@
                         "wireValue": "impl"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -24267,9 +24267,9 @@
                         "wireValue": "imports"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -24406,13 +24406,13 @@
                         "wireValue": "generatedTestCaseFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     }
@@ -24441,13 +24441,13 @@
                         "wireValue": "generatedTemplateFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     }
@@ -24476,13 +24476,13 @@
                         "wireValue": "other"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     }
@@ -24647,13 +24647,13 @@
                 "custom": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     },
@@ -24813,7 +24813,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -24841,7 +24841,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     }
                 },
@@ -24869,13 +24869,13 @@
                         "wireValue": "additionalFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:Files"
                         }
                     }
@@ -24904,7 +24904,7 @@
                         "wireValue": "basicTestCaseTemplate"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:BasicTestCaseTemplate"
                     }
                 }
@@ -25040,9 +25040,9 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:FileInfoV2"
                         }
                     }
@@ -25179,7 +25179,7 @@
                         "wireValue": "filename"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -25207,7 +25207,7 @@
                         "wireValue": "directory"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -25235,7 +25235,7 @@
                         "wireValue": "contents"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -25263,7 +25263,7 @@
                         "wireValue": "editable"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -25399,7 +25399,7 @@
                         "wireValue": "file"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:FileInfoV2"
                     }
                 },
@@ -25427,9 +25427,9 @@
                         "wireValue": "relatedTypes"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableType"
                         }
                     }
@@ -25777,7 +25777,7 @@
                         "wireValue": "functionSignature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:FunctionSignature"
                     }
                 }
@@ -25913,13 +25913,13 @@
                         "wireValue": "functionByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -26056,7 +26056,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -26084,7 +26084,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     }
                 }
@@ -26220,13 +26220,13 @@
                         "wireValue": "solutionFileByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:FileInfoV2"
                         }
                     }
@@ -26363,9 +26363,9 @@
                         "wireValue": "template"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     }
@@ -26394,7 +26394,7 @@
                         "wireValue": "testCase"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseV2"
                     }
                 }
@@ -26530,7 +26530,7 @@
                         "wireValue": "template"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/problem:TestCaseTemplate"
                     }
                 }
@@ -26680,7 +26680,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -26828,7 +26828,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -26976,7 +26976,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -27148,7 +27148,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -27176,7 +27176,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -27204,7 +27204,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -27232,7 +27232,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -27260,9 +27260,9 @@
                         "wireValue": "supportedLanguages"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     }
@@ -27291,7 +27291,7 @@
                         "wireValue": "customFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:CustomFiles"
                     }
                 },
@@ -27319,7 +27319,7 @@
                         "wireValue": "generatedFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:GeneratedFiles"
                     }
                 },
@@ -27347,9 +27347,9 @@
                         "wireValue": "customTestCaseTemplates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     }
@@ -27378,9 +27378,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseV2"
                         }
                     }
@@ -27409,7 +27409,7 @@
                         "wireValue": "isPublic"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -27583,7 +27583,7 @@
                         "wireValue": "problemId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:ProblemId"
                     }
                 },
@@ -27611,7 +27611,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -27639,7 +27639,7 @@
                         "wireValue": "problemVersion"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -27667,9 +27667,9 @@
                         "wireValue": "variableTypes"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableType"
                         }
                     }
@@ -27844,7 +27844,7 @@
                         "wireValue": "problemName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -27872,7 +27872,7 @@
                         "wireValue": "problemDescription"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:ProblemDescription"
                     }
                 },
@@ -27900,7 +27900,7 @@
                         "wireValue": "customFiles"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:CustomFiles"
                     }
                 },
@@ -27928,9 +27928,9 @@
                         "wireValue": "customTestCaseTemplates"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     }
@@ -27959,9 +27959,9 @@
                         "wireValue": "testcases"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseV2"
                         }
                     }
@@ -27990,9 +27990,9 @@
                         "wireValue": "supportedLanguages"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     }
@@ -28021,7 +28021,7 @@
                         "wireValue": "isPublic"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -28195,7 +28195,7 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseMetadata"
                     }
                 },
@@ -28223,7 +28223,7 @@
                         "wireValue": "implementation"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationReference"
                     }
                 },
@@ -28251,13 +28251,13 @@
                         "wireValue": "arguments"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:ParameterId"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableValue"
                         }
                     }
@@ -28286,9 +28286,9 @@
                         "wireValue": "expects"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseExpects"
                         }
                     }
@@ -28463,9 +28463,9 @@
                         "wireValue": "expectedStdout"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -28641,7 +28641,7 @@
                 "templateId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplateId"
                     },
                     "discriminantValue": {
@@ -28865,7 +28865,7 @@
                         "wireValue": "templateId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplateId"
                     }
                 },
@@ -28893,7 +28893,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -28921,7 +28921,7 @@
                         "wireValue": "description"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationDescription"
                     }
                 },
@@ -28949,7 +28949,7 @@
                         "wireValue": "expectedValueParameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     }
                 }
@@ -29123,7 +29123,7 @@
                         "wireValue": "templateId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplateId"
                     }
                 },
@@ -29151,7 +29151,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -29179,7 +29179,7 @@
                         "wireValue": "implementation"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementation"
                     }
                 }
@@ -29353,7 +29353,7 @@
                         "wireValue": "description"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationDescription"
                     }
                 },
@@ -29381,7 +29381,7 @@
                         "wireValue": "function"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseFunction"
                     }
                 }
@@ -29777,7 +29777,7 @@
                         "wireValue": "getActualResult"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionDefinition"
                     }
                 },
@@ -29805,7 +29805,7 @@
                         "wireValue": "assertCorrectnessCheck"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:AssertCorrectnessCheck"
                     }
                 }
@@ -29979,9 +29979,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     }
@@ -30010,7 +30010,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -30184,7 +30184,7 @@
                         "wireValue": "parameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     }
                 },
@@ -30212,7 +30212,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -30240,7 +30240,7 @@
                         "wireValue": "variableType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -30414,7 +30414,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     }
                 },
@@ -30442,7 +30442,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -30616,9 +30616,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     }
@@ -30793,9 +30793,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     }
@@ -30824,7 +30824,7 @@
                         "wireValue": "returnType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -30998,9 +30998,9 @@
                         "wireValue": "parameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     }
@@ -31029,7 +31029,7 @@
                         "wireValue": "actualResultType"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:VariableType"
                     }
                 }
@@ -31425,7 +31425,7 @@
                         "wireValue": "expectedValueParameterId"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     }
                 }
@@ -31599,9 +31599,9 @@
                         "wireValue": "additionalParameters"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     }
@@ -31630,7 +31630,7 @@
                         "wireValue": "code"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
@@ -31804,9 +31804,9 @@
                         "wireValue": "boards"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseImplementationDescriptionBoard"
                         }
                     }
@@ -31982,7 +31982,7 @@
                 "html": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -32012,7 +32012,7 @@
                 "paramId": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     },
                     "discriminantValue": {
@@ -32209,7 +32209,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseId"
                     }
                 },
@@ -32237,7 +32237,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -32265,7 +32265,7 @@
                         "wireValue": "hidden"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -32439,13 +32439,13 @@
                         "wireValue": "codeByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:FunctionImplementation"
                         }
                     }
@@ -32620,7 +32620,7 @@
                         "wireValue": "impl"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -32648,9 +32648,9 @@
                         "wireValue": "imports"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -32825,13 +32825,13 @@
                         "wireValue": "generatedTestCaseFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Files"
                         }
                     }
@@ -32860,13 +32860,13 @@
                         "wireValue": "generatedTemplateFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Files"
                         }
                     }
@@ -32895,13 +32895,13 @@
                         "wireValue": "other"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Files"
                         }
                     }
@@ -33104,13 +33104,13 @@
                 "custom": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Files"
                         }
                     },
@@ -33308,7 +33308,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -33336,7 +33336,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     }
                 },
@@ -33364,13 +33364,13 @@
                         "wireValue": "additionalFiles"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:Files"
                         }
                     }
@@ -33399,7 +33399,7 @@
                         "wireValue": "basicTestCaseTemplate"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:BasicTestCaseTemplate"
                     }
                 }
@@ -33573,9 +33573,9 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:FileInfoV2"
                         }
                     }
@@ -33750,7 +33750,7 @@
                         "wireValue": "filename"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -33778,7 +33778,7 @@
                         "wireValue": "directory"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -33806,7 +33806,7 @@
                         "wireValue": "contents"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -33834,7 +33834,7 @@
                         "wireValue": "editable"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -34008,7 +34008,7 @@
                         "wireValue": "file"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:FileInfoV2"
                     }
                 },
@@ -34036,9 +34036,9 @@
                         "wireValue": "relatedTypes"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:VariableType"
                         }
                     }
@@ -34462,7 +34462,7 @@
                         "wireValue": "functionSignature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:FunctionSignature"
                     }
                 }
@@ -34636,13 +34636,13 @@
                         "wireValue": "functionByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -34817,7 +34817,7 @@
                         "wireValue": "methodName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -34845,7 +34845,7 @@
                         "wireValue": "signature"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     }
                 }
@@ -35019,13 +35019,13 @@
                         "wireValue": "solutionFileByLanguage"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:FileInfoV2"
                         }
                     }
@@ -35200,9 +35200,9 @@
                         "wireValue": "template"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     }
@@ -35231,7 +35231,7 @@
                         "wireValue": "testCase"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseV2"
                     }
                 }
@@ -35405,7 +35405,7 @@
                         "wireValue": "template"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplate"
                     }
                 }
@@ -35437,9 +35437,9 @@
                 "wireValue": "X-Random-Header"
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 }
             }
@@ -35666,7 +35666,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -35674,7 +35674,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestSubmissionStatus"
                     }
                 }
@@ -35801,7 +35801,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -35809,7 +35809,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:TestSubmissionUpdate"
                     }
                 }
@@ -35936,7 +35936,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -35944,7 +35944,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:WorkspaceSubmissionStatus"
                     }
                 }
@@ -36071,7 +36071,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -36079,7 +36079,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_submission:WorkspaceSubmissionUpdate"
                     }
                 }
@@ -36270,7 +36270,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     },
@@ -36298,7 +36298,7 @@
                             "wireValue": "testCaseId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -36332,7 +36332,7 @@
                                 "wireValue": "result"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_submission:TestCaseResultWithStdout"
                             }
                         },
@@ -36360,9 +36360,9 @@
                                 "wireValue": "traceResponses"
                             },
                             "typeReference": {
-                                "_type": "list",
+                                "type": "list",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_submission:TraceResponse"
                                 }
                             }
@@ -36496,7 +36496,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     },
@@ -36524,7 +36524,7 @@
                             "wireValue": "testCaseId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_v2/problem:TestCaseId"
                         }
                     }
@@ -36532,9 +36532,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TraceResponseV2"
                         }
                     }
@@ -36726,7 +36726,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -36760,7 +36760,7 @@
                                 "wireValue": "workspaceRunDetails"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_submission:WorkspaceRunDetails"
                             }
                         },
@@ -36788,9 +36788,9 @@
                                 "wireValue": "traceResponses"
                             },
                             "typeReference": {
-                                "_type": "list",
+                                "type": "list",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_submission:TraceResponse"
                                 }
                             }
@@ -36924,7 +36924,7 @@
                             "wireValue": "submissionId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:SubmissionId"
                         }
                     }
@@ -36932,9 +36932,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_submission:TraceResponseV2"
                         }
                     }
@@ -37141,9 +37141,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -37337,7 +37337,7 @@
                             "wireValue": "admin-key-header"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -37534,7 +37534,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -37564,7 +37564,7 @@
                             "wireValue": "datetime"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE_TIME"
                         }
                     },
@@ -37592,9 +37592,9 @@
                             "wireValue": "optionalDatetime"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "DATE_TIME"
                             }
                         }
@@ -37625,7 +37625,7 @@
                     "bodyType": {
                         "type": "typeReference",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_playlist:PlaylistCreateRequest"
                         }
                     }
@@ -37821,7 +37821,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -37851,9 +37851,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -37882,7 +37882,7 @@
                             "wireValue": "otherField"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -37910,7 +37910,7 @@
                             "wireValue": "multiLineDocs"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -37938,11 +37938,11 @@
                             "wireValue": "optionalMultipleField"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -37972,9 +37972,9 @@
                             "wireValue": "multipleField"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -38109,7 +38109,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     },
@@ -38137,7 +38137,7 @@
                             "wireValue": "playlistId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_playlist:PlaylistId"
                         }
                     }
@@ -38266,7 +38266,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     },
@@ -38294,7 +38294,7 @@
                             "wireValue": "playlistId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_playlist:PlaylistId"
                         }
                     }
@@ -38302,9 +38302,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_playlist:UpdatePlaylistRequest"
                         }
                     }
@@ -38432,7 +38432,7 @@
                             "wireValue": "serviceParam"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     },
@@ -38460,7 +38460,7 @@
                             "wireValue": "playlist_id"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_playlist:PlaylistId"
                         }
                     }
@@ -38568,7 +38568,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:CreateProblemRequest"
                     }
                 }
@@ -38695,7 +38695,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -38703,7 +38703,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_problem:CreateProblemRequest"
                     }
                 }
@@ -38830,7 +38830,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -39028,9 +39028,9 @@
                                 "wireValue": "inputParams"
                             },
                             "typeReference": {
-                                "_type": "list",
+                                "type": "list",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_problem:VariableTypeAndName"
                                 }
                             }
@@ -39059,7 +39059,7 @@
                                 "wireValue": "outputType"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_commons:VariableType"
                             }
                         },
@@ -39087,7 +39087,7 @@
                                 "wireValue": "methodName"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -39220,7 +39220,7 @@
                             "wireValue": "language"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     }
@@ -39349,7 +39349,7 @@
                             "wireValue": "sessionId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -39478,7 +39478,7 @@
                             "wireValue": "sessionId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -39707,7 +39707,7 @@
                             "wireValue": "language"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:Language"
                         }
                     },
@@ -39735,7 +39735,7 @@
                             "wireValue": "numWarmInstances"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -40281,7 +40281,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -40449,7 +40449,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     },
@@ -40477,7 +40477,7 @@
                             "wireValue": "problemVersion"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -41037,7 +41037,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     }
@@ -41243,7 +41243,7 @@
                             "wireValue": "problemId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons:ProblemId"
                         }
                     },
@@ -41271,7 +41271,7 @@
                             "wireValue": "problemVersion"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }

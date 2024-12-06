@@ -28,9 +28,12 @@
     "depcheck": "depcheck",
     "generate": "fern generate --local"
   },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
+    "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",

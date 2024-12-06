@@ -13,4 +13,10 @@ export abstract class AbstractDynamicSnippetsGenerator<
      * @param request
      */
     public abstract generate(request: EndpointSnippetRequest): Promise<EndpointSnippetResponse>;
+
+    /**
+     * Generates code for the specified request.
+     * @param request
+     */
+    public abstract generateSync(request: EndpointSnippetRequest): EndpointSnippetResponse;
 }

@@ -4,7 +4,7 @@ import { LogLevel } from "@fern-api/logger";
 import {
     AbstractAPIWorkspace,
     FernWorkspace,
-    getOSSWorkspaceSettingsFromGeneratorInvocation
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -69,7 +69,7 @@ export async function runWithCustomFixture({
     try {
         const fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
             { context: taskContext },
-            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+            getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
         );
 
         await dockerGeneratorRunner.build();

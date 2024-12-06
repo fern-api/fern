@@ -8348,7 +8348,6 @@ errors:
                                   "city": "Los Angeles",
                                   "country": "United States",
                                   "country_code": "US",
-                                  "ref": "address_ref_x",
                                   "street_address": "123 Queen St",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "USLA",
@@ -8374,7 +8373,6 @@ errors:
                                   "city": "Shanghai",
                                   "country": "China",
                                   "country_code": "CN",
-                                  "ref": "address_ref_x",
                                   "street_address": "123 Queen St",
                                   "timezone": "America/Los_Angeles",
                                   "unlocode": "CNSZP",
@@ -8439,7 +8437,6 @@ errors:
                             "wants_import_customs_service": true,
                           },
                         ],
-                        "next": "https://api.flexport.com/bookings?page=3&per=10",
                         "prev": "https://api.flexport.com/bookings?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/bookings?page=13&per=10",
@@ -8652,28 +8649,6 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "air_booking": {
-                          "_object": "/air/booking",
-                          "destination_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "incoterm": "EXW",
-                          "origin_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "product_descriptions": [
-                            {
-                              "_object": "/bookings/product_descriptions",
-                              "description": "Wristwatches",
-                              "description_for_export_customs": "手表",
-                              "description_for_export_customs_locale": "zh_CN",
-                            },
-                          ],
-                          "wants_delivery_service": false,
-                          "wants_pickup_service": true,
-                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -8787,7 +8762,6 @@ errors:
                           ],
                         },
                         "name": "PO 123",
-                        "notify_party": "John Doe | john@example.com | 905-555-1234",
                         "ocean_booking": {
                           "_object": "/ocean/booking",
                           "container_counts": {
@@ -8877,7 +8851,6 @@ errors:
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "quote_status": "pending_quote",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123,
@@ -8913,12 +8886,6 @@ errors:
                         "special_instructions": "Handle carefully",
                         "status": "archived",
                         "transportation_mode": "ocean",
-                        "trucking_booking": {
-                          "_object": "/trucking/booking",
-                          "description_of_products": "Wristwatches",
-                          "is_ftl": false,
-                          "payment_terms": "collect",
-                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -9051,28 +9018,6 @@ errors:
                       "_object": "/api/response",
                       "data": {
                         "_object": "/booking",
-                        "air_booking": {
-                          "_object": "/air/booking",
-                          "destination_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "incoterm": "EXW",
-                          "origin_port": {
-                            "_object": "/place",
-                            "name": "ORD - Chicago - IL",
-                          },
-                          "product_descriptions": [
-                            {
-                              "_object": "/bookings/product_descriptions",
-                              "description": "Wristwatches",
-                              "description_for_export_customs": "手表",
-                              "description_for_export_customs_locale": "zh_CN",
-                            },
-                          ],
-                          "wants_delivery_service": false,
-                          "wants_pickup_service": true,
-                        },
                         "booking_line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
@@ -9306,12 +9251,6 @@ errors:
                         "special_instructions": "",
                         "status": "archived",
                         "transportation_mode": "ocean",
-                        "trucking_booking": {
-                          "_object": "/trucking/booking",
-                          "description_of_products": "Wristwatches",
-                          "is_ftl": false,
-                          "payment_terms": "collect",
-                        },
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                       },
@@ -9624,7 +9563,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/bookings?page=12&per=10
-                next: https://api.flexport.com/bookings?page=3&per=10
                 data:
                   - _object: /booking
                     id: 123
@@ -9694,7 +9632,6 @@ service:
                           country: China
                           country_code: CN
                           timezone: America/Los_Angeles
-                          ref: address_ref_x
                           unlocode: CNSZP
                         details:
                           - _object: /trucking/port
@@ -9711,7 +9648,6 @@ service:
                           country: United States
                           country_code: US
                           timezone: America/Los_Angeles
-                          ref: address_ref_x
                           unlocode: USLA
                         details:
                           - _object: /trucking/port
@@ -9971,7 +9907,6 @@ service:
                   link: https://api.flexport.com/shipments/123
                   id: 123
                 status: archived
-                quote_status: pending_quote
                 shipper_entity:
                   _object: /company_entity
                   id: 9281
@@ -10014,7 +9949,6 @@ service:
                     - _object: company_entity/vat_number
                       country_code: US
                       number: US 123746396
-                notify_party: John Doe | john@example.com | 905-555-1234
                 transportation_mode: ocean
                 ocean_booking:
                   _object: /ocean/booking
@@ -10074,27 +10008,6 @@ service:
                           36177-92-1) (provided for in subheading 2933.39.91)
                         code: '9101.00'
                         country_code: US
-                air_booking:
-                  _object: /air/booking
-                  incoterm: EXW
-                  wants_pickup_service: true
-                  wants_delivery_service: false
-                  origin_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  destination_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  product_descriptions:
-                    - _object: /bookings/product_descriptions
-                      description: Wristwatches
-                      description_for_export_customs: 手表
-                      description_for_export_customs_locale: zh_CN
-                trucking_booking:
-                  _object: /trucking/booking
-                  is_ftl: false
-                  payment_terms: collect
-                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -10311,27 +10224,6 @@ service:
                       description: Wristwatches
                       description_for_export_customs: 手表
                       description_for_export_customs_locale: zh_CN
-                air_booking:
-                  _object: /air/booking
-                  incoterm: EXW
-                  wants_pickup_service: true
-                  wants_delivery_service: false
-                  origin_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  destination_port:
-                    _object: /place
-                    name: ORD - Chicago - IL
-                  product_descriptions:
-                    - _object: /bookings/product_descriptions
-                      description: Wristwatches
-                      description_for_export_customs: 手表
-                      description_for_export_customs_locale: zh_CN
-                trucking_booking:
-                  _object: /trucking/booking
-                  is_ftl: false
-                  payment_terms: collect
-                  description_of_products: Wristwatches
                 origin_address:
                   _object: /address
                   street_address: 1641 Settlers Lane
@@ -10596,12 +10488,9 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
-                          "state": "MN",
                           "street_address": "123 Queen St",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
-                          "zip": "56307",
                         },
                         "new_port_of_loading": {
                           "_object": "/address",
@@ -10609,12 +10498,9 @@ docs: Endpoints relating to Booking objects
                           "country": "China",
                           "country_code": "CN",
                           "ref": "my-shanghai-address-ref",
-                          "state": "MN",
                           "street_address": "123 Queen St",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shanghai",
                           "unlocode": "CNSHA",
-                          "zip": "56307",
                         },
                         "new_port_of_unloading": {
                           "_object": "/address",
@@ -10916,24 +10802,18 @@ service:
                 new_origin_address:
                   _object: /address
                   street_address: 123 Queen St
-                  street_address2: STE 2918
                   city: Shanghai
-                  state: MN
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
                 new_port_of_loading:
                   _object: /address
                   street_address: 123 Queen St
-                  street_address2: STE 2918
                   city: Shanghai
-                  state: MN
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shanghai
                   ref: my-shanghai-address-ref
                   unlocode: CNSHA
@@ -11140,7 +11020,6 @@ docs: >-
                             "units": 200,
                           },
                         ],
-                        "next": "https://api.flexport.com/booking_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/booking_line_items?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/booking_line_items?page=13&per=10",
@@ -11435,7 +11314,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/booking_line_items?page=12&per=10
-                next: https://api.flexport.com/booking_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/booking_line_item
                     id: 123456
@@ -12265,7 +12143,6 @@ docs: Endpoints relating to Carbon Calculations
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/commercial_invoices?page=3&per=10",
                         "prev": "https://api.flexport.com/commercial_invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/commercial_invoices?page=2&per=10",
@@ -12818,7 +12695,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/commercial_invoices?page=1&per=10
-                next: https://api.flexport.com/commercial_invoices?page=3&per=10
                 data:
                   - _object: /commercial_invoices
                     id: abcxyz-23456-def
@@ -13490,7 +13366,6 @@ docs: Endpoints relating to Commercial Invoice objects
                             "ref": "ref_for_company",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/companies?page=3&per=10",
                         "prev": "https://api.flexport.com/network/companies?page=12&per=10",
                         "total_count": 121,
                       },
@@ -14022,7 +13897,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/companies?page=12&per=10
-                next: https://api.flexport.com/network/companies?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/company
@@ -14400,7 +14274,6 @@ docs: Endpoints relating to Company objects
                             ],
                           },
                         ],
-                        "next": "https://api.flexport.com/network/company_entities?page=3&per=10",
                         "prev": "https://api.flexport.com/network/company_entities?page=12&per=10",
                         "total_count": 121,
                       },
@@ -14885,8 +14758,6 @@ service:
                 _object: /api/collections/paginated
                 prev: >-
                   https://api.flexport.com/network/company_entities?page=12&per=10
-                next: >-
-                  https://api.flexport.com/network/company_entities?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /company_entity
@@ -15233,7 +15104,6 @@ docs: Endpoints relating to CompanyEntity objects
                             "phone_number": "6789998212",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/contacts?page=3&per=10",
                         "prev": "https://api.flexport.com/network/contacts?page=12&per=10",
                         "total_count": 121,
                       },
@@ -15605,7 +15475,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/contacts?page=12&per=10
-                next: https://api.flexport.com/network/contacts?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /network/contact
@@ -16742,7 +16611,6 @@ docs: Endpoints relating to ContainerLeg objects
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/customs_entries?page=3&per=10",
                         "prev": "https://api.flexport.com/customs_entries?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/customs_entries?page=13&per=10",
@@ -16969,7 +16837,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/customs_entries?page=12&per=10
-                next: https://api.flexport.com/customs_entries?page=3&per=10
                 data:
                   - _object: /customs_entries
                     id: ABC123
@@ -17149,7 +17016,6 @@ docs: Endpoints relating to Customs Entry objects
                             },
                           },
                         ],
-                        "next": "https://api.flexport.com/documents?page=3&per=10",
                         "prev": "https://api.flexport.com/documents?page=12&per=10",
                         "total_count": 121,
                       },
@@ -17243,7 +17109,6 @@ docs: Endpoints relating to Customs Entry objects
                       "_object": "/api/response",
                       "data": {
                         "_object": "/document",
-                        "archived_at": "2024-01-15T09:30:00Z",
                         "document_type": "billing_packet",
                         "file_link": "https://api.flexport.com/documents/ABC123/download",
                         "file_metadata": {
@@ -17253,7 +17118,6 @@ docs: Endpoints relating to Customs Entry objects
                         },
                         "file_name": "readme.txt",
                         "id": "ABC123",
-                        "memo": "memo",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123456,
@@ -17457,7 +17321,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/documents?page=12&per=10
-                next: https://api.flexport.com/documents?page=3&per=10
                 total_count: 121
                 data:
                   - _object: /document
@@ -17542,9 +17405,7 @@ service:
                 id: ABC123
                 file_name: readme.txt
                 document_type: billing_packet
-                memo: memo
                 file_link: https://api.flexport.com/documents/ABC123/download
-                archived_at: '2024-01-15T09:30:00Z'
                 file_metadata:
                   _object: file/metadata
                   size: 20000
@@ -18337,7 +18198,6 @@ Other details about this invoice",
                           },
                         ],
                         "next": "https://api.flexport.com/invoices?page=2&per=10",
-                        "prev": "https://api.flexport.com/invoices?page=1&per=10",
                       },
                       "self": "https://api.flexport.com/invoices",
                       "version": 2,
@@ -18933,7 +18793,6 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
-                prev: https://api.flexport.com/invoices?page=1&per=10
                 next: https://api.flexport.com/invoices?page=2&per=10
                 data:
                   - _object: /invoice
@@ -19382,7 +19241,6 @@ docs: Endpoints relating to Invoice objects
                             "name": "Wayne Enterprises",
                           },
                         ],
-                        "next": "https://api.flexport.com/network/locations?page=3&per=10",
                         "prev": "https://api.flexport.com/network/locations?page=1&per=10",
                         "total_count": 11,
                       },
@@ -19653,7 +19511,6 @@ docs: Endpoints relating to Invoice objects
                           "ref": "zoomit-management-co",
                           "state": "CA",
                           "street_address": "2 World Way",
-                          "street_address2": "STE 2918",
                           "timezone": "America/Los_Angeles",
                           "unlocode": "USLAX",
                           "zip": "90045",
@@ -19914,7 +19771,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/network/locations?page=1&per=10
-                next: https://api.flexport.com/network/locations?page=3&per=10
                 total_count: 11
                 data:
                   - _object: /network/location
@@ -20136,7 +19992,6 @@ service:
                 address:
                   _object: /address
                   street_address: 2 World Way
-                  street_address2: STE 2918
                   city: Los Angeles
                   state: CA
                   country: United States of America
@@ -21680,22 +21535,18 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
-                                "street_address": "1641 Settlers Lane",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -21736,22 +21587,18 @@ docs: Endpoints relating to Product objects
                                 "country_code": "US",
                                 "ref": "id-313120",
                                 "state": "GA",
-                                "street_address": "1641 Settlers Lane",
                                 "timezone": "America/New_York",
                                 "unlocode": "USFBN",
                               },
                               "details": [
                                 {
                                   "_object": "/ocean/railport",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "port_code": "3901",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "port_code": "3901",
                                 },
                               ],
                               "name": "Fairburn",
@@ -21766,7 +21613,6 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
-                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
                                     "timezone": "Asia/Shanghai",
@@ -21826,7 +21672,6 @@ docs: Endpoints relating to Product objects
                                     "city": "shanghai",
                                     "country": "China",
                                     "country_code": "CN",
-                                    "ref": "address_ref_x",
                                     "state": "Shanghai",
                                     "street_address": "test",
                                     "timezone": "Asia/Shanghai",
@@ -21859,7 +21704,6 @@ docs: Endpoints relating to Product objects
                             "updated_at": "2020-07-31T19:52:58.161Z",
                           },
                         ],
-                        "next": "https://api.flexport.com/purchase_orders?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -22586,7 +22430,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
-                next: https://api.flexport.com/purchase_orders?page=3&per=10
                 data:
                   - id: 109771
                     _object: /purchase_order
@@ -22604,7 +22447,6 @@ service:
                       name: Fairburn
                       address:
                         _object: /address
-                        street_address: 1641 Settlers Lane
                         city: Fairburn
                         state: GA
                         country: United States
@@ -22614,11 +22456,8 @@ service:
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
-                          port_code: '3901'
                         - _object: /trucking/port
-                          port_code: '3901'
                         - _object: /ocean/port
-                          port_code: '3901'
                     origin_address:
                       _object: /address
                       street_address: No 1, 123 St
@@ -22633,7 +22472,6 @@ service:
                       name: Fairburn
                       address:
                         _object: /address
-                        street_address: 1641 Settlers Lane
                         city: Fairburn
                         state: GA
                         country: United States
@@ -22643,11 +22481,8 @@ service:
                         unlocode: USFBN
                       details:
                         - _object: /ocean/railport
-                          port_code: '3901'
                         - _object: /trucking/port
-                          port_code: '3901'
                         - _object: /ocean/port
-                          port_code: '3901'
                     destination_addresses:
                       - _object: /address
                         street_address: Vandelay street 1
@@ -22673,7 +22508,6 @@ service:
                             country: China
                             country_code: CN
                             timezone: Asia/Shanghai
-                            ref: address_ref_x
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -22714,7 +22548,6 @@ service:
                             country: China
                             country_code: CN
                             timezone: Asia/Shanghai
-                            ref: address_ref_x
                           vat_numbers:
                             - _object: /company_entity/vat_number
                               country_code: GB
@@ -23303,7 +23136,6 @@ docs: >-
                                 "city": "Albany",
                                 "country": "United States of America",
                                 "country_code": "US",
-                                "ref": "address_ref_x",
                                 "state": "MN",
                                 "street_address": "1641 Settlers Lane",
                                 "street_address2": "STE 2918",
@@ -23396,7 +23228,6 @@ docs: >-
                             "units": 20,
                           },
                         ],
-                        "next": "https://api.flexport.com/purchase_order_line_items?page=3&per=10",
                         "prev": "https://api.flexport.com/purchase_orders?page=12&per=10",
                       },
                       "self": "https://api.flexport.com/purchase_orders?page=13&per=10",
@@ -23489,7 +23320,6 @@ docs: >-
                             "city": "Albany",
                             "country": "United States of America",
                             "country_code": "US",
-                            "ref": "address_ref_x",
                             "state": "MN",
                             "street_address": "1641 Settlers Lane",
                             "street_address2": "STE 2918",
@@ -23518,28 +23348,6 @@ docs: >-
                             "units": 1,
                           },
                         ],
-                        "destination_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
                         "hs_codes": [
                           {
                             "_object": "/hs_code",
@@ -23573,34 +23381,8 @@ docs: >-
                           "ref": "sellingcoaddress",
                           "state": "44",
                           "street_address": "10th YouSong Industrial District",
-                          "street_address2": "STE 2918",
                           "timezone": "China/Shenzhen",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
                         },
-                        "origin_port": {
-                          "_object": "/place",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "street_address": "1641 Settlers Lane",
-                            "timezone": "America/Los_Angeles",
-                          },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "parent_line_key": "parent_line_key",
                         "product": {
                           "color": "red",
                           "country_of_origin": "US",
@@ -23809,8 +23591,6 @@ service:
               data:
                 _object: /api/collections/paginated
                 prev: https://api.flexport.com/purchase_orders?page=12&per=10
-                next: >-
-                  https://api.flexport.com/purchase_order_line_items?page=3&per=10
                 data:
                   - _object: /purchase_orders/line_item
                     id: 123456
@@ -23879,7 +23659,6 @@ service:
                         country_code: US
                         zip: '56307'
                         timezone: America/Los_Angeles
-                        ref: address_ref_x
                         unlocode: US AL2
                       vat_numbers:
                         - _object: company_entity/vat_number
@@ -23955,52 +23734,15 @@ service:
                 transportation_mode: air
                 unit_of_measure: HUN
                 must_arrive_date: '2019-03-11'
-                origin_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
                 origin_location:
                   _object: /address
                   street_address: 10th YouSong Industrial District
-                  street_address2: STE 2918
                   city: Shenzhen
                   state: '44'
                   country: China
                   country_code: CN
-                  zip: '56307'
                   timezone: China/Shenzhen
                   ref: sellingcoaddress
-                  unlocode: US AL2
-                destination_port:
-                  _object: /place
-                  name: ORD - Chicago - IL
-                  address:
-                    _object: /address
-                    street_address: 1641 Settlers Lane
-                    city: Albany
-                    country: United States of America
-                    country_code: US
-                    timezone: America/Los_Angeles
-                    ref: address_ref_x
-                  details:
-                    - _object: /air/port
-                      port_code: '3901'
-                      country_code: US
-                      iata_code: LAX
-                      icao_code: KLAX
                 destination_addresses:
                   - location_ref: id-1234
                     units: 1
@@ -24008,7 +23750,6 @@ service:
                   - _object: /hs_code
                     code: 8309.90.10.00
                     country_code: US
-                parent_line_key: parent_line_key
                 assigned_party:
                   _object: /company_entity
                   id: 9281
@@ -24024,7 +23765,6 @@ service:
                     country_code: US
                     zip: '56307'
                     timezone: America/Los_Angeles
-                    ref: address_ref_x
                     unlocode: US AL2
                   vat_numbers:
                     - _object: company_entity/vat_number
@@ -24348,8 +24088,6 @@ docs: >-
                             "wants_trade_declaration_service": false,
                           },
                         ],
-                        "next": "next",
-                        "prev": "prev",
                       },
                       "self": "https://api.flexport.com/shipments?page=1&per=20&sort=id&direction=desc",
                       "version": 2,
@@ -24601,19 +24339,6 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                        "air_shipment": {
-                          "_object": "/air/shipment",
-                          "chargeable_volume": {
-                            "_object": "/quantity/volume",
-                            "value": 472.62,
-                          },
-                          "chargeable_weight": {
-                            "_object": "/quantity/weight",
-                            "value": 2300.4,
-                          },
-                          "house_airway_bill": "HWXJKE67732",
-                          "master_airway_bill": "22831046871",
-                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": false,
                         "booking": {
@@ -24661,14 +24386,6 @@ docs: >-
                           "value": 2300.4,
                         },
                         "cargo_ready_date": "2019-02-06",
-                        "child_shipments": [
-                          {
-                            "_object": "/api/refs/object",
-                            "id": 123,
-                            "link": "https://api.flexport.com/shipments/123",
-                            "ref_type": "/shipment",
-                          },
-                        ],
                         "commercial_invoices": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -24809,12 +24526,6 @@ docs: >-
                           "is_lcl": false,
                           "master_bill_number": "NEWO697216024",
                         },
-                        "parent_shipment": {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
                         "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                         "pieces": 8372,
                         "priority": "high",
@@ -24935,19 +24646,6 @@ docs: >-
                         "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                         "actual_departure_date": "2019-02-06T19:28:25Z",
                         "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                        "air_shipment": {
-                          "_object": "/air/shipment",
-                          "chargeable_volume": {
-                            "_object": "/quantity/volume",
-                            "value": 472.62,
-                          },
-                          "chargeable_weight": {
-                            "_object": "/quantity/weight",
-                            "value": 2300.4,
-                          },
-                          "house_airway_bill": "HWXJKE67732",
-                          "master_airway_bill": "22831046871",
-                        },
                         "arrival_date": "2019-02-06T19:28:25Z",
                         "belongs_to_a_buyers_consol": true,
                         "booking": {
@@ -25637,8 +25335,6 @@ service:
               version: 2
               data:
                 _object: /api/collections/paginated
-                prev: prev
-                next: next
                 data:
                   - metadata:
                       key: value
@@ -25923,16 +25619,6 @@ service:
                 visibility_only: false
                 wants_delivery_service: false
                 belongs_to_a_buyers_consol: false
-                child_shipments:
-                  - _object: /api/refs/object
-                    ref_type: /shipment
-                    link: https://api.flexport.com/shipments/123
-                    id: 123
-                parent_shipment:
-                  _object: /api/refs/object
-                  ref_type: /shipment
-                  link: https://api.flexport.com/shipments/123
-                  id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 target_delivery_date: target_delivery_date
@@ -25952,16 +25638,6 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
-                air_shipment:
-                  _object: /air/shipment
-                  house_airway_bill: HWXJKE67732
-                  master_airway_bill: '22831046871'
-                  chargeable_weight:
-                    value: 2300.4
-                    _object: /quantity/weight
-                  chargeable_volume:
-                    value: 472.62
-                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -26225,16 +25901,6 @@ service:
                     ref_type: /ocean/shipment_container
                     link: >-
                       https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123
-                air_shipment:
-                  _object: /air/shipment
-                  house_airway_bill: HWXJKE67732
-                  master_airway_bill: '22831046871'
-                  chargeable_weight:
-                    value: 2300.4
-                    _object: /quantity/weight
-                  chargeable_volume:
-                    value: 472.62
-                    _object: /quantity/volume
                 dangerous_goods:
                   _object: /shipment/dangerous_goods
                   review_status: complete
@@ -26685,12 +26351,6 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
-                        "air_leg": {
-                          "_object": "/air/shipment_leg",
-                          "flight_number": "Y8 1234",
-                          "iata_code": "2Q",
-                          "icao_code": "SNC",
-                        },
                         "cargo_ready_date": "cargo_ready_date",
                         "carrier_name": "Liberty Carrier",
                         "deleted_at": "2024-01-15T09:30:00Z",
@@ -26729,11 +26389,6 @@ docs: Endpoints relating to Shipment objects
                           "tags": [
                             "port_of_loading",
                           ],
-                          "terminal": {
-                            "_object": "/shipment_node/terminal",
-                            "firms_code": "I092",
-                            "name": "Terminal 3",
-                          },
                         },
                         "estimated_arrival_date": "2019-02-06T19:28:25Z",
                         "estimated_departure_date": "2019-02-06T19:28:25Z",
@@ -26803,14 +26458,6 @@ docs: Endpoints relating to Shipment objects
                             "name": "Terminal 3",
                           },
                         },
-                        "rail_leg": {
-                          "_object": "/rail/shipment_leg",
-                          "container_legs": {
-                            "_object": "/api/refs/collection",
-                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                            "ref_type": "/ocean/shipment_container_leg",
-                          },
-                        },
                         "shipment": {
                           "_object": "/api/refs/object",
                           "id": 123,
@@ -26818,18 +26465,6 @@ docs: Endpoints relating to Shipment objects
                           "ref_type": "/shipment",
                         },
                         "transportation_mode": "ocean",
-                        "trucking_leg": {
-                          "_object": "/trucking/shipment_leg",
-                          "container_legs": {
-                            "_object": "/api/refs/collection",
-                            "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                            "ref_type": "/ocean/shipment_container_leg",
-                          },
-                          "pieces": 32,
-                          "scac_code": "ABCD",
-                          "service_type": "ltl",
-                          "tracking_number": "FBA123456789",
-                        },
                       },
                       "self": "https://api.flexport.com/shipment_legs/948211",
                       "version": 2,
@@ -27219,41 +26854,14 @@ service:
                         icao_code: KORD
                       - _object: /trucking/port
                         port_code: '3901'
-                  terminal:
-                    _object: /shipment_node/terminal
-                    name: Terminal 3
-                    firms_code: I092
                 transportation_mode: ocean
                 carrier_name: Liberty Carrier
-                air_leg:
-                  _object: /air/shipment_leg
-                  iata_code: 2Q
-                  icao_code: SNC
-                  flight_number: Y8 1234
                 ocean_leg:
                   _object: /ocean/shipment_leg
                   scac_code: XJAE
                   vessel_name: Lenox
                   vessel_imo: IMO9074729
                   voyage_number: 059E
-                  container_legs:
-                    _object: /api/refs/collection
-                    ref_type: /ocean/shipment_container_leg
-                    link: >-
-                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                trucking_leg:
-                  _object: /trucking/shipment_leg
-                  tracking_number: FBA123456789
-                  service_type: ltl
-                  pieces: 32
-                  scac_code: ABCD
-                  container_legs:
-                    _object: /api/refs/collection
-                    ref_type: /ocean/shipment_container_leg
-                    link: >-
-                      https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                rail_leg:
-                  _object: /rail/shipment_leg
                   container_legs:
                     _object: /api/refs/collection
                     ref_type: /ocean/shipment_container_leg

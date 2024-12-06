@@ -11155,10 +11155,6 @@ You can view the currently authorised admin along with the embedded app object (
                         },
                       ],
                       "pages": {
-                        "next": {
-                          "per_page": 2,
-                          "starting_after": "your-cursor-from-response",
-                        },
                         "page": 1,
                         "per_page": 20,
                         "total_pages": 1,
@@ -11710,9 +11706,6 @@ service:
               pages:
                 type: pages
                 page: 1
-                next:
-                  per_page: 2
-                  starting_after: your-cursor-from-response
                 per_page: 20
                 total_pages: 1
               activity_logs:
@@ -18103,10 +18096,6 @@ When using the Companies endpoint and the pages object to iterate through the re
                         },
                       ],
                       "pages": {
-                        "next": {
-                          "per_page": 2,
-                          "starting_after": "your-cursor-from-response",
-                        },
                         "page": 1,
                         "per_page": 15,
                         "total_pages": 1,
@@ -18218,10 +18207,6 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                         },
                       ],
                       "pages": {
-                        "next": {
-                          "per_page": 2,
-                          "starting_after": "your-cursor-from-response",
-                        },
                         "page": 1,
                         "per_page": 15,
                         "total_pages": 1,
@@ -18341,18 +18326,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                           "website": "https://www.intercom.com",
                         },
                       ],
-                      "pages": {
-                        "next": {
-                          "per_page": 2,
-                          "starting_after": "your-cursor-from-response",
-                        },
-                        "page": 1,
-                        "per_page": 2,
-                        "total_pages": 13,
-                        "type": "pages",
-                      },
                       "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc",
-                      "total_count": 100,
                       "type": "list",
                     },
                   },
@@ -18586,9 +18560,6 @@ service:
               pages:
                 type: pages
                 page: 1
-                next:
-                  per_page: 2
-                  starting_after: your-cursor-from-response
                 per_page: 15
                 total_pages: 1
               total_count: 1
@@ -19019,9 +18990,6 @@ service:
               pages:
                 type: pages
                 page: 1
-                next:
-                  per_page: 2
-                  starting_after: your-cursor-from-response
                 per_page: 15
                 total_pages: 1
               total_count: 1
@@ -19133,15 +19101,6 @@ service:
                         name: Active
                         created_at: 1394621988
                         updated_at: 1394622004
-              pages:
-                type: pages
-                page: 1
-                next:
-                  per_page: 2
-                  starting_after: your-cursor-from-response
-                per_page: 2
-                total_pages: 13
-              total_count: 100
               scroll_param: 12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc
     attachContactToACompany:
       path: /contacts/{id}/companies
@@ -19520,19 +19479,6 @@ types:
                   },
                   "response": {
                     "body": {
-                      "android_app_name": "Intercom",
-                      "android_app_version": "5.0.0",
-                      "android_device": "Pixel 3",
-                      "android_last_seen_at": 1571672154,
-                      "android_os_version": "10",
-                      "android_sdk_version": "28",
-                      "avatar": {
-                        "image_url": "https://example.org/128Wash.jpg",
-                        "type": "avatar",
-                      },
-                      "browser": "Chrome",
-                      "browser_language": "en-US",
-                      "browser_version": "80.0.3987.132",
                       "companies": {
                         "has_more": false,
                         "total_count": 0,
@@ -19544,30 +19490,13 @@ types:
                       },
                       "email": "joebloggs@intercom.io",
                       "email_domain": "example.com",
-                      "external_id": "f3b87a2e09d514c6c2e79b9a",
                       "formatted_phone": "+1123456789",
                       "has_hard_bounced": false,
                       "id": "667d60b08a68186f43bafdbf",
-                      "ios_app_name": "Intercom",
-                      "ios_app_version": "5.0.0",
-                      "ios_device": "iPhone 11",
-                      "ios_last_seen_at": 1571672154,
-                      "ios_os_version": "13.3.1",
-                      "ios_sdk_version": "13.3.1",
-                      "language_override": "en",
-                      "last_contacted_at": 1571672154,
-                      "last_email_clicked_at": 1571672154,
-                      "last_email_opened_at": 1571672154,
-                      "last_replied_at": 1571672154,
-                      "last_seen_at": 1571672154,
                       "location": {
-                        "city": "Dublin",
-                        "country": "Ireland",
-                        "region": "Dublin",
                         "type": "location",
                       },
                       "marked_email_as_spam": false,
-                      "name": "John Doe",
                       "notes": {
                         "data": [
                           {
@@ -19580,11 +19509,7 @@ types:
                         "total_count": 0,
                         "url": "/contacts/667d60b08a68186f43bafdbf/notes",
                       },
-                      "os": "Mac OS X",
-                      "owner_id": 123,
-                      "phone": "+1123456789",
                       "role": "user",
-                      "signed_up_at": 1571672154,
                       "social_profiles": {
                         "data": [
                           {
@@ -19793,19 +19718,6 @@ types:
                   },
                   "response": {
                     "body": {
-                      "android_app_name": "Intercom",
-                      "android_app_version": "5.0.0",
-                      "android_device": "Pixel 3",
-                      "android_last_seen_at": 1571672154,
-                      "android_os_version": "10",
-                      "android_sdk_version": "28",
-                      "avatar": {
-                        "image_url": "https://example.org/128Wash.jpg",
-                        "type": "avatar",
-                      },
-                      "browser": "Chrome",
-                      "browser_language": "en-US",
-                      "browser_version": "80.0.3987.132",
                       "companies": {
                         "has_more": false,
                         "total_count": 0,
@@ -19821,22 +19733,7 @@ types:
                       "formatted_phone": "+1123456789",
                       "has_hard_bounced": false,
                       "id": "667d60ac8a68186f43bafdbc",
-                      "ios_app_name": "Intercom",
-                      "ios_app_version": "5.0.0",
-                      "ios_device": "iPhone 11",
-                      "ios_last_seen_at": 1571672154,
-                      "ios_os_version": "13.3.1",
-                      "ios_sdk_version": "13.3.1",
-                      "language_override": "en",
-                      "last_contacted_at": 1571672154,
-                      "last_email_clicked_at": 1571672154,
-                      "last_email_opened_at": 1571672154,
-                      "last_replied_at": 1571672154,
-                      "last_seen_at": 1571672154,
                       "location": {
-                        "city": "Dublin",
-                        "country": "Ireland",
-                        "region": "Dublin",
                         "type": "location",
                       },
                       "marked_email_as_spam": false,
@@ -19853,9 +19750,6 @@ types:
                         "total_count": 0,
                         "url": "/contacts/667d60ac8a68186f43bafdbc/notes",
                       },
-                      "os": "Mac OS X",
-                      "owner_id": 123,
-                      "phone": "+1123456789",
                       "role": "user",
                       "signed_up_at": 1719492780,
                       "social_profiles": {
@@ -20156,19 +20050,6 @@ The table below shows the operators you can use to define how you want to search
                   },
                   "response": {
                     "body": {
-                      "android_app_name": "Intercom",
-                      "android_app_version": "5.0.0",
-                      "android_device": "Pixel 3",
-                      "android_last_seen_at": 1571672154,
-                      "android_os_version": "10",
-                      "android_sdk_version": "28",
-                      "avatar": {
-                        "image_url": "https://example.org/128Wash.jpg",
-                        "type": "avatar",
-                      },
-                      "browser": "Chrome",
-                      "browser_language": "en-US",
-                      "browser_version": "80.0.3987.132",
                       "companies": {
                         "has_more": false,
                         "total_count": 0,
@@ -20184,22 +20065,7 @@ The table below shows the operators you can use to define how you want to search
                       "formatted_phone": "+1123456789",
                       "has_hard_bounced": false,
                       "id": "667d60a98a68186f43bafdb9",
-                      "ios_app_name": "Intercom",
-                      "ios_app_version": "5.0.0",
-                      "ios_device": "iPhone 11",
-                      "ios_last_seen_at": 1571672154,
-                      "ios_os_version": "13.3.1",
-                      "ios_sdk_version": "13.3.1",
-                      "language_override": "en",
-                      "last_contacted_at": 1571672154,
-                      "last_email_clicked_at": 1571672154,
-                      "last_email_opened_at": 1571672154,
-                      "last_replied_at": 1571672154,
-                      "last_seen_at": 1571672154,
                       "location": {
-                        "city": "Dublin",
-                        "country": "Ireland",
-                        "region": "Dublin",
                         "type": "location",
                       },
                       "marked_email_as_spam": false,
@@ -20216,9 +20082,6 @@ The table below shows the operators you can use to define how you want to search
                         "total_count": 0,
                         "url": "/contacts/667d60a98a68186f43bafdb9/notes",
                       },
-                      "os": "Mac OS X",
-                      "owner_id": 123,
-                      "phone": "+1123456789",
                       "role": "user",
                       "signed_up_at": 1719492777,
                       "social_profiles": {
@@ -20323,19 +20186,6 @@ The table below shows the operators you can use to define how you want to search
                   },
                   "response": {
                     "body": {
-                      "android_app_name": "Intercom",
-                      "android_app_version": "5.0.0",
-                      "android_device": "Pixel 3",
-                      "android_last_seen_at": 1571672154,
-                      "android_os_version": "10",
-                      "android_sdk_version": "28",
-                      "avatar": {
-                        "image_url": "https://example.org/128Wash.jpg",
-                        "type": "avatar",
-                      },
-                      "browser": "Chrome",
-                      "browser_language": "en-US",
-                      "browser_version": "80.0.3987.132",
                       "companies": {
                         "has_more": false,
                         "total_count": 0,
@@ -20351,22 +20201,7 @@ The table below shows the operators you can use to define how you want to search
                       "formatted_phone": "+1123456789",
                       "has_hard_bounced": false,
                       "id": "667d60a88a68186f43bafdb8",
-                      "ios_app_name": "Intercom",
-                      "ios_app_version": "5.0.0",
-                      "ios_device": "iPhone 11",
-                      "ios_last_seen_at": 1571672154,
-                      "ios_os_version": "13.3.1",
-                      "ios_sdk_version": "13.3.1",
-                      "language_override": "en",
-                      "last_contacted_at": 1571672154,
-                      "last_email_clicked_at": 1571672154,
-                      "last_email_opened_at": 1571672154,
-                      "last_replied_at": 1571672154,
-                      "last_seen_at": 1571672154,
                       "location": {
-                        "city": "Dublin",
-                        "country": "Ireland",
-                        "region": "Dublin",
                         "type": "location",
                       },
                       "marked_email_as_spam": false,
@@ -20383,9 +20218,6 @@ The table below shows the operators you can use to define how you want to search
                         "total_count": 0,
                         "url": "/contacts/667d60a88a68186f43bafdb8/notes",
                       },
-                      "os": "Mac OS X",
-                      "owner_id": 123,
-                      "phone": "+1123456789",
                       "role": "user",
                       "signed_up_at": 1719492776,
                       "social_profiles": {
@@ -20535,7 +20367,6 @@ The table below shows the operators you can use to define how you want to search
                         },
                       ],
                       "pages": {
-                        "next": "next",
                         "page": 1,
                         "per_page": 50,
                         "total_pages": 1,
@@ -21028,7 +20859,6 @@ service:
               pages:
                 type: pages
                 page: 1
-                next: next
                 per_page: 50
                 total_pages: 1
     listSegmentsForAContact:
@@ -21194,43 +21024,16 @@ service:
               role: user
               email: joe@bloggs.com
               email_domain: example.com
-              phone: '+1123456789'
               formatted_phone: '+1123456789'
               name: Joe Bloggs
-              owner_id: 123
               has_hard_bounced: false
               marked_email_as_spam: false
               unsubscribed_from_emails: false
               created_at: 1719492777
               updated_at: 1719492777
               signed_up_at: 1719492777
-              last_seen_at: 1571672154
-              last_replied_at: 1571672154
-              last_contacted_at: 1571672154
-              last_email_opened_at: 1571672154
-              last_email_clicked_at: 1571672154
-              language_override: en
-              browser: Chrome
-              browser_version: 80.0.3987.132
-              browser_language: en-US
-              os: Mac OS X
-              android_app_name: Intercom
-              android_app_version: 5.0.0
-              android_device: Pixel 3
-              android_os_version: '10'
-              android_sdk_version: '28'
-              android_last_seen_at: 1571672154
-              ios_app_name: Intercom
-              ios_app_version: 5.0.0
-              ios_device: iPhone 11
-              ios_os_version: 13.3.1
-              ios_sdk_version: 13.3.1
-              ios_last_seen_at: 1571672154
               custom_attributes:
                 key: value
-              avatar:
-                type: avatar
-                image_url: https://example.org/128Wash.jpg
               tags:
                 data:
                   - type: note
@@ -21253,9 +21056,6 @@ service:
                 has_more: false
               location:
                 type: location
-                country: Ireland
-                region: Dublin
-                city: Dublin
               social_profiles:
                 data:
                   - type: social_profile
@@ -21336,43 +21136,16 @@ service:
               role: user
               email: joebloggs@intercom.io
               email_domain: example.com
-              phone: '+1123456789'
               formatted_phone: '+1123456789'
               name: joe bloggs
-              owner_id: 123
               has_hard_bounced: false
               marked_email_as_spam: false
               unsubscribed_from_emails: false
               created_at: 1719492776
               updated_at: 1719492776
               signed_up_at: 1719492776
-              last_seen_at: 1571672154
-              last_replied_at: 1571672154
-              last_contacted_at: 1571672154
-              last_email_opened_at: 1571672154
-              last_email_clicked_at: 1571672154
-              language_override: en
-              browser: Chrome
-              browser_version: 80.0.3987.132
-              browser_language: en-US
-              os: Mac OS X
-              android_app_name: Intercom
-              android_app_version: 5.0.0
-              android_device: Pixel 3
-              android_os_version: '10'
-              android_sdk_version: '28'
-              android_last_seen_at: 1571672154
-              ios_app_name: Intercom
-              ios_app_version: 5.0.0
-              ios_device: iPhone 11
-              ios_os_version: 13.3.1
-              ios_sdk_version: 13.3.1
-              ios_last_seen_at: 1571672154
               custom_attributes:
                 key: value
-              avatar:
-                type: avatar
-                image_url: https://example.org/128Wash.jpg
               tags:
                 data:
                   - type: note
@@ -21395,9 +21168,6 @@ service:
                 has_more: false
               location:
                 type: location
-                country: Ireland
-                region: Dublin
-                city: Dublin
               social_profiles:
                 data:
                   - type: social_profile
@@ -21474,43 +21244,16 @@ service:
               role: user
               email: joe@bloggs.com
               email_domain: example.com
-              phone: '+1123456789'
               formatted_phone: '+1123456789'
               name: Joe Bloggs
-              owner_id: 123
               has_hard_bounced: false
               marked_email_as_spam: false
               unsubscribed_from_emails: false
               created_at: 1719492780
               updated_at: 1719492780
               signed_up_at: 1719492780
-              last_seen_at: 1571672154
-              last_replied_at: 1571672154
-              last_contacted_at: 1571672154
-              last_email_opened_at: 1571672154
-              last_email_clicked_at: 1571672154
-              language_override: en
-              browser: Chrome
-              browser_version: 80.0.3987.132
-              browser_language: en-US
-              os: Mac OS X
-              android_app_name: Intercom
-              android_app_version: 5.0.0
-              android_device: Pixel 3
-              android_os_version: '10'
-              android_sdk_version: '28'
-              android_last_seen_at: 1571672154
-              ios_app_name: Intercom
-              ios_app_version: 5.0.0
-              ios_device: iPhone 11
-              ios_os_version: 13.3.1
-              ios_sdk_version: 13.3.1
-              ios_last_seen_at: 1571672154
               custom_attributes:
                 key: value
-              avatar:
-                type: avatar
-                image_url: https://example.org/128Wash.jpg
               tags:
                 data:
                   - type: note
@@ -21533,9 +21276,6 @@ service:
                 has_more: false
               location:
                 type: location
-                country: Ireland
-                region: Dublin
-                city: Dublin
               social_profiles:
                 data:
                   - type: social_profile
@@ -21966,48 +21706,18 @@ service:
             body:
               type: contact
               id: 667d60b08a68186f43bafdbf
-              external_id: f3b87a2e09d514c6c2e79b9a
               workspace_id: this_is_an_id272_that_should_be_at_least_
               role: user
               email: joebloggs@intercom.io
               email_domain: example.com
-              phone: '+1123456789'
               formatted_phone: '+1123456789'
-              name: John Doe
-              owner_id: 123
               has_hard_bounced: false
               marked_email_as_spam: false
               unsubscribed_from_emails: false
               created_at: 1719492784
               updated_at: 1719492784
-              signed_up_at: 1571672154
-              last_seen_at: 1571672154
-              last_replied_at: 1571672154
-              last_contacted_at: 1571672154
-              last_email_opened_at: 1571672154
-              last_email_clicked_at: 1571672154
-              language_override: en
-              browser: Chrome
-              browser_version: 80.0.3987.132
-              browser_language: en-US
-              os: Mac OS X
-              android_app_name: Intercom
-              android_app_version: 5.0.0
-              android_device: Pixel 3
-              android_os_version: '10'
-              android_sdk_version: '28'
-              android_last_seen_at: 1571672154
-              ios_app_name: Intercom
-              ios_app_version: 5.0.0
-              ios_device: iPhone 11
-              ios_os_version: 13.3.1
-              ios_sdk_version: 13.3.1
-              ios_last_seen_at: 1571672154
               custom_attributes:
                 key: value
-              avatar:
-                type: avatar
-                image_url: https://example.org/128Wash.jpg
               tags:
                 data:
                   - type: note
@@ -22030,9 +21740,6 @@ service:
                 has_more: false
               location:
                 type: location
-                country: Ireland
-                region: Dublin
-                city: Dublin
               social_profiles:
                 data:
                   - type: social_profile
@@ -22693,26 +22400,6 @@ It is not possible to use this endpoint with Workflows.
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -22759,28 +22446,9 @@ It is not possible to use this endpoint with Workflows.
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492880,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "409",
                       "linked_objects": {
@@ -22796,12 +22464,6 @@ It is not possible to use this endpoint with Workflows.
                       "open": false,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -22826,30 +22488,8 @@ It is not possible to use this endpoint with Workflows.
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -22861,19 +22501,8 @@ It is not possible to use this endpoint with Workflows.
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492881,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -24128,26 +23757,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -24192,28 +23801,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492862,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "394",
                       "linked_objects": {
@@ -24229,12 +23819,6 @@ You can optionally request the result page size and the cursor to start after to
                       "open": false,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -24259,30 +23843,8 @@ You can optionally request the result page size and the cursor to start after to
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -24294,19 +23856,8 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492862,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -24324,26 +23875,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -24387,28 +23918,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492864,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "395",
                       "linked_objects": {
@@ -24424,11 +23936,6 @@ You can optionally request the result page size and the cursor to start after to
                       "open": true,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
                       "snoozed_until": 1719496464,
                       "source": {
                         "attachments": [
@@ -24454,30 +23961,8 @@ You can optionally request the result page size and the cursor to start after to
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "snoozed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -24489,19 +23974,8 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492864,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -24519,26 +23993,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -24582,28 +24036,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492863,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "400",
                       "linked_objects": {
@@ -24619,12 +24054,6 @@ You can optionally request the result page size and the cursor to start after to
                       "open": true,
                       "priority": "not_priority",
                       "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -24649,30 +24078,8 @@ You can optionally request the result page size and the cursor to start after to
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -24684,19 +24091,9 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
                       "title": "",
                       "type": "conversation",
                       "updated_at": 1719492873,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -24715,25 +24112,6 @@ You can optionally request the result page size and the cursor to start after to
                   "response": {
                     "body": {
                       "admin_assignee_id": 991267615,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -24781,28 +24159,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492874,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "405",
                       "linked_objects": {
@@ -24818,12 +24177,6 @@ You can optionally request the result page size and the cursor to start after to
                       "open": true,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -24848,30 +24201,8 @@ You can optionally request the result page size and the cursor to start after to
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -24883,19 +24214,8 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492875,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -24913,26 +24233,6 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -24977,28 +24277,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492862,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "394",
                       "linked_objects": {
@@ -25014,12 +24295,6 @@ You can optionally request the result page size and the cursor to start after to
                       "open": false,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -25044,30 +24319,8 @@ You can optionally request the result page size and the cursor to start after to
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -25079,19 +24332,8 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492862,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -25141,26 +24383,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -25205,20 +24427,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492938,
                       "custom_attributes": {
                         "key": "value",
@@ -25226,7 +24434,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "first_contact_reply": {
                         "created_at": 1719492939,
                         "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "471",
                       "linked_objects": {
@@ -25242,12 +24449,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": true,
                       "priority": "not_priority",
                       "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -25272,30 +24473,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -25307,16 +24486,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492940,
                       "waiting_since": 1719492939,
@@ -25332,26 +24501,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -25396,20 +24545,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492938,
                       "custom_attributes": {
                         "key": "value",
@@ -25417,7 +24552,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "first_contact_reply": {
                         "created_at": 1719492939,
                         "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "471",
                       "linked_objects": {
@@ -25433,12 +24567,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": true,
                       "priority": "not_priority",
                       "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -25463,30 +24591,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -25498,16 +24604,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492940,
                       "waiting_since": 1719492939,
@@ -25553,26 +24649,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -25617,20 +24693,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492849,
                       "custom_attributes": {
                         "key": "value",
@@ -25638,7 +24700,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "first_contact_reply": {
                         "created_at": 1719492850,
                         "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "387",
                       "linked_objects": {
@@ -25654,12 +24715,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": true,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -25684,30 +24739,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -25719,16 +24752,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492850,
                       "waiting_since": 1719492850,
@@ -25748,26 +24771,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -25823,28 +24826,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492852,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "388",
                       "linked_objects": {
@@ -25860,12 +24844,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": false,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -25890,30 +24868,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -25925,19 +24881,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492853,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -25954,26 +24899,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -26018,20 +24943,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492855,
                       "custom_attributes": {
                         "key": "value",
@@ -26039,7 +24950,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "first_contact_reply": {
                         "created_at": 1719492856,
                         "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "390",
                       "linked_objects": {
@@ -26055,12 +24965,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": true,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -26085,30 +24989,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -26120,16 +25002,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492856,
                       "waiting_since": 1719492856,
@@ -26149,26 +25021,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -26213,20 +25065,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 1,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492849,
                       "custom_attributes": {
                         "key": "value",
@@ -26234,7 +25072,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "first_contact_reply": {
                         "created_at": 1719492850,
                         "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "387",
                       "linked_objects": {
@@ -26250,12 +25087,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "open": true,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -26280,30 +25111,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -26315,16 +25124,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492850,
                       "waiting_since": 1719492850,
@@ -26383,26 +25182,6 @@ For AI agent conversation metadata, please note that you need to have the agent 
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -26429,28 +25208,9 @@ For AI agent conversation metadata, please note that you need to have the agent 
                         "total_count": 0,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492825,
                       "custom_attributes": {
                         "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "367",
                       "linked_objects": {
@@ -26466,12 +25226,6 @@ For AI agent conversation metadata, please note that you need to have the agent 
                       "open": false,
                       "priority": "not_priority",
                       "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -26496,30 +25250,8 @@ For AI agent conversation metadata, please note that you need to have the agent 
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -26531,19 +25263,8 @@ For AI agent conversation metadata, please note that you need to have the agent 
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492825,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -26698,7 +25419,6 @@ The table below shows the operators you can use to define how you want to search
                     "body": {
                       "conversations": [
                         {
-                          "admin_assignee_id": 0,
                           "ai_agent_participated": false,
                           "contacts": {
                             "contacts": [
@@ -26713,18 +25433,9 @@ The table below shows the operators you can use to define how you want to search
                           "conversation_parts": {
                             "total_count": 2,
                           },
-                          "conversation_rating": {
-                            "created_at": 1671028894,
-                            "rating": 5,
-                            "remark": "",
-                          },
                           "created_at": 1719492843,
                           "custom_attributes": {
                             "key": "value",
-                          },
-                          "first_contact_reply": {
-                            "created_at": 1663597223,
-                            "type": "conversation",
                           },
                           "id": "378",
                           "linked_objects": {
@@ -26740,11 +25451,6 @@ The table below shows the operators you can use to define how you want to search
                           "open": false,
                           "priority": "not_priority",
                           "read": false,
-                          "sla_applied": {
-                            "sla_name": "",
-                            "type": "conversation_sla_summary",
-                          },
-                          "snoozed_until": 1663597260,
                           "source": {
                             "attachments": [
                               {
@@ -26771,27 +25477,6 @@ The table below shows the operators you can use to define how you want to search
                             "type": "conversation",
                           },
                           "state": "closed",
-                          "statistics": {
-                            "count_assignments": 1,
-                            "count_conversation_parts": 1,
-                            "count_reopens": 1,
-                            "first_admin_reply_at": 1663597233,
-                            "first_assignment_at": 1663597233,
-                            "first_close_at": 1663597233,
-                            "first_contact_reply_at": 1663597233,
-                            "last_admin_reply_at": 1663597233,
-                            "last_assignment_admin_reply_at": 1663597233,
-                            "last_assignment_at": 1663597233,
-                            "last_close_at": 1663597233,
-                            "last_closed_by_id": "c3po",
-                            "last_contact_reply_at": 1663597233,
-                            "median_time_to_reply": 2310,
-                            "time_to_admin_reply": 2310,
-                            "time_to_assignment": 2310,
-                            "time_to_first_close": 2310,
-                            "time_to_last_close": 2310,
-                            "type": "conversation_statistics",
-                          },
                           "tags": {
                             "tags": [
                               {
@@ -26803,14 +25488,8 @@ The table below shows the operators you can use to define how you want to search
                             ],
                             "type": "tag.list",
                           },
-                          "team_assignee_id": "5017691",
-                          "teammates": {
-                            "type": "admin.list",
-                          },
-                          "title": "Conversation Title",
                           "type": "conversation",
                           "updated_at": 1719492843,
-                          "waiting_since": 1663597260,
                         },
                       ],
                       "pages": {
@@ -26880,26 +25559,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -26969,29 +25628,10 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         "total_count": 2,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492832,
                       "custom_attributes": {
                         "issue_type": "Billing",
                         "priority": "High",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "371",
                       "linked_objects": {
@@ -27007,12 +25647,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                       "open": false,
                       "priority": "not_priority",
                       "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -27037,30 +25671,8 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -27072,19 +25684,8 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492834,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -27105,26 +25706,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
                       "ai_agent_participated": false,
                       "contacts": {
                         "contacts": [
@@ -27194,29 +25775,10 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         "total_count": 2,
                         "type": "conversation_part.list",
                       },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
                       "created_at": 1719492832,
                       "custom_attributes": {
                         "issue_type": "Billing",
                         "priority": "High",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
                       },
                       "id": "371",
                       "linked_objects": {
@@ -27232,12 +25794,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                       "open": false,
                       "priority": "not_priority",
                       "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
                       "source": {
                         "attachments": [
                           {
@@ -27262,30 +25818,8 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
-                        "url": "url",
                       },
                       "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
                       "tags": {
                         "tags": [
                           {
@@ -27297,19 +25831,8 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                         ],
                         "type": "tag.list",
                       },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492834,
-                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -27804,17 +26327,12 @@ service:
             body:
               type: conversation
               id: '367'
-              title: Conversation Title
               created_at: 1719492825
               updated_at: 1719492825
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -27822,17 +26340,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918255'
@@ -27852,7 +26359,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -27860,40 +26366,8 @@ service:
                   - type: contact
                     id: 667d60d88a68186f43bafde1
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -27912,20 +26386,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     updateConversation:
       path: /conversations/{id}
       method: PUT
@@ -27986,17 +26446,12 @@ service:
             body:
               type: conversation
               id: '371'
-              title: Conversation Title
               created_at: 1719492832
               updated_at: 1719492834
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: true
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -28004,17 +26459,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918259'
@@ -28034,7 +26478,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -28042,41 +26485,9 @@ service:
                   - type: contact
                     id: 667d60e08a68186f43bafde5
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 issue_type: Billing
                 priority: High
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -28130,20 +26541,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Not found
           path-parameters:
             id: 1
@@ -28158,17 +26555,12 @@ service:
             body:
               type: conversation
               id: '371'
-              title: Conversation Title
               created_at: 1719492832
               updated_at: 1719492834
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: true
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -28176,17 +26568,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918259'
@@ -28206,7 +26587,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -28214,41 +26594,9 @@ service:
                   - type: contact
                     id: 667d60e08a68186f43bafde5
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 issue_type: Billing
                 priority: High
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -28302,20 +26650,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     searchConversations:
       path: /conversations/search
       method: POST
@@ -28667,17 +27001,12 @@ service:
               conversations:
                 - type: conversation
                   id: '378'
-                  title: Conversation Title
                   created_at: 1719492843
                   updated_at: 1719492843
-                  waiting_since: 1663597260
-                  snoozed_until: 1663597260
                   open: false
                   state: closed
                   read: false
                   priority: not_priority
-                  admin_assignee_id: 0
-                  team_assignee_id: '5017691'
                   tags:
                     type: tag.list
                     tags:
@@ -28685,10 +27014,6 @@ service:
                         id: '123456'
                         name: Test tag
                         applied_at: 1663597223
-                  conversation_rating:
-                    rating: 5
-                    remark: ''
-                    created_at: 1671028894
                   source:
                     type: conversation
                     id: '403918266'
@@ -28715,36 +27040,8 @@ service:
                       - type: contact
                         id: 667d60ea8a68186f43bafdec
                         external_id: '70'
-                  teammates:
-                    type: admin.list
                   custom_attributes:
                     key: value
-                  first_contact_reply:
-                    created_at: 1663597223
-                    type: conversation
-                  sla_applied:
-                    type: conversation_sla_summary
-                    sla_name: ''
-                  statistics:
-                    type: conversation_statistics
-                    time_to_assignment: 2310
-                    time_to_admin_reply: 2310
-                    time_to_first_close: 2310
-                    time_to_last_close: 2310
-                    median_time_to_reply: 2310
-                    first_contact_reply_at: 1663597233
-                    first_assignment_at: 1663597233
-                    first_admin_reply_at: 1663597233
-                    first_close_at: 1663597233
-                    last_assignment_at: 1663597233
-                    last_assignment_admin_reply_at: 1663597233
-                    last_contact_reply_at: 1663597233
-                    last_admin_reply_at: 1663597233
-                    last_close_at: 1663597233
-                    last_closed_by_id: c3po
-                    count_reopens: 1
-                    count_assignments: 1
-                    count_conversation_parts: 1
                   conversation_parts:
                     total_count: 2
                   linked_objects:
@@ -28802,17 +27099,13 @@ service:
             body:
               type: conversation
               id: '387'
-              title: Conversation Title
               created_at: 1719492849
               updated_at: 1719492850
               waiting_since: 1719492850
-              snoozed_until: 1663597260
               open: true
               state: open
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -28820,17 +27113,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918269'
@@ -28850,7 +27132,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -28858,40 +27139,11 @@ service:
                   - type: contact
                     id: 667d60f18a68186f43bafdf4
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
               first_contact_reply:
                 created_at: 1719492850
                 type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -28924,20 +27176,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Admin note reply
           path-parameters:
             id: 123 or "last"
@@ -28954,17 +27192,12 @@ service:
             body:
               type: conversation
               id: '388'
-              title: Conversation Title
               created_at: 1719492852
               updated_at: 1719492853
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -28972,17 +27205,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918270'
@@ -29002,7 +27224,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29010,40 +27231,8 @@ service:
                   - type: contact
                     id: 667d60f38a68186f43bafdf5
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29088,20 +27277,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: User last conversation reply
           path-parameters:
             id: 123 or "last"
@@ -29114,17 +27289,13 @@ service:
             body:
               type: conversation
               id: '390'
-              title: Conversation Title
               created_at: 1719492855
               updated_at: 1719492856
               waiting_since: 1719492856
-              snoozed_until: 1663597260
               open: true
               state: open
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29132,17 +27303,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918272'
@@ -29162,7 +27322,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29170,40 +27329,11 @@ service:
                   - type: contact
                     id: 667d60f78a68186f43bafdf7
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
               first_contact_reply:
                 created_at: 1719492856
                 type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29236,20 +27366,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Not found
           path-parameters:
             id: 123 or "last"
@@ -29262,17 +27378,13 @@ service:
             body:
               type: conversation
               id: '387'
-              title: Conversation Title
               created_at: 1719492849
               updated_at: 1719492850
               waiting_since: 1719492850
-              snoozed_until: 1663597260
               open: true
               state: open
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29280,17 +27392,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918269'
@@ -29310,7 +27411,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29318,40 +27418,11 @@ service:
                   - type: contact
                     id: 667d60f18a68186f43bafdf4
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
               first_contact_reply:
                 created_at: 1719492850
                 type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29384,20 +27455,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     manageConversation:
       path: /conversations/{id}/parts
       method: POST
@@ -29439,17 +27496,12 @@ service:
             body:
               type: conversation
               id: '394'
-              title: Conversation Title
               created_at: 1719492862
               updated_at: 1719492862
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29457,17 +27509,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918276'
@@ -29487,7 +27528,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29495,40 +27535,8 @@ service:
                   - type: contact
                     id: 667d60fd8a68186f43bafdfb
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29561,20 +27569,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Snooze a conversation
           path-parameters:
             id: '123'
@@ -29588,17 +27582,13 @@ service:
             body:
               type: conversation
               id: '395'
-              title: Conversation Title
               created_at: 1719492864
               updated_at: 1719492864
-              waiting_since: 1663597260
               snoozed_until: 1719496464
               open: true
               state: snoozed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29606,17 +27596,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918277'
@@ -29636,7 +27615,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29644,40 +27622,8 @@ service:
                   - type: contact
                     id: 667d60ff8a68186f43bafdfc
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29709,20 +27655,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Open a conversation
           path-parameters:
             id: '123'
@@ -29739,14 +27671,10 @@ service:
               title: ''
               created_at: 1719492863
               updated_at: 1719492873
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: true
               state: open
               read: true
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29754,17 +27682,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918278'
@@ -29784,7 +27701,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29792,40 +27708,8 @@ service:
                   - type: contact
                     id: 667d61038a68186f43bafe01
                     external_id: '74'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -29857,20 +27741,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Assign a conversation
           path-parameters:
             id: '123'
@@ -29884,17 +27754,13 @@ service:
             body:
               type: conversation
               id: '405'
-              title: Conversation Title
               created_at: 1719492874
               updated_at: 1719492875
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: true
               state: open
               read: false
               priority: not_priority
               admin_assignee_id: 991267615
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -29902,17 +27768,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918281'
@@ -29932,7 +27787,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -29940,40 +27794,8 @@ service:
                   - type: contact
                     id: 667d610a8a68186f43bafe05
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -30008,20 +27830,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Not found
           path-parameters:
             id: '123'
@@ -30035,17 +27843,12 @@ service:
             body:
               type: conversation
               id: '394'
-              title: Conversation Title
               created_at: 1719492862
               updated_at: 1719492862
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -30053,17 +27856,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918276'
@@ -30083,7 +27875,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -30091,40 +27882,8 @@ service:
                   - type: contact
                     id: 667d60fd8a68186f43bafdfb
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -30157,20 +27916,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     autoAssignConversation:
       path: /conversations/{id}/run_assignment_rules
       method: POST
@@ -30206,17 +27951,12 @@ service:
             body:
               type: conversation
               id: '409'
-              title: Conversation Title
               created_at: 1719492880
               updated_at: 1719492881
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
               open: false
               state: closed
               read: false
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -30224,17 +27964,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918285'
@@ -30254,7 +27983,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -30262,40 +27990,8 @@ service:
                   - type: contact
                     id: 667d61108a68186f43bafe09
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -30330,20 +28026,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     attachContactToConversation:
       path: /conversations/{id}/customers
       method: POST
@@ -31252,17 +28934,13 @@ service:
             body:
               type: conversation
               id: '471'
-              title: Conversation Title
               created_at: 1719492938
               updated_at: 1719492940
               waiting_since: 1719492939
-              snoozed_until: 1663597260
               open: true
               state: open
               read: true
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -31270,17 +28948,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918311'
@@ -31300,7 +28967,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -31308,40 +28974,11 @@ service:
                   - type: contact
                     id: 667d614a8a68186f43bafe42
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
               first_contact_reply:
                 created_at: 1719492939
                 type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -31374,20 +29011,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
         - name: Not found
           request:
             type: conversation_part
@@ -31397,17 +29020,13 @@ service:
             body:
               type: conversation
               id: '471'
-              title: Conversation Title
               created_at: 1719492938
               updated_at: 1719492940
               waiting_since: 1719492939
-              snoozed_until: 1663597260
               open: true
               state: open
               read: true
               priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
               tags:
                 type: tag.list
                 tags:
@@ -31415,17 +29034,6 @@ service:
                     id: '123456'
                     name: Test tag
                     applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
               source:
                 type: conversation
                 id: '403918311'
@@ -31445,7 +29053,6 @@ service:
                     filesize: 100
                     width: 100
                     height: 100
-                url: url
                 redacted: false
               contacts:
                 type: contact.list
@@ -31453,40 +29060,11 @@ service:
                   - type: contact
                     id: 667d614a8a68186f43bafe42
                     external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
               custom_attributes:
                 key: value
               first_contact_reply:
                 created_at: 1719492939
                 type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
               conversation_parts:
                 type: conversation_part.list
                 conversation_parts:
@@ -31519,20 +29097,6 @@ service:
                 data:
                   - id: '7583'
               ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
     convertConversationToTicket:
       path: /conversations/{id}/convert
       method: POST
@@ -34900,7 +32464,6 @@ types:
                       "id": "165",
                       "name": "Thanks for everything",
                       "order": 1,
-                      "parent_id": "6871118",
                       "translated_content": {
                         "ar": {
                           "description": " Collection description",
@@ -35111,7 +32674,6 @@ types:
                       "id": "165",
                       "name": "Thanks for everything",
                       "order": 1,
-                      "parent_id": "6871118",
                       "translated_content": {
                         "ar": {
                           "description": " Collection description",
@@ -35413,7 +32975,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                           "id": "159",
                           "name": "English collection title",
                           "order": 17,
-                          "parent_id": "6871118",
                           "updated_at": 1719492720,
                           "url": "http://help-center.test/myapp-65/collection-17",
                           "workspace_id": "this_is_an_id65_that_should_be_at_least_4",
@@ -35421,8 +32982,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                         {
                           "created_at": 1719492720,
                           "default_locale": "en",
-                          "description": "Default language description",
-                          "help_center_id": 1,
                           "icon": "bookmark",
                           "id": "160",
                           "name": "English section title",
@@ -35523,7 +33082,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                       "id": "170",
                       "name": "English collection title",
                       "order": 22,
-                      "parent_id": "6871118",
                       "translated_content": {
                         "ar": {
                           "description": " Collection description",
@@ -35807,7 +33365,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                       "id": "176",
                       "name": "Update collection name",
                       "order": 25,
-                      "parent_id": "6871118",
                       "translated_content": {
                         "ar": {
                           "description": " Collection description",
@@ -36020,7 +33577,6 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                       "id": "176",
                       "name": "Update collection name",
                       "order": 25,
-                      "parent_id": "6871118",
                       "translated_content": {
                         "ar": {
                           "description": " Collection description",
@@ -36432,12 +33988,10 @@ service:
                   icon: bookmark
                   order: 17
                   default_locale: en
-                  parent_id: '6871118'
                   help_center_id: 79
                 - id: '160'
                   workspace_id: this_is_an_id65_that_should_be_at_least_4
                   name: English section title
-                  description: Default language description
                   created_at: 1719492720
                   updated_at: 1719492720
                   url: http://help-center.test/myapp-65/section-1
@@ -36445,7 +33999,6 @@ service:
                   order: 1
                   default_locale: en
                   parent_id: '159'
-                  help_center_id: 1
     createCollection:
       path: /help_center/collections
       method: POST
@@ -36655,7 +34208,6 @@ service:
                   type: group_content
                   name: Collection name
                   description: ' Collection description'
-              parent_id: '6871118'
               help_center_id: 81
         - name: Bad Request
           request:
@@ -36823,7 +34375,6 @@ service:
                   type: group_content
                   name: Collection name
                   description: ' Collection description'
-              parent_id: '6871118'
               help_center_id: 81
     retrieveCollection:
       path: /help_center/collections/{id}
@@ -37011,7 +34562,6 @@ service:
                   type: group_content
                   name: Collection name
                   description: ' Collection description'
-              parent_id: '6871118'
               help_center_id: 84
     updateCollection:
       path: /help_center/collections/{id}
@@ -37223,7 +34773,6 @@ service:
                   type: group_content
                   name: Collection name
                   description: ' Collection description'
-              parent_id: '6871118'
               help_center_id: 87
         - name: Collection Not Found
           path-parameters:
@@ -37392,7 +34941,6 @@ service:
                   type: group_content
                   name: Collection name
                   description: ' Collection description'
-              parent_id: '6871118'
               help_center_id: 87
     deleteCollection:
       path: /help_center/collections/{id}
@@ -38101,7 +35649,6 @@ types:
                   "response": {
                     "body": {
                       "body": "<p>New costumes in store for this spooky season</p>",
-                      "cover_image_url": "https://example.com/cover.jpg",
                       "created_at": 1719492978,
                       "deliver_silently": true,
                       "id": "33",
@@ -38370,7 +35917,6 @@ types:
                   "response": {
                     "body": {
                       "body": "<p>Hello there,</p>",
-                      "cover_image_url": "https://example.com/cover.jpg",
                       "created_at": 1719492979,
                       "deliver_silently": false,
                       "id": "34",
@@ -38481,7 +36027,6 @@ types:
                   "response": {
                     "body": {
                       "body": "<p>New gifts in store for the jolly season</p>",
-                      "cover_image_url": "https://example.com/cover.jpg",
                       "created_at": 1719492982,
                       "deliver_silently": false,
                       "id": "37",
@@ -38523,7 +36068,6 @@ types:
                   "response": {
                     "body": {
                       "body": "<p>New gifts in store for the jolly season</p>",
-                      "cover_image_url": "https://example.com/cover.jpg",
                       "created_at": 1719492982,
                       "deliver_silently": false,
                       "id": "37",
@@ -38796,7 +36340,6 @@ service:
                 - New
                 - Product
                 - Update
-              cover_image_url: https://example.com/cover.jpg
               reactions:
                 - 😆
                 - 😅
@@ -38838,7 +36381,6 @@ service:
                   published_at: 1719492980
               labels:
                 - Product Update
-              cover_image_url: https://example.com/cover.jpg
               reactions:
                 - 👍
                 - 👍
@@ -38892,7 +36434,6 @@ service:
                   published_at: 1674917488
               labels:
                 - Product Update
-              cover_image_url: https://example.com/cover.jpg
               reactions:
                 - 😝
                 - 😂
@@ -38922,7 +36463,6 @@ service:
                   published_at: 1674917488
               labels:
                 - Product Update
-              cover_image_url: https://example.com/cover.jpg
               reactions:
                 - 😝
                 - 😂
@@ -39455,10 +36995,6 @@ types:
                         },
                       ],
                       "pages": {
-                        "next": {
-                          "per_page": 2,
-                          "starting_after": "your-cursor-from-response",
-                        },
                         "page": 1,
                         "per_page": 50,
                         "total_pages": 1,
@@ -39696,9 +37232,6 @@ service:
               pages:
                 type: pages
                 page: 1
-                next:
-                  per_page: 2
-                  starting_after: your-cursor-from-response
                 per_page: 50
                 total_pages: 1
     createNote:
@@ -47203,19 +44736,6 @@ docs: Everything about your tickets
                   },
                   "response": {
                     "body": {
-                      "android_app_name": "Intercom",
-                      "android_app_version": "5.0.0",
-                      "android_device": "Pixel 3",
-                      "android_last_seen_at": 1571672154,
-                      "android_os_version": "10",
-                      "android_sdk_version": "28",
-                      "avatar": {
-                        "image_url": "https://example.org/128Wash.jpg",
-                        "type": "avatar",
-                      },
-                      "browser": "Chrome",
-                      "browser_language": "en-US",
-                      "browser_version": "80.0.3987.132",
                       "companies": {
                         "has_more": false,
                         "total_count": 0,
@@ -47227,30 +44747,13 @@ docs: Everything about your tickets
                       },
                       "email": "foo@bar.com",
                       "email_domain": "example.com",
-                      "external_id": "f3b87a2e09d514c6c2e79b9a",
                       "formatted_phone": "+1123456789",
                       "has_hard_bounced": false,
                       "id": "667d61d08a68186f43bafea2",
-                      "ios_app_name": "Intercom",
-                      "ios_app_version": "5.0.0",
-                      "ios_device": "iPhone 11",
-                      "ios_last_seen_at": 1571672154,
-                      "ios_os_version": "13.3.1",
-                      "ios_sdk_version": "13.3.1",
-                      "language_override": "en",
-                      "last_contacted_at": 1571672154,
-                      "last_email_clicked_at": 1571672154,
-                      "last_email_opened_at": 1571672154,
-                      "last_replied_at": 1571672154,
-                      "last_seen_at": 1571672154,
                       "location": {
-                        "city": "Dublin",
-                        "country": "Ireland",
-                        "region": "Dublin",
                         "type": "location",
                       },
                       "marked_email_as_spam": false,
-                      "name": "John Doe",
                       "notes": {
                         "data": [
                           {
@@ -47263,9 +44766,6 @@ docs: Everything about your tickets
                         "total_count": 0,
                         "url": "/contacts/667d61d08a68186f43bafea2/notes",
                       },
-                      "os": "Mac OS X",
-                      "owner_id": 123,
-                      "phone": "+1123456789",
                       "role": "user",
                       "signed_up_at": 1719493072,
                       "social_profiles": {
@@ -47344,7 +44844,6 @@ docs: Everything about your tickets
                       "anonymous": true,
                       "app_id": "this_is_an_id677_that_should_be_at_least_",
                       "avatar": {
-                        "image_url": "https://example.com/avatar.png",
                         "type": "avatar",
                       },
                       "companies": {
@@ -47377,7 +44876,6 @@ docs: Everything about your tickets
                       "custom_attributes": {
                         "key": "value",
                       },
-                      "do_not_track": false,
                       "email": "",
                       "has_hard_bounced": false,
                       "id": "667d61ce8a68186f43bafe9b",
@@ -47393,11 +44891,6 @@ docs: Everything about your tickets
                         "type": "location_data",
                       },
                       "marked_email_as_spam": false,
-                      "name": "Jane Doe",
-                      "owner_id": "5169261",
-                      "phone": "555-555-5555",
-                      "pseudonym": "Red Duck from Dublin",
-                      "referrer": "https://www.google.com/",
                       "remote_created_at": 1719493070,
                       "segments": {
                         "segments": [
@@ -47426,11 +44919,6 @@ docs: Everything about your tickets
                       "unsubscribed_from_emails": false,
                       "updated_at": 1719493070,
                       "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
-                      "utm_campaign": "intercom-link",
-                      "utm_content": "banner",
-                      "utm_medium": "email",
-                      "utm_source": "Intercom",
-                      "utm_term": "messenger",
                     },
                   },
                 },
@@ -47513,7 +45001,6 @@ docs: Everything about your tickets
                       "custom_attributes": {
                         "key": "value",
                       },
-                      "do_not_track": false,
                       "email": "",
                       "has_hard_bounced": false,
                       "id": "667d61cc8a68186f43bafe95",
@@ -47530,10 +45017,7 @@ docs: Everything about your tickets
                       },
                       "marked_email_as_spam": false,
                       "name": "Gareth Bale",
-                      "owner_id": "5169261",
-                      "phone": "555-555-5555",
                       "pseudonym": "Indigo Ghost",
-                      "referrer": "https://www.google.com/",
                       "remote_created_at": 1719493068,
                       "segments": {
                         "segments": [
@@ -47562,11 +45046,6 @@ docs: Everything about your tickets
                       "unsubscribed_from_emails": false,
                       "updated_at": 1719493068,
                       "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
-                      "utm_campaign": "intercom-link",
-                      "utm_content": "banner",
-                      "utm_medium": "email",
-                      "utm_source": "Intercom",
-                      "utm_term": "messenger",
                     },
                   },
                 },
@@ -47614,7 +45093,6 @@ docs: Everything about your tickets
                       "custom_attributes": {
                         "key": "value",
                       },
-                      "do_not_track": false,
                       "email": "",
                       "has_hard_bounced": false,
                       "id": "667d61cc8a68186f43bafe95",
@@ -47631,10 +45109,7 @@ docs: Everything about your tickets
                       },
                       "marked_email_as_spam": false,
                       "name": "Gareth Bale",
-                      "owner_id": "5169261",
-                      "phone": "555-555-5555",
                       "pseudonym": "Indigo Ghost",
-                      "referrer": "https://www.google.com/",
                       "remote_created_at": 1719493068,
                       "segments": {
                         "segments": [
@@ -47663,11 +45138,6 @@ docs: Everything about your tickets
                       "unsubscribed_from_emails": false,
                       "updated_at": 1719493068,
                       "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
-                      "utm_campaign": "intercom-link",
-                      "utm_content": "banner",
-                      "utm_medium": "email",
-                      "utm_source": "Intercom",
-                      "utm_term": "messenger",
                     },
                   },
                 },
@@ -47731,12 +45201,8 @@ service:
               user_id: 3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3
               anonymous: true
               email: ''
-              phone: 555-555-5555
-              name: Jane Doe
-              pseudonym: Red Duck from Dublin
               avatar:
                 type: avatar
-                image_url: https://example.com/avatar.png
               app_id: this_is_an_id677_that_should_be_at_least_
               companies:
                 type: company.list
@@ -47778,7 +45244,6 @@ service:
                 type: social_profile.list
                 social_profiles:
                   - social_profiles
-              owner_id: '5169261'
               unsubscribed_from_emails: false
               marked_email_as_spam: false
               has_hard_bounced: false
@@ -47793,13 +45258,6 @@ service:
                   - segments
               custom_attributes:
                 key: value
-              referrer: https://www.google.com/
-              utm_campaign: intercom-link
-              utm_content: banner
-              utm_medium: email
-              utm_source: Intercom
-              utm_term: messenger
-              do_not_track: false
     updateVisitor:
       path: /visitors
       method: PUT
@@ -47839,7 +45297,6 @@ service:
               user_id: 3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3
               anonymous: true
               email: ''
-              phone: 555-555-5555
               name: Gareth Bale
               pseudonym: Indigo Ghost
               avatar:
@@ -47887,7 +45344,6 @@ service:
                 type: social_profile.list
                 social_profiles:
                   - social_profiles
-              owner_id: '5169261'
               unsubscribed_from_emails: false
               marked_email_as_spam: false
               has_hard_bounced: false
@@ -47902,13 +45358,6 @@ service:
                   - segments
               custom_attributes:
                 key: value
-              referrer: https://www.google.com/
-              utm_campaign: intercom-link
-              utm_content: banner
-              utm_medium: email
-              utm_source: Intercom
-              utm_term: messenger
-              do_not_track: false
         - name: visitor Not Found
           request:
             user_id: fail
@@ -47920,7 +45369,6 @@ service:
               user_id: 3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3
               anonymous: true
               email: ''
-              phone: 555-555-5555
               name: Gareth Bale
               pseudonym: Indigo Ghost
               avatar:
@@ -47968,7 +45416,6 @@ service:
                 type: social_profile.list
                 social_profiles:
                   - social_profiles
-              owner_id: '5169261'
               unsubscribed_from_emails: false
               marked_email_as_spam: false
               has_hard_bounced: false
@@ -47983,13 +45430,6 @@ service:
                   - segments
               custom_attributes:
                 key: value
-              referrer: https://www.google.com/
-              utm_campaign: intercom-link
-              utm_content: banner
-              utm_medium: email
-              utm_source: Intercom
-              utm_term: messenger
-              do_not_track: false
     convertVisitor:
       path: /visitors/convert
       method: POST
@@ -48038,48 +45478,19 @@ service:
             body:
               type: contact
               id: 667d61d08a68186f43bafea2
-              external_id: f3b87a2e09d514c6c2e79b9a
               workspace_id: this_is_an_id683_that_should_be_at_least_
               role: user
               email: foo@bar.com
               email_domain: example.com
-              phone: '+1123456789'
               formatted_phone: '+1123456789'
-              name: John Doe
-              owner_id: 123
               has_hard_bounced: false
               marked_email_as_spam: false
               unsubscribed_from_emails: false
               created_at: 1719493072
               updated_at: 1719493072
               signed_up_at: 1719493072
-              last_seen_at: 1571672154
-              last_replied_at: 1571672154
-              last_contacted_at: 1571672154
-              last_email_opened_at: 1571672154
-              last_email_clicked_at: 1571672154
-              language_override: en
-              browser: Chrome
-              browser_version: 80.0.3987.132
-              browser_language: en-US
-              os: Mac OS X
-              android_app_name: Intercom
-              android_app_version: 5.0.0
-              android_device: Pixel 3
-              android_os_version: '10'
-              android_sdk_version: '28'
-              android_last_seen_at: 1571672154
-              ios_app_name: Intercom
-              ios_app_version: 5.0.0
-              ios_device: iPhone 11
-              ios_os_version: 13.3.1
-              ios_sdk_version: 13.3.1
-              ios_last_seen_at: 1571672154
               custom_attributes:
                 key: value
-              avatar:
-                type: avatar
-                image_url: https://example.org/128Wash.jpg
               tags:
                 data:
                   - type: note
@@ -48102,9 +45513,6 @@ service:
                 has_more: false
               location:
                 type: location
-                country: Ireland
-                region: Dublin
-                city: Dublin
               social_profiles:
                 data:
                   - type: social_profile

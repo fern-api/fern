@@ -1,7 +1,7 @@
 import { Transport } from "@fern-api/ir-sdk";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
-import { SourceResolver } from "../../resolvers/SourceResolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { convertProtobufService } from "./convertProtobufService";
 
 export async function getTransportForService({
@@ -75,7 +75,7 @@ async function createProtobufService(
 ) {
     const resolvedSource = await sourceResolver.resolveSourceOrThrow({
         source,
-        file
+        relativeFilepath: file.relativeFilepath
     });
     if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         throw new Error(`Expected a protobuf source for ${source.proto}.`);

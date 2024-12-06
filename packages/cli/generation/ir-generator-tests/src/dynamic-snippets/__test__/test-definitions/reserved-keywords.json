@@ -92,7 +92,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -189,13 +189,13 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -224,7 +224,7 @@
                         "wireValue": "3d"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -395,7 +395,7 @@
                             "wireValue": "for"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }

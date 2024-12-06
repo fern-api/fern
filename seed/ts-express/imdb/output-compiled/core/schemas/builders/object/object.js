@@ -194,6 +194,34 @@ function getObjectUtils(schema) {
             };
             return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
         },
+        passthrough: () => {
+            const baseSchema = {
+                _getParsedProperties: () => schema._getParsedProperties(),
+                _getRawProperties: () => schema._getRawProperties(),
+                parse: (raw, opts) => {
+                    const transformed = schema.parse(raw, Object.assign(Object.assign({}, opts), { unrecognizedObjectKeys: "passthrough" }));
+                    if (!transformed.ok) {
+                        return transformed;
+                    }
+                    return {
+                        ok: true,
+                        value: Object.assign(Object.assign({}, raw), transformed.value),
+                    };
+                },
+                json: (parsed, opts) => {
+                    const transformed = schema.json(parsed, Object.assign(Object.assign({}, opts), { unrecognizedObjectKeys: "passthrough" }));
+                    if (!transformed.ok) {
+                        return transformed;
+                    }
+                    return {
+                        ok: true,
+                        value: Object.assign(Object.assign({}, parsed), transformed.value),
+                    };
+                },
+                getType: () => Schema_1.SchemaType.OBJECT,
+            };
+            return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
+        },
     };
 }
 exports.getObjectUtils = getObjectUtils;
