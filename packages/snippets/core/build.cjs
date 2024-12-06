@@ -13,6 +13,7 @@ async function main() {
         minify: true,
         dts: true,
         outDir: 'dist',
+        target: "es2017",
         external: [
             // Exclude the optional dependencies that aren't supported in the browser.
             'prettier',
