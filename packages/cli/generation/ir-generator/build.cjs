@@ -10,13 +10,13 @@ async function main() {
         entry: ['src/**/*.ts', '!src/__test__'],
         format: ['cjs'],
         clean: true,
-        minify: true,
+        // minify: true,
         dts: true,
         outDir: 'dist',
         target: "es2017",
         external: [
             // Exclude the optional dependencies that aren't supported in the browser.
-            'prettier'
+            'prettier',
         ],
         tsconfig: "./build.tsconfig.json"
     });

@@ -13,7 +13,6 @@
       }
     ],
     "x-fern-base-path": "/v1",
-    "paths": {},
-    "components": {}
+    "paths": {}
   }
 }

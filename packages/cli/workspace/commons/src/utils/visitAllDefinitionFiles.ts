@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
-import path from "path";
+import { basename } from "@fern-api/path-utils";
 import { FernWorkspace } from "../FernWorkspace";
 import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
 
@@ -16,7 +16,7 @@ export async function visitAllDefinitionFiles(
 ): Promise<void> {
     for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(workspace.definition))) {
         await visitor(relativeFilepath, file.contents, {
-            isPackageMarker: path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME,
+            isPackageMarker: basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME,
             defaultUrl: file.defaultUrl
         });
     }

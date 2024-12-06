@@ -75,7 +75,6 @@
           "#/paths/~1users/get/responses/200/content/application~1json/schema/items"
         ]
       }
-    ],
-    "components": {}
+    ]
   }
 }
