@@ -13,6 +13,7 @@ async function main() {
         minify: true,
         dts: true,
         outDir: 'dist',
+        target: "es2017",
         external: [
             // Test dependencies should not be included in the published package.
             '@fern-api/go-formatter',
