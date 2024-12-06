@@ -50,6 +50,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -63,6 +64,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
     protected inlineFileProperties: boolean;
+    private inlineInlineTypes: boolean;
 
     constructor({
         service,
@@ -71,7 +73,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         packageId,
         includeSerdeLayer,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        inlineInlineTypes
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -80,6 +83,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.inlineInlineTypes = inlineInlineTypes;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -124,9 +128,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     })) {
                         requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context));
                     }
-                    const inlineModule = this.generateModuleForInlineTypes(inlinedRequestBody, context);
-                    if (inlineModule) {
-                        context.sourceFile.addModule(inlineModule);
+                    const iModule = this.generateModule(inlinedRequestBody, context);
+                    if (iModule) {
+                        context.sourceFile.addModule(iModule);
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
@@ -232,10 +236,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
     }
 
-    private generateModuleForInlineTypes(
+    private generateModule(
         inlinedRequestBody: InlinedRequestBody,
         context: SdkContext
     ): ModuleDeclarationStructure | undefined {
+        if (!this.inlineInlineTypes) {
+            return undefined;
+        }
+
         const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(inlinedRequestBody, context);
         if (inlineProperties.size === 0) {
             return;

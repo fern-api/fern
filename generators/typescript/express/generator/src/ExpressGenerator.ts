@@ -67,6 +67,7 @@ export declare namespace ExpressGenerator {
         requestValidationStatusCode: number;
         useBigInt: boolean;
         noOptionalProperties: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -189,7 +190,8 @@ export class ExpressGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            inlineInlineTypes: config.inlineInlineTypes
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -553,7 +555,8 @@ export class ExpressGenerator {
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            useBigInt: this.config.useBigInt
+            useBigInt: this.config.useBigInt,
+            inlineInlineTypes: this.config.inlineInlineTypes
         });
     }
 }

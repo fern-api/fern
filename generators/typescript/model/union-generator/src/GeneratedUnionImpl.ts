@@ -43,6 +43,7 @@ export declare namespace GeneratedUnionImpl {
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         inline: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -72,6 +73,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private includeConstBuilders: boolean;
     private noOptionalProperties: boolean;
     private inline: boolean;
+    private inlineInlineTypes: boolean;
 
     constructor({
         typeName,
@@ -87,7 +89,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         includeSerdeLayer,
         retainOriginalCasing,
         noOptionalProperties,
-        inline
+        inline,
+        inlineInlineTypes
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -103,6 +106,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.includeConstBuilders = includeConstBuilders;
         this.noOptionalProperties = noOptionalProperties;
         this.inline = inline;
+        this.inlineInlineTypes = inlineInlineTypes;
     }
 
     public generateStatements(
@@ -285,7 +289,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         singleUnionType: ParsedSingleUnionType<Context>,
         context: Context
     ): ts.TypeNode {
-        if (this.inline) {
+        if (this.inlineInlineTypes && this.inline) {
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(
                     ts.factory.createIdentifier(this.typeName),

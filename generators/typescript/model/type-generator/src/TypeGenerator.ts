@@ -34,6 +34,7 @@ export declare namespace TypeGenerator {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        inlineInlineTypes: boolean;
     }
 
     export namespace generateType {
@@ -58,6 +59,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private includeSerdeLayer: boolean;
     private noOptionalProperties: boolean;
     private retainOriginalCasing: boolean;
+    private inlineInlineTypes: boolean;
 
     constructor({
         useBrandedStringAliases,
@@ -65,7 +67,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         includeOtherInUnionTypes,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inlineInlineTypes
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
@@ -73,6 +76,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineInlineTypes = inlineInlineTypes;
     }
 
     public generateType({
@@ -143,7 +147,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
-            inline
+            inline,
+            inlineInlineTypes: this.inlineInlineTypes
         });
     }
 
@@ -176,7 +181,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
-            inline
+            inline,
+            inlineInlineTypes: this.inlineInlineTypes
         });
     }
 
@@ -207,7 +213,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
-            inline
+            inline,
+            inlineInlineTypes: this.inlineInlineTypes
         });
     }
 
@@ -239,7 +246,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             noOptionalProperties: this.noOptionalProperties,
             includeEnumUtils: this.includeUtilsOnUnionMembers,
             retainOriginalCasing: this.retainOriginalCasing,
-            inline
+            inline,
+            inlineInlineTypes: this.inlineInlineTypes
         });
     }
 
@@ -269,7 +277,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   includeSerdeLayer: this.includeSerdeLayer,
                   noOptionalProperties: this.noOptionalProperties,
                   retainOriginalCasing: this.retainOriginalCasing,
-                  inline: false
+                  inline: false,
+                  inlineInlineTypes: this.inlineInlineTypes
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -281,7 +290,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   includeSerdeLayer: this.includeSerdeLayer,
                   noOptionalProperties: this.noOptionalProperties,
                   retainOriginalCasing: this.retainOriginalCasing,
-                  inline: false
+                  inline: false,
+                  inlineInlineTypes: this.inlineInlineTypes
               });
     }
 }

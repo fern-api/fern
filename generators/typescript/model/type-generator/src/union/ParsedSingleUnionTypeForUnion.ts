@@ -22,7 +22,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
-        inline: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -30,7 +30,6 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     private singleUnionTypeFromUnion: SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
-    private inline: boolean;
     protected union: UnionTypeDeclaration;
 
     constructor({
@@ -40,7 +39,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         includeSerdeLayer,
         retainOriginalCasing,
         noOptionalProperties,
-        inline
+        inlineInlineTypes
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -48,7 +47,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                     samePropertiesAsObject: (extended) =>
-                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
+                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended, inlineInlineTypes }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
@@ -59,7 +58,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                                 context.type.getReferenceToType(singleProperty.type),
                             getReferenceToPropertyTypeForInlineUnion: (context) =>
                                 context.type.getReferenceToTypeForInlineUnion(singleProperty.type),
-                            noOptionalProperties
+                            noOptionalProperties,
+                            inlineInlineTypes
                         }),
                     _other: () => {
                         throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
@@ -73,7 +73,6 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.inline = inline;
     }
 
     public getDocs(): string | null | undefined {

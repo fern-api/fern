@@ -40,9 +40,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)];
-        const inlineModule = this.generateModule(context);
-        if (inlineModule) {
-            statements.push(inlineModule);
+        const iModule = this.generateModule(context);
+        if (iModule) {
+            statements.push(iModule);
         }
         return statements;
     }
@@ -217,6 +217,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
+        if (!this.inlineInlineTypes) {
+            return undefined;
+        }
         const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(context);
         if (inlineProperties.size === 0) {
             return;

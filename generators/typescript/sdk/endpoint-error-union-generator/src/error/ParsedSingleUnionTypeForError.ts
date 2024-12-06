@@ -16,6 +16,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -31,7 +32,8 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         errorResolver,
         includeUtilsOnUnionMembers,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inlineInlineTypes
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
@@ -39,7 +41,8 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
                 errorDiscriminationStrategy,
                 errorDeclaration,
                 noOptionalProperties,
-                retainOriginalCasing
+                retainOriginalCasing,
+                inlineInlineTypes
             }),
             includeUtilsOnUnionMembers
         });
@@ -87,12 +90,14 @@ function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
     errorDeclaration,
     noOptionalProperties,
-    retainOriginalCasing
+    retainOriginalCasing,
+    inlineInlineTypes
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
     noOptionalProperties: boolean;
     retainOriginalCasing: boolean;
+    inlineInlineTypes: boolean;
 }): SingleUnionTypeGenerator<SdkContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
@@ -112,6 +117,7 @@ function getSingleUnionTypeGenerator({
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
         getReferenceToPropertyTypeForInlineUnion: (context) => context.type.getReferenceToTypeForInlineUnion(type),
-        noOptionalProperties
+        noOptionalProperties,
+        inlineInlineTypes
     });
 }

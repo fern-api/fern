@@ -6,6 +6,7 @@ import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, t
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {
         extended: DeclaredTypeName;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -15,9 +16,11 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
     private static BUILDER_PARAMETER_NAME = "value";
 
     private extended: DeclaredTypeName;
+    private inlineInlineTypes: boolean;
 
-    constructor({ extended }: SamePropertiesAsObjectSingleUnionTypeGenerator.Init) {
+    constructor({ extended, inlineInlineTypes }: SamePropertiesAsObjectSingleUnionTypeGenerator.Init) {
         this.extended = extended;
+        this.inlineInlineTypes = inlineInlineTypes;
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {
@@ -31,7 +34,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
 
     public getExtendsForInterface(context: Context): ts.TypeNode[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
-        if (typeDeclaration.inline) {
+        if (this.inlineInlineTypes && typeDeclaration.inline) {
             // inline types don't inherit the properties from the interface, but have the properties directly on the parent interface
             return [];
         }
@@ -40,7 +43,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
 
     public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
-        if (typeDeclaration.inline) {
+        if (this.inlineInlineTypes && typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
             if (type.type === "object") {
                 return type.generateProperties(context);
@@ -50,12 +53,15 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
-        if (typeDeclaration.inline) {
-            const type = context.type.getGeneratedType(typeDeclaration.name);
-            return type.generateModule(context);
+        if (!this.inlineInlineTypes) {
+            return undefined;
         }
-        return undefined;
+        const typeDeclaration = context.type.getTypeDeclaration(this.extended);
+        if (!typeDeclaration.inline) {
+            return undefined;
+        }
+        const type = context.type.getGeneratedType(typeDeclaration.name);
+        return type.generateModule(context);
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {

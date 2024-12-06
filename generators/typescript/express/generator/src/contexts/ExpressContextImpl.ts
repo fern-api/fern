@@ -80,6 +80,7 @@ export declare namespace ExpressContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -136,6 +137,7 @@ export class ExpressContextImpl implements ExpressContext {
         expressErrorSchemaGenerator,
         includeSerdeLayer,
         retainOriginalCasing,
+        inlineInlineTypes,
         useBigInt
     }: ExpressContextImpl.Init) {
         this.logger = logger;
@@ -162,6 +164,7 @@ export class ExpressContextImpl implements ExpressContext {
             includeSerdeLayer,
             retainOriginalCasing,
             useBigInt,
+            inlineInlineTypes,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
@@ -176,7 +179,8 @@ export class ExpressContextImpl implements ExpressContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            inlineInlineTypes
         });
 
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({

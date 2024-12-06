@@ -42,7 +42,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
 
         let typeNodeWithoutUndefined: ts.TypeNode;
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.inline) {
+        if (this.inlineInlineTypes && typeDeclaration.inline) {
             if ("inlineType" in params) {
                 typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedType(params.inlineType);
             } else if ("forInlineUnion" in params) {

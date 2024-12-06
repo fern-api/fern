@@ -17,6 +17,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
         inline: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -34,7 +35,9 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorDiscriminationStrategy,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inline,
+        inlineInlineTypes
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -58,7 +61,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         errorDiscriminationStrategy,
                         includeUtilsOnUnionMembers,
                         noOptionalProperties,
-                        retainOriginalCasing
+                        retainOriginalCasing,
+                        inlineInlineTypes
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -75,7 +79,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             includeSerdeLayer,
             noOptionalProperties,
             retainOriginalCasing,
-            inline: false
+            inline,
+            inlineInlineTypes
         });
     }
 

@@ -54,6 +54,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            inlineInlineTypes: parsed?.inlineInlineTypes ?? false,
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? false,
@@ -135,7 +136,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
                 omitUndefined: customConfig.omitUndefined ?? false,
-                useBigInt: customConfig.useBigInt ?? false
+                useBigInt: customConfig.useBigInt ?? false,
+                inlineInlineTypes: customConfig.inlineInlineTypes ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();

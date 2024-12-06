@@ -11,6 +11,7 @@ export declare namespace SinglePropertySingleUnionTypeGenerator {
         getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
         getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
         noOptionalProperties: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 

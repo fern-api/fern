@@ -29,7 +29,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             skipRequestValidation: parsed?.skipRequestValidation ?? false,
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
             useBigInt: parsed?.useBigInt ?? false,
-            noOptionalProperties: parsed?.noOptionalProperties ?? false
+            noOptionalProperties: parsed?.noOptionalProperties ?? false,
+            inlineInlineTypes: parsed?.inlineInlineTypes ?? false
         };
     }
 
@@ -68,7 +69,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 skipResponseValidation: customConfig.skipResponseValidation,
                 requestValidationStatusCode: customConfig.requestValidationStatusCode,
                 useBigInt: customConfig.useBigInt,
-                noOptionalProperties: customConfig.noOptionalProperties
+                noOptionalProperties: customConfig.noOptionalProperties,
+                inlineInlineTypes: customConfig.inlineInlineTypes
             }
         });
 
