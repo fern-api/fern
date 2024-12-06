@@ -16,8 +16,7 @@ async function main() {
         target: "es2017",
         external: [
             // Exclude the optional dependencies that aren't supported in the browser.
-            'prettier',
-            '@redocly/openapi-core'
+            'prettier'
         ],
         tsconfig: "./build.tsconfig.json"
     });
@@ -36,10 +35,7 @@ async function main() {
                 repository: packageJson.repository,
                 main: "index.cjs",
                 types: "index.d.ts",
-                files: ["index.cjs", "index.d.ts"],
-                dependencies: {
-                    '@redocly/openapi-core': '^1.4.1',
-                }
+                files: ["index.cjs", "index.d.ts"]
             },
             undefined,
             2

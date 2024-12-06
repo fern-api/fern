@@ -5997,9 +5997,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@redocly/openapi-core':
-        specifier: ^1.4.1
-        version: 1.4.1
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3

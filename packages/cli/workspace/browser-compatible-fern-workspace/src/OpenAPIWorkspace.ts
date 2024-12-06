@@ -55,7 +55,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
         },
         options?: OpenAPIWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
-        const document = await this.loader.loadDocument(this.spec);
+        const document = this.loader.loadDocument(this.spec);
         return await parse({
             context,
             documents: [document],
