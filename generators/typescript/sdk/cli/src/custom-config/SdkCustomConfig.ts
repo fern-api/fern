@@ -6,6 +6,7 @@ export interface SdkCustomConfig {
     neverThrowErrors: boolean;
     namespaceExport: string | undefined;
     outputEsm: boolean;
+    outputProjectFiles: boolean;
     outputSourceFiles: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
