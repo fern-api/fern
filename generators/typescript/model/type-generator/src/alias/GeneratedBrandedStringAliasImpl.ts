@@ -3,7 +3,8 @@ import {
     GetReferenceOpts,
     getTextOfTsKeyword,
     getTextOfTsNode,
-    maybeAddDocs,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
     writerToString
 } from "@fern-typescript/commons";
 import { BrandedGeneratedAliasType, BaseContext } from "@fern-typescript/contexts";
@@ -73,7 +74,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
             ),
             isExported: true
         };
-        maybeAddDocs(typeAlias, this.getDocs(context));
+        maybeAddDocsStructure(typeAlias, this.getDocs(context));
         return typeAlias;
     }
 

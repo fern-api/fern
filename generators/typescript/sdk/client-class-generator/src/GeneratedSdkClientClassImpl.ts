@@ -19,7 +19,7 @@ import {
     getTextOfTsNode,
     ImportsManager,
     JavaScriptRuntime,
-    maybeAddDocs,
+    maybeAddDocsStructure,
     NpmPackage,
     PackageId
 } from "@fern-typescript/commons";
@@ -459,7 +459,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             methods: [],
             getAccessors: []
         };
-        maybeAddDocs(serviceClass, this.package_.docs);
+        maybeAddDocsStructure(serviceClass, this.package_.docs);
 
         if (this.isRoot && context.generateOAuthClients) {
             serviceClass.properties.push({
@@ -608,7 +608,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer: optionsInterface.properties!.every((property) => property.hasQuestionToken)
+                        initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
                             ? "{}"
                             : undefined
                     }
@@ -651,7 +651,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceClass.methods.push(method);
 
             if (overloads.length === 0) {
-                maybeAddDocs(method, docs);
+                maybeAddDocsStructure(method, docs);
             }
         }
 

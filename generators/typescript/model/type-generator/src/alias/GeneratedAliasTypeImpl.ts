@@ -1,5 +1,11 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, writerToString } from "@fern-typescript/commons";
+import {
+    GetReferenceOpts,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
+    writerToString
+} from "@fern-typescript/commons";
 import { BaseContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
 import {
     ModuleDeclarationStructure,
@@ -36,7 +42,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
             type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
             isExported: true
         };
-        maybeAddDocs(typeAlias, this.getDocs(context));
+        maybeAddDocsStructure(typeAlias, this.getDocs(context));
         return typeAlias;
     }
 

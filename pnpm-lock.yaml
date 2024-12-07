@@ -4162,6 +4162,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/cli/dist/local: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -7980,11 +7982,11 @@ packages:
   '@fern-fern/ir-sdk@53.18.0':
     resolution: {integrity: sha512-KXHiAn8wjL9VIjjR9z8fXso0O2oaCMUSy9BSYRiGjEOmbIBUhplxSXjM3wSEXQ19hiPpsRYJTCCjnaZVP0OVrw==}
 
-  '@fern-fern/ir-sdk@53.23.0':
-    resolution: {integrity: sha512-9U6uGs9WFDnVg57VyM7s6LKCkA30JOYDQwuLrNh50Meme0m8ce4GDZ/naVncfhrGjWfxt7PSjy1vlVLBi+PKZA==}
-
   '@fern-fern/ir-sdk@53.22.0':
     resolution: {integrity: sha512-NAQ9t6nFGxRCDQqufJHnUicMetgCuSMwO3eXLJfsvFaVQt4cDx1BVp/1bsD3pz6qdJ10lX0kjf7qQDYT8QGG1A==}
+
+  '@fern-fern/ir-sdk@53.23.0':
+    resolution: {integrity: sha512-9U6uGs9WFDnVg57VyM7s6LKCkA30JOYDQwuLrNh50Meme0m8ce4GDZ/naVncfhrGjWfxt7PSjy1vlVLBi+PKZA==}
 
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
@@ -15051,9 +15053,9 @@ snapshots:
 
   '@fern-fern/ir-sdk@53.18.0': {}
 
-  '@fern-fern/ir-sdk@53.23.0': {}
-
   '@fern-fern/ir-sdk@53.22.0': {}
+
+  '@fern-fern/ir-sdk@53.23.0': {}
 
   '@fern-fern/ir-sdk@53.7.0': {}
 

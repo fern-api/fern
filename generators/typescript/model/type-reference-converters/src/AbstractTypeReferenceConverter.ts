@@ -38,11 +38,11 @@ export namespace ConvertTypeReferenceParams {
     /**
      * Metadata for converting inline types
      */
-    export type InlineType = {
+    export interface InlineType {
         parentTypeName: string;
         propertyName: string;
         genericIn?: InlineType.GenericIn;
-    };
+    }
 
     export namespace InlineType {
         export const GenericIn = {

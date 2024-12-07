@@ -20,7 +20,8 @@ import {
 import {
     getExampleEndpointCalls,
     getTextOfTsNode,
-    maybeAddDocs,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
     PackageId,
     TypeReferenceNode,
     visitJavaScriptRuntime
@@ -108,7 +109,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 ),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, queryParameter.docs);
+            maybeAddDocsNode(property, queryParameter.docs);
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
@@ -117,7 +118,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, header.docs);
+            maybeAddDocsNode(property, header.docs);
         }
         if (this.endpoint.requestBody != null) {
             HttpRequestBody._visit(this.endpoint.requestBody, {
@@ -145,7 +146,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     });
-                    maybeAddDocs(property, referenceToRequestBody.docs);
+                    maybeAddDocsNode(property, referenceToRequestBody.docs);
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
@@ -290,7 +291,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 .filter((prop): prop is InlinedRequestBodyProperty => prop !== undefined)
                 .map((property): [ObjectProperty, NamedType] | undefined => {
                     const namedType = getNamedType(property?.valueType);
-                    if (namedType) return [property, namedType];
+                    if (namedType) {
+                        return [property, namedType];
+                    }
                     return undefined;
                 })
                 .filter((x): x is [ObjectProperty, TypeReference.Named] => x != null)
@@ -601,7 +604,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 }
-
 function getNamedType(typeReference: TypeReference): NamedType | undefined {
     switch (typeReference.type) {
         case "named":
@@ -621,6 +623,7 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
                 default:
                     assertNever(typeReference.container);
             }
+        // fallthrough
         case "primitive":
             return undefined;
         case "unknown":

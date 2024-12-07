@@ -3,7 +3,8 @@ import {
     FernWriters,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocs,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
     ObjectWriter,
     Reference
 } from "@fern-typescript/commons";
@@ -279,9 +280,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             ),
             isExported: true
         };
-        if (this.getDocs != null) {
-            maybeAddDocs(typeAlias, this.getDocs(context));
-        }
+        maybeAddDocsStructure(typeAlias, this.getDocs?.(context));
         return typeAlias;
     }
 

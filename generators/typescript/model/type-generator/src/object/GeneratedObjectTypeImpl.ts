@@ -6,7 +6,13 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs, TypeReferenceNode } from "@fern-typescript/commons";
+import {
+    GetReferenceOpts,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
+    TypeReferenceNode
+} from "@fern-typescript/commons";
 import { GeneratedObjectType, BaseContext } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
@@ -71,9 +77,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
             const propertyNode: PropertySignatureStructure = {
                 kind: StructureKind.PropertySignature,
-                name: name,
+                name,
                 type: getTextOfTsNode(type),
-                hasQuestionToken: hasQuestionToken,
+                hasQuestionToken,
                 docs: docs != null ? [{ description: docs }] : undefined
             };
 
@@ -113,7 +119,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             isExported: true
         };
 
-        maybeAddDocs(interfaceNode, this.getDocs(context));
+        maybeAddDocsStructure(interfaceNode, this.getDocs(context));
         const iExtends = [];
         for (const extension of this.shape.extends) {
             iExtends.push(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
@@ -135,7 +141,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             this.shape.properties
                 .map((property): [ObjectProperty, NamedType] | undefined => {
                     const namedType = getNamedType(property.valueType);
-                    if (namedType) return [property, namedType];
+                    if (namedType) {
+                        return [property, namedType];
+                    }
                     return undefined;
                 })
                 .filter((x): x is [ObjectProperty, NamedType] => x !== undefined)
@@ -348,6 +356,7 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
                 default:
                     assertNever(typeReference.container);
             }
+        // fallthrough
         case "primitive":
             return undefined;
         case "unknown":

@@ -3,7 +3,8 @@ import {
     GetReferenceOpts,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocs
+    maybeAddDocsNode,
+    maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import {
@@ -59,7 +60,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             )
         };
 
-        maybeAddDocs(type, this.getDocs(context));
+        maybeAddDocsStructure(type, this.getDocs(context));
         return type;
     }
 

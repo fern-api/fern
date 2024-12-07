@@ -3,7 +3,7 @@ export { getPropertyKey } from "./codegen-utils/getPropertyKey";
 export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
-export { maybeAddDocs } from "./codegen-utils/maybeAddDocs";
+export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs";
 export { writerToString } from "./codegen-utils/writerToString";
 export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";
