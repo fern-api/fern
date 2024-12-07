@@ -28,6 +28,9 @@ export interface GetUndiscriminatedUnionRequest {
 }
 
 export namespace GetUndiscriminatedUnionRequest {
+    /**
+     * lorem ipsum
+     */
     export type Bar =
         /**
          * lorem ipsum */

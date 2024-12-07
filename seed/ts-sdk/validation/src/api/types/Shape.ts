@@ -3,7 +3,6 @@
  */
 
 export type Shape = "SQUARE" | "CIRCLE" | "TRIANGLE";
-
 export const Shape = {
     Square: "SQUARE",
     Circle: "CIRCLE",

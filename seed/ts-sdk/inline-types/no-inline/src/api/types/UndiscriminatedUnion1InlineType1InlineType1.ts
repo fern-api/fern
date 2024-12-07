@@ -4,6 +4,9 @@
 
 import * as SeedObject from "../index";
 
+/**
+ * lorem ipsum
+ */
 export interface UndiscriminatedUnion1InlineType1InlineType1 {
     /** lorem ipsum */
     foo: string;

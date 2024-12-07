@@ -24,15 +24,14 @@ export declare namespace A {
 }
 
 export class A {
-    constructor(protected readonly _options: A.Options) {}
-
     protected _b: B | undefined;
+    protected _c: C | undefined;
+
+    constructor(protected readonly _options: A.Options) {}
 
     public get b(): B {
         return (this._b ??= new B(this._options));
     }
-
-    protected _c: C | undefined;
 
     public get c(): C {
         return (this._c ??= new C(this._options));

@@ -29,6 +29,9 @@ export interface GetDiscriminatedUnionRequest {
 }
 
 export namespace GetDiscriminatedUnionRequest {
+    /**
+     * lorem ipsum
+     */
     export type Bar =
         /**
          * lorem ipsum */
@@ -52,6 +55,9 @@ export namespace GetDiscriminatedUnionRequest {
         }
 
         export namespace DiscriminatedUnion1InlineType1 {
+            /**
+             * lorem ipsum
+             */
             export interface Bar {
                 /** lorem ipsum */
                 foo: string;

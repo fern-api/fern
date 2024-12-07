@@ -455,9 +455,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: this.serviceClassName,
             isExported: true,
             properties: [],
+            getAccessors: [],
             ctors: [],
-            methods: [],
-            getAccessors: []
+            methods: []
         };
         maybeAddDocsStructure(serviceClass, this.package_.docs);
 
@@ -698,6 +698,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 statements: this.getCustomAuthorizationHeaderStatements(context).map(getTextOfTsNode)
             });
         }
+
+        context.sourceFile.addClass(serviceClass);
     }
 
     private shouldGenerateAuthorizationHeaderHelperMethod(): boolean {

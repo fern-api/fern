@@ -27,7 +27,13 @@ export declare namespace Events {
 }
 
 export class Events {
+    protected _metadata: Metadata | undefined;
+
     constructor(protected readonly _options: Events.Options) {}
+
+    public get metadata(): Metadata {
+        return (this._metadata ??= new Metadata(this._options));
+    }
 
     /**
      * List all user events.
@@ -100,11 +106,5 @@ export class Events {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _metadata: Metadata | undefined;
-
-    public get metadata(): Metadata {
-        return (this._metadata ??= new Metadata(this._options));
     }
 }

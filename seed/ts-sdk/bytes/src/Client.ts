@@ -23,9 +23,9 @@ export declare namespace SeedBytesClient {
 }
 
 export class SeedBytesClient {
-    constructor(protected readonly _options: SeedBytesClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedBytesClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

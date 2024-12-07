@@ -6,7 +6,6 @@
  * Keep in sync with SubmissionType.
  */
 export type SubmissionTypeEnum = "TEST";
-
 export const SubmissionTypeEnum = {
     Test: "TEST",
     _visit: <R>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum.Visitor<R>) => {

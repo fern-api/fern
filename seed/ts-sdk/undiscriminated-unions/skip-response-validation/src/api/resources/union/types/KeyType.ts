@@ -3,7 +3,6 @@
  */
 
 export type KeyType = "name" | "value";
-
 export const KeyType = {
     Name: "name",
     Value: "value",

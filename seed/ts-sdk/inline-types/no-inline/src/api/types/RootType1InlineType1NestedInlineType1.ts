@@ -4,6 +4,9 @@
 
 import * as SeedObject from "../index";
 
+/**
+ * lorem ipsum
+ */
 export interface RootType1InlineType1NestedInlineType1 {
     /** lorem ipsum */
     foo: string;

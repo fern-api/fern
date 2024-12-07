@@ -9,7 +9,6 @@ export type ExecutionSessionStatus =
     | "RUNNING_CONTAINER"
     | "LIVE_CONTAINER"
     | "FAILED_TO_LAUNCH";
-
 export const ExecutionSessionStatus = {
     CreatingContainer: "CREATING_CONTAINER",
     ProvisioningContainer: "PROVISIONING_CONTAINER",

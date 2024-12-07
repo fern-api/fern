@@ -24,9 +24,9 @@ export declare namespace SeedCustomAuthClient {
 }
 
 export class SeedCustomAuthClient {
-    constructor(protected readonly _options: SeedCustomAuthClient.Options) {}
-
     protected _customAuth: CustomAuth | undefined;
+
+    constructor(protected readonly _options: SeedCustomAuthClient.Options) {}
 
     public get customAuth(): CustomAuth {
         return (this._customAuth ??= new CustomAuth(this._options));

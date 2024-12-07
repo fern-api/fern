@@ -30,7 +30,23 @@ export declare namespace SeedExamplesClient {
 }
 
 export class SeedExamplesClient {
+    protected _file: File_ | undefined;
+    protected _health: Health | undefined;
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
+
+    public get file(): File_ {
+        return (this._file ??= new File_(this._options));
+    }
+
+    public get health(): Health {
+        return (this._health ??= new Health(this._options));
+    }
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {string} request
@@ -151,24 +167,6 @@ export class SeedExamplesClient {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _file: File_ | undefined;
-
-    public get file(): File_ {
-        return (this._file ??= new File_(this._options));
-    }
-
-    protected _health: Health | undefined;
-
-    public get health(): Health {
-        return (this._health ??= new Health(this._options));
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

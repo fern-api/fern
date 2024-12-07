@@ -4,6 +4,9 @@
 
 import * as SeedObject from "../index";
 
+/**
+ * lorem ipsum
+ */
 export type UndiscriminatedUnion1 =
     /**
      * lorem ipsum */

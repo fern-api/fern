@@ -4,6 +4,9 @@
 
 import * as SeedObject from "../index";
 
+/**
+ * lorem ipsum
+ */
 export interface RootType1 {
     /** lorem ipsum */
     foo: string;
@@ -20,6 +23,9 @@ export interface RootType1 {
 }
 
 export namespace RootType1 {
+    /**
+     * lorem ipsum
+     */
     export interface Bar {
         /** lorem ipsum */
         foo: string;
@@ -30,6 +36,9 @@ export namespace RootType1 {
     }
 
     export namespace Bar {
+        /**
+         * lorem ipsum
+         */
         export interface Bar {
             /** lorem ipsum */
             foo: string;
@@ -42,6 +51,9 @@ export namespace RootType1 {
         }
 
         export namespace Bar {
+            /**
+             * lorem ipsum
+             */
             export type MyEnum = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
             export const MyEnum = {
                 Sunny: "SUNNY",
@@ -53,6 +65,9 @@ export namespace RootType1 {
     }
 
     export namespace FooMap {
+        /**
+         * lorem ipsum
+         */
         export interface Value {
             /** lorem ipsum */
             foo: string;
@@ -64,6 +79,9 @@ export namespace RootType1 {
     type FooList = FooList.Item[];
 
     export namespace FooList {
+        /**
+         * lorem ipsum
+         */
         export interface Item {
             /** lorem ipsum */
             foo: string;
@@ -75,6 +93,9 @@ export namespace RootType1 {
     type FooSet = FooSet.Item[];
 
     export namespace FooSet {
+        /**
+         * lorem ipsum
+         */
         export interface Item {
             /** lorem ipsum */
             foo: string;

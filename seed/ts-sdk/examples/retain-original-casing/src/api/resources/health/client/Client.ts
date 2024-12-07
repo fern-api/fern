@@ -25,9 +25,9 @@ export declare namespace Health {
 }
 
 export class Health {
-    constructor(protected readonly _options: Health.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: Health.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));
