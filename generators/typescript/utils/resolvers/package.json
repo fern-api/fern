@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "@fern-fern/ir-sdk": "53.22.0",
-    "@fern-typescript/commons": "workspace:*",
-    "@fern-api/core-utils": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

@@ -3369,9 +3369,6 @@ importers:
 
   generators/typescript/utils/resolvers:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 53.22.0
         version: 53.22.0

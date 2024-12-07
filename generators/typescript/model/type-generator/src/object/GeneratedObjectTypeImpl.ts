@@ -28,13 +28,13 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-type Property = {
+interface Property {
     name: string;
     type: ts.TypeNode;
     hasQuestionToken: boolean;
     docs: string | undefined;
     irProperty: ObjectProperty | undefined;
-};
+}
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
@@ -59,7 +59,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
                 let propertyValue: ts.TypeNode = type;
                 if (irProperty && inlineProperties.has(irProperty)) {
-                    const typeDeclaration = inlineProperties.get(irProperty)!;
+                    const typeDeclaration = inlineProperties.get(irProperty) as TypeDeclaration;
                     const generatedType = context.type.getGeneratedType(typeDeclaration.name);
                     propertyValue = generatedType.generateForInlineUnion(context);
                 }
