@@ -24,15 +24,14 @@ export declare namespace SeedMixedFileDirectoryClient {
 }
 
 export class SeedMixedFileDirectoryClient {
-    constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
-
     protected _organization: Organization | undefined;
+    protected _user: User | undefined;
+
+    constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
 
     public get organization(): Organization {
         return (this._organization ??= new Organization(this._options));
     }
-
-    protected _user: User | undefined;
 
     public get user(): User {
         return (this._user ??= new User(this._options));

@@ -3,7 +3,6 @@
  */
 
 export type PrimitiveValue = "STRING" | "NUMBER";
-
 export const PrimitiveValue = {
     String: "STRING",
     Number: "NUMBER",

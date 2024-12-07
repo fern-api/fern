@@ -24,9 +24,9 @@ export declare namespace SeedVariablesClient {
 }
 
 export class SeedVariablesClient {
-    constructor(protected readonly _options: SeedVariablesClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedVariablesClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

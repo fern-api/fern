@@ -25,21 +25,19 @@ export declare namespace SeedEnumClient {
 }
 
 export class SeedEnumClient {
-    constructor(protected readonly _options: SeedEnumClient.Options) {}
-
     protected _inlinedRequest: InlinedRequest | undefined;
+    protected _pathParam: PathParam | undefined;
+    protected _queryParam: QueryParam | undefined;
+
+    constructor(protected readonly _options: SeedEnumClient.Options) {}
 
     public get inlinedRequest(): InlinedRequest {
         return (this._inlinedRequest ??= new InlinedRequest(this._options));
     }
 
-    protected _pathParam: PathParam | undefined;
-
     public get pathParam(): PathParam {
         return (this._pathParam ??= new PathParam(this._options));
     }
-
-    protected _queryParam: QueryParam | undefined;
 
     public get queryParam(): QueryParam {
         return (this._queryParam ??= new QueryParam(this._options));

@@ -23,9 +23,9 @@ export declare namespace SeedExtraPropertiesClient {
 }
 
 export class SeedExtraPropertiesClient {
-    constructor(protected readonly _options: SeedExtraPropertiesClient.Options) {}
-
     protected _user: User | undefined;
+
+    constructor(protected readonly _options: SeedExtraPropertiesClient.Options) {}
 
     public get user(): User {
         return (this._user ??= new User(this._options));

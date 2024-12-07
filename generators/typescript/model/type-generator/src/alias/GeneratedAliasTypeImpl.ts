@@ -1,18 +1,53 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { ModelContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import {
+    GetReferenceOpts,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
+    writerToString
+} from "@fern-typescript/commons";
+import { BaseContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts";
+import {
+    ModuleDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    ts,
+    TypeAliasDeclarationStructure,
+    WriterFunction
+} from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedAliasTypeImpl<Context extends ModelContext>
+export class GeneratedAliasTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements NotBrandedGeneratedAliasType<Context>
 {
     public readonly type = "alias";
     public readonly isBranded = false;
 
-    public writeToFile(context: Context): void {
-        this.writeTypeAlias(context);
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        return [this.generateTypeAlias(context)];
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const type = writerToString(this.generateTypeAlias(context).type);
+        return ts.factory.createTypeReferenceNode(type);
+    }
+
+    private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {
+        const typeAlias: TypeAliasDeclarationStructure = {
+            kind: StructureKind.TypeAlias,
+            name: this.typeName,
+            type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
+            isExported: true
+        };
+        maybeAddDocsStructure(typeAlias, this.getDocs(context));
+        return typeAlias;
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
@@ -20,14 +55,5 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
             throw new Error("Example is not for an alias");
         }
         return context.type.getGeneratedExample(example.value).build(context, opts);
-    }
-
-    private writeTypeAlias(context: Context) {
-        const typeAlias = context.sourceFile.addTypeAlias({
-            name: this.typeName,
-            type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
-            isExported: true
-        });
-        maybeAddDocs(typeAlias, this.getDocs(context));
     }
 }

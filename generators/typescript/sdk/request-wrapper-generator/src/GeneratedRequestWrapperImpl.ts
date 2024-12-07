@@ -1,7 +1,8 @@
-import { noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
     FileProperty,
+    FileUploadRequest,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
@@ -10,14 +11,19 @@ import {
     InlinedRequestBody,
     InlinedRequestBodyProperty,
     NameAndWireValue,
+    NamedType,
+    ObjectProperty,
     QueryParameter,
+    TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import {
     getExampleEndpointCalls,
     getTextOfTsNode,
-    maybeAddDocs,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
     PackageId,
+    TypeReferenceNode,
     visitJavaScriptRuntime
 } from "@fern-typescript/commons";
 import {
@@ -26,7 +32,14 @@ import {
     RequestWrapperNonBodyProperty,
     SdkContext
 } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import {
+    ModuleDeclarationKind,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    StructureKind,
+    ts
+} from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -38,6 +51,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -51,6 +65,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
     protected inlineFileProperties: boolean;
+    private inlineInlineTypes: boolean;
 
     constructor({
         service,
@@ -59,7 +74,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         packageId,
         includeSerdeLayer,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        inlineInlineTypes
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -68,6 +84,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.inlineInlineTypes = inlineInlineTypes;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -92,7 +109,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 ),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, queryParameter.docs);
+            maybeAddDocsNode(property, queryParameter.docs);
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
@@ -101,7 +118,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, header.docs);
+            maybeAddDocsNode(property, header.docs);
         }
         if (this.endpoint.requestBody != null) {
             HttpRequestBody._visit(this.endpoint.requestBody, {
@@ -110,7 +127,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         inlinedRequestBody,
                         context
                     })) {
-                        requestInterface.addProperty(this.getInlineProperty(property, context));
+                        requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context));
+                    }
+                    const iModule = this.generateModule(inlinedRequestBody, context);
+                    if (iModule) {
+                        context.sourceFile.addModule(iModule);
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
@@ -125,7 +146,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     });
-                    maybeAddDocs(property, referenceToRequestBody.docs);
+                    maybeAddDocsNode(property, referenceToRequestBody.docs);
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
@@ -141,7 +162,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
-                                requestInterface.addProperty(this.getInlineProperty(inlinedProperty, context));
+                                requestInterface.addProperty(
+                                    this.getInlineProperty(fileUploadRequest, inlinedProperty, context)
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -186,16 +209,99 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getInlineProperty(
+        requestBody: InlinedRequestBody | FileUploadRequest,
         property: InlinedRequestBodyProperty,
         context: SdkContext
     ): OptionalKind<PropertySignatureStructure> {
-        const type = context.type.getReferenceToType(property.valueType);
+        const type = this.getTypeForBodyProperty(requestBody, property, context);
         return {
             name: `"${this.getInlinedRequestBodyPropertyKey(property)}"`,
             type: getTextOfTsNode(type.typeNodeWithoutUndefined),
             hasQuestionToken: type.isOptional,
             docs: property.docs != null ? [property.docs] : undefined
         };
+    }
+
+    private getTypeForBodyProperty(
+        requestBody: InlinedRequestBody | FileUploadRequest,
+        property: InlinedRequestBodyProperty,
+        context: SdkContext
+    ): TypeReferenceNode {
+        const inlineProps = this.getInlinePropertiesWithTypeDeclaration(requestBody, context);
+        if (inlineProps.has(property)) {
+            const propParentTypeName = requestBody.name.pascalCase.safeName;
+            const propName = property.name.name.pascalCase.safeName;
+            return context.type.getReferenceToInlineType(property.valueType, propParentTypeName, propName);
+        } else {
+            return context.type.getReferenceToType(property.valueType);
+        }
+    }
+
+    private generateModule(
+        inlinedRequestBody: InlinedRequestBody,
+        context: SdkContext
+    ): ModuleDeclarationStructure | undefined {
+        if (!this.inlineInlineTypes) {
+            return undefined;
+        }
+
+        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(inlinedRequestBody, context);
+        if (inlineProperties.size === 0) {
+            return;
+        }
+        return {
+            kind: StructureKind.Module,
+            name: inlinedRequestBody.name.pascalCase.safeName,
+            isExported: true,
+            hasDeclareKeyword: false,
+            declarationKind: ModuleDeclarationKind.Namespace,
+            statements: Array.from(inlineProperties.entries()).flatMap(
+                ([objectProperty, typeDeclaration]: [ObjectProperty, TypeDeclaration]) => {
+                    const generatedType = context.type.getGeneratedType(
+                        typeDeclaration.name,
+                        objectProperty.name.name.pascalCase.safeName
+                    );
+                    return generatedType.generateStatements(context);
+                }
+            )
+        };
+    }
+
+    private getInlinePropertiesWithTypeDeclaration(
+        requestBody: InlinedRequestBody | FileUploadRequest,
+        context: SdkContext
+    ): Map<ObjectProperty, TypeDeclaration> {
+        const inlineProperties = new Map<ObjectProperty, TypeDeclaration>(
+            requestBody.properties
+                .map((prop) => {
+                    if ("type" in prop) {
+                        // fileupload prop
+                        switch (prop.type) {
+                            case "bodyProperty":
+                                return prop as InlinedRequestBodyProperty;
+                            case "file":
+                                return undefined;
+                            default:
+                                assertNever(prop);
+                        }
+                    } else {
+                        return prop;
+                    }
+                })
+                .filter((prop): prop is InlinedRequestBodyProperty => prop !== undefined)
+                .map((property): [ObjectProperty, NamedType] | undefined => {
+                    const namedType = getNamedType(property?.valueType);
+                    if (namedType) {
+                        return [property, namedType];
+                    }
+                    return undefined;
+                })
+                .filter((x): x is [ObjectProperty, TypeReference.Named] => x != null)
+                .map(([property, type]): [ObjectProperty, TypeDeclaration] => {
+                    return [property, context.type.getTypeDeclaration(type)];
+                })
+        );
+        return inlineProperties;
     }
 
     public areBodyPropertiesInlined(): boolean {
@@ -496,5 +602,33 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+    }
+}
+function getNamedType(typeReference: TypeReference): NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    assertNever(typeReference.container);
+            }
+        // fallthrough
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            assertNever(typeReference);
     }
 }

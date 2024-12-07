@@ -23,9 +23,9 @@ export declare namespace SeedMultiLineDocsClient {
 }
 
 export class SeedMultiLineDocsClient {
-    constructor(protected readonly _options: SeedMultiLineDocsClient.Options) {}
-
     protected _user: User | undefined;
+
+    constructor(protected readonly _options: SeedMultiLineDocsClient.Options) {}
 
     public get user(): User {
         return (this._user ??= new User(this._options));

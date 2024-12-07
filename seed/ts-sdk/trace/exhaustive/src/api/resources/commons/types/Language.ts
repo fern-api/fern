@@ -3,7 +3,6 @@
  */
 
 export type Language = "JAVA" | "JAVASCRIPT" | "PYTHON";
-
 export const Language = {
     Java: "JAVA",
     Javascript: "JAVASCRIPT",

@@ -23,9 +23,9 @@ export declare namespace SeedServerSentEventsClient {
 }
 
 export class SeedServerSentEventsClient {
-    constructor(protected readonly _options: SeedServerSentEventsClient.Options) {}
-
     protected _completions: Completions | undefined;
+
+    constructor(protected readonly _options: SeedServerSentEventsClient.Options) {}
 
     public get completions(): Completions {
         return (this._completions ??= new Completions(this._options));

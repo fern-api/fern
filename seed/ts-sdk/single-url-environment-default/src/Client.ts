@@ -25,9 +25,9 @@ export declare namespace SeedSingleUrlEnvironmentDefaultClient {
 }
 
 export class SeedSingleUrlEnvironmentDefaultClient {
-    constructor(protected readonly _options: SeedSingleUrlEnvironmentDefaultClient.Options) {}
-
     protected _dummy: Dummy | undefined;
+
+    constructor(protected readonly _options: SeedSingleUrlEnvironmentDefaultClient.Options) {}
 
     public get dummy(): Dummy {
         return (this._dummy ??= new Dummy(this._options));

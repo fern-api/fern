@@ -3,7 +3,6 @@
  */
 
 export type ComplexType = "object" | "union" | "unknown";
-
 export const ComplexType = {
     Object: "object",
     Union: "union",

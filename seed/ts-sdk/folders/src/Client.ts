@@ -25,7 +25,18 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
+    protected _a: A | undefined;
+    protected _folder: Folder | undefined;
+
     constructor(protected readonly _options: SeedApiClient.Options) {}
+
+    public get a(): A {
+        return (this._a ??= new A(this._options));
+    }
+
+    public get folder(): Folder {
+        return (this._folder ??= new Folder(this._options));
+    }
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -76,17 +87,5 @@ export class SeedApiClient {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _a: A | undefined;
-
-    public get a(): A {
-        return (this._a ??= new A(this._options));
-    }
-
-    protected _folder: Folder | undefined;
-
-    public get folder(): Folder {
-        return (this._folder ??= new Folder(this._options));
     }
 }

@@ -35,33 +35,29 @@ export declare namespace SeedLiteralClient {
 }
 
 export class SeedLiteralClient {
-    constructor(protected readonly _options: SeedLiteralClient.Options) {}
-
     protected _headers: Headers | undefined;
+    protected _inlined: Inlined | undefined;
+    protected _path: Path | undefined;
+    protected _query: Query | undefined;
+    protected _reference: Reference | undefined;
+
+    constructor(protected readonly _options: SeedLiteralClient.Options) {}
 
     public get headers(): Headers {
         return (this._headers ??= new Headers(this._options));
     }
 
-    protected _inlined: Inlined | undefined;
-
     public get inlined(): Inlined {
         return (this._inlined ??= new Inlined(this._options));
     }
-
-    protected _path: Path | undefined;
 
     public get path(): Path {
         return (this._path ??= new Path(this._options));
     }
 
-    protected _query: Query | undefined;
-
     public get query(): Query {
         return (this._query ??= new Query(this._options));
     }
-
-    protected _reference: Reference | undefined;
 
     public get reference(): Reference {
         return (this._reference ??= new Reference(this._options));

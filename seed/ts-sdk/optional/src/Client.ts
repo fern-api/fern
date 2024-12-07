@@ -23,9 +23,9 @@ export declare namespace SeedObjectsWithImportsClient {
 }
 
 export class SeedObjectsWithImportsClient {
-    constructor(protected readonly _options: SeedObjectsWithImportsClient.Options) {}
-
     protected _optional: Optional | undefined;
+
+    constructor(protected readonly _options: SeedObjectsWithImportsClient.Options) {}
 
     public get optional(): Optional {
         return (this._optional ??= new Optional(this._options));

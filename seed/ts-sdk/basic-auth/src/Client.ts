@@ -25,9 +25,9 @@ export declare namespace SeedBasicAuthClient {
 }
 
 export class SeedBasicAuthClient {
-    constructor(protected readonly _options: SeedBasicAuthClient.Options) {}
-
     protected _basicAuth: BasicAuth | undefined;
+
+    constructor(protected readonly _options: SeedBasicAuthClient.Options) {}
 
     public get basicAuth(): BasicAuth {
         return (this._basicAuth ??= new BasicAuth(this._options));

@@ -5,23 +5,23 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedUnion, GeneratedUnionType, ModelContext } from "@fern-typescript/contexts";
+import { GeneratedUnion, GeneratedUnionType, BaseContext } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ts } from "ts-morph";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
 
 export declare namespace GeneratedUnionTypeImpl {
-    export interface Init<Context extends ModelContext>
+    export interface Init<Context extends BaseContext>
         extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
     }
 }
 
-export class GeneratedUnionTypeImpl<Context extends ModelContext>
+export class GeneratedUnionTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
 {
@@ -44,7 +44,8 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
-                    noOptionalProperties: this.noOptionalProperties
+                    noOptionalProperties: this.noOptionalProperties,
+                    inlineInlineTypes: this.inlineInlineTypes
                 })
         );
 
@@ -67,12 +68,24 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            inline: this.inline,
+            inlineInlineTypes: this.inlineInlineTypes
         });
     }
 
-    public writeToFile(context: Context): void {
-        this.generatedUnion.writeToFile(context);
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        return this.generatedUnion.generateStatements(context);
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return this.generatedUnion.generateForInlineUnion(context);
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getGeneratedUnion(): GeneratedUnion<Context> {

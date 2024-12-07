@@ -26,6 +26,7 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected _auth: Auth | undefined;
 
     constructor(protected readonly _options: SeedOauthClientCredentialsClient.Options) {
         this._oauthTokenProvider = new core.OAuthTokenProvider({
@@ -36,8 +37,6 @@ export class SeedOauthClientCredentialsClient {
             }),
         });
     }
-
-    protected _auth: Auth | undefined;
 
     public get auth(): Auth {
         return (this._auth ??= new Auth({

@@ -31,7 +31,18 @@ export declare namespace V2 {
 }
 
 export class V2 {
+    protected _problem: Problem | undefined;
+    protected _v3: V3 | undefined;
+
     constructor(protected readonly _options: V2.Options = {}) {}
+
+    public get problem(): Problem {
+        return (this._problem ??= new Problem(this._options));
+    }
+
+    public get v3(): V3 {
+        return (this._v3 ??= new V3(this._options));
+    }
 
     /**
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -75,18 +86,6 @@ export class V2 {
             ok: false,
             error: SeedTrace.v2.test.Error._unknown(_response.error),
         };
-    }
-
-    protected _problem: Problem | undefined;
-
-    public get problem(): Problem {
-        return (this._problem ??= new Problem(this._options));
-    }
-
-    protected _v3: V3 | undefined;
-
-    public get v3(): V3 {
-        return (this._v3 ??= new V3(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
