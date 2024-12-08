@@ -745,10 +745,10 @@ Used to submit feedback regarding the quality of previously generated completion
         },
         "types": {
           "BlockTypeEnum": {
-            "docs": "* `CHAT_MESSAGE` - CHAT_MESSAGE
-* `CHAT_HISTORY` - CHAT_HISTORY
-* `JINJA` - JINJA
-* `FUNCTION_DEFINITION` - FUNCTION_DEFINITION",
+            "docs": "- `CHAT_MESSAGE` - CHAT_MESSAGE
+- `CHAT_HISTORY` - CHAT_HISTORY
+- `JINJA` - JINJA
+- `FUNCTION_DEFINITION` - FUNCTION_DEFINITION",
             "enum": [
               "CHAT_MESSAGE",
               "CHAT_HISTORY",
@@ -782,10 +782,10 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ChatMessageRole": {
-            "docs": "* `SYSTEM` - System
-* `ASSISTANT` - Assistant
-* `USER` - User
-* `FUNCTION` - Function",
+            "docs": "- `SYSTEM` - System
+- `ASSISTANT` - Assistant
+- `USER` - User
+- `FUNCTION` - Function",
             "enum": [
               "SYSTEM",
               "ASSISTANT",
@@ -817,8 +817,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ContentType": {
-            "docs": "* `STRING` - STRING
-* `JSON` - JSON",
+            "docs": "- `STRING` - STRING
+- `JSON` - JSON",
             "enum": [
               "STRING",
               "JSON",
@@ -858,9 +858,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "environment": {
                 "docs": "The environment this deployment is used in
 
-* `DEVELOPMENT` - Development
-* `STAGING` - Staging
-* `PRODUCTION` - Production",
+- `DEVELOPMENT` - Development
+- `STAGING` - Staging
+- `PRODUCTION` - Production",
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
@@ -886,8 +886,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "model_type": {
                 "docs": "The type of model this deployment serves
 
-* `GENERATE` - Generate
-* `CLASSIFY` - Classify",
+- `GENERATE` - Generate
+- `CLASSIFY` - Classify",
                 "type": "ModelTypeEnum",
               },
               "name": {
@@ -903,9 +903,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "status": {
                 "docs": "The current status of the deployment
 
-* `ACTIVE` - Active
-* `INACTIVE` - Inactive
-* `ARCHIVED` - Archived",
+- `ACTIVE` - Active
+- `INACTIVE` - Inactive
+- `ARCHIVED` - Archived",
                 "type": "optional<DeploymentReadStatusEnum>",
               },
             },
@@ -914,9 +914,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "DeploymentReadStatusEnum": {
-            "docs": "* `ACTIVE` - Active
-* `INACTIVE` - Inactive
-* `ARCHIVED` - Archived",
+            "docs": "- `ACTIVE` - Active
+- `INACTIVE` - Inactive
+- `ARCHIVED` - Archived",
             "enum": [
               "ACTIVE",
               "INACTIVE",
@@ -992,11 +992,11 @@ Used to submit feedback regarding the quality of previously generated completion
               "indexing_state": {
                 "docs": "An enum value representing where this document is along its indexing lifecycle for this index.
 
-* `AWAITING_PROCESSING` - Awaiting Processing
-* `QUEUED` - Queued
-* `INDEXING` - Indexing
-* `INDEXED` - Indexed
-* `FAILED` - Failed",
+- `AWAITING_PROCESSING` - Awaiting Processing
+- `QUEUED` - Queued
+- `INDEXING` - Indexing
+- `INDEXED` - Indexed
+- `FAILED` - Failed",
                 "type": "optional<IndexingStateEnum>",
               },
             },
@@ -1012,9 +1012,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "environment": {
                 "docs": "The environment this document index is used in
 
-* `DEVELOPMENT` - Development
-* `STAGING` - Staging
-* `PRODUCTION` - Production",
+- `DEVELOPMENT` - Development
+- `STAGING` - Staging
+- `PRODUCTION` - Production",
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
@@ -1053,8 +1053,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "status": {
                 "docs": "The current status of the document index
 
-* `ACTIVE` - Active
-* `ARCHIVED` - Archived",
+- `ACTIVE` - Active
+- `ARCHIVED` - Archived",
                 "type": "optional<DocumentIndexStatus>",
               },
             },
@@ -1063,8 +1063,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "DocumentIndexStatus": {
-            "docs": "* `ACTIVE` - Active
-* `ARCHIVED` - Archived",
+            "docs": "- `ACTIVE` - Active
+- `ARCHIVED` - Archived",
             "enum": [
               "ACTIVE",
               "ARCHIVED",
@@ -1084,9 +1084,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "finish_reason": {
                 "docs": "The reason the generation finished.
 
-* `LENGTH` - LENGTH
-* `STOP` - STOP
-* `UNKNOWN` - UNKNOWN",
+- `LENGTH` - LENGTH
+- `STOP` - STOP
+- `UNKNOWN` - UNKNOWN",
                 "type": "optional<FinishReasonEnum>",
               },
               "id": {
@@ -1118,9 +1118,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "EnvironmentEnum": {
-            "docs": "* `DEVELOPMENT` - Development
-* `STAGING` - Staging
-* `PRODUCTION` - Production",
+            "docs": "- `DEVELOPMENT` - Development
+- `STAGING` - Staging
+- `PRODUCTION` - Production",
             "enum": [
               "DEVELOPMENT",
               "STAGING",
@@ -1157,9 +1157,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "FinishReasonEnum": {
-            "docs": "* `LENGTH` - LENGTH
-* `STOP` - STOP
-* `UNKNOWN` - UNKNOWN",
+            "docs": "- `LENGTH` - LENGTH
+- `STOP` - STOP
+- `UNKNOWN` - UNKNOWN",
             "enum": [
               "LENGTH",
               "STOP",
@@ -1189,8 +1189,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "logprobs": {
                 "docs": "Which logprobs to include, if any. Defaults to NONE.
 
-* `ALL` - ALL
-* `NONE` - NONE",
+- `ALL` - ALL
+- `NONE` - NONE",
                 "type": "optional<LogprobsEnum>",
               },
             },
@@ -1309,11 +1309,11 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "IndexingStateEnum": {
-            "docs": "* `AWAITING_PROCESSING` - Awaiting Processing
-* `QUEUED` - Queued
-* `INDEXING` - Indexing
-* `INDEXED` - Indexed
-* `FAILED` - Failed",
+            "docs": "- `AWAITING_PROCESSING` - Awaiting Processing
+- `QUEUED` - Queued
+- `INDEXING` - Indexing
+- `INDEXED` - Indexed
+- `FAILED` - Failed",
             "enum": [
               "AWAITING_PROCESSING",
               "QUEUED",
@@ -1326,8 +1326,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "LogprobsEnum": {
-            "docs": "* `ALL` - ALL
-* `NONE` - NONE",
+            "docs": "- `ALL` - ALL
+- `NONE` - NONE",
             "enum": [
               "ALL",
               "NONE",
@@ -1337,8 +1337,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ModelTypeEnum": {
-            "docs": "* `GENERATE` - Generate
-* `CLASSIFY` - Classify",
+            "docs": "- `GENERATE` - Generate
+- `CLASSIFY` - Classify",
             "enum": [
               "GENERATE",
               "CLASSIFY",
@@ -1490,21 +1490,21 @@ Used to submit feedback regarding the quality of previously generated completion
               "model_type": {
                 "docs": "The type of task this model is used for.
 
-* `GENERATE` - Generate
-* `CLASSIFY` - Classify",
+- `GENERATE` - Generate
+- `CLASSIFY` - Classify",
                 "type": "ModelTypeEnum",
               },
               "provider": {
                 "docs": "Which LLM provider this model version is associated with.
 
-* `ANTHROPIC` - Anthropic
-* `COHERE` - Cohere
-* `GOOGLE` - Google
-* `HOSTED` - Hosted
-* `MOSAICML` - MosaicML
-* `MYSTIC` - Mystic
-* `OPENAI` - OpenAI
-* `PYQ` - Pyq",
+- `ANTHROPIC` - Anthropic
+- `COHERE` - Cohere
+- `GOOGLE` - Google
+- `HOSTED` - Hosted
+- `MOSAICML` - MosaicML
+- `MYSTIC` - Mystic
+- `OPENAI` - OpenAI
+- `PYQ` - Pyq",
                 "type": "ProviderEnum",
               },
               "status": "optional<ModelVersionReadStatusEnum>",
@@ -1514,10 +1514,10 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ModelVersionReadStatusEnum": {
-            "docs": "* `CREATING` - Creating
-* `READY` - Ready
-* `CREATION_FAILED` - Creation Failed
-* `DISABLED` - Disabled",
+            "docs": "- `CREATING` - Creating
+- `READY` - Ready
+- `CREATION_FAILED` - Creation Failed
+- `DISABLED` - Disabled",
             "enum": [
               "CREATING",
               "READY",
@@ -1611,14 +1611,14 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ProcessingFailureReasonEnum": {
-            "docs": "* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
+            "docs": "- `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
             "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
           },
           "ProcessingStateEnum": {
-            "docs": "* `QUEUED` - Queued
-* `PROCESSING` - Processing
-* `PROCESSED` - Processed
-* `FAILED` - Failed",
+            "docs": "- `QUEUED` - Queued
+- `PROCESSING` - Processing
+- `PROCESSED` - Processed
+- `FAILED` - Failed",
             "enum": [
               "QUEUED",
               "PROCESSING",
@@ -1794,14 +1794,14 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ProviderEnum": {
-            "docs": "* `ANTHROPIC` - Anthropic
-* `COHERE` - Cohere
-* `GOOGLE` - Google
-* `HOSTED` - Hosted
-* `MOSAICML` - MosaicML
-* `MYSTIC` - Mystic
-* `OPENAI` - OpenAI
-* `PYQ` - Pyq",
+            "docs": "- `ANTHROPIC` - Anthropic
+- `COHERE` - Cohere
+- `GOOGLE` - Google
+- `HOSTED` - Hosted
+- `MOSAICML` - MosaicML
+- `MYSTIC` - Mystic
+- `OPENAI` - OpenAI
+- `PYQ` - Pyq",
             "enum": [
               "ANTHROPIC",
               "COHERE",
@@ -2077,8 +2077,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "ScenarioInputTypeEnum": {
-            "docs": "* `TEXT` - Text
-* `CHAT_HISTORY` - Chat History",
+            "docs": "- `TEXT` - Text
+- `CHAT_HISTORY` - Chat History",
             "enum": [
               "TEXT",
               "CHAT_HISTORY",
@@ -2272,22 +2272,22 @@ Used to submit feedback regarding the quality of previously generated completion
               "processing_failure_reason": {
                 "docs": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
 
-* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
+- `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
                 "type": "optional<ProcessingFailureReasonEnum>",
               },
               "processing_state": {
                 "docs": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
 
-* `QUEUED` - Queued
-* `PROCESSING` - Processing
-* `PROCESSED` - Processed
-* `FAILED` - Failed",
+- `QUEUED` - Queued
+- `PROCESSING` - Processing
+- `PROCESSED` - Processed
+- `FAILED` - Failed",
                 "type": "optional<ProcessingStateEnum>",
               },
               "status": {
                 "docs": "The document's current status.
 
-* `ACTIVE` - Active",
+- `ACTIVE` - Active",
                 "type": "optional<SlimDocumentStatusEnum>",
               },
             },
@@ -2296,7 +2296,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "SlimDocumentStatusEnum": {
-            "docs": "* `ACTIVE` - Active",
+            "docs": "- `ACTIVE` - Active",
             "type": "literal<"ACTIVE">",
           },
           "SubmitCompletionActualRequest": {
@@ -2500,8 +2500,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "WorkflowExecutionEventErrorCode": {
-            "docs": "* `WORKFLOW_INITIALIZATION` - WORKFLOW_INITIALIZATION
-* `NODE_EXECUTION` - NODE_EXECUTION",
+            "docs": "- `WORKFLOW_INITIALIZATION` - WORKFLOW_INITIALIZATION
+- `NODE_EXECUTION` - NODE_EXECUTION",
             "enum": [
               "WORKFLOW_INITIALIZATION",
               "NODE_EXECUTION",
@@ -2569,10 +2569,10 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "WorkflowNodeResultEventState": {
-            "docs": "* `INITIATED` - INITIATED
-* `STREAMING` - STREAMING
-* `FULFILLED` - FULFILLED
-* `REJECTED` - REJECTED",
+            "docs": "- `INITIATED` - INITIATED
+- `STREAMING` - STREAMING
+- `FULFILLED` - FULFILLED
+- `REJECTED` - REJECTED",
             "enum": [
               "INITIATED",
               "STREAMING",
@@ -4559,11 +4559,9 @@ types:
           "endpoints": {
             "retrieve": {
               "auth": true,
-              "docs": "
-<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+              "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
-Used to retrieve a deployment given its ID or name.
-",
+Used to retrieve a deployment given its ID or name.",
               "examples": [
                 {
                   "path-parameters": {
@@ -4797,9 +4795,9 @@ Creates a new document index.",
                     "environment": {
                       "docs": "The environment this document index is used in
 
-* `DEVELOPMENT` - Development
-* `STAGING` - Staging
-* `PRODUCTION` - Production",
+- `DEVELOPMENT` - Development
+- `STAGING` - Staging
+- `PRODUCTION` - Production",
                       "type": "optional<root.EnvironmentEnum>",
                     },
                     "indexing_config": {
@@ -4829,8 +4827,8 @@ Creates a new document index.",
                     "status": {
                       "docs": "The current status of the document index
 
-* `ACTIVE` - Active
-* `ARCHIVED` - Archived",
+- `ACTIVE` - Active
+- `ARCHIVED` - Archived",
                       "type": "optional<root.DocumentIndexStatus>",
                     },
                   },
@@ -5011,11 +5009,9 @@ service:
           "endpoints": {
             "list": {
               "auth": true,
-              "docs": "
-<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+              "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
-Used to list documents. Optionally filter on supported fields.
-",
+Used to list documents. Optionally filter on supported fields.",
               "examples": [
                 {
                   "response": {
@@ -5367,11 +5363,9 @@ Compiles the prompt backing the model version using the provided input values.",
             },
             "retrieve": {
               "auth": true,
-              "docs": "
-<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+              "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
-Used to retrieve a model version given its ID.
-",
+Used to retrieve a model version given its ID.",
               "examples": [
                 {
                   "path-parameters": {
@@ -5685,7 +5679,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                       },
                     },
                     "parameters": {
-                      "docs": "The initial model parameters to use for  this prompt",
+                      "docs": "The initial model parameters to use for this prompt",
                       "type": "root.RegisterPromptModelParametersRequest",
                     },
                     "prompt": {
@@ -5695,14 +5689,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "provider": {
                       "docs": "The initial LLM provider to use for this prompt
 
-* `ANTHROPIC` - Anthropic
-* `COHERE` - Cohere
-* `GOOGLE` - Google
-* `HOSTED` - Hosted
-* `MOSAICML` - MosaicML
-* `MYSTIC` - Mystic
-* `OPENAI` - OpenAI
-* `PYQ` - Pyq",
+- `ANTHROPIC` - Anthropic
+- `COHERE` - Cohere
+- `GOOGLE` - Google
+- `HOSTED` - Hosted
+- `MOSAICML` - MosaicML
+- `MYSTIC` - Mystic
+- `OPENAI` - OpenAI
+- `PYQ` - Pyq",
                       "type": "root.ProviderEnum",
                     },
                   },

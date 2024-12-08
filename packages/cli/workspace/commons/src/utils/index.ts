@@ -4,3 +4,4 @@ export { getAllPackageMarkers } from "./getAllPackageMarkers";
 export { getDefinitionFile } from "./getDefinitionFile";
 export { visitAllDefinitionFiles } from "./visitAllDefinitionFiles";
 export { visitAllPackageMarkers } from "./visitAllPackageMarkers";
+export { formatAllDocs } from "./formatAllDocs";

@@ -769,8 +769,7 @@ errors:
                   },
                   "sort": {
                     "docs": "Sort string to use when ordering access groups
-Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
-",
+Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)",
                     "type": "optional<AccessGroupsListRequestSort>",
                   },
                 },
@@ -1009,8 +1008,7 @@ service:
             "create": {
               "auth": true,
               "display-name": "Create Asset Metadata",
-              "docs": "Create a new asset entry.  </br></br> This endpoint generates a response with the following information: `uploadUrl` and `uploadDetails`.  You can use these two properties to [upload the file to Amazon s3 by making a POST](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html) request to the `uploadUrl` with the `uploadDetails` object as your header information in the request. </br></br>  Required scope | `assets:write`
-",
+              "docs": "Create a new asset entry. </br></br> This endpoint generates a response with the following information: `uploadUrl` and `uploadDetails`. You can use these two properties to [upload the file to Amazon s3 by making a POST](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html) request to the `uploadUrl` with the `uploadDetails` object as your header information in the request. </br></br> Required scope | `assets:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -3746,8 +3744,7 @@ service:
             "create": {
               "auth": true,
               "display-name": "Create Collection Field",
-              "docs": "Create a custom field in a collection.  </br></br> Slugs must be all lowercase letters without spaces. If you pass a string with uppercase letters and/or spaces to the "Slug" property, Webflow will convert the slug to lowercase and replace spaces with "-." </br></br> Only some field types can be created through the API.  This endpoint does not currently support bulk creation.  </br></br>  Required scope | `cms:write`
-",
+              "docs": "Create a custom field in a collection. </br></br> Slugs must be all lowercase letters without spaces. If you pass a string with uppercase letters and/or spaces to the "Slug" property, Webflow will convert the slug to lowercase and replace spaces with "-." </br></br> Only some field types can be created through the API. This endpoint does not currently support bulk creation. </br></br> Required scope | `cms:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -3826,7 +3823,7 @@ service:
             "update": {
               "auth": true,
               "display-name": "Update Collection Field",
-              "docs": "Update a custom field in a collection.  </br></br> Required scope | `cms:write`",
+              "docs": "Update a custom field in a collection. </br></br> Required scope | `cms:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5284,8 +5281,7 @@ service:
             },
           },
           "ItemsCreateItemForMultipleLocalesResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleIds": {
@@ -5361,8 +5357,7 @@ service:
             },
           },
           "ItemsCreateItemLiveResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -5438,8 +5433,7 @@ service:
             },
           },
           "ItemsCreateItemResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -5497,8 +5491,7 @@ service:
             },
           },
           "ItemsGetItemLiveResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -5556,8 +5549,7 @@ service:
             },
           },
           "ItemsGetItemResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -5648,8 +5640,7 @@ service:
             },
           },
           "ItemsListItemsLiveResponseItemsItem": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "cmsLocaleId": {
@@ -5763,8 +5754,7 @@ service:
             },
           },
           "ItemsListItemsResponseItemsItem": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "cmsLocaleId": {
@@ -5874,8 +5864,7 @@ service:
             },
           },
           "ItemsUpdateItemLiveResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -5951,8 +5940,7 @@ service:
             },
           },
           "ItemsUpdateItemResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -7358,8 +7346,7 @@ service:
               "display-name": "Get Ecommerce Settings",
               "docs": "Retrieve ecommerce settings for a site.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -9088,8 +9075,7 @@ webhooks:
               "display-name": "List Inventory",
               "docs": "List the current inventory levels for a particular SKU item.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -9140,8 +9126,7 @@ Required scope | `ecommerce:read`
               "display-name": "Update Item Inventory",
               "docs": "Updates the current inventory levels for a particular SKU item. Updates may be given in one or two methods, absolutely or incrementally. Absolute updates are done by setting `quantity` directly. Incremental updates are by specifying the inventory delta in `updateQuantity` which is then added to the `quantity` stored on the server.
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -9547,8 +9532,7 @@ webhooks:
       "contents": {
         "types": {
           "CollectionItemChangedPayload": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -9606,8 +9590,7 @@ webhooks:
             },
           },
           "CollectionItemCreatedPayload": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
@@ -9774,8 +9757,7 @@ webhooks:
             "headers": {},
             "method": "POST",
             "payload": {
-              "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+              "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
               "type": "CollectionItemChangedPayload",
             },
           },
@@ -9803,8 +9785,7 @@ webhooks:
             "headers": {},
             "method": "POST",
             "payload": {
-              "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+              "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
               "type": "CollectionItemCreatedPayload",
             },
           },
@@ -10094,8 +10075,7 @@ webhooks:
               "display-name": "Get Order",
               "docs": "Retrieve a single product by its id. All of its SKUs will also be retrieved.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -10358,8 +10338,7 @@ Required scope | `ecommerce:read`
               "display-name": "List Orders",
               "docs": "List all orders created for a given site.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -10812,9 +10791,7 @@ Required scope | `ecommerce:read`
               "docs": "This API will reverse a Stripe charge and refund an order back to a
 customer. It will also set the order's status to `refunded`.
 
-
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -11093,8 +11070,7 @@ Required scope | `ecommerce:write`
               "display-name": "Update Order",
               "docs": "This API lets you update the fields, `comment`, `shippingProvider`, and/or `shippingTracking` for a given order. All three fields can be updated simultaneously or independently.
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -11385,8 +11361,7 @@ Required scope | `ecommerce:write`
               "display-name": "Fulfill Order",
               "docs": "Updates an order's status to fulfilled
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -11666,8 +11641,7 @@ Required scope | `ecommerce:write`
               "display-name": "Unfulfill Order",
               "docs": "Updates an order's status to unfulfilled
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -11956,8 +11930,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -11969,18 +11942,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<EcommNewOrderPayloadCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<EcommNewOrderPayloadDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -11988,23 +11958,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<EcommNewOrderPayloadDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<EcommNewOrderPayloadMetadata>",
@@ -12017,13 +11983,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<EcommNewOrderPayloadPaypalDetails>",
@@ -12044,13 +12008,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<EcommNewOrderPayloadShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -12063,13 +12025,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<EcommNewOrderPayloadStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<EcommNewOrderPayloadStripeCard>",
               },
               "stripeDetails": {
@@ -12281,8 +12241,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommNewOrderPayloadDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -12651,8 +12610,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommNewOrderPayloadStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -12669,8 +12627,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommNewOrderPayloadStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -12922,8 +12879,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -12935,18 +12891,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<EcommOrderChangedPayloadCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<EcommOrderChangedPayloadDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -12954,23 +12907,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<EcommOrderChangedPayloadDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<EcommOrderChangedPayloadMetadata>",
@@ -12983,13 +12932,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<EcommOrderChangedPayloadPaypalDetails>",
@@ -13010,13 +12957,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<EcommOrderChangedPayloadShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -13029,13 +12974,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<EcommOrderChangedPayloadStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<EcommOrderChangedPayloadStripeCard>",
               },
               "stripeDetails": {
@@ -13247,8 +13190,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommOrderChangedPayloadDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -13617,8 +13559,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommOrderChangedPayloadStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -13635,8 +13576,7 @@ Required scope | `ecommerce:write`
             },
           },
           "EcommOrderChangedPayloadStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -13888,8 +13828,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -13901,18 +13840,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersGetResponseCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersGetResponseDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -13920,23 +13856,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersGetResponseDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersGetResponseMetadata>",
@@ -13949,13 +13881,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersGetResponsePaypalDetails>",
@@ -13976,13 +13906,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersGetResponseShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -13995,13 +13923,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersGetResponseStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersGetResponseStripeCard>",
               },
               "stripeDetails": {
@@ -14213,8 +14139,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersGetResponseDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -14583,8 +14508,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersGetResponseStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -14601,8 +14525,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersGetResponseStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -14887,8 +14810,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -14900,18 +14822,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersListResponseOrdersItemCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersListResponseOrdersItemDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -14919,23 +14838,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersListResponseOrdersItemDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersListResponseOrdersItemMetadata>",
@@ -14948,13 +14863,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersListResponseOrdersItemPaypalDetails>",
@@ -14975,13 +14888,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersListResponseOrdersItemShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -14994,13 +14905,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersListResponseOrdersItemStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersListResponseOrdersItemStripeCard>",
               },
               "stripeDetails": {
@@ -15212,8 +15121,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersListResponseOrdersItemDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -15582,8 +15490,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersListResponseOrdersItemStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -15600,8 +15507,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersListResponseOrdersItemStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -15885,8 +15791,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -15898,18 +15803,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersRefundResponseCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersRefundResponseDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -15917,23 +15819,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersRefundResponseDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersRefundResponseMetadata>",
@@ -15946,13 +15844,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersRefundResponsePaypalDetails>",
@@ -15973,13 +15869,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersRefundResponseShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -15992,13 +15886,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersRefundResponseStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersRefundResponseStripeCard>",
               },
               "stripeDetails": {
@@ -16210,8 +16102,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersRefundResponseDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -16580,8 +16471,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersRefundResponseStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -16598,8 +16488,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersRefundResponseStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -16851,8 +16740,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -16864,18 +16752,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateFulfillResponseCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersUpdateFulfillResponseDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -16883,23 +16768,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersUpdateFulfillResponseDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersUpdateFulfillResponseMetadata>",
@@ -16912,13 +16793,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersUpdateFulfillResponsePaypalDetails>",
@@ -16939,13 +16818,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateFulfillResponseShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -16958,13 +16835,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersUpdateFulfillResponseStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersUpdateFulfillResponseStripeCard>",
               },
               "stripeDetails": {
@@ -17176,8 +17051,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateFulfillResponseDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -17546,8 +17420,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateFulfillResponseStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -17564,8 +17437,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateFulfillResponseStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -17817,8 +17689,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -17830,18 +17701,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateResponseCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersUpdateResponseDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -17849,23 +17717,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersUpdateResponseDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersUpdateResponseMetadata>",
@@ -17878,13 +17742,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersUpdateResponsePaypalDetails>",
@@ -17905,13 +17767,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateResponseShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -17924,13 +17784,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersUpdateResponseStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersUpdateResponseStripeCard>",
               },
               "stripeDetails": {
@@ -18142,8 +18000,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateResponseDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -18512,8 +18369,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateResponseStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -18530,8 +18386,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateResponseStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -18783,8 +18638,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "customData": {
-                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.
-",
+                "docs": "An array of additional inputs for custom order data gathering. Each object in the array represents an input with a name, and a textInput, textArea, or checkbox value.",
                 "type": "optional<list<map<string, unknown>>>",
               },
               "customerInfo": {
@@ -18796,18 +18650,15 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateUnfulfillResponseCustomerPaid>",
               },
               "disputeLastStatus": {
-                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+                "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
                 "type": "optional<OrdersUpdateUnfulfillResponseDisputeLastStatus>",
               },
               "disputeUpdatedOn": {
-                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.
-",
+                "docs": "If an Order has been disputed by the customer, this key will be set to the ISO8601 timestamp of the last update received. If the Order is not disputed, the key will be null.",
                 "type": "optional<datetime>",
               },
               "disputedOn": {
-                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'disputed', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "downloadFiles": {
@@ -18815,23 +18666,19 @@ Required scope | `ecommerce:write`
                 "type": "optional<list<OrdersUpdateUnfulfillResponseDownloadFilesItem>>",
               },
               "fulfilledOn": {
-                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.
-",
+                "docs": "When an Order is marked as 'fulfilled', this field represents the timestamp of the fulfillment in ISO8601 format. Otherwise, it is null.",
                 "type": "optional<datetime>",
               },
               "hasDownloads": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that are downloadable.",
                 "type": "optional<boolean>",
               },
               "isCustomerDeleted": {
-                "docs": "A boolean indicating whether the customer has been deleted from the site.
-",
+                "docs": "A boolean indicating whether the customer has been deleted from the site.",
                 "type": "optional<boolean>",
               },
               "isShippingRequired": {
-                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.
-",
+                "docs": "A boolean indicating whether the order contains one or more purchased items that require shipping.",
                 "type": "optional<boolean>",
               },
               "metadata": "optional<OrdersUpdateUnfulfillResponseMetadata>",
@@ -18844,13 +18691,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
-                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
-",
+                "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.",
                 "type": "optional<string>",
               },
               "paymentProcessor": {
-                "docs": "A string indicating the payment processor used for this order.
-",
+                "docs": "A string indicating the payment processor used for this order.",
                 "type": "optional<string>",
               },
               "paypalDetails": "optional<OrdersUpdateUnfulfillResponsePaypalDetails>",
@@ -18871,13 +18716,11 @@ Required scope | `ecommerce:write`
                 "type": "optional<OrdersUpdateUnfulfillResponseShippingAddress>",
               },
               "shippingProvider": {
-                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping provider used (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTracking": {
-                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).
-",
+                "docs": "A string editable by the API user to note the shipping tracking number for the order (not used by Webflow).",
                 "type": "optional<string>",
               },
               "shippingTrackingURL": {
@@ -18890,13 +18733,11 @@ Required scope | `ecommerce:write`
                 },
               },
               "status": {
-                "docs": "The status of the Order
-",
+                "docs": "The status of the Order",
                 "type": "optional<OrdersUpdateUnfulfillResponseStatus>",
               },
               "stripeCard": {
-                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+                "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
                 "type": "optional<OrdersUpdateUnfulfillResponseStripeCard>",
               },
               "stripeDetails": {
@@ -19108,8 +18949,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateUnfulfillResponseDisputeLastStatus": {
-            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
-",
+            "docs": "If an order was disputed by the customer, then this key will be set with the [dispute's status](https://stripe.com/docs/api#dispute_object-status).",
             "enum": [
               "warning_needs_response",
               "warning_under_review",
@@ -19478,8 +19318,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateUnfulfillResponseStatus": {
-            "docs": "The status of the Order
-",
+            "docs": "The status of the Order",
             "enum": [
               "pending",
               "unfulfilled",
@@ -19496,8 +19335,7 @@ Required scope | `ecommerce:write`
             },
           },
           "OrdersUpdateUnfulfillResponseStripeCard": {
-            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.
-",
+            "docs": "Details on the card used to fulfill this order, if this order was finalized with Stripe.",
             "inline": true,
             "properties": {
               "brand": {
@@ -28281,10 +28119,10 @@ webhooks:
               "auth": true,
               "display-name": "Update Page Content",
               "docs": "This endpoint allows for updating static content on a static page within a secondary locale. It is designed specifically for localized pages and can handle up to 1000 nodes per request.
+
 <blockquote class="callout callout_info"><p><strong>Note:</strong>This endpoint is specifically for localized pages. Ensure that the locale specified is a valid secondary locale for the site.</p></blockquote>
 
-Required scope | `pages:write`
-",
+Required scope | `pages:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -28457,8 +28295,7 @@ Required scope | `pages:write`
             },
           },
           "PagesGetContentResponse": {
-            "docs": "The DOM (Document Object Model) schema represents the content structure of a web page. It captures various content nodes, such as text and images, along with their associated attributes. Each node has a unique identifier and can be of different types like text or image. The schema also provides pagination details for scenarios where the content nodes are too many to be fetched in a single request.
-",
+            "docs": "The DOM (Document Object Model) schema represents the content structure of a web page. It captures various content nodes, such as text and images, along with their associated attributes. Each node has a unique identifier and can be of different types like text or image. The schema also provides pagination details for scenarios where the content nodes are too many to be fetched in a single request.",
             "inline": undefined,
             "properties": {
               "nodes": "optional<list<PagesGetContentResponseNodesItem>>",
@@ -28476,8 +28313,7 @@ Required scope | `pages:write`
             },
           },
           "PagesGetContentResponseNodesItem": {
-            "docs": "A generic representation of a content element within the Document Object Model (DOM). Each node has a unique identifier and a specific type that determines its content structure and attributes.
-",
+            "docs": "A generic representation of a content element within the Document Object Model (DOM). Each node has a unique identifier and a specific type that determines its content structure and attributes.",
             "inline": true,
             "properties": {
               "attributes": {
@@ -28489,13 +28325,11 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "image": {
-                "docs": "Represents an image within the DOM. It contains details about the image, such as its alternative text (alt) for accessibility and an asset identifier for fetching the actual image resource. Additional attributes can be associated with the image for styling or other purposes.
-",
+                "docs": "Represents an image within the DOM. It contains details about the image, such as its alternative text (alt) for accessibility and an asset identifier for fetching the actual image resource. Additional attributes can be associated with the image for styling or other purposes.",
                 "type": "optional<PagesGetContentResponseNodesItemImage>",
               },
               "text": {
-                "docs": "Represents textual content within the DOM. It contains both the raw text and its HTML representation, allowing for flexibility in rendering and processing. Additional attributes can be associated with the text for styling or other purposes.
-",
+                "docs": "Represents textual content within the DOM. It contains both the raw text and its HTML representation, allowing for flexibility in rendering and processing. Additional attributes can be associated with the text for styling or other purposes.",
                 "type": "optional<PagesGetContentResponseNodesItemText>",
               },
               "type": "optional<PagesGetContentResponseNodesItemType>",
@@ -28505,8 +28339,7 @@ Required scope | `pages:write`
             },
           },
           "PagesGetContentResponseNodesItemImage": {
-            "docs": "Represents an image within the DOM. It contains details about the image, such as its alternative text (alt) for accessibility and an asset identifier for fetching the actual image resource. Additional attributes can be associated with the image for styling or other purposes.
-",
+            "docs": "Represents an image within the DOM. It contains details about the image, such as its alternative text (alt) for accessibility and an asset identifier for fetching the actual image resource. Additional attributes can be associated with the image for styling or other purposes.",
             "inline": true,
             "properties": {
               "alt": "optional<string>",
@@ -28517,8 +28350,7 @@ Required scope | `pages:write`
             },
           },
           "PagesGetContentResponseNodesItemText": {
-            "docs": "Represents textual content within the DOM. It contains both the raw text and its HTML representation, allowing for flexibility in rendering and processing. Additional attributes can be associated with the text for styling or other purposes.
-",
+            "docs": "Represents textual content within the DOM. It contains both the raw text and its HTML representation, allowing for flexibility in rendering and processing. Additional attributes can be associated with the text for styling or other purposes.",
             "inline": true,
             "properties": {
               "html": "optional<string>",
@@ -30095,8 +29927,7 @@ webhooks:
             "delete-custom-code": {
               "auth": true,
               "display-name": "Delete Custom Code",
-              "docs": "Delete the custom code block that an app has created for a page </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`
-",
+              "docs": "Delete the custom code block that an app has created for a page </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -30127,8 +29958,7 @@ webhooks:
             "get-custom-code": {
               "auth": true,
               "display-name": "Get Custom Code",
-              "docs": "Get all registered scripts that have been applied to a specific Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`
-",
+              "docs": "Get all registered scripts that have been applied to a specific Page. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -30179,8 +30009,7 @@ webhooks:
             "upsert-custom-code": {
               "auth": true,
               "display-name": "Add/Update Custom Code",
-              "docs": "Add a registered script to a Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`
-",
+              "docs": "Add a registered script to a Page. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -30313,7 +30142,7 @@ webhooks:
                 "type": "ScriptsGetCustomCodeResponseScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -30350,7 +30179,7 @@ webhooks:
                 "type": "ScriptsUpsertCustomCodeRequestScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -30408,7 +30237,7 @@ webhooks:
                 "type": "ScriptsUpsertCustomCodeResponseScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -30877,8 +30706,7 @@ Required scope | `ecommerce:write`",
 
 Creating additional SKUs will set the product type to `Advanced` for the product associated with the SKUs. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -30972,8 +30800,7 @@ Required scope | `ecommerce:write`
               "display-name": "Get Product and SKUs",
               "docs": "Retrieve a single product by its id. All of its SKUs will also be retrieved.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -31107,8 +30934,7 @@ Required scope | `ecommerce:read`
               "display-name": "List Products & SKUs",
               "docs": "Retrieve all products for a site. Use `limit` and `offset` to page through all products with subsequent requests. All SKUs for each product will also be fetched and returned. The `limit`, `offset` and `total` values represent Products only and do not include any SKUs.
 
-Required scope | `ecommerce:read`
-",
+Required scope | `ecommerce:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -31256,8 +31082,7 @@ Required scope | `ecommerce:read`
               "display-name": "Update Product",
               "docs": "Updating an existing Product will set the product type to `Advanced`. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -31393,8 +31218,7 @@ Required scope | `ecommerce:write`
               "display-name": "Update SKU",
               "docs": "Updating an existing SKU will set the product type to `Advanced` for the product associated with the SKU. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.
 
-Required scope | `ecommerce:write`
-",
+Required scope | `ecommerce:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -31507,7 +31331,7 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsCreateRequestProductFieldData>",
               },
             },
@@ -31516,7 +31340,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsCreateRequestProductFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -31802,8 +31626,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -31962,7 +31785,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<datetime>",
               },
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsCreateResponseProductFieldData>",
               },
               "id": {
@@ -31993,7 +31816,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsCreateResponseProductFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -32268,8 +32091,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -32465,8 +32287,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -32661,8 +32482,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -32821,7 +32641,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<datetime>",
               },
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsGetResponseProductFieldData>",
               },
               "id": {
@@ -32852,7 +32672,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsGetResponseProductFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -33127,8 +32947,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -33304,7 +33123,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<datetime>",
               },
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsListResponseItemsItemProductFieldData>",
               },
               "id": {
@@ -33335,7 +33154,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsListResponseItemsItemProductFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -33610,8 +33429,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -33774,7 +33592,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<datetime>",
               },
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsUpdateRequestProductFieldData>",
               },
               "id": {
@@ -33805,7 +33623,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsUpdateRequestProductFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -34091,8 +33909,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -34234,7 +34051,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<datetime>",
               },
               "fieldData": {
-                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+                "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
                 "type": "optional<ProductsUpdateResponseFieldData>",
               },
               "id": {
@@ -34265,7 +34082,7 @@ Required scope | `ecommerce:write`
             },
           },
           "ProductsUpdateResponseFieldData": {
-            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
+            "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description) and custom fields tailored to the product setup.",
             "inline": true,
             "properties": {
               "categories": {
@@ -34551,8 +34368,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -34737,8 +34553,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "sku-values": {
-                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
-",
+                "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.",
                 "type": "optional<map<string, string>>",
               },
               "slug": {
@@ -37905,8 +37720,7 @@ service:
             "list": {
               "auth": true,
               "display-name": "Get Registered Scripts",
-              "docs": "List of scripts registered to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
-",
+              "docs": "List of scripts registered to a Site. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. Additionally, Scripts can be remotely hosted, or registered as inline snippets. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -37975,8 +37789,7 @@ service:
             "register-hosted": {
               "auth": true,
               "display-name": "Register Script - Hosted",
-              "docs": "Add a script to a Site's Custom Code registry. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets.   <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     </br></br>  Required scope | `custom_code:write`
-",
+              "docs": "Add a script to a Site's Custom Code registry. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. Additionally, Scripts can be remotely hosted, or registered as inline snippets. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> </br></br> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -38062,8 +37875,7 @@ service:
             "register-inline": {
               "auth": true,
               "display-name": "Register Script - Inline",
-              "docs": "Add a script to a Site's Custom Code registry. Inline scripts can be between 1 and 2000 characters. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  </br></br>  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
-",
+              "docs": "Add a script to a Site's Custom Code registry. Inline scripts can be between 1 and 2000 characters. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. </br></br> <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -38641,7 +38453,7 @@ service:
             "get": {
               "auth": true,
               "display-name": "Get Site",
-              "docs": "Get a site by site id </br></br>  Required scope | `sites:read`",
+              "docs": "Get a site by site id </br></br> Required scope | `sites:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -38723,7 +38535,7 @@ service:
             "get-custom-domain": {
               "auth": true,
               "display-name": "Get Custom Domains",
-              "docs": "Get a list of all custom domains related to site. </br></br>  Required scope | `sites:read`",
+              "docs": "Get a list of all custom domains related to site. </br></br> Required scope | `sites:read`",
               "errors": [
                 "root.UnauthorizedError",
                 "root.ForbiddenError",
@@ -38929,7 +38741,7 @@ service:
             "publish": {
               "auth": true,
               "display-name": "Publish site",
-              "docs": "Publish a site to one more more domains. </br></br>  Required scope | `sites:write` <blockquote class="callout callout_info" theme="📘"><h2 class="callout-heading"><span class="callout-icon">📘</span><p>Endpoint-specific rate limit</p></h2><p>This endpoint has a limit of one successful publish queue per minute.</p></blockquote>",
+              "docs": "Publish a site to one more more domains. </br></br> Required scope | `sites:write` <blockquote class="callout callout_info" theme="📘"><h2 class="callout-heading"><span class="callout-icon">📘</span><p>Endpoint-specific rate limit</p></h2><p>This endpoint has a limit of one successful publish queue per minute.</p></blockquote>",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -40114,7 +39926,7 @@ webhooks:
             "list": {
               "auth": true,
               "display-name": "Get Site Activity Logs",
-              "docs": "Retrieve Activity Logs for a specific Site. Requires Site to be on an Enterprise plan. </br></br>  Required scope | `site_activity:read`",
+              "docs": "Retrieve Activity Logs for a specific Site. Requires Site to be on an Enterprise plan. </br></br> Required scope | `site_activity:read`",
               "errors": [
                 "root.ForbiddenError",
                 "root.NotFoundError",
@@ -40400,8 +40212,7 @@ service:
             "delete-custom-code": {
               "auth": true,
               "display-name": "Delete Custom Code",
-              "docs": "Delete the custom code block that an app created for a Site </br></br> <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
-",
+              "docs": "Delete the custom code block that an app created for a Site </br></br> <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -40432,8 +40243,7 @@ service:
             "get-custom-code": {
               "auth": true,
               "display-name": "Get Custom Code",
-              "docs": "Get all registered scripts that have been applied to a specific Site.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
-",
+              "docs": "Get all registered scripts that have been applied to a specific Site. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -40492,8 +40302,7 @@ service:
             "list-custom-code-blocks": {
               "auth": true,
               "display-name": "List Custom Code Blocks",
-              "docs": "Get all instances of Custom Code applied to a Site or Pages.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
-",
+              "docs": "Get all instances of Custom Code applied to a Site or Pages. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -40593,8 +40402,7 @@ service:
             "upsert-custom-code": {
               "auth": true,
               "display-name": "Add/Update Custom Code",
-              "docs": "Add a registered script to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
-",
+              "docs": "Add a registered script to a Site. </br></br> In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -40727,7 +40535,7 @@ service:
                 "type": "ScriptsGetCustomCodeResponseScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -40811,7 +40619,7 @@ service:
                 "type": "ScriptsListCustomCodeBlocksResponseBlocksItemScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -40879,7 +40687,7 @@ service:
                 "type": "ScriptsUpsertCustomCodeRequestScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -40937,7 +40745,7 @@ service:
                 "type": "ScriptsUpsertCustomCodeResponseScriptsItemLocation",
               },
               "version": {
-                "docs": "Semantic Version String for the registered script *e.g. 0.0.1*",
+                "docs": "Semantic Version String for the registered script _e.g. 0.0.1_",
                 "type": "string",
               },
             },
@@ -41433,8 +41241,7 @@ service:
             "introspect": {
               "auth": true,
               "display-name": "Get Authorization Info",
-              "docs": "Information about the authorization token <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>    
-",
+              "docs": "Information about the authorization token <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>",
               "errors": [
                 "root.UnauthorizedError",
               ],
@@ -41908,8 +41715,7 @@ service:
                 "body": {
                   "properties": {
                     "accessGroups": {
-                      "docs": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.
-",
+                      "docs": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.",
                       "type": "optional<list<string>>",
                     },
                     "email": {
@@ -42067,8 +41873,7 @@ service:
 
 Example(`CreatedOn`, `Email`, `Status`, `LastLogin`, `UpdatedOn`).
 
-Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
-",
+Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)",
                     "type": "optional<UsersListRequestSort>",
                   },
                 },
@@ -42085,8 +41890,8 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "auth": true,
               "display-name": "Update User",
               "docs": "Update a User by ID <br><br> Required scope | `users:write`
-<aside class="notice">The <code>email</code> and <code>password</code> fields cannot be updated using this endpoint</aside>
-",
+
+<aside class="notice">The <code>email</code> and <code>password</code> fields cannot be updated using this endpoint</aside>",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -42158,8 +41963,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "body": {
                   "properties": {
                     "accessGroups": {
-                      "docs": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.
-",
+                      "docs": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.",
                       "type": "optional<list<string>>",
                     },
                     "data": "optional<UsersUpdateRequestData>",
@@ -42190,8 +41994,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": undefined,
             "properties": {
               "payload": {
-                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
                 "type": "optional<UserAccountAddedPayloadPayload>",
               },
               "triggerType": {
@@ -42204,8 +42007,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UserAccountAddedPayloadPayload": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "accessGroups": {
@@ -42259,9 +42061,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UserAccountAddedPayloadPayloadAccessGroupsItemType>",
               },
             },
@@ -42271,9 +42073,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UserAccountAddedPayloadPayloadAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -42297,13 +42099,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -42311,13 +42111,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -42352,8 +42150,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": undefined,
             "properties": {
               "payload": {
-                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
                 "type": "optional<UserAccountDeletedPayloadPayload>",
               },
               "triggerType": {
@@ -42366,8 +42163,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UserAccountDeletedPayloadPayload": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "accessGroups": {
@@ -42421,9 +42217,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UserAccountDeletedPayloadPayloadAccessGroupsItemType>",
               },
             },
@@ -42433,9 +42229,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UserAccountDeletedPayloadPayloadAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -42459,13 +42255,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -42473,13 +42267,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -42514,8 +42306,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": undefined,
             "properties": {
               "payload": {
-                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+                "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
                 "type": "optional<UserAccountUpdatedPayloadPayload>",
               },
               "triggerType": {
@@ -42528,8 +42319,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UserAccountUpdatedPayloadPayload": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "accessGroups": {
@@ -42583,9 +42373,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UserAccountUpdatedPayloadPayloadAccessGroupsItemType>",
               },
             },
@@ -42595,9 +42385,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UserAccountUpdatedPayloadPayloadAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -42621,13 +42411,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -42635,13 +42423,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -42672,8 +42458,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UsersGetResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "accessGroups": {
@@ -42727,9 +42512,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UsersGetResponseAccessGroupsItemType>",
               },
             },
@@ -42739,9 +42524,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UsersGetResponseAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -42765,13 +42550,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -42779,13 +42562,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -42805,8 +42586,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UsersInviteResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "accessGroups": {
@@ -42860,9 +42640,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UsersInviteResponseAccessGroupsItemType>",
               },
             },
@@ -42872,9 +42652,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UsersInviteResponseAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -42898,13 +42678,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -42912,13 +42690,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -43026,8 +42802,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UsersListResponseUsersItem": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": true,
             "properties": {
               "accessGroups": {
@@ -43081,9 +42856,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UsersListResponseUsersItemAccessGroupsItemType>",
               },
             },
@@ -43093,9 +42868,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UsersListResponseUsersItemAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -43119,13 +42894,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -43133,13 +42906,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -43163,18 +42934,15 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -43183,8 +42951,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             },
           },
           "UsersUpdateResponse": {
-            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items
-",
+            "docs": "The fields that define the schema for a given Item are based on the Collection that Item belongs to. Beyond the user defined fields, there are a handful of additional fields that are automatically created for all items",
             "inline": undefined,
             "properties": {
               "accessGroups": {
@@ -43238,9 +43005,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "type": {
                 "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
                 "type": "optional<UsersUpdateResponseAccessGroupsItemType>",
               },
             },
@@ -43250,9 +43017,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           },
           "UsersUpdateResponseAccessGroupsItemType": {
             "docs": "The type of access group based on how it was assigned to the user.
-* `admin` - Assigned to the user via API or in the designer
-* `ecommerce` - Assigned to the user via an ecommerce purchase
-",
+
+- `admin` - Assigned to the user via API or in the designer
+- `ecommerce` - Assigned to the user via an ecommerce purchase",
             "enum": [
               "admin",
               "ecommerce",
@@ -43276,13 +43043,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "inline": true,
             "properties": {
               "accept-communications": {
-                "docs": "Boolean indicating if the user has accepted to receive communications
-",
+                "docs": "Boolean indicating if the user has accepted to receive communications",
                 "type": "optional<boolean>",
               },
               "accept-privacy": {
-                "docs": "Boolean indicating if the user has accepted the privacy policy
-",
+                "docs": "Boolean indicating if the user has accepted the privacy policy",
                 "type": "optional<boolean>",
               },
               "additionalProperties": {
@@ -43290,13 +43055,11 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<string>",
               },
               "email": {
-                "docs": "The email address of the user
-",
+                "docs": "The email address of the user",
                 "type": "optional<string>",
               },
               "name": {
-                "docs": "The name of the user
-",
+                "docs": "The name of the user",
                 "type": "optional<string>",
               },
             },
@@ -44645,8 +44408,7 @@ webhooks:
             "create": {
               "auth": true,
               "display-name": "Create Webhook",
-              "docs": "Create a new Webhook, to be notified when Webflow resources change. Limit of 75 registrations per `triggerType`, per site. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `sites:write`
-",
+              "docs": "Create a new Webhook, to be notified when Webflow resources change. Limit of 75 registrations per `triggerType`, per site. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `sites:write`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -44689,26 +44451,25 @@ webhooks:
                 "body": {
                   "properties": {
                     "filter": {
-                      "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                      "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
                       "type": "optional<WebhooksCreateRequestFilter>",
                     },
                     "triggerType": {
-                      "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+                      "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
                       "type": "optional<WebhooksCreateRequestTriggerType>",
                     },
                     "url": {
@@ -44811,8 +44572,7 @@ webhooks:
             "list": {
               "auth": true,
               "display-name": "List Webhooks",
-              "docs": "List all App-created Webhooks registered for a given site </br></br> Required scope | `sites:read`
-",
+              "docs": "List all App-created Webhooks registered for a given site </br></br> Required scope | `sites:read`",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -44898,7 +44658,7 @@ webhooks:
         },
         "types": {
           "WebhooksCreateRequestFilter": {
-            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
             "inline": true,
             "properties": {
               "name": {
@@ -44911,22 +44671,21 @@ webhooks:
             },
           },
           "WebhooksCreateRequestTriggerType": {
-            "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+            "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
             "enum": [
               "form_submission",
               "site_publish",
@@ -44957,7 +44716,7 @@ webhooks:
                 "type": "optional<datetime>",
               },
               "filter": {
-                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
                 "type": "optional<WebhooksCreateResponseFilter>",
               },
               "id": {
@@ -44973,22 +44732,21 @@ webhooks:
                 "type": "optional<string>",
               },
               "triggerType": {
-                "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+                "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
                 "type": "optional<WebhooksCreateResponseTriggerType>",
               },
               "url": {
@@ -45005,7 +44763,7 @@ webhooks:
             },
           },
           "WebhooksCreateResponseFilter": {
-            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
             "inline": true,
             "properties": {
               "name": {
@@ -45018,22 +44776,21 @@ webhooks:
             },
           },
           "WebhooksCreateResponseTriggerType": {
-            "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+            "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
             "enum": [
               "form_submission",
               "site_publish",
@@ -45064,7 +44821,7 @@ webhooks:
                 "type": "optional<datetime>",
               },
               "filter": {
-                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
                 "type": "optional<WebhooksGetResponseFilter>",
               },
               "id": {
@@ -45080,22 +44837,21 @@ webhooks:
                 "type": "optional<string>",
               },
               "triggerType": {
-                "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+                "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
                 "type": "optional<WebhooksGetResponseTriggerType>",
               },
               "url": {
@@ -45112,7 +44868,7 @@ webhooks:
             },
           },
           "WebhooksGetResponseFilter": {
-            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
             "inline": true,
             "properties": {
               "name": {
@@ -45125,22 +44881,21 @@ webhooks:
             },
           },
           "WebhooksGetResponseTriggerType": {
-            "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+            "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
             "enum": [
               "form_submission",
               "site_publish",
@@ -45206,7 +44961,7 @@ webhooks:
                 "type": "optional<datetime>",
               },
               "filter": {
-                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
                 "type": "optional<WebhooksListResponseWebhooksItemFilter>",
               },
               "id": {
@@ -45222,22 +44977,21 @@ webhooks:
                 "type": "optional<string>",
               },
               "triggerType": {
-                "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+                "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
                 "type": "optional<WebhooksListResponseWebhooksItemTriggerType>",
               },
               "url": {
@@ -45254,7 +45008,7 @@ webhooks:
             },
           },
           "WebhooksListResponseWebhooksItemFilter": {
-            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+            "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for.",
             "inline": true,
             "properties": {
               "name": {
@@ -45267,22 +45021,21 @@ webhooks:
             },
           },
           "WebhooksListResponseWebhooksItemTriggerType": {
-            "docs": "* `form_submission` - Sends the [form_submission](#form_submission) event
-* `site_publish` - Sends a [site_publish](#site_publish) event
-* `page_created` - Send the [page_created](#page_created) event
-* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
-* `page_deleted` - Sends the [page_deleted](#page_deleted) event
-* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
-* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
-* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
-* `user_account_added` - Sends the [user_account_added](#user_account_added) event
-* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
-* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
-* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
-* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
-* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
-* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event
-",
+            "docs": "- `form_submission` - Sends the [form_submission](#form_submission) event
+- `site_publish` - Sends a [site_publish](#site_publish) event
+- `page_created` - Send the [page_created](#page_created) event
+- `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event
+- `page_deleted` - Sends the [page_deleted](#page_deleted) event
+- `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event
+- `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event
+- `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event
+- `user_account_added` - Sends the [user_account_added](#user_account_added) event
+- `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event
+- `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event
+- `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event
+- `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event
+- `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event
+- `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event",
             "enum": [
               "form_submission",
               "site_publish",

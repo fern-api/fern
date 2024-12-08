@@ -1885,11 +1885,11 @@
                 "type": "boolean",
               },
               "origin_port_loc_code": {
-                "docs": "One of `origin_port_us_cbp_port_code` or  `origin_port_loc_code` is required if `pickup_service` = `no`. Unique port reference code used by US CBP.",
+                "docs": "One of `origin_port_us_cbp_port_code` or `origin_port_loc_code` is required if `pickup_service` = `no`. Unique port reference code used by US CBP.",
                 "type": "optional<string>",
               },
               "origin_port_us_cbp_port_code": {
-                "docs": "One of `origin_port_us_cbp_port_code` or  `origin_port_loc_code` is required if `pickup_service` = `no`. Unique port reference code used by US Customs and Border Protection.",
+                "docs": "One of `origin_port_us_cbp_port_code` or `origin_port_loc_code` is required if `pickup_service` = `no`. Unique port reference code used by US Customs and Border Protection.",
                 "type": "optional<string>",
               },
               "product_descriptions": "list<CreateBookingHsCode>",
@@ -3042,8 +3042,7 @@
             },
           },
           "Metadata": {
-            "docs": "Set of custom key-values specific to the object. The keys are strings and values are arrays of strings. The set of valid keys is always the consignee's list of keys, even if call was made by a different party.
-",
+            "docs": "Set of custom key-values specific to the object. The keys are strings and values are arrays of strings. The set of valid keys is always the consignee's list of keys, even if call was made by a different party.",
             "type": "map<string, unknown>",
           },
           "MetadataCreate": {
@@ -4154,7 +4153,7 @@
                 "type": "optional<string>",
               },
               "containers": {
-                "docs": "An array of the containers associated with this event.  Array is empty for shipment-level events.",
+                "docs": "An array of the containers associated with this event. Array is empty for shipment-level events.",
                 "type": "optional<list<ShipmentContainer>>",
               },
               "exception": "optional<Exception>",
@@ -4399,7 +4398,7 @@
             },
           },
           "Terminal": {
-            "docs": "Name and address of a specific terminal within a port or airport.  Possibly null",
+            "docs": "Name and address of a specific terminal within a port or airport. Possibly null",
             "inline": undefined,
             "properties": {
               "_object": {
@@ -4408,7 +4407,7 @@
               },
               "address": "optional<Address>",
               "firms_code": {
-                "docs": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities;  available prior to shipment arrival at location tagged 'customs_entry'",
+                "docs": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities; available prior to shipment arrival at location tagged 'customs_entry'",
                 "type": "optional<string>",
               },
               "name": {
@@ -8500,8 +8499,7 @@ errors:
                     "type": "optional<string>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
-                    "docs": "Filters the list for bookings that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return bookings matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`
-",
+                    "docs": "Filters the list for bookings that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return bookings matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`",
                     "type": "optional<string>",
                   },
                   "f.name": "optional<string>",
@@ -9002,8 +9000,7 @@ errors:
             "show": {
               "auth": false,
               "display-name": "Retrieve a booking",
-              "docs": "Retrieves the details of a single booking.
-",
+              "docs": "Retrieves the details of a single booking.",
               "errors": [
                 "root.BadRequestError",
               ],
@@ -10581,11 +10578,11 @@ docs: Endpoints relating to Booking objects
                       "type": "optional<string>",
                     },
                     "new_origin_port_loc_code": {
-                      "docs": "At most one of `origin_port_us_cbp_port_code` or  `origin_port_loc_code` may be specified. UN code for the origin port.",
+                      "docs": "At most one of `origin_port_us_cbp_port_code` or `origin_port_loc_code` may be specified. UN code for the origin port.",
                       "type": "optional<string>",
                     },
                     "new_origin_port_us_cbp_port_code": {
-                      "docs": "At most one of `origin_port_us_cbp_port_code` or  `origin_port_loc_code` may be specified. Unique port reference code used by US Customs and Border Protection.",
+                      "docs": "At most one of `origin_port_us_cbp_port_code` or `origin_port_loc_code` may be specified. Unique port reference code used by US Customs and Border Protection.",
                       "type": "optional<string>",
                     },
                     "new_product_descriptions": {
@@ -10895,7 +10892,7 @@ docs: >-
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
-  your Flexport Sales representative if you are interested in using these endpoints.**",
+your Flexport Sales representative if you are interested in using these endpoints.**",
         "imports": {
           "root": "__package__.yml",
         },
@@ -11035,7 +11032,7 @@ docs: >-
                 "name": "BookingLineItemIndexRequest",
                 "query-parameters": {
                   "direction": {
-                    "docs": "Set sort order. Allows "asc" (ascending) or "desc"  (descending)",
+                    "docs": "Set sort order. Allows "asc" (ascending) or "desc" (descending)",
                     "type": "optional<BookingLineItemIndexRequestDirection>",
                   },
                   "f.booking.id": {
@@ -17497,7 +17494,7 @@ docs: Endpoints relating to Document objects
                 "name": "EventsIndexRequest",
                 "query-parameters": {
                   "f.data.resource._object": {
-                    "docs": "Get all events which involved a resource of this type. The key for this filter will be the '_object' value for your target resource",
+                    "docs": "Get all events which involved a resource of this type. The key for this filter will be the '\_object' value for your target resource",
                     "type": "optional<EventsIndexRequestFDataResourceObject>",
                   },
                   "f.data.shipment.id": {
@@ -18217,8 +18214,7 @@ Other details about this invoice",
                   },
                   "f.billed_directly_to_client": {
                     "docs": "Filters for invoices that are billed directly to the client, rather than invoices that are billed to a shipment.
-This parameter is mutually exclusive with the f.shipment.id filter.
-",
+This parameter is mutually exclusive with the f.shipment.id filter.",
                     "type": "optional<boolean>",
                   },
                   "f.client_id": {
@@ -21806,8 +21802,7 @@ docs: Endpoints relating to Product objects
             "purchase_order_show": {
               "auth": false,
               "display-name": "Retrieve a purchase order",
-              "docs": "Retrieves the details of a single purchase order.
-",
+              "docs": "Retrieves the details of a single purchase order.",
               "errors": [
                 "root.BadRequestError",
               ],
@@ -24138,8 +24133,7 @@ docs: >-
                     "type": "optional<string>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
-                    "docs": "Filters the list for shipments that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return shipments matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`
-",
+                    "docs": "Filters the list for shipments that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return shipments matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`",
                     "type": "optional<string>",
                   },
                   "f.origin_address_ref": {
@@ -24319,8 +24313,7 @@ docs: >-
             "show": {
               "auth": false,
               "display-name": "Retrieve a shipment",
-              "docs": "Retrieves the details of a single shipment.
-",
+              "docs": "Retrieves the details of a single shipment.",
               "errors": [
                 "root.BadRequestError",
               ],

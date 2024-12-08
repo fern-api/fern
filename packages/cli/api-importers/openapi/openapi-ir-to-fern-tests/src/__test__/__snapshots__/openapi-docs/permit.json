@@ -1533,7 +1533,7 @@
                 },
               },
               "permission": {
-                "docs": "a permission that is currently granted to the userset *on* the resourceset.",
+                "docs": "a permission that is currently granted to the userset _on_ the resourceset.",
                 "type": "string",
               },
               "project_id": {
@@ -1547,7 +1547,7 @@
                 },
               },
               "resource_set": {
-                "docs": "the resourceset that represents the resources that are currently granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*",
+                "docs": "the resourceset that represents the resources that are currently granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted _permission_",
                 "type": "string",
               },
               "updated_at": {
@@ -1603,11 +1603,11 @@
             "inline": undefined,
             "properties": {
               "exclude": {
-                "docs": "Object to exclude (use * as wildcard)",
+                "docs": "Object to exclude (use \* as wildcard)",
                 "type": "optional<list<string>>",
               },
               "include": {
-                "docs": "Objects to include (use * as wildcard)",
+                "docs": "Objects to include (use \* as wildcard)",
                 "type": "optional<list<string>>",
               },
             },
@@ -2614,7 +2614,7 @@ The actions represents the ways you can interact with a protected resource.",
                 "type": "optional<list<string>>",
               },
               "attributes": {
-                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr\_ prefix",
                 "type": "optional<map<string, unknown>>",
               },
               "created_at": {
@@ -2703,7 +2703,7 @@ The actions represents the ways you can interact with a protected resource.",
             "inline": undefined,
             "properties": {
               "attributes": {
-                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr\_ prefix",
                 "type": "optional<map<string, unknown>>",
               },
               "created_at": {
@@ -2973,7 +2973,7 @@ The actions represents the ways you can interact with a protected resource.",
                 },
               },
               "resource": {
-                "docs": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.",
+                "docs": "the _key_ of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.",
                 "type": "string",
               },
               "resource_id": {
@@ -2987,7 +2987,7 @@ The actions represents the ways you can interact with a protected resource.",
                 },
               },
               "tenant": {
-                "docs": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
+                "docs": "the _key_ of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
                 "type": "optional<string>",
               },
               "tenant_id": {
@@ -3017,10 +3017,9 @@ The actions represents the ways you can interact with a protected resource.",
                 "type": "optional<map<string, list<string>>>",
               },
               "actions": {
-                "docs": "
-        A actions definition block, typically contained within a resource type definition block.
+                "docs": "        A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
-        ",
+",
                 "type": "optional<map<string, ActionBlockRead>>",
               },
               "attributes": {
@@ -3114,7 +3113,7 @@ The actions represents the ways you can interact with a protected resource.",
             "inline": undefined,
             "properties": {
               "attributes": {
-                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                 "type": "optional<map<string, unknown>>",
               },
               "created_at": {
@@ -3372,7 +3371,7 @@ The actions represents the ways you can interact with a protected resource.",
             "inline": undefined,
             "properties": {
               "attributes": {
-                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                 "type": "optional<map<string, unknown>>",
               },
               "created_at": {
@@ -6813,18 +6812,17 @@ docs: None
     "conditionSetRules.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
+        "docs": "Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
 
 If such tuple exists, it means all users matching the UserSet
 can perform the Action on the resources matching ResourceSet.
 
 Example:
 (`us_based_employees`, `repository:clone`, `private_repos`) where:
+
 - `us_based_employees` is a user set
 - `repository:clone` is an action
-- `private_repos` is a resource set
-",
+- `private_repos` is a resource set",
         "imports": {
           "root": "__package__.yml",
         },
@@ -6836,7 +6834,7 @@ Example:
             "assign_set_permissions": {
               "auth": true,
               "display-name": "Assign Set Permissions",
-              "docs": "Grant permissions to a user set *on* a resource set.
+              "docs": "Grant permissions to a user set _on_ a resource set.
 
 If the permission is already granted, it is skipped.",
               "errors": [
@@ -6898,11 +6896,11 @@ If the permission is already granted, it is skipped.",
                       "type": "optional<boolean>",
                     },
                     "permission": {
-                      "docs": "The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".",
+                      "docs": "The permission that will be granted to the userset _on_ the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".",
                       "type": "string",
                     },
                     "resource_set": {
-                      "docs": "The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*",
+                      "docs": "The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted _permission_",
                       "type": "string",
                     },
                     "user_set": {
@@ -6929,6 +6927,7 @@ If the permission is already granted, it is skipped.",
               "auth": true,
               "display-name": "List Set Permissions",
               "docs": "Lists the condition set rules matching the filter.
+
 - If the `user_set` filter is present, will only return the permissions set of that user set.
 - If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.
 - If the `resource_set` filter is present, will only return the permissions set of that resource set.",
@@ -7022,7 +7021,7 @@ If the permission is already granted, it is skipped.",
             "unassign_set_permissions": {
               "auth": true,
               "display-name": "Unassign Set Permissions",
-              "docs": "Revokes permissions to a user set *on* a resource set.
+              "docs": "Revokes permissions to a user set _on_ a resource set.
 
 If the permission is not granted, it is skipped.",
               "errors": [
@@ -7068,11 +7067,11 @@ If the permission is not granted, it is skipped.",
                       "type": "optional<boolean>",
                     },
                     "permission": {
-                      "docs": "The permission that will be removed from the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".",
+                      "docs": "The permission that will be removed from the userset _on_ the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".",
                       "type": "string",
                     },
                     "resource_set": {
-                      "docs": "The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified *permission*",
+                      "docs": "The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified _permission_",
                       "type": "string",
                     },
                     "user_set": {
@@ -7350,25 +7349,24 @@ docs: |
     "conditionSets.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Condition sets are sets of objects that are dynamically defined based on conditions on the objects' attributes.
+        "docs": "Condition sets are sets of objects that are dynamically defined based on conditions on the objects' attributes.
 Conditions sets allows you the flexibility of ABAC with the simplicity of RBAC.
 
 There are currently two types of condition sets at the moment:
-1) user set = the set of users that match all the specified conditions.
-2) resource set = the set of resources that match all the specified conditions.
+
+1. user set = the set of users that match all the specified conditions.
+2. resource set = the set of resources that match all the specified conditions.
 
 Examples:
 
-- `us_based_employees` = {U1, ..., Un} = {all **users** who are *located in the US* and are *assigned the employee role*}
-- `private_repos` = {R1, ..., Rn} = {all **resources** *of type repository* that *are private*}
+- `us_based_employees` = {U1, ..., Un} = {all **users** who are _located in the US_ and are _assigned the employee role_}
+- `private_repos` = {R1, ..., Rn} = {all **resources** _of type repository_ that _are private_}
 
-We can then picture a **matrix** of assignment between *user sets* and *resource sets*.
+We can then picture a **matrix** of assignment between _user sets_ and _resource sets_.
 
 Example:
 If we check the checkbox where `us_based_employees` and `private_repos->clone` action intersect, we are setting a rule:
-*all US based employees can clone private repos*.
-",
+_all US based employees can clone private repos_.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -9103,8 +9101,7 @@ docs: >
     "environments.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Environments are silos contained within projects that enables you to safely iterate on changes.
+        "docs": "Environments are silos contained within projects that enables you to safely iterate on changes.
 
 Environments allow you to manage your policy throughout your entire development lifecycle,
 from dev to production. Typical environments within a project could be `production`, `staging`,
@@ -9112,8 +9109,7 @@ or individual environments.
 
 Each project must contain at least one environment.
 You may clone an environment from a base environment, similar to git branches.
-You can later safely merge the changes, after you tested them.
-",
+You can later safely merge the changes, after you tested them.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -10165,13 +10161,11 @@ types:
     "organizations.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-The Organizations API gives you access to control and manage your Permit organizations.
+        "docs": "The Organizations API gives you access to control and manage your Permit organizations.
 
 An organization represents a **single billable account** (i.e: a company using Permit).
 You may invite your team members to your Permit account, and thus multiple team members
-may control an organization simultaniously (each member has access according to his role).
-",
+may control an organization simultaniously (each member has access according to his role).",
         "imports": {
           "root": "__package__.yml",
         },
@@ -10755,12 +10749,10 @@ docs: >
     "projects.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Projects let you manage permissions for different business objectives from a single Permit account.
+        "docs": "Projects let you manage permissions for different business objectives from a single Permit account.
 
 For example, you can create one project called "Billing App" and another project called "Web App".
-Every project is a separate silo, and has its own unique set of environments and policies.
-",
+Every project is a separate silo, and has its own unique set of environments and policies.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -11333,10 +11325,8 @@ docs: >
     "resourceActionGroups.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Resource Action Groups are groups of actions that are assigned
-to a role as one action.
-",
+        "docs": "Resource Action Groups are groups of actions that are assigned
+to a role as one action.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -11415,7 +11405,7 @@ to a role as one action.
                       "type": "optional<list<string>>",
                     },
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr\_ prefix",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -11721,7 +11711,7 @@ Fields that will be provided will be completely overwritten.",
                       "type": "optional<list<string>>",
                     },
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr\_ prefix",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -12108,10 +12098,8 @@ docs: |
     "resourceActions.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Actions are the various ways you can interact with a resource or affect the resource.
-Each (resource, action) pair defines a unique permission level.
-",
+        "docs": "Actions are the various ways you can interact with a resource or affect the resource.
+Each (resource, action) pair defines a unique permission level.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -12180,7 +12168,7 @@ Each (resource, action) pair defines a unique permission level.
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr\_ prefix",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -12476,7 +12464,7 @@ Fields that will be provided will be completely overwritten.",
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr\_ prefix",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -12847,16 +12835,14 @@ docs: >
     "resourceAttributes.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Resource attributes allow you to specify an arbitrary schema attributes that are part
+        "docs": "Resource attributes allow you to specify an arbitrary schema attributes that are part
 of the definition of resource and must be included in any of its instances.
 
 Attributes are used to enforce attribute-based access control policies.
 
 For example, if we are building the github's permissions system, we might want to know
 on the `Repository` resource whether the repo is private or now. In such case we will
-define a boolean `private` attributes that we can now use in our policies.
-",
+define a boolean `private` attributes that we can now use in our policies.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -13557,12 +13543,10 @@ docs: >
     "resourceInstances.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Resource instances are instances of resource types.
+        "docs": "Resource instances are instances of resource types.
 
 An instance represents **a single object** in your system on which you'd want to enforce authorization.
-You can use this API to store tenancy data (tenant) and arbitraty data (attributes).
-",
+You can use this API to store tenancy data (tenant) and arbitraty data (attributes).",
         "imports": {
           "root": "__package__.yml",
         },
@@ -13648,11 +13632,11 @@ and will return the existing instance object in the response body.",
                       },
                     },
                     "resource": {
-                      "docs": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.",
+                      "docs": "the _key_ of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.",
                       "type": "string",
                     },
                     "tenant": {
-                      "docs": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
+                      "docs": "the _key_ of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
                       "type": "optional<string>",
                     },
                   },
@@ -14256,16 +14240,14 @@ docs: >
     "resourceRoles.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Roles allow you to associate permissions indirectly via a job function.
+        "docs": "Roles allow you to associate permissions indirectly via a job function.
 
 Resource roles allow you to grant roles that are scoped to a resource, thus
 expressing ownership or arbitrary relationships between an actor (i.e: user) and
 a specific object.
 
 This API allows you to manipulate roles: assign or unassign permissions to a role,
-define hierarchy (inheritance) between two roles or define relationships between two roles.
-",
+define hierarchy (inheritance) between two roles or define relationships between two roles.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -14427,7 +14409,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -14977,7 +14959,7 @@ Fields that will be provided will be completely overwritten.",
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -15666,8 +15648,7 @@ docs: >
     "resources.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Resources are *types* of objects or feature names that you wish to protect (or gate) with permissions.
+        "docs": "Resources are _types_ of objects or feature names that you wish to protect (or gate) with permissions.
 
 For example, if you build a document-sharing app like google docs, you might want to define a "document" resource.
 
@@ -15675,10 +15656,10 @@ A resource definition block typically contains **actions**.
 Actions are the various ways you can interact with the object / feature. Each (resource, action) pair defines a unique permission level.
 
 A resource may also contain:
+
 - roles (if you wish to define resource-bound roles or if your permissions model is relational)
 - relations to other resources (if your permissions model is relational, i.e: you work with a ReBAC model)
-- attributes (attributes that are typically defined on the resource, typically used in ABAC models)
-",
+- attributes (attributes that are typically defined on the resource, typically used in ABAC models)",
         "imports": {
           "root": "__package__.yml",
         },
@@ -15800,10 +15781,9 @@ A resource may also contain:
                 "body": {
                   "properties": {
                     "actions": {
-                      "docs": "
-        A actions definition block, typically contained within a resource type definition block.
+                      "docs": "        A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
-        ",
+",
                       "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
@@ -16118,7 +16098,7 @@ A resource may also contain:
 
 - If the resource key is changed, all role and permissions assignments for the the resource will be revoked.
 - If the resource key is unchanged, but some actions are removed or renamed from the resource definition,
-role and permissions assignments for these actions will be revoked.
+  role and permissions assignments for these actions will be revoked.
 
 TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT completely while there are permissions that can be affected.",
               "errors": [
@@ -16222,10 +16202,9 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 "body": {
                   "properties": {
                     "actions": {
-                      "docs": "
-        A actions definition block, typically contained within a resource type definition block.
+                      "docs": "        A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
-        ",
+",
                       "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
@@ -16361,10 +16340,9 @@ Fields that will be provided will be completely overwritten.",
                 "body": {
                   "properties": {
                     "actions": {
-                      "docs": "
-        A actions definition block, typically contained within a resource type definition block.
+                      "docs": "        A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
-        ",
+",
                       "type": "optional<map<string, root.ActionBlockEditable>>",
                     },
                     "attributes": {
@@ -17045,12 +17023,10 @@ docs: >
     "roleAssignments.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
+        "docs": "Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
 
 With role assignments you can assign or unassign roles to a user.
-Role assignment define the relationship between users and tenants.
-",
+Role assignment define the relationship between users and tenants.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -17655,15 +17631,13 @@ docs: >
     "roles.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Roles allow you to associate permissions indirectly via a job function.
+        "docs": "Roles allow you to associate permissions indirectly via a job function.
 
 The Roles API allows you to manipulate roles: assign or unassign permissions to a role,
 define hierarchy between roles or define relationships between resource roles.
 
 Roles manipulated by this API are **tenant roles**, meaning when they are assigned, they are
-assigned on a tenant.
-",
+assigned on a tenant.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -17813,7 +17787,7 @@ If some of the permissions specified are already assigned, will skip them.",
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -18334,7 +18308,7 @@ Fields that will be provided will be completely overwritten.",
                 "body": {
                   "properties": {
                     "attributes": {
-                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                      "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr\_ prefix, currently supports only 'equals' operator",
                       "type": "optional<map<string, unknown>>",
                     },
                     "description": {
@@ -18988,8 +18962,7 @@ docs: >
     "tenants.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-A tenant is a group of users that share a common organizational identity.
+        "docs": "A tenant is a group of users that share a common organizational identity.
 
 Each tenant is a silo that can enforce strict boundaries between your customers.
 You can associate your protected objects with a specific tenant, and only users
@@ -18997,8 +18970,7 @@ belonging to that tenant may access these resources (pending on adequate permiss
 
 Usually, each tenant will represent one of the end-customer companies in your product
 (i.e. the company that you sell to). Through the tenant feature we enable you to have
-multi-tenancy straight out of the box.
-",
+multi-tenancy straight out of the box.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -19999,18 +19971,16 @@ types:
     "userAttributes.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-User attributes allow you to specify an arbitrary schema attributes that are part
+        "docs": "User attributes allow you to specify an arbitrary schema attributes that are part
 of the definition of the User resource.
 
 Attributes are used to enforce attribute-based access control policies.
 
-*NOTE: A User is a Resource by itself, so basically a user's attribute is an attribute that assigned to the resource called "user".*
+_NOTE: A User is a Resource by itself, so basically a user's attribute is an attribute that assigned to the resource called "user"._
 
 For example, if we are building the github's permissions system, we might want to know
 whether the user is an owner of the organization or not. In such case we will
-define a string `owner` attribute that we can now use in our policies.
-",
+define a string `owner` attribute that we can now use in our policies.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -20684,15 +20654,13 @@ docs: >
     "users.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "
-Users represent human end-users of your applications that you'd like to enforce permissions on.
+        "docs": "Users represent human end-users of your applications that you'd like to enforce permissions on.
 
 You must create a user object in Permit.io prior to trying to enforce permissions for that user.
 A user is identified by its key, and you can only create one user with the same key inside a Permit environment.
 You can place users within tenants via role assignments in order to enforce multi-tenancy in your app.
 
-You may create users via the API (shown below), with one of the SDKs, or via the Permit cloud console.
-",
+You may create users via the API (shown below), with one of the SDKs, or via the Permit cloud console.",
         "imports": {
           "root": "__package__.yml",
         },

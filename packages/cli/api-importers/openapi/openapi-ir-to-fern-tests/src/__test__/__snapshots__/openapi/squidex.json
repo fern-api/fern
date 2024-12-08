@@ -3687,9 +3687,9 @@
             "inline": undefined,
             "properties": {
               "action": {
-                "docs": "* Broadcast = send to all users.
- * User = send to all target users(s).
- * Group = send to all target group(s).",
+                "docs": "- Broadcast = send to all users.
+- User = send to all target users(s).
+- Group = send to all target group(s).",
                 "type": "ActionTypeEnum",
               },
               "connectionString": {
@@ -4213,7 +4213,7 @@
             "inline": undefined,
             "properties": {
               "accessSecret": {
-                "docs": " The generated access secret.",
+                "docs": "The generated access secret.",
                 "type": "string",
                 "validation": {
                   "format": undefined,
@@ -4223,7 +4223,7 @@
                 },
               },
               "accessToken": {
-                "docs": " The generated access token.",
+                "docs": "The generated access token.",
                 "type": "string",
                 "validation": {
                   "format": undefined,
