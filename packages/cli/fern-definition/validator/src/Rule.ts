@@ -29,10 +29,7 @@ export interface RuleVisitors {
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {
-    [K in keyof AstNodeTypes]?: (
-        node: AstNodeTypes[K],
-        args: RuleRunnerArgs<FileSchema>
-    ) => RuleViolation[];
+    [K in keyof AstNodeTypes]?: (node: AstNodeTypes[K], args: RuleRunnerArgs<FileSchema>) => RuleViolation[];
 };
 
 export interface RuleRunnerArgs<FileSchema> {
@@ -44,3 +41,5 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
 }
+
+// TODO: Make an async variant for some rules.
