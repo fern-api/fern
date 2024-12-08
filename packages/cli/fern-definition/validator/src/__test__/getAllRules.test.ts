@@ -20,8 +20,8 @@ describe("getAllRules", () => {
                 }
                 return rule as Rule;
             });
-        const allRules: Rule[] = await Promise.all(allRulesPromises);
 
+        const allRules = await Promise.all(allRulesPromises);
         const registeredRules = getAllRules();
 
         expect(allRules.length).toEqual(registeredRules.length);

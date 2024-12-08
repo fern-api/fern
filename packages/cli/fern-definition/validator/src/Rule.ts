@@ -13,7 +13,7 @@ import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from
 export interface Rule {
     name: string;
     DISABLE_RULE?: boolean;
-    create: (context: RuleContext) => MaybePromise<RuleVisitors>;
+    create: (context: RuleContext) => RuleVisitors;
 }
 
 export interface RuleContext {
@@ -29,10 +29,7 @@ export interface RuleVisitors {
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {
-    [K in keyof AstNodeTypes]?: (
-        node: AstNodeTypes[K],
-        args: RuleRunnerArgs<FileSchema>
-    ) => MaybePromise<RuleViolation[]>;
+    [K in keyof AstNodeTypes]?: (node: AstNodeTypes[K], args: RuleRunnerArgs<FileSchema>) => RuleViolation[];
 };
 
 export interface RuleRunnerArgs<FileSchema> {
@@ -45,4 +42,4 @@ export interface RuleViolation {
     message: string;
 }
 
-export type MaybePromise<T> = T | Promise<T>;
+// TODO: Make an async variant for some rules.

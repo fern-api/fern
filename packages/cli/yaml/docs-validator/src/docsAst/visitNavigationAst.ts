@@ -5,7 +5,7 @@ import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { visitFilepath } from "./visitFilepath";
 import { readFile } from "fs/promises";
-import { visitObject, noop } from "@fern-api/core-utils";
+import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 
@@ -83,7 +83,7 @@ async function visitNavigationItem({
     loadAPIWorkspace: APIWorkspaceLoader;
     context: TaskContext;
 }): Promise<void> {
-    await visitObject(navigationItem, {
+    await visitObjectAsync(navigationItem, {
         alphabetized: noop,
         api: noop,
         apiName: noop,

@@ -4,11 +4,11 @@ import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
 import { FernWorkspace } from "../FernWorkspace";
 import { getAllPackageMarkers } from "./getAllPackageMarkers";
 
-export async function visitAllPackageMarkers(
+export function visitAllPackageMarkers(
     workspace: FernWorkspace,
-    visitor: (filepath: RelativeFilePath, packageMarker: PackageMarkerFileSchema) => void | Promise<void>
-): Promise<void> {
+    visitor: (filepath: RelativeFilePath, packageMarker: PackageMarkerFileSchema) => void
+): void {
     for (const [relativeFilepath, file] of entries(getAllPackageMarkers(workspace.definition))) {
-        await visitor(relativeFilepath, file.contents);
+        visitor(relativeFilepath, file.contents);
     }
 }

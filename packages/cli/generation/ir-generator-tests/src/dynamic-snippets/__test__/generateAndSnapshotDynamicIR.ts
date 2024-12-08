@@ -23,7 +23,7 @@ export async function generateAndSnapshotDynamicIR({
         context
     });
 
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace: fernWorkspace,
         generationLanguage: undefined,
         audiences,

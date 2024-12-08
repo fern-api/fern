@@ -18,8 +18,8 @@ type TypeName = string;
 
 export const NoUndefinedTypeReferenceRule: Rule = {
     name: "no-undefined-type-reference",
-    create: async ({ workspace }) => {
-        const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = await getTypesByFilepath(workspace);
+    create: ({ workspace }) => {
+        const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = getTypesByFilepath(workspace);
 
         function doesTypeExist(reference: ReferenceToTypeName) {
             if (reference.parsed == null) {
@@ -142,13 +142,13 @@ export const NoUndefinedTypeReferenceRule: Rule = {
     }
 };
 
-async function getTypesByFilepath(workspace: FernWorkspace) {
+function getTypesByFilepath(workspace: FernWorkspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
                     const maybeGenericDeclaration = parseGeneric(typeName.name);

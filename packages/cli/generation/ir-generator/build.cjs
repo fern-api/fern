@@ -6,7 +6,7 @@ const path = require("path");
 main();
 
 async function main() {
-    await tsup.build({
+     tsup.build({
         entry: ['src/**/*.ts', '!src/__test__'],
         format: ['cjs'],
         clean: true,
@@ -24,9 +24,9 @@ async function main() {
     process.chdir(path.join(__dirname, "dist"));
 
     // The module expects the imports defined in the index.d.ts file.
-    await rename("index.d.cts", "index.d.ts");
+     rename("index.d.cts", "index.d.ts");
 
-    await writeFile(
+     writeFile(
         "package.json",
         JSON.stringify(
             {

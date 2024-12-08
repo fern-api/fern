@@ -49,7 +49,7 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,

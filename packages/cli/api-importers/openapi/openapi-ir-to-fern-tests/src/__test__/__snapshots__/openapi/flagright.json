@@ -702,12 +702,11 @@ In order to pass the payload of a User to Flagright and verify the User, you wil
 
 ### Payload
 
-
 Each consumer Business entity needs three mandatory fields:
 
-* `userId` - Unique identifier for the user
-* `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory
-* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system",
+- `userId` - Unique identifier for the user
+- `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory
+- `createdTimestamp` - UNIX timestamp in _milliseconds_ for when the User is created in your system",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -779,20 +778,19 @@ Each consumer Business entity needs three mandatory fields:
 
 User events are created after the initial `POST /business/users` call (which creates a user) and are used to:
 
-* Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field
-* Update the user details, using the `updatedBusinessUserAttributes` field.
+- Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field
+- Update the user details, using the `updatedBusinessUserAttributes` field.
 
-> If you have neither of the above two use cases, you do not need to use user events. 
+> If you have neither of the above two use cases, you do not need to use user events.
 
 ### Payload
 
 Each user event needs three mandatory fields:
 
-* `timestamp`- the timestamp of when the event was created or occured in your system
-* `userId` - The ID of the transaction for which this event is generated. 
+- `timestamp`- the timestamp of when the event was created or occured in your system
+- `userId` - The ID of the transaction for which this event is generated.
 
-In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
-",
+In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -1213,23 +1211,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 
 `/transactions` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)
 
-In order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. 
-
+In order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
 
 ### Payload
 
 Here are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):
 
-* `type`: Type of transaction (Ex: `WITHDRAWAL`, `DEPOSIT`, `TRANSFER` etc). 
-* `transactionId` - Unique Identifier for the transaction. Flagright API will generate a `transactionId` if this field is left empty
-* `timestamp` - UNIX timestamp in *milliseconds* of when the transaction took place
-* `transactionState` - The state of the transaction, set to `CREATED` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)
-* `originUserId` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
-* `destinationUserId` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
-* `originAmountDetails` - Details of the amount being sent from the origin
-* `destinationAmountDetails` - Details of the amount being received at the destination
-* `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
-* `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
+- `type`: Type of transaction (Ex: `WITHDRAWAL`, `DEPOSIT`, `TRANSFER` etc).
+- `transactionId` - Unique Identifier for the transaction. Flagright API will generate a `transactionId` if this field is left empty
+- `timestamp` - UNIX timestamp in _milliseconds_ of when the transaction took place
+- `transactionState` - The state of the transaction, set to `CREATED` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)
+- `originUserId` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
+- `destinationUserId` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
+- `originAmountDetails` - Details of the amount being sent from the origin
+- `destinationAmountDetails` - Details of the amount being received at the destination
+- `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
+- `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -1385,9 +1382,8 @@ In order to pass the payload of a User to Flagright and verify the User, you wil
 
 Each consumer User entity needs three mandatory fields:
 
-* `userId` - Unique identifier for the user
-* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system
-",
+- `userId` - Unique identifier for the user
+- `createdTimestamp` - UNIX timestamp in _milliseconds_ for when the User is created in your system",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -1520,21 +1516,20 @@ Each consumer User entity needs three mandatory fields:
 
 Transaction events are created after the initial `POST /transactions` call (which creates a transaction) and are used to:
 
-* Update the STATE of the transaction, using the `transactionState` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)
-* Update the transaction details, using the `updatedTransactionAttributes` field.
+- Update the STATE of the transaction, using the `transactionState` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)
+- Update the transaction details, using the `updatedTransactionAttributes` field.
 
-> If you have neither of the above two use cases, you do not need to use transaction events. 
+> If you have neither of the above two use cases, you do not need to use transaction events.
 
 ### Payload
 
 Each transaction event needs three mandatory fields:
 
-* `transactionState` - STATE of the transaction -> value is set to `CREATED` after `POST /transactions` call
-* `timestamp`- the timestamp of when the event was created or occured in your system
-* `transactionId` - The ID of the transaction for which this event is generated. 
+- `transactionState` - STATE of the transaction -> value is set to `CREATED` after `POST /transactions` call
+- `timestamp`- the timestamp of when the event was created or occured in your system
+- `transactionId` - The ID of the transaction for which this event is generated.
 
-In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
-",
+In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -1749,20 +1744,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 
 User events are created after the initial `POST /consumer/users` call (which creates a user) and are used to:
 
-* Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field
-* Update the user details, using the `updatedConsumerUserAttributes` field.
+- Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field
+- Update the user details, using the `updatedConsumerUserAttributes` field.
 
-> If you have neither of the above two use cases, you do not need to use user events. 
+> If you have neither of the above two use cases, you do not need to use user events.
 
 ### Payload
 
 Each user event needs three mandatory fields:
 
-* `timestamp`- the timestamp of when the event was created or occured in your system
-* `userId` - The ID of the transaction for which this event is generated. 
+- `timestamp`- the timestamp of when the event was created or occured in your system
+- `userId` - The ID of the transaction for which this event is generated.
 
-In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
-",
+In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.",
               "errors": [
                 "BadRequestError",
                 "UnauthorizedError",
@@ -2512,8 +2506,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "CardPaymentMethod": {
-            "docs": "Classify the method of payment as "Card" for CardDetails
-",
+            "docs": "Classify the method of payment as "Card" for CardDetails",
             "type": "literal<"CARD">",
           },
           "CaseClosedDetails": {
@@ -3793,8 +3786,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "IBANPaymentMethod": {
-            "docs": "Classify the method of payment as "IBAN" for IBANDetails
-",
+            "docs": "Classify the method of payment as "IBAN" for IBANDetails",
             "type": "literal<"IBAN">",
           },
           "KYCStatus": {

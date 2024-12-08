@@ -125,8 +125,7 @@
           },
           "AutoHighlightsResult": {
             "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
-See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
-",
+See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.",
             "inline": undefined,
             "properties": {
               "results": {
@@ -301,8 +300,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "language_code": {
                 "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
-The default value is 'en_us'.
-",
+The default value is 'en_us'.",
                 "type": "optional<TranscriptLanguageCode>",
               },
               "language_detection": {
@@ -348,8 +346,7 @@ The default value is 'en_us'.
               },
               "speech_threshold": {
                 "docs": "Reject audio files that contain less than this fraction of speech.
-Valid values are in the range [0, 1] inclusive.
-",
+Valid values are in the range [0, 1] inclusive.",
                 "type": "optional<float>",
               },
               "summarization": {
@@ -426,8 +423,7 @@ Valid values are in the range [0, 1] inclusive.
                 "value": "blood_type",
               },
               {
-                "docs": "Credit card verification code (e.g., CVV: 080)
-",
+                "docs": "Credit card verification code (e.g., CVV: 080)",
                 "value": "credit_card_cvv",
               },
               {
@@ -443,13 +439,11 @@ Valid values are in the range [0, 1] inclusive.
                 "value": "date",
               },
               {
-                "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)
-",
+                "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)",
                 "value": "date_of_birth",
               },
               {
-                "docs": "Driver's license number (e.g., DL #356933-540)
-",
+                "docs": "Driver's license number (e.g., DL #356933-540)",
                 "value": "drivers_license",
               },
               {
@@ -588,8 +582,7 @@ Valid values are in the range [0, 1] inclusive.
               "temperature": {
                 "docs": "The temperature to use for the model.
 Higher values result in answers that are more creative, lower values are more conservative.
-Can be any value between 0.0 and 1.0 inclusive.
-",
+Can be any value between 0.0 and 1.0 inclusive.",
                 "type": "optional<float>",
               },
               "transcript_ids": {
@@ -628,8 +621,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "LemurModel": {
-            "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
-",
+            "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").",
             "enum": [
               "default",
               "basic",
@@ -643,13 +635,11 @@ Can be any value between 0.0 and 1.0 inclusive.
             "inline": undefined,
             "properties": {
               "answer_format": {
-                "docs": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"
-",
+                "docs": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"",
                 "type": "optional<string>",
               },
               "answer_options": {
-                "docs": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]
-",
+                "docs": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]",
                 "type": "optional<list<string>>",
               },
               "context": {
@@ -1116,8 +1106,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "auto_highlights_result": {
                 "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
-See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
-",
+See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.",
                 "type": "optional<AutoHighlightsResult>",
               },
               "boost_param": {
@@ -1145,8 +1134,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "content_safety_labels": {
                 "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
-See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
-",
+See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.",
                 "type": "optional<TranscriptContentSafetyLabels>",
               },
               "custom_spelling": {
@@ -1167,8 +1155,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
               },
               "entities": {
                 "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
-See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
-",
+See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.",
                 "type": "optional<list<Entity>>",
               },
               "entity_detection": {
@@ -1193,8 +1180,7 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
               },
               "iab_categories_result": {
                 "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
-See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
-",
+See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.",
                 "type": "optional<TranscriptIabCategoriesResult>",
               },
               "id": {
@@ -1204,8 +1190,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
               "language_code": {
                 "docs": "The language of your audio file.
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
-The default value is 'en_us'.
-",
+The default value is 'en_us'.",
                 "type": "optional<TranscriptLanguageCode>",
               },
               "language_detection": {
@@ -1227,20 +1212,17 @@ The default value is 'en_us'.
               },
               "redact_pii_audio": {
                 "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
-either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
-",
+either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.",
                 "type": "optional<boolean>",
               },
               "redact_pii_audio_quality": {
                 "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
-See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
-",
+See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.",
                 "type": "optional<string>",
               },
               "redact_pii_policies": {
                 "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
-See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
-",
+See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.",
                 "type": "optional<list<PiiPolicy>>",
               },
               "redact_pii_sub": {
@@ -1253,8 +1235,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
               },
               "sentiment_analysis_results": {
                 "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
-See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
-",
+See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.",
                 "type": "optional<list<SentimentAnalysisResult>>",
               },
               "speaker_labels": {
@@ -1267,8 +1248,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
               },
               "speech_threshold": {
                 "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
-Valid values are in the range [0, 1] inclusive.
-",
+Valid values are in the range [0, 1] inclusive.",
                 "type": "optional<float>",
               },
               "speed_boost": {
@@ -1290,8 +1270,7 @@ Valid values are in the range [0, 1] inclusive.
               },
               "summary_model": {
                 "docs": "The Summarization model used to generate the summary,
-if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
-",
+if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
                 "type": "optional<string>",
               },
               "summary_type": {
@@ -1312,8 +1291,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
               },
               "utterances": {
                 "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
-See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
-",
+See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.",
                 "type": "optional<list<TranscriptUtterance>>",
               },
               "webhook_auth": {
@@ -1338,8 +1316,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
               },
               "words": {
                 "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
-See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
-",
+See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.",
                 "type": "optional<list<TranscriptWord>>",
               },
             },
@@ -1360,8 +1337,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           },
           "TranscriptContentSafetyLabels": {
             "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
-See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
-",
+See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.",
             "inline": true,
             "properties": {
               "results": "list<ContentSafetyLabelResult>",
@@ -1393,8 +1369,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
           },
           "TranscriptIabCategoriesResult": {
             "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
-See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
-",
+See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.",
             "inline": true,
             "properties": {
               "results": {
@@ -1417,8 +1392,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "TranscriptLanguageCode": {
             "default": "en_us",
             "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
-The default value is 'en_us'.
-",
+The default value is 'en_us'.",
             "enum": [
               "en",
               "en_au",
@@ -3228,8 +3202,7 @@ service:
               "auth": true,
               "display-name": "Delete the data for a previously submitted LeMUR request.",
               "docs": "Delete the data for a previously submitted LeMUR request.
-The LLM response data, as well as any context provided in the original request will be removed.
-",
+The LLM response data, as well as any context provided in the original request will be removed.",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -3375,8 +3348,7 @@ The LLM response data, as well as any context provided in the original request w
                   ],
                   "properties": {
                     "answer_format": {
-                      "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
-",
+                      "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"",
                       "type": "optional<string>",
                     },
                   },

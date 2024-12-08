@@ -61,7 +61,7 @@ it.skip("converts to api reference node", async () => {
 
     const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
 
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace: apiWorkspace,
         audiences: { type: "all" },
         generationLanguage: undefined,

@@ -15,6 +15,7 @@ import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFil
 import { OSSWorkspace } from "./OSSWorkspace";
 import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace";
+import { formatAllDocs } from "@fern-api/api-workspace-commons";
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -38,7 +39,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         { context }: { context?: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
-        return (await this.toFernWorkspace({ context }, settings)).definition;
+        const definition = (await this.toFernWorkspace({ context }, settings)).definition;
+        await formatAllDocs(definition);
+        return definition;
     }
 
     public async toFernWorkspace(

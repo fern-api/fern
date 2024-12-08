@@ -4,38 +4,36 @@ import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 
-export async function convertObjectTypeDeclaration({
+export function convertObjectTypeDeclaration({
     object,
     file
 }: {
     object: RawSchemas.ObjectSchema;
     file: FernFileContext;
-}): Promise<Type> {
+}): Type {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties: await getObjectPropertiesFromRawObjectSchema(object, file),
+        properties: getObjectPropertiesFromRawObjectSchema(object, file),
         extraProperties: object["extra-properties"] ?? false,
         extendedProperties: undefined
     });
 }
 
-export async function getObjectPropertiesFromRawObjectSchema(
+export function getObjectPropertiesFromRawObjectSchema(
     object: RawSchemas.ObjectSchema,
     file: FernFileContext
-): Promise<ObjectProperty[]> {
+): ObjectProperty[] {
     if (object.properties == null) {
         return [];
     }
-    return await Promise.all(
-        Object.entries(object.properties).map(async ([propertyKey, propertyDefinition]) => ({
-            ...(await convertDeclaration(propertyDefinition)),
-            name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: propertyKey,
-                name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-            }),
-            valueType: file.parseTypeReference(propertyDefinition)
-        }))
-    );
+    return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
+        ...convertDeclaration(propertyDefinition),
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+        }),
+        valueType: file.parseTypeReference(propertyDefinition)
+    }));
 }
 
 export function getExtensionsAsList(extensions: string | string[] | undefined): string[] {

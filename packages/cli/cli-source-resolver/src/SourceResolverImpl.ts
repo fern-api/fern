@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExistSync, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
@@ -16,14 +16,14 @@ export class SourceResolverImpl implements SourceResolver {
         this.sourceCache = new Map();
     }
 
-    public async resolveSourceOrThrow({
+    public resolveSourceOrThrow({
         source,
         relativeFilepath
     }: {
         source: RawSchemas.SourceSchema;
         relativeFilepath: RelativeFilePath;
-    }): Promise<ResolvedSource | undefined> {
-        const resolvedType = await this.resolveSource({ source });
+    }): ResolvedSource | undefined {
+        const resolvedType = this.resolveSource({ source });
         if (resolvedType == null) {
             if (isRawProtobufSourceSchema(source)) {
                 throw new Error(`Cannot resolve source ${source.proto} from file ${relativeFilepath}`);
@@ -34,27 +34,23 @@ export class SourceResolverImpl implements SourceResolver {
         return resolvedType;
     }
 
-    public async resolveSource({ source }: { source: RawSchemas.SourceSchema }): Promise<ResolvedSource | undefined> {
+    public resolveSource({ source }: { source: RawSchemas.SourceSchema }): ResolvedSource | undefined {
         if (isRawProtobufSourceSchema(source)) {
-            return await this.resolveProtobufSource({ source });
+            return this.resolveProtobufSource({ source });
         }
-        return await this.resolveOpenAPISource({ source });
+        return this.resolveOpenAPISource({ source });
     }
 
-    private async resolveProtobufSource({
-        source
-    }: {
-        source: RawSchemas.ProtobufSourceSchema;
-    }): Promise<ResolvedSource | undefined> {
+    private resolveProtobufSource({ source }: { source: RawSchemas.ProtobufSourceSchema }): ResolvedSource | undefined {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.proto));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);
         }
-        if (!(await doesPathExist(absoluteFilepath))) {
+        if (!doesPathExistSync(absoluteFilepath)) {
             return undefined;
         }
         const parser = new ProtobufParser();
-        const protobufFileInfo = await parser.parse({ absoluteFilePath: absoluteFilepath });
+        const protobufFileInfo = parser.parse({ absoluteFilePath: absoluteFilepath });
         const resolvedSource: ResolvedSource = {
             type: "protobuf",
             absoluteFilePath: absoluteFilepath,
@@ -67,16 +63,12 @@ export class SourceResolverImpl implements SourceResolver {
         return resolvedSource;
     }
 
-    private async resolveOpenAPISource({
-        source
-    }: {
-        source: RawSchemas.OpenApiSourceSchema;
-    }): Promise<ResolvedSource | undefined> {
+    private resolveOpenAPISource({ source }: { source: RawSchemas.OpenApiSourceSchema }): ResolvedSource | undefined {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.openapi));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);
         }
-        if (!(await doesPathExist(absoluteFilepath))) {
+        if (!doesPathExistSync(absoluteFilepath)) {
             return undefined;
         }
         const resolvedSource: ResolvedSource = {

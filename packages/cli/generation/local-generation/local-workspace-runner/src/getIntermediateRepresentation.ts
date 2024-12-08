@@ -37,7 +37,7 @@ export async function getIntermediateRepresentation({
     sourceConfig: SourceConfig | undefined;
     includeOptionalRequestPropertyExamples?: boolean;
 }): Promise<getIntermediateRepresentation.Return> {
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,

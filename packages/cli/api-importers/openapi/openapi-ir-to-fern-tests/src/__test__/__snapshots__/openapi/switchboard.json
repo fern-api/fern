@@ -220,7 +220,7 @@
                 "type": "string",
               },
               "token": {
-                "docs": "Token to connect to the airtop browser, use as a header: 'Authorization: Bearer <token>' ",
+                "docs": "Token to connect to the airtop browser, use as a header: 'Authorization: Bearer <token>'",
                 "type": "optional<string>",
               },
             },

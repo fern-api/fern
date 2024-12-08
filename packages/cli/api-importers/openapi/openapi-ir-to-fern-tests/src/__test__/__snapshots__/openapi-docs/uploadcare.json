@@ -1003,8 +1003,7 @@
           "ExpireType": {
             "docs": "`expire` must be sent along with your upload request if you would like to use signed uploads.
 The parameter defines the time during which your signature is valid. It's a UNIX timestamp.
-See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
-",
+See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.",
             "type": "double",
           },
           "FileIdInvalidError": {
@@ -1127,21 +1126,18 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "inline": undefined,
             "properties": {
               "error": {
-                "docs": "Human readable description of the issue with the fetch/upload task.
-",
+                "docs": "Human readable description of the issue with the fetch/upload task.",
                 "type": "optional<string>",
               },
               "error_code": {
                 "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
-page for a full list of all possible error codes.
-",
+page for a full list of all possible error codes.",
                 "type": "optional<string>",
               },
               "status": {
-                "docs": "The system failed to fetch and/or upload the file.
-",
+                "docs": "The system failed to fetch and/or upload the file.",
                 "type": "optional<literal<"error">>",
               },
             },
@@ -1167,13 +1163,11 @@ page for a full list of all possible error codes.
             "inline": undefined,
             "properties": {
               "done": {
-                "docs": "How many bytes of the file have been fetched so far.
-",
+                "docs": "How many bytes of the file have been fetched so far.",
                 "type": "optional<double>",
               },
               "status": {
-                "docs": "The system is fetching/uploading the file.
-",
+                "docs": "The system is fetching/uploading the file.",
                 "type": "optional<literal<"progress">>",
               },
               "total": {
@@ -1181,8 +1175,7 @@ page for a full list of all possible error codes.
 
 **Note:** the value can be missing if the server we are fetching the file from
 does not provide the information or if the server is returning the file in, for
-example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
-",
+example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).",
                 "type": "optional<double>",
               },
             },
@@ -1242,8 +1235,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
 
 Note: Uploadcare stores information about the `/from_url/` tasks for a limited
 period of time only. The endpoint can return the status `unknown` for the tasks
-that are tool old (or that have not been created at all).
-",
+that are tool old (or that have not been created at all).",
                 "type": "optional<literal<"unknown">>",
               },
             },
@@ -1256,8 +1248,7 @@ that are tool old (or that have not been created at all).
             "inline": undefined,
             "properties": {
               "status": {
-                "docs": "The system is preparing to handle the request.
-",
+                "docs": "The system is preparing to handle the request.",
                 "type": "optional<literal<"waiting">>",
               },
             },
@@ -1405,8 +1396,7 @@ that are tool old (or that have not been created at all).
                 "type": "optional<datetime>",
               },
               "files": {
-                "docs": "The list of files in the group. An array may contain null values if a file has been removed.
-",
+                "docs": "The list of files in the group. An array may contain null values if a file has been removed.",
                 "type": "optional<list<unknown>>",
               },
               "files_count": {
@@ -1615,8 +1605,7 @@ that are tool old (or that have not been created at all).
           },
           "MetadataValue": {
             "docs": "Arbitrary metadata associated with the file.
-See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
-",
+See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.",
             "type": "string",
             "validation": {
               "format": undefined,
@@ -1878,8 +1867,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "docs": "`signature` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
 **Note**: the process requires knowledge of your Uploadcare Project's Secret key.
-See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
-",
+See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.",
             "type": "string",
           },
           "SourceUrlRequiredError": {
@@ -1890,6 +1878,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
+
 - `0` - do not mark an uploaded file as stored and remove it after 24 hours
 - `1` - mark the uploaded file as stored
 - `auto` - delegate the choice of the file-storing behavior to a project-wide setting called
@@ -1897,14 +1886,13 @@ The parameter can have the following values:
 
 The default value depends on the user registration date.
 
-For all users registered after February 12, 2024 (UTC 13:30), the default value is `auto`. 
-File-storing behavior depends entirely on what is set in the 
+For all users registered after February 12, 2024 (UTC 13:30), the default value is `auto`.
+File-storing behavior depends entirely on what is set in the
 [storage settings](https://app.uploadcare.com/projects/-/settings/#storage) in the Dashboard.
 
-For users registered before February 12, 2024, the default value is `0`. 
+For users registered before February 12, 2024, the default value is `0`.
 To ensure that file storage in the project matches the settings in the Dashboard,
-change the value to `auto`.
-",
+change the value to `auto`.",
             "enum": [
               {
                 "name": "Zero",
@@ -3330,8 +3318,7 @@ multiple files at once and then wants to display them together.
 **Note:** A group itself and files within it MUST belong to the same project.
 
 **Note:** Groups are immutable and the only way to add/remove a file to a group
-is to create a new one.
-",
+is to create a new one.",
               "errors": [
                 "root.CreateFilesGroupRequestBadRequestError",
                 "root.CreateFilesGroupRequestForbiddenError",
@@ -3516,8 +3503,7 @@ Log.d("TAG", group.toString())
                     "files[]": {
                       "docs": "Set of files you want to add to the group.
 Each element can be a file UUID with or without the applied image
-processing operations.
-",
+processing operations.",
                       "type": "list<string>",
                     },
                     "pub_key": "root.ProjectPublicKeyType",
@@ -3542,8 +3528,7 @@ processing operations.
               "auth": false,
               "display-name": "Get information about a file group",
               "docs": "Returns a JSON object with information about a file group (when the group was created,
-number of the files in the group, etc).
-",
+number of the files in the group, etc).",
               "errors": [
                 "root.FilesGroupInfoRequestBadRequestError",
                 "root.FilesGroupInfoRequestForbiddenError",
@@ -3714,8 +3699,7 @@ Log.d("TAG", group.toString())
                 "name": "FilesGroupInfoRequest",
                 "query-parameters": {
                   "group_id": {
-                    "docs": "Group's unique ID. Group IDs look like `UUID~N`, where the `~N` part reflects the number of the files in the group.
-",
+                    "docs": "Group's unique ID. Group IDs look like `UUID~N`, where the `~N` part reflects the number of the files in the group.",
                     "type": "string",
                   },
                   "pub_key": "root.ProjectPublicKeyType",
@@ -4140,8 +4124,7 @@ File upload example with curl:
 
 ```
 curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "https://upload.uploadcare.com/base/"
-```
-",
+```",
               "errors": [
                 "root.BaseUploadRequestBadRequestError",
                 "root.BaseUploadRequestForbiddenError",
@@ -4294,8 +4277,7 @@ Log.d("TAG", file.toString())
             "fileUploadInfo": {
               "auth": false,
               "display-name": "Get information about an uploaded file",
-              "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).
-",
+              "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).",
               "errors": [
                 "root.FileUploadInfoRequestBadRequestError",
                 "root.FileUploadInfoRequestForbiddenError",
@@ -4525,6 +4507,7 @@ Log.d("TAG", file.toString())
 fetched file to your project.
 
 #### Upload tokens
+
 Requests to the endpoint return a JSON dictionary with a `token` that can be further used
 to [check the status](/api-refs/upload-api/#operation/fromURLUploadStatus) of the upload
 request.
@@ -4533,12 +4516,12 @@ request.
 The actual file ID should be retrieved by calling the `/from_url/status/` endpoint.
 
 #### Duplicates prevention
+
 By default, every call to the `/from_url/` endpoint with the same `source_url` results in
 a new upload leading to file duplication.
 
 If you would like Uploadcare to keep track of the requested URLs and avoid the duplicate
-uploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.
-",
+uploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.",
               "errors": [
                 "root.FromUrlUploadRequestBadRequestError",
                 "root.FromUrlUploadRequestForbiddenError",
@@ -4882,8 +4865,7 @@ Log.d("TAG", file.toString())
                       "default": "0",
                       "docs": "If set to "1", enables the `source_url` duplicates prevention.
 Specifically, if the `source_url` had already been fetched and uploaded previously,
-this request will return information about the already uploaded file.
-",
+this request will return information about the already uploaded file.",
                       "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
                     },
                     "expire": "optional<root.ExpireType>",
@@ -4893,8 +4875,7 @@ If not defined, the file name is obtained from either HTTP
 response headers or the `source_url`'s path.
 
 **Note:** The filename will be sanitized to only contain the following symbols:
-`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.
-",
+`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.",
                       "type": "optional<string>",
                     },
                     "metadata[{key}]": "optional<root.MetadataValue>",
@@ -4902,16 +4883,14 @@ response headers or the `source_url`'s path.
                     "save_URL_duplicates": {
                       "docs": "Determines if the requested `source_url` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
-to the value of the `check_URL_duplicates` parameter.
-",
+to the value of the `check_URL_duplicates` parameter.",
                       "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
                     },
                     "signature": "optional<root.SignatureType>",
                     "source_url": {
                       "docs": "Source URL of the file to fetch and upload.
 
-**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
-",
+**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.",
                       "type": "string",
                       "validation": {
                         "format": "uri",
@@ -4941,13 +4920,13 @@ to the value of the `check_URL_duplicates` parameter.
               "auth": false,
               "display-name": "Check the status of a task to fetch/upload a file from a URL",
               "docs": "The endpoint notifies about the progress of the task by changing the value of the `status` field:
-  * the field is set to `waiting` initially
-  * once the system starts processing the request, the field is set to `progress`
-  * if the file is fetched and uploaded successfully, the `status` field is set to `success`
-    and the endpoint returns a JSON object holding information about the uploaded file
-  * if the system fails to fetch/upload the file, the `status` field is set to `error` and
-    the `error` field is set to the cause of the error.
-",
+
+- the field is set to `waiting` initially
+- once the system starts processing the request, the field is set to `progress`
+- if the file is fetched and uploaded successfully, the `status` field is set to `success`
+  and the endpoint returns a JSON object holding information about the uploaded file
+- if the system fails to fetch/upload the file, the `status` field is set to `error` and
+  the `error` field is set to the cause of the error.",
               "errors": [
                 "root.FromUrlUploadStatusRequestBadRequestError",
               ],
@@ -5533,8 +5512,7 @@ Log.d("TAG", status.toString())
                 },
               },
               "response": {
-                "docs": "Request was processed successfully.
-",
+                "docs": "Request was processed successfully.",
                 "type": "FromUrlUploadStatusResponse",
               },
               "source": {
@@ -5545,8 +5523,7 @@ Log.d("TAG", status.toString())
               "auth": false,
               "display-name": "Complete multipart upload",
               "docs": "Once all the file parts have been uploaded successfully, complete the
-upload session to assemble all the file parts into a single resulting file.
-",
+upload session to assemble all the file parts into a single resulting file.",
               "errors": [
                 "root.MultipartFileUploadCompleteRequestBadRequestError",
                 "root.MultipartFileUploadCompleteRequestForbiddenError",
@@ -5805,8 +5782,7 @@ Log.d("TAG", file.toString())
 Each uploaded part should be at least 5 MiB (5242880 bytes) in size except for the last one, which can be smaller.
 You can upload the file parts in parallel provided that the byte order stays unchanged.
 
-**Note**: You MUST define `Content-Type` header for your data.
-",
+**Note**: You MUST define `Content-Type` header for your data.",
               "examples": [
                 {
                   "code-samples": [
@@ -5932,12 +5908,12 @@ explicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/tran
 When you use Multipart Uploads your files go straight to AWS S3 bypassing our upload instances.
 
 To upload large files, 3 requests are sent in sequence:
+
 1. `/multipart/start/`
 2. `<presigned-url-x>`
 3. `/multipart/complete/`.
 
-**Note**: Multipart uploads support files larger than 10 megabytes only.
-",
+**Note**: Multipart uploads support files larger than 10 megabytes only.",
               "errors": [
                 "root.MultipartFileUploadStartRequestBadRequestError",
                 "root.MultipartFileUploadStartRequestForbiddenError",
@@ -6100,8 +6076,7 @@ By default, we assume that you will upload the files in 5 megabyte chunks,
 so we return a list of presigned AWS S3 URLs accordingly.
 If you intend to upload large files (for example, larger than a gigabyte),
 we recommend to bump the part size and to pass the expected chunk size
-to us as a value of the `part_size` parameter (in bytes).
-",
+to us as a value of the `part_size` parameter (in bytes).",
                       "type": "optional<integer>",
                       "validation": {
                         "exclusiveMax": undefined,
@@ -6114,8 +6089,7 @@ to us as a value of the `part_size` parameter (in bytes).
                     "signature": "optional<root.SignatureType>",
                     "size": {
                       "docs": "Precise file size of the uploaded file (in bytes).
-**Note**: The size should not exceed max file size cap for your project.
-",
+**Note**: The size should not exceed max file size cap for your project.",
                       "type": "integer",
                     },
                   },
@@ -6143,8 +6117,7 @@ to us as a value of the `part_size` parameter (in bytes).
         "types": {
           "BaseUploadResponse": {
             "docs": "JSON object where the key is the file name of the uploaded file and
-the value is the unique ID of the file on our systems.
-",
+the value is the unique ID of the file on our systems.",
             "inline": undefined,
             "properties": {
               "filename": {
@@ -6165,8 +6138,7 @@ the value is the unique ID of the file on our systems.
             "default": "0",
             "docs": "If set to "1", enables the `source_url` duplicates prevention.
 Specifically, if the `source_url` had already been fetched and uploaded previously,
-this request will return information about the already uploaded file.
-",
+this request will return information about the already uploaded file.",
             "enum": [
               {
                 "name": "Zero",
@@ -6184,8 +6156,7 @@ this request will return information about the already uploaded file.
           "FromUrlUploadRequestSaveUrlDuplicates": {
             "docs": "Determines if the requested `source_url` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
-to the value of the `check_URL_duplicates` parameter.
-",
+to the value of the `check_URL_duplicates` parameter.",
             "enum": [
               {
                 "name": "Zero",

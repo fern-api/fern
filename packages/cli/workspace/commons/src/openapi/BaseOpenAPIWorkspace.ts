@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { OpenAPISettings } from "./OpenAPISettings";
 import { FernDefinitionConverter } from "./FernDefinitionConverter";
+import { formatAllDocs } from "../utils";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -46,12 +47,14 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         settings?: BaseOpenAPIWorkspace.Settings
     ): Promise<FernDefinition> {
         const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
-        return this.converter.convert({
+        const definition = this.converter.convert({
             context,
             ir: openApiIr,
             settings,
             absoluteFilePath
         });
+        await formatAllDocs(definition);
+        return definition;
     }
 
     public async toFernWorkspace(

@@ -48,7 +48,7 @@ export async function generateAndSnapshotIR({
         context
     });
 
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace: fernWorkspace,
         generationLanguage: undefined,
         audiences,

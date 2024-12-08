@@ -11,7 +11,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
 
-export async function convertHttpResponse({
+export function convertHttpResponse({
     endpoint,
     file,
     typeResolver
@@ -19,8 +19,8 @@ export async function convertHttpResponse({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponse | undefined> {
-    const responseBody = await convertHttpResponseBody({
+}): HttpResponse | undefined {
+    const responseBody = convertHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -31,7 +31,7 @@ export async function convertHttpResponse({
     };
 }
 
-export async function convertHttpResponseBody({
+export function convertHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -39,14 +39,14 @@ export async function convertHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponseBody | undefined> {
-    const response = await convertNonStreamHttpResponseBody({
+}): HttpResponseBody | undefined {
+    const response = convertNonStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
     });
 
-    const streamResponse = await convertStreamHttpResponseBody({
+    const streamResponse = convertStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -85,7 +85,7 @@ export async function convertHttpResponseBody({
     return undefined;
 }
 
-export async function convertNonStreamHttpResponseBody({
+export function convertNonStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -93,7 +93,7 @@ export async function convertNonStreamHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | undefined> {
+}): HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | undefined {
     const { response } = endpoint;
 
     if (response != null) {
@@ -109,14 +109,14 @@ export async function convertNonStreamHttpResponseBody({
                 docs
             });
         } else {
-            return await convertJsonResponse(response, docs, file, typeResolver);
+            return convertJsonResponse(response, docs, file, typeResolver);
         }
     }
 
     return undefined;
 }
 
-export async function convertStreamHttpResponseBody({
+export function convertStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -124,7 +124,7 @@ export async function convertStreamHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): Promise<StreamingResponse | undefined> {
+}): StreamingResponse | undefined {
     const { ["response-stream"]: responseStream } = endpoint;
 
     if (responseStream != null) {
@@ -153,12 +153,12 @@ export async function convertStreamHttpResponseBody({
     return undefined;
 }
 
-async function convertJsonResponse(
+function convertJsonResponse(
     response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Promise<HttpResponseBody.Json> {
+): HttpResponseBody.Json {
     const responseBodyType = file.parseTypeReference(response);
     const resolvedType = typeResolver.resolveTypeOrThrow({
         type: typeof response !== "string" ? response.type : response,
@@ -170,7 +170,7 @@ async function convertJsonResponse(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty: await getObjectPropertyFromResolvedType({
+                responseProperty: getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
                     resolvedType,

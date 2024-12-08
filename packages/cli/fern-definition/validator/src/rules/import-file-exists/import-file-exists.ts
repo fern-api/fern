@@ -16,7 +16,7 @@ export const ImportFileExistsRule: Rule = {
 
         return {
             definitionFile: {
-                import: async ({ importedAs, importPath }, { relativeFilepath }) => {
+                import: ({ importedAs, importPath }, { relativeFilepath }) => {
                     const violations: RuleViolation[] = [];
                     const importAbsoluteFilepath = join(
                         workspace.definition.absoluteFilePath,

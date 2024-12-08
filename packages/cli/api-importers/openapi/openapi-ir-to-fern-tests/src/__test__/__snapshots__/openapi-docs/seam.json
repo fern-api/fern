@@ -1370,9 +1370,7 @@
                 "type": "optional<datetime>",
               },
               "status": {
-                "docs": "
-    Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
-  ",
+                "docs": "    Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.",
                 "type": "AccessCodeStatus",
               },
               "type": {
@@ -1386,9 +1384,7 @@
             },
           },
           "AccessCodeStatus": {
-            "docs": "
-    Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
-  ",
+            "docs": "    Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.",
             "enum": [
               "setting",
               "set",
@@ -1415,19 +1411,15 @@
             "inline": undefined,
             "properties": {
               "access_group_type": {
-                "docs": "
-    ---
+                "docs": "    ---
     deprecated: use external_type
-    ---
-  ",
+    ---",
                 "type": "AcsAccessGroupAccessGroupType",
               },
               "access_group_type_display_name": {
-                "docs": "
-    ---
+                "docs": "    ---
     deprecated: use external_type_display_name
-    ---
-    ",
+    ---",
                 "type": "string",
               },
               "acs_access_group_id": {
@@ -1468,11 +1460,9 @@
             },
           },
           "AcsAccessGroupAccessGroupType": {
-            "docs": "
-    ---
+            "docs": "    ---
     deprecated: use external_type
-    ---
-  ",
+    ---",
             "enum": [
               "pti_unit",
               "pti_access_level",
@@ -1871,19 +1861,17 @@
               "image_url": "string",
               "name": "string",
               "system_type": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use external_type
       ---
-      ",
+",
                 "type": "optional<AcsSystemSystemType>",
               },
               "system_type_display_name": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use external_type_display_name
       ---
-      ",
+",
                 "type": "optional<string>",
               },
               "warnings": "list<AcsSystemWarningsItem>",
@@ -1953,11 +1941,10 @@
             },
           },
           "AcsSystemSystemType": {
-            "docs": "
-      ---
+            "docs": "      ---
       deprecated: use external_type
       ---
-      ",
+",
             "enum": [
               "pti_site",
               "alta_org",
@@ -2006,11 +1993,9 @@
               "created_at": "datetime",
               "display_name": "string",
               "email": {
-                "docs": "
-    ---
+                "docs": "    ---
     deprecated: use email_address.
-    ---
-    ",
+    ---",
                 "type": "optional<string>",
                 "validation": {
                   "format": "email",
@@ -2216,12 +2201,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2255,12 +2238,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2294,12 +2275,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2322,12 +2301,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2361,12 +2338,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2389,12 +2364,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2428,12 +2401,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2456,12 +2427,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2495,12 +2464,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2523,12 +2490,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2551,12 +2516,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2587,12 +2550,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2626,12 +2587,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2654,12 +2613,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2690,12 +2647,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2726,12 +2681,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2762,12 +2715,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2801,12 +2752,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2829,12 +2778,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2865,12 +2812,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2901,12 +2846,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2937,12 +2880,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -2965,12 +2906,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3004,12 +2943,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3043,12 +2980,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3071,12 +3006,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3099,12 +3032,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3127,12 +3058,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3155,12 +3084,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3183,12 +3110,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3211,12 +3136,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3250,12 +3173,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3278,12 +3199,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3306,12 +3225,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3334,12 +3251,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3373,12 +3288,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3401,12 +3314,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3429,12 +3340,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3468,12 +3377,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3496,12 +3403,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3524,12 +3429,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3563,12 +3466,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3602,12 +3503,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3638,12 +3537,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3677,12 +3574,10 @@
             "inline": true,
             "properties": {
               "action_attempt_id": {
-                "docs": "
-    ---
+                "docs": "    ---
     title: Action Attempt ID
     ---
-    The ID of the action attempt.
-  ",
+    The ID of the action attempt.",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -3791,20 +3686,18 @@
             "inline": undefined,
             "properties": {
               "accepted_devices": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: Unused. Will be removed.
       ---
-      ",
+",
                 "type": "list<string>",
               },
               "accepted_providers": "list<string>",
               "any_device_allowed": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: Unused. Will be removed.
       ---
-      ",
+",
                 "type": "boolean",
               },
               "any_provider_allowed": "boolean",
@@ -4219,12 +4112,11 @@
               "minut_metadata": "optional<DevicePropertiesMinutMetadata>",
               "model": "DevicePropertiesModel",
               "name": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use device.display_name instead
       ---
       Name of the device.
-      ",
+",
                 "type": "string",
               },
               "nest_metadata": "optional<DevicePropertiesNestMetadata>",
@@ -4256,20 +4148,18 @@
               "smartthings_metadata": "optional<DevicePropertiesSmartthingsMetadata>",
               "supported_code_lengths": "optional<list<double>>",
               "supports_accessory_keypad": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
-      ",
+",
                 "type": "optional<boolean>",
               },
               "supports_backup_access_code_pool": "optional<boolean>",
               "supports_offline_access_codes": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use offline_access_codes_enabled
       ---
-      ",
+",
                 "type": "optional<boolean>",
               },
               "tedee_metadata": "optional<DevicePropertiesTedeeMetadata>",
@@ -4744,11 +4634,10 @@
             "inline": true,
             "properties": {
               "accessory_keypad_supported": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
-      ",
+",
                 "type": "optional<boolean>",
               },
               "can_connect_accessory_keypad": {
@@ -5669,12 +5558,11 @@
               },
               "model": "UnmanagedDevicePropertiesModel",
               "name": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use device.display_name instead
       ---
       Name of the device.
-      ",
+",
                 "type": "string",
               },
               "offline_access_codes_enabled": {
@@ -5766,11 +5654,10 @@
             "inline": true,
             "properties": {
               "accessory_keypad_supported": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use device.properties.model.can_connect_accessory_keypad
       ---
-      ",
+",
                 "type": "optional<boolean>",
               },
               "can_connect_accessory_keypad": {
@@ -5897,11 +5784,9 @@
             "properties": {
               "company_name": "string",
               "connect_partner_name": {
-                "docs": "
-    ---
+                "docs": "    ---
     deprecated: use company_name
-    ---
-  ",
+    ---",
                 "type": "optional<string>",
               },
               "is_sandbox": "boolean",
@@ -14323,11 +14208,10 @@ service:
                 "type": "optional<CredentialsCreateRequestVisionlineMetadataCardFunctionType>",
               },
               "is_override_key": {
-                "docs": "
-          ---
+                "docs": "          ---
           deprecated: use override.
           ---
-        ",
+",
                 "type": "optional<boolean>",
               },
               "joiner_acs_credential_ids": "optional<list<string>>",
@@ -16197,11 +16081,9 @@ service:
                       },
                     },
                     "email": {
-                      "docs": "
-    ---
+                      "docs": "    ---
     deprecated: use email_address.
-    ---
-    ",
+    ---",
                       "type": "optional<string>",
                       "validation": {
                         "format": "email",
@@ -16786,11 +16668,9 @@ service:
                       },
                     },
                     "email": {
-                      "docs": "
-    ---
+                      "docs": "    ---
     deprecated: use email_address.
-    ---
-    ",
+    ---",
                       "type": "optional<string>",
                       "validation": {
                         "format": "email",
@@ -30832,11 +30712,9 @@ service:
             "inline": undefined,
             "properties": {
               "accessible_devices": {
-                "docs": "
-      ---
+                "docs": "      ---
       deprecated: use devices.
-      ---
-    ",
+      ---",
                 "type": "list<root.Device>",
               },
               "devices": "list<root.Device>",
@@ -32659,11 +32537,9 @@ service:
                   "properties": {
                     "company_name": "optional<string>",
                     "connect_partner_name": {
-                      "docs": "
-    ---
+                      "docs": "    ---
     deprecated: use company_name
-    ---
-  ",
+    ---",
                       "type": "optional<string>",
                     },
                     "is_sandbox": {

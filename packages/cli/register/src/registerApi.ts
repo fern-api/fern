@@ -27,7 +27,7 @@ export async function registerApi({
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: undefined,

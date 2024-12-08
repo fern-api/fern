@@ -1,13 +1,8 @@
-const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
-
-export async function formatDocs(docs: string | undefined): Promise<string | undefined> {
-    if (docs == null || isBrowser) {
+export function formatDocs(docs: string | undefined): string | undefined {
+    if (docs == null) {
         return undefined;
     }
-    const prettier = await import("prettier");
-    const formattedDocs = prettier.format(docs, {
-        parser: "markdown"
-    });
+    const formattedDocs = docs;
     if (formattedDocs.endsWith("\n") || formattedDocs.endsWith("\r")) {
         return formattedDocs.substring(0, formattedDocs.length - 1);
     }

@@ -1254,7 +1254,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "inline": undefined,
             "properties": {
               "batch_id": {
-                "docs": "Unique identifier for the batch of Logs to include in the Evaluation Report. ",
+                "docs": "Unique identifier for the batch of Logs to include in the Evaluation Report.",
                 "type": "optional<string>",
               },
               "orchestrated": {
@@ -1344,8 +1344,7 @@ function.",
 - `"pending"`: The Evaluation has been created but is not actively being worked on by Humanloop.
 - `"running"`: Humanloop is checking for any missing Logs and Evaluator Logs, and will generate them where appropriate.
 - `"completed"`: All Logs an Evaluator Logs have been generated.
-- `"cancelled"`: The Evaluation has been cancelled by the user. Humanloop will stop generating Logs and Evaluator Logs.
-",
+- `"cancelled"`: The Evaluation has been cancelled by the user. Humanloop will stop generating Logs and Evaluator Logs.",
                 "type": "EvaluationStatus",
               },
               "updated_at": {
@@ -1661,7 +1660,7 @@ function.",
             "inline": undefined,
             "properties": {
               "created_at": {
-                "docs": "User defined timestamp for when the feedback was created. ",
+                "docs": "User defined timestamp for when the feedback was created.",
                 "type": "optional<datetime>",
               },
               "data_id": {
@@ -1987,7 +1986,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
                 "type": "optional<string>",
               },
               "id": {
-                "docs": "The ID of the linked tool. Starts with "oc_"",
+                "docs": "The ID of the linked tool. Starts with "oc\_"",
                 "type": "string",
               },
               "name": {
@@ -2104,7 +2103,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
                 "type": "optional<string>",
               },
               "created_at": {
-                "docs": "User defined timestamp for when the log was created. ",
+                "docs": "User defined timestamp for when the log was created.",
                 "type": "optional<datetime>",
               },
               "duration": {
@@ -2824,7 +2823,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "inline": undefined,
             "properties": {
               "created_at": {
-                "docs": "User defined timestamp for when the log was created. ",
+                "docs": "User defined timestamp for when the log was created.",
                 "type": "optional<datetime>",
               },
               "error": {
@@ -2922,7 +2921,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<boolean>",
               },
               "session_id": {
-                "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests. ",
+                "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests.",
                 "type": "optional<string>",
               },
               "source": {
@@ -2934,10 +2933,11 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<string>",
               },
               "tool_choice": {
-                "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+                "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
                 "type": "optional<PromptCallResponseToolChoice>",
               },
@@ -2952,10 +2952,11 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptCallResponseToolChoice": {
             "discriminated": false,
-            "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+            "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
             "inline": true,
@@ -2976,7 +2977,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "inline": undefined,
             "properties": {
               "created_at": {
-                "docs": "User defined timestamp for when the log was created. ",
+                "docs": "User defined timestamp for when the log was created.",
                 "type": "optional<datetime>",
               },
               "error": {
@@ -3136,7 +3137,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<list<string>>",
               },
               "created_at": {
-                "docs": "User defined timestamp for when the log was created. ",
+                "docs": "User defined timestamp for when the log was created.",
                 "type": "optional<datetime>",
               },
               "environment": {
@@ -3221,7 +3222,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<boolean>",
               },
               "session_id": {
-                "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests. ",
+                "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests.",
                 "type": "optional<string>",
               },
               "source": {
@@ -3233,10 +3234,11 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<string>",
               },
               "tool_choice": {
-                "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+                "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
                 "type": "optional<PromptLogResponseToolChoice>",
               },
@@ -3251,10 +3253,11 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "PromptLogResponseToolChoice": {
             "discriminated": false,
-            "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+            "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
             "inline": true,
@@ -3286,7 +3289,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
                 "type": "optional<UserResponse>",
               },
               "directory_id": {
-                "docs": "Unique identifier for the Directory of the Prompt. ",
+                "docs": "Unique identifier for the Directory of the Prompt.",
                 "type": "optional<string>",
               },
               "endpoint": {
@@ -3736,7 +3739,7 @@ Does not have things like the signature or setup schema.",
                 "type": "optional<UserResponse>",
               },
               "directory_id": {
-                "docs": "Unique identifier for the Directory of the Prompt. ",
+                "docs": "Unique identifier for the Directory of the Prompt.",
                 "type": "optional<string>",
               },
               "environments": {
@@ -7107,9 +7110,7 @@ inputs such as `{_dedupe_id: <unique ID>}`.
 Datasets have immutable versions. To add/remove Datapoint to/from an existing version, use the **Create** endpoint
 and specify `action` as `"add"` or `"remove"` respectively. You may also specify the `version_id` or `environment`
 query parameters to identify the existing version to base the new version on. If neither is provided, the version
-deployed to the default Environment will be used.
-
-",
+deployed to the default Environment will be used.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -7290,9 +7291,9 @@ exists, it will be ignored.",
                     "action": {
                       "docs": "The action to take with the provided Datapoints.
 
- - If `"set"`, the created version will only contain the Datapoints provided in this request. 
- - If `"add"`, the created version will contain the Datapoints provided in this request in addition to the Datapoints in the target version. 
- - If `"remove"`, the created version will contain the Datapoints in the target version except for the Datapoints provided in this request. 
+- If `"set"`, the created version will only contain the Datapoints provided in this request.
+- If `"add"`, the created version will contain the Datapoints provided in this request in addition to the Datapoints in the target version.
+- If `"remove"`, the created version will contain the Datapoints in the target version except for the Datapoints provided in this request.
 
 If `"add"` or `"remove"`, one of the `version_id` or `environment` query parameters may be provided.",
                       "type": "optional<root.UpdateDatesetAction>",
@@ -8557,9 +8558,7 @@ for each Evaluatee. The Evaluators will then be run on these Logs.
 Aggregate stats can be viewed in the Humanloop app or retrieved with the **Get Evaluation Stats** endpoint.
 
 Note that when an Evaluation is created, Humanloop will attempt to reuse any existing Logs for each Datapoint-Evaluatee
-pair. This means that you can create multiple Evaluations without generating new Logs unnecessarily.
-
-",
+pair. This means that you can create multiple Evaluations without generating new Logs unnecessarily.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -10377,7 +10376,7 @@ an exception will be raised.",
                 "body": {
                   "properties": {
                     "datapoint_ids": {
-                      "docs": "The IDs of the evaluation datapoints on which to run the draft evaluator. ",
+                      "docs": "The IDs of the evaluation datapoints on which to run the draft evaluator.",
                       "type": "optional<list<string>>",
                     },
                     "evaluator": {
@@ -10604,7 +10603,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     "type": "optional<string>",
                   },
                   "version_id": {
-                    "docs": "A specific Version Id  of the Evaluator to retrieve.",
+                    "docs": "A specific Version Id of the Evaluator to retrieve.",
                     "type": "optional<string>",
                   },
                 },
@@ -11767,10 +11766,7 @@ Evaluator Logs are also created when an Evaluator is run on a Log.
 
 You can manually create Logs through the API.
 
-...
-
-
-",
+...",
         "imports": {
           "root": "__package__.yml",
         },
@@ -12418,9 +12414,7 @@ or `environment` query parameter in the request. If you provide a `version_id`, 
 use the specified version of the Prompt. If you provide an `environment`, Humanloop will use the
 version of the Prompt that is currently deployed to that Environment.
 If you do not provide either a `version_id` or `environment`, Humanloop will use the Prompt version
-that is deployed to the default Environment.
-
-",
+that is deployed to the default Environment.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -12639,7 +12633,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "type": "optional<boolean>",
                     },
                     "session_id": {
-                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests. ",
+                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests.",
                       "type": "optional<string>",
                     },
                     "source": {
@@ -12660,10 +12654,11 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "type": "optional<string>",
                     },
                     "tool_choice": {
-                      "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+                      "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
                       "type": "optional<PromptCallRequestToolChoice>",
                     },
@@ -12913,7 +12908,7 @@ an exception will be raised.",
                       "type": "optional<string>",
                     },
                     "directory_id": {
-                      "docs": "Unique identifier for the Directory of the Prompt. ",
+                      "docs": "Unique identifier for the Directory of the Prompt.",
                       "type": "optional<string>",
                     },
                     "endpoint": {
@@ -13253,7 +13248,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "type": "optional<string>",
                   },
                   "version_id": {
-                    "docs": "A specific Version Id  of the Prompt to retrieve.",
+                    "docs": "A specific Version Id of the Prompt to retrieve.",
                     "type": "optional<string>",
                   },
                 },
@@ -13558,7 +13553,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "type": "optional<list<string>>",
                     },
                     "created_at": {
-                      "docs": "User defined timestamp for when the log was created. ",
+                      "docs": "User defined timestamp for when the log was created.",
                       "type": "optional<datetime>",
                     },
                     "environment": {
@@ -13640,7 +13635,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "type": "optional<boolean>",
                     },
                     "session_id": {
-                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests. ",
+                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests.",
                       "type": "optional<string>",
                     },
                     "source": {
@@ -13652,10 +13647,11 @@ in the case where you are storing or deriving your Prompt details in code.",
                       "type": "optional<string>",
                     },
                     "tool_choice": {
-                      "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+                      "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
                       "type": "optional<PromptLogRequestToolChoice>",
                     },
@@ -13786,7 +13782,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "body": {
                   "properties": {
                     "directory_id": {
-                      "docs": "Unique identifier for the Directory of the Prompt. ",
+                      "docs": "Unique identifier for the Directory of the Prompt.",
                       "type": "optional<string>",
                     },
                     "name": {
@@ -13925,10 +13921,11 @@ within the Prompt for monitoring purposes.",
         "types": {
           "PromptCallRequestToolChoice": {
             "discriminated": false,
-            "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+            "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
             "inline": true,
@@ -13946,10 +13943,11 @@ within the Prompt for monitoring purposes.",
           },
           "PromptLogRequestToolChoice": {
             "discriminated": false,
-            "docs": "Controls how the model uses tools. The following options are supported: 
-- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt. 
-- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
-- `'required'` means the model can decide to call one or more of the provided tools. 
+            "docs": "Controls how the model uses tools. The following options are supported:
+
+- `'none'` means the model will not call any tool and instead generates a message; this is the default when no tools are provided as part of the Prompt.
+- `'auto'` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt.
+- `'required'` means the model can decide to call one or more of the provided tools.
 - `{'type': 'function', 'function': {name': <TOOL_NAME>}}` forces the model to use the named function.",
             "encoding": undefined,
             "inline": true,
@@ -15366,9 +15364,7 @@ generated text.
 
 Logs within a Session may be nested within each other. When Evaluators are run
 for monitoring, the Evaluator Logs are added to the Session that the evaluated
-Log is in, nested within the evaluated Log.
-
-",
+Log is in, nested within the evaluated Log.",
         "imports": {
           "root": "__package__.yml",
         },
@@ -15964,7 +15960,7 @@ an exception will be raised.",
                       "type": "optional<string>",
                     },
                     "directory_id": {
-                      "docs": "Unique identifier for the Directory of the Prompt. ",
+                      "docs": "Unique identifier for the Directory of the Prompt.",
                       "type": "optional<string>",
                     },
                     "function": {
@@ -16207,7 +16203,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "type": "optional<string>",
                   },
                   "version_id": {
-                    "docs": "A specific Version Id  of the Tool to retrieve.",
+                    "docs": "A specific Version Id of the Tool to retrieve.",
                     "type": "optional<string>",
                   },
                 },
@@ -16509,7 +16505,7 @@ in the case where you are storing or deriving your Tool details in code.",
                       "type": "optional<list<string>>",
                     },
                     "created_at": {
-                      "docs": "User defined timestamp for when the log was created. ",
+                      "docs": "User defined timestamp for when the log was created.",
                       "type": "optional<datetime>",
                     },
                     "environment": {
@@ -16559,7 +16555,7 @@ in the case where you are storing or deriving your Tool details in code.",
                       "type": "optional<boolean>",
                     },
                     "session_id": {
-                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests. ",
+                      "docs": "Unique identifier for the Session to associate the Log to. Allows you to record multiple Logs to a Session (using an ID kept by your internal systems) by passing the same `session_id` in subsequent log requests.",
                       "type": "optional<string>",
                     },
                     "source": {
@@ -16677,7 +16673,7 @@ in the case where you are storing or deriving your Tool details in code.",
                 "body": {
                   "properties": {
                     "directory_id": {
-                      "docs": "Unique identifier for the Directory of the Prompt. ",
+                      "docs": "Unique identifier for the Directory of the Prompt.",
                       "type": "optional<string>",
                     },
                     "name": {

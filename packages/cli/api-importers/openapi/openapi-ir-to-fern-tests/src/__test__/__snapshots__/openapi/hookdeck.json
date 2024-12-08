@@ -1552,7 +1552,7 @@
                 "type": "optional<integer>",
               },
               "created_at": {
-                "docs": "	Date the event was created",
+                "docs": "    Date the event was created",
                 "type": "datetime",
               },
               "data": "optional<RequestData>",

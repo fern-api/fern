@@ -30,7 +30,7 @@ export async function generateJsonschemaForWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
 
-                const intermediateRepresentation = await generateIntermediateRepresentation({
+                const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage: undefined,

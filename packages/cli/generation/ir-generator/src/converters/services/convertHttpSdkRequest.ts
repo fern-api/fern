@@ -10,7 +10,7 @@ import { getRequestPropertyComponents } from "./convertProperty";
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
-export async function convertHttpSdkRequest({
+export function convertHttpSdkRequest({
     request,
     endpointKey,
     endpoint,
@@ -26,7 +26,7 @@ export async function convertHttpSdkRequest({
     file: FernFileContext;
     typeResolver: TypeResolver;
     propertyResolver: PropertyResolver;
-}): Promise<SdkRequest | undefined> {
+}): SdkRequest | undefined {
     const shape = convertHttpSdkRequestShape({ request, service, file, typeResolver });
     if (shape == null) {
         return undefined;
@@ -36,7 +36,7 @@ export async function convertHttpSdkRequest({
         requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
         streamParameter:
             endpoint["stream-condition"] != null
-                ? await propertyResolver.resolveRequestPropertyOrThrow({
+                ? propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointKey,
                       propertyComponents: getRequestPropertyComponents(endpoint["stream-condition"])

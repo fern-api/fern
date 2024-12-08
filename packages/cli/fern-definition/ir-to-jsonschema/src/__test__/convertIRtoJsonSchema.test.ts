@@ -30,7 +30,7 @@ describe("convertIRtoJsonSchema", async () => {
                 context
             });
 
-            const intermediateRepresentation = await generateIntermediateRepresentation({
+            const intermediateRepresentation = generateIntermediateRepresentation({
                 workspace: fernWorkspace,
                 generationLanguage: undefined,
                 audiences: { type: "all" },
