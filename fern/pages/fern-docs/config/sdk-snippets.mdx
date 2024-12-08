@@ -74,6 +74,22 @@ navigation:
 
 As the final step, trigger your docs generation by running `fern generate --docs` locally or in CI/CD (i.e., GitHub Actions). The SDK snippets will now appear via a drop-down!
 
+### Set default snippet 
+
+To set the default snippet shown in the API Reference drop-down, specify the `default-language` in your `docs.yml`. 
+
+<CodeBlock title="docs.yml">
+```yaml {1}
+default-language: typescript
+
+navigation:
+  - api: API Reference
+    snippets:
+      python: your-package-name 
+      typescript: your-package-name
+```
+</CodeBlock>
+
 ## Language support
 
 TypeScript, Python, Go, and Ruby are the supported SDK code snippet languages. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
