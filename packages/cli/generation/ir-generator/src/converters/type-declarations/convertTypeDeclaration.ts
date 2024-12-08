@@ -24,7 +24,7 @@ export interface TypeDeclarationWithDescendantFilepaths {
     propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
-export  function convertTypeDeclaration({
+export function convertTypeDeclaration({
     typeName,
     typeDeclaration,
     file,
@@ -41,7 +41,7 @@ export  function convertTypeDeclaration({
     sourceResolver: SourceResolver;
     workspace: FernWorkspace;
 }): TypeDeclarationWithDescendantFilepaths {
-    const declaration =  convertDeclaration(typeDeclaration);
+    const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
         file
@@ -54,7 +54,7 @@ export  function convertTypeDeclaration({
         propertiesByAudience = getPropertiesByAudience(typeDeclaration.properties ?? {});
     }
 
-    const source =  convertTypeDeclarationSource({
+    const source = convertTypeDeclarationSource({
         file,
         typeDeclaration,
         typeName,
@@ -67,7 +67,7 @@ export  function convertTypeDeclaration({
             ...declaration,
             inline: getInline(typeDeclaration),
             name: declaredTypeName,
-            shape:  convertType({ typeDeclaration, file, typeResolver }),
+            shape: convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
             source,
@@ -100,7 +100,7 @@ export  function convertTypeDeclaration({
     };
 }
 
-export  function convertType({
+export function convertType({
     typeDeclaration,
     file,
     typeResolver
@@ -114,11 +114,11 @@ export  function convertType({
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum:  (enum_) => Type.enum( convertEnumTypeDeclaration({ _enum: enum_, file }))
+        enum: (enum_) => Type.enum(convertEnumTypeDeclaration({ _enum: enum_, file }))
     });
 }
 
- function convertTypeDeclarationSource({
+function convertTypeDeclarationSource({
     file,
     typeDeclaration,
     typeName,
@@ -143,7 +143,7 @@ export  function convertType({
     if (typeDeclaration.source == null) {
         return undefined;
     }
-    const resolvedSource =  sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = sourceResolver.resolveSourceOrThrow({
         source: typeDeclaration.source,
         relativeFilepath: file.relativeFilepath
     });

@@ -7,7 +7,7 @@ import { convertCursorPagination } from "./convertCursorPagination";
 import { convertOffsetPagination } from "./convertOffsetPagination";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils";
 
-export  function convertPagination({
+export function convertPagination({
     propertyResolver,
     file,
     endpointName,
@@ -26,7 +26,7 @@ export  function convertPagination({
     const paginationPropertyComponents = getPaginationPropertyComponents(endpointPagination);
     switch (paginationPropertyComponents.type) {
         case "cursor":
-            return  convertCursorPagination({
+            return convertCursorPagination({
                 propertyResolver,
                 file,
                 endpointName,

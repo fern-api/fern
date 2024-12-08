@@ -8,7 +8,7 @@ import {
     getObjectPropertyFromResolvedType
 } from "./getObjectPropertyFromResolvedType";
 
-export  function getNestedObjectPropertyFromResolvedType({
+export function getNestedObjectPropertyFromResolvedType({
     typeResolver,
     file,
     resolvedType,
@@ -23,7 +23,7 @@ export  function getNestedObjectPropertyFromResolvedType({
         return undefined;
     }
     if (propertyComponents.length === 1) {
-        return  getObjectPropertyFromResolvedType({
+        return getObjectPropertyFromResolvedType({
             typeResolver,
             file,
             resolvedType,
@@ -42,7 +42,7 @@ export  function getNestedObjectPropertyFromResolvedType({
     });
 }
 
-export  function getNestedObjectPropertyFromObjectSchema({
+export function getNestedObjectPropertyFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -57,14 +57,14 @@ export  function getNestedObjectPropertyFromObjectSchema({
         return undefined;
     }
     if (propertyComponents.length === 1) {
-        return  getObjectPropertyFromObjectSchema({
+        return getObjectPropertyFromObjectSchema({
             typeResolver,
             file,
             objectSchema,
             property: propertyComponents[0] ?? ""
         });
     }
-    const propertyType =  getPropertyTypeFromObjectSchema({
+    const propertyType = getPropertyTypeFromObjectSchema({
         typeResolver,
         file,
         objectSchema,
@@ -82,7 +82,7 @@ export  function getNestedObjectPropertyFromObjectSchema({
     });
 }
 
-export  function getPropertyTypeFromObjectSchema({
+export function getPropertyTypeFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -93,7 +93,7 @@ export  function getPropertyTypeFromObjectSchema({
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
 }): string {
-    const properties =  getAllPropertiesForRawObjectSchema({
+    const properties = getAllPropertiesForRawObjectSchema({
         typeResolver,
         file,
         objectSchema
@@ -105,7 +105,7 @@ export  function getPropertyTypeFromObjectSchema({
     return propertyType;
 }
 
- function getAllPropertiesForRawObjectSchema({
+function getAllPropertiesForRawObjectSchema({
     typeResolver,
     file,
     objectSchema
@@ -123,7 +123,7 @@ export  function getPropertyTypeFromObjectSchema({
 
     const properties: Record<string, string> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties =  getAllPropertiesForExtendedType({
+        const extendedProperties = getAllPropertiesForExtendedType({
             typeResolver,
             file,
             extendedType
@@ -142,7 +142,7 @@ export  function getPropertyTypeFromObjectSchema({
     return properties;
 }
 
- function getAllPropertiesForExtendedType({
+function getAllPropertiesForExtendedType({
     typeResolver,
     file,
     extendedType
@@ -156,7 +156,7 @@ export  function getPropertyTypeFromObjectSchema({
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return  getAllPropertiesForRawObjectSchema({
+        return getAllPropertiesForRawObjectSchema({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
             objectSchema: resolvedType.declaration

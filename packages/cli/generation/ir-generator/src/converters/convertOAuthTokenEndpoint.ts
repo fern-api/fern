@@ -6,7 +6,7 @@ import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { TokenEndpoint } from "./convertOAuthUtils";
 
-export  function convertOAuthTokenEndpoint({
+export function convertOAuthTokenEndpoint({
     endpointResolver,
     propertyResolver,
     file,
@@ -17,7 +17,7 @@ export  function convertOAuthTokenEndpoint({
     file: FernFileContext;
     tokenEndpoint: TokenEndpoint;
 }): OAuthTokenEndpoint | undefined {
-    const resolvedEndpoint =  endpointResolver.resolveEndpointOrThrow({
+    const resolvedEndpoint = endpointResolver.resolveEndpointOrThrow({
         endpoint: tokenEndpoint.endpoint,
         file
     });
@@ -30,19 +30,19 @@ export  function convertOAuthTokenEndpoint({
                 : undefined
         },
         requestProperties: {
-            clientId:  propertyResolver.resolveRequestPropertyOrThrow({
+            clientId: propertyResolver.resolveRequestPropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.requestProperties.client_id
             }),
-            clientSecret:  propertyResolver.resolveRequestPropertyOrThrow({
+            clientSecret: propertyResolver.resolveRequestPropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.requestProperties.client_secret
             }),
             scopes:
                 tokenEndpoint.requestProperties.scopes != null
-                    ?  propertyResolver.resolveRequestPropertyOrThrow({
+                    ? propertyResolver.resolveRequestPropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.requestProperties.scopes
@@ -50,14 +50,14 @@ export  function convertOAuthTokenEndpoint({
                     : undefined
         },
         responseProperties: {
-            accessToken:  propertyResolver.resolveResponsePropertyOrThrow({
+            accessToken: propertyResolver.resolveResponsePropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.responseProperties.access_token
             }),
             expiresIn:
                 tokenEndpoint.responseProperties.expires_in != null
-                    ?  propertyResolver.resolveResponsePropertyOrThrow({
+                    ? propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.responseProperties.expires_in
@@ -65,7 +65,7 @@ export  function convertOAuthTokenEndpoint({
                     : undefined,
             refreshToken:
                 tokenEndpoint.responseProperties.refresh_token != null
-                    ?  propertyResolver.resolveResponsePropertyOrThrow({
+                    ? propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.responseProperties.refresh_token

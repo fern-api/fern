@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 
-export  function convertQueryParameter({
+export function convertQueryParameter({
     file,
     queryParameterKey,
     queryParameter
@@ -15,7 +15,7 @@ export  function convertQueryParameter({
     const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
     const valueType = file.parseTypeReference(queryParameter);
     return {
-        ...( convertDeclaration(queryParameter)),
+        ...convertDeclaration(queryParameter),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: queryParameterKey,
             name

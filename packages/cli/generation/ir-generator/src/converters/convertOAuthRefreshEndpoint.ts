@@ -6,7 +6,7 @@ import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { RefreshTokenEndpoint } from "./convertOAuthUtils";
 
-export  function convertOAuthRefreshEndpoint({
+export function convertOAuthRefreshEndpoint({
     endpointResolver,
     propertyResolver,
     file,
@@ -17,7 +17,7 @@ export  function convertOAuthRefreshEndpoint({
     file: FernFileContext;
     refreshTokenEndpoint: RefreshTokenEndpoint;
 }): OAuthRefreshEndpoint | undefined {
-    const resolvedEndpoint =  endpointResolver.resolveEndpointOrThrow({
+    const resolvedEndpoint = endpointResolver.resolveEndpointOrThrow({
         endpoint: refreshTokenEndpoint.endpoint,
         file
     });
@@ -30,21 +30,21 @@ export  function convertOAuthRefreshEndpoint({
                 : undefined
         },
         requestProperties: {
-            refreshToken:  propertyResolver.resolveRequestPropertyOrThrow({
+            refreshToken: propertyResolver.resolveRequestPropertyOrThrow({
                 file,
                 endpoint: refreshTokenEndpoint.endpoint,
                 propertyComponents: refreshTokenEndpoint.requestProperties.refresh_token
             })
         },
         responseProperties: {
-            accessToken:  propertyResolver.resolveResponsePropertyOrThrow({
+            accessToken: propertyResolver.resolveResponsePropertyOrThrow({
                 file,
                 endpoint: refreshTokenEndpoint.endpoint,
                 propertyComponents: refreshTokenEndpoint.responseProperties.access_token
             }),
             expiresIn:
                 refreshTokenEndpoint.responseProperties.expires_in != null
-                    ?  propertyResolver.resolveResponsePropertyOrThrow({
+                    ? propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: refreshTokenEndpoint.endpoint,
                           propertyComponents: refreshTokenEndpoint.responseProperties.expires_in
@@ -52,7 +52,7 @@ export  function convertOAuthRefreshEndpoint({
                     : undefined,
             refreshToken:
                 refreshTokenEndpoint.responseProperties.refresh_token != null
-                    ?  propertyResolver.resolveResponsePropertyOrThrow({
+                    ? propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: refreshTokenEndpoint.endpoint,
                           propertyComponents: refreshTokenEndpoint.responseProperties.refresh_token

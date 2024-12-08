@@ -6,7 +6,7 @@ import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
 
-export  function getObjectPropertyFromResolvedType({
+export function getObjectPropertyFromResolvedType({
     typeResolver,
     file,
     resolvedType,
@@ -20,7 +20,7 @@ export  function getObjectPropertyFromResolvedType({
     switch (resolvedType._type) {
         case "container":
             if (resolvedType.container._type === "optional") {
-                return  getObjectPropertyFromResolvedType({
+                return getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
                     resolvedType: resolvedType.container.itemType,
@@ -30,7 +30,7 @@ export  function getObjectPropertyFromResolvedType({
             break;
         case "named":
             if (isRawObjectDefinition(resolvedType.declaration)) {
-                return  getObjectPropertyFromObjectSchema({
+                return getObjectPropertyFromObjectSchema({
                     typeResolver,
                     file: resolvedType.file,
                     objectSchema: resolvedType.declaration,
@@ -47,7 +47,7 @@ export  function getObjectPropertyFromResolvedType({
     throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
 
-export  function getObjectPropertyFromObjectSchema({
+export function getObjectPropertyFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -58,7 +58,7 @@ export  function getObjectPropertyFromObjectSchema({
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
 }): ObjectProperty {
-    const properties =  getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
+    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     const objectProperty = properties[property];
     if (objectProperty == null) {
         throw new Error(`Object does not have a property named ${property}.`);
@@ -66,7 +66,7 @@ export  function getObjectPropertyFromObjectSchema({
     return objectProperty;
 }
 
- function getAllPropertiesForRawObjectSchema(
+function getAllPropertiesForRawObjectSchema(
     objectSchema: RawSchemas.ObjectSchema,
     file: FernFileContext,
     typeResolver: TypeResolver
@@ -80,13 +80,13 @@ export  function getObjectPropertyFromObjectSchema({
 
     const properties: Record<string, ObjectProperty> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties =  getAllPropertiesForExtendedType(extendedType, file, typeResolver);
+        const extendedProperties = getAllPropertiesForExtendedType(extendedType, file, typeResolver);
         Object.entries(extendedProperties).map(([propertyKey, objectProperty]) => {
             properties[propertyKey] = objectProperty;
         });
     }
 
-    const objectProperties =  getObjectPropertiesFromRawObjectSchema(objectSchema, file);
+    const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
         properties[objectProperty.name.name.originalName] = objectProperty;
     });
@@ -94,7 +94,7 @@ export  function getObjectPropertyFromObjectSchema({
     return properties;
 }
 
- function getAllPropertiesForExtendedType(
+function getAllPropertiesForExtendedType(
     extendedType: string,
     file: FernFileContext,
     typeResolver: TypeResolver
@@ -104,7 +104,7 @@ export  function getObjectPropertyFromObjectSchema({
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return  getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
+        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // This should be unreachable; extended types must be named objects.
     throw new Error(`Extended type ${extendedType} must be another named type`);

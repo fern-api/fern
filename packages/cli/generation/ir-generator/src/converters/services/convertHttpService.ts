@@ -35,7 +35,7 @@ import { convertResponseErrors } from "./convertResponseErrors";
 import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 
-export  function convertHttpService({
+export function convertHttpService({
     rootDefaultUrl,
     rootPathParameters,
     serviceDefinition,
@@ -62,14 +62,14 @@ export  function convertHttpService({
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
 }): HttpService {
-    const servicePathParameters =  convertPathParameters({
+    const servicePathParameters = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
         variableResolver
     });
 
-    const transport =  getTransportForService({
+    const transport = getTransportForService({
         file,
         serviceDeclaration: serviceDefinition,
         sourceResolver
@@ -84,116 +84,115 @@ export  function convertHttpService({
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
-                    convertHttpHeader({ headerKey, header, file })
-                )
+                      convertHttpHeader({ headerKey, header, file })
+                  )
                 : [],
         pathParameters: servicePathParameters,
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
-        endpoints:
-            Object.entries(serviceDefinition.endpoints).map( ([endpointKey, endpoint]): HttpEndpoint => {
-                const endpointPathParameters =  convertPathParameters({
-                    pathParameters: getEndpointPathParameters(endpoint),
-                    location: PathParameterLocation.Endpoint,
+        endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
+            const endpointPathParameters = convertPathParameters({
+                pathParameters: getEndpointPathParameters(endpoint),
+                location: PathParameterLocation.Endpoint,
+                file,
+                variableResolver
+            });
+            const httpEndpoint: HttpEndpoint = {
+                ...convertDeclaration(endpoint),
+                id: "",
+                name: file.casingsGenerator.generateName(endpointKey),
+                displayName: endpoint["display-name"],
+                auth: endpoint.auth ?? serviceDefinition.auth,
+                idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
+                baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
+                method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
+                path: constructHttpPath(endpoint.path),
+                fullPath: constructHttpPath(
+                    endpoint["base-path"] != null
+                        ? urlJoin(endpoint["base-path"], endpoint.path)
+                        : file.rootApiFile["base-path"] != null
+                        ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                        : urlJoin(serviceDefinition["base-path"], endpoint.path)
+                ),
+                pathParameters: endpointPathParameters,
+                allPathParameters:
+                    endpoint["base-path"] != null
+                        ? endpointPathParameters
+                        : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
+                queryParameters:
+                    typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
+                        ? Object.entries(endpoint.request["query-parameters"]).map(
+                              ([queryParameterKey, queryParameter]) => {
+                                  return convertQueryParameter({
+                                      file,
+                                      queryParameterKey,
+                                      queryParameter
+                                  });
+                              }
+                          )
+                        : [],
+                headers:
+                    typeof endpoint.request !== "string" && endpoint.request?.headers != null
+                        ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
+                              convertHttpHeader({ headerKey, header, file })
+                          )
+                        : [],
+                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                sdkRequest: convertHttpSdkRequest({
+                    service: serviceDefinition,
+                    request: endpoint.request,
+                    endpoint,
+                    endpointKey,
                     file,
-                    variableResolver
-                });
-                const httpEndpoint: HttpEndpoint = {
-                    ...( convertDeclaration(endpoint)),
-                    id: "",
-                    name: file.casingsGenerator.generateName(endpointKey),
-                    displayName: endpoint["display-name"],
-                    auth: endpoint.auth ?? serviceDefinition.auth,
-                    idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
-                    baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
-                    method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                    basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
-                    path: constructHttpPath(endpoint.path),
-                    fullPath: constructHttpPath(
-                        endpoint["base-path"] != null
-                            ? urlJoin(endpoint["base-path"], endpoint.path)
-                            : file.rootApiFile["base-path"] != null
-                            ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
-                            : urlJoin(serviceDefinition["base-path"], endpoint.path)
-                    ),
-                    pathParameters: endpointPathParameters,
-                    allPathParameters:
-                        endpoint["base-path"] != null
-                            ? endpointPathParameters
-                            : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
-                    queryParameters:
-                        typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                            ? Object.entries(endpoint.request["query-parameters"]).map(
-                                       ([queryParameterKey, queryParameter]) => {
-                                          return  convertQueryParameter({
-                                              file,
-                                              queryParameterKey,
-                                              queryParameter
-                                          });
-                                      }
-                              )
-                            : [],
-                    headers:
-                        typeof endpoint.request !== "string" && endpoint.request?.headers != null
-                            ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
-                                      convertHttpHeader({ headerKey, header, file })
+                    typeResolver,
+                    propertyResolver
+                }),
+                response: convertHttpResponse({ endpoint, file, typeResolver }),
+                errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
+                userSpecifiedExamples:
+                    endpoint.examples != null
+                        ? endpoint.examples.map((example) => {
+                              return {
+                                  example: convertExampleEndpointCall({
+                                      service: serviceDefinition,
+                                      endpoint,
+                                      example,
+                                      typeResolver,
+                                      errorResolver,
+                                      exampleResolver,
+                                      variableResolver,
+                                      file,
+                                      workspace
+                                  }),
+                                  codeSamples: example["code-samples"]?.map((codeSample) =>
+                                      convertCodeSample({ codeSample, file })
                                   )
-                            : [],
-                    requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest:  convertHttpSdkRequest({
-                        service: serviceDefinition,
-                        request: endpoint.request,
-                        endpoint,
-                        endpointKey,
-                        file,
-                        typeResolver,
-                        propertyResolver
-                    }),
-                    response:  convertHttpResponse({ endpoint, file, typeResolver }),
-                    errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
-                    userSpecifiedExamples:
-                        endpoint.examples != null
-                            ? endpoint.examples.map((example) => {
-                                  return {
-                                      example: convertExampleEndpointCall({
-                                          service: serviceDefinition,
-                                          endpoint,
-                                          example,
-                                          typeResolver,
-                                          errorResolver,
-                                          exampleResolver,
-                                          variableResolver,
-                                          file,
-                                          workspace
-                                      }),
-                                      codeSamples: example["code-samples"]?.map((codeSample) =>
-                                          convertCodeSample({ codeSample, file })
-                                      )
-                                  };
-                              })
-                            : [],
-                    autogeneratedExamples: [], // gets filled in later on
-                    pagination:  convertPagination({
-                        propertyResolver,
-                        file,
-                        endpointName: endpointKey,
-                        endpointSchema: endpoint
-                    }),
-                    transport:  getTransportForEndpoint({
-                        file,
-                        serviceTransport: transport,
-                        endpointDeclaration: endpoint,
-                        sourceResolver
-                    })
-                };
-                httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
-                return httpEndpoint;
-            })
+                              };
+                          })
+                        : [],
+                autogeneratedExamples: [], // gets filled in later on
+                pagination: convertPagination({
+                    propertyResolver,
+                    file,
+                    endpointName: endpointKey,
+                    endpointSchema: endpoint
+                }),
+                transport: getTransportForEndpoint({
+                    file,
+                    serviceTransport: transport,
+                    endpointDeclaration: endpoint,
+                    sourceResolver
+                })
+            };
+            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            return httpEndpoint;
+        })
     };
     return service;
 }
 
-export  function convertPathParameters({
+export function convertPathParameters({
     pathParameters,
     location,
     file,
@@ -218,7 +217,7 @@ export  function convertPathParameters({
     );
 }
 
- function convertPathParameter({
+function convertPathParameter({
     parameterName,
     parameter,
     location,
@@ -232,7 +231,7 @@ export  function convertPathParameters({
     variableResolver: VariableResolver;
 }): PathParameter {
     return {
-        ...( convertDeclaration(parameter)),
+        ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
@@ -330,7 +329,7 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
     }
 }
 
-export  function convertHttpHeader({
+export function convertHttpHeader({
     headerKey,
     header,
     file
@@ -341,7 +340,7 @@ export  function convertHttpHeader({
 }): HttpHeader {
     const { name } = getHeaderName({ headerKey, header });
     return {
-        ...( convertDeclaration(header)),
+        ...convertDeclaration(header),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
             name

@@ -13,7 +13,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 
-export  function convertAliasTypeDeclaration({
+export function convertAliasTypeDeclaration({
     alias,
     file,
     typeResolver
@@ -24,7 +24,7 @@ export  function convertAliasTypeDeclaration({
 }): Type {
     const aliasOfStr = typeof alias === "string" ? alias : alias.type;
     if (isGeneric(aliasOfStr)) {
-        return  convertGenericTypeDeclaration({ generic: aliasOfStr, file, typeResolver });
+        return convertGenericTypeDeclaration({ generic: aliasOfStr, file, typeResolver });
     }
     return Type.alias({
         aliasOf: file.parseTypeReference(alias),

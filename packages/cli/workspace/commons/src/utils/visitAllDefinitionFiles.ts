@@ -12,7 +12,7 @@ export function visitAllDefinitionFiles(
         filepath: RelativeFilePath,
         definitionFile: DefinitionFileSchema,
         metadata: { isPackageMarker: boolean; defaultUrl: string | undefined }
-    ) => void 
+    ) => void
 ): void {
     for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(workspace.definition))) {
         visitor(relativeFilepath, file.contents, {

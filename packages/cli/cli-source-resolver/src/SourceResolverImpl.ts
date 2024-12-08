@@ -41,11 +41,7 @@ export class SourceResolverImpl implements SourceResolver {
         return this.resolveOpenAPISource({ source });
     }
 
-    private resolveProtobufSource({
-        source
-    }: {
-        source: RawSchemas.ProtobufSourceSchema;
-    }): ResolvedSource | undefined {
+    private resolveProtobufSource({ source }: { source: RawSchemas.ProtobufSourceSchema }): ResolvedSource | undefined {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.proto));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);
@@ -67,11 +63,7 @@ export class SourceResolverImpl implements SourceResolver {
         return resolvedSource;
     }
 
-    private resolveOpenAPISource({
-        source
-    }: {
-        source: RawSchemas.OpenApiSourceSchema;
-    }): ResolvedSource | undefined {
+    private resolveOpenAPISource({ source }: { source: RawSchemas.OpenApiSourceSchema }): ResolvedSource | undefined {
         const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.openapi));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);

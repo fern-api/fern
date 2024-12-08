@@ -5,7 +5,7 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration";
 
-export  function convertGenericTypeDeclaration({
+export function convertGenericTypeDeclaration({
     generic,
     file,
     typeResolver
@@ -40,10 +40,7 @@ export  function convertGenericTypeDeclaration({
             extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            properties:  getObjectPropertiesFromRawObjectSchema(
-                { properties: Object.fromEntries(newProperties) },
-                file
-            ),
+            properties: getObjectPropertiesFromRawObjectSchema({ properties: Object.fromEntries(newProperties) }, file),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
             extendedProperties: undefined
         });

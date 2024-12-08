@@ -25,21 +25,15 @@ interface RawEndpointInfo {
 export class EndpointResolverImpl implements EndpointResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public  resolveEndpointOrThrow({
-        endpoint,
-        file
-    }: {
-        endpoint: string;
-        file: FernFileContext;
-    }): ResolvedEndpoint {
-        const resolvedEndpoint =  this.resolveEndpoint({ endpoint, file });
+    public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
+        const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });
         if (resolvedEndpoint == null) {
             throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath);
         }
         return resolvedEndpoint;
     }
 
-    public  resolveEndpointByMethodAndPath({
+    public resolveEndpointByMethodAndPath({
         method,
         path
     }: {
@@ -47,7 +41,7 @@ export class EndpointResolverImpl implements EndpointResolver {
         path: string;
     }): ResolvedEndpoint | undefined {
         let result: ResolvedEndpoint | undefined = undefined;
-         visitAllDefinitionFiles(this.workspace,  (relativeFilepath, file, metadata) => {
+        visitAllDefinitionFiles(this.workspace, (relativeFilepath, file, metadata) => {
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
@@ -65,7 +59,7 @@ export class EndpointResolverImpl implements EndpointResolver {
                 }
             }
         });
-         visitAllPackageMarkers(this.workspace,  (relativeFilepath, packageMarker) => {
+        visitAllPackageMarkers(this.workspace, (relativeFilepath, packageMarker) => {
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: packageMarker,
@@ -85,7 +79,7 @@ export class EndpointResolverImpl implements EndpointResolver {
         return result;
     }
 
-    public  resolveEndpoint({
+    public resolveEndpoint({
         endpoint,
         file
     }: {
@@ -95,7 +89,7 @@ export class EndpointResolverImpl implements EndpointResolver {
         const referenceParser = new HttpEndpointReferenceParser();
         const parsedEndpointReference = referenceParser.tryParse(endpoint);
         if (parsedEndpointReference != null) {
-            return  this.resolveEndpointByMethodAndPath(parsedEndpointReference);
+            return this.resolveEndpointByMethodAndPath(parsedEndpointReference);
         }
 
         const maybeDeclaration = this.getDeclarationOfEndpoint({

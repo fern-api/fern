@@ -4,7 +4,7 @@ import { FernFileContext } from "../FernFileContext";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration";
 
-export  function convertApiVersionScheme({
+export function convertApiVersionScheme({
     file,
     rawApiFileSchema
 }: {
@@ -15,18 +15,18 @@ export  function convertApiVersionScheme({
         return undefined;
     }
     return ApiVersionScheme.header({
-        header:  convertHeader({
+        header: convertHeader({
             file,
             header: rawApiFileSchema.version.header
         }),
-        value:  convertEnum({
+        value: convertEnum({
             file,
             versionDeclaration: rawApiFileSchema.version
         })
     });
 }
 
- function convertHeader({
+function convertHeader({
     file,
     header
 }: {
@@ -34,7 +34,7 @@ export  function convertApiVersionScheme({
     header: RawSchemas.VersionDeclarationHeaderSchema;
 }): HttpHeader {
     if (typeof header === "string") {
-        return  convertHttpHeader({
+        return convertHttpHeader({
             file,
             headerKey: header,
             header: {
@@ -42,7 +42,7 @@ export  function convertApiVersionScheme({
             }
         });
     }
-    return  convertHttpHeader({
+    return convertHttpHeader({
         file,
         headerKey: header.value,
         header: {
@@ -53,14 +53,14 @@ export  function convertApiVersionScheme({
     });
 }
 
- function convertEnum({
+function convertEnum({
     file,
     versionDeclaration
 }: {
     file: FernFileContext;
     versionDeclaration: RawSchemas.VersionDeclarationSchema;
 }): EnumTypeDeclaration {
-    return  convertEnumTypeDeclaration({
+    return convertEnumTypeDeclaration({
         _enum: {
             default: versionDeclaration.default,
             enum: versionDeclaration.values

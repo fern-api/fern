@@ -10,7 +10,7 @@ import { getRequestPropertyComponents } from "./convertProperty";
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
-export  function convertHttpSdkRequest({
+export function convertHttpSdkRequest({
     request,
     endpointKey,
     endpoint,
@@ -36,7 +36,7 @@ export  function convertHttpSdkRequest({
         requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
         streamParameter:
             endpoint["stream-condition"] != null
-                ?  propertyResolver.resolveRequestPropertyOrThrow({
+                ? propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointKey,
                       propertyComponents: getRequestPropertyComponents(endpoint["stream-condition"])

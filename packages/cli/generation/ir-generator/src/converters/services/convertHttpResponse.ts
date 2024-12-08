@@ -11,7 +11,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
 
-export  function convertHttpResponse({
+export function convertHttpResponse({
     endpoint,
     file,
     typeResolver
@@ -20,7 +20,7 @@ export  function convertHttpResponse({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): HttpResponse | undefined {
-    const responseBody =  convertHttpResponseBody({
+    const responseBody = convertHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -31,7 +31,7 @@ export  function convertHttpResponse({
     };
 }
 
-export  function convertHttpResponseBody({
+export function convertHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -40,13 +40,13 @@ export  function convertHttpResponseBody({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): HttpResponseBody | undefined {
-    const response =  convertNonStreamHttpResponseBody({
+    const response = convertNonStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
     });
 
-    const streamResponse =  convertStreamHttpResponseBody({
+    const streamResponse = convertStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -85,7 +85,7 @@ export  function convertHttpResponseBody({
     return undefined;
 }
 
-export  function convertNonStreamHttpResponseBody({
+export function convertNonStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -109,14 +109,14 @@ export  function convertNonStreamHttpResponseBody({
                 docs
             });
         } else {
-            return  convertJsonResponse(response, docs, file, typeResolver);
+            return convertJsonResponse(response, docs, file, typeResolver);
         }
     }
 
     return undefined;
 }
 
-export  function convertStreamHttpResponseBody({
+export function convertStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -153,7 +153,7 @@ export  function convertStreamHttpResponseBody({
     return undefined;
 }
 
- function convertJsonResponse(
+function convertJsonResponse(
     response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
     file: FernFileContext,
@@ -170,7 +170,7 @@ export  function convertStreamHttpResponseBody({
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty:  getObjectPropertyFromResolvedType({
+                responseProperty: getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
                     resolvedType,

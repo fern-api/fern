@@ -19,7 +19,7 @@ import { convertHttpHeader } from "./services/convertHttpService";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
-export  function convertWebhookGroup({
+export function convertWebhookGroup({
     webhooks,
     file,
     typeResolver,
@@ -44,7 +44,7 @@ export  function convertWebhookGroup({
             headers:
                 webhook.headers != null
                     ? Object.entries(webhook.headers).map(([headerKey, header]) =>
-                        convertHttpHeader({ headerKey, header, file })
+                          convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),

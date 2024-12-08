@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 
-export  function convertObjectTypeDeclaration({
+export function convertObjectTypeDeclaration({
     object,
     file
 }: {
@@ -13,21 +13,21 @@ export  function convertObjectTypeDeclaration({
 }): Type {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties:  getObjectPropertiesFromRawObjectSchema(object, file),
+        properties: getObjectPropertiesFromRawObjectSchema(object, file),
         extraProperties: object["extra-properties"] ?? false,
         extendedProperties: undefined
     });
 }
 
-export  function getObjectPropertiesFromRawObjectSchema(
+export function getObjectPropertiesFromRawObjectSchema(
     object: RawSchemas.ObjectSchema,
     file: FernFileContext
 ): ObjectProperty[] {
     if (object.properties == null) {
         return [];
     }
-    return Object.entries(object.properties).map( ([propertyKey, propertyDefinition]) => ({
-        ...( convertDeclaration(propertyDefinition)),
+    return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
+        ...convertDeclaration(propertyDefinition),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name

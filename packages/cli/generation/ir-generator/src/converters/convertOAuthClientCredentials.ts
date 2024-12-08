@@ -7,7 +7,7 @@ import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint";
 import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint";
 import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils";
 
-export  function convertOAuthClientCredentials({
+export function convertOAuthClientCredentials({
     propertyResolver,
     endpointResolver,
     file,
@@ -22,7 +22,7 @@ export  function convertOAuthClientCredentials({
     tokenEndpoint: TokenEndpoint;
     refreshTokenEndpoint: RefreshTokenEndpoint | undefined;
 }): OAuthClientCredentials {
-    const oauthTokenEndpoint =  convertOAuthTokenEndpoint({
+    const oauthTokenEndpoint = convertOAuthTokenEndpoint({
         propertyResolver,
         endpointResolver,
         file,
@@ -33,7 +33,7 @@ export  function convertOAuthClientCredentials({
     }
     const refreshEndpoint =
         refreshTokenEndpoint != null
-            ?  convertOAuthRefreshEndpoint({
+            ? convertOAuthRefreshEndpoint({
                   propertyResolver,
                   endpointResolver,
                   file,

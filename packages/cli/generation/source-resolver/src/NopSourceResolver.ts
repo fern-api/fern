@@ -7,11 +7,7 @@ export class NopSourceResolver implements SourceResolver {
         return undefined;
     }
 
-    public resolveSourceOrThrow({
-        source
-    }: {
-        source: RawSchemas.SourceSchema;
-    }): ResolvedSource | undefined {
+    public resolveSourceOrThrow({ source }: { source: RawSchemas.SourceSchema }): ResolvedSource | undefined {
         return undefined;
     }
 }

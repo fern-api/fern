@@ -3,21 +3,21 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 
-export  function convertEnumTypeDeclaration({
+export function convertEnumTypeDeclaration({
     _enum,
     file
 }: {
     _enum: RawSchemas.EnumSchema;
     file: FernFileContext;
 }): EnumTypeDeclaration {
-    const values = _enum.enum.map( (value) => {
-            return {
-                ...( convertDeclaration(value)),
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    wireValue: typeof value === "string" ? value : value.value,
-                    name: getEnumName(value).name,
-                    opts: {
-                        casingOverrides: typeof value !== "string" ? value.casing : undefined
+    const values = _enum.enum.map((value) => {
+        return {
+            ...convertDeclaration(value),
+            name: file.casingsGenerator.generateNameAndWireValue({
+                wireValue: typeof value === "string" ? value : value.value,
+                name: getEnumName(value).name,
+                opts: {
+                    casingOverrides: typeof value !== "string" ? value.casing : undefined
                 }
             })
         };

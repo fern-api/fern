@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils";
 
-export  function convertOffsetPagination({
+export function convertOffsetPagination({
     propertyResolver,
     file,
     endpointName,
@@ -18,19 +18,19 @@ export  function convertOffsetPagination({
     paginationPropertyComponents: OffsetPaginationPropertyComponents;
 }): Pagination | undefined {
     return Pagination.offset({
-        page:  propertyResolver.resolveRequestPropertyOrThrow({
+        page: propertyResolver.resolveRequestPropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.offset
         }),
-        results:  propertyResolver.resolveResponsePropertyOrThrow({
+        results: propertyResolver.resolveResponsePropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.results
         }),
         step:
             paginationPropertyComponents.step != null
-                ?  propertyResolver.resolveRequestPropertyOrThrow({
+                ? propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointName,
                       propertyComponents: paginationPropertyComponents.step
@@ -38,7 +38,7 @@ export  function convertOffsetPagination({
                 : undefined,
         hasNextPage:
             paginationPropertyComponents.hasNextPage != null
-                ?  propertyResolver.resolveResponsePropertyOrThrow({
+                ? propertyResolver.resolveResponsePropertyOrThrow({
                       file,
                       endpoint: endpointName,
                       propertyComponents: paginationPropertyComponents.hasNextPage

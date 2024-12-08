@@ -6,7 +6,7 @@ import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
 import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils";
 
-export  function convertApiAuth({
+export function convertApiAuth({
     rawApiFileSchema,
     file,
     propertyResolver,
@@ -27,8 +27,8 @@ export  function convertApiAuth({
 
     const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined;
     return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
-        single:  (authScheme) => {
-            const schemaReference =  convertSchemeReference({
+        single: (authScheme) => {
+            const schemaReference = convertSchemeReference({
                 reference: authScheme,
                 authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 file,
@@ -41,12 +41,11 @@ export  function convertApiAuth({
                 schemes: [schemaReference]
             };
         },
-        any:  ({ any }) => ({
+        any: ({ any }) => ({
             docs,
             requirement: AuthSchemesRequirement.Any,
-            schemes: any.map(
-                (schemeReference) =>
-                    convertSchemeReference({
+            schemes: any.map((schemeReference) =>
+                convertSchemeReference({
                     reference: schemeReference,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     file,
@@ -58,7 +57,7 @@ export  function convertApiAuth({
     });
 }
 
- function convertSchemeReference({
+function convertSchemeReference({
     reference,
     authSchemeDeclarations,
     file,
@@ -77,7 +76,7 @@ export  function convertApiAuth({
             throw new Error("Unknown auth scheme: " + reference);
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
-            header:  (rawHeader) =>
+            header: (rawHeader) =>
                 AuthScheme.header({
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
@@ -88,20 +87,20 @@ export  function convertApiAuth({
                     prefix: rawHeader.prefix,
                     headerEnvVar: rawHeader.env
                 }),
-            basic:  (rawScheme) =>
+            basic: (rawScheme) =>
                 generateBasicAuth({
                     file,
                     docs,
                     rawScheme
                 }),
-            bearer:  (rawScheme) =>
+            bearer: (rawScheme) =>
                 generateBearerAuth({
                     file,
                     docs,
                     rawScheme
                 }),
-            oauth:  (rawScheme) =>
-                 generateOAuth({
+            oauth: (rawScheme) =>
+                generateOAuth({
                     file,
                     docs,
                     rawScheme,
@@ -127,7 +126,7 @@ export  function convertApiAuth({
                 rawScheme: undefined
             });
         case "oauth":
-            return  generateOAuth({
+            return generateOAuth({
                 file,
                 docs: undefined,
                 rawScheme: undefined,
@@ -173,7 +172,7 @@ function generateBasicAuth({
     });
 }
 
- function generateOAuth({
+function generateOAuth({
     file,
     docs,
     rawScheme,
@@ -191,7 +190,7 @@ function generateBasicAuth({
             return AuthScheme.oauth({
                 docs,
                 configuration: OAuthConfiguration.clientCredentials(
-                     convertOAuthClientCredentials({
+                    convertOAuthClientCredentials({
                         propertyResolver,
                         endpointResolver,
                         file,

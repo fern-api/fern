@@ -32,7 +32,7 @@ import {
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 
-export  function convertChannel({
+export function convertChannel({
     channel,
     typeResolver,
     exampleResolver,
@@ -74,7 +74,7 @@ export  function convertChannel({
         docs: channel.docs,
         pathParameters:
             channel["path-parameters"] != null
-                ?  convertPathParameters({
+                ? convertPathParameters({
                       pathParameters: channel["path-parameters"],
                       location: PathParameterLocation.Endpoint,
                       file,
@@ -85,20 +85,20 @@ export  function convertChannel({
             channel["query-parameters"] != null
                 ? Object.entries(channel["query-parameters"]).map(([queryParameterKey, queryParameter]) => {
                       const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
-                          const valueType = file.parseTypeReference(queryParameter);
-                          return {
-                              ...( convertDeclaration(queryParameter)),
-                              name: file.casingsGenerator.generateNameAndWireValue({
-                                  wireValue: queryParameterKey,
-                                  name
-                              }),
-                              valueType,
-                              allowMultiple:
-                                  typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
-                                      ? queryParameter["allow-multiple"]
-                                      : false
-                          };
-                      })
+                      const valueType = file.parseTypeReference(queryParameter);
+                      return {
+                          ...convertDeclaration(queryParameter),
+                          name: file.casingsGenerator.generateNameAndWireValue({
+                              wireValue: queryParameterKey,
+                              name
+                          }),
+                          valueType,
+                          allowMultiple:
+                              typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+                                  ? queryParameter["allow-multiple"]
+                                  : false
+                      };
+                  })
                 : [],
         messages: Object.values(messages),
         examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {

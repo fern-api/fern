@@ -39,7 +39,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         this.endpointResolver = endpointResolver;
     }
 
-    public  resolveRequestPropertyOrThrow({
+    public resolveRequestPropertyOrThrow({
         file,
         endpoint,
         propertyComponents
@@ -48,7 +48,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): RequestProperty {
-        const resolvedRequestProperty =  this.resolveRequestProperty({ file, endpoint, propertyComponents });
+        const resolvedRequestProperty = this.resolveRequestProperty({ file, endpoint, propertyComponents });
         if (resolvedRequestProperty == null) {
             throw new Error(
                 "Cannot resolve request property from endpoint: " + endpoint + " in file " + file.relativeFilepath
@@ -57,7 +57,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         return resolvedRequestProperty;
     }
 
-    public  resolveRequestProperty({
+    public resolveRequestProperty({
         file,
         endpoint,
         propertyComponents
@@ -66,7 +66,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): RequestProperty | undefined {
-        const resolvedEndpoint =  this.endpointResolver.resolveEndpointOrThrow({
+        const resolvedEndpoint = this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });
@@ -81,7 +81,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 propertyComponents
             });
         }
-        const objectProperty =  this.resolveObjectProperty({
+        const objectProperty = this.resolveObjectProperty({
             file: resolvedEndpoint.file,
             typeName: resolvedEndpoint.endpoint.request,
             propertyComponents
@@ -90,7 +90,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath:  this.propertyPathFromPropertyComponents({
+            propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -98,7 +98,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    public  resolveResponsePropertyOrThrow({
+    public resolveResponsePropertyOrThrow({
         file,
         endpoint,
         propertyComponents
@@ -107,7 +107,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): ResponseProperty {
-        const resolvedResponseProperty =  this.resolveResponseProperty({ file, endpoint, propertyComponents });
+        const resolvedResponseProperty = this.resolveResponseProperty({ file, endpoint, propertyComponents });
         if (resolvedResponseProperty == null) {
             throw new Error(
                 "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath
@@ -116,7 +116,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         return resolvedResponseProperty;
     }
 
-    public  resolveResponseProperty({
+    public resolveResponseProperty({
         file,
         endpoint,
         propertyComponents
@@ -125,11 +125,11 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): ResponseProperty | undefined {
-        const resolvedEndpoint =  this.endpointResolver.resolveEndpointOrThrow({
+        const resolvedEndpoint = this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });
-        const objectProperty =  this.resolveObjectProperty({
+        const objectProperty = this.resolveObjectProperty({
             file: resolvedEndpoint.file,
             typeName:
                 (typeof resolvedEndpoint.endpoint.response !== "string"
@@ -141,7 +141,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath:  this.propertyPathFromPropertyComponents({
+            propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -149,7 +149,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    private  resolveRequestPropertyFromInlinedRequest({
+    private resolveRequestPropertyFromInlinedRequest({
         typeResolver,
         file,
         requestType,
@@ -170,7 +170,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             if (queryParameter != null) {
                 return {
                     property: RequestPropertyValue.query(
-                         convertQueryParameter({
+                        convertQueryParameter({
                             file,
                             queryParameterKey,
                             queryParameter
@@ -188,7 +188,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         });
     }
 
-    private  resolveRequestPropertyFromInlinedRequestBody({
+    private resolveRequestPropertyFromInlinedRequestBody({
         typeResolver,
         file,
         requestType,
@@ -203,7 +203,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         if (typeof requestType.body === "string") {
-            const objectProperty =  this.resolveObjectProperty({
+            const objectProperty = this.resolveObjectProperty({
                 file,
                 typeName: requestType.body,
                 propertyComponents
@@ -212,7 +212,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 return undefined;
             }
             return {
-                propertyPath:  this.propertyPathFromPropertyComponents({
+                propertyPath: this.propertyPathFromPropertyComponents({
                     propertyComponents,
                     file
                 }),
@@ -220,7 +220,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             };
         }
         if (isInlineRequestBody(requestType.body)) {
-            const objectProperty =  getNestedObjectPropertyFromObjectSchema({
+            const objectProperty = getNestedObjectPropertyFromObjectSchema({
                 typeResolver,
                 file,
                 objectSchema: requestType.body,
@@ -230,14 +230,14 @@ export class PropertyResolverImpl implements PropertyResolver {
                 return undefined;
             }
             return {
-                propertyPath:  this.propertyPathFromPropertyComponents({
+                propertyPath: this.propertyPathFromPropertyComponents({
                     propertyComponents,
                     file
                 }),
                 property: RequestPropertyValue.body(objectProperty)
             };
         }
-        const objectProperty =  this.resolveObjectProperty({
+        const objectProperty = this.resolveObjectProperty({
             file,
             typeName: requestType.body.type,
             propertyComponents
@@ -246,7 +246,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath:  this.propertyPathFromPropertyComponents({
+            propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -254,7 +254,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    private  resolveObjectProperty({
+    private resolveObjectProperty({
         file,
         typeName,
         propertyComponents
@@ -267,7 +267,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             type: typeName,
             file
         });
-        return  getNestedObjectPropertyFromResolvedType({
+        return getNestedObjectPropertyFromResolvedType({
             typeResolver: this.typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
             resolvedType,
@@ -275,7 +275,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         });
     }
 
-    private  propertyPathFromPropertyComponents({
+    private propertyPathFromPropertyComponents({
         propertyComponents,
         file
     }: {

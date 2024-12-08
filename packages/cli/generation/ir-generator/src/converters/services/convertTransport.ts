@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { SourceResolver } from "@fern-api/source-resolver";
 import { convertProtobufService } from "./convertProtobufService";
 
-export  function getTransportForService({
+export function getTransportForService({
     file,
     serviceDeclaration,
     sourceResolver
@@ -17,7 +17,7 @@ export  function getTransportForService({
         // anything not protobuf is http
         return Transport.http();
     }
-    return  createProtobufService(
+    return createProtobufService(
         file,
         serviceDeclaration.source,
         sourceResolver,
@@ -25,7 +25,7 @@ export  function getTransportForService({
     );
 }
 
-export  function getTransportForEndpoint({
+export function getTransportForEndpoint({
     file,
     serviceTransport,
     endpointDeclaration,
@@ -58,7 +58,7 @@ export  function getTransportForEndpoint({
             // if there's no config specifically for the endpoint, we'll return undefined to inherit the service's transport
             return undefined;
         } else {
-            return  createProtobufService(file, protoSource, sourceResolver, serviceNameOverride);
+            return createProtobufService(file, protoSource, sourceResolver, serviceNameOverride);
         }
     }
 
@@ -67,13 +67,13 @@ export  function getTransportForEndpoint({
     );
 }
 
- function createProtobufService(
+function createProtobufService(
     file: FernFileContext,
     source: RawSchemas.ProtobufSourceSchema,
     sourceResolver: SourceResolver,
     serviceNameOverride: string | undefined
 ) {
-    const resolvedSource =  sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = sourceResolver.resolveSourceOrThrow({
         source,
         relativeFilepath: file.relativeFilepath
     });

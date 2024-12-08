@@ -8,12 +8,12 @@ const DEFAULT_DECLARATION = {
     availability: undefined
 };
 
-export  function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
+export function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
     if (typeof declaration === "string") {
         return DEFAULT_DECLARATION;
     }
     return {
-        docs:  formatDocs(declaration.docs),
+        docs: formatDocs(declaration.docs),
         availability: convertAvailability(declaration.availability)
     };
 }
