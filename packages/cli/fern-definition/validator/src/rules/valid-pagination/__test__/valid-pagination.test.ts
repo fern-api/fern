@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidPaginationRule } from "../valid-pagination";
 
 describe("valid-pagination", () => {
-    it("valid", async () => {
-        const violations = await getViolationsForRule({
+    it("valid",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidPaginationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -16,8 +16,8 @@ describe("valid-pagination", () => {
         expect(violations).toEqual([]);
     });
 
-    it("invalid", async () => {
-        const violations = await getViolationsForRule({
+    it("invalid",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidPaginationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

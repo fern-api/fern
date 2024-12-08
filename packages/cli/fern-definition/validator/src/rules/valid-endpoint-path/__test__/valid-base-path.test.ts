@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidEndpointPathRule } from "../valid-endpoint-path";
 
 describe("valid-endpoint-path", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidEndpointPathRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

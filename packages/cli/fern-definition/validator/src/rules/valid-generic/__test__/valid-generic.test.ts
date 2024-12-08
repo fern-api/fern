@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ValidGenericRule } from "../valid-generic";
 
 describe("valid-generic", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidGenericRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

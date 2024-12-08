@@ -19,7 +19,7 @@ export const NoCircularImportsRule: Rule = {
 
         return {
             definitionFile: {
-                import: async ({ importPath }, { relativeFilepath }) => {
+                import:  ({ importPath }, { relativeFilepath }) => {
                     const circularImportsForFile = circularImports[relativeFilepath];
                     if (circularImportsForFile == null) {
                         return [];

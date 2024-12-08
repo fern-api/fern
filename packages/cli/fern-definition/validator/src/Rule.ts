@@ -13,7 +13,7 @@ import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from
 export interface Rule {
     name: string;
     DISABLE_RULE?: boolean;
-    create: (context: RuleContext) => MaybePromise<RuleVisitors>;
+    create: (context: RuleContext) => RuleVisitors;
 }
 
 export interface RuleContext {
@@ -32,7 +32,7 @@ export type RuleVisitor<AstNodeTypes, FileSchema> = {
     [K in keyof AstNodeTypes]?: (
         node: AstNodeTypes[K],
         args: RuleRunnerArgs<FileSchema>
-    ) => MaybePromise<RuleViolation[]>;
+    ) => RuleViolation[];
 };
 
 export interface RuleRunnerArgs<FileSchema> {
@@ -44,5 +44,3 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
 }
-
-export type MaybePromise<T> = T | Promise<T>;

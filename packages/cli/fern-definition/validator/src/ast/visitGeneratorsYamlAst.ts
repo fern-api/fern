@@ -3,13 +3,13 @@ import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";
 
-export async function visitGeneratorsYamlAst(
+export  function visitGeneratorsYamlAst(
     contents: generatorsYml.GeneratorsConfigurationSchema,
     cliVersion: string,
     visitor: Partial<GeneratorsYmlFileAstVisitor>
-): Promise<void> {
-    await visitor.file?.(contents, []);
-    await visitObject(contents, {
+): void {
+     visitor.file?.(contents, []);
+     visitObject(contents, {
         "auth-schemes": noop,
         api: noop,
         whitelabel: noop,
@@ -20,10 +20,10 @@ export async function visitGeneratorsYamlAst(
         openapi: noop,
         "openapi-overrides": noop,
         "spec-origin": noop,
-        "async-api": noop,
+        "-api": noop,
         "api-settings": noop,
-        groups: async (groups) => {
-            await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
+        groups:  (groups) => {
+             visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
         }
     });
 }

@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoMissingAuthRule } from "../no-missing-auth";
 
 describe("no-missing-auth", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: NoMissingAuthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

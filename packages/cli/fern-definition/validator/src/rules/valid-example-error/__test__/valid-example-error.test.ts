@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidExampleErrorRule } from "../valid-example-error";
 
 describe("valid-example-error", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidExampleErrorRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

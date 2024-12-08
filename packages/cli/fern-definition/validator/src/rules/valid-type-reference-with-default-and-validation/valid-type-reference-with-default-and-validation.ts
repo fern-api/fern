@@ -5,7 +5,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
     name: "valid-type-reference-with-default-and-validation",
-    create: async ({ workspace }) => {
+    create:  ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {

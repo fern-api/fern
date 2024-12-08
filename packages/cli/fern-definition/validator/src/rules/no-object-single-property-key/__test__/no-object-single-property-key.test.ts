@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key";
 
 describe("valid-field-names", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: NoObjectSinglePropertyKeyRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

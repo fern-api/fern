@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoGetRequestBodyRule } from "../no-get-request-body";
 
 describe("no-get-request-body", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: NoGetRequestBodyRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

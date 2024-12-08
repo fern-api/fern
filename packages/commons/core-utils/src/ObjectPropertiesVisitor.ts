@@ -4,11 +4,11 @@ export type ObjectPropertiesVisitor<T, R> = {
     [K in keyof T]-?: (value: T[K]) => R;
 };
 
-export async function visitObject<T extends object>(
+export function visitObject<T extends object>(
     object: T,
-    visitor: ObjectPropertiesVisitor<T, void | Promise<void>>
-): Promise<void> {
+    visitor: ObjectPropertiesVisitor<T, void>
+): void {
     for (const key of keys(visitor)) {
-        await visitor[key](object[key]);
+        visitor[key](object[key]);
     }
 }

@@ -5,7 +5,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoUndefinedExampleReferenceRule: Rule = {
     name: "no-undefined-example-reference",
-    create: async ({ workspace }) => {
+    create:  ({ workspace }) => {
         const exampleResolver = new ExampleResolverImpl(new TypeResolverImpl(workspace));
 
         return {

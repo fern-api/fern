@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names";
 
 describe("no-duplicate-field-names", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: NoDuplicateFieldNamesRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

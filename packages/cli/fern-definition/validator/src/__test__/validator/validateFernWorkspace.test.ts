@@ -21,7 +21,7 @@ describe("validateFernWorkspace", () => {
     for (const fixture of FIXTURES) {
         const context = createMockTaskContext();
         // eslint-disable-next-line jest/valid-title
-        it(fixture.name, async () => {
+        it(fixture.name,  () => {
             const lazyWorkspace = new LazyFernWorkspace({
                 absoluteFilePath: join(
                     AbsoluteFilePath.of(__dirname),
@@ -32,9 +32,9 @@ describe("validateFernWorkspace", () => {
                 cliVersion: "0.0.0",
                 workspaceName: undefined
             });
-            const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
+            const fernWorkspace =  lazyWorkspace.toFernWorkspace({ context });
 
-            const violations = await validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
+            const violations =  validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
             expect(violations).toEqual(fixture.expectedViolations);
         });
     }

@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidOauthRule } from "../valid-oauth";
 
 describe("valid-oauth", () => {
-    it("valid-default", async () => {
-        const violations = await getViolationsForRule({
+    it("valid-default",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -17,8 +17,8 @@ describe("valid-oauth", () => {
         expect(violations).toEqual([]);
     });
 
-    it("valid-simple", async () => {
-        const violations = await getViolationsForRule({
+    it("valid-simple",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -30,8 +30,8 @@ describe("valid-oauth", () => {
         expect(violations).toEqual([]);
     });
 
-    it("valid-query-parameters", async () => {
-        const violations = await getViolationsForRule({
+    it("valid-query-parameters",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -43,8 +43,8 @@ describe("valid-oauth", () => {
         expect(violations).toEqual([]);
     });
 
-    it("valid-alias", async () => {
-        const violations = await getViolationsForRule({
+    it("valid-alias",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -56,8 +56,8 @@ describe("valid-oauth", () => {
         expect(violations).toEqual([]);
     });
 
-    it("invalid-property-path", async () => {
-        const violations = await getViolationsForRule({
+    it("invalid-property-path",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -90,8 +90,8 @@ describe("valid-oauth", () => {
         ).not.toThrow();
     });
 
-    it("invalid-missing", async () => {
-        const violations = await getViolationsForRule({
+    it("invalid-missing",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -152,8 +152,8 @@ describe("valid-oauth", () => {
         ).not.toThrow();
     });
 
-    it("invalid-types", async () => {
-        const violations = await getViolationsForRule({
+    it("invalid-types",  () => {
+        const violations =  getViolationsForRule({
             rule: ValidOauthRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

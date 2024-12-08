@@ -17,7 +17,7 @@ import {
 
 export const ValidStreamConditionRule: Rule = {
     name: "valid-stream-condition",
-    create: async ({ workspace }) => {
+    create:  ({ workspace }) => {
         return {
             definitionFile: {
                 streamCondition: (

@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { OnlyObjectExtensionsRule } from "../only-object-extensions";
 
 describe("only-object-extensions", () => {
-    it("simple", async () => {
-        const violations = await getViolationsForRule({
+    it("simple",  () => {
+        const violations =  getViolationsForRule({
             rule: OnlyObjectExtensionsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
