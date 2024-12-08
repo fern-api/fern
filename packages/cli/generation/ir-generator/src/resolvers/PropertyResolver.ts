@@ -15,22 +15,22 @@ export interface PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }) => Promise<RequestProperty | undefined>;
+    }) => RequestProperty | undefined;
     resolveRequestPropertyOrThrow: (args: {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }) => Promise<RequestProperty>;
+    }) => RequestProperty;
     resolveResponseProperty: (args: {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }) => Promise<ResponseProperty | undefined>;
+    }) => ResponseProperty | undefined;
     resolveResponsePropertyOrThrow: (args: {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }) => Promise<ResponseProperty>;
+    }) => ResponseProperty;
 }
 
 export class PropertyResolverImpl implements PropertyResolver {
@@ -39,7 +39,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         this.endpointResolver = endpointResolver;
     }
 
-    public async resolveRequestPropertyOrThrow({
+    public  resolveRequestPropertyOrThrow({
         file,
         endpoint,
         propertyComponents
@@ -47,8 +47,8 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }): Promise<RequestProperty> {
-        const resolvedRequestProperty = await this.resolveRequestProperty({ file, endpoint, propertyComponents });
+    }): RequestProperty {
+        const resolvedRequestProperty =  this.resolveRequestProperty({ file, endpoint, propertyComponents });
         if (resolvedRequestProperty == null) {
             throw new Error(
                 "Cannot resolve request property from endpoint: " + endpoint + " in file " + file.relativeFilepath
@@ -57,7 +57,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         return resolvedRequestProperty;
     }
 
-    public async resolveRequestProperty({
+    public  resolveRequestProperty({
         file,
         endpoint,
         propertyComponents
@@ -65,8 +65,8 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }): Promise<RequestProperty | undefined> {
-        const resolvedEndpoint = await this.endpointResolver.resolveEndpointOrThrow({
+    }): RequestProperty | undefined {
+        const resolvedEndpoint =  this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });
@@ -81,7 +81,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 propertyComponents
             });
         }
-        const objectProperty = await this.resolveObjectProperty({
+        const objectProperty =  this.resolveObjectProperty({
             file: resolvedEndpoint.file,
             typeName: resolvedEndpoint.endpoint.request,
             propertyComponents
@@ -90,7 +90,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath: await this.propertyPathFromPropertyComponents({
+            propertyPath:  this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -98,7 +98,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    public async resolveResponsePropertyOrThrow({
+    public  resolveResponsePropertyOrThrow({
         file,
         endpoint,
         propertyComponents
@@ -106,8 +106,8 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }): Promise<ResponseProperty> {
-        const resolvedResponseProperty = await this.resolveResponseProperty({ file, endpoint, propertyComponents });
+    }): ResponseProperty {
+        const resolvedResponseProperty =  this.resolveResponseProperty({ file, endpoint, propertyComponents });
         if (resolvedResponseProperty == null) {
             throw new Error(
                 "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath
@@ -116,7 +116,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         return resolvedResponseProperty;
     }
 
-    public async resolveResponseProperty({
+    public  resolveResponseProperty({
         file,
         endpoint,
         propertyComponents
@@ -124,12 +124,12 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
-    }): Promise<ResponseProperty | undefined> {
-        const resolvedEndpoint = await this.endpointResolver.resolveEndpointOrThrow({
+    }): ResponseProperty | undefined {
+        const resolvedEndpoint =  this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });
-        const objectProperty = await this.resolveObjectProperty({
+        const objectProperty =  this.resolveObjectProperty({
             file: resolvedEndpoint.file,
             typeName:
                 (typeof resolvedEndpoint.endpoint.response !== "string"
@@ -141,7 +141,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath: await this.propertyPathFromPropertyComponents({
+            propertyPath:  this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -149,7 +149,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    private async resolveRequestPropertyFromInlinedRequest({
+    private  resolveRequestPropertyFromInlinedRequest({
         typeResolver,
         file,
         requestType,
@@ -159,7 +159,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         requestType: RawSchemas.HttpRequestSchema;
         propertyComponents: string[];
-    }): Promise<RequestProperty | undefined> {
+    }): RequestProperty | undefined {
         if (propertyComponents.length === 1) {
             // Query parameters can only be defined on the root level of the request.
             const queryParameterKey = propertyComponents[0] ?? "";
@@ -170,7 +170,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             if (queryParameter != null) {
                 return {
                     property: RequestPropertyValue.query(
-                        await convertQueryParameter({
+                         convertQueryParameter({
                             file,
                             queryParameterKey,
                             queryParameter
@@ -188,7 +188,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         });
     }
 
-    private async resolveRequestPropertyFromInlinedRequestBody({
+    private  resolveRequestPropertyFromInlinedRequestBody({
         typeResolver,
         file,
         requestType,
@@ -198,12 +198,12 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         requestType: RawSchemas.HttpRequestSchema;
         propertyComponents: string[];
-    }): Promise<RequestProperty | undefined> {
+    }): RequestProperty | undefined {
         if (requestType.body == null) {
             return undefined;
         }
         if (typeof requestType.body === "string") {
-            const objectProperty = await this.resolveObjectProperty({
+            const objectProperty =  this.resolveObjectProperty({
                 file,
                 typeName: requestType.body,
                 propertyComponents
@@ -212,7 +212,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 return undefined;
             }
             return {
-                propertyPath: await this.propertyPathFromPropertyComponents({
+                propertyPath:  this.propertyPathFromPropertyComponents({
                     propertyComponents,
                     file
                 }),
@@ -220,7 +220,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             };
         }
         if (isInlineRequestBody(requestType.body)) {
-            const objectProperty = await getNestedObjectPropertyFromObjectSchema({
+            const objectProperty =  getNestedObjectPropertyFromObjectSchema({
                 typeResolver,
                 file,
                 objectSchema: requestType.body,
@@ -230,14 +230,14 @@ export class PropertyResolverImpl implements PropertyResolver {
                 return undefined;
             }
             return {
-                propertyPath: await this.propertyPathFromPropertyComponents({
+                propertyPath:  this.propertyPathFromPropertyComponents({
                     propertyComponents,
                     file
                 }),
                 property: RequestPropertyValue.body(objectProperty)
             };
         }
-        const objectProperty = await this.resolveObjectProperty({
+        const objectProperty =  this.resolveObjectProperty({
             file,
             typeName: requestType.body.type,
             propertyComponents
@@ -246,7 +246,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         return {
-            propertyPath: await this.propertyPathFromPropertyComponents({
+            propertyPath:  this.propertyPathFromPropertyComponents({
                 propertyComponents,
                 file
             }),
@@ -254,7 +254,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         };
     }
 
-    private async resolveObjectProperty({
+    private  resolveObjectProperty({
         file,
         typeName,
         propertyComponents
@@ -262,12 +262,12 @@ export class PropertyResolverImpl implements PropertyResolver {
         file: FernFileContext;
         typeName: string;
         propertyComponents: string[];
-    }): Promise<ObjectProperty | undefined> {
+    }): ObjectProperty | undefined {
         const resolvedType = this.typeResolver.resolveTypeOrThrow({
             type: typeName,
             file
         });
-        return await getNestedObjectPropertyFromResolvedType({
+        return  getNestedObjectPropertyFromResolvedType({
             typeResolver: this.typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
             resolvedType,
@@ -275,13 +275,13 @@ export class PropertyResolverImpl implements PropertyResolver {
         });
     }
 
-    private async propertyPathFromPropertyComponents({
+    private  propertyPathFromPropertyComponents({
         propertyComponents,
         file
     }: {
         propertyComponents: string[];
         file: FernFileContext;
-    }): Promise<Name[]> {
+    }): Name[] {
         if (propertyComponents.length <= 1) {
             return [];
         }

@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { CursorPaginationPropertyComponents } from "./convertPaginationUtils";
 
-export async function convertCursorPagination({
+export  function convertCursorPagination({
     propertyResolver,
     file,
     endpointName,
@@ -16,19 +16,19 @@ export async function convertCursorPagination({
     endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
     paginationPropertyComponents: CursorPaginationPropertyComponents;
-}): Promise<Pagination | undefined> {
+}): Pagination | undefined {
     return Pagination.cursor({
-        page: await propertyResolver.resolveRequestPropertyOrThrow({
+        page:  propertyResolver.resolveRequestPropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.cursor
         }),
-        next: await propertyResolver.resolveResponsePropertyOrThrow({
+        next:  propertyResolver.resolveResponsePropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.next_cursor
         }),
-        results: await propertyResolver.resolveResponsePropertyOrThrow({
+        results:  propertyResolver.resolveResponsePropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.results

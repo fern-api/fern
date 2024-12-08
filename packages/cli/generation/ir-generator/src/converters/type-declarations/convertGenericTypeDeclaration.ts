@@ -5,7 +5,7 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration";
 
-export async function convertGenericTypeDeclaration({
+export  function convertGenericTypeDeclaration({
     generic,
     file,
     typeResolver
@@ -13,7 +13,7 @@ export async function convertGenericTypeDeclaration({
     generic: string | RawSchemas.AliasSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<Type> {
+}): Type {
     const genericInstantiation = typeof generic === "string" ? generic : generic.type;
 
     const maybeGeneric = parseGeneric(genericInstantiation);
@@ -40,7 +40,7 @@ export async function convertGenericTypeDeclaration({
             extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            properties: await getObjectPropertiesFromRawObjectSchema(
+            properties:  getObjectPropertiesFromRawObjectSchema(
                 { properties: Object.fromEntries(newProperties) },
                 file
             ),

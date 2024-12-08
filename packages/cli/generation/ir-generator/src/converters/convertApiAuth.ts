@@ -6,7 +6,7 @@ import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
 import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils";
 
-export async function convertApiAuth({
+export  function convertApiAuth({
     rawApiFileSchema,
     file,
     propertyResolver,
@@ -16,7 +16,7 @@ export async function convertApiAuth({
     file: FernFileContext;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
-}): Promise<ApiAuth> {
+}): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
             docs: undefined,
@@ -26,9 +26,9 @@ export async function convertApiAuth({
     }
 
     const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined;
-    return visitRawApiAuth<Promise<ApiAuth>>(rawApiFileSchema.auth, {
-        single: async (authScheme) => {
-            const schemaReference = await convertSchemeReference({
+    return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
+        single:  (authScheme) => {
+            const schemaReference =  convertSchemeReference({
                 reference: authScheme,
                 authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 file,
@@ -41,13 +41,13 @@ export async function convertApiAuth({
                 schemes: [schemaReference]
             };
         },
-        any: async ({ any }) => ({
+        any:  ({ any }) => ({
             docs,
             requirement: AuthSchemesRequirement.Any,
-            schemes: await Promise.all(
+            schemes:  Promise.all(
                 any.map(
-                    async (schemeReference) =>
-                        await convertSchemeReference({
+                     (schemeReference) =>
+                         convertSchemeReference({
                             reference: schemeReference,
                             authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                             file,
@@ -60,7 +60,7 @@ export async function convertApiAuth({
     });
 }
 
-async function convertSchemeReference({
+ function convertSchemeReference({
     reference,
     authSchemeDeclarations,
     file,
@@ -72,14 +72,14 @@ async function convertSchemeReference({
     file: FernFileContext;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
-}): Promise<AuthScheme> {
+}): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
             throw new Error("Unknown auth scheme: " + reference);
         }
-        return visitRawAuthSchemeDeclaration<Promise<AuthScheme>>(declaration, {
-            header: async (rawHeader) =>
+        return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
+            header:  (rawHeader) =>
                 AuthScheme.header({
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
@@ -90,20 +90,20 @@ async function convertSchemeReference({
                     prefix: rawHeader.prefix,
                     headerEnvVar: rawHeader.env
                 }),
-            basic: async (rawScheme) =>
+            basic:  (rawScheme) =>
                 generateBasicAuth({
                     file,
                     docs,
                     rawScheme
                 }),
-            bearer: async (rawScheme) =>
+            bearer:  (rawScheme) =>
                 generateBearerAuth({
                     file,
                     docs,
                     rawScheme
                 }),
-            oauth: async (rawScheme) =>
-                await generateOAuth({
+            oauth:  (rawScheme) =>
+                 generateOAuth({
                     file,
                     docs,
                     rawScheme,
@@ -129,7 +129,7 @@ async function convertSchemeReference({
                 rawScheme: undefined
             });
         case "oauth":
-            return await generateOAuth({
+            return  generateOAuth({
                 file,
                 docs: undefined,
                 rawScheme: undefined,
@@ -175,7 +175,7 @@ function generateBasicAuth({
     });
 }
 
-async function generateOAuth({
+ function generateOAuth({
     file,
     docs,
     rawScheme,
@@ -187,13 +187,13 @@ async function generateOAuth({
     rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
-}): Promise<AuthScheme.Oauth> {
+}): AuthScheme.Oauth {
     switch (rawScheme?.type) {
         case "client-credentials":
             return AuthScheme.oauth({
                 docs,
                 configuration: OAuthConfiguration.clientCredentials(
-                    await convertOAuthClientCredentials({
+                     convertOAuthClientCredentials({
                         propertyResolver,
                         endpointResolver,
                         file,

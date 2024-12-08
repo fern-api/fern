@@ -32,7 +32,7 @@ import {
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 
-export async function convertChannel({
+export  function convertChannel({
     channel,
     typeResolver,
     exampleResolver,
@@ -46,7 +46,7 @@ export async function convertChannel({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Promise<WebSocketChannel> {
+}): WebSocketChannel {
     const messages: WebSocketMessage[] = [];
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
         messages.push({
@@ -67,7 +67,7 @@ export async function convertChannel({
         displayName: channel["display-name"],
         headers:
             channel.headers != null
-                ? await Promise.all(
+                ?  Promise.all(
                       Object.entries(channel.headers).map(([headerKey, header]) =>
                           convertHttpHeader({ headerKey, header, file })
                       )
@@ -76,7 +76,7 @@ export async function convertChannel({
         docs: channel.docs,
         pathParameters:
             channel["path-parameters"] != null
-                ? await convertPathParameters({
+                ?  convertPathParameters({
                       pathParameters: channel["path-parameters"],
                       location: PathParameterLocation.Endpoint,
                       file,
@@ -85,12 +85,12 @@ export async function convertChannel({
                 : [],
         queryParameters:
             channel["query-parameters"] != null
-                ? await Promise.all(
-                      Object.entries(channel["query-parameters"]).map(async ([queryParameterKey, queryParameter]) => {
+                ?  Promise.all(
+                      Object.entries(channel["query-parameters"]).map( ([queryParameterKey, queryParameter]) => {
                           const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
                           const valueType = file.parseTypeReference(queryParameter);
                           return {
-                              ...(await convertDeclaration(queryParameter)),
+                              ...( convertDeclaration(queryParameter)),
                               name: file.casingsGenerator.generateNameAndWireValue({
                                   wireValue: queryParameterKey,
                                   name

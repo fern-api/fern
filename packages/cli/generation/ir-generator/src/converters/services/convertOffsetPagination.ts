@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils";
 
-export async function convertOffsetPagination({
+export  function convertOffsetPagination({
     propertyResolver,
     file,
     endpointName,
@@ -16,21 +16,21 @@ export async function convertOffsetPagination({
     endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
     paginationPropertyComponents: OffsetPaginationPropertyComponents;
-}): Promise<Pagination | undefined> {
+}): Pagination | undefined {
     return Pagination.offset({
-        page: await propertyResolver.resolveRequestPropertyOrThrow({
+        page:  propertyResolver.resolveRequestPropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.offset
         }),
-        results: await propertyResolver.resolveResponsePropertyOrThrow({
+        results:  propertyResolver.resolveResponsePropertyOrThrow({
             file,
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.results
         }),
         step:
             paginationPropertyComponents.step != null
-                ? await propertyResolver.resolveRequestPropertyOrThrow({
+                ?  propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointName,
                       propertyComponents: paginationPropertyComponents.step
@@ -38,7 +38,7 @@ export async function convertOffsetPagination({
                 : undefined,
         hasNextPage:
             paginationPropertyComponents.hasNextPage != null
-                ? await propertyResolver.resolveResponsePropertyOrThrow({
+                ?  propertyResolver.resolveResponsePropertyOrThrow({
                       file,
                       endpoint: endpointName,
                       propertyComponents: paginationPropertyComponents.hasNextPage

@@ -35,7 +35,7 @@ import { convertResponseErrors } from "./convertResponseErrors";
 import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 
-export async function convertHttpService({
+export  function convertHttpService({
     rootDefaultUrl,
     rootPathParameters,
     serviceDefinition,
@@ -61,15 +61,15 @@ export async function convertHttpService({
     sourceResolver: SourceResolver;
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
-}): Promise<HttpService> {
-    const servicePathParameters = await convertPathParameters({
+}): HttpService {
+    const servicePathParameters =  convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
         variableResolver
     });
 
-    const transport = await getTransportForService({
+    const transport =  getTransportForService({
         file,
         serviceDeclaration: serviceDefinition,
         sourceResolver
@@ -83,7 +83,7 @@ export async function convertHttpService({
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
-                ? await Promise.all(
+                ?  Promise.all(
                       Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
                           convertHttpHeader({ headerKey, header, file })
                       )
@@ -92,16 +92,16 @@ export async function convertHttpService({
         pathParameters: servicePathParameters,
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
-        endpoints: await Promise.all(
-            Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
-                const endpointPathParameters = await convertPathParameters({
+        endpoints:  Promise.all(
+            Object.entries(serviceDefinition.endpoints).map( ([endpointKey, endpoint]): HttpEndpoint> = {
+                const endpointPathParameters =  convertPathParameters({
                     pathParameters: getEndpointPathParameters(endpoint),
                     location: PathParameterLocation.Endpoint,
                     file,
                     variableResolver
                 });
                 const httpEndpoint: HttpEndpoint = {
-                    ...(await convertDeclaration(endpoint)),
+                    ...( convertDeclaration(endpoint)),
                     id: "",
                     name: file.casingsGenerator.generateName(endpointKey),
                     displayName: endpoint["display-name"],
@@ -125,10 +125,10 @@ export async function convertHttpService({
                             : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
                     queryParameters:
                         typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                            ? await Promise.all(
+                            ?  Promise.all(
                                   Object.entries(endpoint.request["query-parameters"]).map(
-                                      async ([queryParameterKey, queryParameter]) => {
-                                          return await convertQueryParameter({
+                                       ([queryParameterKey, queryParameter]) => {
+                                          return  convertQueryParameter({
                                               file,
                                               queryParameterKey,
                                               queryParameter
@@ -139,14 +139,14 @@ export async function convertHttpService({
                             : [],
                     headers:
                         typeof endpoint.request !== "string" && endpoint.request?.headers != null
-                            ? await Promise.all(
+                            ?  Promise.all(
                                   Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
                                       convertHttpHeader({ headerKey, header, file })
                                   )
                               )
                             : [],
                     requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest: await convertHttpSdkRequest({
+                    sdkRequest:  convertHttpSdkRequest({
                         service: serviceDefinition,
                         request: endpoint.request,
                         endpoint,
@@ -155,7 +155,7 @@ export async function convertHttpService({
                         typeResolver,
                         propertyResolver
                     }),
-                    response: await convertHttpResponse({ endpoint, file, typeResolver }),
+                    response:  convertHttpResponse({ endpoint, file, typeResolver }),
                     errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                     userSpecifiedExamples:
                         endpoint.examples != null
@@ -179,13 +179,13 @@ export async function convertHttpService({
                               })
                             : [],
                     autogeneratedExamples: [], // gets filled in later on
-                    pagination: await convertPagination({
+                    pagination:  convertPagination({
                         propertyResolver,
                         file,
                         endpointName: endpointKey,
                         endpointSchema: endpoint
                     }),
-                    transport: await getTransportForEndpoint({
+                    transport:  getTransportForEndpoint({
                         file,
                         serviceTransport: transport,
                         endpointDeclaration: endpoint,
@@ -200,7 +200,7 @@ export async function convertHttpService({
     return service;
 }
 
-export async function convertPathParameters({
+export  function convertPathParameters({
     pathParameters,
     location,
     file,
@@ -210,11 +210,11 @@ export async function convertPathParameters({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): Promise<PathParameter[]> {
+}): PathParameter[] {
     if (pathParameters == null) {
         return [];
     }
-    return await Promise.all(
+    return  Promise.all(
         Object.entries(pathParameters).map(([parameterName, parameter]) =>
             convertPathParameter({
                 parameterName,
@@ -227,7 +227,7 @@ export async function convertPathParameters({
     );
 }
 
-async function convertPathParameter({
+ function convertPathParameter({
     parameterName,
     parameter,
     location,
@@ -239,9 +239,9 @@ async function convertPathParameter({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): Promise<PathParameter> {
+}): PathParameter {
     return {
-        ...(await convertDeclaration(parameter)),
+        ...( convertDeclaration(parameter)),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
@@ -339,7 +339,7 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
     }
 }
 
-export async function convertHttpHeader({
+export  function convertHttpHeader({
     headerKey,
     header,
     file
@@ -347,10 +347,10 @@ export async function convertHttpHeader({
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
     file: FernFileContext;
-}): Promise<HttpHeader> {
+}): HttpHeader {
     const { name } = getHeaderName({ headerKey, header });
     return {
-        ...(await convertDeclaration(header)),
+        ...( convertDeclaration(header)),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
             name

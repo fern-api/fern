@@ -6,7 +6,7 @@ import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { TokenEndpoint } from "./convertOAuthUtils";
 
-export async function convertOAuthTokenEndpoint({
+export  function convertOAuthTokenEndpoint({
     endpointResolver,
     propertyResolver,
     file,
@@ -16,8 +16,8 @@ export async function convertOAuthTokenEndpoint({
     propertyResolver: PropertyResolver;
     file: FernFileContext;
     tokenEndpoint: TokenEndpoint;
-}): Promise<OAuthTokenEndpoint | undefined> {
-    const resolvedEndpoint = await endpointResolver.resolveEndpointOrThrow({
+}): OAuthTokenEndpoint | undefined {
+    const resolvedEndpoint =  endpointResolver.resolveEndpointOrThrow({
         endpoint: tokenEndpoint.endpoint,
         file
     });
@@ -30,19 +30,19 @@ export async function convertOAuthTokenEndpoint({
                 : undefined
         },
         requestProperties: {
-            clientId: await propertyResolver.resolveRequestPropertyOrThrow({
+            clientId:  propertyResolver.resolveRequestPropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.requestProperties.client_id
             }),
-            clientSecret: await propertyResolver.resolveRequestPropertyOrThrow({
+            clientSecret:  propertyResolver.resolveRequestPropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.requestProperties.client_secret
             }),
             scopes:
                 tokenEndpoint.requestProperties.scopes != null
-                    ? await propertyResolver.resolveRequestPropertyOrThrow({
+                    ?  propertyResolver.resolveRequestPropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.requestProperties.scopes
@@ -50,14 +50,14 @@ export async function convertOAuthTokenEndpoint({
                     : undefined
         },
         responseProperties: {
-            accessToken: await propertyResolver.resolveResponsePropertyOrThrow({
+            accessToken:  propertyResolver.resolveResponsePropertyOrThrow({
                 file,
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.responseProperties.access_token
             }),
             expiresIn:
                 tokenEndpoint.responseProperties.expires_in != null
-                    ? await propertyResolver.resolveResponsePropertyOrThrow({
+                    ?  propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.responseProperties.expires_in
@@ -65,7 +65,7 @@ export async function convertOAuthTokenEndpoint({
                     : undefined,
             refreshToken:
                 tokenEndpoint.responseProperties.refresh_token != null
-                    ? await propertyResolver.resolveResponsePropertyOrThrow({
+                    ?  propertyResolver.resolveResponsePropertyOrThrow({
                           file,
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.responseProperties.refresh_token

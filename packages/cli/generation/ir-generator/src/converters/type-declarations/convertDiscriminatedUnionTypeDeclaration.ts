@@ -11,7 +11,7 @@ import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclara
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
-export async function convertDiscriminatedUnionTypeDeclaration({
+export  function convertDiscriminatedUnionTypeDeclaration({
     union,
     file,
     typeResolver
@@ -19,7 +19,7 @@ export async function convertDiscriminatedUnionTypeDeclaration({
     union: RawSchemas.DiscriminatedUnionSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<Type> {
+}): Type {
     const discriminant = getUnionDiscriminant(union);
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
@@ -29,9 +29,9 @@ export async function convertDiscriminatedUnionTypeDeclaration({
         extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
             union["base-properties"] != null
-                ? await Promise.all(
-                      Object.entries(union["base-properties"]).map(async ([propertyKey, propertyDefinition]) => ({
-                          ...(await convertDeclaration(propertyDefinition)),
+                ?  Promise.all(
+                      Object.entries(union["base-properties"]).map( ([propertyKey, propertyDefinition]) => ({
+                          ...( convertDeclaration(propertyDefinition)),
                           name: file.casingsGenerator.generateNameAndWireValue({
                               wireValue: propertyKey,
                               name: getPropertyName({ propertyKey, property: propertyDefinition }).name
