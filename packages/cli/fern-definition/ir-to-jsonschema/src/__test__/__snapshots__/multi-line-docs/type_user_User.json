@@ -5,7 +5,8 @@
       "type": "string"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "The user's name. This name is unique to each user. A few examples are included below:\n\n- Alice\n- Bob\n- Charlie"
     },
     "age": {
       "oneOf": [
@@ -15,7 +16,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The user's age."
     }
   },
   "required": [

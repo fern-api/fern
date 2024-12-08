@@ -8,7 +8,8 @@
       "type": "string"
     },
     "rating": {
-      "type": "number"
+      "type": "number",
+      "description": "The rating scale is one to five stars"
     }
   },
   "required": [
