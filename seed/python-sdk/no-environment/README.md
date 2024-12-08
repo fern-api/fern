@@ -84,9 +84,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.dummy.get_dummy(request_options={
-        "max_retries": 1
-    })
-    ```
+    "max_retries": 1
+})
+```
 
 ### Timeouts
 
@@ -94,7 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-    from seed import SeedNoEnvironment
+from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
     ...,
@@ -102,11 +102,11 @@ client = SeedNoEnvironment(
 )
 
 
-    # Override timeout for a specific method
-    client.dummy.get_dummy(request_options={
-        "timeout_in_seconds": 1
-    })
-    ```
+# Override timeout for a specific method
+client.dummy.get_dummy(request_options={
+    "timeout_in_seconds": 1
+})
+```
 
 ### Custom Client
 
