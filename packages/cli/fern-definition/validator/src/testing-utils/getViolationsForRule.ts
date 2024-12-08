@@ -35,7 +35,7 @@ export async function getViolationsForRule({
     });
     const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
-    const violations = runRulesOnWorkspace({
+    const violations = await runRulesOnWorkspace({
         workspace: fernWorkspace,
         logger: CONSOLE_LOGGER,
         rules: [rule]

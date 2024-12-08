@@ -13,12 +13,12 @@ import { visitRootApiFileYamlAst, visitPackageMarkerYamlAst, visitDefinitionFile
 import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules";
 import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst";
 
-export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
+export async function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
 }
 
 // exported for testing
-export function runRulesOnWorkspace({
+export async function runRulesOnWorkspace({
     workspace,
     rules,
     logger
@@ -26,10 +26,10 @@ export function runRulesOnWorkspace({
     workspace: FernWorkspace;
     rules: Rule[];
     logger: Logger;
-}): ValidationViolation[] {
+}): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = rules.map((rule) => rule.create({ workspace, logger }));
+    const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger })));
 
     if (workspace.generatorsConfiguration?.rawConfiguration) {
         const violationsForGeneratorsYml = validateGeneratorsYmlFile({
