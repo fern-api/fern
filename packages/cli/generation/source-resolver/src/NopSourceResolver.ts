@@ -1,16 +1,17 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ResolvedSource } from "./ResolvedSource";
 import { SourceResolver } from "./SourceResolver";
+
 export class NopSourceResolver implements SourceResolver {
-    public async resolveSource({ source }: { source: RawSchemas.SourceSchema }): Promise<ResolvedSource | undefined> {
+    public resolveSource({ source }: { source: RawSchemas.SourceSchema }): ResolvedSource | undefined {
         return undefined;
     }
 
-    public async resolveSourceOrThrow({
+    public resolveSourceOrThrow({
         source
     }: {
         source: RawSchemas.SourceSchema;
-    }): Promise<ResolvedSource | undefined> {
+    }): ResolvedSource | undefined {
         return undefined;
     }
 }

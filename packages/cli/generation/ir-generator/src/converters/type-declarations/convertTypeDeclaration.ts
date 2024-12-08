@@ -109,7 +109,7 @@ export  function convertType({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): Type {
-    return  visitRawTypeDeclaration<Type> | Type(typeDeclaration, {
+    return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
