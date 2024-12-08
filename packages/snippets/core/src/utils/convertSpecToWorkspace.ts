@@ -4,7 +4,7 @@ import { Spec } from "../Spec";
 import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
-export async function convertSpecToWorkspace({
+export function convertSpecToWorkspace({
     context,
     spec,
     generatorsConfiguration
@@ -12,7 +12,7 @@ export async function convertSpecToWorkspace({
     context: TaskContext;
     spec: Spec;
     generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
-}): Promise<FernWorkspace> {
+}): FernWorkspace {
     switch (spec.type) {
         case "openapi": {
             const openapi = new OpenAPIWorkspace({
@@ -22,7 +22,7 @@ export async function convertSpecToWorkspace({
                 },
                 generatorsConfiguration
             });
-            return await openapi.toFernWorkspace(
+            return openapi.toFernWorkspace(
                 {
                     context
                 },
