@@ -24,18 +24,18 @@ function getOverriddenIrVersion(irVersion: string): number {
     return Number(irVersion.replace("v", ""));
 }
 
-async function getIrVersionForGeneratorInvocation(
+ function getIrVersionForGeneratorInvocation(
     invocation: generatorsYml.GeneratorInvocationSchema
-): Promise<number | undefined> {
+): number | undefined {
     const fdr = createFdrGeneratorsSdkService({ token: undefined });
-    const generatorEntity = await fdr.generators.getGeneratorByImage({
+    const generatorEntity =  fdr.generators.getGeneratorByImage({
         dockerImage: invocation.name
     });
     // Again, this is to allow for offline usage, and other transient errors
     if (!generatorEntity.ok || generatorEntity.body == null) {
         return undefined;
     }
-    const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
+    const generatorRelease =  fdr.generators.versions.getGeneratorRelease(
         generatorEntity.body.id,
         invocation.version
     );
@@ -51,18 +51,17 @@ async function getIrVersionForGeneratorInvocation(
 // NOTE: we do not throw in the event of a failure here, to account for using the generator offline
 export const CompatibleIrVersionsRule: Rule = {
     name: "compatible-ir-version",
-    create: () => ({ /* no-op */ }),
-    createAsync: async () => {
+    create:  () => {
         return {
             generatorsYml: {
-                generatorInvocation: async ({ invocation, cliVersion }) => {
+                generatorInvocation:  ({ invocation, cliVersion }) => {
                     const fdr = createFdrGeneratorsSdkService({ token: undefined });
                     if (cliVersion == null) {
                         return [];
                     }
 
                     // Pull the CLI release to get the IR version
-                    const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);
+                    const cliRelease =  fdr.generators.cli.getCliRelease(cliVersion);
                     // Again, this is to allow for offline usage, and other transient errors
                     if (!cliRelease.ok) {
                         return [];
@@ -75,7 +74,7 @@ export const CompatibleIrVersionsRule: Rule = {
                         // You've overridden the IR version in the generator invocation, let's clean it up
                         invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"]);
                     } else {
-                        const maybeIrVersion = await getIrVersionForGeneratorInvocation(invocation);
+                        const maybeIrVersion =  getIrVersionForGeneratorInvocation(invocation);
 
                         // The above returns undefined if we can't get the IR version, so we'll just return an empty array
                         // Again, this is to allow for offline usage, and other transient errors
@@ -92,7 +91,7 @@ export const CompatibleIrVersionsRule: Rule = {
 
                     // If we've made it this far, we know the IR versions aren't a match, let's grab the min version
                     // and throw an error for the user telling them what to upgrade to to use this generator.
-                    const minCliVersion = await fdr.generators.cli.getMinCliForIr(invocationIrVersion);
+                    const minCliVersion =  fdr.generators.cli.getMinCliForIr(invocationIrVersion);
                     if (minCliVersion.ok) {
                         return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
                     } else {
