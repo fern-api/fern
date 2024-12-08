@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ GITHUB_REF }}
 
       - name: Install
         uses: ./.github/actions/install
