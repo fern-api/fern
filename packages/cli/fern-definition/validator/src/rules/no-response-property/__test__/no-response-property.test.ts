@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoResponsePropertyRule } from "../no-response-property";
 
 describe("no-response-property", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoResponsePropertyRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

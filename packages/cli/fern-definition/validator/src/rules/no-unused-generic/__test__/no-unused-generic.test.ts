@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUnusedGenericRule } from "../no-unused-generic";
 
 describe("no-unused-generic", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoUnusedGenericRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

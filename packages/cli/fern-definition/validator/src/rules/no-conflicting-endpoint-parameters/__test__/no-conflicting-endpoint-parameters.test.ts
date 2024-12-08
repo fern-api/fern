@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoConflictingEndpointParametersRule } from "../no-conflicting-endpoint-parameters";
 
 describe("no-conflicting-endpoint-parameters", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoConflictingEndpointParametersRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

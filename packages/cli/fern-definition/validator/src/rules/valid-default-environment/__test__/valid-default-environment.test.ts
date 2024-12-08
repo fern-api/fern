@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ValidDefaultEnvironmentRule } from "../valid-default-environment";
 
 describe("valid-default-environment", () => {
-    it("default-env-missing", () => {
-        const violations = getViolationsForRule({
+    it("default-env-missing", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidDefaultEnvironmentRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -22,8 +22,8 @@ describe("valid-default-environment", () => {
         ]);
     });
 
-    it("default-env-valid", () => {
-        const violations = getViolationsForRule({
+    it("default-env-valid", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidDefaultEnvironmentRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -34,8 +34,8 @@ describe("valid-default-environment", () => {
         expect(violations).toEqual([]);
     });
 
-    it("default-env-null", () => {
-        const violations = getViolationsForRule({
+    it("default-env-null", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidDefaultEnvironmentRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

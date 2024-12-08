@@ -20,7 +20,7 @@ export function visitGeneratorsYamlAst(
         openapi: noop,
         "openapi-overrides": noop,
         "spec-origin": noop,
-        "-api": noop,
+        "async-api": noop,
         "api-settings": noop,
         groups: (groups) => {
             visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });

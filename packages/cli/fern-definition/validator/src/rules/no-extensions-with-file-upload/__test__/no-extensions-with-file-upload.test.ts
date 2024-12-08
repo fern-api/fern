@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { NoExtensionsWithFileUploadRule } from "../no-extensions-with-file-upload";
 
 describe("no-extensions-with-file-upload", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoExtensionsWithFileUploadRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

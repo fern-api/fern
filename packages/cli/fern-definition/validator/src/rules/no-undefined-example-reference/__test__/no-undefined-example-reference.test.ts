@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUndefinedExampleReferenceRule } from "../no-undefined-example-reference";
 
 describe("no-undefined-example-reference", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoUndefinedExampleReferenceRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ValidTypeReferenceWithDefaultAndValidationRule } from "../valid-type-reference-with-default-and-validation";
 
 describe("valid-default-and-validation-type-reference", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidTypeReferenceWithDefaultAndValidationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -16,8 +16,8 @@ describe("valid-default-and-validation-type-reference", () => {
         expect(violations).toEqual([]);
     });
 
-    it("invalid", () => {
-        const violations = getViolationsForRule({
+    it("invalid", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidTypeReferenceWithDefaultAndValidationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

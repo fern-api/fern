@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ValidPathParametersConfigurationRule } from "../valid-path-parameters-configuration";
 
 describe("valid-path-parameters-configuration", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidPathParametersConfigurationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

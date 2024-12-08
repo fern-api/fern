@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidFieldNamesRule } from "../valid-field-names";
 
 describe("valid-field-names", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidFieldNamesRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

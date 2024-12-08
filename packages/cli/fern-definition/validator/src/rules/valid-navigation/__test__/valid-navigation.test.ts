@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidNavigationRule } from "../valid-navigation";
 
 describe("valid-navigation", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: ValidNavigationRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

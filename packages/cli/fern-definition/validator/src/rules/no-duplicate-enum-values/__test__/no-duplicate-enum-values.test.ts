@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoDuplicateEnumValuesRule } from "../no-duplicate-enum-values";
 
 describe("no-duplicate-enum-values", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoDuplicateEnumValuesRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

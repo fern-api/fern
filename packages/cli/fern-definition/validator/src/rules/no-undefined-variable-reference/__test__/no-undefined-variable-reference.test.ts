@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { NoUndefinedVariableReferenceRule } from "../no-undefined-variable-reference";
 
 describe("no-undefined-variable-reference", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoUndefinedVariableReferenceRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

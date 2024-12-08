@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUndefinedTypeReferenceRule } from "../no-undefined-type-reference";
 
 describe("no-undefined-type-reference", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoUndefinedTypeReferenceRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

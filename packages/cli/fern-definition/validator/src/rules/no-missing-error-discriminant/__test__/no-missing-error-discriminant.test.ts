@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoMissingErrorDiscriminantRule } from "../no-missing-error-discriminant";
 
 describe("no-missing-error-discriminant", () => {
-    it("discriminant-missing-errors-declared", () => {
-        const violations = getViolationsForRule({
+    it("discriminant-missing-errors-declared", async () => {
+        const violations = await getViolationsForRule({
             rule: NoMissingErrorDiscriminantRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -22,8 +22,8 @@ describe("no-missing-error-discriminant", () => {
         ]);
     });
 
-    it("discriminant-missing-no-errors-declared", () => {
-        const violations = getViolationsForRule({
+    it("discriminant-missing-no-errors-declared", async () => {
+        const violations = await getViolationsForRule({
             rule: NoMissingErrorDiscriminantRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -34,8 +34,8 @@ describe("no-missing-error-discriminant", () => {
         expect(violations).toEqual([]);
     });
 
-    it("discriminant-present-errors-declared", () => {
-        const violations = getViolationsForRule({
+    it("discriminant-present-errors-declared", async () => {
+        const violations = await getViolationsForRule({
             rule: NoMissingErrorDiscriminantRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -46,8 +46,8 @@ describe("no-missing-error-discriminant", () => {
         expect(violations).toEqual([]);
     });
 
-    it("discriminant-present-no-errors-declared", () => {
-        const violations = getViolationsForRule({
+    it("discriminant-present-no-errors-declared", async () => {
+        const violations = await getViolationsForRule({
             rule: NoMissingErrorDiscriminantRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

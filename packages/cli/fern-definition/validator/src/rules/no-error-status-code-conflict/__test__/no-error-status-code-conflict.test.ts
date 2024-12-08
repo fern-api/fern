@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict";
 
 describe("no-duplicate-declarations", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: NoErrorStatusCodeConflictRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

@@ -16,16 +16,16 @@ export declare namespace getViolationsForRule {
     }
 }
 
-export function getViolationsForRule({
+export async function getViolationsForRule({
     rule,
     absolutePathToWorkspace,
     cliVersion
-}: getViolationsForRule.Args): ValidationViolation[] {
+}: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const context = createMockTaskContext();
 
     const lazyWorkspace = new LazyFernWorkspace({
         absoluteFilePath: absolutePathToWorkspace,
-        generatorsConfiguration: loadGeneratorsConfiguration({
+        generatorsConfiguration: await loadGeneratorsConfiguration({
             absolutePathToWorkspace,
             context
         }),
@@ -33,7 +33,7 @@ export function getViolationsForRule({
         cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     });
-    const fernWorkspace = lazyWorkspace.toFernWorkspace({ context });
+    const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
     const violations = runRulesOnWorkspace({
         workspace: fernWorkspace,

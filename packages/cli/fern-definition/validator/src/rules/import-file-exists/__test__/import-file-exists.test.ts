@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ImportFileExistsRule } from "../import-file-exists";
 
 describe("import-file-exists", () => {
-    it("simple", () => {
-        const violations = getViolationsForRule({
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
             rule: ImportFileExistsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
