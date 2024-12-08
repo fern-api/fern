@@ -14,6 +14,7 @@ imports:
   webhooks: webhooks.yml
   websocket: websocket.yml
   publish: publish.yml
+  license: license.yml
 
 types:
   IntermediateRepresentation:
@@ -62,6 +63,7 @@ types:
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
+      licenseConfig: optional<license.LicenseConfig>
 
   ReadmeConfig:
     docs: |
