@@ -14,6 +14,7 @@ export interface Rule {
     name: string;
     DISABLE_RULE?: boolean;
     create: (context: RuleContext) => RuleVisitors;
+    createAsync?: (context: RuleContext) => Promise<AsyncRuleVisitors>;
 }
 
 export interface RuleContext {
@@ -28,8 +29,19 @@ export interface RuleVisitors {
     generatorsYml?: RuleVisitor<GeneratorsYmlFileAstNodeTypes, generatorsYml.GeneratorsConfigurationSchema>;
 }
 
+export interface AsyncRuleVisitors {
+    rootApiFile?: AsyncRuleVisitor<RootApiFileAstNodeTypes, RootApiFileSchema>;
+    definitionFile?: AsyncRuleVisitor<DefinitionFileAstNodeTypes, DefinitionFileSchema>;
+    packageMarker?: AsyncRuleVisitor<PackageMarkerAstNodeTypes, PackageMarkerFileSchema>;
+    generatorsYml?: AsyncRuleVisitor<GeneratorsYmlFileAstNodeTypes, generatorsYml.GeneratorsConfigurationSchema>;
+}
+
 export type RuleVisitor<AstNodeTypes, FileSchema> = {
     [K in keyof AstNodeTypes]?: (node: AstNodeTypes[K], args: RuleRunnerArgs<FileSchema>) => RuleViolation[];
+};
+
+export type AsyncRuleVisitor<AstNodeTypes, FileSchema> = {
+    [K in keyof AstNodeTypes]?: (node: AstNodeTypes[K], args: RuleRunnerArgs<FileSchema>) => Promise<RuleViolation[]>;
 };
 
 export interface RuleRunnerArgs<FileSchema> {
@@ -41,5 +53,3 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
 }
-
-// TODO: Make an async variant for some rules.
