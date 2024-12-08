@@ -83,17 +83,15 @@ export  function convertHttpService({
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
-                ?  Promise.all(
-                      Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file })
-                      )
-                  )
+                ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
+                    convertHttpHeader({ headerKey, header, file })
+                )
                 : [],
         pathParameters: servicePathParameters,
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
-        endpoints:  Promise.all(
-            Object.entries(serviceDefinition.endpoints).map( ([endpointKey, endpoint]): HttpEndpoint> = {
+        endpoints:
+            Object.entries(serviceDefinition.endpoints).map( ([endpointKey, endpoint]): HttpEndpoint => {
                 const endpointPathParameters =  convertPathParameters({
                     pathParameters: getEndpointPathParameters(endpoint),
                     location: PathParameterLocation.Endpoint,
@@ -125,8 +123,7 @@ export  function convertHttpService({
                             : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
                     queryParameters:
                         typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                            ?  Promise.all(
-                                  Object.entries(endpoint.request["query-parameters"]).map(
+                            ? Object.entries(endpoint.request["query-parameters"]).map(
                                        ([queryParameterKey, queryParameter]) => {
                                           return  convertQueryParameter({
                                               file,
@@ -134,16 +131,13 @@ export  function convertHttpService({
                                               queryParameter
                                           });
                                       }
-                                  )
                               )
                             : [],
                     headers:
                         typeof endpoint.request !== "string" && endpoint.request?.headers != null
-                            ?  Promise.all(
-                                  Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
+                            ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
                                       convertHttpHeader({ headerKey, header, file })
                                   )
-                              )
                             : [],
                     requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
                     sdkRequest:  convertHttpSdkRequest({
@@ -195,7 +189,6 @@ export  function convertHttpService({
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
                 return httpEndpoint;
             })
-        )
     };
     return service;
 }
@@ -214,16 +207,14 @@ export  function convertPathParameters({
     if (pathParameters == null) {
         return [];
     }
-    return  Promise.all(
-        Object.entries(pathParameters).map(([parameterName, parameter]) =>
-            convertPathParameter({
-                parameterName,
-                parameter,
-                location,
-                file,
-                variableResolver
-            })
-        )
+    return Object.entries(pathParameters).map(([parameterName, parameter]) =>
+        convertPathParameter({
+            parameterName,
+            parameter,
+            location,
+            file,
+            variableResolver
+        })
     );
 }
 

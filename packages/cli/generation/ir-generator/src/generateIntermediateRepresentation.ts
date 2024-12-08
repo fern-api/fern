@@ -124,19 +124,15 @@ export  function generateIntermediateRepresentation({
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
-                ?  Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
                           convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                       )
-                  )
                 : [],
         idempotencyHeaders:
             workspace.definition.rootApiFile.contents["idempotency-headers"] != null
-                ?  Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
                           ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                       )
-                  )
                 : [],
         types: {},
         errors: {},

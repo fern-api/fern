@@ -43,10 +43,8 @@ export  function convertWebhookGroup({
             name: file.casingsGenerator.generateName(webhookId),
             headers:
                 webhook.headers != null
-                    ?  Promise.all(
-                          Object.entries(webhook.headers).map(([headerKey, header]) =>
-                              convertHttpHeader({ headerKey, header, file })
-                          )
+                    ? Object.entries(webhook.headers).map(([headerKey, header]) =>
+                        convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),

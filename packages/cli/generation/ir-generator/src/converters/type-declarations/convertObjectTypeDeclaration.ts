@@ -26,16 +26,14 @@ export  function getObjectPropertiesFromRawObjectSchema(
     if (object.properties == null) {
         return [];
     }
-    return  Promise.all(
-        Object.entries(object.properties).map( ([propertyKey, propertyDefinition]) => ({
-            ...( convertDeclaration(propertyDefinition)),
-            name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: propertyKey,
-                name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-            }),
-            valueType: file.parseTypeReference(propertyDefinition)
-        }))
-    );
+    return Object.entries(object.properties).map( ([propertyKey, propertyDefinition]) => ({
+        ...( convertDeclaration(propertyDefinition)),
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+        }),
+        valueType: file.parseTypeReference(propertyDefinition)
+    }));
 }
 
 export function getExtensionsAsList(extensions: string | string[] | undefined): string[] {

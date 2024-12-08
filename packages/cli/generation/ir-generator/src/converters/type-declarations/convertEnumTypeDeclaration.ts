@@ -10,8 +10,7 @@ export  function convertEnumTypeDeclaration({
     _enum: RawSchemas.EnumSchema;
     file: FernFileContext;
 }): EnumTypeDeclaration {
-    const values =  Promise.all(
-        _enum.enum.map( (value) => {
+    const values = _enum.enum.map( (value) => {
             return {
                 ...( convertDeclaration(value)),
                 name: file.casingsGenerator.generateNameAndWireValue({
@@ -19,11 +18,10 @@ export  function convertEnumTypeDeclaration({
                     name: getEnumName(value).name,
                     opts: {
                         casingOverrides: typeof value !== "string" ? value.casing : undefined
-                    }
-                })
-            };
-        })
-    );
+                }
+            })
+        };
+    });
     let defaultValue: EnumValue | undefined;
     if (_enum.default != null) {
         defaultValue = values.find((enumValue) => enumValue.name.wireValue === _enum.default);

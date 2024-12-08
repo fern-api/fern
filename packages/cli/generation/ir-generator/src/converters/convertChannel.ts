@@ -67,10 +67,8 @@ export  function convertChannel({
         displayName: channel["display-name"],
         headers:
             channel.headers != null
-                ?  Promise.all(
-                      Object.entries(channel.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file })
-                      )
+                ? Object.entries(channel.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
         docs: channel.docs,
@@ -85,9 +83,8 @@ export  function convertChannel({
                 : [],
         queryParameters:
             channel["query-parameters"] != null
-                ?  Promise.all(
-                      Object.entries(channel["query-parameters"]).map( ([queryParameterKey, queryParameter]) => {
-                          const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
+                ? Object.entries(channel["query-parameters"]).map(([queryParameterKey, queryParameter]) => {
+                      const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
                           const valueType = file.parseTypeReference(queryParameter);
                           return {
                               ...( convertDeclaration(queryParameter)),
@@ -102,7 +99,6 @@ export  function convertChannel({
                                       : false
                           };
                       })
-                  )
                 : [],
         messages: Object.values(messages),
         examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {

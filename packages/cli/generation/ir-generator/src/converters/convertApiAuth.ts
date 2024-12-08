@@ -44,17 +44,15 @@ export  function convertApiAuth({
         any:  ({ any }) => ({
             docs,
             requirement: AuthSchemesRequirement.Any,
-            schemes:  Promise.all(
-                any.map(
-                     (schemeReference) =>
-                         convertSchemeReference({
-                            reference: schemeReference,
-                            authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                            file,
-                            propertyResolver,
-                            endpointResolver
-                        })
-                )
+            schemes: any.map(
+                (schemeReference) =>
+                    convertSchemeReference({
+                    reference: schemeReference,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    file,
+                    propertyResolver,
+                    endpointResolver
+                })
             )
         })
     });
