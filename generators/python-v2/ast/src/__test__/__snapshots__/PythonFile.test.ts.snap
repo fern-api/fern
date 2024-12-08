@@ -112,6 +112,17 @@ my_variable: ImportedClass.nested.attribute
 "
 `;
 
+exports[`PythonFile > Write duplicative import names 1`] = `
+"from .cars import Car
+from .vehicles import Car
+
+
+class Car:
+    car = Car()
+    vehicle = Car()
+"
+`;
+
 exports[`PythonFile > Write star imports 1`] = `
 "# flake8: noqa: F401, F403
 
