@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { NoConflictingEndpointPathsRule } from "../no-conflicting-endpoint-paths";
 
 describe("no-conflicting-endpoint-paths", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoConflictingEndpointPathsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

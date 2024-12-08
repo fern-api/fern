@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoMissingRequestNameRule } from "../no-missing-request-name";
 
 describe("no-missing-request-name", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoMissingRequestNameRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

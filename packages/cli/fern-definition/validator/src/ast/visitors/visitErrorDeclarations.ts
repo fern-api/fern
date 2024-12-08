@@ -5,7 +5,7 @@ import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
-export  function visitErrorDeclarations({
+export function visitErrorDeclarations({
     errorDeclarations,
     visitor,
     nodePath
@@ -19,12 +19,12 @@ export  function visitErrorDeclarations({
     }
     for (const [errorName, errorDeclaration] of Object.entries(errorDeclarations)) {
         const nodePathForError = [...nodePath, errorName];
-         visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
-         visitErrorDeclaration({ errorName, declaration: errorDeclaration, visitor, nodePathForError });
+        visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
+        visitErrorDeclaration({ errorName, declaration: errorDeclaration, visitor, nodePathForError });
     }
 }
 
- function visitErrorDeclaration({
+function visitErrorDeclaration({
     errorName,
     declaration,
     visitor,
@@ -38,20 +38,20 @@ export  function visitErrorDeclarations({
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
     if (typeof declaration === "string") {
-         visitTypeReference(declaration, nodePathForError);
+        visitTypeReference(declaration, nodePathForError);
     } else {
-         visitObject(declaration, {
+        visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
             "status-code": noop,
-            type:  (type) => {
+            type: (type) => {
                 if (type == null) {
                     return;
                 }
                 const nodePathForErrorType = [...nodePathForError, "type"];
                 if (typeof type === "string") {
-                     visitTypeReference(type, nodePathForErrorType);
+                    visitTypeReference(type, nodePathForErrorType);
                 } else {
-                     visitTypeDeclaration({
+                    visitTypeDeclaration({
                         typeName: errorName,
                         declaration: type,
                         visitor,
@@ -59,13 +59,13 @@ export  function visitErrorDeclarations({
                     });
                 }
             },
-            examples:  (examples) => {
+            examples: (examples) => {
                 if (examples == null) {
                     return;
                 }
                 for (const example of examples) {
                     const nodePathForErrorExample = [...nodePathForError, "type"];
-                     visitor.exampleError?.({ errorName, declaration, example }, nodePathForErrorExample);
+                    visitor.exampleError?.({ errorName, declaration, example }, nodePathForErrorExample);
                 }
             }
         });

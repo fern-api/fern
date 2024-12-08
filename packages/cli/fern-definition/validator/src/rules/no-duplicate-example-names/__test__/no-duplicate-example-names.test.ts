@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoDuplicateExampleNamesRule } from "../no-duplicate-example-names";
 
 describe("no-duplicate-example-names", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoDuplicateExampleNamesRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

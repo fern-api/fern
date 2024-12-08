@@ -12,7 +12,7 @@ import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
 import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
 
-export  function visitHttpService({
+export function visitHttpService({
     service,
     visitor,
     nodePath
@@ -21,17 +21,17 @@ export  function visitHttpService({
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): void {
-     visitor.httpService?.(service, nodePath);
+    visitor.httpService?.(service, nodePath);
 
-     visitObject(service, {
-        url:  (url) => {
-             visitor.serviceBaseUrl?.(url, [...nodePath, "url"]);
+    visitObject(service, {
+        url: (url) => {
+            visitor.serviceBaseUrl?.(url, [...nodePath, "url"]);
         },
         "base-path": noop,
         "display-name": noop,
         availability: noop,
-        headers:  (headers) => {
-             visitHeaders({
+        headers: (headers) => {
+            visitHeaders({
                 headers,
                 visitor,
                 nodePath: [...nodePath, "headers"]
@@ -39,17 +39,17 @@ export  function visitHttpService({
         },
         audiences: noop,
         auth: noop,
-        "path-parameters":  (pathParameters) => {
-             visitPathParameters({
+        "path-parameters": (pathParameters) => {
+            visitPathParameters({
                 pathParameters,
                 visitor,
                 nodePath: [...nodePath, "path-parameters"]
             });
         },
-        endpoints:  (endpoints) => {
+        endpoints: (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePath, "endpoints", endpointId];
-                 visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
+                visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
         idempotent: noop,
@@ -58,7 +58,7 @@ export  function visitHttpService({
     });
 }
 
- function visitEndpoint({
+function visitEndpoint({
     endpointId,
     endpoint,
     service,
@@ -73,46 +73,46 @@ export  function visitHttpService({
 }) {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
-     visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
-     visitObject(endpoint, {
+    visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
+    visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         "display-name": noop,
         availability: noop,
         "base-path": noop,
         path: noop,
         idempotent: noop,
-        url:  (baseUrl) => {
-             visitor.endpointBaseUrl?.({ baseUrl, service }, [...nodePathForEndpoint, "url"]);
+        url: (baseUrl) => {
+            visitor.endpointBaseUrl?.({ baseUrl, service }, [...nodePathForEndpoint, "url"]);
         },
-        "path-parameters":  (pathParameters) => {
-             visitPathParameters({
+        "path-parameters": (pathParameters) => {
+            visitPathParameters({
                 pathParameters,
                 visitor,
                 nodePath: [...nodePathForEndpoint, "path-parameters"]
             });
         },
-        request:  (request) => {
+        request: (request) => {
             if (request == null) {
                 return;
             }
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
-                 visitTypeReference(request, nodePathForRequest, {
+                visitTypeReference(request, nodePathForRequest, {
                     location: "requestReference"
                 });
                 return;
             }
-             visitObject(request, {
+            visitObject(request, {
                 name: noop,
                 docs: createDocsVisitor(visitor, nodePathForRequest),
-                "path-parameters":  (pathParameters) => {
-                     visitPathParameters({
+                "path-parameters": (pathParameters) => {
+                    visitPathParameters({
                         pathParameters,
                         visitor,
                         nodePath: [...nodePathForRequest, "path-parameters"]
                     });
                 },
-                "query-parameters":  (queryParameters) => {
+                "query-parameters": (queryParameters) => {
                     if (queryParameters == null) {
                         return;
                     }
@@ -122,20 +122,17 @@ export  function visitHttpService({
                             "query-parameters",
                             queryParameterKey
                         ];
-                         visitor.queryParameter?.(
-                            { queryParameterKey, queryParameter },
-                            nodePathForQueryParameter
-                        );
+                        visitor.queryParameter?.({ queryParameterKey, queryParameter }, nodePathForQueryParameter);
 
                         if (typeof queryParameter === "string") {
-                             visitTypeReference(queryParameter, nodePathForQueryParameter);
+                            visitTypeReference(queryParameter, nodePathForQueryParameter);
                         } else {
-                             visitObject(queryParameter, {
+                            visitObject(queryParameter, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForQueryParameter),
                                 availability: noop,
-                                type:  (type) => {
-                                     visitTypeReference(type, [...nodePathForQueryParameter, "type"], {
+                                type: (type) => {
+                                    visitTypeReference(type, [...nodePathForQueryParameter, "type"], {
                                         _default: queryParameter.default,
                                         validation: queryParameter.validation
                                     });
@@ -150,58 +147,58 @@ export  function visitHttpService({
                     }
                 },
                 "content-type": noop,
-                headers:  (headers) => {
-                     visitHeaders({
+                headers: (headers) => {
+                    visitHeaders({
                         headers,
                         visitor,
                         nodePath: [...nodePathForRequest, "headers"]
                     });
                 },
-                body:  (body) => {
+                body: (body) => {
                     if (body == null) {
                         return;
                     }
                     const nodePathForRequestBody = [...nodePathForRequest, "body"];
 
                     if (typeof body === "string") {
-                         visitTypeReference(body, nodePathForRequestBody, {
+                        visitTypeReference(body, nodePathForRequestBody, {
                             location: "requestReference"
                         });
                     } else if (isInlineRequestBody(body)) {
-                         visitor.typeDeclaration?.(
+                        visitor.typeDeclaration?.(
                             { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: body },
                             nodePathForRequestBody
                         );
 
-                         visitObject(body, {
-                            extends:  (_extends) => {
+                        visitObject(body, {
+                            extends: (_extends) => {
                                 if (_extends == null) {
                                     return;
                                 }
                                 const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                                 for (const extendedType of extendsList) {
                                     const nodePathForExtension = [...nodePathForRequestBody, "extends", extendedType];
-                                     visitor.extension?.(extendedType, nodePathForExtension);
-                                     visitTypeReference(extendedType, nodePathForExtension);
+                                    visitor.extension?.(extendedType, nodePathForExtension);
+                                    visitTypeReference(extendedType, nodePathForExtension);
                                 }
                             },
-                            properties:  (properties) => {
+                            properties: (properties) => {
                                 if (properties == null) {
                                     return;
                                 }
                                 for (const [propertyKey, property] of Object.entries(properties)) {
                                     const nodePathForProperty = [...nodePathForRequestBody, "properties", propertyKey];
                                     if (typeof property === "string") {
-                                         visitTypeReference(property, nodePathForProperty, {
+                                        visitTypeReference(property, nodePathForProperty, {
                                             location: TypeReferenceLocation.InlinedRequestProperty
                                         });
                                     } else {
-                                         visitObject(property, {
+                                        visitObject(property, {
                                             name: noop,
                                             docs: createDocsVisitor(visitor, nodePathForProperty),
                                             availability: noop,
-                                            type:  (type) => {
-                                                 visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                            type: (type) => {
+                                                visitTypeReference(type, [...nodePathForProperty, "type"], {
                                                     location: TypeReferenceLocation.InlinedRequestProperty,
                                                     _default: property.default,
                                                     validation: property.validation
@@ -219,8 +216,8 @@ export  function visitHttpService({
                             ["extra-properties"]: noop
                         });
                     } else {
-                         createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
-                         visitTypeReference(body.type, nodePathForRequestBody);
+                        createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
+                        visitTypeReference(body.type, nodePathForRequestBody);
                     }
                 }
             });
@@ -228,38 +225,35 @@ export  function visitHttpService({
         audiences: noop,
         method: noop,
         auth: noop,
-        "stream-condition":  (streamCondition) => {
-             visitor.streamCondition?.({ streamCondition, endpoint }, [
-                ...nodePathForEndpoint,
-                "stream-condition"
-            ]);
+        "stream-condition": (streamCondition) => {
+            visitor.streamCondition?.({ streamCondition, endpoint }, [...nodePathForEndpoint, "stream-condition"]);
         },
-        "response-stream":  (responseStream) => {
+        "response-stream": (responseStream) => {
             if (responseStream == null) {
                 return;
             }
             if (typeof responseStream === "string") {
-                 visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"], {
+                visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"], {
                     location: TypeReferenceLocation.StreamingResponse
                 });
             } else {
-                 visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"], {
+                visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"], {
                     location: TypeReferenceLocation.StreamingResponse
                 });
             }
         },
-        response:  (response) => {
+        response: (response) => {
             if (response == null) {
                 return;
             }
             const nodePathForResponse = [...nodePathForEndpoint, "response"];
             if (typeof response === "string") {
-                 visitTypeReference(response, nodePathForResponse, { location: TypeReferenceLocation.Response });
+                visitTypeReference(response, nodePathForResponse, { location: TypeReferenceLocation.Response });
             } else {
-                 visitObject(response, {
+                visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
-                    type:  (type) => {
-                         visitTypeReference(type, [...nodePathForResponse, "type"], {
+                    type: (type) => {
+                        visitTypeReference(type, [...nodePathForResponse, "type"], {
                             location: TypeReferenceLocation.Response
                         });
                     },
@@ -268,7 +262,7 @@ export  function visitHttpService({
                 });
             }
         },
-        errors:  (errors) => {
+        errors: (errors) => {
             if (errors == null) {
                 return;
             }
@@ -279,23 +273,23 @@ export  function visitHttpService({
                     typeof error === "string" ? error : error.error
                 ];
                 if (typeof error === "string") {
-                     visitor.errorReference?.(error, nodePathForError);
+                    visitor.errorReference?.(error, nodePathForError);
                 } else {
-                     visitObject(error, {
+                    visitObject(error, {
                         docs: createDocsVisitor(visitor, nodePathForError),
-                        error:  (error) => {
-                             visitor.errorReference?.(error, [...nodePathForError, "error"]);
+                        error: (error) => {
+                            visitor.errorReference?.(error, [...nodePathForError, "error"]);
                         }
                     });
                 }
             }
         },
-        examples:  (examples) => {
+        examples: (examples) => {
             if (examples == null) {
                 return;
             }
             for (const [index, example] of examples.entries()) {
-                 visitExampleEndpointCall({
+                visitExampleEndpointCall({
                     nodePathForExample: [...nodePathForEndpoint, { key: "examples", arrayIndex: index }],
                     visitor,
                     service,
@@ -310,7 +304,7 @@ export  function visitHttpService({
     });
 }
 
- function visitExampleEndpointCall({
+function visitExampleEndpointCall({
     nodePathForExample,
     visitor,
     service,
@@ -336,7 +330,7 @@ export  function visitHttpService({
         return;
     }
 
-     visitor.exampleHttpEndpointCall?.(
+    visitor.exampleHttpEndpointCall?.(
         {
             service,
             endpoint,
@@ -346,7 +340,7 @@ export  function visitHttpService({
     );
 
     const nodePathForHeaders = [...nodePathForExample, "headers"];
-     visitor.exampleHeaders?.(
+    visitor.exampleHeaders?.(
         {
             service,
             endpoint,
@@ -356,7 +350,7 @@ export  function visitHttpService({
     );
     if (example.headers != null) {
         for (const exampleHeader of Object.values(example.headers)) {
-             visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleHeader,
                 visitor,
                 nodePath: nodePathForHeaders
@@ -365,7 +359,7 @@ export  function visitHttpService({
     }
 
     const nodePathForPathParameters = [...nodePathForExample, "path-parameters"];
-     visitor.examplePathParameters?.(
+    visitor.examplePathParameters?.(
         {
             service,
             endpoint,
@@ -375,7 +369,7 @@ export  function visitHttpService({
     );
     if (example["path-parameters"] != null) {
         for (const examplePathParameter of Object.values(example["path-parameters"])) {
-             visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: examplePathParameter,
                 visitor,
                 nodePath: nodePathForPathParameters
@@ -384,7 +378,7 @@ export  function visitHttpService({
     }
 
     const nodePathForQueryParameters = [...nodePathForExample, "query-parameters"];
-     visitor.exampleQueryParameters?.(
+    visitor.exampleQueryParameters?.(
         {
             service,
             endpoint,
@@ -394,7 +388,7 @@ export  function visitHttpService({
     );
     if (example["query-parameters"] != null) {
         for (const exampleQueryParameter of Object.values(example["query-parameters"])) {
-             visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleQueryParameter,
                 visitor,
                 nodePath: nodePathForQueryParameters
@@ -403,7 +397,7 @@ export  function visitHttpService({
     }
 
     const nodePathForRequest = [...nodePathForExample, "request"];
-     visitor.exampleRequest?.(
+    visitor.exampleRequest?.(
         {
             service,
             endpoint,
@@ -412,7 +406,7 @@ export  function visitHttpService({
         nodePathForRequest
     );
     if (example.request != null) {
-         visitAllReferencesInExample({
+        visitAllReferencesInExample({
             example: example.request,
             visitor,
             nodePath: nodePathForRequest
@@ -420,7 +414,7 @@ export  function visitHttpService({
     }
 
     const nodePathForResponse = [...nodePathForExample, "response"];
-     visitor.exampleResponse?.(
+    visitor.exampleResponse?.(
         {
             service,
             endpoint,
@@ -429,31 +423,31 @@ export  function visitHttpService({
         nodePathForResponse
     );
     if (example.response != null) {
-         visitExampleResponseSchema(endpoint, example.response, {
-            body:  (response) => {
+        visitExampleResponseSchema(endpoint, example.response, {
+            body: (response) => {
                 if (response.body != null) {
-                     visitAllReferencesInExample({
+                    visitAllReferencesInExample({
                         example: response.body,
                         visitor,
                         nodePath: nodePathForResponse
                     });
                 }
                 if (response.error != null) {
-                     visitor.errorReference?.(response.error, [...nodePathForResponse, "error"]);
+                    visitor.errorReference?.(response.error, [...nodePathForResponse, "error"]);
                 }
             },
-            stream:  (response) => {
+            stream: (response) => {
                 for (const example of response.stream) {
-                     visitAllReferencesInExample({
+                    visitAllReferencesInExample({
                         example,
                         visitor,
                         nodePath: nodePathForResponse
                     });
                 }
             },
-            events:  (response) => {
+            events: (response) => {
                 for (const { data: example } of response.stream) {
-                     visitAllReferencesInExample({
+                    visitAllReferencesInExample({
                         example,
                         visitor,
                         nodePath: nodePathForResponse
@@ -465,7 +459,7 @@ export  function visitHttpService({
 
     if (example["code-samples"] != null) {
         for (const [index, codeSample] of example["code-samples"].entries()) {
-             visitor.exampleCodeSample?.(
+            visitor.exampleCodeSample?.(
                 {
                     service,
                     endpoint,
@@ -478,7 +472,7 @@ export  function visitHttpService({
     }
 }
 
-export  function visitPathParameters({
+export function visitPathParameters({
     pathParameters,
     visitor,
     nodePath
@@ -494,27 +488,27 @@ export  function visitPathParameters({
     for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
         const nodePathForPathParameter = [...nodePath, pathParameterKey];
 
-         visitor.pathParameter?.({ pathParameterKey, pathParameter }, nodePathForPathParameter);
+        visitor.pathParameter?.({ pathParameterKey, pathParameter }, nodePathForPathParameter);
 
         if (isVariablePathParameter(pathParameter)) {
             if (typeof pathParameter === "string") {
-                 visitor.variableReference?.(pathParameter, nodePathForPathParameter);
+                visitor.variableReference?.(pathParameter, nodePathForPathParameter);
             } else {
-                 visitObject(pathParameter, {
+                visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                    variable:  (variable) =>
-                         visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
+                    variable: (variable) =>
+                        visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
                     availability: noop
                 });
             }
         } else {
             if (typeof pathParameter === "string") {
-                 visitTypeReference(pathParameter, nodePathForPathParameter);
+                visitTypeReference(pathParameter, nodePathForPathParameter);
             } else {
-                 visitObject(pathParameter, {
+                visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                    type:  (type) => {
-                         visitTypeReference(type, [...nodePathForPathParameter, "type"], {
+                    type: (type) => {
+                        visitTypeReference(type, [...nodePathForPathParameter, "type"], {
                             _default: pathParameter.default,
                             validation: pathParameter.validation
                         });
@@ -531,7 +525,7 @@ export  function visitPathParameters({
     }
 }
 
- function visitHeaders({
+function visitHeaders({
     headers,
     visitor,
     nodePath
@@ -549,16 +543,16 @@ export  function visitPathParameters({
     for (const [headerKey, header] of Object.entries(headers)) {
         const nodePathForHeader = [...nodePath, headerKey];
 
-         visitor.header?.({ headerKey, header }, nodePathForHeader);
+        visitor.header?.({ headerKey, header }, nodePathForHeader);
 
         if (typeof header === "string") {
-             visitTypeReference(header, nodePathForHeader);
+            visitTypeReference(header, nodePathForHeader);
         } else {
-             visitObject(header, {
+            visitObject(header, {
                 name: noop,
                 availability: noop,
-                type:  (type) => {
-                     visitTypeReference(type, nodePathForHeader, {
+                type: (type) => {
+                    visitTypeReference(type, nodePathForHeader, {
                         _default: header.default,
                         validation: header.validation
                     });

@@ -18,14 +18,11 @@ export function createDefinitionFileAstVisitorForRules({
     function createAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes>(
         nodeType: K
     ): Record<K, DefinitionFileAstNodeVisitor<K>> {
-        const visit: DefinitionFileAstNodeVisitor<K> =  (
-            node: DefinitionFileAstNodeTypes[K],
-            nodePath: NodePath
-        ) => {
+        const visit: DefinitionFileAstNodeVisitor<K> = (node: DefinitionFileAstNodeTypes[K], nodePath: NodePath) => {
             for (const ruleVisitors of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.definitionFile?.[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations =  visitFromRule(node, { relativeFilepath, contents });
+                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,

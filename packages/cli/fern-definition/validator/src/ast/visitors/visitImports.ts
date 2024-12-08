@@ -1,7 +1,7 @@
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 
-export  function visitImports({
+export function visitImports({
     imports,
     visitor,
     nodePath
@@ -14,6 +14,6 @@ export  function visitImports({
         return;
     }
     for (const [importedAs, importPath] of Object.entries(imports)) {
-         visitor.import?.({ importPath, importedAs }, [...nodePath, importedAs]);
+        visitor.import?.({ importPath, importedAs }, [...nodePath, importedAs]);
     }
 }

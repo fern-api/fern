@@ -10,8 +10,8 @@ type ErrorName = string;
 
 export const NoUndefinedErrorReferenceRule: Rule = {
     name: "no-undefined-error-reference",
-    create:  ({ workspace }) => {
-        const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> =  getErrorsByFilepath(workspace);
+    create: ({ workspace }) => {
+        const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = getErrorsByFilepath(workspace);
 
         function doesErrorExist(errorName: string, relativeFilepath: RelativeFilePath) {
             const errorsForFilepath = errorsByFilepath[relativeFilepath];
@@ -59,14 +59,14 @@ export const NoUndefinedErrorReferenceRule: Rule = {
     }
 };
 
- function getErrorsByFilepath(workspace: FernWorkspace) {
+function getErrorsByFilepath(workspace: FernWorkspace) {
     const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
-    visitAllDefinitionFiles(workspace,  (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const errorsForFile = new Set<ErrorName>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 
-         visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
             }

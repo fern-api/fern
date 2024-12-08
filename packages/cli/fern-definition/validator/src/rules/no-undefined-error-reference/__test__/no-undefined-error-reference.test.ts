@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference";
 
 describe("no-undefined-error-reference", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoUndefinedErrorReferenceRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

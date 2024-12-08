@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidExampleTypeRule } from "../valid-example-type";
 
 describe("valid-example-type", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleTypeRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

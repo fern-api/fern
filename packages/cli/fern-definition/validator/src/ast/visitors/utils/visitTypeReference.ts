@@ -8,8 +8,8 @@ export function createTypeReferenceVisitor(
     nodePath: NodePath,
     opts?: { _default?: unknown; validation?: RawSchemas.ValidationSchema; location?: TypeReferenceLocation }
 ) => void {
-    return  (typeReference, nodePath, { _default, validation, location } = {}) => {
-         visitor.typeReference?.(
+    return (typeReference, nodePath, { _default, validation, location } = {}) => {
+        visitor.typeReference?.(
             {
                 typeReference,
                 _default,

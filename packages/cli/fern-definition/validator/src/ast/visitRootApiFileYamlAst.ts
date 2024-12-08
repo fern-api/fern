@@ -3,12 +3,9 @@ import { isOAuthScheme, RootApiFileSchema } from "@fern-api/fern-definition-sche
 import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
 import { visitPathParameters } from "./visitors/services/visitHttpService";
 
-export  function visitRootApiFileYamlAst(
-    contents: RootApiFileSchema,
-    visitor: Partial<RootApiFileAstVisitor>
-): void {
-     visitor.file?.(contents, []);
-     visitObject(contents, {
+export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Partial<RootApiFileAstVisitor>): void {
+    visitor.file?.(contents, []);
+    visitObject(contents, {
         version: noop,
         name: noop,
         "default-url": noop,
@@ -16,51 +13,49 @@ export  function visitRootApiFileYamlAst(
         imports: noop,
         auth: noop,
         "idempotency-headers": noop,
-        "auth-schemes":  (authSchemes) => Object.entries(authSchemes ?? {}).map( ([authScheme, authSchemeDeclaration]) => {
+        "auth-schemes": (authSchemes) =>
+            Object.entries(authSchemes ?? {}).map(([authScheme, authSchemeDeclaration]) => {
                 if (isOAuthScheme(authSchemeDeclaration)) {
-                        visitor.oauth?.({ name: authScheme, oauth: authSchemeDeclaration }, [
-                        "auth-scheme",
-                        authScheme
-                    ]);
-            }
-        }),
+                    visitor.oauth?.({ name: authScheme, oauth: authSchemeDeclaration }, ["auth-scheme", authScheme]);
+                }
+            }),
         pagination: noop,
-        "default-environment":  (defaultEnvironment) => {
-             visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
+        "default-environment": (defaultEnvironment) => {
+            visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
         },
         docs: noop,
         headers: noop,
-        environments:  (environments) => {
+        environments: (environments) => {
             if (environments == null) {
                 return;
             }
             for (const [environmentId, environment] of Object.entries(environments)) {
-                 visitor.environment?.({ environmentId, environment }, ["environments", environmentId]);
+                visitor.environment?.({ environmentId, environment }, ["environments", environmentId]);
             }
         },
-        "error-discrimination":  (errorDiscrimination) => {
-             visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
+        "error-discrimination": (errorDiscrimination) => {
+            visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
         },
         audiences: noop,
-        errors:  (errors) => {
+        errors: (errors) => {
             if (errors != null) {
                 for (const error of errors) {
-                     visitor.errorReference?.(error, ["errors", error]);
+                    visitor.errorReference?.(error, ["errors", error]);
                 }
             }
         },
         "base-path": noop,
-        "path-parameters":  (pathParameters) => {
-             visitPathParameters({
+        "path-parameters": (pathParameters) => {
+            visitPathParameters({
                 pathParameters,
                 visitor,
                 nodePath: ["path-parameters"]
             });
         },
-        variables:  (variables) => {
+        variables: (variables) => {
             if (variables != null) {
                 for (const [variableId, variable] of Object.entries(variables)) {
-                     visitor.variableDeclaration?.(
+                    visitor.variableDeclaration?.(
                         {
                             variableId,
                             variable

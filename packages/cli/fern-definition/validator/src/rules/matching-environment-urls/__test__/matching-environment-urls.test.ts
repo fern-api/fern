@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls";
 
 describe("matching-environment-urls", () => {
-    it("matching-urls",  () => {
-        const violations =  getViolationsForRule({
+    it("matching-urls", () => {
+        const violations = getViolationsForRule({
             rule: MatchingEnvironmentUrlsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -16,8 +16,8 @@ describe("matching-environment-urls", () => {
         expect(violations).toEqual([]);
     });
 
-    it("not-matching-urls",  () => {
-        const violations =  getViolationsForRule({
+    it("not-matching-urls", () => {
+        const violations = getViolationsForRule({
             rule: MatchingEnvironmentUrlsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

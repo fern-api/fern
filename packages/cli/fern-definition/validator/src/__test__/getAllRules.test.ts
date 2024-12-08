@@ -7,12 +7,12 @@ import { Rule } from "../Rule";
 const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
 
 describe("getAllRules", () => {
-    it("ensure all rules are registered",  async () => {
-        const allRulesPromises = ( await readdir(RULES_DIRECTORY, { withFileTypes: true }))
+    it("ensure all rules are registered", async () => {
+        const allRulesPromises = (await readdir(RULES_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
-            .map( async (item) => {
+            .map(async (item) => {
                 const fullPath = join(RULES_DIRECTORY, RelativeFilePath.of(item.name));
-                const imported =  await import(fullPath);
+                const imported = await import(fullPath);
                 const ruleName = `${upperFirst(camelCase(item.name))}Rule`;
                 const rule = imported[ruleName];
                 if (rule == null) {

@@ -4,7 +4,7 @@ const ALPHA_REGEX = /^[a-z]/i;
 
 export const ValidTypeNameRule: Rule = {
     name: "valid-type-name",
-    create:  () => {
+    create: () => {
         return {
             definitionFile: {
                 typeDeclaration: ({ typeName }) => {

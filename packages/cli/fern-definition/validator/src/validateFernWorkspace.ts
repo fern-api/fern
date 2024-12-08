@@ -13,12 +13,12 @@ import { visitRootApiFileYamlAst, visitPackageMarkerYamlAst, visitDefinitionFile
 import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules";
 import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst";
 
-export  function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
+export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
 }
 
 // exported for testing
-export  function runRulesOnWorkspace({
+export function runRulesOnWorkspace({
     workspace,
     rules,
     logger
@@ -32,7 +32,7 @@ export  function runRulesOnWorkspace({
     const allRuleVisitors = rules.map((rule) => rule.create({ workspace, logger }));
 
     if (workspace.generatorsConfiguration?.rawConfiguration) {
-        const violationsForGeneratorsYml =  validateGeneratorsYmlFile({
+        const violationsForGeneratorsYml = validateGeneratorsYmlFile({
             contents: workspace.generatorsConfiguration.rawConfiguration,
             allRuleVisitors,
             cliVersion: workspace.cliVersion
@@ -40,14 +40,14 @@ export  function runRulesOnWorkspace({
         violations.push(...violationsForGeneratorsYml);
     }
 
-    const violationsForRoot =  validateRootApiFile({
+    const violationsForRoot = validateRootApiFile({
         contents: workspace.definition.rootApiFile.contents,
         allRuleVisitors
     });
     violations.push(...violationsForRoot);
 
-    visitAllDefinitionFiles(workspace,  (relativeFilepath, file) => {
-        const violationsForFile =  validateDefinitionFile({
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
+        const violationsForFile = validateDefinitionFile({
             relativeFilepath,
             contents: file,
             allRuleVisitors
@@ -55,8 +55,8 @@ export  function runRulesOnWorkspace({
         violations.push(...violationsForFile);
     });
 
-    visitAllPackageMarkers(workspace,  (relativeFilepath, file) => {
-        const violationsForFile =  validatePackageMarker({
+    visitAllPackageMarkers(workspace, (relativeFilepath, file) => {
+        const violationsForFile = validatePackageMarker({
             relativeFilepath,
             contents: file,
             allRuleVisitors
@@ -67,7 +67,7 @@ export  function runRulesOnWorkspace({
     return violations;
 }
 
- function validateGeneratorsYmlFile({
+function validateGeneratorsYmlFile({
     contents,
     allRuleVisitors,
     cliVersion
@@ -86,12 +86,12 @@ export  function runRulesOnWorkspace({
             violations.push(...newViolations);
         }
     });
-     visitGeneratorsYamlAst(contents, cliVersion, astVisitor);
+    visitGeneratorsYamlAst(contents, cliVersion, astVisitor);
 
     return violations;
 }
 
- function validateDefinitionFile({
+function validateDefinitionFile({
     relativeFilepath,
     contents,
     allRuleVisitors
@@ -110,12 +110,12 @@ export  function runRulesOnWorkspace({
             violations.push(...newViolations);
         }
     });
-     visitDefinitionFileYamlAst(contents, astVisitor);
+    visitDefinitionFileYamlAst(contents, astVisitor);
 
     return violations;
 }
 
- function validateRootApiFile({
+function validateRootApiFile({
     contents,
     allRuleVisitors
 }: {
@@ -132,12 +132,12 @@ export  function runRulesOnWorkspace({
             violations.push(...newViolations);
         }
     });
-     visitRootApiFileYamlAst(contents, astVisitor);
+    visitRootApiFileYamlAst(contents, astVisitor);
 
     return violations;
 }
 
- function validatePackageMarker({
+function validatePackageMarker({
     relativeFilepath,
     contents,
     allRuleVisitors
@@ -156,7 +156,7 @@ export  function runRulesOnWorkspace({
             violations.push(...newViolations);
         }
     });
-     visitPackageMarkerYamlAst(contents, astVisitor);
+    visitPackageMarkerYamlAst(contents, astVisitor);
 
     return violations;
 }

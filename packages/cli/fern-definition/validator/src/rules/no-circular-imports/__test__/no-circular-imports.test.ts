@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoCircularImportsRule } from "../no-circular-imports";
 
 describe("no-circular-imports", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoCircularImportsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

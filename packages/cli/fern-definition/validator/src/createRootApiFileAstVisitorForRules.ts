@@ -18,11 +18,11 @@ export function createRootApiFileAstVisitorForRules({
     function createAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes>(
         nodeType: K
     ): Record<K, RootApiFileAstNodeVisitor<K>> {
-        const visit: RootApiFileAstNodeVisitor<K> =  (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
+        const visit: RootApiFileAstNodeVisitor<K> = (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
             for (const ruleVisitors of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.rootApiFile?.[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations =  visitFromRule(node, { relativeFilepath, contents });
+                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,

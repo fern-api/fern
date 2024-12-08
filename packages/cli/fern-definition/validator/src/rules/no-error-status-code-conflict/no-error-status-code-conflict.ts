@@ -6,14 +6,14 @@ import { Rule, RuleViolation } from "../../Rule";
 
 export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",
-    create:  ({ workspace }) => {
+    create: ({ workspace }) => {
         if (workspace.definition.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {};
         }
-        const errorDeclarations =  getErrorDeclarations(workspace);
+        const errorDeclarations = getErrorDeclarations(workspace);
         return {
             definitionFile: {
-                httpEndpoint:  ({ endpoint }) => {
+                httpEndpoint: ({ endpoint }) => {
                     if (endpoint.errors == null) {
                         return [];
                     }
@@ -47,12 +47,10 @@ export const NoErrorStatusCodeConflictRule: Rule = {
     }
 };
 
- function getErrorDeclarations(
-    workspace: FernWorkspace
-): Record<string, RawSchemas.ErrorDeclarationSchema> {
+function getErrorDeclarations(workspace: FernWorkspace): Record<string, RawSchemas.ErrorDeclarationSchema> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
-    visitAllDefinitionFiles(workspace,  (_relativeFilepath, file) => {
-         visitDefinitionFileYamlAst(file, {
+    visitAllDefinitionFiles(workspace, (_relativeFilepath, file) => {
+        visitDefinitionFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;

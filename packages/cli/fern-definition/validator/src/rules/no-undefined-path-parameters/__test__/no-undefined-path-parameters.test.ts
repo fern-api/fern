@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters";
 
 describe("no-undefined-path-parameters", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoUndefinedPathParametersRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

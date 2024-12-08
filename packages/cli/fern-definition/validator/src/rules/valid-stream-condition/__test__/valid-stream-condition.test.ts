@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ValidStreamConditionRule } from "../valid-stream-condition";
 
 describe("valid-stream-condition", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: ValidStreamConditionRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

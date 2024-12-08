@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidVersionRule } from "../valid-version";
 
 describe("valid-version", () => {
-    it("valid",  () => {
-        const violations =  getViolationsForRule({
+    it("valid", () => {
+        const violations = getViolationsForRule({
             rule: ValidVersionRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -16,8 +16,8 @@ describe("valid-version", () => {
         expect(violations).toEqual([]);
     });
 
-    it("invalid",  () => {
-        const violations =  getViolationsForRule({
+    it("invalid", () => {
+        const violations = getViolationsForRule({
             rule: ValidVersionRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

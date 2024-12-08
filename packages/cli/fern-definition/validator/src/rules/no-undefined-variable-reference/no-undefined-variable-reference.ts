@@ -9,7 +9,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoUndefinedVariableReferenceRule: Rule = {
     name: "no-undefined-variable-reference",
-    create:  ({ workspace }) => {
+    create: ({ workspace }) => {
         const variableResolver = new VariableResolverImpl();
 
         const validateVariableReference = (variableReference: string, file: FernFileContext): RuleViolation[] => {

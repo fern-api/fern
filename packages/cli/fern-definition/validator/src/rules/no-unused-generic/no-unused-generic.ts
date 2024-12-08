@@ -6,11 +6,11 @@ import { visitRawTypeDeclaration, parseGeneric } from "@fern-api/fern-definition
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",
-    create:  ({ workspace }) => {
+    create: ({ workspace }) => {
         const instantiations = new Set();
 
-        visitAllDefinitionFiles(workspace,  (_, file) => {
-             visitDefinitionFileYamlAst(file, {
+        visitAllDefinitionFiles(workspace, (_, file) => {
+            visitDefinitionFileYamlAst(file, {
                 typeDeclaration: (type) => {
                     visitRawTypeDeclaration(type.declaration, {
                         alias: (alias) => {

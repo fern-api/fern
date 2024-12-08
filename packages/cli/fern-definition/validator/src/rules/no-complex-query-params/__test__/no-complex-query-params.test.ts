@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoComplexQueryParamsRule } from "../no-complex-query-params";
 
 describe("no-complex-query-params", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoComplexQueryParamsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

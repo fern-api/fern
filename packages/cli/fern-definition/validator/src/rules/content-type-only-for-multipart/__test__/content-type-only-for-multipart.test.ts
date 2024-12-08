@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { ContentTypeOnlyForMultipartRule } from "../content-type-only-for-multipart";
 
 describe("compatible-ir-versions", () => {
-    it("simple failure",  () => {
-        const violations =  getViolationsForRule({
+    it("simple failure", () => {
+        const violations = getViolationsForRule({
             rule: ContentTypeOnlyForMultipartRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

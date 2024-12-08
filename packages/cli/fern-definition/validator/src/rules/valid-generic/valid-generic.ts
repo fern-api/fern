@@ -9,8 +9,8 @@ type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";
 
 export const ValidGenericRule: Rule = {
     name: "valid-generic",
-    create:  ({ workspace }) => {
-        const genericArgumentCounts =  getGenericArgumentCounts(workspace);
+    create: ({ workspace }) => {
+        const genericArgumentCounts = getGenericArgumentCounts(workspace);
         const propertyBasedErrors: Record<
             PropertyBasedTypeDeclaration,
             {
@@ -189,11 +189,11 @@ export const ValidGenericRule: Rule = {
     }
 };
 
- function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, number> {
+function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, number> {
     const genericArgumentCounts: Record<GenericDeclaration, number> = {};
 
-    visitAllDefinitionFiles(workspace,  (relativeFilepath, file) => {
-         visitDefinitionFileYamlAst(file, {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
+        visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName, declaration }) => {
                 if (!typeName.isInlined) {
                     const maybeGeneric = parseGeneric(typeName.name);

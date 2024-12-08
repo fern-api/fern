@@ -7,11 +7,11 @@ import { getFullEndpointPath } from "./getFullEndpointPath";
 
 export const NoConflictingEndpointPathsRule: Rule = {
     name: "no-conflicting-endpoint-paths",
-    create:  ({ workspace }) => {
+    create: ({ workspace }) => {
         const endpointPathRegistry = new EndpointPathRegistry();
 
-        visitAllDefinitionFiles(workspace,  (relativeFilepath, file) => {
-             visitDefinitionFileYamlAst(file, {
+        visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
+            visitDefinitionFileYamlAst(file, {
                 httpEndpoint: ({ service, endpointId, endpoint }) => {
                     endpointPathRegistry.registerEndpoint({
                         service,

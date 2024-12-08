@@ -5,7 +5,7 @@ import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 
-export  function visitTypeDeclarations({
+export function visitTypeDeclarations({
     typeDeclarations,
     visitor,
     nodePath
@@ -19,12 +19,12 @@ export  function visitTypeDeclarations({
     }
     for (const [typeName, declaration] of Object.entries(typeDeclarations)) {
         const nodePathForType = [...nodePath, typeName];
-         visitor.typeName?.(typeName, nodePathForType);
-         visitTypeDeclaration({ typeName, declaration, visitor, nodePathForType });
+        visitor.typeName?.(typeName, nodePathForType);
+        visitTypeDeclaration({ typeName, declaration, visitor, nodePathForType });
     }
 }
 
-export  function visitTypeDeclaration({
+export function visitTypeDeclaration({
     typeName,
     declaration,
     visitor,
@@ -37,19 +37,19 @@ export  function visitTypeDeclaration({
 }): void {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
-     visitor.typeDeclaration?.(
+    visitor.typeDeclaration?.(
         { typeName: { isInlined: false, name: typeName }, declaration, nodePath: nodePathForType },
         nodePathForType
     );
 
-    const visitExamples =  (examples: RawSchemas.ExampleTypeSchema[] | undefined) => {
+    const visitExamples = (examples: RawSchemas.ExampleTypeSchema[] | undefined) => {
         if (examples == null) {
             return;
         }
         for (const [arrayIndex, example] of examples.entries()) {
             const nodePathForExample = [...nodePathForType, { key: "examples", arrayIndex }];
-             visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, nodePathForExample);
-             visitAllReferencesInExample({
+            visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, nodePathForExample);
+            visitAllReferencesInExample({
                 example: example.value,
                 nodePath: nodePathForExample,
                 visitor
@@ -57,14 +57,14 @@ export  function visitTypeDeclaration({
         }
     };
 
-     visitRawTypeDeclaration(declaration, {
-        alias:  (alias) => {
+    visitRawTypeDeclaration(declaration, {
+        alias: (alias) => {
             if (typeof alias === "string") {
-                 visitTypeReference(alias, nodePathForType);
+                visitTypeReference(alias, nodePathForType);
             } else {
-                 visitObject(alias, {
-                    type:  (aliasOf) => {
-                         visitTypeReference(aliasOf, [...nodePathForType, "type"]);
+                visitObject(alias, {
+                    type: (aliasOf) => {
+                        visitTypeReference(aliasOf, [...nodePathForType, "type"]);
                     },
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
@@ -77,35 +77,35 @@ export  function visitTypeDeclaration({
                 });
             }
         },
-        object:  (object) => {
-             visitObject(object, {
+        object: (object) => {
+            visitObject(object, {
                 docs: createDocsVisitor(visitor, nodePathForType),
-                extends:  (_extends) => {
+                extends: (_extends) => {
                     if (_extends == null) {
                         return;
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
                         const nodePathForExtension = [...nodePathForType, "extends", extendedType];
-                         visitor.extension?.(extendedType, nodePathForExtension);
-                         visitTypeReference(extendedType, nodePathForExtension);
+                        visitor.extension?.(extendedType, nodePathForExtension);
+                        visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                properties:  (properties) => {
+                properties: (properties) => {
                     if (properties == null) {
                         return;
                     }
                     for (const [propertyKey, property] of Object.entries(properties)) {
                         const nodePathForProperty = [...nodePathForType, "properties", propertyKey];
                         if (typeof property === "string") {
-                             visitTypeReference(property, nodePathForProperty);
+                            visitTypeReference(property, nodePathForProperty);
                         } else {
-                             visitObject(property, {
+                            visitObject(property, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
-                                type:  (type) => {
-                                     visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                type: (type) => {
+                                    visitTypeReference(type, [...nodePathForProperty, "type"], {
                                         _default: property.default,
                                         validation: property.validation
                                     });
@@ -127,34 +127,34 @@ export  function visitTypeDeclaration({
                 inline: noop
             });
         },
-        discriminatedUnion:  (union) => {
-             visitObject(union, {
+        discriminatedUnion: (union) => {
+            visitObject(union, {
                 docs: createDocsVisitor(visitor, nodePathForType),
                 discriminant: noop,
-                extends:  (_extends) => {
+                extends: (_extends) => {
                     if (_extends == null) {
                         return;
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
                         const nodePathForExtension = [...nodePathForType, "extends", extendedType];
-                         visitor.extension?.(extendedType, nodePathForExtension);
-                         visitTypeReference(extendedType, nodePathForExtension);
+                        visitor.extension?.(extendedType, nodePathForExtension);
+                        visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                union:  (unionTypes) => {
+                union: (unionTypes) => {
                     for (const [discriminantValue, unionType] of Object.entries(unionTypes)) {
                         const nodePathForUnionType = [...nodePathForType, "union", discriminantValue];
                         if (typeof unionType === "string") {
-                             visitTypeReference(unionType, nodePathForUnionType);
+                            visitTypeReference(unionType, nodePathForUnionType);
                         } else {
-                             visitObject(unionType, {
+                            visitObject(unionType, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 name: noop,
                                 key: noop,
-                                type:  (type) => {
+                                type: (type) => {
                                     if (typeof type === "string") {
-                                         visitTypeReference(type, [...nodePathForType, "type"]);
+                                        visitTypeReference(type, [...nodePathForType, "type"]);
                                     }
                                 },
                                 ["display-name"]: noop,
@@ -172,18 +172,18 @@ export  function visitTypeDeclaration({
                 inline: noop
             });
         },
-        undiscriminatedUnion:  (union) => {
-             visitObject(union, {
+        undiscriminatedUnion: (union) => {
+            visitObject(union, {
                 docs: createDocsVisitor(visitor, nodePathForType),
                 discriminated: noop,
-                union:  (unionMembers) => {
+                union: (unionMembers) => {
                     for (const [index, unionMember] of unionMembers.entries()) {
                         const nodePathForUnionType = [...nodePathForType, `union[${index}]`];
                         if (typeof unionMember !== "string") {
-                             visitObject(unionMember, {
+                            visitObject(unionMember, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
-                                type:  (type) => {
-                                     visitTypeReference(type, [...nodePathForType, "type"]);
+                                type: (type) => {
+                                    visitTypeReference(type, [...nodePathForType, "type"]);
                                 },
                                 "display-name": noop
                             });
@@ -198,10 +198,10 @@ export  function visitTypeDeclaration({
                 inline: noop
             });
         },
-        enum:  (_enum) => {
-             visitObject(_enum, {
+        enum: (_enum) => {
+            visitObject(_enum, {
                 docs: createDocsVisitor(visitor, nodePathForType),
-                enum:  (enumTypes) => {
+                enum: (enumTypes) => {
                     for (const enumType of enumTypes) {
                         const nodePathForEnumType = [
                             ...nodePathForType,
@@ -209,7 +209,7 @@ export  function visitTypeDeclaration({
                         ];
 
                         if (typeof enumType !== "string") {
-                             visitObject(enumType, {
+                            visitObject(enumType, {
                                 docs: createDocsVisitor(visitor, nodePathForEnumType),
                                 name: noop,
                                 value: noop,

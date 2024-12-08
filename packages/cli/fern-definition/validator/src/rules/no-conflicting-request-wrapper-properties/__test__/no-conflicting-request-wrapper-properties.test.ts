@@ -3,8 +3,8 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoConflictingRequestWrapperPropertiesRule } from "../no-conflicting-request-wrapper-properties";
 
 describe("no-conflicting-request-wrapper-properties", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: NoConflictingRequestWrapperPropertiesRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

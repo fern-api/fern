@@ -2,7 +2,7 @@ import { isPlainObject } from "@fern-api/core-utils";
 import { NodePath, EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
 import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 
-export  function visitAllReferencesInExample({
+export function visitAllReferencesInExample({
     example,
     visitor,
     nodePath
@@ -13,11 +13,11 @@ export  function visitAllReferencesInExample({
 }): void {
     if (typeof example === "string") {
         if (example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
-             visitor.exampleTypeReference?.(example, nodePath);
+            visitor.exampleTypeReference?.(example, nodePath);
         }
     } else if (isPlainObject(example)) {
         for (const exampleValue of Object.values(example)) {
-             visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleValue,
                 visitor,
                 nodePath
@@ -25,7 +25,7 @@ export  function visitAllReferencesInExample({
         }
     } else if (Array.isArray(example)) {
         for (const exampleItem of example) {
-             visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleItem,
                 visitor,
                 nodePath

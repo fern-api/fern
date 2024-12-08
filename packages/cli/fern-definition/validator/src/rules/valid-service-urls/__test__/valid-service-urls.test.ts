@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidServiceUrlsRule } from "../valid-service-url";
 
 describe("valid-service-urls", () => {
-    it("single-environment-url",  () => {
-        const violations =  getViolationsForRule({
+    it("single-environment-url", () => {
+        const violations = getViolationsForRule({
             rule: ValidServiceUrlsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -25,8 +25,8 @@ describe("valid-service-urls", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("multiple-environment-urls",  () => {
-        const violations =  getViolationsForRule({
+    it("multiple-environment-urls", () => {
+        const violations = getViolationsForRule({
             rule: ValidServiceUrlsRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

@@ -4,7 +4,7 @@ import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFi
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 
-export  function visitWebhooks({
+export function visitWebhooks({
     webhook,
     visitor,
     nodePathForWebhook
@@ -15,68 +15,68 @@ export  function visitWebhooks({
 }): void {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
-     visitObject(webhook, {
+    visitObject(webhook, {
         "display-name": noop,
         method: noop,
         examples: noop,
-        headers:  (headers) => {
-             visitHeaders({
+        headers: (headers) => {
+            visitHeaders({
                 headers,
                 visitor,
                 nodePath: [...nodePathForWebhook, "headers"]
             });
         },
-        payload:  (payload) => {
+        payload: (payload) => {
             const nodePathForPayload = [...nodePathForWebhook, "payload"];
             if (typeof payload === "string") {
-                 visitTypeReference(payload, nodePathForPayload, {
+                visitTypeReference(payload, nodePathForPayload, {
                     location: "requestReference"
                 });
                 return;
             }
 
             if (isRawDiscriminatedUnionDefinition(payload)) {
-                 visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
+                visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
                     location: "requestReference"
                 });
                 return;
             }
 
             const nodePathForInlinedPayload = [...nodePathForPayload];
-             visitor.typeDeclaration?.(
+            visitor.typeDeclaration?.(
                 { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: payload },
                 nodePathForInlinedPayload
             );
-             visitObject(payload, {
+            visitObject(payload, {
                 name: noop,
-                extends:  (_extends) => {
+                extends: (_extends) => {
                     if (_extends == null) {
                         return;
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
                         const nodePathForExtension = [...nodePathForInlinedPayload, "extends", extendedType];
-                         visitor.extension?.(extendedType, nodePathForExtension);
-                         visitTypeReference(extendedType, nodePathForExtension);
+                        visitor.extension?.(extendedType, nodePathForExtension);
+                        visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                properties:  (properties) => {
+                properties: (properties) => {
                     if (properties == null) {
                         return;
                     }
                     for (const [propertyKey, property] of Object.entries(properties)) {
                         const nodePathForProperty = [...nodePathForInlinedPayload, "properties", propertyKey];
                         if (typeof property === "string") {
-                             visitTypeReference(property, nodePathForProperty, {
+                            visitTypeReference(property, nodePathForProperty, {
                                 location: TypeReferenceLocation.InlinedRequestProperty
                             });
                         } else {
-                             visitObject(property, {
+                            visitObject(property, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
-                                type:  (type) => {
-                                     visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                type: (type) => {
+                                    visitTypeReference(type, [...nodePathForProperty, "type"], {
                                         _default: property.default,
                                         validation: property.validation,
                                         location: TypeReferenceLocation.InlinedRequestProperty
@@ -98,7 +98,7 @@ export  function visitWebhooks({
     });
 }
 
- function visitHeaders({
+function visitHeaders({
     headers,
     visitor,
     nodePath
@@ -116,16 +116,16 @@ export  function visitWebhooks({
     for (const [headerKey, header] of Object.entries(headers)) {
         const nodePathForHeader = [...nodePath, headerKey];
 
-         visitor.header?.({ headerKey, header }, nodePathForHeader);
+        visitor.header?.({ headerKey, header }, nodePathForHeader);
 
         if (typeof header === "string") {
-             visitTypeReference(header, nodePathForHeader);
+            visitTypeReference(header, nodePathForHeader);
         } else {
-             visitObject(header, {
+            visitObject(header, {
                 name: noop,
                 availability: noop,
-                type:  (type) => {
-                     visitTypeReference(type, nodePathForHeader, {
+                type: (type) => {
+                    visitTypeReference(type, nodePathForHeader, {
                         _default: header.default,
                         validation: header.validation
                     });

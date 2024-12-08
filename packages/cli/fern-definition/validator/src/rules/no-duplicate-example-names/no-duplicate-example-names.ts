@@ -4,7 +4,7 @@ import { getDuplicates } from "../../utils/getDuplicates";
 
 export const NoDuplicateExampleNamesRule: Rule = {
     name: "no-duplicate-example-names",
-    create:  () => {
+    create: () => {
         return {
             definitionFile: {
                 typeDeclaration: ({ declaration }) => {

@@ -16,7 +16,7 @@ export declare namespace getViolationsForRule {
     }
 }
 
-export  function getViolationsForRule({
+export function getViolationsForRule({
     rule,
     absolutePathToWorkspace,
     cliVersion
@@ -25,7 +25,7 @@ export  function getViolationsForRule({
 
     const lazyWorkspace = new LazyFernWorkspace({
         absoluteFilePath: absolutePathToWorkspace,
-        generatorsConfiguration:  loadGeneratorsConfiguration({
+        generatorsConfiguration: loadGeneratorsConfiguration({
             absolutePathToWorkspace,
             context
         }),
@@ -33,9 +33,9 @@ export  function getViolationsForRule({
         cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     });
-    const fernWorkspace =  lazyWorkspace.toFernWorkspace({ context });
+    const fernWorkspace = lazyWorkspace.toFernWorkspace({ context });
 
-    const violations =  runRulesOnWorkspace({
+    const violations = runRulesOnWorkspace({
         workspace: fernWorkspace,
         logger: CONSOLE_LOGGER,
         rules: [rule]

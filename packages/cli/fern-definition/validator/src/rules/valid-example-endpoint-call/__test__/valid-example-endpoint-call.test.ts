@@ -4,8 +4,8 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { ValidExampleEndpointCallRule } from "../valid-example-endpoint-call";
 
 describe("valid-example-endpoint-call", () => {
-    it("simple",  () => {
-        const violations =  getViolationsForRule({
+    it("simple", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleEndpointCallRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -467,8 +467,8 @@ describe("valid-example-endpoint-call", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("optional-example-property",  () => {
-        const violations =  getViolationsForRule({
+    it("optional-example-property", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleEndpointCallRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -481,8 +481,8 @@ describe("valid-example-endpoint-call", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("server-sent-events",  () => {
-        const violations =  getViolationsForRule({
+    it("server-sent-events", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleEndpointCallRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -496,8 +496,8 @@ describe("valid-example-endpoint-call", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("endpoint-level-base-path",  () => {
-        const violations =  getViolationsForRule({
+    it("endpoint-level-base-path", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleEndpointCallRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
@@ -511,8 +511,8 @@ describe("valid-example-endpoint-call", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("endpoint-recursive-types",  () => {
-        const violations =  getViolationsForRule({
+    it("endpoint-recursive-types", () => {
+        const violations = getViolationsForRule({
             rule: ValidExampleEndpointCallRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),

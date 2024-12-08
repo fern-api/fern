@@ -11,8 +11,8 @@ type Declarations = Record<RelativeDirectoryPath, Record<DeclaredName, RelativeF
 
 export const NoDuplicateDeclarationsRule: Rule = {
     name: "no-duplicate-declarations",
-    create:  ({ workspace, logger }) => {
-        const declarations =  getDeclarations(workspace);
+    create: ({ workspace, logger }) => {
+        const declarations = getDeclarations(workspace);
 
         // keep track of seen types, so we only warn starting on the second instance
         const seenTypes: Record<RelativeDirectoryPath, Set<DeclaredName>> = {};
@@ -68,10 +68,10 @@ export const NoDuplicateDeclarationsRule: Rule = {
     }
 };
 
- function getDeclarations(workspace: FernWorkspace): Declarations {
+function getDeclarations(workspace: FernWorkspace): Declarations {
     const declarations: Declarations = {};
 
-    visitAllDefinitionFiles(workspace,  (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilepath);
 
         const declarationsForDirectory = (declarations[relativeDirectoryPath] ??= {});
@@ -79,7 +79,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
             (declarationsForDirectory[declaredName] ??= []).push(relativeFilepath);
         };
 
-         visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             typeName: (typeName) => {
                 addDeclaration(typeName);
             },

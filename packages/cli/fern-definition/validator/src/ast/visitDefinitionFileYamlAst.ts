@@ -8,32 +8,32 @@ import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 import { visitWebhooks } from "./visitors/visitWebhooks";
 
-export  function visitDefinitionFileYamlAst(
+export function visitDefinitionFileYamlAst(
     contents: DefinitionFileSchema,
     visitor: Partial<DefinitionFileAstVisitor>
 ): void {
-     visitObject(contents, {
+    visitObject(contents, {
         docs: createDocsVisitor(visitor, []),
-        imports:  (imports) => {
-             visitImports({ imports, visitor, nodePath: ["imports"] });
+        imports: (imports) => {
+            visitImports({ imports, visitor, nodePath: ["imports"] });
         },
-        types:  (types) => {
-             visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
+        types: (types) => {
+            visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
         },
-        service:  (service) => {
+        service: (service) => {
             if (service != null) {
-                 visitHttpService({ service, visitor, nodePath: ["service"] });
+                visitHttpService({ service, visitor, nodePath: ["service"] });
             }
         },
-        webhooks:  (webhooks) => {
+        webhooks: (webhooks) => {
             for (const [webhookId, webhook] of Object.entries(webhooks ?? {})) {
-                 visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
+                visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
             }
         },
         // TODO(dsinghvi): Implement visitor for channel
         channel: noop,
-        errors:  (errors) => {
-             visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
+        errors: (errors) => {
+            visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         }
     });
 }
