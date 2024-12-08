@@ -51,7 +51,7 @@ async function getErrorDeclarations(
     workspace: FernWorkspace
 ): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
-    await visitAllDefinitionFiles(workspace, async (_relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (_relativeFilepath, file) => {
         await visitDefinitionFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {

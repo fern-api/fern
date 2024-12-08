@@ -144,7 +144,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
 async function getTypesByFilepath(workspace: FernWorkspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 

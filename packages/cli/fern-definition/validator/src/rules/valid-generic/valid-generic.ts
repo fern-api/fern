@@ -192,7 +192,7 @@ export const ValidGenericRule: Rule = {
 async function getGenericArgumentCounts(workspace: FernWorkspace): Promise<Record<string, number>> {
     const genericArgumentCounts: Record<GenericDeclaration, number> = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName, declaration }) => {
                 if (!typeName.isInlined) {

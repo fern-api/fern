@@ -71,7 +71,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
 async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> {
     const declarations: Declarations = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilepath);
 
         const declarationsForDirectory = (declarations[relativeDirectoryPath] ??= {});

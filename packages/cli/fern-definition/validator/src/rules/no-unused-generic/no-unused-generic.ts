@@ -9,7 +9,7 @@ export const NoUnusedGenericRule: Rule = {
     create: async ({ workspace }) => {
         const instantiations = new Set();
 
-        await visitAllDefinitionFiles(workspace, async (_, file) => {
+        visitAllDefinitionFiles(workspace, async (_, file) => {
             await visitDefinitionFileYamlAst(file, {
                 typeDeclaration: (type) => {
                     visitRawTypeDeclaration(type.declaration, {

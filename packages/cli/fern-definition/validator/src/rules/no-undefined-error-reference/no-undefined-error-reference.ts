@@ -62,7 +62,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 async function getErrorsByFilepath(workspace: FernWorkspace) {
     const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const errorsForFile = new Set<ErrorName>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 

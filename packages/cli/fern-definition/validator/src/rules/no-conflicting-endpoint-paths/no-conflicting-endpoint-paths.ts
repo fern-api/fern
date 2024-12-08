@@ -10,7 +10,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
     create: async ({ workspace }) => {
         const endpointPathRegistry = new EndpointPathRegistry();
 
-        await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
             await visitDefinitionFileYamlAst(file, {
                 httpEndpoint: ({ service, endpointId, endpoint }) => {
                     endpointPathRegistry.registerEndpoint({

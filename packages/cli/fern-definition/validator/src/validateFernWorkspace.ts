@@ -46,7 +46,7 @@ export async function runRulesOnWorkspace({
     });
     violations.push(...violationsForRoot);
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const violationsForFile = await validateDefinitionFile({
             relativeFilepath,
             contents: file,
@@ -55,7 +55,7 @@ export async function runRulesOnWorkspace({
         violations.push(...violationsForFile);
     });
 
-    await visitAllPackageMarkers(workspace, async (relativeFilepath, file) => {
+    visitAllPackageMarkers(workspace, async (relativeFilepath, file) => {
         const violationsForFile = await validatePackageMarker({
             relativeFilepath,
             contents: file,
