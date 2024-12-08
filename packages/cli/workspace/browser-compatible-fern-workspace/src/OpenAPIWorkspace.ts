@@ -1,4 +1,4 @@
-import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { OpenAPI } from "openapi-types";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -30,7 +30,7 @@ export declare namespace OpenAPIWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
-export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
+export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
 
@@ -47,16 +47,16 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
         this.loader = new InMemoryOpenAPILoader();
     }
 
-    public async getOpenAPIIr(
+    public getOpenAPIIr(
         {
             context
         }: {
             context: TaskContext;
         },
         options?: OpenAPIWorkspace.Settings
-    ): Promise<OpenApiIntermediateRepresentation> {
+    ): OpenApiIntermediateRepresentation {
         const document = this.loader.loadDocument(this.spec);
-        return await parse({
+        return parse({
             context,
             documents: [document],
             options: {

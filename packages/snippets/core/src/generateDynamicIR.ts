@@ -1,4 +1,3 @@
-import { OpenAPIWorkspace } from "@fern-api/browser-compatible-fern-workspace";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { NopSourceResolver } from "@fern-api/source-resolver";
 import { createTaskContext } from "./utils/createTaskContext";
@@ -23,7 +22,7 @@ export async function generateDynamicIR({
     smartCasing?: boolean;
 }): Promise<dynamic.DynamicIntermediateRepresentation> {
     const context = createTaskContext();
-    const workspace = await convertSpecToWorkspace({ context, spec, generatorsConfiguration });
+    const workspace = convertSpecToWorkspace({ context, spec, generatorsConfiguration });
     const ir = await generateIntermediateRepresentation({
         context,
         workspace,

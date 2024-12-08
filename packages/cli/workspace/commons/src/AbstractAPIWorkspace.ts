@@ -31,6 +31,8 @@ export declare namespace AbstractAPIWorkspace {
         absoluteFilePath: AbsoluteFilePath;
         changelog?: APIChangelog;
     }
+
+    export const Type = "api";
 }
 
 /**
@@ -47,7 +49,7 @@ export abstract class AbstractAPIWorkspace<Settings> {
     public absoluteFilePath: AbsoluteFilePath;
     public changelog: APIChangelog | undefined;
 
-    public type = "api";
+    public type = AbstractAPIWorkspace.Type;
 
     public constructor({
         generatorsConfiguration,
@@ -69,6 +71,46 @@ export abstract class AbstractAPIWorkspace<Settings> {
      * @returns The Fern Definition that corresponds to this workspace
      */
     public abstract getDefinition({ context }: { context?: TaskContext }, settings?: Settings): Promise<FernDefinition>;
+
+    /**
+     * @returns all filepaths related to this workspace
+     */
+    public abstract getAbsoluteFilePaths(): AbsoluteFilePath[];
+}
+
+/**
+ * Equivalent to the `AbstractAPIWorkspace` class, but without async methods.
+ * This is useful in environments that don't have access to async code.
+ */
+export abstract class AbstractAPIWorkspaceSync<Settings> {
+    public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+    public workspaceName: string | undefined;
+    public cliVersion: string;
+    public absoluteFilePath: AbsoluteFilePath;
+    public changelog: APIChangelog | undefined;
+
+    public type = AbstractAPIWorkspace.Type;
+
+    public constructor({
+        generatorsConfiguration,
+        workspaceName,
+        cliVersion,
+        absoluteFilePath,
+        changelog
+    }: AbstractAPIWorkspace.Args) {
+        this.generatorsConfiguration = generatorsConfiguration;
+        this.workspaceName = workspaceName;
+        this.cliVersion = cliVersion;
+        this.absoluteFilePath = absoluteFilePath;
+        this.changelog = changelog;
+    }
+
+    public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): FernWorkspace;
+
+    /**
+     * @returns The Fern Definition that corresponds to this workspace
+     */
+    public abstract getDefinition({ context }: { context?: TaskContext }, settings?: Settings): FernDefinition;
 
     /**
      * @returns all filepaths related to this workspace

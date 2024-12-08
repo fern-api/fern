@@ -26,7 +26,7 @@ export interface AsyncAPIDocument {
     settings?: ParseOpenAPIOptions;
 }
 
-export async function parse({
+export function parse({
     context,
     documents,
     options
@@ -34,7 +34,7 @@ export async function parse({
     context: TaskContext;
     documents: Document[];
     options?: Partial<ParseOpenAPIOptions>;
-}): Promise<OpenApiIntermediateRepresentation> {
+}): OpenApiIntermediateRepresentation {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
         title: undefined,
