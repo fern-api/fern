@@ -23,9 +23,9 @@ export declare namespace SeedUnknownAsAnyClient {
 }
 
 export class SeedUnknownAsAnyClient {
-    constructor(protected readonly _options: SeedUnknownAsAnyClient.Options) {}
-
     protected _unknown: Unknown | undefined;
+
+    constructor(protected readonly _options: SeedUnknownAsAnyClient.Options) {}
 
     public get unknown(): Unknown {
         return (this._unknown ??= new Unknown(this._options));

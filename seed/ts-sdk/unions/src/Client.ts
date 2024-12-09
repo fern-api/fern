@@ -23,9 +23,9 @@ export declare namespace SeedUnionsClient {
 }
 
 export class SeedUnionsClient {
-    constructor(protected readonly _options: SeedUnionsClient.Options) {}
-
     protected _union: Union | undefined;
+
+    constructor(protected readonly _options: SeedUnionsClient.Options) {}
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));

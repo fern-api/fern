@@ -1,7 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace UnknownErrorSingleUnionTypeGenerator {
     export interface Init {
@@ -19,8 +19,27 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         this.discriminant = discriminant;
     }
 
+    public generateForInlineUnion(context: SdkContext): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode([
+            ts.factory.createPropertySignature(
+                undefined,
+                UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
+                undefined,
+                context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
+            )
+        ]);
+    }
+
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
+    }
+
+    public getDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
+        return [];
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {

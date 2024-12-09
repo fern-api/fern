@@ -36,51 +36,44 @@ export declare namespace SeedTraceClient {
 }
 
 export class SeedTraceClient {
-    constructor(protected readonly _options: SeedTraceClient.Options = {}) {}
-
     protected _v2: V2 | undefined;
+    protected _admin: Admin | undefined;
+    protected _homepage: Homepage | undefined;
+    protected _migration: Migration | undefined;
+    protected _playlist: Playlist | undefined;
+    protected _problem: Problem | undefined;
+    protected _submission: Submission | undefined;
+    protected _sysprop: Sysprop | undefined;
+
+    constructor(protected readonly _options: SeedTraceClient.Options = {}) {}
 
     public get v2(): V2 {
         return (this._v2 ??= new V2(this._options));
     }
 
-    protected _admin: Admin | undefined;
-
     public get admin(): Admin {
         return (this._admin ??= new Admin(this._options));
     }
-
-    protected _homepage: Homepage | undefined;
 
     public get homepage(): Homepage {
         return (this._homepage ??= new Homepage(this._options));
     }
 
-    protected _migration: Migration | undefined;
-
     public get migration(): Migration {
         return (this._migration ??= new Migration(this._options));
     }
-
-    protected _playlist: Playlist | undefined;
 
     public get playlist(): Playlist {
         return (this._playlist ??= new Playlist(this._options));
     }
 
-    protected _problem: Problem | undefined;
-
     public get problem(): Problem {
         return (this._problem ??= new Problem(this._options));
     }
 
-    protected _submission: Submission | undefined;
-
     public get submission(): Submission {
         return (this._submission ??= new Submission(this._options));
     }
-
-    protected _sysprop: Sysprop | undefined;
 
     public get sysprop(): Sysprop {
         return (this._sysprop ??= new Sysprop(this._options));

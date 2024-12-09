@@ -28,33 +28,29 @@ export declare namespace SeedExhaustiveClient {
 }
 
 export class SeedExhaustiveClient {
-    constructor(protected readonly _options: SeedExhaustiveClient.Options) {}
-
     protected _endpoints: Endpoints | undefined;
+    protected _inlinedRequests: InlinedRequests | undefined;
+    protected _noAuth: NoAuth | undefined;
+    protected _noReqBody: NoReqBody | undefined;
+    protected _reqWithHeaders: ReqWithHeaders | undefined;
+
+    constructor(protected readonly _options: SeedExhaustiveClient.Options) {}
 
     public get endpoints(): Endpoints {
         return (this._endpoints ??= new Endpoints(this._options));
     }
 
-    protected _inlinedRequests: InlinedRequests | undefined;
-
     public get inlinedRequests(): InlinedRequests {
         return (this._inlinedRequests ??= new InlinedRequests(this._options));
     }
-
-    protected _noAuth: NoAuth | undefined;
 
     public get noAuth(): NoAuth {
         return (this._noAuth ??= new NoAuth(this._options));
     }
 
-    protected _noReqBody: NoReqBody | undefined;
-
     public get noReqBody(): NoReqBody {
         return (this._noReqBody ??= new NoReqBody(this._options));
     }
-
-    protected _reqWithHeaders: ReqWithHeaders | undefined;
 
     public get reqWithHeaders(): ReqWithHeaders {
         return (this._reqWithHeaders ??= new ReqWithHeaders(this._options));

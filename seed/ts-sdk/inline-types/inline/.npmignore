@@ -1,0 +1,9 @@
+node_modules
+src
+tests
+.gitignore
+.github
+.fernignore
+.prettierrc.yml
+tsconfig.json
+yarn.lock

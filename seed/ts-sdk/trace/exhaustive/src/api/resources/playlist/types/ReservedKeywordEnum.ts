@@ -3,7 +3,6 @@
  */
 
 export type ReservedKeywordEnum = "is" | "as";
-
 export const ReservedKeywordEnum = {
     Is: "is",
     As: "as",

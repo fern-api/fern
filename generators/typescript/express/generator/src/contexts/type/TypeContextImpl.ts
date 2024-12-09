@@ -1,12 +1,13 @@
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -29,6 +30,8 @@ export declare namespace TypeContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        context: BaseContext;
+        inlineInlineTypes: boolean;
     }
 }
 
@@ -43,6 +46,7 @@ export class TypeContextImpl implements TypeContext {
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private context: BaseContext;
 
     constructor({
         sourceFile,
@@ -54,7 +58,9 @@ export class TypeContextImpl implements TypeContext {
         treatUnknownAsAny,
         includeSerdeLayer,
         retainOriginalCasing,
-        useBigInt
+        useBigInt,
+        inlineInlineTypes,
+        context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -64,24 +70,54 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.context = context;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            inlineInlineTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            inlineInlineTypes
         });
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference });
+    }
+
+    public getReferenceToInlineType(
+        typeReference: TypeReference,
+        parentTypeName: string,
+        propertyName: string
+    ): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            inlineType: {
+                parentTypeName,
+                propertyName
+            }
+        });
+    }
+
+    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        const generatedType = this.getGeneratedType(typeName);
+        return generatedType.generateForInlineUnion(this.context);
+    }
+
+    public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            forInlineUnion: true
+        });
     }
 
     public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
@@ -125,7 +161,8 @@ export class TypeContextImpl implements TypeContext {
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            inline: typeDeclaration.inline ?? false
         });
     }
 
@@ -135,11 +172,15 @@ export class TypeContextImpl implements TypeContext {
         { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
-            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional(valueType)(
-                valueToStringify
-            );
+            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         } else {
-            return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify);
+            return this.typeReferenceToStringExpressionConverter.convert({
+                typeReference: valueType,
+                inlineType: undefined
+            })(valueToStringify);
         }
     }
 

@@ -8,7 +8,6 @@ export type RunningSubmissionState =
     | "WRITING_SUBMISSION_TO_FILE"
     | "COMPILING_SUBMISSION"
     | "RUNNING_SUBMISSION";
-
 export const RunningSubmissionState = {
     QueueingSubmission: "QUEUEING_SUBMISSION",
     KillingHistoricalSubmissions: "KILLING_HISTORICAL_SUBMISSIONS",

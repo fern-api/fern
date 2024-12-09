@@ -28,7 +28,13 @@ export declare namespace SeedPackageYmlClient {
 }
 
 export class SeedPackageYmlClient {
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {SeedPackageYml.EchoRequest} request
@@ -95,11 +101,5 @@ export class SeedPackageYmlClient {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 }

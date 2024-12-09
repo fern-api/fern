@@ -23,9 +23,9 @@ export declare namespace SeedPathParametersClient {
 }
 
 export class SeedPathParametersClient {
-    constructor(protected readonly _options: SeedPathParametersClient.Options) {}
-
     protected _user: User | undefined;
+
+    constructor(protected readonly _options: SeedPathParametersClient.Options) {}
 
     public get user(): User {
         return (this._user ??= new User(this._options));

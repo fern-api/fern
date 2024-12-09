@@ -24,7 +24,13 @@ export declare namespace Folder {
 }
 
 export class Folder {
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: Folder.Options) {}
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
@@ -75,11 +81,5 @@ export class Folder {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 }

@@ -1,6 +1,13 @@
 - changelogEntry:
     - summary: |
-        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`. 
+        Set `inline: true` for inline enums imported from OpenAPI
+      type: fix
+  irVersion: 53
+  version: 0.45.4
+
+- changelogEntry:
+    - summary: |
+        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`.
       type: fix
   irVersion: 53
   version: 0.45.3

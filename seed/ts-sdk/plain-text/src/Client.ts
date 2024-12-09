@@ -23,9 +23,9 @@ export declare namespace SeedPlainTextClient {
 }
 
 export class SeedPlainTextClient {
-    constructor(protected readonly _options: SeedPlainTextClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedPlainTextClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

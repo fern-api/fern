@@ -23,9 +23,9 @@ export declare namespace SeedFileDownloadClient {
 }
 
 export class SeedFileDownloadClient {
-    constructor(protected readonly _options: SeedFileDownloadClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedFileDownloadClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

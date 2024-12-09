@@ -23,9 +23,9 @@ export declare namespace SeedAudiencesClient {
 }
 
 export class SeedAudiencesClient {
-    constructor(protected readonly _options: SeedAudiencesClient.Options) {}
-
     protected _folderD: FolderD | undefined;
+
+    constructor(protected readonly _options: SeedAudiencesClient.Options) {}
 
     public get folderD(): FolderD {
         return (this._folderD ??= new FolderD(this._options));
