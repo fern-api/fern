@@ -79,7 +79,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         root_type_annotation = (
             AST.Expression(
                 AST.FunctionInvocation(
-                    function_definition=Pydantic.Field(),
+                    function_definition=Pydantic(self._custom_config.version).Field(),
                     kwargs=[
                         (
                             "discriminator",
@@ -362,13 +362,13 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
-            if self._custom_config.version == PydanticVersionCompatibility.V1:
+            if self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
                 external_pydantic_model.set_root_type_unsafe_v1_only(
                     is_forward_ref=True,
                     root_type=root_type,
                     annotation=AST.Expression(
                         AST.FunctionInvocation(
-                            function_definition=Pydantic.Field(),
+                            function_definition=Pydantic(self._custom_config.version).Field(),
                             kwargs=[
                                 (
                                     "discriminator",
@@ -486,7 +486,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     else_code=list(v1_nodes),
                 )
             )
-        elif self._custom_config.version == PydanticVersionCompatibility.V1:
+        elif self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
             for node in v1_nodes:
                 write_node(node)
         elif self._custom_config.version == PydanticVersionCompatibility.V2:

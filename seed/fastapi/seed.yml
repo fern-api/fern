@@ -66,6 +66,10 @@ fixtures:
         async_handlers:
           - imdb.createMovie
       outputFolder: async-handlers
+    - customConfig:
+        pydantic_config:
+          version: "v1_on_v2"
+      outputFolder: v1_on_v2
 allowedFailures:
   - auth-environment-variables
   - bytes
