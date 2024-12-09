@@ -153,7 +153,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
-        throw new Error("Not implemented");
+        throw new Error("Inline unions are not supported in Express Schemas");
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {

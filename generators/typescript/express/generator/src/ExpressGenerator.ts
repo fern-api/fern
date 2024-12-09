@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import {
     convertExportedFilePathToFilePath,
     CoreUtilitiesManager,
@@ -67,7 +67,6 @@ export declare namespace ExpressGenerator {
         requestValidationStatusCode: number;
         useBigInt: boolean;
         noOptionalProperties: boolean;
-        inlineInlineTypes: boolean;
     }
 }
 
@@ -191,7 +190,7 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
-            inlineInlineTypes: config.inlineInlineTypes
+            inlineInlineTypes: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -279,8 +278,12 @@ export class ExpressGenerator {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
+    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+        return this.intermediateRepresentation.types;
+    }
+
     private generateTypeDeclarations() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -296,7 +299,7 @@ export class ExpressGenerator {
     }
 
     private generateTypeSchemas() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -556,7 +559,7 @@ export class ExpressGenerator {
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             useBigInt: this.config.useBigInt,
-            inlineInlineTypes: this.config.inlineInlineTypes
+            inlineInlineTypes: false
         });
     }
 }

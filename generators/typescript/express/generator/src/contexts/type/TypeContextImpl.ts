@@ -146,7 +146,7 @@ export class TypeContextImpl implements TypeContext {
         return this.getGeneratedType(typeDeclaration.name);
     }
 
-    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+    public getGeneratedType(typeName: DeclaredTypeName, typeNameOverride?: string): GeneratedType {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -156,7 +156,7 @@ export class TypeContextImpl implements TypeContext {
         return this.typeGenerator.generateType({
             shape: typeDeclaration.shape,
             docs: typeDeclaration.docs ?? undefined,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+            typeName: typeNameOverride ?? this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
             examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
