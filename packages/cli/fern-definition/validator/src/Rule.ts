@@ -1,11 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
-    PackageMarkerAstNodeTypes,
-    RootApiFileAstNodeTypes,
-    DefinitionFileAstNodeTypes
-} from "./ast";
+import { PackageMarkerAstNodeTypes, RootApiFileAstNodeTypes, DefinitionFileAstNodeTypes } from "./ast";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 
 export interface Rule {
