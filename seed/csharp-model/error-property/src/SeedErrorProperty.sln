@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty", "SeedErrorProperty\SeedErrorProperty.csproj", "{A72341A9-FFF3-4B5C-BB43-E588DE439F06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty", "SeedErrorProperty\SeedErrorProperty.csproj", "{FA4B58F8-98FE-4A01-A5AB-D9BE4FFC68B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty.Test", "SeedErrorProperty.Test\SeedErrorProperty.Test.csproj", "{182BE3BC-0967-4968-89B0-F29EB77038EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty.Test", "SeedErrorProperty.Test\SeedErrorProperty.Test.csproj", "{AC7CE3EE-F420-4174-B129-3D7F64D02B41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A72341A9-FFF3-4B5C-BB43-E588DE439F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A72341A9-FFF3-4B5C-BB43-E588DE439F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A72341A9-FFF3-4B5C-BB43-E588DE439F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A72341A9-FFF3-4B5C-BB43-E588DE439F06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{182BE3BC-0967-4968-89B0-F29EB77038EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{182BE3BC-0967-4968-89B0-F29EB77038EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{182BE3BC-0967-4968-89B0-F29EB77038EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{182BE3BC-0967-4968-89B0-F29EB77038EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4B58F8-98FE-4A01-A5AB-D9BE4FFC68B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4B58F8-98FE-4A01-A5AB-D9BE4FFC68B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4B58F8-98FE-4A01-A5AB-D9BE4FFC68B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4B58F8-98FE-4A01-A5AB-D9BE4FFC68B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC7CE3EE-F420-4174-B129-3D7F64D02B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC7CE3EE-F420-4174-B129-3D7F64D02B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7CE3EE-F420-4174-B129-3D7F64D02B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC7CE3EE-F420-4174-B129-3D7F64D02B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

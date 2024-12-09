@@ -57,7 +57,7 @@ describe("protobuf parser", () => {
 
     testCases.forEach((testCase) => {
         it(`"${testCase.filename}"`, async () => {
-            const actual = await parser.parse({
+            const actual = parser.parse({
                 absoluteFilePath: join(TEST_DEFINITIONS, RelativeFilePath.of(testCase.filename))
             });
             expect(actual).toEqual(testCase.expected);
