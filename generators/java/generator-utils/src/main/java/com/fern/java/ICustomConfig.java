@@ -59,11 +59,8 @@ public interface ICustomConfig {
         return false;
     }
 
-    @Value.Default
     @JsonProperty("package-prefix")
-    default Optional<String> packagePrefix() {
-        return Optional.empty();
-    }
+    Optional<String> packagePrefix();
 
     enum JsonInclude {
         NON_EMPTY("non-empty"),
