@@ -6,16 +6,16 @@ import { basename } from "@fern-api/path-utils";
 import { FernWorkspace } from "../FernWorkspace";
 import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
 
-export async function visitAllDefinitionFiles(
+export function visitAllDefinitionFiles(
     workspace: FernWorkspace,
     visitor: (
         filepath: RelativeFilePath,
         definitionFile: DefinitionFileSchema,
         metadata: { isPackageMarker: boolean; defaultUrl: string | undefined }
-    ) => void | Promise<void>
-): Promise<void> {
+    ) => void
+): void {
     for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(workspace.definition))) {
-        await visitor(relativeFilepath, file.contents, {
+        visitor(relativeFilepath, file.contents, {
             isPackageMarker: basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME,
             defaultUrl: file.defaultUrl
         });

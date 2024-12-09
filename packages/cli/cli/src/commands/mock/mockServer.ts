@@ -36,7 +36,7 @@ export async function mockServer({
             workspace: fernWorkspace
         });
 
-        const ir = await generateIntermediateRepresentation({
+        const ir = generateIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,

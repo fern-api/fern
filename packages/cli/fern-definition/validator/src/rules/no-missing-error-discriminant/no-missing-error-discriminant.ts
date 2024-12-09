@@ -4,7 +4,7 @@ import { Rule } from "../../Rule";
 
 export const NoMissingErrorDiscriminantRule: Rule = {
     name: "no-missing-error-discriminant",
-    create: async ({ workspace }) => {
+    create: ({ workspace }) => {
         if (!doesApiDeclareErrors(workspace)) {
             return {};
         }

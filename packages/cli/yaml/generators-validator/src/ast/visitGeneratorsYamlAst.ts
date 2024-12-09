@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
-import { noop, visitObject } from "@fern-api/core-utils";
+import { noop, visitObject, visitObjectAsync } from "@fern-api/core-utils";
 import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";
 
 export async function visitGeneratorsYamlAst(
@@ -9,7 +9,7 @@ export async function visitGeneratorsYamlAst(
     visitor: Partial<GeneratorsYmlFileAstVisitor>
 ): Promise<void> {
     await visitor.file?.(contents, []);
-    await visitObject(contents, {
+    await visitObjectAsync(contents, {
         "auth-schemes": noop,
         api: noop,
         whitelabel: noop,

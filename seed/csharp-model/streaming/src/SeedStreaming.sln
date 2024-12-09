@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming", "SeedStreaming\SeedStreaming.csproj", "{5BC1C780-3D6E-443F-9004-2F261CBF33ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming", "SeedStreaming\SeedStreaming.csproj", "{93EF786D-5767-491B-BE77-1776CD664A5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming.Test", "SeedStreaming.Test\SeedStreaming.Test.csproj", "{AAA7A052-7A59-4BC8-882A-5F0B21F886E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming.Test", "SeedStreaming.Test\SeedStreaming.Test.csproj", "{117C503F-E81E-4D55-89A2-C93E614BCA57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5BC1C780-3D6E-443F-9004-2F261CBF33ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BC1C780-3D6E-443F-9004-2F261CBF33ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BC1C780-3D6E-443F-9004-2F261CBF33ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BC1C780-3D6E-443F-9004-2F261CBF33ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAA7A052-7A59-4BC8-882A-5F0B21F886E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAA7A052-7A59-4BC8-882A-5F0B21F886E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAA7A052-7A59-4BC8-882A-5F0B21F886E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAA7A052-7A59-4BC8-882A-5F0B21F886E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93EF786D-5767-491B-BE77-1776CD664A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93EF786D-5767-491B-BE77-1776CD664A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93EF786D-5767-491B-BE77-1776CD664A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93EF786D-5767-491B-BE77-1776CD664A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117C503F-E81E-4D55-89A2-C93E614BCA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117C503F-E81E-4D55-89A2-C93E614BCA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117C503F-E81E-4D55-89A2-C93E614BCA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117C503F-E81E-4D55-89A2-C93E614BCA57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

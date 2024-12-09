@@ -544,7 +544,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = await generateIntermediateRepresentation({
+        const ir = generateIntermediateRepresentation({
             workspace,
             audiences: item.audiences,
             generationLanguage: undefined,

@@ -34,7 +34,7 @@ describe("validateFernWorkspace", () => {
             });
             const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
-            const violations = await validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
+            const violations = validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
             expect(violations).toEqual(fixture.expectedViolations);
         });
     }

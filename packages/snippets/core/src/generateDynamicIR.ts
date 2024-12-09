@@ -6,7 +6,7 @@ import { dynamic } from "@fern-api/ir-sdk";
 import { Spec } from "./Spec";
 import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
 
-export async function generateDynamicIR({
+export function generateDynamicIR({
     spec,
     language,
     generatorsConfiguration,
@@ -20,10 +20,10 @@ export async function generateDynamicIR({
     audiences?: Audiences;
     keywords?: string[];
     smartCasing?: boolean;
-}): Promise<dynamic.DynamicIntermediateRepresentation> {
+}): dynamic.DynamicIntermediateRepresentation {
     const context = createTaskContext();
     const workspace = convertSpecToWorkspace({ context, spec, generatorsConfiguration });
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         context,
         workspace,
         generationLanguage: language,
