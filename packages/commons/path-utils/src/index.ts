@@ -3,6 +3,7 @@ export { RelativeFilePath } from "./RelativeFilePath";
 export { basename } from "./basename";
 export { convertToOsPath } from "./convertToOsPath";
 export { dirname } from "./dirname";
+export { isAbsolute } from "./isAbsolute";
 export { join } from "./join";
 export { relative } from "./relative";
 export { sep } from "./sep";

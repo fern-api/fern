@@ -1,15 +1,14 @@
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
-import { bundle, Source } from "@redocly/openapi-core";
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, isOpenAPIV2 } from "@fern-api/api-workspace-commons";
+import { isOpenAPIV2, isOpenAPIV3_1 } from "@fern-api/api-workspace-commons";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 
 export class InMemoryOpenAPILoader {
-    public async loadDocument(spec: OpenAPIWorkspace.Spec): Promise<OpenAPIDocument> {
+    public loadDocument(spec: OpenAPIWorkspace.Spec): OpenAPIDocument {
         return {
             type: "openapi",
-            value: await this.loadParsedOpenAPI({
+            value: this.loadParsedOpenAPI({
                 openapi: spec.parsed,
                 overrides: spec.overrides
             }),
@@ -17,36 +16,19 @@ export class InMemoryOpenAPILoader {
         };
     }
 
-    private async loadParsedOpenAPI({
+    private loadParsedOpenAPI({
         openapi,
         overrides
     }: {
         openapi: OpenAPI.Document;
         overrides: OpenAPI.Document | undefined;
-    }): Promise<OpenAPIV3.Document> {
-        const parsed = await this.parseOpenAPI({
-            parsed: openapi
-        });
-        if (overrides != null) {
-            const merged = await coreMergeWithOverrides({ data: parsed, overrides });
-            return await this.parseOpenAPI({
-                parsed: merged
-            });
+    }): OpenAPIV3.Document {
+        if (isOpenAPIV2(openapi)) {
+            throw new Error("Swagger v2.0 is not supported in the browser");
         }
-        return parsed;
-    }
-
-    private async parseOpenAPI({ parsed }: { parsed: OpenAPI.Document }): Promise<OpenAPIV3.Document> {
-        const result = await bundle({
-            ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-            doc: {
-                source: new Source("<memory>", "<openapi>"),
-                parsed
-            }
-        });
-        const v3 = result.bundle.parsed;
-        if (isOpenAPIV2(v3)) {
-            throw new Error("Swagger 2.0 is not supported in the browser");
+        const v3 = openapi as OpenAPIV3.Document;
+        if (overrides != null) {
+            return coreMergeWithOverrides({ data: v3, overrides });
         }
         return v3;
     }
