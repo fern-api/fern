@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 public interface ICustomConfig {
@@ -56,6 +57,12 @@ public interface ICustomConfig {
     @JsonProperty("disable-required-property-builder-checks")
     default Boolean disableRequiredPropertyBuilderChecks() {
         return false;
+    }
+
+    @Value.Default
+    @JsonProperty("package-prefix")
+    default Optional<String> packagePrefix() {
+        return Optional.empty();
     }
 
     enum JsonInclude {
