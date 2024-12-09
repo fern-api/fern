@@ -3,7 +3,6 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceWithoutExiting } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
-import { validateGeneratorsWorkspaceWithoutExiting } from "../validate/validateGeneratorsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -48,12 +47,6 @@ export async function previewDocsWorkspace({
                 for (const apiWorkspace of project.apiWorkspaces) {
                     await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
                         const workspace = await apiWorkspace.toFernWorkspace({ context }, { preserveSchemaIds: true });
-                        await validateGeneratorsWorkspaceWithoutExiting({
-                            workspace,
-                            context: apiWorkspaceContext,
-                            logWarnings: false,
-                            logSummary: false
-                        });
                         await validateAPIWorkspaceWithoutExiting({
                             workspace,
                             context: apiWorkspaceContext,

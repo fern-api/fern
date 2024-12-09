@@ -2,7 +2,6 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
-import { validateGeneratorsWorkspaceAndLogIssues } from "./validateGeneratorsWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
@@ -29,7 +28,6 @@ export async function validateWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
-                await validateGeneratorsWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
                 await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
             });
         })
