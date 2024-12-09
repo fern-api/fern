@@ -10,8 +10,6 @@ import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 import { visitRootApiFileYamlAst, visitPackageMarkerYamlAst, visitDefinitionFileYamlAst } from "./ast";
-import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules";
-import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst";
 
 export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
@@ -30,15 +28,6 @@ export function runRulesOnWorkspace({
     const violations: ValidationViolation[] = [];
 
     const allRuleVisitors = rules.map((rule) => rule.create({ workspace, logger }));
-
-    if (workspace.generatorsConfiguration?.rawConfiguration) {
-        const violationsForGeneratorsYml = validateGeneratorsYmlFile({
-            contents: workspace.generatorsConfiguration.rawConfiguration,
-            allRuleVisitors,
-            cliVersion: workspace.cliVersion
-        });
-        violations.push(...violationsForGeneratorsYml);
-    }
 
     const violationsForRoot = validateRootApiFile({
         contents: workspace.definition.rootApiFile.contents,
@@ -63,30 +52,6 @@ export function runRulesOnWorkspace({
         });
         violations.push(...violationsForFile);
     });
-
-    return violations;
-}
-
-function validateGeneratorsYmlFile({
-    contents,
-    allRuleVisitors,
-    cliVersion
-}: {
-    contents: generatorsYml.GeneratorsConfigurationSchema;
-    allRuleVisitors: RuleVisitors[];
-    cliVersion: string;
-}): ValidationViolation[] {
-    const violations: ValidationViolation[] = [];
-
-    const astVisitor = createGeneratorsYmlAstVisitorForRules({
-        relativeFilepath: RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME),
-        contents,
-        allRuleVisitors,
-        addViolations: (newViolations: ValidationViolation[]) => {
-            violations.push(...newViolations);
-        }
-    });
-    visitGeneratorsYamlAst(contents, cliVersion, astVisitor);
 
     return violations;
 }

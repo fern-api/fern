@@ -15,7 +15,7 @@ export async function validateAPIWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateFernWorkspace(workspace, context.logger);
+    const violations = validateFernWorkspace(workspace, context.logger);
     const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
 
     return { hasErrors };

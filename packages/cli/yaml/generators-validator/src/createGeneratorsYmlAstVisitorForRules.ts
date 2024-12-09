@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
-import { GeneratorsYmlFileAstNodeTypes, GeneratorsYmlFileAstNodeVisitor } from "./ast";
+import { GeneratorsYmlFileAstNodeTypes, GeneratorsYmlFileAstNodeVisitor } from "./ast/GeneratorsYmlAstVisitor";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 import { generatorsYml } from "@fern-api/configuration-loader";
@@ -20,14 +20,14 @@ export function createGeneratorsYmlAstVisitorForRules({
     function createAstNodeVisitor<K extends keyof GeneratorsYmlFileAstNodeTypes>(
         nodeType: K
     ): Record<K, GeneratorsYmlFileAstNodeVisitor<K>> {
-        const visit: GeneratorsYmlFileAstNodeVisitor<K> = (
+        const visit: GeneratorsYmlFileAstNodeVisitor<K> = async (
             node: GeneratorsYmlFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
             for (const ruleVisitors of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.generatorsYml?.[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
+                    const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,

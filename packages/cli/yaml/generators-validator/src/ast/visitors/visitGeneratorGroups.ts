@@ -2,7 +2,7 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor";
 
-export function visitGeneratorGroups({
+export async function visitGeneratorGroups({
     groups,
     visitor,
     nodePath,
@@ -12,16 +12,16 @@ export function visitGeneratorGroups({
     visitor: Partial<GeneratorsYmlFileAstVisitor>;
     nodePath: NodePath;
     cliVersion: string;
-}): void {
+}): Promise<void> {
     if (groups == null) {
         return;
     }
     for (const [groupName, group] of Object.entries(groups)) {
-        visitGeneratorGroup({ group, visitor, nodePath: [...nodePath, groupName], cliVersion });
+        await visitGeneratorGroup({ group, visitor, nodePath: [...nodePath, groupName], cliVersion });
     }
 }
 
-function visitGeneratorGroup({
+async function visitGeneratorGroup({
     group,
     visitor,
     nodePath,
@@ -31,13 +31,16 @@ function visitGeneratorGroup({
     visitor: Partial<GeneratorsYmlFileAstVisitor>;
     nodePath: NodePath;
     cliVersion: string;
-}): void {
-    group.generators.map((generator, idx) =>
-        visitor.generatorInvocation?.({ invocation: generator, cliVersion }, [
-            ...nodePath,
-            "generators",
-            idx.toString(),
-            generator.name
-        ])
+}): Promise<void> {
+    await Promise.all(
+        group.generators.map(
+            async (generator, idx) =>
+                await visitor.generatorInvocation?.({ invocation: generator, cliVersion }, [
+                    ...nodePath,
+                    "generators",
+                    idx.toString(),
+                    generator.name
+                ])
+        )
     );
 }

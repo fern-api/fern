@@ -1,9 +1,7 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
-    GeneratorsYmlFileAstNodeTypes,
     PackageMarkerAstNodeTypes,
     RootApiFileAstNodeTypes,
     DefinitionFileAstNodeTypes
@@ -25,7 +23,6 @@ export interface RuleVisitors {
     rootApiFile?: RuleVisitor<RootApiFileAstNodeTypes, RootApiFileSchema>;
     definitionFile?: RuleVisitor<DefinitionFileAstNodeTypes, DefinitionFileSchema>;
     packageMarker?: RuleVisitor<PackageMarkerAstNodeTypes, PackageMarkerFileSchema>;
-    generatorsYml?: RuleVisitor<GeneratorsYmlFileAstNodeTypes, generatorsYml.GeneratorsConfigurationSchema>;
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {
@@ -41,5 +38,3 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
 }
-
-// TODO: Make an async variant for some rules.
