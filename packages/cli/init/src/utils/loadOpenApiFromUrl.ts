@@ -23,24 +23,7 @@ export interface FailedLoadOpenAPI {
 
 export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<LoadOpenAPIResult> {
     try {
-        const response = await axios.get(url);
-        const contentType = response.headers["content-type"] ?? "";
-        if (typeof contentType !== "string") {
-            throw new Error("Content-Type from endpoint is not defined.");
-        }
-
-        let yamlData;
-
-        if (contentType.includes("json")) {
-            yamlData = dump(response.data);
-        } else if (contentType.includes("yaml")) {
-            yamlData = response.data;
-        } else {
-            throw new Error(
-                "Unsupported Content-Type from endpoint. Please ensure you're pointing to a URL that returns JSON or Y(A)ML and not HTML (e.g., Swagger UI webpage)"
-            );
-        }
-
+        const yamlData = await fetchOpenAPIFromUrl({ url, logger });
         const tmpDir = await tmp.dir();
         const filePath = join(tmpDir.path, "openapi.yml");
         logger.debug("tmpDir", tmpDir.path);
@@ -52,10 +35,25 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
         };
     } catch (error) {
         logger.debug(`Encountered an error while loading OpenAPI spec: ${JSON.stringify(error)}`);
-        const errorMessage = `Failed to load OpenAPI spec from ${url}`;
+        const errorMessage = error instanceof Error ? error.message : `Failed to load OpenAPI spec from ${url}`;
         return {
             status: LoadOpenAPIStatus.Failure,
             errorMessage
         };
     }
+}
+
+async function fetchOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<string> {
+    const response = await axios.get(url);
+    const contentType = response.headers["content-type"] ?? "";
+    if (contentType.includes("json")) {
+        return dump(response.data);
+    }
+    if (contentType.includes("yaml")) {
+        return response.data;
+    }
+    logger.warn(
+        `Unrecognized Content-Type "${contentType}" from endpoint ${url}. Please ensure you're pointing to a URL that returns JSON or YAML and not HTML (e.g. Swagger UI webpage)`
+    );
+    return response.data;
 }
