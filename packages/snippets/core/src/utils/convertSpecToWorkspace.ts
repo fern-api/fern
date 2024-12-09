@@ -18,7 +18,8 @@ export function convertSpecToWorkspace({
             const openapi = new OpenAPIWorkspace({
                 spec: {
                     parsed: spec.openapi,
-                    overrides: spec.overrides
+                    overrides: spec.overrides,
+                    settings: spec.settings
                 },
                 generatorsConfiguration
             });

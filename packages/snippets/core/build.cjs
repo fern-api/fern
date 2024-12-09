@@ -14,10 +14,6 @@ async function main() {
         dts: true,
         outDir: 'dist',
         target: "es2017",
-        external: [
-            // Exclude the optional dependencies that aren't supported in the browser.
-            'prettier'
-        ],
         tsconfig: "./build.tsconfig.json"
     });
 
