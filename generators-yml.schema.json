@@ -1272,6 +1272,25 @@
         }
       ]
     },
+    "generators.OpenAPIFilterSchema": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1339,6 +1358,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIFilterSchema"
             },
             {
               "type": "null"
