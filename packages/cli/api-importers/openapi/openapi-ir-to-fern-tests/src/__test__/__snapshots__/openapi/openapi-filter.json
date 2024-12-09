@@ -26,44 +26,9 @@
             "status-code": 400,
             "type": "Error",
           },
-          "NotFoundError": {
-            "docs": "Company Not Found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "Company Not Found",
-                "value": {
-                  "errors": [
-                    {
-                      "code": "company_not_found",
-                      "message": "Company Not Found",
-                    },
-                  ],
-                  "request_id": "c97dd75f-a434-4c83-a8e8-c4d1887d6c48",
-                  "type": "error.list",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
           "UnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
-              {
-                "docs": undefined,
-                "name": "Unauthorized",
-                "value": {
-                  "errors": [
-                    {
-                      "code": "unauthorized",
-                      "message": "Access Token Invalid",
-                    },
-                  ],
-                  "request_id": "6ef54f1c-70a4-4779-b3a6-29e4fd65d9dd",
-                  "type": "error.list",
-                },
-              },
               {
                 "docs": undefined,
                 "name": "Unauthorized",
@@ -83,34 +48,7 @@
             "type": "Error",
           },
         },
-        "imports": {
-          "companies": "companies.yml",
-        },
         "types": {
-          "Companies": {
-            "docs": "This will return a list of companies for the App.",
-            "inline": undefined,
-            "properties": {
-              "data": {
-                "docs": "An array containing Company Objects.",
-                "type": "optional<list<companies.Company>>",
-              },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
-              "total_count": {
-                "docs": "The total number of companies.",
-                "type": "optional<integer>",
-              },
-              "type": {
-                "docs": "The type of object - `list`.",
-                "type": "optional<literal<"list">>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "CreateOrUpdateCompanyRequest": {
             "docs": "You can create or update a Company",
             "inline": undefined,
@@ -150,36 +88,6 @@
               "website": {
                 "docs": "The URL for this company's website. Please note that the value specified here is not validated. Accepts any string.",
                 "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CursorPages": {
-            "docs": "Cursor-based pagination is a technique used in the Intercom API to navigate through large amounts of data.
-A "cursor" or pointer is used to keep track of the current position in the result set, allowing the API to return the data in small chunks or "pages" as needed.
-",
-            "inline": undefined,
-            "properties": {
-              "next": {
-                "type": "optional<StartingAfterPaging>",
-              },
-              "page": {
-                "docs": "The current page",
-                "type": "optional<integer>",
-              },
-              "per_page": {
-                "docs": "Number of results per page",
-                "type": "optional<integer>",
-              },
-              "total_pages": {
-                "docs": "Total number of pages",
-                "type": "optional<integer>",
-              },
-              "type": {
-                "docs": "the type of object `pages`.",
-                "type": "optional<literal<"pages">>",
               },
             },
             "source": {
@@ -234,57 +142,9 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "openapi": "../openapi.yml",
             },
           },
-          "StartingAfterPaging": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "per_page": {
-                "docs": "The number of results to fetch per page.",
-                "type": "optional<integer>",
-              },
-              "starting_after": {
-                "docs": "The cursor to use in the next request to get the next page of results.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
       "rawContents": "errors:
-  UnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          type: error.list
-          request_id: 6ef54f1c-70a4-4779-b3a6-29e4fd65d9dd
-          errors:
-            - code: unauthorized
-              message: Access Token Invalid
-        name: Unauthorized
-      - value:
-          type: error.list
-          request_id: 9b0d6fb9-d2d7-4904-a13c-97557a802323
-          errors:
-            - code: unauthorized
-              message: Access Token Invalid
-        name: Unauthorized
-  NotFoundError:
-    status-code: 404
-    type: Error
-    docs: Company Not Found
-    examples:
-      - value:
-          type: error.list
-          request_id: c97dd75f-a434-4c83-a8e8-c4d1887d6c48
-          errors:
-            - code: company_not_found
-              message: Company Not Found
-        name: Company Not Found
   BadRequestError:
     status-code: 400
     type: Error
@@ -296,25 +156,19 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             - code: bad_request
               message: bad 'test' parameter
         name: Bad Request
-imports:
-  companies: companies.yml
+  UnauthorizedError:
+    status-code: 401
+    type: Error
+    docs: Unauthorized
+    examples:
+      - value:
+          type: error.list
+          request_id: 9b0d6fb9-d2d7-4904-a13c-97557a802323
+          errors:
+            - code: unauthorized
+              message: Access Token Invalid
+        name: Unauthorized
 types:
-  Companies:
-    docs: This will return a list of companies for the App.
-    properties:
-      type:
-        type: optional<literal<"list">>
-        docs: The type of object - `list`.
-      pages:
-        type: optional<CursorPages>
-      total_count:
-        type: optional<integer>
-        docs: The total number of companies.
-      data:
-        type: optional<list<companies.Company>>
-        docs: An array containing Company Objects.
-    source:
-      openapi: ../openapi.yml
   CreateOrUpdateCompanyRequest:
     docs: You can create or update a Company
     properties:
@@ -355,31 +209,6 @@ types:
           2**31-1 or 2147483647..
     source:
       openapi: ../openapi.yml
-  CursorPages:
-    docs: >
-      Cursor-based pagination is a technique used in the Intercom API to
-      navigate through large amounts of data.
-
-      A "cursor" or pointer is used to keep track of the current position in the
-      result set, allowing the API to return the data in small chunks or "pages"
-      as needed.
-    properties:
-      type:
-        type: optional<literal<"pages">>
-        docs: the type of object `pages`.
-      page:
-        type: optional<integer>
-        docs: The current page
-      next:
-        type: optional<StartingAfterPaging>
-      per_page:
-        type: optional<integer>
-        docs: Number of results per page
-      total_pages:
-        type: optional<integer>
-        docs: Total number of pages
-    source:
-      openapi: ../openapi.yml
   ErrorErrorsItem:
     properties:
       code:
@@ -414,16 +243,6 @@ types:
       errors:
         docs: An array of one or more error objects
         type: list<ErrorErrorsItem>
-    source:
-      openapi: ../openapi.yml
-  StartingAfterPaging:
-    properties:
-      per_page:
-        type: optional<integer>
-        docs: The number of results to fetch per page.
-      starting_after:
-        type: optional<string>
-        docs: The cursor to use in the next request to get the next page of results.
     source:
       openapi: ../openapi.yml
 ",
@@ -526,129 +345,6 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               "response": {
                 "docs": "Successful",
                 "type": "Company",
-              },
-              "source": {
-                "openapi": "../openapi.yml",
-              },
-            },
-            "retrieveCompany": {
-              "auth": true,
-              "display-name": "Retrieve companies",
-              "docs": "You can fetch a single company by passing in `company_id` or `name`.
-
-  `https://api.intercom.io/companies?name={name}`
-
-  `https://api.intercom.io/companies?company_id={company_id}`
-
-You can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.
-
-  `https://api.intercom.io/companies?tag_id={tag_id}`
-
-  `https://api.intercom.io/companies?segment_id={segment_id}`
-",
-              "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-              ],
-              "examples": [
-                {
-                  "name": "Successful",
-                  "query-parameters": {
-                    "company_id": "12345",
-                    "name": "my company",
-                    "segment_id": "98765",
-                    "tag_id": "678910",
-                  },
-                  "response": {
-                    "body": {
-                      "data": [
-                        {
-                          "app_id": "this_is_an_id122_that_should_be_at_least_",
-                          "company_id": "remote_companies_scroll_2",
-                          "created_at": 1719492734,
-                          "custom_attributes": {
-                            "key": "value",
-                          },
-                          "id": "667d607e8a68186f43bafd26",
-                          "industry": "Software",
-                          "last_request_at": 1663597223,
-                          "monthly_spend": 0,
-                          "name": "IntercomQATest1",
-                          "plan": {
-                            "id": "269315",
-                            "name": "Pro",
-                            "type": "plan",
-                          },
-                          "remote_created_at": 1719492734,
-                          "segments": {
-                            "segments": [
-                              {
-                                "created_at": 1394621988,
-                                "id": "56203d253cba154d39010062",
-                                "name": "Active",
-                                "updated_at": 1394622004,
-                              },
-                            ],
-                            "type": "segment.list",
-                          },
-                          "session_count": 0,
-                          "size": 100,
-                          "tags": {
-                            "type": "tag.list",
-                          },
-                          "type": "company",
-                          "updated_at": 1719492734,
-                          "user_count": 4,
-                          "website": "https://www.intercom.com",
-                        },
-                      ],
-                      "pages": {
-                        "page": 1,
-                        "per_page": 15,
-                        "total_pages": 1,
-                        "type": "pages",
-                      },
-                      "total_count": 1,
-                      "type": "list",
-                    },
-                  },
-                },
-              ],
-              "method": "GET",
-              "pagination": undefined,
-              "path": "/companies",
-              "request": {
-                "name": "RetrieveCompanyRequest",
-                "query-parameters": {
-                  "company_id": {
-                    "docs": "The `company_id` of the company to filter by.",
-                    "type": "optional<string>",
-                  },
-                  "name": {
-                    "docs": "The `name` of the company to filter by.",
-                    "type": "optional<string>",
-                  },
-                  "page": {
-                    "docs": "The page of results to fetch. Defaults to first page",
-                    "type": "optional<integer>",
-                  },
-                  "per_page": {
-                    "docs": "How many results to display per page. Defaults to 15",
-                    "type": "optional<integer>",
-                  },
-                  "segment_id": {
-                    "docs": "The `segment_id` of the company to filter by.",
-                    "type": "optional<string>",
-                  },
-                  "tag_id": {
-                    "docs": "The `tag_id` of the company to filter by.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "response": {
-                "docs": "Successful",
-                "type": "root.Companies",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -802,100 +498,6 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    retrieveCompany:
-      path: /companies
-      method: GET
-      auth: true
-      docs: >
-        You can fetch a single company by passing in `company_id` or `name`.
-
-          `https://api.intercom.io/companies?name={name}`
-
-          `https://api.intercom.io/companies?company_id={company_id}`
-
-        You can fetch all companies and filter by `segment_id` or `tag_id` as a
-        query parameter.
-
-          `https://api.intercom.io/companies?tag_id={tag_id}`
-
-          `https://api.intercom.io/companies?segment_id={segment_id}`
-      source:
-        openapi: ../openapi.yml
-      display-name: Retrieve companies
-      request:
-        name: RetrieveCompanyRequest
-        query-parameters:
-          name:
-            type: optional<string>
-            docs: The `name` of the company to filter by.
-          company_id:
-            type: optional<string>
-            docs: The `company_id` of the company to filter by.
-          tag_id:
-            type: optional<string>
-            docs: The `tag_id` of the company to filter by.
-          segment_id:
-            type: optional<string>
-            docs: The `segment_id` of the company to filter by.
-          page:
-            type: optional<integer>
-            docs: The page of results to fetch. Defaults to first page
-          per_page:
-            type: optional<integer>
-            docs: How many results to display per page. Defaults to 15
-      response:
-        docs: Successful
-        type: root.Companies
-      errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-      examples:
-        - name: Successful
-          query-parameters:
-            name: my company
-            company_id: '12345'
-            tag_id: '678910'
-            segment_id: '98765'
-          response:
-            body:
-              type: list
-              pages:
-                type: pages
-                page: 1
-                per_page: 15
-                total_pages: 1
-              total_count: 1
-              data:
-                - type: company
-                  id: 667d607e8a68186f43bafd26
-                  name: IntercomQATest1
-                  app_id: this_is_an_id122_that_should_be_at_least_
-                  plan:
-                    type: plan
-                    id: '269315'
-                    name: Pro
-                  company_id: remote_companies_scroll_2
-                  remote_created_at: 1719492734
-                  created_at: 1719492734
-                  updated_at: 1719492734
-                  last_request_at: 1663597223
-                  size: 100
-                  website: https://www.intercom.com
-                  industry: Software
-                  monthly_spend: 0
-                  session_count: 0
-                  user_count: 4
-                  custom_attributes:
-                    key: value
-                  tags:
-                    type: tag.list
-                  segments:
-                    type: segment.list
-                    segments:
-                      - id: 56203d253cba154d39010062
-                        name: Active
-                        created_at: 1394621988
-                        updated_at: 1394622004
     createOrUpdateCompany:
       path: /companies
       method: POST

@@ -3,6 +3,6 @@
  */
 
 export interface OpenApiFilterSchema {
-    /** Paths to include in the generated SDK. */
-    paths?: string[];
+    /** Endpoints to include in the generated SDK (e.g. "POST /users"). */
+    endpoints?: string[];
 }

@@ -83,6 +83,13 @@ export function generateIr({
             return null;
         })
     );
+    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
+    const globalHeaders = getGlobalHeaders(openApi);
+    const idempotencyHeaders = getIdempotencyHeaders(openApi);
+    const audiences = options.audiences ?? [];
+    const endpointsWithExample: EndpointWithExample[] = [];
+    const webhooksWithExample: WebhookWithExample[] = [];
+
     const context = new OpenAPIV3ParserContext({
         document: openApi,
         taskContext,
@@ -91,30 +98,17 @@ export function generateIr({
         source,
         namespace
     });
-    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
-    const globalHeaders = getGlobalHeaders(openApi);
-    const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
-    const audiences = options.audiences ?? [];
-
-    const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooksWithExample: WebhookWithExample[] = [];
-
-    if (context.filter.hasPaths()) {
-        taskContext.logger.debug("Path filter applied...");
+    if (context.filter.hasEndpoints()) {
+        taskContext.logger.debug("Endpoint filter applied...");
     }
 
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
-        if (context.filter.skipPath(path)) {
-            taskContext.logger.debug(`Skipping path "${path}"`);
-            return;
-        }
         taskContext.logger.debug(`Converting path ${path}`);
         const convertedOperations = convertPathItem(path, pathItem, openApi, context);
-
         for (const operation of convertedOperations) {
             const operationAudiences = getAudiences({ operation });
             if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {
@@ -144,10 +138,6 @@ export function generateIr({
     });
     Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
         if (pathItem == null) {
-            return;
-        }
-        if (context.filter.skipPath(path)) {
-            taskContext.logger.debug(`Skipping path "${path}"`);
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);

@@ -3,6 +3,6 @@ api:
     - openapi: ../openapi.yml
       settings:
         filter:
-          paths:
-            - /companies
+          endpoints:
+            - POST /companies
         only-include-referenced-schemas: true

@@ -10,11 +10,11 @@ export const OpenApiFilterSchema: core.serialization.ObjectSchema<
     serializers.OpenApiFilterSchema.Raw,
     FernDefinition.OpenApiFilterSchema
 > = core.serialization.object({
-    paths: core.serialization.list(core.serialization.string()).optional(),
+    endpoints: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace OpenApiFilterSchema {
     interface Raw {
-        paths?: string[] | null;
+        endpoints?: string[] | null;
     }
 }

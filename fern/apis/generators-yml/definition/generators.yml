@@ -240,8 +240,8 @@ types:
 
   OpenAPIFilterSchema:
     properties:
-      paths:
-        docs: Paths to include in the generated SDK.
+      endpoints:
+        docs: Endpoints to include in the generated SDK (e.g. "POST /users").
         type: optional<list<string>>
 
   OpenAPISpecSchema:
