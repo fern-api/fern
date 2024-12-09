@@ -54,7 +54,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             ...getSchemaOptions({
-                allowExtraFields: this.allowExtraFields,
+                allowExtraFields: this.allowExtraFields ?? this.inlinedRequestBody.extraProperties,
                 omitUndefined: this.omitUndefined
             })
         });

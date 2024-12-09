@@ -11,50 +11,18 @@ import {
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
-import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
+import { isSchemaEqual } from "@fern-api/openapi-ir";
 import { State } from "./State";
+import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
     ir: OpenApiIntermediateRepresentation;
 
-    /**
-     * If true, each error will be made unique per endpoint. This is the preferred behavior for Docs.
-     * If false, error codes will be shared across endpoints. The side effect is that if more than one error schema is detected for each error code, then the error schema will default to unknown. This is the preferred behavior for SDKs.
-     */
-    enableUniqueErrorsPerEndpoint: boolean;
-
-    /**
-     * If true, the converter will detect frequently headers and add extract them as global headers within
-     * the IR. This is primarily used for generating SDKs, but disabled for docs as it allows the documentation
-     */
-    detectGlobalHeaders: boolean;
-
+    options?: ConvertOpenAPIOptions;
     authOverrides?: RawSchemas.WithAuthSchema;
-
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
-
     globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
-
-    /**
-     * If true, the converter will generate complex query parameters in the generated Fern Definition.
-     */
-    objectQueryParameters: boolean;
-
-    /**
-     * If true, the converter will respect readonly properties in OpenAPI schemas.
-     */
-    respectReadonlySchemas: boolean;
-
-    /**
-     * If true, the converter will only include schemas referenced by endpoints.
-     */
-    onlyIncludeReferencedSchemas: boolean;
-
-    /**
-     * If true, the converter will include path parameters in the in-lined request.
-     */
-    inlinePathParameters: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -99,33 +67,28 @@ export class OpenApiIrConverterContext {
     constructor({
         taskContext,
         ir,
-        enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders,
+        options,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides,
-        objectQueryParameters,
-        respectReadonlySchemas,
-        onlyIncludeReferencedSchemas,
-        inlinePathParameters
+        authOverrides
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
-        this.enableUniqueErrorsPerEndpoint = enableUniqueErrorsPerEndpoint;
-        this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint);
-        if (ir.title != null) {
-            this.builder.setDisplayName({ displayName: ir.title });
-        }
-        this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
-        this.objectQueryParameters = objectQueryParameters;
-        this.respectReadonlySchemas = respectReadonlySchemas;
-        this.onlyIncludeReferencedSchemas = onlyIncludeReferencedSchemas;
-        this.inlinePathParameters = inlinePathParameters;
-        this.referencedSchemaIds = onlyIncludeReferencedSchemas ? new Set() : undefined;
+        this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
+        this.objectQueryParameters = options?.objectQueryParameters ?? false;
+        this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
+        this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
+        this.inlinePathParameters = options?.inlinePathParameters ?? false;
+        this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
+        this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
+        this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
+        if (ir.title != null) {
+            this.builder.setDisplayName({ displayName: ir.title });
+        }
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {

@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.9
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix indentation in generated README.md sections to ensure proper formatting and readability.
+
 - version: 4.3.8
   irVersion: 53
   changelogEntry:

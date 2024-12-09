@@ -84,6 +84,13 @@ var_b: List[str]
 "
 `;
 
+exports[`PythonFile > Initialize with a statement containing a reference 1`] = `
+"from uuid import UUID
+
+my_id = UUID("1234")
+"
+`;
+
 exports[`PythonFile > Multiple imports from the same module should work 1`] = `
 "from typing import Union, List, Set
 
@@ -102,5 +109,25 @@ exports[`PythonFile > Set a variable to a nested attribute of an imported refere
 "from external_module import ImportedClass
 
 my_variable: ImportedClass.nested.attribute
+"
+`;
+
+exports[`PythonFile > Write star imports 1`] = `
+"# flake8: noqa: F401, F403
+
+from uuid import UUID
+from .my_module import *
+
+my_id = UUID("1234")
+"
+`;
+
+exports[`PythonFile > Write top of file comments 1`] = `
+"# !/usr/bin/env python
+# flake8: noqa: F401, F403
+
+from uuid import UUID
+
+my_id = UUID("1234")
 "
 `;

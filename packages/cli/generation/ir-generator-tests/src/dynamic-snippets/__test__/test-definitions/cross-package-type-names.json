@@ -68,7 +68,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -202,9 +202,9 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_folder-b/common:Foo"
                         }
                     }
@@ -341,9 +341,9 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_folder-c/common:Foo"
                         }
                     }
@@ -480,7 +480,7 @@
                         "wireValue": "bar_property"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UUID"
                     }
                 }
@@ -616,9 +616,9 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_folder-b/common:Foo"
                         }
                     }
@@ -716,7 +716,7 @@
                         "wireValue": "imported"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Imported"
                     }
                 }
@@ -789,9 +789,9 @@
                 }
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 }
             }
@@ -1197,7 +1197,7 @@
                             "wireValue": "optionalString"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_foo:OptionalString"
                         }
                     }
@@ -1230,9 +1230,9 @@
                                 "wireValue": "publicProperty"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -1261,9 +1261,9 @@
                                 "wireValue": "privateProperty"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "INTEGER"
                                 }
                             }

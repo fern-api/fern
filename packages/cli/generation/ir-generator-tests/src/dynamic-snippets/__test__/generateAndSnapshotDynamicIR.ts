@@ -5,6 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function generateAndSnapshotDynamicIR({
     workspace,
@@ -22,7 +23,7 @@ export async function generateAndSnapshotDynamicIR({
         context
     });
 
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace: fernWorkspace,
         generationLanguage: undefined,
         audiences,
@@ -32,7 +33,8 @@ export async function generateAndSnapshotDynamicIR({
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 
     const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(intermediateRepresentation);

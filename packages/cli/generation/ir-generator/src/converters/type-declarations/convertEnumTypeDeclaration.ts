@@ -3,27 +3,25 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 
-export async function convertEnumTypeDeclaration({
+export function convertEnumTypeDeclaration({
     _enum,
     file
 }: {
     _enum: RawSchemas.EnumSchema;
     file: FernFileContext;
-}): Promise<EnumTypeDeclaration> {
-    const values = await Promise.all(
-        _enum.enum.map(async (value) => {
-            return {
-                ...(await convertDeclaration(value)),
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    wireValue: typeof value === "string" ? value : value.value,
-                    name: getEnumName(value).name,
-                    opts: {
-                        casingOverrides: typeof value !== "string" ? value.casing : undefined
-                    }
-                })
-            };
-        })
-    );
+}): EnumTypeDeclaration {
+    const values = _enum.enum.map((value) => {
+        return {
+            ...convertDeclaration(value),
+            name: file.casingsGenerator.generateNameAndWireValue({
+                wireValue: typeof value === "string" ? value : value.value,
+                name: getEnumName(value).name,
+                opts: {
+                    casingOverrides: typeof value !== "string" ? value.casing : undefined
+                }
+            })
+        };
+    });
     let defaultValue: EnumValue | undefined;
     if (_enum.default != null) {
         defaultValue = values.find((enumValue) => enumValue.name.wireValue === _enum.default);

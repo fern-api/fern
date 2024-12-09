@@ -6,6 +6,7 @@ import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
+import { OpenAPIFilter } from "./OpenAPIFilter";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
@@ -31,8 +32,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly DUMMY: SchemaParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
+    public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
-
     constructor({
         document,
         taskContext,
@@ -55,6 +56,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.options = options;
         this.source = source;
+        this.filter = new OpenAPIFilter({ context: taskContext, options });
         this.DUMMY = this.getDummy();
 
         this.namespace = namespace;
@@ -106,17 +108,16 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         for (const key of keys) {
             if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return {
-                    "x-fern-type": "unknown",
-                    additionalProperties: true
+                    "x-fern-type": "unknown"
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any as OpenAPIV3.SchemaObject;
             }
             resolvedSchema = resolvedSchema[key];
         }
         if (resolvedSchema == null) {
+            this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
             return {
-                "x-fern-type": "unknown",
-                additionalProperties: true
+                "x-fern-type": "unknown"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any as OpenAPIV3.SchemaObject;
         }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables", "SeedBasicAuthEnvironmentVariables\SeedBasicAuthEnvironmentVariables.csproj", "{8816B054-1391-4BFE-8829-4FF262A99369}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables", "SeedBasicAuthEnvironmentVariables\SeedBasicAuthEnvironmentVariables.csproj", "{12EDB1FD-1994-411B-86A3-A1C0144C84DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables.Test", "SeedBasicAuthEnvironmentVariables.Test\SeedBasicAuthEnvironmentVariables.Test.csproj", "{8291080C-D6BD-496C-B973-AE9388DB6686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables.Test", "SeedBasicAuthEnvironmentVariables.Test\SeedBasicAuthEnvironmentVariables.Test.csproj", "{B5CF75A3-8AF9-4434-B9A9-8F984BFDD84E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8816B054-1391-4BFE-8829-4FF262A99369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8816B054-1391-4BFE-8829-4FF262A99369}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8816B054-1391-4BFE-8829-4FF262A99369}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8816B054-1391-4BFE-8829-4FF262A99369}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8291080C-D6BD-496C-B973-AE9388DB6686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8291080C-D6BD-496C-B973-AE9388DB6686}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8291080C-D6BD-496C-B973-AE9388DB6686}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8291080C-D6BD-496C-B973-AE9388DB6686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12EDB1FD-1994-411B-86A3-A1C0144C84DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12EDB1FD-1994-411B-86A3-A1C0144C84DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12EDB1FD-1994-411B-86A3-A1C0144C84DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12EDB1FD-1994-411B-86A3-A1C0144C84DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5CF75A3-8AF9-4434-B9A9-8F984BFDD84E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5CF75A3-8AF9-4434-B9A9-8F984BFDD84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5CF75A3-8AF9-4434-B9A9-8F984BFDD84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5CF75A3-8AF9-4434-B9A9-8F984BFDD84E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -26,7 +26,16 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                     };
 
                     return propertyNode;
-                })
+                }),
+                ...(this.shape.extraProperties
+                    ? [
+                          {
+                              name: "[key: string]", // This is the simpler way to add an index signature
+                              type: "any",
+                              docs: [{ description: "Accepts any additional properties" }]
+                          }
+                      ]
+                    : [])
             ],
             isExported: true
         });

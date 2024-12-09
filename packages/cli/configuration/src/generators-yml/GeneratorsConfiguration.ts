@@ -7,6 +7,7 @@ import { ApiDefinitionSettingsSchema } from "./schemas";
 import { GeneratorInvocationSchema } from "./schemas";
 import { GeneratorsConfigurationSchema } from "./schemas";
 import { ReadmeSchema } from "./schemas";
+import { OpenApiFilterSchema } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -56,6 +57,7 @@ export interface APIDefinitionSettings {
     respectReadonlySchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
+    filter: OpenApiFilterSchema | undefined;
 }
 
 export interface APIDefinitionLocation {

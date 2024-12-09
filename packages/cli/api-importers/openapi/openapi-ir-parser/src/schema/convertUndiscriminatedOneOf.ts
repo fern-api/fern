@@ -1,6 +1,8 @@
 import {
     Availability,
+    convertNumberToSnakeCase,
     Encoding,
+    isSchemaEqual,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
@@ -14,8 +16,6 @@ import { convertReferenceObject, convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaEqual } from "./utils/isSchemaEqual";
-import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
 export interface UndiscriminatedOneOfPrefixNotFound {
     type: "notFound";

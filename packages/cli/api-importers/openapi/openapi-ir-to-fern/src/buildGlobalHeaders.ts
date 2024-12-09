@@ -1,5 +1,5 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { GlobalHeader } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";

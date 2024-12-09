@@ -189,7 +189,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -217,7 +217,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -245,9 +245,9 @@
                         "wireValue": "age"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -354,7 +354,7 @@
                             "wireValue": "userId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -531,7 +531,7 @@
                                 "wireValue": "name"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -559,9 +559,9 @@
                                 "wireValue": "age"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "INTEGER"
                                 }
                             }

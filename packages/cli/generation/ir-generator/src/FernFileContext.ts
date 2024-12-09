@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
 import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { mapValues } from "lodash-es";

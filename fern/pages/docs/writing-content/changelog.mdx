@@ -23,7 +23,7 @@ Configure a changelog for your project by creating a changelog folder.
 fern/
 ├─ fern.config.json
 ├─ docs.yml
-├─ changelog
+├─ changelog/
     ├─ 07-08-24.md
     └─ 08-21-24.mdx
 ```
@@ -43,7 +43,7 @@ tabs:
   changelog:
     display-name: Changelog
     icon: light clock
-    changelog: ../changelog
+    changelog: ./changelog
 ```
 </CodeBlock>
 
@@ -61,7 +61,7 @@ fern/
 ├─ docs.yml
 └─ openapi/
     ├─ openapi.yml
-    └─ changelog
+    └─ changelog/
         ├─ 07-15-24.md
         └─ 08-23-24.mdx
 ```
@@ -74,7 +74,7 @@ fern/
 └─ definition/
     ├─ api.yml
     ├─ imdb.yml
-    └─ changelog
+    └─ changelog/
         ├─ 07-15-24.md
         └─ 08-23-24.mdx 
 ```
@@ -84,20 +84,21 @@ fern/
 fern/
 ├─ fern.config.json
 ├─ docs.yml
-└─ user-api
-    └─ openapi/
-        ├─ openapi.yml
-        ├─ openapi-overrides.yml
-        └─ changelog
-            ├─ 07-15-24.md
-            └─ 08-23-24.mdx
-└─ admin-api
-    └─ openapi/
-        ├─ openapi.yml
-        └─ changelog
-            ├─ 06-29-24.md
-            └─ 08-02-24.md
-            └─ 08-15-24.md
+└─ apis/
+    ├─ user-api/
+        └─ openapi/
+            ├─ openapi.yml
+            ├─ openapi-overrides.yml
+            └─ changelog
+                ├─ 07-15-24.md
+                └─ 08-23-24.mdx
+    └─ admin-api/
+        └─ openapi/
+            ├─ openapi.yml
+            └─ changelog
+                ├─ 06-29-24.md
+                └─ 08-02-24.md
+                └─ 08-15-24.md
 ```
 </CodeBlock>
 </CodeBlocks>
@@ -113,6 +114,39 @@ View an example of a changelog per API in [Astronomer's docs](https://www.astron
       <img src="changelog-astronomer.png" />
   </Frame>
 
+</Accordion>
+<Accordion title="Section-level Changelog">
+Configure a changelog for your project by creating a changelog folder.
+
+<CodeBlock title="Configure a Changelog">
+```yaml {4-6}
+fern/
+├─ fern.config.json
+├─ docs.yml
+├─ pages/
+├─ changelog/
+    ├─ 07-08-24.md
+    └─ 08-21-24.mdx
+```
+</CodeBlock>
+
+Once you've configured your changelog, specify where it should appear within your navigation in your `docs.yml`.
+
+<CodeBlock title="docs.yml">
+```yaml {9-11}
+navigation:
+  - section: Introduction
+    contents: 
+      - page: Authentication
+        path: ./pages/authentication.mdx
+      - page: Versioning
+        path: ./pages/versioning.mdx
+  - api: API Reference
+  - changelog: ./changelog
+    title: Release Notes
+    slug: api-release-notes
+```
+</CodeBlock>
 </Accordion>
 </AccordionGroup>
 

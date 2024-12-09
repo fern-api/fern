@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.7] - 2024-12-03
+
+- Feature: Support `additionalProperties` in OpenAPI or `extra-properties` in the Fern Defnition. Now 
+  an object that has additionalProperties marked as true will generate the following interface: 
+
+  ```ts
+  interface User {
+    propertyOne: string
+    [key: string]: any
+  }
+  ```
+
+## [0.42.6] - 2024-11-23
+
+- Fix: Remove the generated `APIPromise` since it is not compatible on certain node versions.
+
 ## [0.42.5] - 2024-11-23
 
 - Fix: Remove extraenous import in pagination snippets.

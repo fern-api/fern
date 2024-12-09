@@ -2,6 +2,7 @@ import { python } from "..";
 import { Writer } from "../core/Writer";
 import { Method } from "../Method";
 import { CodeBlock } from "../CodeBlock";
+import { expect } from "vitest";
 
 describe("PythonFile", () => {
     let writer: Writer;
@@ -260,5 +261,59 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Initialize with a statement containing a reference", async () => {
+        const field = python.field({
+            name: "my_id",
+            initializer: python.TypeInstantiation.uuid("1234")
+        });
+
+        const file = python.file({
+            path: ["root"],
+            statements: [field]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(1);
+    });
+
+    it("Write top of file comments", async () => {
+        const file = python.file({
+            path: ["root"],
+            comments: [
+                python.comment({ docs: "!/usr/bin/env python" }),
+                python.comment({ docs: "flake8: noqa: F401, F403" })
+            ],
+            statements: [
+                python.field({
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
+                })
+            ]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(1);
+    });
+
+    it("Write star imports", async () => {
+        const file = python.file({
+            path: ["root"],
+            comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
+            imports: [python.starImport({ modulePath: ["root", "my_module"] })],
+            statements: [
+                python.field({
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
+                })
+            ]
+        });
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(2);
     });
 });

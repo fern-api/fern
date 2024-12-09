@@ -88,9 +88,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
-        "max_retries": 1
-    })
-    ```
+    "max_retries": 1
+})
+```
 
 ### Timeouts
 
@@ -98,7 +98,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-    from seed import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     ...,
@@ -106,11 +106,11 @@ client = SeedExhaustive(
 )
 
 
-    # Override timeout for a specific method
-    client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
-        "timeout_in_seconds": 1
-    })
-    ```
+# Override timeout for a specific method
+client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
+    "timeout_in_seconds": 1
+})
+```
 
 ### Custom Client
 

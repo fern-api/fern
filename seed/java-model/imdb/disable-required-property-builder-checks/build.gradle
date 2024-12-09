@@ -21,15 +21,39 @@ dependencies {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
 spotless {
     java {
         palantirJavaFormat()
     }
 }
 
+
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+
+group = 'com.fern'
+
+version = '0.0.1'
+
+jar {
+    dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "imdb"
+}
+
+sourcesJar {
+    archiveBaseName = "imdb"
+}
+
+javadocJar {
+    archiveBaseName = "imdb"
 }
 
 test {
@@ -38,6 +62,7 @@ test {
         showStandardStreams = true
     }
 }
+
 publishing {
     publications {
         maven(MavenPublication) {
@@ -46,6 +71,12 @@ publishing {
             version = '0.0.1'
             from components.java
             pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://mit-license.org/'
+                    }
+                }
                 scm {
                     connection = 'scm:git:git://github.com/imdb/fern.git'
                     developerConnection = 'scm:git:git://github.com/imdb/fern.git'

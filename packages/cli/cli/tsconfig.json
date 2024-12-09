@@ -28,6 +28,9 @@
       "path": "../auth"
     },
     {
+      "path": "../cli-source-resolver"
+    },
+    {
       "path": "../configuration-loader"
     },
     {
@@ -85,16 +88,19 @@
       "path": "../task-context"
     },
     {
-      "path": "../workspace-loader"
+      "path": "../workspace/loader"
     },
     {
-      "path": "../workspace-commons"
+      "path": "../workspace/commons"
     },
     {
-      "path": "../lazy-fern-workspace"
+      "path": "../workspace/lazy-fern-workspace"
     },
     {
       "path": "../yaml/docs-validator"
+    },
+    {
+      "path": "../yaml/generators-validator"
     },
     {
       "path": "../fern-definition/formatter"

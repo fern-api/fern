@@ -1,29 +1,33 @@
 import { Class } from "./Class";
-import { Field } from "./Field";
-import { Reference } from "./Reference";
-import { CodeBlock } from "./CodeBlock";
-import { Method } from "./Method";
-import { MethodInvocation } from "./MethodInvocation";
 import { ClassInstantiation } from "./ClassInstantiation";
-import { Parameter } from "./Parameter";
-import { MethodArgument } from "./MethodArgument";
-import { PythonFile } from "./PythonFile";
+import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
+import { Field } from "./Field";
+import { Method } from "./Method";
+import { MethodArgument } from "./MethodArgument";
+import { MethodInvocation } from "./MethodInvocation";
+import { Parameter } from "./Parameter";
+import { PythonFile } from "./PythonFile";
 import { Operator } from "./Operator";
+import { Reference } from "./Reference";
+import { StarImport } from "./StarImport";
 
 export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
-export { Field } from "./Field";
-export { Reference } from "./Reference";
-export { CodeBlock } from "./CodeBlock";
-export { Method } from "./Method";
-export { MethodInvocation } from "./MethodInvocation";
 export { ClassInstantiation } from "./ClassInstantiation";
-export { Parameter } from "./Parameter";
-export { MethodArgument } from "./MethodArgument";
-export { PythonFile } from "./PythonFile";
+export { CodeBlock } from "./CodeBlock";
+export { Comment } from "./Comment";
 export { Decorator } from "./Decorator";
+export { Field } from "./Field";
+export { Method } from "./Method";
+export { MethodArgument } from "./MethodArgument";
+export { MethodInvocation } from "./MethodInvocation";
+export { Parameter } from "./Parameter";
+export { PythonFile } from "./PythonFile";
 export { Operator } from "./Operator";
+export { Reference } from "./Reference";
+export { StarImport } from "./StarImport";
 export { Type } from "./Type";
 export { TypeInstantiation } from "./TypeInstantiation";
 
@@ -47,12 +51,20 @@ export function reference(args: Reference.Args): Reference {
     return new Reference(args);
 }
 
+export function starImport(args: StarImport.Args): StarImport {
+    return new StarImport(args);
+}
+
 export function field(args: Field.Args): Field {
     return new Field(args);
 }
 
 export function codeBlock(args: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(args);
+}
+
+export function comment(args: Comment.Args): Comment {
+    return new Comment(args);
 }
 
 export function method(args: Method.Args): Method {

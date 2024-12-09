@@ -1,7 +1,5 @@
-import { getPathModule } from "./getPathModule";
 import { convertToOsPath } from "./convertToOsPath";
-
-const path = getPathModule();
+import { isAbsolute } from "./isAbsolute";
 
 export type RelativeFilePath = string & {
     __RelativeFilePath: void;
@@ -9,7 +7,7 @@ export type RelativeFilePath = string & {
 
 export const RelativeFilePath = {
     of: (value: string): RelativeFilePath => {
-        if (path.isAbsolute(value)) {
+        if (isAbsolute(value)) {
             throw new Error("Filepath is not relative: " + value);
         }
         return convertToOsPath(value) as RelativeFilePath;

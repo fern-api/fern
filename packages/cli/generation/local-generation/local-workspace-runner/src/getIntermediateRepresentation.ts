@@ -7,6 +7,7 @@ import {
 import { IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export declare namespace getIntermediateRepresentation {
     interface Return {
@@ -36,7 +37,7 @@ export async function getIntermediateRepresentation({
     sourceConfig: SourceConfig | undefined;
     includeOptionalRequestPropertyExamples?: boolean;
 }): Promise<getIntermediateRepresentation.Return> {
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,
@@ -47,7 +48,8 @@ export async function getIntermediateRepresentation({
         readme: generatorInvocation.readme,
         version,
         packageName,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, workspace)
     });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;

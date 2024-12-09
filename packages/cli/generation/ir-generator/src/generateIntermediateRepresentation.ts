@@ -1,6 +1,6 @@
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
 import {
     ExampleType,
     HttpEndpoint,
@@ -43,9 +43,9 @@ import { EndpointResolverImpl } from "./resolvers/EndpointResolver";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
-import { SourceResolverImpl } from "./resolvers/SourceResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
 import { isGeneric } from "@fern-api/fern-definition-schema";
@@ -53,33 +53,35 @@ import { parseErrorName } from "./utils/parseErrorName";
 import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 
-export async function generateIntermediateRepresentation({
-    fdrApiDefinitionId,
+export function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
     keywords,
     smartCasing,
     disableExamples,
-    includeOptionalRequestPropertyExamples,
     audiences,
     readme,
     packageName,
     version,
-    context
+    context,
+    fdrApiDefinitionId,
+    includeOptionalRequestPropertyExamples,
+    sourceResolver
 }: {
-    fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
-    includeOptionalRequestPropertyExamples?: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
     packageName: string | undefined;
     version: string | undefined;
     context: TaskContext;
-}): Promise<IntermediateRepresentation> {
+    sourceResolver: SourceResolver;
+    fdrApiDefinitionId?: string;
+    includeOptionalRequestPropertyExamples?: boolean;
+}): IntermediateRepresentation {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
@@ -104,18 +106,17 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl(context, workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,
-        apiVersion: await convertApiVersionScheme({
+        apiVersion: convertApiVersionScheme({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents
         }),
         apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
-        auth: await convertApiAuth({
+        apiDocs: formatDocs(workspace.definition.rootApiFile.contents.docs),
+        auth: convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,
             propertyResolver,
@@ -123,18 +124,14 @@ export async function generateIntermediateRepresentation({
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
-                ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file: rootApiFileContext })
-                      )
+                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
         idempotencyHeaders:
             workspace.definition.rootApiFile.contents["idempotency-headers"] != null
-                ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
-                          ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
-                      )
+                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                      ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
         types: {},
@@ -153,7 +150,7 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["base-path"] != null
                 ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
                 : undefined,
-        pathParameters: await convertPathParameters({
+        pathParameters: convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
@@ -182,10 +179,10 @@ export async function generateIntermediateRepresentation({
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
-    const visitDefinitionFile = async (file: FernFileContext) => {
+    const visitDefinitionFile = (file: FernFileContext) => {
         packageTreeGenerator.addSubpackage(file.fernFilepath);
 
-        await visitObject(file.definitionFile, {
+        visitObject(file.definitionFile, {
             imports: noop,
             docs: (docs) => {
                 if (docs != null) {
@@ -193,7 +190,7 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            types: async (types) => {
+            types: (types) => {
                 if (types == null) {
                     return;
                 }
@@ -206,7 +203,7 @@ export async function generateIntermediateRepresentation({
                         continue;
                     }
 
-                    const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
@@ -263,12 +260,12 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            service: async (service) => {
+            service: (service) => {
                 if (service == null) {
                     return;
                 }
 
-                const convertedHttpService = await convertHttpService({
+                const convertedHttpService = convertHttpService({
                     rootDefaultUrl: file.defaultUrl ?? workspace.definition.rootApiFile.contents["default-url"],
                     rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
@@ -315,12 +312,12 @@ export async function generateIntermediateRepresentation({
                     }
                 });
             },
-            webhooks: async (webhooks) => {
+            webhooks: (webhooks) => {
                 if (webhooks == null) {
                     return;
                 }
                 const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
-                const convertedWebhookGroup = await convertWebhookGroup({
+                const convertedWebhookGroup = convertWebhookGroup({
                     webhooks,
                     file,
                     typeResolver,
@@ -346,12 +343,12 @@ export async function generateIntermediateRepresentation({
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
-            channel: async (channel) => {
+            channel: (channel) => {
                 if (channel == null) {
                     return;
                 }
                 const websocketChannelId = IdGenerator.generateWebSocketChannelId(file.fernFilepath);
-                const websocketChannel = await convertChannel({
+                const websocketChannel = convertChannel({
                     channel,
                     file,
                     variableResolver,
@@ -367,8 +364,8 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file, metadata) => {
-        await visitDefinitionFile(
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file, metadata) => {
+        visitDefinitionFile(
             constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
@@ -379,7 +376,7 @@ export async function generateIntermediateRepresentation({
         );
     });
 
-    await visitAllPackageMarkers(workspace, async (relativeFilepath, packageMarker) => {
+    visitAllPackageMarkers(workspace, (relativeFilepath, packageMarker) => {
         if (packageMarker.navigation == null) {
             return;
         }
@@ -526,7 +523,7 @@ export async function generateIntermediateRepresentation({
 
     return {
         ...finalIR,
-        dynamic: await convertIrToDynamicSnippetsIr(finalIR)
+        dynamic: convertIrToDynamicSnippetsIr(finalIR)
     };
 }
 

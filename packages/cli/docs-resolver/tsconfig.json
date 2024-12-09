@@ -19,6 +19,9 @@
       "path": "../../ir-sdk"
     },
     {
+      "path": "../cli-source-resolver"
+    },
+    {
       "path": "../configuration-loader"
     },
     {
@@ -34,7 +37,7 @@
       "path": "../task-context"
     },
     {
-      "path": "../workspace-loader"
+      "path": "../workspace/loader"
     }
   ]
 }

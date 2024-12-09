@@ -1,7 +1,5 @@
-import { getPathModule } from "./getPathModule";
 import { convertToOsPath } from "./convertToOsPath";
-
-const path = getPathModule();
+import { isAbsolute } from "./isAbsolute";
 
 export type AbsoluteFilePath = string & {
     __AbsoluteFilePath: void;
@@ -9,7 +7,7 @@ export type AbsoluteFilePath = string & {
 
 export const AbsoluteFilePath = {
     of: (value: string): AbsoluteFilePath => {
-        if (!path.isAbsolute(value)) {
+        if (!isAbsolute(value)) {
             throw new Error("Filepath is not absolute: " + value);
         }
         return convertToOsPath(value) as AbsoluteFilePath;

@@ -26,7 +26,7 @@
                 "wireValue": "X-Another-Header"
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -54,7 +54,7 @@
                 "wireValue": "X-API-Version"
             },
             "typeReference": {
-                "_type": "literal",
+                "type": "literal",
                 "value": {
                     "type": "string",
                     "value": "01-01-2000"
@@ -90,7 +90,7 @@
                         "wireValue": "X-FERN-API-KEY"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -199,7 +199,7 @@
                         "wireValue": "X-FERN-API-KEY"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -365,7 +365,7 @@
                             "wireValue": "X-Endpoint-Header"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
