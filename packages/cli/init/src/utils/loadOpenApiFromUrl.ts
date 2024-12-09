@@ -24,8 +24,23 @@ export interface FailedLoadOpenAPI {
 export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<LoadOpenAPIResult> {
     try {
         const response = await axios.get(url);
-        const jsonData = response.data;
-        const yamlData = dump(jsonData);
+        const contentType = response.headers["content-type"] ?? "";
+        if (typeof contentType !== "string") {
+            throw new Error("Content-Type from endpoint is not defined.");
+        }
+
+        let yamlData;
+
+        if (contentType.includes("json")) {
+            yamlData = dump(response.data);
+        } else if (contentType.includes("yaml")) {
+            yamlData = response.data;
+        } else {
+            throw new Error(
+                "Unsupported Content-Type from endpoint. Please ensure you're pointing to a URL that returns JSON or Y(A)ML and not HTML (e.g., Swagger UI webpage)"
+            );
+        }
+
         const tmpDir = await tmp.dir();
         const filePath = join(tmpDir.path, "openapi.yml");
         logger.debug("tmpDir", tmpDir.path);
