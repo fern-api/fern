@@ -995,7 +995,7 @@
             "type": "Error",
           },
           "CreateTagRequestNotFoundError": {
-            "docs": "User not found",
+            "docs": "User  not found",
             "examples": [
               {
                 "docs": undefined,
@@ -5759,7 +5759,7 @@
                 "type": "optional<string>",
               },
               "monthly_spend": {
-                "docs": "How much revenue the company generates for your business. Note that this will truncate floats. i.e. it only allow for whole integers, 155.98 will be truncated to 155. Note that this has an upper limit of 2\*\*31-1 or 2147483647..",
+                "docs": "How much revenue the company generates for your business. Note that this will truncate floats. i.e. it only allow for whole integers, 155.98 will be truncated to 155. Note that this has an upper limit of 2**31-1 or 2147483647..",
                 "type": "optional<integer>",
               },
               "name": {
@@ -5839,7 +5839,8 @@
           },
           "CreateTicketTypeRequest": {
             "docs": "The request payload for creating a ticket type.
-You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)",
+  You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
+",
             "inline": undefined,
             "properties": {
               "category": {
@@ -5885,7 +5886,8 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
           },
           "CursorPages": {
             "docs": "Cursor-based pagination is a technique used in the Intercom API to navigate through large amounts of data.
-A "cursor" or pointer is used to keep track of the current position in the result set, allowing the API to return the data in small chunks or "pages" as needed.",
+A "cursor" or pointer is used to keep track of the current position in the result set, allowing the API to return the data in small chunks or "pages" as needed.
+",
             "inline": undefined,
             "properties": {
               "next": {
@@ -6830,7 +6832,8 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           "PagesLink": {
             "docs": "The majority of list resources in the API are paginated to allow clients to traverse data over multiple requests.
 
-Their responses are likely to contain a pages object that hosts pagination links which a client can use to paginate through the data without having to construct a query. The link relations for the pages field are as follows.",
+Their responses are likely to contain a pages object that hosts pagination links which a client can use to paginate through the data without having to construct a query. The link relations for the pages field are as follows.
+",
             "inline": undefined,
             "properties": {
               "next": {
@@ -7178,7 +7181,8 @@ Their responses are likely to contain a pages object that hosts pagination links
           },
           "SlaApplied": {
             "docs": "The SLA Applied object contains the details for which SLA has been applied to this conversation.
-Important: if there are any canceled sla_events for the conversation - meaning an SLA has been manually removed from a conversation, the sla_status will always be returned as null.",
+Important: if there are any canceled sla_events for the conversation - meaning an SLA has been manually removed from a conversation, the sla_status will always be returned as null.
+",
             "inline": undefined,
             "properties": {
               "sla_name": {
@@ -7186,7 +7190,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
                 "type": "optional<string>",
               },
               "sla_status": {
-                "docs": "SLA statuses: - `hit`: If there’s at least one hit event in the underlying sla_events table, and no “missed” or “canceled” events for the conversation. - `missed`: If there are any missed sla_events for the conversation and no canceled events. If there’s even a single missed sla event, the status will always be missed. A missed status is not applied when the SLA expires, only the next time a teammate replies. - `active`: An SLA has been applied to a conversation, but has not yet been fulfilled. SLA status is active only if there are no “hit, “missed”, or “canceled” events.",
+                "docs": "SLA statuses:
+            - `hit`: If there’s at least one hit event in the underlying sla_events table, and no “missed” or “canceled” events for the conversation.
+            - `missed`: If there are any missed sla_events for the conversation and no canceled events. If there’s even a single missed sla event, the status will always be missed. A missed status is not applied when the SLA expires, only the next time a teammate replies.
+            - `active`: An SLA has been applied to a conversation, but has not yet been fulfilled. SLA status is active only if there are no “hit, “missed”, or “canceled” events.",
                 "type": "optional<SlaAppliedSlaStatus>",
               },
               "type": {
@@ -7199,7 +7206,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             },
           },
           "SlaAppliedSlaStatus": {
-            "docs": "SLA statuses: - `hit`: If there’s at least one hit event in the underlying sla_events table, and no “missed” or “canceled” events for the conversation. - `missed`: If there are any missed sla_events for the conversation and no canceled events. If there’s even a single missed sla event, the status will always be missed. A missed status is not applied when the SLA expires, only the next time a teammate replies. - `active`: An SLA has been applied to a conversation, but has not yet been fulfilled. SLA status is active only if there are no “hit, “missed”, or “canceled” events.",
+            "docs": "SLA statuses:
+            - `hit`: If there’s at least one hit event in the underlying sla_events table, and no “missed” or “canceled” events for the conversation.
+            - `missed`: If there are any missed sla_events for the conversation and no canceled events. If there’s even a single missed sla event, the status will always be missed. A missed status is not applied when the SLA expires, only the next time a teammate replies.
+            - `active`: An SLA has been applied to a conversation, but has not yet been fulfilled. SLA status is active only if there are no “hit, “missed”, or “canceled” events.",
             "enum": [
               "hit",
               "missed",
@@ -7810,7 +7820,8 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "UpdateTicketTypeRequest": {
             "docs": "The request payload for updating a ticket type.
-You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)",
+You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
+",
             "inline": undefined,
             "properties": {
               "archived": {
@@ -13615,11 +13626,13 @@ imports:
             "identifyAdmin": {
               "auth": true,
               "display-name": "Identify an admin",
-              "docs": "You can view the currently authorised admin along with the embedded app object (a "workspace" in legacy terminology).
+              "docs": "
+You can view the currently authorised admin along with the embedded app object (a "workspace" in legacy terminology).
 
 > 🚧 Single Sign On
 >
-> If you are building a custom "Log in with Intercom" flow for your site, and you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with unverified email addresses as it poses a potential impersonation security risk.",
+> If you are building a custom "Log in with Intercom" flow for your site, and you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with unverified email addresses as it poses a potential impersonation security risk.
+",
               "examples": [
                 {
                   "name": "Successful response",
@@ -15584,7 +15597,8 @@ imports:
 
 > 📘 How are the articles sorted and ordered?
 >
-> Articles will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated articles first.",
+> Articles will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated articles first.
+",
               "errors": [
                 "root.ListArticlesRequestUnauthorizedError",
               ],
@@ -20080,8 +20094,9 @@ types:
               "docs": "You can update a single company using the Intercom provisioned `id`.
 
 {% admonition type="attention" name="Using `company_id`" %}
-When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company.
-{% /admonition %}",
+  When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company.
+{% /admonition %}
+",
               "errors": [
                 "root.UpdateCompanyRequestUnauthorizedError",
                 "root.UpdateCompanyRequestNotFoundError",
@@ -20377,8 +20392,9 @@ Companies will be only visible in Intercom when there is at least one associated
 Companies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated.
 
 {% admonition type="attention" name="Using `company_id`" %}
-You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company.
-{% /admonition %}",
+  You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company.
+{% /admonition %}
+",
               "errors": [
                 "root.CreateOrUpdateCompanyRequestBadRequestError",
                 "root.CreateOrUpdateCompanyRequestUnauthorizedError",
@@ -20589,9 +20605,10 @@ Note that the API does not include companies who have no associated users in lis
 
 When using the Companies endpoint and the pages object to iterate through the returned companies, there is a limit of 10,000 Companies that can be returned. If you need to list or iterate on more than 10,000 Companies, please use the [Scroll API](https://developers.intercom.com/reference#iterating-over-all-companies).
 {% admonition type="warning" name="Pagination" %}
-You can use pagination to limit the number of results returned. The default is `20` results per page.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
-{% /admonition %}",
+  You can use pagination to limit the number of results returned. The default is `20` results per page.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
+{% /admonition %}
+",
               "errors": [
                 "root.ListAllCompaniesRequestUnauthorizedError",
               ],
@@ -20689,15 +20706,16 @@ See the [pagination section](https://developers.intercom.com/docs/build-an-integ
               "display-name": "Retrieve companies",
               "docs": "You can fetch a single company by passing in `company_id` or `name`.
 
-`https://api.intercom.io/companies?name={name}`
+  `https://api.intercom.io/companies?name={name}`
 
-`https://api.intercom.io/companies?company_id={company_id}`
+  `https://api.intercom.io/companies?company_id={company_id}`
 
 You can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.
 
-`https://api.intercom.io/companies?tag_id={tag_id}`
+  `https://api.intercom.io/companies?tag_id={tag_id}`
 
-`https://api.intercom.io/companies?segment_id={segment_id}`",
+  `https://api.intercom.io/companies?segment_id={segment_id}`
+",
               "errors": [
                 "root.RetrieveCompanyRequestUnauthorizedError",
                 "root.RetrieveCompanyRequestNotFoundError",
@@ -20816,14 +20834,15 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
 - If the end of the scroll is reached, "companies" will be empty and the scroll parameter will expire
 
 {% admonition type="info" name="Scroll Parameter" %}
-You can get the first page of companies by simply sending a GET request to the scroll endpoint.
-For subsequent requests you will need to use the scroll parameter from the response.
+  You can get the first page of companies by simply sending a GET request to the scroll endpoint.
+  For subsequent requests you will need to use the scroll parameter from the response.
 {% /admonition %}
 {% admonition type="danger" name="Scroll network timeouts" %}
-Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this occurs you will see a HTTP 500 error with the following message:
-"Request failed due to an internal network error. Please restart the scroll operation."
-If this happens, you will need to restart your scroll query: It is not possible to continue from a specific point when using scroll.
-{% /admonition %}",
+  Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this occurs you will see a HTTP 500 error with the following message:
+  "Request failed due to an internal network error. Please restart the scroll operation."
+  If this happens, you will need to restart your scroll query: It is not possible to continue from a specific point when using scroll.
+{% /admonition %}
+",
               "errors": [
                 "root.ScrollOverAllCompaniesRequestUnauthorizedError",
               ],
@@ -22146,9 +22165,10 @@ types:
               "display-name": "List all contacts",
               "docs": "You can fetch a list of all contacts (ie. users or leads) in your workspace.
 {% admonition type="warning" name="Pagination" %}
-You can use pagination to limit the number of results returned. The default is `50` results per page.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
-{% /admonition %}",
+  You can use pagination to limit the number of results returned. The default is `50` results per page.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
+{% /admonition %}
+",
               "errors": [
                 "root.ListContactsRequestUnauthorizedError",
               ],
@@ -22367,12 +22387,11 @@ To search for contacts, you need to send a `POST` request to `https://api.interc
 This will accept a query object in the body which will define your filters in order to search for contacts.
 
 {% admonition type="warning" name="Optimizing search queries" %}
-Search queries can be complex, so optimizing them can help the performance of your search.
-Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
-pagination to limit the number of results returned. The default is `50` results per page.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
+  Search queries can be complex, so optimizing them can help the performance of your search.
+  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
+  pagination to limit the number of results returned. The default is `50` results per page.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
 {% /admonition %}
-
 ### Contact Creation Delay
 
 If a contact has recently been created, there is a possibility that it will not yet be available when searching. This means that it may not appear in the response. This delay can take a few minutes. If you need to be instantly notified it is recommended to use webhooks and iterate to see if they match your search filters.
@@ -22381,9 +22400,8 @@ If a contact has recently been created, there is a possibility that it will not 
 
 You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).
 There are some limitations to the amount of multiple's there can be:
-
-- There's a limit of max 2 nested filters
-- There's a limit of max 15 filters for each AND or OR group
+* There's a limit of max 2 nested filters
+* There's a limit of max 15 filters for each AND or OR group
 
 ### Searching for Timestamp Fields
 
@@ -22445,10 +22463,10 @@ Most key listed as part of the Contacts Model are searchable, whether writeable 
 ### Accepted Operators
 
 {% admonition type="attention" name="Searching based on `created_at`" %}
-You cannot use the `<=` or `>=` operators to search by `created_at`.
+  You cannot use the `<=` or `>=` operators to search by `created_at`.
 {% /admonition %}
 
-The table below shows the operators you can use to define how you want to search for the value. The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
+The table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
 
 | Operator | Valid Types                      | Description                                                      |
 | :------- | :------------------------------- | :--------------------------------------------------------------- |
@@ -22457,11 +22475,12 @@ The table below shows the operators you can use to define how you want to search
 | IN       | All                              | In<br>Shortcut for `OR` queries<br>Values must be in Array       |
 | NIN      | All                              | Not In<br>Shortcut for `OR !` queries<br>Values must be in Array |
 | >        | Integer<br>Date (UNIX Timestamp) | Greater than                                                     |
-| <        | Integer<br>Date (UNIX Timestamp) | Lower than                                                       |
+| <       | Integer<br>Date (UNIX Timestamp) | Lower than                                                       |
 | ~        | String                           | Contains                                                         |
 | !~       | String                           | Doesn't Contain                                                  |
 | ^        | String                           | Starts With                                                      |
-| $        | String                           | Ends With                                                        |",
+| $        | String                           | Ends With                                                        |
+",
               "errors": [
                 "root.SearchContactsRequestUnauthorizedError",
               ],
@@ -22999,8 +23018,9 @@ This will return a list of Subscription Type objects that the contact is associa
 
 The data property will show a combined list of:
 
-1.Opt-out subscription types that the user has opted-out from.
-2.Opt-in subscription types that the user has opted-in to receiving.",
+  1.Opt-out subscription types that the user has opted-out from.
+  2.Opt-in subscription types that the user has opted-in to receiving.
+",
               "errors": [
                 "root.ListSubscriptionsForAContactRequestUnauthorizedError",
                 "root.ListSubscriptionsForAContactRequestNotFoundError",
@@ -24530,7 +24550,9 @@ types:
 
 {% admonition type="attention" name="Contacts without an email" %}
 If you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.
-{% /admonition %}",
+{% /admonition %}
+
+",
               "errors": [
                 "root.AttachContactToConversationRequestUnauthorizedError",
                 "root.AttachContactToConversationRequestForbiddenError",
@@ -24929,7 +24951,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
               "docs": "You can let a conversation be automatically assigned following assignment rules.
 {% admonition type="attention" name="When using workflows" %}
 It is not possible to use this endpoint with Workflows.
-{% /admonition %}",
+{% /admonition %}
+",
               "errors": [
                 "root.AutoAssignConversationRequestUnauthorizedError",
                 "root.AutoAssignConversationRequestForbiddenError",
@@ -25370,7 +25393,9 @@ You can also send a message from a visitor by specifying their `user_id` or `id`
 This visitor will be automatically converted to a contact with a lead role once the conversation is created.
 {% /admonition %}
 
-This will return the Message model that has been created.",
+This will return the Message model that has been created.
+
+",
               "errors": [
                 "root.CreateConversationRequestUnauthorizedError",
                 "root.CreateConversationRequestForbiddenError",
@@ -25454,7 +25479,9 @@ This will return the Message model that has been created.",
 
 {% admonition type="attention" name="Contacts without an email" %}
 If you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.
-{% /admonition %}",
+{% /admonition %}
+
+",
               "errors": [
                 "root.DetachContactFromConversationRequestUnauthorizedError",
                 "root.DetachContactFromConversationRequestForbiddenError",
@@ -26198,9 +26225,10 @@ If you add a contact via the email parameter and there is no user/lead found on 
 
 You can optionally request the result page size and the cursor to start after to fetch the result.
 {% admonition type="warning" name="Pagination" %}
-You can use pagination to limit the number of results returned. The default is `20` results per page.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
-{% /admonition %}",
+  You can use pagination to limit the number of results returned. The default is `20` results per page.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.
+{% /admonition %}
+",
               "errors": [
                 "root.ListConversationsRequestUnauthorizedError",
                 "root.ListConversationsRequestForbiddenError",
@@ -26270,11 +26298,11 @@ See the [pagination section](https://developers.intercom.com/docs/build-an-integ
               "auth": true,
               "display-name": "Manage a conversation",
               "docs": "For managing conversations you can:
-
 - Close a conversation
 - Snooze a conversation to reopen on a future date
 - Open a conversation which is `snoozed` or `closed`
-- Assign a conversation to an admin and/or team.",
+- Assign a conversation to an admin and/or team.
+",
               "errors": [
                 "root.ManageConversationRequestUnauthorizedError",
                 "root.ManageConversationRequestForbiddenError",
@@ -26904,7 +26932,9 @@ See the [pagination section](https://developers.intercom.com/docs/build-an-integ
 
 {% admonition type="info" name="Redacting parts and messages" %}
 If you are redacting a conversation part, it must have a `body`. If you are redacting a source message, it must have been created by a contact. We will return a `conversation_part_not_redactable` error if these criteria are not met.
-{% /admonition %}",
+{% /admonition %}
+
+",
               "errors": [
                 "root.RedactConversationRequestUnauthorizedError",
                 "root.RedactConversationRequestNotFoundError",
@@ -27691,7 +27721,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
             "retrieveConversation": {
               "auth": true,
               "display-name": "Retrieve a conversation",
-              "docs": "You can fetch the details of a single conversation.
+              "docs": "
+You can fetch the details of a single conversation.
 
 This will return a single Conversation model with all its conversation parts.
 
@@ -27699,7 +27730,8 @@ This will return a single Conversation model with all its conversation parts.
 The maximum number of conversation parts that can be returned via the API is 500. If you have more than that we will return the 500 most recent conversation parts.
 {% /admonition %}
 
-For AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).",
+For AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).
+",
               "errors": [
                 "root.RetrieveConversationRequestUnauthorizedError",
                 "root.RetrieveConversationRequestForbiddenError",
@@ -27838,17 +27870,16 @@ To search for conversations, you need to send a `POST` request to `https://api.i
 
 This will accept a query object in the body which will define your filters in order to search for conversations.
 {% admonition type="warning" name="Optimizing search queries" %}
-Search queries can be complex, so optimizing them can help the performance of your search.
-Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
-pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
+  Search queries can be complex, so optimizing them can help the performance of your search.
+  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
+  pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
 {% /admonition %}
 
 ### Nesting & Limitations
 
 You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).
 There are some limitations to the amount of multiple's there can be:
-
 - There's a limit of max 2 nested filters
 - There's a limit of max 15 filters for each AND or OR group
 
@@ -27917,20 +27948,21 @@ Most keys listed as part of the The conversation model is searchable, whether wr
 
 ### Accepted Operators
 
-The table below shows the operators you can use to define how you want to search for the value. The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
+The table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
 
-| Operator | Valid Types                   | Description                                                |
-| :------- | :---------------------------- | :--------------------------------------------------------- |
-| =        | All                           | Equals                                                     |
-| !=       | All                           | Doesn't Equal                                              |
-| IN       | All                           | In Shortcut for `OR` queries Values most be in Array       |
-| NIN      | All                           | Not In Shortcut for `OR !` queries Values must be in Array |
-| >        | Integer Date (UNIX Timestamp) | Greater (or equal) than                                    |
-| <        | Integer Date (UNIX Timestamp) | Lower (or equal) than                                      |
-| ~        | String                        | Contains                                                   |
-| !~       | String                        | Doesn't Contain                                            |
-| ^        | String                        | Starts With                                                |
-| $        | String                        | Ends With                                                  |",
+| Operator | Valid Types                    | Description                                                  |
+| :------- | :----------------------------- | :----------------------------------------------------------- |
+| =        | All                            | Equals                                                       |
+| !=       | All                            | Doesn't Equal                                                |
+| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |
+| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |
+| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |
+| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |
+| ~        | String                         | Contains                                                     |
+| !~       | String                         | Doesn't Contain                                              |
+| ^        | String                         | Starts With                                                  |
+| $        | String                         | Ends With                                                    |
+",
               "examples": [
                 {
                   "name": "successful",
@@ -28062,11 +28094,14 @@ The table below shows the operators you can use to define how you want to search
             "updateConversation": {
               "auth": true,
               "display-name": "Update a conversation",
-              "docs": "You can update an existing conversation.
+              "docs": "
+You can update an existing conversation.
 
 {% admonition type="info" name="Replying and other actions" %}
 If you want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at the reply and manage endpoints.
-{% /admonition %}",
+{% /admonition %}
+
+",
               "errors": [
                 "root.UpdateConversationRequestUnauthorizedError",
                 "root.UpdateConversationRequestForbiddenError",
@@ -32774,11 +32809,13 @@ types:
             "updateDataAttribute": {
               "auth": true,
               "display-name": "Update a data attribute",
-              "docs": "You can update a data attribute.
+              "docs": "
+You can update a data attribute.
 
 > 🚧 Updating the data type is not possible
 >
-> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.",
+> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.
+",
               "errors": [
                 "root.UpdateDataAttributeRequestBadRequestError",
                 "root.UpdateDataAttributeRequestUnauthorizedError",
@@ -33995,7 +34032,8 @@ docs: Everything about your Data Attributes
             "createDataEvent": {
               "auth": true,
               "display-name": "Submit a data event",
-              "docs": "You will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`.
+              "docs": "
+You will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`.
 
 When using the JavaScript API, [adding the code to your app](http://docs.intercom.io/configuring-Intercom/tracking-user-events-in-your-app) makes the Events API available. Once added, you can submit an event using the `trackEvent` method. This will associate the event with the Lead or currently logged-in user or logged-out visitor/lead and send it to Intercom. The final parameter is a map that can be used to send optional metadata about the event.
 
@@ -34034,7 +34072,9 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
 - Unauthorised access will be rejected with a `401 Unauthorized` or `403 Forbidden` response code.
 - Events sent about users that cannot be found will return a `404 Not Found`.
 - Event lists containing duplicate events will have those duplicates ignored.
-- Server errors will return a `500` response code and may contain an error message in the body.",
+- Server errors will return a `500` response code and may contain an error message in the body.
+
+",
               "errors": [
                 "root.CreateDataEventRequestUnauthorizedError",
               ],
@@ -34052,7 +34092,9 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
             "dataEventSummaries": {
               "auth": true,
               "display-name": "Create event summaries",
-              "docs": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.",
+              "docs": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.
+
+",
               "errors": [
                 "root.DataEventSummariesRequestUnauthorizedError",
               ],
@@ -34090,7 +34132,8 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
             "lisDataEvents": {
               "auth": true,
               "display-name": "List all data events",
-              "docs": "> 🚧
+              "docs": "
+> 🚧
 >
 > Please note that you can only 'list' events that are less than 90 days old. Event counts and summaries will still include your events older than 90 days but you cannot 'list' these events individually if they are older than 90 days
 
@@ -34102,7 +34145,8 @@ The events belonging to a customer can be listed by sending a GET request to `ht
 
 The `email` parameter value should be [url encoded](http://en.wikipedia.org/wiki/Percent-encoding) when sending.
 
-You can optionally define the result page size as well with the `per_page` parameter.",
+You can optionally define the result page size as well with the `per_page` parameter.
+",
               "errors": [
                 "root.LisDataEventsRequestUnauthorizedError",
               ],
@@ -34639,17 +34683,18 @@ docs: Everything about your Data Events
 
 The only parameters you need to provide are the range of dates that you want exported.
 
-> 🚧 Limit of one active job
+>🚧 Limit of one active job
 >
 > You can only have one active job per workspace. You will receive a HTTP status code of 429 with the message Exceeded rate limit of 1 pending message data export jobs if you attempt to create a second concurrent job.
 
-> ❗️ Updated_at not included
+>❗️ Updated_at not included
 >
 > It should be noted that the timeframe only includes messages sent during the time period and not messages that were only updated during this period. For example, if a message was updated yesterday but sent two days ago, you would need to set the created_at_after date before the message was sent to include that in your retrieval job.
 
-> 📘 Date ranges are inclusive
+>📘 Date ranges are inclusive
 >
-> Requesting data for 2018-06-01 until 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until 2018-06-30 23:59:99.",
+> Requesting data for 2018-06-01 until 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until 2018-06-30 23:59:99.
+",
               "examples": [
                 {
                   "name": "successful",
@@ -34706,7 +34751,8 @@ Your exported message data will be streamed continuously back down to you in a g
 
 > 📘 Octet header required
 >
-> You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.",
+> You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.
+",
               "examples": [
                 {
                   "path-parameters": {
@@ -34734,7 +34780,8 @@ Your exported message data will be streamed continuously back down to you in a g
 `https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in the response when you first created the export job. More on it can be seen in the Export Job Model.
 
 > 🚧 Jobs expire after two days
-> All jobs that have completed processing (and are thus available to download from the provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will no longer be available.",
+> All jobs that have completed processing (and are thus available to download from the provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will no longer be available.
+",
               "examples": [
                 {
                   "name": "successful",
@@ -35550,7 +35597,8 @@ types:
               "display-name": "List all collections",
               "docs": "You can fetch a list of all collections by making a GET request to `https://api.intercom.io/help_center/collections`.
 
-Collections will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated collections first.",
+Collections will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated collections first.
+",
               "errors": [
                 "root.ListAllCollectionsRequestUnauthorizedError",
               ],
@@ -37761,7 +37809,8 @@ This will return the Message model that has been created.
 
 > 🚧 Retrieving Associated Conversations
 >
-> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.",
+> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.
+",
               "errors": [
                 "root.CreateMessageRequestBadRequestError",
                 "root.CreateMessageRequestUnauthorizedError",
@@ -38795,7 +38844,8 @@ types:
           "Newsfeed": {
             "docs": "A newsfeed is a collection of news items, targeted to a specific audience.
 
-Newsfeeds currently cannot be edited through the API, please refer to [this article](https://www.intercom.com/help/en/articles/6362267-getting-started-with-news) to set up your newsfeeds in Intercom.",
+Newsfeeds currently cannot be edited through the API, please refer to [this article](https://www.intercom.com/help/en/articles/6362267-getting-started-with-news) to set up your newsfeeds in Intercom.
+",
             "inline": undefined,
             "properties": {
               "created_at": {
@@ -40355,11 +40405,12 @@ types:
               "display-name": "Add subscription to a contact",
               "docs": "You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in:
 
-1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type.
+  1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type.
 
-2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type.
+  2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type.
 
-This will return a subscription type model for the subscription type that was added to the contact.",
+This will return a subscription type model for the subscription type that was added to the contact.
+",
               "errors": [
                 "root.AttachSubscriptionTypeToContactRequestUnauthorizedError",
                 "root.AttachSubscriptionTypeToContactRequestNotFoundError",
@@ -40961,7 +41012,8 @@ types:
               "docs": "You can use the API to deflect phone calls to the Intercom Messenger.
 Calling this endpoint will send an SMS with a link to the Messenger to the phone number specified.
 
-If custom attributes are specified, they will be added to the user or lead's custom data attributes.",
+If custom attributes are specified, they will be added to the user or lead's custom data attributes.
+",
               "errors": [
                 "root.CreatePhoneSwitchRequestBadRequestError",
                 "root.CreatePhoneSwitchRequestUnauthorizedError",
@@ -41438,17 +41490,18 @@ docs: Everything about Switch
               "display-name": "Create or update a tag, Tag or untag companies, Tag contacts",
               "docs": "You can use this endpoint to perform the following operations:
 
-**1. Create a new tag:** You can create a new tag by passing in the tag name as specified in "Create or Update Tag Request Payload" described below.
+  **1. Create a new tag:** You can create a new tag by passing in the tag name as specified in "Create or Update Tag Request Payload" described below.
 
-**2. Update an existing tag:** You can update an existing tag by passing the id of the tag as specified in "Create or Update Tag Request Payload" described below.
+  **2. Update an existing tag:** You can update an existing tag by passing the id of the tag as specified in "Create or Update Tag Request Payload" described below.
 
-**3. Tag Companies:** You can tag single company or a list of companies. You can tag a company by passing in the tag name and the company details as specified in "Tag Company Request Payload" described below. Also, if the tag doesn't exist then a new one will be created automatically.
+  **3. Tag Companies:** You can tag single company or a list of companies. You can tag a company by passing in the tag name and the company details as specified in "Tag Company Request Payload" described below. Also, if the tag doesn't exist then a new one will be created automatically.
 
-**4. Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in the tag id and the company details as specified in "Untag Company Request Payload" described below.
+  **4. Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in the tag id and the company details as specified in "Untag Company Request Payload" described below.
 
-**5. Tag Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user details as specified in "Tag Users Request Payload" described below.
+  **5. Tag Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user details as specified in "Tag Users Request Payload" described below.
 
-Each operation will return a tag object.",
+Each operation will return a tag object.
+",
               "errors": [
                 "root.CreateTagRequestBadRequestError",
                 "root.CreateTagRequestUnauthorizedError",
@@ -41860,7 +41913,8 @@ Each operation will return a tag object.",
               "auth": true,
               "display-name": "Find a specific tag",
               "docs": "You can fetch the details of tags that are on the workspace by their id.
-This will return a tag object.",
+This will return a tag object.
+",
               "errors": [
                 "root.FindTagRequestUnauthorizedError",
                 "root.FindTagRequestNotFoundError",
@@ -41905,7 +41959,9 @@ This will return a tag object.",
             "listTags": {
               "auth": true,
               "display-name": "List all tags",
-              "docs": "You can fetch a list of all tags for a given workspace.",
+              "docs": "You can fetch a list of all tags for a given workspace.
+
+",
               "errors": [
                 "root.ListTagsRequestUnauthorizedError",
               ],
@@ -43346,11 +43402,11 @@ docs: Everything about your ticket type attributes
               "auth": true,
               "display-name": "Create a ticket type",
               "docs": "You can create a new ticket type.
-
 > 📘 Creating ticket types.
 >
 > Every ticket type will be created with two default attributes: _default_title_ and _default_description_.
-> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)",
+> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
+",
               "errors": [
                 "root.CreateTicketTypeRequestUnauthorizedError",
               ],
@@ -43535,11 +43591,13 @@ docs: Everything about your ticket type attributes
             "updateTicketType": {
               "auth": true,
               "display-name": "Update a ticket type",
-              "docs": "You can update a ticket type.
+              "docs": "
+You can update a ticket type.
 
 > 📘 Updating a ticket type.
 >
-> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)",
+> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
+",
               "errors": [
                 "root.UpdateTicketTypeRequestUnauthorizedError",
               ],
@@ -44382,17 +44440,16 @@ To search for tickets, you send a `POST` request to `https://api.intercom.io/tic
 
 This will accept a query object in the body which will define your filters.
 {% admonition type="warning" name="Optimizing search queries" %}
-Search queries can be complex, so optimizing them can help the performance of your search.
-Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
-pagination to limit the number of results returned. The default is `20` results per page.
-See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
+  Search queries can be complex, so optimizing them can help the performance of your search.
+  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
+  pagination to limit the number of results returned. The default is `20` results per page.
+  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.
 {% /admonition %}
 
 ### Nesting & Limitations
 
 You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).
 There are some limitations to the amount of multiples there can be:
-
 - There's a limit of max 2 nested filters
 - There's a limit of max 15 filters for each AND or OR group
 
@@ -44400,44 +44457,45 @@ There are some limitations to the amount of multiples there can be:
 
 Most keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foobar"`).
 
-| Field                 | Type                                                           |
-| :-------------------- | :------------------------------------------------------------- |
-| id                    | String                                                         |
-| created_at            | Date (UNIX timestamp)                                          |
-| updated_at            | Date (UNIX timestamp)                                          |
-| _default_title_       | String                                                         |
-| _default_description_ | String                                                         |
-| category              | String                                                         |
-| ticket_type_id        | String                                                         |
-| contact_ids           | String                                                         |
-| teammate_ids          | String                                                         |
-| admin_assignee_id     | String                                                         |
-| team_assignee_id      | String                                                         |
-| open                  | Boolean                                                        |
-| state                 | String                                                         |
-| snoozed_until         | Date (UNIX timestamp)                                          |
-| ticket_attribute.{id} | String or Boolean or Date (UNIX timestamp) or Float or Integer |
+| Field                                     | Type                                                                                     |
+| :---------------------------------------- | :--------------------------------------------------------------------------------------- |
+| id                                        | String                                                                                   |
+| created_at                                | Date (UNIX timestamp)                                                                    |
+| updated_at                                | Date (UNIX timestamp)                                                                    |
+| _default_title_                           | String                                                                                   |
+| _default_description_                     | String                                                                                   |
+| category                                  | String                                                                                   |
+| ticket_type_id                            | String                                                                                   |
+| contact_ids                               | String                                                                                   |
+| teammate_ids                              | String                                                                                   |
+| admin_assignee_id                         | String                                                                                   |
+| team_assignee_id                          | String                                                                                   |
+| open                                      | Boolean                                                                                  |
+| state                                     | String                                                                                   |
+| snoozed_until                             | Date (UNIX timestamp)                                                                    |
+| ticket_attribute.{id}                     | String or Boolean or Date (UNIX timestamp) or Float or Integer                           |
 
 ### Accepted Operators
 
 {% admonition type="info" name="Searching based on `created_at`" %}
-You may use the `<=` or `>=` operators to search by `created_at`.
+  You may use the `<=` or `>=` operators to search by `created_at`.
 {% /admonition %}
 
-The table below shows the operators you can use to define how you want to search for the value. The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
+The table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`"="`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).
 
-| Operator | Valid Types                   | Description                                                |
-| :------- | :---------------------------- | :--------------------------------------------------------- |
-| =        | All                           | Equals                                                     |
-| !=       | All                           | Doesn't Equal                                              |
-| IN       | All                           | In Shortcut for `OR` queries Values most be in Array       |
-| NIN      | All                           | Not In Shortcut for `OR !` queries Values must be in Array |
-| >        | Integer Date (UNIX Timestamp) | Greater (or equal) than                                    |
-| <        | Integer Date (UNIX Timestamp) | Lower (or equal) than                                      |
-| ~        | String                        | Contains                                                   |
-| !~       | String                        | Doesn't Contain                                            |
-| ^        | String                        | Starts With                                                |
-| $        | String                        | Ends With                                                  |",
+| Operator | Valid Types                    | Description                                                  |
+| :------- | :----------------------------- | :----------------------------------------------------------- |
+| =        | All                            | Equals                                                       |
+| !=       | All                            | Doesn't Equal                                                |
+| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |
+| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |
+| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |
+| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |
+| ~        | String                         | Contains                                                     |
+| !~       | String                         | Doesn't Contain                                              |
+| ^        | String                         | Starts With                                                  |
+| $        | String                         | Ends With                                                    |
+",
               "examples": [
                 {
                   "name": "successful",
@@ -47301,7 +47359,8 @@ docs: Everything about your tickets
 
 > 📘 What happens upon a visitor being converted?
 >
-> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.",
+> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.
+",
               "errors": [
                 "root.ConvertVisitorRequestUnauthorizedError",
               ],
@@ -47533,7 +47592,8 @@ docs: Everything about your tickets
 
 **Option 1.** You can update a visitor by passing in the `user_id` of the visitor in the Request body.
 
-**Option 2.** You can update a visitor by passing in the `id` of the visitor in the Request body.",
+**Option 2.** You can update a visitor by passing in the `id` of the visitor in the Request body.
+",
               "errors": [
                 "root.UpdateVisitorRequestUnauthorizedError",
                 "root.UpdateVisitorRequestNotFoundError",

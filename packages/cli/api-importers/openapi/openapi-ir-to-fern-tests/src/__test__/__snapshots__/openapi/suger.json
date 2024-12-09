@@ -2286,7 +2286,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                 "type": "optional<list<SharedGcpCommerceProducerPriceSubscription>>",
               },
               "usageFees": {
-                "docs": "Usage based metering plan, when priceModel = USAGE or SUBSCRIPTION_PLUS_USAGE",
+                "docs": "Usage based metering plan, when priceModel =  USAGE or SUBSCRIPTION_PLUS_USAGE",
                 "type": "optional<list<SharedGcpCommerceProducerPriceUsage>>",
               },
             },
@@ -2372,12 +2372,12 @@ in the google.rpc.Status.details field, or localized by the client.",
               "displayUnit": "optional<string>",
               "displayUnitDescription": "optional<string>",
               "id": {
-                "docs": "The usage metering dimension key, in format of "{plan*key}*{usage_dimension_key}"",
+                "docs": "The usage metering dimension key, in format of "{plan_key}_{usage_dimension_key}"",
                 "type": "optional<string>",
               },
               "metricKind": "optional<string>",
               "name": {
-                "docs": "Name: The resource name of the metric descriptor, in format of "{service*name}/{plan_key}*{usage_dimension_key}"",
+                "docs": "Name: The resource name of the metric descriptor, in format of "{service_name}/{plan_key}_{usage_dimension_key}"",
                 "type": "optional<string>",
               },
               "reportingUnit": "optional<string>",
@@ -3959,25 +3959,26 @@ must equal the Quantity of the UsageRecord.",
                 "docs": "The UsageRecordResultStatus indicates the status of an individual UsageRecord
 processed by BatchMeterUsage.
 
-- Success- The UsageRecord was accepted and
-  honored by BatchMeterUsage.
+* Success- The UsageRecord was accepted and
+honored by BatchMeterUsage.
 
-- CustomerNotSubscribed- The CustomerIdentifier
-  specified is not able to use your product. The UsageRecord was not honored.
-  There are three causes for this result:
+* CustomerNotSubscribed- The CustomerIdentifier
+specified is not able to use your product. The UsageRecord was not honored.
+There are three causes for this result:
 
-- The customer identifier is
-  invalid.
+* The customer identifier is
+invalid.
 
-- The customer identifier provided in the metering record does not
-  have an active agreement or subscription with this product. Future UsageRecords
-  for this customer will fail until the customer subscribes to your product.
+* The customer identifier provided in the metering record does not
+have an active agreement or subscription with this product. Future UsageRecords
+for this customer will fail until the customer subscribes to your product.
 
-- The customer's AWS account was suspended.
+*
+The customer's AWS account was suspended.
 
-- DuplicateRecord- Indicates that the
-  UsageRecord was invalid and not honored. A previously metered UsageRecord had
-  the same customer, dimension, and time, but a different quantity.",
+* DuplicateRecord- Indicates that the
+UsageRecord was invalid and not honored. A previously metered UsageRecord had
+the same customer, dimension, and time, but a different quantity.",
                 "type": "optional<TypesUsageRecordResultStatus>",
               },
               "usageRecord": {

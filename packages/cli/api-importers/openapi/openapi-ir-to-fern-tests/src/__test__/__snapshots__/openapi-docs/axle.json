@@ -439,7 +439,7 @@
                 "name": "GetAccountRequest",
                 "query-parameters": {
                   "expand": {
-                    "docs": "Set to _true_ if you would like to expand related entities (e.g., account, policy). Defaults to _false_.",
+                    "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -1166,7 +1166,7 @@ service:
                 "name": "GetPolicyRequest",
                 "query-parameters": {
                   "expand": {
-                    "docs": "Set to _true_ if you would like to expand related entities (e.g., account, policy). Defaults to _false_.",
+                    "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
                     "type": "optional<boolean>",
                   },
                 },

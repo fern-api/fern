@@ -12,7 +12,8 @@
             "testUpload": {
               "auth": false,
               "display-name": "Test upload",
-              "docs": "Test multipart request with different content types.",
+              "docs": "Test multipart request with different content types.
+",
               "examples": [
                 {
                   "path-parameters": {

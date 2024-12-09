@@ -29,7 +29,8 @@
                 "body": {
                   "properties": {
                     "id": {
-                      "docs": "An optional string value.",
+                      "docs": "An optional string value.
+",
                       "type": "optional<string>",
                     },
                   },
@@ -55,11 +56,13 @@
         },
         "types": {
           "Response": {
-            "docs": "A generic response type used throughout the API.",
+            "docs": "A generic response type used throughout the API.
+",
             "inline": undefined,
             "properties": {
               "value": {
-                "docs": "An optional numerical value.",
+                "docs": "An optional numerical value.
+",
                 "type": "optional<double>",
               },
             },

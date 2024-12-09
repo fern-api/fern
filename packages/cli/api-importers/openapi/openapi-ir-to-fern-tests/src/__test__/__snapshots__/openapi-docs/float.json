@@ -53,7 +53,8 @@
         },
         "types": {
           "Response": {
-            "docs": "A generic response type used throughout the API.",
+            "docs": "A generic response type used throughout the API.
+",
             "inline": undefined,
             "properties": {
               "id": "optional<float>",

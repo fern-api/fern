@@ -22248,7 +22248,7 @@ docs: Interaction with ledger
                     },
                   },
                   "role": {
-                    "docs": "Filer on role, 'client' for keys mediated by other agents, 'server' for keys mediated by this agent",
+                    "docs": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
                     "type": "optional<GetKeylistsRequestRole>",
                   },
                 },
@@ -23403,7 +23403,7 @@ types:
                 "body": {
                   "properties": {
                     "image_url": {
-                      "docs": "Image url for this wallet. This image url is publicized (self-attested) to other agents as part of forming a connection.",
+                      "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
                       "type": "optional<string>",
                     },
                     "key_management_mode": {
@@ -23411,11 +23411,11 @@ types:
                       "type": "optional<literal<"managed">>",
                     },
                     "label": {
-                      "docs": "Label for this wallet. This label is publicized (self-attested) to other agents as part of forming a connection.",
+                      "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
                       "type": "optional<string>",
                     },
                     "wallet_dispatch_type": {
-                      "docs": "Webhook target dispatch type for this wallet. default - Dispatch only to webhooks associated with this wallet. base - Dispatch only to webhooks associated with the base wallet. both - Dispatch to both webhook targets.",
+                      "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
                       "type": "optional<CreateWalletRequestWalletDispatchType>",
                     },
                     "wallet_key": {
@@ -23486,7 +23486,7 @@ types:
                 "body": {
                   "properties": {
                     "wallet_key": {
-                      "docs": "Master key used for key derivation. Only required for unmanaged wallets.",
+                      "docs": "Master key used for key derivation. Only required for             unmanaged wallets.",
                       "type": "optional<string>",
                     },
                   },
@@ -23534,7 +23534,7 @@ types:
                 "body": {
                   "properties": {
                     "wallet_key": {
-                      "docs": "Master key used for key derivation. Only required for unamanged wallets.",
+                      "docs": "Master key used for key derivation. Only required for             unamanged wallets.",
                       "type": "optional<string>",
                     },
                   },
@@ -23680,15 +23680,15 @@ types:
                 "body": {
                   "properties": {
                     "image_url": {
-                      "docs": "Image url for this wallet. This image url is publicized (self-attested) to other agents as part of forming a connection.",
+                      "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
                       "type": "optional<string>",
                     },
                     "label": {
-                      "docs": "Label for this wallet. This label is publicized (self-attested) to other agents as part of forming a connection.",
+                      "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
                       "type": "optional<string>",
                     },
                     "wallet_dispatch_type": {
-                      "docs": "Webhook target dispatch type for this wallet. default - Dispatch only to webhooks associated with this wallet. base - Dispatch only to webhooks associated with the base wallet. both - Dispatch to both webhook targets.",
+                      "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
                       "type": "optional<UpdateWalletRequestWalletDispatchType>",
                     },
                     "wallet_webhook_urls": {
@@ -23718,7 +23718,7 @@ types:
         },
         "types": {
           "CreateWalletRequestWalletDispatchType": {
-            "docs": "Webhook target dispatch type for this wallet. default - Dispatch only to webhooks associated with this wallet. base - Dispatch only to webhooks associated with the base wallet. both - Dispatch to both webhook targets.",
+            "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
             "enum": [
               "default",
               "both",
@@ -23751,7 +23751,7 @@ types:
             },
           },
           "UpdateWalletRequestWalletDispatchType": {
-            "docs": "Webhook target dispatch type for this wallet. default - Dispatch only to webhooks associated with this wallet. base - Dispatch only to webhooks associated with the base wallet. both - Dispatch to both webhook targets.",
+            "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
             "enum": [
               "default",
               "both",

@@ -105,7 +105,7 @@
                 "type": "optional<string>",
               },
               "type": {
-                "docs": "The type of the account holder.",
+                "docs": "The type of the account holder. ",
                 "type": "AccountHolderType",
               },
             },
@@ -1856,10 +1856,10 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "status": {
                 "docs": "The status of the report.
 
-- `open`: a newly created report
-- `pending`: the report is being investigated
-- `rejected`: the original enrichment output was deemed correct or we couldn't resolve it, check `rejection_reason`
-- `resolved`: the issue has been resolved",
+* `open`: a newly created report
+* `pending`: the report is being investigated
+* `rejected`: the original enrichment output was deemed correct or we couldn't resolve it, check `rejection_reason`
+* `resolved`: the issue has been resolved",
                 "type": "ReportStatus",
               },
               "transaction_id": {
@@ -3918,14 +3918,16 @@ types:
     "accountHolders.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Account Holder API allows you to retrieve, create and modify account holders. An account holder represents an
+        "docs": "
+The Account Holder API allows you to retrieve, create and modify account holders. An account holder represents an
 entity that holds an account associated with transactions. An account holder can either be a business or an individual
 person - consumer.
 
 The fields chosen for an account holder are used by our enrichment process and can dramatically improve the accuracy
-of the results.
+of the results. 
 
-Complete guide: [Account Holders](../../../account-holders).",
+Complete guide: [Account Holders](../../../account-holders).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -4012,7 +4014,7 @@ ah = sdk.account_holders.create(
                       "type": "optional<string>",
                     },
                     "type": {
-                      "docs": "The type of the account holder.",
+                      "docs": "The type of the account holder. ",
                       "type": "root.AccountHolderType",
                     },
                   },
@@ -4460,23 +4462,27 @@ docs: >
     "bankStatements.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Bank Statements API allows you to manage and extract information from bank statements. We support extraction of
+        "docs": "
+The Bank Statements API allows you to manage and extract information from bank statements. We support extraction of
 account holder information, account information and transaction records. Files should be uploaded in PDF format.
 
 During the extraction process, the bank statements undergo several status changes:
-| Status | Description |
+|  Status  |                              Description                               |
 |----------|------------------------------------------------------------------------|
-|processing|The upload was successful. Extraction is in progress. |
-|completed |The extraction was successful. Results are available. |
-|error |An error occurred during extraction. Check `error` for more information.|
+|processing|The upload was successful. Extraction is in progress.                   |
+|completed |The extraction was successful. Results are available.                   |
+|error     |An error occurred during extraction. Check `error` for more information.|
+
 
 A list of error codes for the `error` status can be found below:
-| Code | Description |
+|         Code         |                Description                |
 |----------------------|-------------------------------------------|
 |invalid_bank_statement|Failed to process file as a bank statement.|
-|internal_error |Internal error. Please contact support. |
+|internal_error        |Internal error. Please contact support.    |
 
-Complete guide: [Bank Statements](../../../bank-statements).",
+
+Complete guide: [Bank Statements](../../../bank-statements).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -5554,11 +5560,11 @@ batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") ",
             "postBatch": {
               "auth": true,
               "display-name": "Submit a batch of transactions",
-              "docs": "Creates a batch of transactions and enriches it in an asynchronous fashion. A batch, representing the status of the
-enrichment progress is returned as a result of the submission.
+              "docs": "Creates a batch of transactions and enriches it in an asynchronous fashion. A batch, representing the status of the 
+enrichment progress is returned as a result of the submission. 
 
-In order to be notified on the status of the batch, you can setup [webhooks](../../../webhooks) and receive
-the respective notifications. Alternatively, you can
+In order to be notified on the status of the batch, you can setup [webhooks](../../../webhooks) and receive 
+the respective notifications. Alternatively, you can 
 [poll](../../../enrichment/introduction/#viewing-the-progress-of-a-batch) for the status of the batch using its id.
 
 This endpoints supports up to 24960 transactions.",
@@ -6594,9 +6600,9 @@ sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") ",
             "searchEntity": {
               "auth": true,
               "display-name": "Searches for an entity",
-              "docs": "Resolves a query into an entity by querying our entity resolution system.
-The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using
-the `name` parameter are billed the same way transactions are.",
+              "docs": "Resolves a query into an entity by querying our entity resolution system. 
+    The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using 
+    the `name` parameter are billed the same way transactions are.",
               "errors": [
                 "root.BadRequestError",
                 "root.UnprocessableEntityError",
@@ -6786,9 +6792,11 @@ service:
     "personalization.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Personalization API allows you to customize the output of enrichment by
+        "docs": "
+The Personalization API allows you to customize the output of enrichment by
 uploading a set of rules. For more information, see our documentation on
-[Personalization](None).",
+[Personalization](None).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -7392,16 +7400,18 @@ docs: |
     "recurrence.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Recurrence API allows you to identify and categorize recurring patterns found in the transactions of an
-[account holder](#tag/Account-Holders), such as periodic payments or subscriptions and group them
-into recurrence groups. Each recurrence group contains detailed information about the pattern,
+        "docs": "
+The Recurrence API allows you to identify and categorize recurring patterns found in the transactions of an 
+[account holder](#tag/Account-Holders), such as periodic payments or subscriptions and group them 
+into recurrence groups. Each recurrence group contains detailed information about the pattern, 
 such as periodicity, amount and counterparty.
 
-Transactions can be added to an account holder via the [Enrichment API](#tag/Enrichment).
-It is crucial that transactions are submitted with the [correct](../../../account-holders)
+Transactions can be added to an account holder via the [Enrichment API](#tag/Enrichment). 
+It is crucial that transactions are submitted with the [correct](../../../account-holders) 
 account holder information as the recurrence calculation relies heavily on it.
 
-Complete guide: [Recurrence](../../../enrichment/recurrence).",
+Complete guide: [Recurrence](../../../enrichment/recurrence).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -7602,8 +7612,10 @@ docs: >
     "reports.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Reports API allows you to flag transactions with incorrect fields. You can also track the progress of each
-report either through the API or using [webhooks](#tag/Webhooks).",
+        "docs": "
+The Reports API allows you to flag transactions with incorrect fields. You can also track the progress of each
+report either through the API or using [webhooks](#tag/Webhooks).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -8127,9 +8139,11 @@ docs: >
     "transactions.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Transaction API allows you to manage, retrieve and search through enriched transactions. A transaction contains
-both the enrichment fields and the original input fields. They are made available after being
-[enriched](#tag/Enrichment).",
+        "docs": "
+The Transaction API allows you to manage, retrieve and search through enriched transactions. A transaction contains
+both the enrichment fields and the original input fields. They are made available after being 
+[enriched](#tag/Enrichment).
+",
         "imports": {
           "root": "__package__.yml",
         },
@@ -8446,11 +8460,11 @@ for tx in sdk.transactions.list().auto_paginate():
               "auth": true,
               "display-name": "Synchronously enrich transactions",
               "docs": "Enriches a list of transactions in synchronous fashion. The enriched transactions returned in
-the order that they were submitted. Webhook events are not triggered for this operation.
+the order that they were submitted. Webhook events are not triggered for this operation. 
 
-This endpoint supports up to 1000 transactions.
+This endpoint supports up to 1000 transactions. 
 
-If you want more throughput and live updates refer to the
+If you want more throughput and live updates refer to the 
 [async enrichment endpoint](../batches/post-batch).",
               "errors": [
                 "root.UnprocessableEntityError",
@@ -9213,13 +9227,15 @@ docs: >
     "webhooks.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
-        "docs": "The Webhooks API allows you to receive notifications when certain events occur,
-such as when a batch or bank statement finishes processing.
+        "docs": "
+The Webhooks API allows you to receive notifications when certain events occur,
+such as when a batch or bank statement finishes processing. 
 
 When an event occurs, Ntropy will make a POST request to the `url` of the
 webhook. If you specified a `token` when creating the webhook, this string will
-be included in the `X-Ntropy-Token` header. The webhook call has a timeout limit of 10
-seconds, so any processing of the event",
+be included in the `X-Ntropy-Token` header. The webhook call has a timeout limit of 10 
+seconds, so any processing of the event 
+",
         "imports": {
           "root": "__package__.yml",
         },

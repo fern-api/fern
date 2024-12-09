@@ -205,13 +205,15 @@
                 "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
-it would appear on the login button as 'Log in to abclogin'.",
+it would appear on the login button as 'Log in to abclogin'.
+",
                 "type": "optional<string>",
               },
               "enabled": {
                 "docs": "Whether the authentication connection is enabled or disabled. If
 set to false, the authentication connection will not show up on the
-login screen as a login option.",
+login screen as a login option.
+",
                 "type": "optional<boolean>",
               },
               "id": {
@@ -221,7 +223,8 @@ login screen as a login option.",
             },
             "discriminant": "type",
             "docs": "Connection object that specifies the configuration for an
-authentication connection that is set up for a Dev organization.",
+authentication connection that is set up for a Dev organization.
+",
             "encoding": undefined,
             "source": {
               "openapi": "../openapi.yml",
@@ -246,7 +249,8 @@ authentication connection that is set up for a Dev organization.",
           },
           "AuthConnectionOptionsAzureAd": {
             "docs": "Object encapsulating the configuration parameters for an Azure AD
-authentication connection.",
+authentication connection.
+",
             "inline": undefined,
             "properties": {
               "client_id": {
@@ -268,7 +272,8 @@ authentication connection.",
           },
           "AuthConnectionOptionsGoogleApps": {
             "docs": "Object encapsulating the configuration parameters for a Google Apps
-authentication connection.",
+authentication connection.
+",
             "inline": undefined,
             "properties": {
               "client_id": {
@@ -276,11 +281,13 @@ authentication connection.",
                 "type": "optional<string>",
               },
               "client_secret": {
-                "docs": "Client secret for the Google Apps authentication connection.",
+                "docs": "Client secret for the Google Apps authentication connection.
+",
                 "type": "optional<string>",
               },
               "tenant_domain": {
-                "docs": "Tenant domain URL of the Google Apps authentication connection.",
+                "docs": "Tenant domain URL of the Google Apps authentication connection.
+",
                 "type": "optional<string>",
               },
             },
@@ -290,7 +297,8 @@ authentication connection.",
           },
           "AuthConnectionOptionsOidc": {
             "docs": "Object encapsulating the configuration parameters for an OIDC
-authentication connection.",
+authentication connection.
+",
             "inline": undefined,
             "properties": {
               "client_id": {
@@ -312,7 +320,8 @@ authentication connection.",
           },
           "AuthConnectionOptionsSaml": {
             "docs": "Object encapsulating the configuration parameters for a SAML
-authentication connection.",
+authentication connection.
+",
             "inline": undefined,
             "properties": {
               "sign_in_endpoint": {
@@ -320,7 +329,8 @@ authentication connection.",
                 "type": "optional<string>",
               },
               "signing_cert": {
-                "docs": "Signing certificate for the SAML authentication connection.",
+                "docs": "Signing certificate for the SAML authentication connection.
+",
                 "type": "optional<string>",
               },
             },
@@ -342,7 +352,8 @@ authentication connection.",
           },
           "AuthConnectionType": {
             "docs": "Defines the type for the authentication connection. The configuration
-for each authentication connection will depend on the type value.",
+for each authentication connection will depend on the type value.
+",
             "enum": [
               "google_apps",
               "oidc",
@@ -363,7 +374,8 @@ for each authentication connection will depend on the type value.",
             "properties": {
               "client_id": {
                 "docs": "An identifier that represents the application that requested the
-token. Only applicable for application access tokens.",
+token. Only applicable for application access tokens.
+",
                 "type": "optional<string>",
               },
               "expires_at": {
@@ -501,28 +513,33 @@ token. Only applicable for application access tokens.",
             },
           },
           "AuthTokenTokenType": {
-            "docs": "The type of the issued token. Bearer is the only supported token type.",
+            "docs": "The type of the issued token. Bearer is the only supported token type.
+",
             "type": "literal<"bearer">",
           },
           "AuthTokensCreateResponse": {
             "docs": "Response for the request to create a new token corresponding to the
-requested token type.",
+requested token type.
+",
             "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The issued JSON Web Token (JWT) corresponding to the requested
-token type.",
+token type.
+",
                 "type": "string",
               },
               "client_id": {
                 "docs": "An identifier that represents the application which is requesting
 the token. Only present in a response corresponding to an
-application access token (AAT).",
+application access token (AAT).
+",
                 "type": "optional<string>",
               },
               "expires_in": {
                 "docs": "The validity lifetime of the token specified in seconds since Unix
-epoch.",
+epoch.
+",
                 "type": "long",
               },
               "refresh_token": {
@@ -531,7 +548,8 @@ epoch.",
               },
               "scope": {
                 "docs": "The scopes associated with the issued token. A space-delimited list
-of values in which the order of values does not matter.",
+of values in which the order of values does not matter.
+",
                 "type": "optional<string>",
               },
               "token_type": "AuthTokenTokenType",
@@ -584,7 +602,8 @@ of values in which the order of values does not matter.",
           },
           "AuthTokensRevInfo": {
             "docs": "Carries info corresponding to the Rev user to be provisioned and/or
-issue a Rev session token.",
+issue a Rev session token.
+",
             "inline": undefined,
             "properties": {
               "org_ref": {
@@ -656,12 +675,14 @@ issue a Rev session token.",
                 "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
-it would appear on the login button as 'Log in to abclogin'.",
+it would appear on the login button as 'Log in to abclogin'.
+",
                 "type": "optional<string>",
               },
             },
             "discriminant": "type",
-            "docs": "Request to create a new enterprise authentication connection.",
+            "docs": "Request to create a new enterprise authentication connection.
+",
             "encoding": undefined,
             "source": {
               "openapi": "../openapi.yml",
@@ -683,7 +704,8 @@ it would appear on the login button as 'Log in to abclogin'.",
           },
           "DevOrgAuthConnectionsCreateRequestType": {
             "docs": "Defines the type for the authentication connection. Different types of
-authentication connections have different configuration parameters.",
+authentication connections have different configuration parameters.
+",
             "enum": [
               "google_apps",
               "oidc",
@@ -696,7 +718,8 @@ authentication connections have different configuration parameters.",
           },
           "DevOrgAuthConnectionsCreateResponse": {
             "docs": "Response for the request to create a new enterprise authentication
-connection.",
+connection.
+",
             "inline": undefined,
             "properties": {
               "auth_connection": {
@@ -709,7 +732,8 @@ connection.",
           },
           "DevOrgAuthConnectionsGetResponse": {
             "docs": "Response object encapsulating the configuration details of an
-authentication connection.",
+authentication connection.
+",
             "inline": undefined,
             "properties": {
               "auth_connection": {
@@ -722,12 +746,14 @@ authentication connection.",
           },
           "DevOrgAuthConnectionsListResponse": {
             "docs": "Response object for the request to list all the social and enterprise
-authentication connections configured for a Dev organization.",
+authentication connections configured for a Dev organization.
+",
             "inline": undefined,
             "properties": {
               "auth_connections": {
                 "docs": "List of all the authentication connections currently configured for
-a Dev organization.",
+a Dev organization.
+",
                 "type": "list<AuthConnection>",
               },
             },
@@ -742,17 +768,20 @@ a Dev organization.",
                 "docs": "New display name of the authentication connection. This name will
 be visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
-it would appear on the login button as 'Log in to abclogin'.",
+it would appear on the login button as 'Log in to abclogin'.
+",
                 "type": "optional<string>",
               },
               "id": {
-                "docs": "ID of the authentication connection which is to be updated.",
+                "docs": "ID of the authentication connection which is to be updated.
+",
                 "type": "string",
               },
             },
             "discriminant": "type",
             "docs": "Request to update an enterprise authentication connection for a Dev
-organization.",
+organization.
+",
             "encoding": undefined,
             "source": {
               "openapi": "../openapi.yml",
@@ -778,7 +807,8 @@ organization.",
           "DevOrgAuthConnectionsUpdateRequestType": {
             "docs": "Specifies the type for the authentication connection. Different types
 of authentication connections have different configuration parameters
-that can be updated.",
+that can be updated.
+",
             "enum": [
               "google_apps",
               "none",
@@ -792,7 +822,8 @@ that can be updated.",
           },
           "DevOrgAuthConnectionsUpdateResponse": {
             "docs": "Response for the request to update an enterprise authentication
-connection.",
+connection.
+",
             "inline": undefined,
             "properties": {
               "auth_connection": {
@@ -832,12 +863,14 @@ connection.",
               },
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
             },
@@ -846,7 +879,8 @@ sort order. If not set, then no prior elements exist.",
             },
           },
           "DevUsersSelfResponse": {
-            "docs": "The response to getting the information for the authenticated user.",
+            "docs": "The response to getting the information for the authenticated user.
+",
             "inline": undefined,
             "properties": {
               "dev_user": {
@@ -1295,7 +1329,8 @@ sort order. If not set, then no prior elements exist.",
 cursor will be returned, or if no cursor is provided, then from the
 beginning. If "before", then entries before the provided cursor will be
 returned, or if no cursor is provided, then from the end. Entries will
-always be returned in the specified sort-by order.",
+always be returned in the specified sort-by order.
+",
             "enum": [
               "after",
               "before",
@@ -1337,7 +1372,8 @@ always be returned in the specified sort-by order.",
             },
           },
           "OrgEnvironment": {
-            "docs": "The environment of the Org. Defaults to 'production' if not specified.",
+            "docs": "The environment of the Org. Defaults to 'production' if not specified.
+",
             "enum": [
               "production",
               "staging",
@@ -1491,11 +1527,13 @@ always be returned in the specified sort-by order.",
             "inline": undefined,
             "properties": {
               "parent_part": {
-                "docs": "ID of the parent part on which the enhancement is to be created.",
+                "docs": "ID of the parent part on which the enhancement is to be created.
+",
                 "type": "list<string>",
               },
               "target_close_date": {
-                "docs": "Target close date by which enhancement is expected to be closed.",
+                "docs": "Target close date by which enhancement is expected to be closed.
+",
                 "type": "optional<datetime>",
               },
             },
@@ -1552,7 +1590,8 @@ always be returned in the specified sort-by order.",
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "parts": {
@@ -1561,7 +1600,8 @@ sort order. If not set, then no later elements exist.",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
             },
@@ -1635,7 +1675,8 @@ sort order. If not set, then no prior elements exist.",
             "properties": {
               "set": {
                 "docs": "Sets the owner IDs to the provided user IDs. This must not be
-empty.",
+empty.
+",
                 "type": "optional<list<string>>",
               },
             },
@@ -1683,7 +1724,8 @@ empty.",
                 "docs": "External ref is a unique identifier for the Rev (customer)
 organization from your primary customer system of records. If none
 is specified, a system-generated identifier will be assigned to the
-organization.",
+organization.
+",
                 "type": "optional<string>",
               },
             },
@@ -1695,7 +1737,8 @@ organization.",
             "type": "OrgBaseSummary",
           },
           "RevOrgsCreateResponse": {
-            "docs": "Response object for request to create a new Rev organization.",
+            "docs": "Response object for request to create a new Rev organization.
+",
             "inline": undefined,
             "properties": {
               "rev_org": {
@@ -1723,17 +1766,20 @@ organization.",
             },
           },
           "RevOrgsListResponse": {
-            "docs": "The response to getting a list of Rev organizations' information.",
+            "docs": "The response to getting a list of Rev organizations' information.
+",
             "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
               "rev_orgs": {
@@ -1769,7 +1815,8 @@ sort order. If not set, then no prior elements exist.",
 Rev organization from your primary customer record. If none is
 available, a good alternative is the email address/phone number
 which could uniquely identify the user. If none is specified, a
-system-generated identifier will be assigned to the user.",
+system-generated identifier will be assigned to the user.
+",
                 "type": "optional<string>",
               },
               "rev_org": "optional<OrgSummary>",
@@ -1788,7 +1835,8 @@ system-generated identifier will be assigned to the user.",
               },
               "value": {
                 "docs": "The value for the object's association with the tag. If specified,
-the value must be one that's specified in the tag's allowed values.",
+the value must be one that's specified in the tag's allowed values.
+",
                 "type": "optional<string>",
               },
             },
@@ -1814,7 +1862,8 @@ the value must be one that's specified in the tag's allowed values.",
             "inline": undefined,
             "properties": {
               "name": {
-                "docs": "The updated name of the stage, otherwise unchanged if not set.",
+                "docs": "The updated name of the stage, otherwise unchanged if not set.
+",
                 "type": "optional<string>",
               },
             },
@@ -1835,7 +1884,8 @@ the value must be one that's specified in the tag's allowed values.",
               "name": {
                 "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
-unique.",
+unique.
+",
                 "type": "string",
               },
             },
@@ -1893,12 +1943,14 @@ unique.",
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
               "tags": {
@@ -1960,7 +2012,8 @@ sort order. If not set, then no prior elements exist.",
               },
               "body": {
                 "docs": "The comment's body. If the comment has been deleted, then no body
-will appear in the response.",
+will appear in the response.
+",
                 "type": "optional<string>",
               },
               "body_type": "optional<TimelineCommentBodyType>",
@@ -2059,12 +2112,14 @@ will appear in the response.",
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
               "timeline_entries": {
@@ -2126,12 +2181,14 @@ sort order. If not set, then no prior elements exist.",
               "add": {
                 "docs": "Adds the provided artifacts to the comment. An artifact cannot be
 added more than once, i.e. nothing is done if the artifact is
-already attached. Mutually exclusive with `set`.",
+already attached. Mutually exclusive with `set`.
+",
                 "type": "optional<list<string>>",
               },
               "remove": {
                 "docs": "Removes the provided artifacts from the comment. If an artifact is
-not present, then it's ignored. Mututally exclusive with `set`.",
+not present, then it's ignored. Mututally exclusive with `set`.
+",
                 "type": "optional<list<string>>",
               },
               "set": {
@@ -2178,7 +2235,8 @@ not present, then it's ignored. Mututally exclusive with `set`.",
           "TimelineEntryVisibility": {
             "docs": "The visibility of the entry. If 'private', then the entry is only
 visible to the creator, otherwise if not set, then the entry has
-default visibility.",
+default visibility.
+",
             "type": "literal<"private">",
           },
           "UserBase": {
@@ -2189,7 +2247,8 @@ default visibility.",
             "inline": undefined,
             "properties": {
               "display_name": {
-                "docs": "The user's display name. The name is non-unique and mutable.",
+                "docs": "The user's display name. The name is non-unique and mutable.
+",
                 "type": "optional<string>",
               },
               "display_picture": "optional<ArtifactSummary>",
@@ -2219,7 +2278,8 @@ default visibility.",
             "inline": undefined,
             "properties": {
               "display_name": {
-                "docs": "The user's display name. The name is non-unique and mutable.",
+                "docs": "The user's display name. The name is non-unique and mutable.
+",
                 "type": "optional<string>",
               },
               "display_picture": "optional<ArtifactSummary>",
@@ -2325,7 +2385,8 @@ default visibility.",
                 "docs": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
 should only be processed if the timestamp isn't stale by several
-seconds.",
+seconds.
+",
                 "type": "optional<datetime>",
               },
               "type": {
@@ -2367,7 +2428,8 @@ seconds.",
             "properties": {
               "challenge": {
                 "docs": "The challenge from the "verify" request, otherwise this should not
-be set for other request types.",
+be set for other request types.
+",
                 "type": "optional<string>",
                 "validation": {
                   "format": "byte",
@@ -2496,19 +2558,22 @@ be set for other request types.",
               "add": {
                 "docs": "The event types to add. If a provided event type is already set for
 the webhook, then nothing is done. Note this is mutually exclusive
-with 'set'.",
+with 'set'.
+",
                 "type": "optional<list<WebhookEventType>>",
               },
               "remove": {
                 "docs": "The event types to remove. If a provided event type isn't set for
 the webhook, then nothing is done. Note this is mutually exclusive
-with 'set'.",
+with 'set'.
+",
                 "type": "optional<list<WebhookEventType>>",
               },
               "set": {
                 "docs": "The updated event types, which will replace the webhook's current
 event types. Note this is mutually exclusive with 'add' and
-'remove'.",
+'remove'.
+",
                 "type": "optional<list<WebhookEventType>>",
               },
             },
@@ -2585,11 +2650,13 @@ event types. Note this is mutually exclusive with 'add' and
               "applies_to_part": {
                 "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
-issues.",
+issues.
+",
                 "type": "string",
               },
               "artifacts": {
-                "docs": "The IDs of the artifacts to associate with the work item.",
+                "docs": "The IDs of the artifacts to associate with the work item.
+",
                 "type": "optional<list<string>>",
               },
               "body": {
@@ -2715,12 +2782,14 @@ issues.",
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
-sort order. If not set, then no later elements exist.",
+sort order. If not set, then no later elements exist.
+",
                 "type": "optional<string>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
-sort order. If not set, then no prior elements exist.",
+sort order. If not set, then no prior elements exist.
+",
                 "type": "optional<string>",
               },
               "works": {
@@ -2741,7 +2810,8 @@ sort order. If not set, then no prior elements exist.",
               },
               "artifacts": "optional<WorksUpdateRequestArtifactIds>",
               "body": {
-                "docs": "Updated body of the work object, or unchanged if not provided.",
+                "docs": "Updated body of the work object, or unchanged if not provided.
+",
                 "type": "optional<string>",
               },
               "id": {
@@ -2753,11 +2823,13 @@ sort order. If not set, then no prior elements exist.",
               "stage": "optional<StageUpdate>",
               "tags": "optional<WorksUpdateRequestTags>",
               "target_close_date": {
-                "docs": "Updates the timestamp for when the work is expected to be complete.",
+                "docs": "Updates the timestamp for when the work is expected to be complete.
+",
                 "type": "optional<datetime>",
               },
               "title": {
-                "docs": "Updated title of the work object, or unchanged if not provided.",
+                "docs": "Updated title of the work object, or unchanged if not provided.
+",
                 "type": "optional<string>",
               },
             },
@@ -2814,7 +2886,8 @@ sort order. If not set, then no prior elements exist.",
             "properties": {
               "set": {
                 "docs": "Sets the owner IDs to the provided user IDs. This must not be
-empty.",
+empty.
+",
                 "type": "optional<list<string>>",
               },
             },
@@ -2827,7 +2900,8 @@ empty.",
             "inline": undefined,
             "properties": {
               "set": {
-                "docs": "Sets the users that reported the work to the provided user IDs.",
+                "docs": "Sets the users that reported the work to the provided user IDs.
+",
                 "type": "optional<list<string>>",
               },
             },
@@ -2857,7 +2931,8 @@ empty.",
                 "type": "optional<string>",
               },
               "rev_org": {
-                "docs": "Updates the Rev organization that the ticket is associated with.",
+                "docs": "Updates the Rev organization that the ticket is associated with.
+",
                 "type": "optional<string>",
               },
               "severity": {
@@ -2953,18 +3028,21 @@ empty.",
               "allowed_values": {
                 "docs": "The allowed values for the tag, where a value is provided when a
 tag is associated with an object. If empty, then no value should be
-provided when the association is made.",
+provided when the association is made.
+",
                 "type": "optional<list<string>>",
               },
               "description": {
                 "docs": "An informative description for the tag that should provide context
-on the tag's purpose and usage.",
+on the tag's purpose and usage.
+",
                 "type": "optional<string>",
               },
               "name": {
                 "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
-unique.",
+unique.
+",
                 "type": "string",
               },
             },
@@ -5061,7 +5139,8 @@ types:
             },
             "prepare": {
               "auth": true,
-              "docs": "Creates an artifact and generates an upload URL for its data.",
+              "docs": "Creates an artifact and generates an upload URL for its data.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5219,7 +5298,8 @@ organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
 enable this. Keep in mind that at a time, only one authentication
 connection can be enabled for a Dev organization. At present, only 5
-enterprise connections can be created by an organization.",
+enterprise connections can be created by an organization.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5269,7 +5349,8 @@ enterprise connections can be created by an organization.",
               "auth": true,
               "docs": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
-connections can not be deleted using this method.",
+connections can not be deleted using this method.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5365,7 +5446,8 @@ connections can not be deleted using this method.",
               "docs": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
-created by the user.",
+created by the user.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5410,7 +5492,8 @@ created by the user.",
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
 is currently enabled for the Dev organization is automatically
-disabled.",
+disabled.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5742,7 +5825,8 @@ docs: Auth Connections of DevOrg.
             "create": {
               "auth": true,
               "docs": "Creates a JWT corresponding to the requested token type for the
-authenticated user.",
+authenticated user.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5780,11 +5864,13 @@ authenticated user.",
                       "docs": "An identifier that represents the application which is requesting
 the token. If no client_id is present in the request to generate an
 application access token (AAT), DevRev will generate a client_id.
-This client_id is only associated with an AAT.",
+This client_id is only associated with an AAT.
+",
                       "type": "optional<string>",
                     },
                     "expires_in": {
-                      "docs": "The expected validity lifetime of the token in number of days.",
+                      "docs": "The expected validity lifetime of the token in number of days.
+",
                       "type": "optional<long>",
                     },
                     "grant_type": {
@@ -5799,12 +5885,14 @@ This client_id is only associated with an AAT.",
                     "scope": {
                       "docs": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
-not matter.",
+not matter.
+",
                       "type": "optional<string>",
                     },
                     "subject_token": {
                       "docs": "Represents the entity that requests the token. Not required when
-requesting an application access token (AAT).",
+requesting an application access token (AAT).
+",
                       "type": "optional<string>",
                     },
                     "subject_token_type": {
@@ -5833,7 +5921,8 @@ requesting an application access token (AAT).",
             "delete": {
               "auth": true,
               "docs": "Revokes the token that matches the given token ID issued under the
-given Dev organization.",
+given Dev organization.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5857,7 +5946,8 @@ given Dev organization.",
                     "token_id": {
                       "docs": "The unique identifier for the token under a given Dev organization.
 If no token ID is provided, then the token ID will be set from the
-JTI claim of the token in the authorization header.",
+JTI claim of the token in the authorization header.
+",
                       "type": "optional<string>",
                     },
                   },
@@ -5875,7 +5965,8 @@ JTI claim of the token in the authorization header.",
             "get": {
               "auth": true,
               "docs": "Gets the token metadata corresponding to the given token ID under the
-given Dev organization.",
+given Dev organization.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -5943,7 +6034,8 @@ given Dev organization.",
                 "name": "AuthTokensGetRequest",
                 "query-parameters": {
                   "token_id": {
-                    "docs": "The unique identifier of the token under a given Dev organization.",
+                    "docs": "The unique identifier of the token under a given Dev organization.
+",
                     "type": "string",
                   },
                 },
@@ -5959,7 +6051,8 @@ given Dev organization.",
             "list": {
               "auth": true,
               "docs": "Gets the token metadata for all the tokens corresponding to the given
-token type issued for a given subject.",
+token type issued for a given subject.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -6011,18 +6104,21 @@ token type issued for a given subject.",
                 "query-parameters": {
                   "client_id": {
                     "docs": "An identifier that represents the application, which requested the
-token. Only relevant for application access tokens.",
+token. Only relevant for application access tokens.
+",
                     "type": "optional<string>",
                   },
                   "requested_token_type": {
                     "docs": "The type of the requested token. If no value is specified, the
-response will include tokens of all the types.",
+response will include tokens of all the types.
+",
                     "type": "optional<root.AuthTokenRequestedTokenType>",
                   },
                   "subject": {
                     "docs": "The subject associated with the token. In the absence of this
 parameter, the ID of the authenticated entity is treated as the
-subject.",
+subject.
+",
                     "type": "optional<string>",
                   },
                 },
@@ -6038,7 +6134,8 @@ subject.",
             "selfDelete": {
               "auth": true,
               "docs": "Revokes all the tokens that matches the given token type created by the
-authenticated user.",
+authenticated user.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -6077,7 +6174,8 @@ authenticated user.",
             "update": {
               "auth": true,
               "docs": "Updates token metadata of a token issued under a given Dev
-organization.",
+organization.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -6150,7 +6248,8 @@ organization.",
                       "type": "string",
                     },
                     "token_id": {
-                      "docs": "The unique identifier of the token under a given Dev organization.",
+                      "docs": "The unique identifier of the token under a given Dev organization.
+",
                       "type": "string",
                     },
                   },
@@ -6596,7 +6695,8 @@ docs: Security token interactions.
                 "query-parameters": {
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "email": {
@@ -6605,17 +6705,20 @@ starts from the beginning.",
                     "type": "optional<string>",
                   },
                   "limit": {
-                    "docs": "The maximum number of Dev users to return. The default is '50'.",
+                    "docs": "The maximum number of Dev users to return. The default is '50'.
+",
                     "type": "optional<integer>",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                   "sort_by": {
                     "allow-multiple": true,
-                    "docs": "Fields to sort the Dev users by and the direction to sort them.",
+                    "docs": "Fields to sort the Dev users by and the direction to sort them.
+",
                     "type": "optional<string>",
                   },
                   "state": {
@@ -7020,7 +7123,8 @@ docs: Dev user interactions.
             },
             "get": {
               "auth": true,
-              "docs": "Gets a [part's](https://devrev.ai/docs/product/parts) information.",
+              "docs": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -7115,7 +7219,8 @@ docs: Dev user interactions.
             },
             "list": {
               "auth": true,
-              "docs": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).",
+              "docs": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -7185,16 +7290,19 @@ docs: Dev user interactions.
                   },
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "limit": {
-                    "docs": "The maximum number of parts to return. The default is '50'.",
+                    "docs": "The maximum number of parts to return. The default is '50'.
+",
                     "type": "optional<integer>",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                   "name": {
@@ -7224,7 +7332,8 @@ used.",
             },
             "update": {
               "auth": true,
-              "docs": "Updates a [part's](https://devrev.ai/docs/product/parts) information.",
+              "docs": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -7662,7 +7771,8 @@ docs: DevRev part interactions.
             "create": {
               "auth": true,
               "docs": "Creates a Rev organization in the authenticated user's Dev
-organization.",
+organization.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -7740,7 +7850,8 @@ organization.",
                     "external_ref": {
                       "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
-records.",
+records.
+",
                       "type": "optional<string>",
                     },
                     "tier": {
@@ -7894,7 +8005,8 @@ records.",
               "auth": true,
               "docs": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
-to access.",
+to access.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -7946,17 +8058,20 @@ to access.",
                     "type": "optional<string>",
                   },
                   "created_date.after": {
-                    "docs": "Filters for objects created after the provided timestamp (inclusive).",
+                    "docs": "Filters for objects created after the provided timestamp (inclusive).
+",
                     "type": "optional<datetime>",
                   },
                   "created_date.before": {
                     "docs": "Filters for objects created before the provided timestamp
-(inclusive).",
+(inclusive).
+",
                     "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "external_ref": {
@@ -7965,27 +8080,32 @@ starts from the beginning.",
                     "type": "optional<string>",
                   },
                   "limit": {
-                    "docs": "The maximum number of Rev organizations to be retrieved per page.",
+                    "docs": "The maximum number of Rev organizations to be retrieved per page.
+",
                     "type": "optional<integer>",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                   "modified_date.after": {
-                    "docs": "Filters for objects created after the provided timestamp (inclusive).",
+                    "docs": "Filters for objects created after the provided timestamp (inclusive).
+",
                     "type": "optional<datetime>",
                   },
                   "modified_date.before": {
                     "docs": "Filters for objects created before the provided timestamp
-(inclusive).",
+(inclusive).
+",
                     "type": "optional<datetime>",
                   },
                   "sort_by": {
                     "allow-multiple": true,
                     "docs": "Fields to sort the Rev organizations by and the direction to sort
-them.",
+them.
+",
                     "type": "optional<string>",
                   },
                 },
@@ -8079,7 +8199,8 @@ them.",
                     "external_ref": {
                       "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
-records.",
+records.
+",
                       "type": "optional<string>",
                     },
                     "id": {
@@ -8487,7 +8608,8 @@ docs: Rev organization interactions.
             "create": {
               "auth": true,
               "docs": "Creates a new tag, which is used to create associations between objects
-and a logical concept denoted by the tag's name.",
+and a logical concept denoted by the tag's name.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -8550,7 +8672,8 @@ and a logical concept denoted by the tag's name.",
                   "properties": {
                     "allowed_values": {
                       "docs": "The allowed values for the tag, or empty if no values are
-permitted.",
+permitted.
+",
                       "type": "optional<list<string>>",
                     },
                     "description": {
@@ -8558,7 +8681,8 @@ permitted.",
                       "type": "optional<string>",
                     },
                     "name": {
-                      "docs": "The name for the tag, which must be unique across all tags.",
+                      "docs": "The name for the tag, which must be unique across all tags.
+",
                       "type": "string",
                     },
                   },
@@ -8755,7 +8879,8 @@ permitted.",
                 "query-parameters": {
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "limit": {
@@ -8764,7 +8889,8 @@ starts from the beginning.",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                 },
@@ -8854,7 +8980,8 @@ used.",
                     },
                     "name": {
                       "docs": "The updated name of the tag. The name must be unique across all
-tags.",
+tags.
+",
                       "type": "optional<string>",
                     },
                   },
@@ -9413,17 +9540,20 @@ docs: DevRev tag interactions.
                 "query-parameters": {
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "limit": {
                     "docs": "The maximum number of entries to return. If not set, then this
-defaults to `50`.",
+defaults to `50`.
+",
                     "type": "optional<integer>",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                   "object": {
@@ -9868,7 +9998,8 @@ docs: APIs to manage timeline entries for objects.
                       "docs": "The secret to use when verifying webhook events. If provided, the
 secret must be between 8 and 32 bytes (inclusive). If not set, a
 secret will be automatically generated and provided in the
-response.",
+response.
+",
                       "type": "optional<string>",
                       "validation": {
                         "format": "byte",
@@ -10158,7 +10289,8 @@ response.",
 events, which must be between 8 and 32 bytes (inclusive). Otherwise
 if empty, then a new secret is generated. If the webhook is active,
 then its status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.",
+won't receive any object events until successfully verified.
+",
                       "type": "optional<string>",
                       "validation": {
                         "format": "byte",
@@ -10170,7 +10302,8 @@ won't receive any object events until successfully verified.",
                     "url": {
                       "docs": "The webhook's updated URL. If the webhook is active, then the
 webhook's status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.",
+won't receive any object events until successfully verified.
+",
                       "type": "optional<string>",
                     },
                   },
@@ -10516,7 +10649,8 @@ docs: Webhook event APIs.
             "create": {
               "auth": true,
               "docs": "Creates new work ([issue](https://devrev.ai/docs/product/build),
-[ticket](https://devrev.ai/docs/product/support)) item.",
+[ticket](https://devrev.ai/docs/product/support)) item.
+",
               "errors": [
                 "root.BadRequestError",
                 "root.UnauthorizedError",
@@ -10791,7 +10925,8 @@ docs: Webhook event APIs.
                   },
                   "first": {
                     "docs": "The number of work items to return. The default is '50', the maximum
-is '5000'.",
+is '5000'.
+",
                     "type": "optional<integer>",
                   },
                   "issue.priority": {
@@ -10801,7 +10936,8 @@ is '5000'.",
                   },
                   "issue.rev_orgs": {
                     "allow-multiple": true,
-                    "docs": "Filters for issues with any of the provided Rev organizations.",
+                    "docs": "Filters for issues with any of the provided Rev organizations.
+",
                     "type": "optional<string>",
                   },
                   "owned_by": {
@@ -10817,7 +10953,8 @@ is '5000'.",
                   "ticket.rev_org": {
                     "allow-multiple": true,
                     "docs": "Filters for tickets that are associated with any of the provided Rev
-organizations.",
+organizations.
+",
                     "type": "optional<string>",
                   },
                   "ticket.severity": {
@@ -11062,7 +11199,8 @@ organizations.",
                   },
                   "cursor": {
                     "docs": "The cursor to resume iteration from. If not provided, then iteration
-starts from the beginning.",
+starts from the beginning.
+",
                     "type": "optional<string>",
                   },
                   "issue.priority": {
@@ -11072,16 +11210,19 @@ starts from the beginning.",
                   },
                   "issue.rev_orgs": {
                     "allow-multiple": true,
-                    "docs": "Filters for issues with any of the provided Rev organizations.",
+                    "docs": "Filters for issues with any of the provided Rev organizations.
+",
                     "type": "optional<string>",
                   },
                   "limit": {
-                    "docs": "The maximum number of works to return. The default is '50'.",
+                    "docs": "The maximum number of works to return. The default is '50'.
+",
                     "type": "optional<integer>",
                   },
                   "mode": {
                     "docs": "The iteration mode to use, otherwise if not set, then "after" is
-used.",
+used.
+",
                     "type": "optional<root.ListMode>",
                   },
                   "owned_by": {
@@ -11097,7 +11238,8 @@ used.",
                   "ticket.rev_org": {
                     "allow-multiple": true,
                     "docs": "Filters for tickets that are associated with any of the provided Rev
-organizations.",
+organizations.
+",
                     "type": "optional<string>",
                   },
                   "ticket.severity": {
