@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedVariables", "SeedVariables\SeedVariables.csproj", "{523CA87F-4342-4DF5-B6E7-22734393244E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedVariables", "SeedVariables\SeedVariables.csproj", "{D53FB883-296B-4022-89C6-34DC30FE708E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedVariables.Test", "SeedVariables.Test\SeedVariables.Test.csproj", "{5B49B795-E8F8-453B-89B5-47E6DC87E2D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedVariables.Test", "SeedVariables.Test\SeedVariables.Test.csproj", "{FA8FED1C-E7DB-4322-BCB2-DFCBB723A763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{523CA87F-4342-4DF5-B6E7-22734393244E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{523CA87F-4342-4DF5-B6E7-22734393244E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{523CA87F-4342-4DF5-B6E7-22734393244E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{523CA87F-4342-4DF5-B6E7-22734393244E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B49B795-E8F8-453B-89B5-47E6DC87E2D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B49B795-E8F8-453B-89B5-47E6DC87E2D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B49B795-E8F8-453B-89B5-47E6DC87E2D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B49B795-E8F8-453B-89B5-47E6DC87E2D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D53FB883-296B-4022-89C6-34DC30FE708E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53FB883-296B-4022-89C6-34DC30FE708E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53FB883-296B-4022-89C6-34DC30FE708E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53FB883-296B-4022-89C6-34DC30FE708E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8FED1C-E7DB-4322-BCB2-DFCBB723A763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8FED1C-E7DB-4322-BCB2-DFCBB723A763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8FED1C-E7DB-4322-BCB2-DFCBB723A763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8FED1C-E7DB-4322-BCB2-DFCBB723A763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

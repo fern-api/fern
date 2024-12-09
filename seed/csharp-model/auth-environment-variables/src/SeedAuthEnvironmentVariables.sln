@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables", "SeedAuthEnvironmentVariables\SeedAuthEnvironmentVariables.csproj", "{D92866BA-4389-4395-A020-7A7F025E3352}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables", "SeedAuthEnvironmentVariables\SeedAuthEnvironmentVariables.csproj", "{A0023E56-F272-4788-B6A1-CFCB505E08B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables.Test", "SeedAuthEnvironmentVariables.Test\SeedAuthEnvironmentVariables.Test.csproj", "{34EF8742-73BE-44B7-AF07-307938CB3DA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables.Test", "SeedAuthEnvironmentVariables.Test\SeedAuthEnvironmentVariables.Test.csproj", "{0B26056C-1522-4D9F-931B-0CFEAEE7DD80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D92866BA-4389-4395-A020-7A7F025E3352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D92866BA-4389-4395-A020-7A7F025E3352}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D92866BA-4389-4395-A020-7A7F025E3352}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D92866BA-4389-4395-A020-7A7F025E3352}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34EF8742-73BE-44B7-AF07-307938CB3DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34EF8742-73BE-44B7-AF07-307938CB3DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34EF8742-73BE-44B7-AF07-307938CB3DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34EF8742-73BE-44B7-AF07-307938CB3DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0023E56-F272-4788-B6A1-CFCB505E08B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0023E56-F272-4788-B6A1-CFCB505E08B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0023E56-F272-4788-B6A1-CFCB505E08B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0023E56-F272-4788-B6A1-CFCB505E08B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B26056C-1522-4D9F-931B-0CFEAEE7DD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B26056C-1522-4D9F-931B-0CFEAEE7DD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B26056C-1522-4D9F-931B-0CFEAEE7DD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B26056C-1522-4D9F-931B-0CFEAEE7DD80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

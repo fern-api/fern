@@ -151,7 +151,7 @@ components:
         - '='
         - less_than
       description: |-
-        Tests enum name and value can be
+        Tests enum name and value can be 
         different.
     Color:
       title: Color

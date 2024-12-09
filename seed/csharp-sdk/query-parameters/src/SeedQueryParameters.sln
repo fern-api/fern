@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters", "SeedQueryParameters\SeedQueryParameters.csproj", "{2F73A35A-D427-44F8-8E2F-7492AADDA316}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters", "SeedQueryParameters\SeedQueryParameters.csproj", "{3DB0B823-6A1D-4E91-8011-221C44613C8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters.Test", "SeedQueryParameters.Test\SeedQueryParameters.Test.csproj", "{B52C2F25-7EFC-44AE-8341-280A30C0D424}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters.Test", "SeedQueryParameters.Test\SeedQueryParameters.Test.csproj", "{163BC43C-44FC-4ACF-A27D-77B927A883D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2F73A35A-D427-44F8-8E2F-7492AADDA316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F73A35A-D427-44F8-8E2F-7492AADDA316}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F73A35A-D427-44F8-8E2F-7492AADDA316}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F73A35A-D427-44F8-8E2F-7492AADDA316}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B52C2F25-7EFC-44AE-8341-280A30C0D424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B52C2F25-7EFC-44AE-8341-280A30C0D424}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B52C2F25-7EFC-44AE-8341-280A30C0D424}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B52C2F25-7EFC-44AE-8341-280A30C0D424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB0B823-6A1D-4E91-8011-221C44613C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB0B823-6A1D-4E91-8011-221C44613C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB0B823-6A1D-4E91-8011-221C44613C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB0B823-6A1D-4E91-8011-221C44613C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{163BC43C-44FC-4ACF-A27D-77B927A883D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{163BC43C-44FC-4ACF-A27D-77B927A883D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{163BC43C-44FC-4ACF-A27D-77B927A883D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{163BC43C-44FC-4ACF-A27D-77B927A883D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

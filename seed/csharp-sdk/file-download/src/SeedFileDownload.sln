@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload", "SeedFileDownload\SeedFileDownload.csproj", "{C8534E0D-6000-49DE-AAAE-18597DEB4A9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload", "SeedFileDownload\SeedFileDownload.csproj", "{409C20EB-8F9B-4D20-BCAB-BDD19DB0D560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload.Test", "SeedFileDownload.Test\SeedFileDownload.Test.csproj", "{C1BC4D3F-F4D3-4532-8CD9-FBFC26FC169A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedFileDownload.Test", "SeedFileDownload.Test\SeedFileDownload.Test.csproj", "{21FA67D1-1DE9-4901-843D-C397F9E48813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C8534E0D-6000-49DE-AAAE-18597DEB4A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8534E0D-6000-49DE-AAAE-18597DEB4A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8534E0D-6000-49DE-AAAE-18597DEB4A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8534E0D-6000-49DE-AAAE-18597DEB4A9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1BC4D3F-F4D3-4532-8CD9-FBFC26FC169A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1BC4D3F-F4D3-4532-8CD9-FBFC26FC169A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1BC4D3F-F4D3-4532-8CD9-FBFC26FC169A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1BC4D3F-F4D3-4532-8CD9-FBFC26FC169A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409C20EB-8F9B-4D20-BCAB-BDD19DB0D560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409C20EB-8F9B-4D20-BCAB-BDD19DB0D560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409C20EB-8F9B-4D20-BCAB-BDD19DB0D560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409C20EB-8F9B-4D20-BCAB-BDD19DB0D560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21FA67D1-1DE9-4901-843D-C397F9E48813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21FA67D1-1DE9-4901-843D-C397F9E48813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21FA67D1-1DE9-4901-843D-C397F9E48813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21FA67D1-1DE9-4901-843D-C397F9E48813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuth", "SeedBasicAuth\SeedBasicAuth.csproj", "{92A866F8-FC3C-4FBF-B52F-2470370912AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuth", "SeedBasicAuth\SeedBasicAuth.csproj", "{32DE8F37-0246-4C5A-B4F3-80D715D18C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuth.Test", "SeedBasicAuth.Test\SeedBasicAuth.Test.csproj", "{5DBB40ED-3510-4C9D-BBE1-BAA1AA75D774}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuth.Test", "SeedBasicAuth.Test\SeedBasicAuth.Test.csproj", "{18CED44C-3D73-4E8D-B215-592B4EAE9595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{92A866F8-FC3C-4FBF-B52F-2470370912AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92A866F8-FC3C-4FBF-B52F-2470370912AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92A866F8-FC3C-4FBF-B52F-2470370912AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92A866F8-FC3C-4FBF-B52F-2470370912AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DBB40ED-3510-4C9D-BBE1-BAA1AA75D774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DBB40ED-3510-4C9D-BBE1-BAA1AA75D774}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DBB40ED-3510-4C9D-BBE1-BAA1AA75D774}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DBB40ED-3510-4C9D-BBE1-BAA1AA75D774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DE8F37-0246-4C5A-B4F3-80D715D18C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DE8F37-0246-4C5A-B4F3-80D715D18C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DE8F37-0246-4C5A-B4F3-80D715D18C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DE8F37-0246-4C5A-B4F3-80D715D18C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18CED44C-3D73-4E8D-B215-592B4EAE9595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18CED44C-3D73-4E8D-B215-592B4EAE9595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18CED44C-3D73-4E8D-B215-592B4EAE9595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18CED44C-3D73-4E8D-B215-592B4EAE9595}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
