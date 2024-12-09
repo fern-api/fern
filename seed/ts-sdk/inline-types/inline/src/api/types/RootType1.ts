@@ -76,7 +76,7 @@ export namespace RootType1 {
         }
     }
 
-    type FooList = FooList.Item[];
+    export type FooList = FooList.Item[];
 
     export namespace FooList {
         /**
@@ -90,7 +90,7 @@ export namespace RootType1 {
         }
     }
 
-    type FooSet = FooSet.Item[];
+    export type FooSet = FooSet.Item[];
 
     export namespace FooSet {
         /**

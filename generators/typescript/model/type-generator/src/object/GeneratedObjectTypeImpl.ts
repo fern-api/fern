@@ -257,7 +257,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                         const listType: TypeAliasDeclarationStructure = {
                             kind: StructureKind.TypeAlias,
                             name: typeName,
-                            type: `${typeName}.${itemTypeName}[]`
+                            type: `${typeName}.${itemTypeName}[]`,
+                            isExported: true
                         };
                         statements.push(listType);
 
