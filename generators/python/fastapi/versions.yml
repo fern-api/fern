@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.6.1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Update `pydantic_utilities.py` to handle `__slots__` in v2 on v1 mode. 
+
 - version: 1.6.0
   irVersion: 53
   changelogEntry:
