@@ -79,6 +79,7 @@
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "@fern-typescript/fetcher": "workspace:*",
+    "@inquirer/prompts": "^7.1.0",
     "@types/axios": "^0.14.0",
     "@types/boxen": "^3.0.1",
     "@types/get-port": "^4.2.0",
@@ -116,5 +117,6 @@
     "vitest": "^2.1.4",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1"
-  }
+  },
+  "dependencies": {}
 }
