@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath", "SeedApiWideBasePath\SeedApiWideBasePath.csproj", "{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath", "SeedApiWideBasePath\SeedApiWideBasePath.csproj", "{2971A4E4-A38A-4858-965A-0E205F4E2817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath.Test", "SeedApiWideBasePath.Test\SeedApiWideBasePath.Test.csproj", "{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath.Test", "SeedApiWideBasePath.Test\SeedApiWideBasePath.Test.csproj", "{3D3A1066-9384-4F3E-8B8F-5751D6A14F88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2971A4E4-A38A-4858-965A-0E205F4E2817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2971A4E4-A38A-4858-965A-0E205F4E2817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2971A4E4-A38A-4858-965A-0E205F4E2817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2971A4E4-A38A-4858-965A-0E205F4E2817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3A1066-9384-4F3E-8B8F-5751D6A14F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3A1066-9384-4F3E-8B8F-5751D6A14F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3A1066-9384-4F3E-8B8F-5751D6A14F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3A1066-9384-4F3E-8B8F-5751D6A14F88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

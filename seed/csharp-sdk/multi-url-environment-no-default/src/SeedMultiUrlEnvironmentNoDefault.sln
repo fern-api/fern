@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironmentNoDefault", "SeedMultiUrlEnvironmentNoDefault\SeedMultiUrlEnvironmentNoDefault.csproj", "{7BB9106C-CE57-43E2-8CE4-7CDAC151EBA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironmentNoDefault", "SeedMultiUrlEnvironmentNoDefault\SeedMultiUrlEnvironmentNoDefault.csproj", "{9D4E3AD2-6522-4A7F-BECB-957211899520}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironmentNoDefault.Test", "SeedMultiUrlEnvironmentNoDefault.Test\SeedMultiUrlEnvironmentNoDefault.Test.csproj", "{4A86084D-0C4D-4893-A438-21FF98C19A06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironmentNoDefault.Test", "SeedMultiUrlEnvironmentNoDefault.Test\SeedMultiUrlEnvironmentNoDefault.Test.csproj", "{109B5A37-9F2D-4464-86A7-E172BAB7734C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7BB9106C-CE57-43E2-8CE4-7CDAC151EBA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BB9106C-CE57-43E2-8CE4-7CDAC151EBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BB9106C-CE57-43E2-8CE4-7CDAC151EBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BB9106C-CE57-43E2-8CE4-7CDAC151EBA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A86084D-0C4D-4893-A438-21FF98C19A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A86084D-0C4D-4893-A438-21FF98C19A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A86084D-0C4D-4893-A438-21FF98C19A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A86084D-0C4D-4893-A438-21FF98C19A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D4E3AD2-6522-4A7F-BECB-957211899520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4E3AD2-6522-4A7F-BECB-957211899520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4E3AD2-6522-4A7F-BECB-957211899520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4E3AD2-6522-4A7F-BECB-957211899520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{109B5A37-9F2D-4464-86A7-E172BAB7734C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{109B5A37-9F2D-4464-86A7-E172BAB7734C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{109B5A37-9F2D-4464-86A7-E172BAB7734C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{109B5A37-9F2D-4464-86A7-E172BAB7734C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAnyAuth", "SeedAnyAuth\SeedAnyAuth.csproj", "{316083FC-4DFA-4FC0-8CD3-AE26C99A4DE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAnyAuth", "SeedAnyAuth\SeedAnyAuth.csproj", "{1AA6AFBA-99AF-4BAA-BEE3-296F6D0018D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAnyAuth.Test", "SeedAnyAuth.Test\SeedAnyAuth.Test.csproj", "{A6B4909F-8EF8-44A0-A9EF-42F4F802FB4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAnyAuth.Test", "SeedAnyAuth.Test\SeedAnyAuth.Test.csproj", "{35136CAD-DB16-4ADC-927A-4C8F2DDD5324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{316083FC-4DFA-4FC0-8CD3-AE26C99A4DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{316083FC-4DFA-4FC0-8CD3-AE26C99A4DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{316083FC-4DFA-4FC0-8CD3-AE26C99A4DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{316083FC-4DFA-4FC0-8CD3-AE26C99A4DE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6B4909F-8EF8-44A0-A9EF-42F4F802FB4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6B4909F-8EF8-44A0-A9EF-42F4F802FB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6B4909F-8EF8-44A0-A9EF-42F4F802FB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6B4909F-8EF8-44A0-A9EF-42F4F802FB4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AA6AFBA-99AF-4BAA-BEE3-296F6D0018D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA6AFBA-99AF-4BAA-BEE3-296F6D0018D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA6AFBA-99AF-4BAA-BEE3-296F6D0018D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA6AFBA-99AF-4BAA-BEE3-296F6D0018D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35136CAD-DB16-4ADC-927A-4C8F2DDD5324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35136CAD-DB16-4ADC-927A-4C8F2DDD5324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35136CAD-DB16-4ADC-927A-4C8F2DDD5324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35136CAD-DB16-4ADC-927A-4C8F2DDD5324}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
