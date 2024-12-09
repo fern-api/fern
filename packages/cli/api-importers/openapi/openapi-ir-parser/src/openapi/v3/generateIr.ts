@@ -99,8 +99,17 @@ export function generateIr({
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooksWithExample: WebhookWithExample[] = [];
+
+    if (context.filter.hasPaths()) {
+        taskContext.logger.debug("Path filter applied...");
+    }
+
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
+            return;
+        }
+        if (context.filter.skipPath(path)) {
+            taskContext.logger.debug(`Skipping path "${path}"`);
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
@@ -135,6 +144,10 @@ export function generateIr({
     });
     Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
         if (pathItem == null) {
+            return;
+        }
+        if (context.filter.skipPath(path)) {
+            taskContext.logger.debug(`Skipping path "${path}"`);
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);

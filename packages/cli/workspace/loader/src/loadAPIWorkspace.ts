@@ -83,7 +83,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     disableExamples: false,
                     discriminatedUnionV2: false,
                     preserveSchemaIds: false,
-                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1"
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
+                    filter: definition.settings?.filter
                 }
             });
             continue;
@@ -131,7 +132,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 disableExamples: false,
                 discriminatedUnionV2: false,
                 preserveSchemaIds: false,
-                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1"
+                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
+                filter: definition.settings?.filter
             },
             source: {
                 type: "openapi",

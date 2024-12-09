@@ -9,17 +9,16 @@ import {
     DiscriminatedUnionReference
 } from "./AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
+import { OpenAPIFilter } from "./OpenAPIFilter";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+    public readonly filter: OpenAPIFilter;
 
     private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
-
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
-
     private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
-
     private schemasToExclude: Set<SchemaId> = new Set();
 
     constructor({
@@ -45,6 +44,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             source,
             namespace
         });
+        this.filter = new OpenAPIFilter(options);
     }
 
     public getDummy(): SchemaParserContext {

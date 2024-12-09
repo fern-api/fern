@@ -234,6 +234,15 @@ types:
       inline-path-parameters:
         type: optional<boolean>
         docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      filter:
+        type: optional<OpenAPIFilterSchema>
+        docs: Filter to apply to the OpenAPI specification.
+
+  OpenAPIFilterSchema:
+    properties:
+      paths:
+        docs: Paths to include in the generated SDK.
+        type: optional<list<string>>
 
   OpenAPISpecSchema:
     properties:

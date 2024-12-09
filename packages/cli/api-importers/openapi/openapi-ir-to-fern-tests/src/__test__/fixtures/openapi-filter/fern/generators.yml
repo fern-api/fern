@@ -1,0 +1,8 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+      settings:
+        filter:
+          paths:
+            - /companies
+        only-include-referenced-schemas: true

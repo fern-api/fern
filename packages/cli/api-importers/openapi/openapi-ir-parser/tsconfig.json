@@ -19,6 +19,9 @@
       "path": "../../../fern-definition/schema"
     },
     {
+      "path": "../../../configuration"
+    },
+    {
       "path": "../../../logger"
     },
     {
