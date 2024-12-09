@@ -58,7 +58,6 @@ export class EndpointErrorUnionGenerator {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
-            inline: false,
             inlineInlineTypes: this.inlineInlineTypes
         });
     }

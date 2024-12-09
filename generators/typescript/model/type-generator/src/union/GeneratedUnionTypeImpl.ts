@@ -18,6 +18,7 @@ export declare namespace GeneratedUnionTypeImpl {
         extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        inline: boolean;
     }
 }
 
@@ -28,13 +29,16 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
     public readonly type = "union";
 
     private generatedUnion: GeneratedUnionImpl<Context>;
+    private readonly inline: boolean;
 
     constructor({
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
+        inline,
         ...superInit
     }: GeneratedUnionTypeImpl.Init<Context>) {
         super(superInit);
+        this.inline = inline;
 
         const parsedSingleUnionTypes = this.shape.types.map(
             (singleUnionType) =>

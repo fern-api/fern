@@ -3,7 +3,6 @@ import {
     FernWriters,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocsNode,
     maybeAddDocsStructure,
     ObjectWriter,
     Reference

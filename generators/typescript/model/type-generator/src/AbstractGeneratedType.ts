@@ -1,7 +1,7 @@
 import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, Node, StatementStructures, ts, TypeLiteralNode, WriterFunction } from "ts-morph";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> {
@@ -14,8 +14,6 @@ export declare namespace AbstractGeneratedType {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
-        /** Whether the current type is marked as inlines */
-        inline: boolean;
         /** Whether inline types should be inlined */
         inlineInlineTypes: boolean;
     }
@@ -32,7 +30,6 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     protected includeSerdeLayer: boolean;
     protected noOptionalProperties: boolean;
     protected retainOriginalCasing: boolean;
-    protected inline: boolean;
     protected inlineInlineTypes: boolean;
 
     private docs: string | undefined;
@@ -47,7 +44,6 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
-        inline,
         inlineInlineTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
@@ -59,7 +55,6 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.inline = inline;
         this.inlineInlineTypes = inlineInlineTypes;
     }
 

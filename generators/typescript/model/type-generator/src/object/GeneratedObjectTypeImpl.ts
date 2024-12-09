@@ -58,10 +58,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return ts.factory.createTypeLiteralNode(
             this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
                 let propertyValue: ts.TypeNode = type;
-                if (irProperty && inlineProperties.has(irProperty)) {
-                    const typeDeclaration = inlineProperties.get(irProperty) as TypeDeclaration;
-                    const generatedType = context.type.getGeneratedType(typeDeclaration.name);
-                    propertyValue = generatedType.generateForInlineUnion(context);
+                if (irProperty) {
+                    const typeDeclaration = inlineProperties.get(irProperty);
+                    if (typeDeclaration) {
+                        const generatedType = context.type.getGeneratedType(typeDeclaration.name);
+                        propertyValue = generatedType.generateForInlineUnion(context);
+                    }
                 }
                 return ts.factory.createPropertySignature(
                     undefined,
