@@ -16,7 +16,6 @@ publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install poetry
-    - poetry shell
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
