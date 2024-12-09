@@ -55,5 +55,5 @@ async function fetchOpenAPIFromUrl({ url, logger }: { url: string; logger: Logge
     logger.warn(
         `Unrecognized Content-Type "${contentType}" from endpoint ${url}. Please ensure you're pointing to a URL that returns JSON or YAML and not HTML (e.g. Swagger UI webpage)`
     );
-    return response.data;
+    return dump(response.data);
 }
