@@ -1,16 +1,16 @@
 - changelogEntry:
     - summary: |
+        The CLI prompts the user to confirm output directory overwrites on fern generate.
+      type: fix
+  irVersion: 53
+  version: 0.45.4-rc0
+
+- changelogEntry:
+    - summary: |
         Unknown schemas are no longer incorrectly marked as `additionalProperties: true`. 
       type: fix
   irVersion: 53
   version: 0.45.3
-
-- changelogEntry:
-    - summary: |
-        The CLI prompts the user to confirm output directory overwrites on fern generate.
-      type: fix
-  irVersion: 53
-  version: 0.45.2-rc0
 
 - changelogEntry:
     - summary: |
