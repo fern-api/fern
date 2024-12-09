@@ -442,6 +442,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
     if (schema.default != null) {
         enumSchema.default = schema.default.value;
     }
+    enumSchema.inline = getInline(declarationDepth);
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
@@ -455,7 +456,6 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
             uniqueEnumName.add(name.toLowerCase());
         } // TODO: log a warning if the name is not unique
     }
-    enumSchema.inline = getInline(declarationDepth);
 
     return {
         name: schema.nameOverride ?? schema.generatedName,
