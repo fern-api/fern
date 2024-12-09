@@ -35,7 +35,7 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
         };
     } catch (error) {
         logger.debug(`Encountered an error while loading OpenAPI spec: ${JSON.stringify(error)}`);
-        const errorMessage = error instanceof Error ? error.message : `Failed to load OpenAPI spec from ${url}`;
+        const errorMessage = `Failed to load OpenAPI spec from ${url}`;
         return {
             status: LoadOpenAPIStatus.Failure,
             errorMessage
