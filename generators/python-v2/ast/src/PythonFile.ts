@@ -4,6 +4,10 @@ import { Writer } from "./core/Writer";
 import { Reference } from "./Reference";
 import { ModulePath } from "./core/types";
 import { StarImport } from "./StarImport";
+import { Class } from "./Class";
+import { Method } from "./Method";
+import { Field } from "./Field";
+import { Type } from "./Type";
 
 export declare namespace PythonFile {
     interface Args {
@@ -44,8 +48,12 @@ export class PythonFile extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const uniqueReferences = this.deduplicateReferences();
+
+        this.updateWriterRefNameOverrides({ writer, uniqueReferences });
+
         this.writeComments(writer);
-        this.writeImports(writer);
+        this.writeImports({ writer, uniqueReferences });
         this.statements.forEach((statement, idx) => {
             statement.write(writer);
             writer.newLine();
@@ -53,38 +61,86 @@ export class PythonFile extends AstNode {
                 writer.newLine();
             }
         });
+
+        writer.unsetRefNameOverrides();
     }
 
     /*******************************
      * Helper Methods
      *******************************/
 
-    private writeComments(writer: Writer): void {
-        this.comments.forEach((comment) => {
-            comment.write(writer);
+    private updateWriterRefNameOverrides({
+        writer,
+        uniqueReferences
+    }: {
+        writer: Writer;
+        uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }>;
+    }): void {
+        const reservedNames = this.getReservedNames();
+        const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
+
+        // Build up a map of refs to their name overrides, keeping track of howmany times we've seen a name as we go.
+        const completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }> = {};
+        const nameUsageCounts: Record<string, number> = {};
+
+        // Initialize counts for reserved names
+        reservedNames.forEach((name) => {
+            nameUsageCounts[name] = 1;
         });
 
-        if (this.comments.length > 0) {
-            writer.newLine();
-        }
+        references.forEach((reference) => {
+            const name = reference.alias ?? reference.name;
+            const refIdentifier = reference.getCompletePath();
+
+            // Get current count for this name, accounting for reserved names used by statements in the file
+            const currentCount = nameUsageCounts[name] ?? 0;
+            nameUsageCounts[name] = currentCount + 1;
+
+            // For reserved names or names we've seen before, use an auto-generated alias with a naming convention
+            // of a numbered suffix.
+            if (reservedNames.has(name) || currentCount > 0) {
+                completeRefPathsToNameOverrides[refIdentifier] = {
+                    name: `${name}_${currentCount}`,
+                    isAlias: true
+                };
+            } else {
+                completeRefPathsToNameOverrides[refIdentifier] = {
+                    name,
+                    isAlias: !!reference.alias
+                };
+            }
+        });
+
+        writer.setRefNameOverrides(completeRefPathsToNameOverrides);
     }
 
-    private getImportName(reference: Reference): string {
-        const name = reference.name;
-        const alias = reference.alias;
-        return `${name}${alias ? ` as ${alias}` : ""}`;
+    private getReservedNames(): Set<string> {
+        const reservedNames = new Set<string>();
+
+        this.statements.forEach((statement) => {
+            if (statement instanceof Class) {
+                reservedNames.add(statement.name);
+            } else if (statement instanceof Method) {
+                reservedNames.add(statement.name);
+            } else if (statement instanceof Field) {
+                reservedNames.add(statement.name);
+            }
+        });
+
+        return reservedNames;
     }
 
-    private writeImports(writer: Writer): void {
+    private deduplicateReferences() {
         // Deduplicate references by their fully qualified paths
         const uniqueReferences = new Map<
             string,
             { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }
         >();
         for (const reference of this.references) {
+            const referenceName = reference.name;
             const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
-            const referenceName = reference.name;
+
             if (existingRefs) {
                 if (!existingRefs.referenceNames.has(referenceName)) {
                     existingRefs.references.push(reference);
@@ -99,6 +155,35 @@ export class PythonFile extends AstNode {
             }
         }
 
+        return uniqueReferences;
+    }
+
+    private writeComments(writer: Writer): void {
+        this.comments.forEach((comment) => {
+            comment.write(writer);
+        });
+
+        if (this.comments.length > 0) {
+            writer.newLine();
+        }
+    }
+
+    private getImportName({ writer, reference }: { writer: Writer; reference: Reference }): string {
+        const nameOverride = writer.getRefNameOverride(reference);
+
+        const name = reference.name;
+        const alias = nameOverride.isAlias ? nameOverride.name : undefined;
+
+        return `${name}${alias ? ` as ${alias}` : ""}`;
+    }
+
+    private writeImports({
+        writer,
+        uniqueReferences
+    }: {
+        writer: Writer;
+        uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[] }>;
+    }): void {
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
             if (refModulePath[0] === this.path[0]) {
@@ -127,12 +212,16 @@ export class PythonFile extends AstNode {
 
                 // Write the relative import statement
                 writer.write(
-                    `from ${relativePath} import ${references.map((ref) => this.getImportName(ref)).join(", ")}`
+                    `from ${relativePath} import ${references
+                        .map((reference) => this.getImportName({ writer, reference }))
+                        .join(", ")}`
                 );
             } else {
                 // Use fully qualified path
                 writer.write(
-                    `from ${fullyQualifiedPath} import ${references.map((ref) => this.getImportName(ref)).join(", ")}`
+                    `from ${fullyQualifiedPath} import ${references
+                        .map((reference) => this.getImportName({ writer, reference }))
+                        .join(", ")}`
                 );
             }
 
