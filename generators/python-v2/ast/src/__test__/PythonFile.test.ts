@@ -316,4 +316,44 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(2);
     });
+
+    it("Write duplicative import names", async () => {
+        const file = python.file({ path: ["root"] });
+
+        const local_class = python.class_({
+            name: "Car"
+        });
+
+        local_class.add(
+            python.field({
+                name: "car",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "cars"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
+                name: "vehicle",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "vehicles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        file.addStatement(local_class);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(2);
+    });
 });

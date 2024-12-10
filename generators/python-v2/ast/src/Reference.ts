@@ -43,7 +43,8 @@ export class Reference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(this.alias ?? this.name);
+        const nameOverride = writer.getRefNameOverride(this);
+        writer.write(nameOverride.name);
 
         if (this.genericTypes.length > 0) {
             writer.write("[");
@@ -69,5 +70,9 @@ export class Reference extends AstNode {
 
     public getFullyQualifiedModulePath(): string {
         return this.modulePath.join(".");
+    }
+
+    public getCompletePath(): string {
+        return `${this.getFullyQualifiedModulePath()}.${this.name}`;
     }
 }
