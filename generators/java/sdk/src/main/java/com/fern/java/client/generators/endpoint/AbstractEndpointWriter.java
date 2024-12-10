@@ -23,44 +23,9 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.CursorPagination;
-import com.fern.ir.model.http.FileDownloadResponse;
-import com.fern.ir.model.http.FileProperty;
-import com.fern.ir.model.http.FileUploadRequest;
-import com.fern.ir.model.http.FileUploadRequestProperty;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpRequestBody;
-import com.fern.ir.model.http.HttpRequestBodyReference;
-import com.fern.ir.model.http.HttpResponseBody;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.InlinedRequestBody;
-import com.fern.ir.model.http.InlinedRequestBodyProperty;
-import com.fern.ir.model.http.JsonResponse;
-import com.fern.ir.model.http.JsonResponseBody;
-import com.fern.ir.model.http.JsonResponseBodyWithProperty;
-import com.fern.ir.model.http.JsonStreamChunk;
-import com.fern.ir.model.http.OffsetPagination;
+import com.fern.ir.model.http.*;
 import com.fern.ir.model.http.Pagination.Visitor;
-import com.fern.ir.model.http.PathParameter;
-import com.fern.ir.model.http.SdkRequest;
-import com.fern.ir.model.http.SdkRequestBodyType;
-import com.fern.ir.model.http.SdkRequestShape;
-import com.fern.ir.model.http.SdkRequestWrapper;
-import com.fern.ir.model.http.SseStreamChunk;
-import com.fern.ir.model.http.StreamingResponse;
-import com.fern.ir.model.http.TextResponse;
-import com.fern.ir.model.http.TextStreamChunk;
-import com.fern.ir.model.types.AliasTypeDeclaration;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.EnumTypeDeclaration;
-import com.fern.ir.model.types.ObjectProperty;
-import com.fern.ir.model.types.ObjectTypeDeclaration;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.Type;
-import com.fern.ir.model.types.TypeDeclaration;
-import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
-import com.fern.ir.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -762,10 +727,31 @@ public abstract class AbstractEndpointWriter {
                                 .build();
                         httpResponseBuilder.addStatement(nextBlock);
                         String builderStartingAfterProperty = cursor.getPage()
-                                .getName()
-                                .getName()
-                                .getCamelCase()
-                                .getUnsafeName();
+                                .getProperty()
+                                .visit(new RequestPropertyValue.Visitor<String>() {
+                                    @Override
+                                    public String visitQuery(QueryParameter queryParameter) {
+                                        return queryParameter
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase()
+                                                .getUnsafeName();
+                                    }
+
+                                    @Override
+                                    public String visitBody(ObjectProperty objectProperty) {
+                                        return objectProperty
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase()
+                                                .getUnsafeName();
+                                    }
+
+                                    @Override
+                                    public String _visitUnknown(Object o) {
+                                        throw new IllegalArgumentException("Unkown request property value type.");
+                                    }
+                                });
                         httpResponseBuilder.addStatement(
                                 "$T $L = $T.builder().from($L).$L($L).build()",
                                 requestParameterSpec.type,
@@ -811,8 +797,26 @@ public abstract class AbstractEndpointWriter {
 
                     @Override
                     public Void visitOffset(OffsetPagination offset) {
-                        com.fern.ir.model.types.TypeReference pageType =
-                                offset.getPage().getValueType();
+                        com.fern.ir.model.types.TypeReference pageType = offset.getPage()
+                                .getProperty()
+                                .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
+                                    @Override
+                                    public com.fern.ir.model.types.TypeReference visitQuery(
+                                            QueryParameter queryParameter) {
+                                        return queryParameter.getValueType();
+                                    }
+
+                                    @Override
+                                    public com.fern.ir.model.types.TypeReference visitBody(
+                                            ObjectProperty objectProperty) {
+                                        return objectProperty.getValueType();
+                                    }
+
+                                    @Override
+                                    public com.fern.ir.model.types.TypeReference _visitUnknown(Object o) {
+                                        throw new IllegalArgumentException("Unknown request property value type.");
+                                    }
+                                });
                         Boolean pageIsOptional = pageType.visit(new TypeReferenceIsOptional(true));
                         if (pageIsOptional) {
                             com.fern.ir.model.types.TypeReference numberType =
@@ -824,11 +828,31 @@ public abstract class AbstractEndpointWriter {
                                             .convertToTypeName(true, numberType),
                                     getNewPageNumberVariableName(),
                                     requestParameterSpec.name,
-                                    offset.getPage()
-                                            .getName()
-                                            .getName()
-                                            .getPascalCase()
-                                            .getUnsafeName()));
+                                    offset.getPage().getProperty().visit(new RequestPropertyValue.Visitor<String>() {
+
+                                        @Override
+                                        public String visitQuery(QueryParameter queryParameter) {
+                                            return queryParameter
+                                                    .getName()
+                                                    .getName()
+                                                    .getPascalCase()
+                                                    .getUnsafeName();
+                                        }
+
+                                        @Override
+                                        public String visitBody(ObjectProperty objectProperty) {
+                                            return objectProperty
+                                                    .getName()
+                                                    .getName()
+                                                    .getPascalCase()
+                                                    .getUnsafeName();
+                                        }
+
+                                        @Override
+                                        public String _visitUnknown(Object o) {
+                                            throw new IllegalArgumentException("Unknown request property value type.");
+                                        }
+                                    })));
                         } else {
                             httpResponseBuilder.addStatement(CodeBlock.of(
                                     "$T $L = $L.get$L() + 1",
@@ -837,11 +861,31 @@ public abstract class AbstractEndpointWriter {
                                             .convertToTypeName(true, pageType),
                                     getNewPageNumberVariableName(),
                                     requestParameterSpec.name,
-                                    offset.getPage()
-                                            .getName()
-                                            .getName()
-                                            .getPascalCase()
-                                            .getUnsafeName()));
+                                    offset.getPage().getProperty().visit(new RequestPropertyValue.Visitor<String>() {
+
+                                        @Override
+                                        public String visitQuery(QueryParameter queryParameter) {
+                                            return queryParameter
+                                                    .getName()
+                                                    .getName()
+                                                    .getPascalCase()
+                                                    .getUnsafeName();
+                                        }
+
+                                        @Override
+                                        public String visitBody(ObjectProperty objectProperty) {
+                                            return objectProperty
+                                                    .getName()
+                                                    .getName()
+                                                    .getPascalCase()
+                                                    .getUnsafeName();
+                                        }
+
+                                        @Override
+                                        public String _visitUnknown(Object o) {
+                                            throw new IllegalArgumentException("Unknown request property value type.");
+                                        }
+                                    })));
                         }
                         httpResponseBuilder.addStatement(
                                 "$T $L = $T.builder().from($L).$L($L).build()",
@@ -849,11 +893,31 @@ public abstract class AbstractEndpointWriter {
                                 getNextRequestVariableName(),
                                 requestParameterSpec.type,
                                 requestParameterSpec.name,
-                                offset.getPage()
-                                        .getName()
-                                        .getName()
-                                        .getCamelCase()
-                                        .getUnsafeName(),
+                                offset.getPage().getProperty().visit(new RequestPropertyValue.Visitor<String>() {
+
+                                    @Override
+                                    public String visitQuery(QueryParameter queryParameter) {
+                                        return queryParameter
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase()
+                                                .getUnsafeName();
+                                    }
+
+                                    @Override
+                                    public String visitBody(ObjectProperty objectProperty) {
+                                        return objectProperty
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase()
+                                                .getUnsafeName();
+                                    }
+
+                                    @Override
+                                    public String _visitUnknown(Object o) {
+                                        throw new IllegalArgumentException("Unknown request property value type.");
+                                    }
+                                }),
                                 getNewPageNumberVariableName());
 
                         SnippetAndResultType resultSnippet = getNestedPropertySnippet(
@@ -959,6 +1023,12 @@ public abstract class AbstractEndpointWriter {
                     terminator);
 
             return null;
+        }
+
+        @Override
+        public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+            // TODO: Implement stream parameters.
+            throw new UnsupportedOperationException("Not implemented.");
         }
 
         @Override
@@ -1097,7 +1167,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public GetSnippetOutput visitNamed(DeclaredTypeName named) {
+        public GetSnippetOutput visitNamed(NamedType named) {
             TypeDeclaration typeDeclaration =
                     clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
             return typeDeclaration.getShape().visit(new Type.Visitor<>() {
@@ -1141,7 +1211,11 @@ public abstract class AbstractEndpointWriter {
                     if (maybeMatchingProperty.isEmpty()) {
                         for (DeclaredTypeName declaredTypeName : object.getExtends()) {
                             try {
-                                return visitNamed(declaredTypeName);
+                                return visitNamed(NamedType.builder()
+                                        .typeId(declaredTypeName.getTypeId())
+                                        .fernFilepath(declaredTypeName.getFernFilepath())
+                                        .name(declaredTypeName.getName())
+                                        .build());
                             } catch (Exception e) {
                             }
                         }
@@ -1299,7 +1373,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public Boolean visitNamed(DeclaredTypeName named) {
+        public Boolean visitNamed(NamedType named) {
             if (visitNamedType) {
                 TypeDeclaration typeDeclaration =
                         clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
@@ -1412,7 +1486,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public Boolean visitBodyProperty(InlinedRequestBodyProperty bodyProperty) {
+        public Boolean visitBodyProperty(FileUploadBodyProperty bodyProperty) {
             return bodyProperty.getValueType().visit(new TypeReferenceIsOptional(false));
         }
 
