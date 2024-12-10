@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Bump IR version to latest (v53)
+      type: chore
+  createdAt: '2024-12-10'
+  irVersion: 53
+  version: 2.5.0
+- changelogEntry:
+    - summary: |
         We now support overriding sdk package prefixes by adding a "package-prefix" key under the java-sdk generator 
         configuration.
       type: feat
