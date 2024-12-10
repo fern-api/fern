@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Defaults are no longer set on datetimes when converting to docs shapes.
+      type: fix
+  irVersion: 53
+  version: 0.45.4-rc1
+
+- changelogEntry:
+    - summary: |
         The CLI prompts the user to confirm output directory overwrites on fern generate.
       type: fix
   irVersion: 53
@@ -16,7 +23,7 @@
     - summary: |
         Example generation now respects read-only schemas when generating request examples.
       type: fix
-  irVersion: 53
+  irVersion: 53 
   version: 0.45.2
 
 - changelogEntry:
