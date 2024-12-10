@@ -47,6 +47,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { RUNTIME } from "@fern-typescript/fetcher";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 
 void runCli();
 
@@ -611,17 +612,32 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the FDR API definition for certain audiences"
+                })
+                .option("v2", {
+                    boolean: true,
+                    description: "Use v2 format"
                 }),
         async (argv) => {
-            await generateFdrApiDefinitionForWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
-                }),
-                outputFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext,
-                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-            });
+            if (argv.v2) {
+                await generateOpenApiToFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext
+                });
+            } else {
+                await generateFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
+                });
+            }
         }
     );
 }
