@@ -4,8 +4,4 @@
 
 import * as SeedObject from "../index";
 
-export interface NestedInlineType1 {
-    foo: string;
-    bar: string;
-    myEnum: SeedObject.InlineEnum;
-}
+export type AliasSetInline = SeedObject.AliasInlineValue[];

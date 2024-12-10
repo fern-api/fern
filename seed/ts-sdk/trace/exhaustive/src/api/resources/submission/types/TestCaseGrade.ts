@@ -9,16 +9,16 @@ export type TestCaseGrade =
     | SeedTrace.TestCaseGrade.NonHidden
     | SeedTrace.TestCaseGrade._Unknown;
 
-export declare namespace TestCaseGrade {
-    interface Hidden extends SeedTrace.TestCaseHiddenGrade, _Utils {
+export namespace TestCaseGrade {
+    export interface Hidden extends SeedTrace.TestCaseHiddenGrade, _Utils {
         type: "hidden";
     }
 
-    interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade, _Utils {
+    export interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade, _Utils {
         type: "nonHidden";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

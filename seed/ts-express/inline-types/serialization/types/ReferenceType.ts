@@ -6,15 +6,13 @@ import * as serializers from "../index";
 import * as SeedObject from "../../api/index";
 import * as core from "../../core";
 
-export const InlineType1: core.serialization.ObjectSchema<serializers.InlineType1.Raw, SeedObject.InlineType1> =
+export const ReferenceType: core.serialization.ObjectSchema<serializers.ReferenceType.Raw, SeedObject.ReferenceType> =
     core.serialization.object({
         foo: core.serialization.string(),
-        bar: core.serialization.lazyObject(() => serializers.NestedInlineType1),
     });
 
-export declare namespace InlineType1 {
+export declare namespace ReferenceType {
     interface Raw {
         foo: string;
-        bar: serializers.NestedInlineType1.Raw;
     }
 }

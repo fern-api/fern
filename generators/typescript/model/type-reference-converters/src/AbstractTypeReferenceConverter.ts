@@ -23,38 +23,66 @@ export declare namespace AbstractTypeReferenceConverter {
 }
 
 export type ConvertTypeReferenceParams =
-    | {
-          typeReference: TypeReference;
-      } & (
-          | {
-                inlineType: ConvertTypeReferenceParams.InlineType;
-            }
-          | {
-                forInlineUnion?: true;
-            }
-      );
+    | ConvertTypeReferenceParams.DefaultParams
+    | ConvertTypeReferenceParams.InlinePropertyTypeParams
+    | ConvertTypeReferenceParams.InlineAliasTypeParams
+    | ConvertTypeReferenceParams.ForInlineUnionTypeParams;
 
 export namespace ConvertTypeReferenceParams {
+    export function isInlinePropertyParams(params: ConvertTypeReferenceParams): params is InlinePropertyTypeParams {
+        return params.type === "inlinePropertyParams";
+    }
+    export function isInlineAliasParams(params: ConvertTypeReferenceParams): params is InlineAliasTypeParams {
+        return params.type === "inlineAliasParams";
+    }
+    export function isForInlineUnionParams(params: ConvertTypeReferenceParams): params is ForInlineUnionTypeParams {
+        return params.type === "forInlineUnionParams";
+    }
+    export function hasGenericIn(
+        params: ConvertTypeReferenceParams
+    ): params is InlinePropertyTypeParams | InlineAliasTypeParams {
+        return isInlinePropertyParams(params) || isInlineAliasParams(params);
+    }
+
+    export interface DefaultParams extends WithTypeReference {
+        type?: undefined;
+    }
+
     /**
      * Metadata for converting inline types
      */
-    export interface InlineType {
+    export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference {
+        type: "inlinePropertyParams";
         parentTypeName: string;
         propertyName: string;
-        genericIn?: InlineType.GenericIn;
     }
 
-    export namespace InlineType {
-        export const GenericIn = {
-            List: "list",
-            Map: "map",
-            Set: "set"
-        } as const;
-        export type GenericIn = typeof GenericIn[keyof typeof GenericIn];
+    export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference {
+        type: "inlineAliasParams";
+        aliasTypeName: string;
     }
+
+    export interface ForInlineUnionTypeParams extends WithTypeReference {
+        type: "forInlineUnionParams";
+    }
+
+    export interface WithGenericIn {
+        genericIn?: GenericIn;
+    }
+
+    export interface WithTypeReference {
+        typeReference: TypeReference;
+    }
+
+    export const GenericIn = {
+        List: "list",
+        Map: "map",
+        Set: "set"
+    } as const;
+    export type GenericIn = typeof GenericIn[keyof typeof GenericIn];
 }
 
-const genericIn = ConvertTypeReferenceParams.InlineType.GenericIn;
+const genericIn = ConvertTypeReferenceParams.GenericIn;
 
 export abstract class AbstractTypeReferenceConverter<T> {
     protected typeResolver: TypeResolver;
@@ -91,9 +119,9 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected container(container: ContainerType, params: ConvertTypeReferenceParams): T {
         return ContainerType._visit<T>(container, {
-            map: (type) => this.map(type, addGenericIn(params, genericIn.Map)),
-            list: (type) => this.list(type, addGenericIn(params, genericIn.List)),
-            set: (type) => this.set(type, addGenericIn(params, genericIn.Set)),
+            map: (type) => this.map(type, setGenericIn(params, genericIn.Map)),
+            list: (type) => this.list(type, setGenericIn(params, genericIn.List)),
+            set: (type) => this.set(type, setGenericIn(params, genericIn.Set)),
             optional: (type) => this.optional(type, params),
             literal: (type) => this.literal(type, params),
             _other: () => {
@@ -169,13 +197,13 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 }
 
-function addGenericIn(
+function setGenericIn(
     params: ConvertTypeReferenceParams,
-    genericIn: ConvertTypeReferenceParams.InlineType.GenericIn
+    genericIn: ConvertTypeReferenceParams.GenericIn
 ): ConvertTypeReferenceParams {
-    if ("inlineType" in params) {
-        params.inlineType = {
-            ...params.inlineType,
+    if (ConvertTypeReferenceParams.hasGenericIn(params)) {
+        params = {
+            ...params,
             genericIn
         };
     }

@@ -43,8 +43,8 @@ export namespace GetDiscriminatedUnionRequest {
          * lorem ipsum */
         | Bar.Ref;
 
-    export declare namespace Bar {
-        interface Type1 {
+    export namespace Bar {
+        export interface Type1 {
             type: "type1";
             /** lorem ipsum */
             foo: string;
@@ -66,7 +66,7 @@ export namespace GetDiscriminatedUnionRequest {
             }
         }
 
-        interface Type2 {
+        export interface Type2 {
             type: "type2";
             /** lorem ipsum */
             baz: string;
@@ -74,7 +74,7 @@ export namespace GetDiscriminatedUnionRequest {
             ref: SeedObject.ReferenceType;
         }
 
-        interface Ref extends SeedObject.ReferenceType {
+        export interface Ref extends SeedObject.ReferenceType {
             type: "ref";
         }
     }

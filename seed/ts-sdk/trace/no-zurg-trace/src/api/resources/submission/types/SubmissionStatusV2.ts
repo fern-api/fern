@@ -6,12 +6,12 @@ import * as SeedTrace from "../../../index";
 
 export type SubmissionStatusV2 = SeedTrace.SubmissionStatusV2.Test | SeedTrace.SubmissionStatusV2.Workspace;
 
-export declare namespace SubmissionStatusV2 {
-    interface Test extends SeedTrace.TestSubmissionStatusV2 {
+export namespace SubmissionStatusV2 {
+    export interface Test extends SeedTrace.TestSubmissionStatusV2 {
         type: "test";
     }
 
-    interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2 {
+    export interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2 {
         type: "workspace";
     }
 }

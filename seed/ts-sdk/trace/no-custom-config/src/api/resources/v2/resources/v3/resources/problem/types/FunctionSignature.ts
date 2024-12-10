@@ -11,16 +11,16 @@ export type FunctionSignature =
      * Useful when specifying custom grading for a testcase where actualResult is defined. */
     | SeedTrace.v2.v3.FunctionSignature.VoidThatTakesActualResult;
 
-export declare namespace FunctionSignature {
-    interface Void extends SeedTrace.v2.v3.VoidFunctionSignature {
+export namespace FunctionSignature {
+    export interface Void extends SeedTrace.v2.v3.VoidFunctionSignature {
         type: "void";
     }
 
-    interface NonVoid extends SeedTrace.v2.v3.NonVoidFunctionSignature {
+    export interface NonVoid extends SeedTrace.v2.v3.NonVoidFunctionSignature {
         type: "nonVoid";
     }
 
-    interface VoidThatTakesActualResult extends SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult {
+    export interface VoidThatTakesActualResult extends SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult {
         type: "voidThatTakesActualResult";
     }
 }

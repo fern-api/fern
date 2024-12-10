@@ -9,16 +9,16 @@ export type AssertCorrectnessCheck =
     | SeedTrace.v2.v3.AssertCorrectnessCheck.Custom
     | SeedTrace.v2.v3.AssertCorrectnessCheck._Unknown;
 
-export declare namespace AssertCorrectnessCheck {
-    interface DeepEquality extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck, _Utils {
+export namespace AssertCorrectnessCheck {
+    export interface DeepEquality extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck, _Utils {
         type: "deepEquality";
     }
 
-    interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult, _Utils {
+    export interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult, _Utils {
         type: "custom";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

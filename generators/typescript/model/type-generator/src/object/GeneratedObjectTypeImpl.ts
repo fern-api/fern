@@ -131,7 +131,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
-        return context.type.getReferenceToInlineType(
+        return context.type.getReferenceToInlinePropertyType(
             property.valueType,
             this.typeName,
             property.name.name.pascalCase.safeName
@@ -253,7 +253,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             statements: Array.from(inlineProperties.entries()).flatMap(
                 ([objectProperty, typeDeclaration]: [ObjectProperty, TypeDeclaration]) => {
                     const typeName = objectProperty.name.name.pascalCase.safeName;
-                    const listOrMapStatementGenerator = () => {
+                    const listOrSetStatementGenerator = () => {
                         const itemTypeName = "Item";
                         const statements: (string | WriterFunction | StatementStructures)[] = [];
                         const listType: TypeAliasDeclarationStructure = {
@@ -283,8 +283,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                             const generatedType = context.type.getGeneratedType(typeDeclaration.name, typeName);
                             return generatedType.generateStatements(context);
                         },
-                        list: listOrMapStatementGenerator,
-                        set: listOrMapStatementGenerator,
+                        list: listOrSetStatementGenerator,
+                        set: listOrSetStatementGenerator,
                         map: () => {
                             const valueTypeName = "Value";
                             const statements: (string | WriterFunction | StatementStructures)[] = [];

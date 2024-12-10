@@ -9,16 +9,16 @@ export type ExceptionV2 =
     | SeedTrace.ExceptionV2.Timeout
     | SeedTrace.ExceptionV2._Unknown;
 
-export declare namespace ExceptionV2 {
-    interface Generic extends SeedTrace.ExceptionInfo, _Utils {
+export namespace ExceptionV2 {
+    export interface Generic extends SeedTrace.ExceptionInfo, _Utils {
         type: "generic";
     }
 
-    interface Timeout extends _Utils {
+    export interface Timeout extends _Utils {
         type: "timeout";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

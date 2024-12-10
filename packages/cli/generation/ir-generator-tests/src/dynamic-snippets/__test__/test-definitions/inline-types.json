@@ -113,42 +113,6 @@
                 }
             }
         },
-        "type_:AliasOptionalInline": {
-            "type": "alias",
-            "declaration": {
-                "name": {
-                    "originalName": "AliasOptionalInline",
-                    "camelCase": {
-                        "unsafeName": "aliasOptionalInline",
-                        "safeName": "aliasOptionalInline"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "alias_optional_inline",
-                        "safeName": "alias_optional_inline"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ALIAS_OPTIONAL_INLINE",
-                        "safeName": "ALIAS_OPTIONAL_INLINE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "AliasOptionalInline",
-                        "safeName": "AliasOptionalInline"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "typeReference": {
-                "type": "optional",
-                "value": {
-                    "type": "named",
-                    "value": "type_:AliasInlineValue"
-                }
-            }
-        },
         "type_:AliasInlineValue": {
             "type": "object",
             "declaration": {

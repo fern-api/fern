@@ -39,7 +39,6 @@ types:
   AliasMapInline: map<string, AliasInlineValue>
   AliasSetInline: set<AliasInlineValue>
   AliasListInline: list<AliasInlineValue>
-  AliasOptionalInline: optional<AliasInlineValue>
 
   AliasInlineValue:
     inline: true

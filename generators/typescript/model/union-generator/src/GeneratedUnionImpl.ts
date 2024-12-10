@@ -312,7 +312,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             kind: StructureKind.Module,
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true
+            hasDeclareKeyword: false
         };
         const statements = [...this.getSingleUnionTypeInterfaces(context)];
         if (this.includeUtilsOnUnionMembers) {
@@ -347,6 +347,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             statements.push({
                 kind: StructureKind.Interface,
                 name: interface_.name,
+                isExported: true,
                 extends: interface_.extends.map(getTextOfTsNode),
                 properties: interface_.properties
             });

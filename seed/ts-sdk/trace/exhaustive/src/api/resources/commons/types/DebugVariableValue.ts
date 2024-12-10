@@ -20,66 +20,66 @@ export type DebugVariableValue =
     | SeedTrace.DebugVariableValue.GenericValue
     | SeedTrace.DebugVariableValue._Unknown;
 
-export declare namespace DebugVariableValue {
-    interface IntegerValue extends _Utils {
+export namespace DebugVariableValue {
+    export interface IntegerValue extends _Utils {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue extends _Utils {
+    export interface BooleanValue extends _Utils {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue extends _Utils {
+    export interface DoubleValue extends _Utils {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue extends _Utils {
+    export interface StringValue extends _Utils {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue extends _Utils {
+    export interface CharValue extends _Utils {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends SeedTrace.DebugMapValue, _Utils {
+    export interface MapValue extends SeedTrace.DebugMapValue, _Utils {
         type: "mapValue";
     }
 
-    interface ListValue extends _Utils {
+    export interface ListValue extends _Utils {
         type: "listValue";
         value: SeedTrace.DebugVariableValue[];
     }
 
-    interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue, _Utils {
+    export interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue, _Utils {
         type: "binaryTreeNodeValue";
     }
 
-    interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue, _Utils {
+    export interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue, _Utils {
         type: "singlyLinkedListNodeValue";
     }
 
-    interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue, _Utils {
+    export interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue, _Utils {
         type: "doublyLinkedListNodeValue";
     }
 
-    interface UndefinedValue extends _Utils {
+    export interface UndefinedValue extends _Utils {
         type: "undefinedValue";
     }
 
-    interface NullValue extends _Utils {
+    export interface NullValue extends _Utils {
         type: "nullValue";
     }
 
-    interface GenericValue extends SeedTrace.GenericValue, _Utils {
+    export interface GenericValue extends SeedTrace.GenericValue, _Utils {
         type: "genericValue";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

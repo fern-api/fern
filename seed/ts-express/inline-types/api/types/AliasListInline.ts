@@ -4,4 +4,4 @@
 
 import * as SeedObject from "../index";
 
-export type InlinedUndiscriminatedUnion1 = SeedObject.InlineType1 | SeedObject.InlineType2;
+export type AliasListInline = SeedObject.AliasInlineValue[];

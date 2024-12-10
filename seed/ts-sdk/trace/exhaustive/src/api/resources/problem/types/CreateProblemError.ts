@@ -6,12 +6,12 @@ import * as SeedTrace from "../../../index";
 
 export type CreateProblemError = SeedTrace.CreateProblemError.Generic | SeedTrace.CreateProblemError._Unknown;
 
-export declare namespace CreateProblemError {
-    interface Generic extends SeedTrace.GenericCreateProblemError, _Utils {
+export namespace CreateProblemError {
+    export interface Generic extends SeedTrace.GenericCreateProblemError, _Utils {
         errorType: "generic";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         errorType: void;
     }
 

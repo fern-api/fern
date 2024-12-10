@@ -14,11 +14,12 @@ import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
 
 export interface TypeContext {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
-    getReferenceToInlineType: (
+    getReferenceToInlinePropertyType: (
         typeReference: TypeReference,
         parentTypeName: string,
         propertyName: string
     ) => TypeReferenceNode;
+    getReferenceToInlineAliasType: (typeReference: TypeReference, aliasTypeName: string) => TypeReferenceNode;
     getReferenceToTypeForInlineUnion: (typeReference: TypeReference) => TypeReferenceNode;
     stringify: (
         valueToStringify: ts.Expression,

@@ -19,62 +19,62 @@ export type DebugVariableValue =
     | SeedTrace.DebugVariableValue.NullValue
     | SeedTrace.DebugVariableValue.GenericValue;
 
-export declare namespace DebugVariableValue {
-    interface IntegerValue {
+export namespace DebugVariableValue {
+    export interface IntegerValue {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue {
+    export interface BooleanValue {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue {
+    export interface DoubleValue {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue {
+    export interface StringValue {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue {
+    export interface CharValue {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends SeedTrace.DebugMapValue {
+    export interface MapValue extends SeedTrace.DebugMapValue {
         type: "mapValue";
     }
 
-    interface ListValue {
+    export interface ListValue {
         type: "listValue";
         value: SeedTrace.DebugVariableValue[];
     }
 
-    interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue {
+    export interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue {
         type: "binaryTreeNodeValue";
     }
 
-    interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue {
+    export interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue {
         type: "singlyLinkedListNodeValue";
     }
 
-    interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue {
+    export interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue {
         type: "doublyLinkedListNodeValue";
     }
 
-    interface UndefinedValue {
+    export interface UndefinedValue {
         type: "undefinedValue";
     }
 
-    interface NullValue {
+    export interface NullValue {
         type: "nullValue";
     }
 
-    interface GenericValue extends SeedTrace.GenericValue {
+    export interface GenericValue extends SeedTrace.GenericValue {
         type: "genericValue";
     }
 }

@@ -9,17 +9,17 @@ export type CustomFiles =
     | SeedTrace.v2.CustomFiles.Custom
     | SeedTrace.v2.CustomFiles._Unknown;
 
-export declare namespace CustomFiles {
-    interface Basic extends SeedTrace.v2.BasicCustomFiles, _Utils {
+export namespace CustomFiles {
+    export interface Basic extends SeedTrace.v2.BasicCustomFiles, _Utils {
         type: "basic";
     }
 
-    interface Custom extends _Utils {
+    export interface Custom extends _Utils {
         type: "custom";
         value: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

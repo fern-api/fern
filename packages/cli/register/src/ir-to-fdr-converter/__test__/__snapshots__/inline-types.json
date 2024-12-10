@@ -45,19 +45,6 @@
         }
       }
     },
-    "type_:AliasOptionalInline": {
-      "name": "AliasOptionalInline",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "optional",
-          "itemType": {
-            "type": "id",
-            "value": "type_:AliasInlineValue"
-          }
-        }
-      }
-    },
     "type_:AliasInlineValue": {
       "name": "AliasInlineValue",
       "shape": {
@@ -1414,7 +1401,6 @@
       "type_:AliasMapInline",
       "type_:AliasSetInline",
       "type_:AliasListInline",
-      "type_:AliasOptionalInline",
       "type_:AliasInlineValue",
       "type_:RequestTypeInlineType1",
       "type_:RootType1",

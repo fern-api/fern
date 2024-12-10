@@ -12,30 +12,30 @@ export type TestSubmissionUpdateInfo =
     | SeedTrace.TestSubmissionUpdateInfo.RecordedTestCase
     | SeedTrace.TestSubmissionUpdateInfo.Finished;
 
-export declare namespace TestSubmissionUpdateInfo {
-    interface Running {
+export namespace TestSubmissionUpdateInfo {
+    export interface Running {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate {
+    export interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate {
         type: "gradedTestCase";
     }
 
-    interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate {
+    export interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate {
         type: "recordedTestCase";
     }
 
-    interface Finished {
+    export interface Finished {
         type: "finished";
     }
 }

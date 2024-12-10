@@ -6,19 +6,17 @@ import * as serializers from "../index";
 import * as SeedObject from "../../api/index";
 import * as core from "../../core";
 
-export const NestedInlineType1: core.serialization.ObjectSchema<
-    serializers.NestedInlineType1.Raw,
-    SeedObject.NestedInlineType1
+export const AliasInlineValue: core.serialization.ObjectSchema<
+    serializers.AliasInlineValue.Raw,
+    SeedObject.AliasInlineValue
 > = core.serialization.object({
     foo: core.serialization.string(),
     bar: core.serialization.string(),
-    myEnum: core.serialization.lazy(() => serializers.InlineEnum),
 });
 
-export declare namespace NestedInlineType1 {
+export declare namespace AliasInlineValue {
     interface Raw {
         foo: string;
         bar: string;
-        myEnum: serializers.InlineEnum.Raw;
     }
 }

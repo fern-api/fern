@@ -21,7 +21,7 @@ export const Language = {
     },
 } as const;
 
-export declare namespace Language {
+export namespace Language {
     interface Visitor<R> {
         java: () => R;
         javascript: () => R;

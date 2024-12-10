@@ -43,9 +43,11 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         let typeNodeWithoutUndefined: ts.TypeNode;
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         if (this.inlineInlineTypes && typeDeclaration.inline) {
-            if ("inlineType" in params) {
-                typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedType(params.inlineType);
-            } else if ("forInlineUnion" in params) {
+            if (ConvertTypeReferenceParams.isInlinePropertyParams(params)) {
+                typeNodeWithoutUndefined = this.createTypeRefenceForInlinePropertyNamedType(params);
+            } else if (ConvertTypeReferenceParams.isInlineAliasParams(params)) {
+                typeNodeWithoutUndefined = this.createTypeRefenceForInlineAliasNamedType(typeName, params);
+            } else if (ConvertTypeReferenceParams.isForInlineUnionParams(params)) {
                 typeNodeWithoutUndefined = this.createTypeRefenceForInlineNamedTypeForInlineUnion(typeName);
             } else {
                 typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(
@@ -73,11 +75,33 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateForInlineUnion(typeName);
     }
 
-    private createTypeRefenceForInlineNamedType({
+    private createTypeRefenceForInlineAliasNamedType(
+        typeName: DeclaredTypeName,
+        params: ConvertTypeReferenceParams.InlineAliasTypeParams
+    ): ts.TypeNode {
+        let name: ts.EntityName = ts.factory.createIdentifier(params.aliasTypeName);
+        switch (params.genericIn) {
+            case "list":
+                name = ts.factory.createQualifiedName(name, "Item");
+                break;
+            case "map":
+                name = ts.factory.createQualifiedName(name, "Value");
+                break;
+            case "set":
+                name = ts.factory.createQualifiedName(name, "Item");
+                break;
+            default:
+                return ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName, params));
+        }
+
+        return ts.factory.createTypeReferenceNode(name);
+    }
+
+    private createTypeRefenceForInlinePropertyNamedType({
         parentTypeName,
         propertyName,
         genericIn
-    }: ConvertTypeReferenceParams.InlineType): ts.TypeNode {
+    }: ConvertTypeReferenceParams.InlinePropertyTypeParams): ts.TypeNode {
         let name = ts.factory.createQualifiedName(
             ts.factory.createIdentifier(parentTypeName),
             ts.factory.createIdentifier(propertyName)

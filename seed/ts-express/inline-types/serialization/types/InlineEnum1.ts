@@ -6,9 +6,9 @@ import * as serializers from "../index";
 import * as SeedObject from "../../api/index";
 import * as core from "../../core";
 
-export const InlineEnum: core.serialization.Schema<serializers.InlineEnum.Raw, SeedObject.InlineEnum> =
+export const InlineEnum1: core.serialization.Schema<serializers.InlineEnum1.Raw, SeedObject.InlineEnum1> =
     core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
-export declare namespace InlineEnum {
+export declare namespace InlineEnum1 {
     type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 }

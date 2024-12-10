@@ -13,34 +13,34 @@ export type SubmissionResponse =
     | SeedTrace.SubmissionResponse.Terminated
     | SeedTrace.SubmissionResponse._Unknown;
 
-export declare namespace SubmissionResponse {
-    interface ServerInitialized extends _Utils {
+export namespace SubmissionResponse {
+    export interface ServerInitialized extends _Utils {
         type: "serverInitialized";
     }
 
-    interface ProblemInitialized extends _Utils {
+    export interface ProblemInitialized extends _Utils {
         type: "problemInitialized";
         value: SeedTrace.ProblemId;
     }
 
-    interface WorkspaceInitialized extends _Utils {
+    export interface WorkspaceInitialized extends _Utils {
         type: "workspaceInitialized";
     }
 
-    interface ServerErrored extends SeedTrace.ExceptionInfo, _Utils {
+    export interface ServerErrored extends SeedTrace.ExceptionInfo, _Utils {
         type: "serverErrored";
     }
 
-    interface CodeExecutionUpdate extends _Utils {
+    export interface CodeExecutionUpdate extends _Utils {
         type: "codeExecutionUpdate";
         value: SeedTrace.CodeExecutionUpdate;
     }
 
-    interface Terminated extends SeedTrace.TerminatedResponse, _Utils {
+    export interface Terminated extends SeedTrace.TerminatedResponse, _Utils {
         type: "terminated";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

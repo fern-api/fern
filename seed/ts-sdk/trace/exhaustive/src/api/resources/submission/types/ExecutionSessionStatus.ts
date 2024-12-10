@@ -36,7 +36,7 @@ export const ExecutionSessionStatus = {
     },
 } as const;
 
-export declare namespace ExecutionSessionStatus {
+export namespace ExecutionSessionStatus {
     interface Visitor<R> {
         creatingContainer: () => R;
         provisioningContainer: () => R;

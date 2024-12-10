@@ -17,48 +17,48 @@ export type VariableType =
     | SeedTrace.VariableType.DoublyLinkedListType
     | SeedTrace.VariableType._Unknown;
 
-export declare namespace VariableType {
-    interface IntegerType extends _Utils {
+export namespace VariableType {
+    export interface IntegerType extends _Utils {
         type: "integerType";
     }
 
-    interface DoubleType extends _Utils {
+    export interface DoubleType extends _Utils {
         type: "doubleType";
     }
 
-    interface BooleanType extends _Utils {
+    export interface BooleanType extends _Utils {
         type: "booleanType";
     }
 
-    interface StringType extends _Utils {
+    export interface StringType extends _Utils {
         type: "stringType";
     }
 
-    interface CharType extends _Utils {
+    export interface CharType extends _Utils {
         type: "charType";
     }
 
-    interface ListType extends SeedTrace.ListType, _Utils {
+    export interface ListType extends SeedTrace.ListType, _Utils {
         type: "listType";
     }
 
-    interface MapType extends SeedTrace.MapType, _Utils {
+    export interface MapType extends SeedTrace.MapType, _Utils {
         type: "mapType";
     }
 
-    interface BinaryTreeType extends _Utils {
+    export interface BinaryTreeType extends _Utils {
         type: "binaryTreeType";
     }
 
-    interface SinglyLinkedListType extends _Utils {
+    export interface SinglyLinkedListType extends _Utils {
         type: "singlyLinkedListType";
     }
 
-    interface DoublyLinkedListType extends _Utils {
+    export interface DoublyLinkedListType extends _Utils {
         type: "doublyLinkedListType";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

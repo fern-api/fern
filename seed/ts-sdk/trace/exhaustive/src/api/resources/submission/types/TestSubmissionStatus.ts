@@ -11,27 +11,27 @@ export type TestSubmissionStatus =
     | SeedTrace.TestSubmissionStatus.TestCaseIdToState
     | SeedTrace.TestSubmissionStatus._Unknown;
 
-export declare namespace TestSubmissionStatus {
-    interface Stopped extends _Utils {
+export namespace TestSubmissionStatus {
+    export interface Stopped extends _Utils {
         type: "stopped";
     }
 
-    interface Errored extends _Utils {
+    export interface Errored extends _Utils {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface Running extends _Utils {
+    export interface Running extends _Utils {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface TestCaseIdToState extends _Utils {
+    export interface TestCaseIdToState extends _Utils {
         type: "testCaseIdToState";
         value: Record<string, SeedTrace.SubmissionStatusForTestCase>;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

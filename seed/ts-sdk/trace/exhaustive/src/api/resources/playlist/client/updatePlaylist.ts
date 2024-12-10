@@ -9,13 +9,13 @@ export type Error =
     | SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError
     | SeedTrace.playlist.updatePlaylist.Error._Unknown;
 
-export declare namespace Error {
-    interface PlaylistIdNotFoundError extends _Utils {
+export namespace Error {
+    export interface PlaylistIdNotFoundError extends _Utils {
         errorName: "PlaylistIdNotFoundError";
         content: SeedTrace.PlaylistIdNotFoundErrorBody;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         errorName: void;
         content: core.Fetcher.Error;
     }

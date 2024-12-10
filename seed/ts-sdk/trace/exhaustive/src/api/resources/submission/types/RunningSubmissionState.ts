@@ -32,7 +32,7 @@ export const RunningSubmissionState = {
     },
 } as const;
 
-export declare namespace RunningSubmissionState {
+export namespace RunningSubmissionState {
     interface Visitor<R> {
         queueingSubmission: () => R;
         killingHistoricalSubmissions: () => R;

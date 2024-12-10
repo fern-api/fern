@@ -14,6 +14,7 @@ import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToStringExpressionConverter
 } from "@fern-typescript/type-reference-converters";
+import { ConvertTypeReferenceParams } from "@fern-typescript/type-reference-converters/src/AbstractTypeReferenceConverter";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
@@ -102,24 +103,31 @@ export class TypeContextImpl implements TypeContext {
         return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference });
     }
 
-    public getReferenceToInlineType(
+    public getReferenceToInlinePropertyType(
         typeReference: TypeReference,
         parentTypeName: string,
         propertyName: string
     ): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
-            inlineType: {
-                parentTypeName,
-                propertyName
-            }
+            type: "inlinePropertyParams",
+            parentTypeName,
+            propertyName
+        });
+    }
+
+    public getReferenceToInlineAliasType(typeReference: TypeReference, aliasTypeName: string): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            type: "inlineAliasParams",
+            aliasTypeName
         });
     }
 
     public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
-            forInlineUnion: true
+            type: "forInlineUnionParams"
         });
     }
 
@@ -193,13 +201,11 @@ export class TypeContextImpl implements TypeContext {
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
             return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional({
-                typeReference: valueType,
-                inlineType: undefined
+                typeReference: valueType
             })(valueToStringify);
         } else {
             return this.typeReferenceToStringExpressionConverter.convert({
-                typeReference: valueType,
-                inlineType: undefined
+                typeReference: valueType
             })(valueToStringify);
         }
     }

@@ -1,3 +1,7 @@
+export * from "./AliasMapInline";
+export * from "./AliasSetInline";
+export * from "./AliasListInline";
+export * from "./AliasInlineValue";
 export * from "./RequestTypeInlineType1";
 export * from "./RootType1";
 export * from "./RootType1FooMapValue";

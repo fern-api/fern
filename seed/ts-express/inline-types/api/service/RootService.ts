@@ -17,6 +17,24 @@ export interface RootServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
+    getDiscriminatedUnion(
+        req: express.Request<never, never, SeedObject.GetDiscriminatedUnionRequest, never>,
+        res: {
+            send: () => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    getUndiscriminatedUnion(
+        req: express.Request<never, never, SeedObject.GetUndiscriminatedUnionRequest, never>,
+        res: {
+            send: () => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
 }
 
 export class RootService {
@@ -60,6 +78,84 @@ export class RootService {
                     if (error instanceof errors.SeedObjectError) {
                         console.warn(
                             `Endpoint 'getRoot' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/discriminated-union", async (req, res, next) => {
+            const request = serializers.GetDiscriminatedUnionRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getDiscriminatedUnion(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedObjectError) {
+                        console.warn(
+                            `Endpoint 'getDiscriminatedUnion' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/undiscriminated-union", async (req, res, next) => {
+            const request = serializers.GetUndiscriminatedUnionRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getUndiscriminatedUnion(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedObjectError) {
+                        console.warn(
+                            `Endpoint 'getUndiscriminatedUnion' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition."
                         );

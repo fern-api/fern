@@ -28,7 +28,7 @@ export const MigrationStatus = {
     },
 } as const;
 
-export declare namespace MigrationStatus {
+export namespace MigrationStatus {
     interface Visitor<R> {
         running: () => R;
         failed: () => R;

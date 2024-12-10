@@ -216,7 +216,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             kind: StructureKind.Module,
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true,
+            hasDeclareKeyword: false,
             statements: [
                 {
                     kind: StructureKind.Interface,

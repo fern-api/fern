@@ -9,13 +9,13 @@ export type UnionWithDiscriminant =
      * This is a Foo field. */
     SeedUnions.UnionWithDiscriminant.Foo | SeedUnions.UnionWithDiscriminant.Bar;
 
-export declare namespace UnionWithDiscriminant {
-    interface Foo {
+export namespace UnionWithDiscriminant {
+    export interface Foo {
         type: "foo";
         foo: SeedUnions.Foo;
     }
 
-    interface Bar {
+    export interface Bar {
         type: "bar";
         bar: SeedUnions.Bar;
     }

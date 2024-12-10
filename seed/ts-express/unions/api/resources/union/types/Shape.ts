@@ -6,12 +6,12 @@ import * as SeedUnions from "../../../index";
 
 export type Shape = SeedUnions.Shape.Circle | SeedUnions.Shape.Square;
 
-export declare namespace Shape {
-    interface Circle extends SeedUnions.Circle, _Base {
+export namespace Shape {
+    export interface Circle extends SeedUnions.Circle, _Base {
         type: "circle";
     }
 
-    interface Square extends SeedUnions.Square, _Base {
+    export interface Square extends SeedUnions.Square, _Base {
         type: "square";
     }
 

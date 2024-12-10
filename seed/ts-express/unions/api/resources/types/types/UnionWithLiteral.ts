@@ -6,8 +6,8 @@ import * as SeedUnions from "../../../index";
 
 export type UnionWithLiteral = SeedUnions.UnionWithLiteral.Fern;
 
-export declare namespace UnionWithLiteral {
-    interface Fern extends _Base {
+export namespace UnionWithLiteral {
+    export interface Fern extends _Base {
         type: "fern";
         value: "fern";
     }
