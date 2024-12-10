@@ -85,6 +85,7 @@ fixtures:
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
+      outputFolder: java-custom-package-prefix
 scripts:
   - docker: fernapi/java-seed
     commands:

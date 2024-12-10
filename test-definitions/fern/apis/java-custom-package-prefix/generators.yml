@@ -1,8 +1,1 @@
-default-group: java-sdk
-groups:
-  java-sdk:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 2.2.0
-        config:
-          package-prefix: "com.customprefix"
+{}
