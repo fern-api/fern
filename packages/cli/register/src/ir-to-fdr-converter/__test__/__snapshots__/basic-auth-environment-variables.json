@@ -55,8 +55,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -131,8 +130,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }

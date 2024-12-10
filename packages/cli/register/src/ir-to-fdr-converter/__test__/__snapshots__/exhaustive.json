@@ -79,8 +79,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "long",
-                  "default": 0
+                  "type": "long"
                 }
               }
             }
@@ -104,8 +103,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -117,8 +115,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "datetime"
                 }
               }
             }
@@ -130,8 +127,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "date",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "date"
                 }
               }
             }
@@ -155,8 +151,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "base64",
-                  "default": "0"
+                  "type": "base64"
                 }
               }
             }
@@ -219,8 +214,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "bigInteger",
-                  "default": "0"
+                  "type": "bigInteger"
                 }
               }
             }
@@ -437,8 +431,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -468,8 +461,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -1806,8 +1798,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -3022,8 +3013,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "long",
-                    "default": 0
+                    "type": "long"
                   }
                 }
               }
@@ -3035,8 +3025,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "long",
-                  "default": 0
+                  "type": "long"
                 }
               }
             }
@@ -3162,8 +3151,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                   }
                 }
               }
@@ -3175,8 +3163,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -3233,8 +3220,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "datetime",
-                    "default": "1970-01-01T00:00:00.000Z"
+                    "type": "datetime"
                   }
                 }
               }
@@ -3246,8 +3232,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "datetime"
                 }
               }
             }
@@ -3304,8 +3289,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "date",
-                    "default": "1970-01-01T00:00:00.000Z"
+                    "type": "date"
                   }
                 }
               }
@@ -3317,8 +3301,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "date",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "date"
                 }
               }
             }
@@ -3444,8 +3427,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "base64",
-                    "default": "0"
+                    "type": "base64"
                   }
                 }
               }
@@ -3457,8 +3439,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "base64",
-                  "default": "0"
+                  "type": "base64"
                 }
               }
             }
@@ -3800,8 +3781,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
