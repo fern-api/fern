@@ -1505,6 +1505,7 @@ that are tool old (or that have not been created at all).
               "HSV",
               "LAB",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1838,6 +1839,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               "HSV",
               "LAB",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1916,6 +1918,7 @@ change the value to `auto`.
               },
               "auto",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2641,6 +2644,7 @@ change the value to `auto`.
       - HSV
       - LAB
     docs: Image color mode.
+    inline: true
     source:
       openapi: ../openapi.json
   ImageInfoGeoLocation:
@@ -2765,6 +2769,7 @@ change the value to `auto`.
       - HSV
       - LAB
     docs: Image color mode.
+    inline: true
     source:
       openapi: ../openapi.json
   SchemasImageInfoGeoLocation:
@@ -6177,6 +6182,7 @@ this request will return information about the already uploaded file.
                 "value": "1",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6196,6 +6202,7 @@ to the value of the `check_URL_duplicates` parameter.
                 "value": "1",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6289,6 +6296,7 @@ types:
 
       this request will return information about the already uploaded file.
     default: '0'
+    inline: true
     source:
       openapi: ../openapi.json
   FromUrlUploadRequestSaveUrlDuplicates:
@@ -6301,6 +6309,7 @@ types:
       Determines if the requested `source_url` should be kept in the history of
       fetched/uploaded URLs. If the value is not defined explicitly, it is set
       to the value of the `check_URL_duplicates` parameter.
+    inline: true
     source:
       openapi: ../openapi.json
   FromUrlUploadResponse:

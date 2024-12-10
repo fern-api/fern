@@ -60,6 +60,7 @@
               "success",
               "failure",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -75,6 +76,7 @@
                 "value": "urn:ietf:params:oauth:grant-type:token-exchange",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -109,6 +111,7 @@ types:
     enum:
       - success
       - failure
+    inline: true
     source:
       openapi: ../openapi.yml
   ExampleResponse:

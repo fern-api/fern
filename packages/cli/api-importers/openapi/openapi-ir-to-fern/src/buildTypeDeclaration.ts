@@ -13,7 +13,8 @@ import {
     PrimitiveSchema,
     ReferencedSchema,
     Schema,
-    SchemaId
+    SchemaId,
+    WithInline
 } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
@@ -52,37 +53,73 @@ export function buildTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
+    let typeDeclaration: ConvertedTypeDeclaration;
     switch (schema.type) {
         case "primitive":
-            return buildPrimitiveTypeDeclaration(schema);
+            typeDeclaration = buildPrimitiveTypeDeclaration(schema);
+            break;
         case "array":
-            return buildArrayTypeDeclaration({ schema, context, declarationFile, namespace, declarationDepth });
+            typeDeclaration = buildArrayTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
         case "map":
-            return buildMapTypeDeclaration({ schema, context, declarationFile, namespace, declarationDepth });
+            typeDeclaration = buildMapTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
         case "reference":
-            return buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
+            typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
+            break;
         case "unknown":
-            return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
+            typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
+            break;
         case "optional":
         case "nullable":
-            return buildOptionalTypeDeclaration({ schema, context, declarationFile, namespace, declarationDepth });
+            typeDeclaration = buildOptionalTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
         case "enum":
-            return buildEnumTypeDeclaration(schema, declarationDepth);
+            typeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
+            break;
         case "literal":
-            return buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
+            typeDeclaration = buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
+            break;
         case "object":
-            return buildObjectTypeDeclaration({ schema, context, declarationFile, namespace, declarationDepth });
+            typeDeclaration = buildObjectTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
         case "oneOf":
-            return buildOneOfTypeDeclaration({
+            typeDeclaration = buildOneOfTypeDeclaration({
                 schema: schema.value,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
             });
+            break;
         default:
             assertNever(schema);
     }
+    return typeDeclaration;
 }
 
 export function buildObjectTypeDeclaration({
@@ -249,7 +286,7 @@ export function buildObjectTypeDeclaration({
         objectTypeDeclaration.source = convertToSourceSchema(schema.source);
     }
 
-    objectTypeDeclaration.inline = getInline(declarationDepth);
+    objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
     const name = schema.nameOverride ?? schema.generatedName;
     return {
@@ -442,7 +479,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
     if (schema.default != null) {
         enumSchema.default = schema.default.value;
     }
-    enumSchema.inline = getInline(declarationDepth);
+    enumSchema.inline = getInline(schema, declarationDepth);
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
@@ -601,7 +638,7 @@ export function buildOneOfTypeDeclaration({
             union,
             encoding,
             source: schema.source != null ? convertToSourceSchema(schema.source) : undefined,
-            inline: getInline(declarationDepth)
+            inline: getInline(schema, declarationDepth)
         }
     };
 }
@@ -659,6 +696,9 @@ function convertPropertyTypeReferenceToTypeDefinition({
  * @param declarationDepth Keeps track of how nested the declaration is.
  * @returns `true` if the declaration should be inlined, `undefined` otherwise.
  */
-function getInline(declarationDepth: number): boolean | undefined {
+function getInline(schema: WithInline, declarationDepth: number): boolean | undefined {
+    if (schema.inline === true) {
+        return true;
+    }
     return declarationDepth > 0 ? true : undefined;
 }

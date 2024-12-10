@@ -91,11 +91,13 @@ export function wrapArray({
                 description,
                 availability,
                 groupName,
-                example
+                example,
+                inline: undefined
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.array({
@@ -106,6 +108,7 @@ export function wrapArray({
         description,
         availability,
         groupName,
-        example
+        example,
+        inline: undefined
     });
 }

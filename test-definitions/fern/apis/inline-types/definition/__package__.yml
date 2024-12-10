@@ -35,6 +35,18 @@ service:
         name: GetUndiscriminatedUnionRequest
 
 types:
+  # this is also the type that would be produced by
+  AliasMapInline: map<string, AliasInlineValue>
+  AliasSetInline: set<AliasInlineValue>
+  AliasListInline: list<AliasInlineValue>
+  AliasOptionalInline: optional<AliasInlineValue>
+
+  AliasInlineValue:
+    inline: true
+    properties:
+      foo: string
+      bar: string
+
   RequestTypeInlineType1:
     inline: true
     docs: lorem ipsum

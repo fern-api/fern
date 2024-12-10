@@ -119,6 +119,7 @@
               "consumer",
               "business",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -129,6 +130,7 @@
               "consumer",
               "business",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -148,6 +150,7 @@
               "financing",
               "taxes",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -287,6 +290,7 @@
               "invalid_bank_statement",
               "internal_error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -328,6 +332,7 @@
               "completed",
               "error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -459,6 +464,7 @@ enriched transactions.",
               "completed",
               "error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -488,6 +494,7 @@ enriched transactions.",
               "low",
               "unknown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -545,6 +552,7 @@ enriched transactions.",
               "person",
               "organization",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -797,6 +805,7 @@ enriched transactions.",
               "ZM",
               "ZW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -955,6 +964,7 @@ enriched transactions.",
               "ZWL",
               "HRK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -982,6 +992,7 @@ enriched transactions.",
               "processed",
               "failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -996,6 +1007,7 @@ enriched transactions.",
               "person",
               "transaction_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1098,6 +1110,7 @@ enriched transactions.",
               "incoming",
               "outgoing",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1454,6 +1467,7 @@ enriched transactions.",
               "delivery_service",
               "payment_processor",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1811,6 +1825,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "yearly",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1825,6 +1840,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "value": "one off",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1885,6 +1901,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "resolved",
               "rejected",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2044,6 +2061,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "account_holder_not_found",
               "internal_error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2216,6 +2234,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2289,6 +2308,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "account_holder_id",
               "account_holder_name",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3606,6 +3626,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
   Webhook:
@@ -9684,6 +9705,7 @@ sdk.webhooks.create(
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9719,6 +9741,7 @@ sdk.webhooks.create(
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10052,6 +10075,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhookPatchEventsItem:
@@ -10070,6 +10094,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
 ",

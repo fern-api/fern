@@ -25,7 +25,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 fullExamples: undefined,
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
-                source: schema.source
+                source: schema.source,
+                inline: undefined
             });
         case "array":
             return SchemaWithExample.array({
@@ -36,7 +37,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 title: schema.title,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
-                example: undefined
+                example: undefined,
+                inline: undefined
             });
         case "enum":
             return SchemaWithExample.enum({
@@ -49,7 +51,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 default: schema.default,
                 groupName: schema.groupName,
                 example: undefined,
-                source: schema.source
+                source: schema.source,
+                inline: undefined
             });
         case "literal":
             return SchemaWithExample.literal({
@@ -69,7 +72,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema.value),
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                inline: undefined
             });
         case "optional":
             return SchemaWithExample.optional({
@@ -79,7 +83,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema.value),
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                inline: undefined
             });
         case "primitive":
             return SchemaWithExample.primitive({
@@ -110,7 +115,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 title: schema.title,
                 groupName: schema.groupName,
                 encoding: schema.encoding,
-                example: undefined
+                example: undefined,
+                inline: undefined
             });
         case "reference":
             return SchemaWithExample.reference({
@@ -150,7 +156,8 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
                 description: undefined,
                 availability: undefined,
                 value: convertSchemaToSchemaWithExample(schema),
-                groupName: undefined
+                groupName: undefined,
+                inline: undefined
             });
         case "object":
         case "array":
@@ -167,7 +174,8 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
                 description: undefined,
                 availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema),
-                groupName: undefined
+                groupName: undefined,
+                inline: undefined
             });
         case "optional":
             return SchemaWithExample.optional({
@@ -177,7 +185,8 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema.value),
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                inline: undefined
             });
         case "oneOf": {
             const oneOfSchema = convertToOneOf(schema.value);
@@ -188,7 +197,8 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 value: SchemaWithExample.oneOf(convertToOneOf(schema.value)),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                inline: undefined
             });
         }
         default:
@@ -219,7 +229,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 ),
                 groupName: oneOfSchema.groupName,
                 encoding: oneOfSchema.encoding,
-                source: oneOfSchema.source
+                source: oneOfSchema.source,
+                inline: undefined
             });
         case "undisciminated":
             return OneOfSchemaWithExample.undisciminated({
@@ -231,7 +242,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaToSchemaWithExample(oneOfSchema)),
                 groupName: oneOfSchema.groupName,
                 encoding: oneOfSchema.encoding,
-                source: oneOfSchema.source
+                source: oneOfSchema.source,
+                inline: undefined
             });
         default:
             assertNever(oneOfSchema);

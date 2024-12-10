@@ -123,6 +123,7 @@
               "refresh_token",
               "client_credentials",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -152,6 +153,7 @@
       - refresh_token
       - client_credentials
     docs: The type of grant to request
+    inline: true
     source:
       openapi: ../openapi.yml
   AuthGetTokenResponse:

@@ -1,0 +1,4 @@
+display-name: Sample API
+error-discrimination:
+  strategy: status-code
+name: api

@@ -572,6 +572,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -622,6 +623,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -633,6 +635,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithTitle
+      - commons.WithInline
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -644,6 +647,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -654,6 +658,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -665,6 +670,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -717,6 +723,7 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -736,5 +743,6 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       schemas: list<Schema>

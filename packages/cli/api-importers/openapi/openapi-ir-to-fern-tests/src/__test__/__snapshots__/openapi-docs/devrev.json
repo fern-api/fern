@@ -3910,6 +3910,7 @@ authentication connection.
               "disable",
               "enable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3925,6 +3926,7 @@ for each authentication connection will depend on the type value.
               "social",
               "waad",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3981,6 +3983,7 @@ token. Only applicable for application access tokens.
                 "value": "urn:ietf:params:oauth:grant-type:token-exchange",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4025,6 +4028,7 @@ token. Only applicable for application access tokens.
                 "value": "urn:ietf:params:oauth:token-type:jwt",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4036,6 +4040,7 @@ token. Only applicable for application access tokens.
               "expired",
               "revoked",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4072,6 +4077,7 @@ token. Only applicable for application access tokens.
                 "value": "urn:ietf:params:oauth:token-type:jwt",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4276,6 +4282,7 @@ authentication connections have different configuration parameters.
               "samlp",
               "waad",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4380,6 +4387,7 @@ that can be updated.
               "samlp",
               "waad",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4517,6 +4525,7 @@ sort order. If not set, then no prior elements exist.
               "parse_error",
               "value_not_permitted",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4884,6 +4893,7 @@ sort order. If not set, then no prior elements exist.
               "p2",
               "p3",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4899,6 +4909,7 @@ always be returned in the specified sort-by order.
               "after",
               "before",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4943,6 +4954,7 @@ always be returned in the specified sort-by order.
               "staging",
               "test",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5032,6 +5044,7 @@ always be returned in the specified sort-by order.
               "feature",
               "product",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5559,6 +5572,7 @@ sort order. If not set, then no prior elements exist.
               "low",
               "medium",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5596,6 +5610,7 @@ will appear in the response.
               "snap_kit",
               "text",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5870,6 +5885,7 @@ default visibility.
               "shadow",
               "unassigned",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5897,6 +5913,7 @@ default visibility.
               "rev_user",
               "sys_user",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6030,6 +6047,7 @@ be set for other request types.
               "work_deleted",
               "work_updated",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6060,6 +6078,7 @@ be set for other request types.
               "inactive",
               "unverified",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6111,6 +6130,7 @@ be set for other request types.
               "activate",
               "deactivate",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6204,6 +6224,7 @@ event types. Note this is mutually exclusive with 'add' and
               "issue",
               "ticket",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

@@ -72,6 +72,7 @@
               "each_attempt",
               "last_attempt",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -150,6 +151,7 @@
               "SOCKET_CLOSED",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -162,6 +164,7 @@
               "COMPLETED",
               "HOLD",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -174,6 +177,7 @@
               "SUCCESSFUL",
               "HOLD",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -187,6 +191,7 @@
               "UNPAUSE",
               "AUTOMATIC",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -474,6 +479,7 @@
               "info",
               "debug",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -726,6 +732,7 @@
               "minute",
               "hour",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1001,6 +1008,7 @@
               "SUCCESSFUL",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1025,6 +1033,7 @@
               "path",
               "query",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1046,6 +1055,7 @@
               "sha256",
               "sha512",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1068,6 +1078,7 @@
               "base64",
               "hex",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1096,6 +1107,7 @@
               "TRANSFORMATION_FAILED",
               "CLI_DISCONNECTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1189,6 +1201,7 @@
               "HANDSHAKE",
               "POLLING",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1235,6 +1248,7 @@
               "pipedrive",
               "sendgrid",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1274,6 +1288,7 @@
               "ACKNOWLEDGED",
               "RESOLVED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1456,6 +1471,7 @@
               "first_attempt",
               "final_attempt",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1494,6 +1510,7 @@
               "transformation",
               "backpressure",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1529,6 +1546,7 @@
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1685,6 +1703,7 @@
               "NORMAL",
               "LOW",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1713,6 +1732,7 @@
               "INGESTION_FATAL",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1763,6 +1783,7 @@
               "linear",
               "exponential",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1897,6 +1918,7 @@
               "minute",
               "second",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2083,6 +2105,7 @@
                 "value": "event.successful",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2229,6 +2252,7 @@
               "error",
               "fatal",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3285,6 +3309,7 @@ types:
     enum:
       - base64
       - hex
+    inline: true
     source:
       openapi: ../openapi.yml
   HmacIntegrationConfigs:
@@ -3316,6 +3341,7 @@ types:
     enum:
       - minute
       - second
+    inline: true
     source:
       openapi: ../openapi.yml
   ShopifyIntegrationConfigs:
@@ -3488,6 +3514,7 @@ types:
       - warn
       - info
       - debug
+    inline: true
     source:
       openapi: ../openapi.yml
   ConsoleLine:
@@ -3681,6 +3708,7 @@ types:
       - NORMAL
       - LOW
     docs: The priority attributed to the request when received
+    inline: true
     source:
       openapi: ../openapi.yml
   RequestDataParsedQueryOne:
@@ -5017,6 +5045,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "http",
               "cli",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5036,6 +5065,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
       - http
       - cli
     docs: Bookmark target
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -8182,6 +8212,7 @@ docs: ''
               "accepted",
               "rejected",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8223,6 +8254,7 @@ docs: ''
     enum:
       - accepted
       - rejected
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateRequestBulkRetryRequestQueryRejectionCauseAny:
@@ -9810,6 +9842,7 @@ docs: ''
               "minute",
               "hour",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9935,6 +9968,7 @@ docs: ''
               "minute",
               "hour",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9998,6 +10032,7 @@ docs: ''
       - minute
       - hour
     docs: Period to rate limit attempts
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateConnectionRequestDestination:
@@ -10059,6 +10094,7 @@ docs: ''
       - minute
       - hour
     docs: Period to rate limit attempts
+    inline: true
     source:
       openapi: ../openapi.yml
   UpsertConnectionRequestDestination:
@@ -11386,6 +11422,7 @@ docs: >-
               "minute",
               "hour",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11408,6 +11445,7 @@ docs: >-
               "minute",
               "hour",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11419,6 +11457,7 @@ docs: >-
               "minute",
               "hour",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11439,6 +11478,7 @@ docs: >-
       - minute
       - hour
     docs: Period to rate limit attempts
+    inline: true
     source:
       openapi: ../openapi.yml
   UpsertDestinationRequestRateLimitPeriod:
@@ -11447,6 +11487,7 @@ docs: >-
       - minute
       - hour
     docs: Period to rate limit attempts
+    inline: true
     source:
       openapi: ../openapi.yml
   UpdateDestinationRequestRateLimitPeriod:
@@ -11455,6 +11496,7 @@ docs: >-
       - minute
       - hour
     docs: Period to rate limit attempts
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -14695,6 +14737,7 @@ docs: >-
               "ACKNOWLEDGED",
               "RESOLVED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14753,6 +14796,7 @@ docs: >-
       - ACKNOWLEDGED
       - RESOLVED
     docs: New status
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -15802,6 +15846,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "accepted",
               "rejected",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

@@ -79,6 +79,15 @@ components:
           type: integer
         name:
           type: string
+        inline_union_map:
+          type: object
+          additionalProperties:
+            anyOf:
+              - type: string
+                nullable: true
+              - type: number
+              - type: boolean
+              - type: array
     Schema2:
       type: object
       properties:
@@ -114,3 +123,13 @@ components:
               properties:
                 b:
                   type: string
+
+    RootUnionMap:
+      type: object
+      additionalProperties:
+        anyOf:
+          - type: string
+            nullable: true
+          - type: number
+          - type: boolean
+          - type: array

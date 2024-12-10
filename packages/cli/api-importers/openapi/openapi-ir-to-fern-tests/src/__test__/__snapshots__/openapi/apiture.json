@@ -557,6 +557,7 @@ This error response may have one of the following `type` values:
               "viewCards",
               "manageCards",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -730,6 +731,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "external",
               "outside",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -890,6 +892,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "float",
               "sameDay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -950,6 +953,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "tel",
               "web",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1172,6 +1176,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "securityQuestions",
               "authenticatorToken",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1314,6 +1319,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "externalTransfer",
               "billPay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1440,6 +1446,7 @@ The client can use this value to localize the `items[].time` values to the local
               "microDeposits",
               "manual",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1569,6 +1576,7 @@ The client can use this value to localize the `items[].time` values to the local
               "swiftBicCode",
               "ibanAccountNumber",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1875,6 +1883,7 @@ The client can use this value to localize the `items[].time` values to the local
               "loan",
               "creditCard",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2069,6 +2078,7 @@ The client can use this value to localize the `items[].time` values to the local
               "credit",
               "debit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2291,6 +2301,7 @@ The client can use this value to localize the `items[].time` values to the local
               "check",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2326,6 +2337,7 @@ The client can use this value to localize the `items[].time` values to the local
               "debit",
               "credit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2489,6 +2501,7 @@ The client can use this value to localize the `items[].time` values to the local
               "closure",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2632,6 +2645,7 @@ The response may include dates prior to requested the start date, as that is use
               "semiyearly",
               "yearly",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2733,6 +2747,7 @@ The response may include dates prior to requested the start date, as that is use
               "fixed",
               "variable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2821,6 +2836,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "credit",
               "both",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2921,6 +2937,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "failed",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2970,6 +2987,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "domesticWireTransfer",
               "internationalWireTransfer",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6254,6 +6272,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "internal",
               "external",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

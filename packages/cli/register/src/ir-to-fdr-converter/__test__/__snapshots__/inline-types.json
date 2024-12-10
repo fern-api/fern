@@ -1,12 +1,125 @@
 {
   "types": {
+    "type_:AliasMapInline": {
+      "name": "AliasMapInline",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "id",
+            "value": "type_:AliasInlineValue"
+          }
+        }
+      }
+    },
+    "type_:AliasSetInline": {
+      "name": "AliasSetInline",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "set",
+          "itemType": {
+            "type": "id",
+            "value": "type_:AliasInlineValue"
+          }
+        }
+      }
+    },
+    "type_:AliasListInline": {
+      "name": "AliasListInline",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "type_:AliasInlineValue"
+          }
+        }
+      }
+    },
+    "type_:AliasOptionalInline": {
+      "name": "AliasOptionalInline",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "type_:AliasInlineValue"
+          }
+        }
+      }
+    },
+    "type_:AliasInlineValue": {
+      "name": "AliasInlineValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:RequestTypeInlineType1": {
+      "description": "lorem ipsum",
+      "name": "RequestTypeInlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
     "type_:RootType1": {
+      "description": "lorem ipsum",
       "name": "RootType1",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
+            "description": "lorem ipsum",
             "key": "foo",
             "valueType": {
               "type": "primitive",
@@ -16,10 +129,58 @@
             }
           },
           {
+            "description": "lorem ipsum",
             "key": "bar",
             "valueType": {
               "type": "id",
-              "value": "type_:InlineType1"
+              "value": "type_:RootType1InlineType1"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "fooMap",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:RootType1FooMapValue"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "fooList",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_:RootType1FooListItem"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "fooSet",
+            "valueType": {
+              "type": "set",
+              "itemType": {
+                "type": "id",
+                "value": "type_:RootType1FooSetItem"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
             }
           }
         ],
@@ -28,13 +189,15 @@
         }
       }
     },
-    "type_:InlineType1": {
-      "name": "InlineType1",
+    "type_:RootType1FooMapValue": {
+      "description": "lorem ipsum",
+      "name": "RootType1FooMapValue",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
+            "description": "lorem ipsum",
             "key": "foo",
             "valueType": {
               "type": "primitive",
@@ -44,10 +207,11 @@
             }
           },
           {
-            "key": "bar",
+            "description": "lorem ipsum",
+            "key": "ref",
             "valueType": {
               "type": "id",
-              "value": "type_:NestedInlineType1"
+              "value": "type_:ReferenceType"
             }
           }
         ],
@@ -56,13 +220,275 @@
         }
       }
     },
-    "type_:InlineType2": {
-      "name": "InlineType2",
+    "type_:RootType1FooListItem": {
+      "description": "lorem ipsum",
+      "name": "RootType1FooListItem",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:RootType1FooSetItem": {
+      "description": "lorem ipsum",
+      "name": "RootType1FooSetItem",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:RootType1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "RootType1InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "bar",
+            "valueType": {
+              "type": "id",
+              "value": "type_:RootType1InlineType1NestedInlineType1"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:RootType1InlineType1NestedInlineType1": {
+      "description": "lorem ipsum",
+      "name": "RootType1InlineType1NestedInlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "myEnum",
+            "valueType": {
+              "type": "id",
+              "value": "type_:InlineEnum1"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:DiscriminatedUnion1": {
+      "description": "lorem ipsum",
+      "name": "DiscriminatedUnion1",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "type1",
+            "additionalProperties": {
+              "extends": [
+                "type_:DiscriminatedUnion1InlineType1"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "type2",
+            "additionalProperties": {
+              "extends": [
+                "type_:DiscriminatedUnion1InlineType2"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "ref",
+            "additionalProperties": {
+              "extends": [
+                "type_:ReferenceType"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_:DiscriminatedUnion1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "DiscriminatedUnion1InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "bar",
+            "valueType": {
+              "type": "id",
+              "value": "type_:DiscriminatedUnion1InlineType1InlineType1"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:DiscriminatedUnion1InlineType1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "DiscriminatedUnion1InlineType1InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:DiscriminatedUnion1InlineType2": {
+      "description": "lorem ipsum",
+      "name": "DiscriminatedUnion1InlineType2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
             "key": "baz",
             "valueType": {
               "type": "primitive",
@@ -70,6 +496,14 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
           }
         ],
         "extraProperties": {
@@ -77,13 +511,116 @@
         }
       }
     },
-    "type_:NestedInlineType1": {
-      "name": "NestedInlineType1",
+    "type_:UndiscriminatedUnion1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "UndiscriminatedUnion1InlineType1",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1InlineType1"
+            }
+          },
+          {
+            "typeName": "UndiscriminatedUnion1InlineType2",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1InlineType2"
+            }
+          },
+          {
+            "typeName": "UndiscriminatedUnion1DiscriminatedUnion1",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
+            }
+          },
+          {
+            "typeName": "UndiscriminatedUnion1DiscriminatedUnion1",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
+            }
+          },
+          {
+            "typeName": "UndiscriminatedUnion1InlineEnum1",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1InlineEnum1"
+            }
+          },
+          {
+            "typeName": "UserId",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:UserId"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_:UndiscriminatedUnion1InlineListItem1"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "type": {
+              "type": "set",
+              "itemType": {
+                "type": "id",
+                "value": "type_:UndiscriminatedUnion1InlineSetItem1"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:UndiscriminatedUnion1InlineMapItem1"
+              }
+            }
+          },
+          {
+            "typeName": "ReferenceType",
+            "description": "lorem ipsum",
+            "type": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnion1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineType1",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
+            "description": "lorem ipsum",
             "key": "foo",
             "valueType": {
               "type": "primitive",
@@ -93,19 +630,19 @@
             }
           },
           {
+            "description": "lorem ipsum",
             "key": "bar",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1InlineType1InlineType1"
             }
           },
           {
-            "key": "myEnum",
+            "description": "lorem ipsum",
+            "key": "ref",
             "valueType": {
               "type": "id",
-              "value": "type_:InlineEnum"
+              "value": "type_:ReferenceType"
             }
           }
         ],
@@ -114,57 +651,71 @@
         }
       }
     },
-    "type_:InlinedDiscriminatedUnion1": {
-      "name": "InlinedDiscriminatedUnion1",
+    "type_:UndiscriminatedUnion1InlineType1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineType1InlineType1",
       "shape": {
-        "type": "discriminatedUnion",
-        "discriminant": "type",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "discriminantValue": "type1",
-            "additionalProperties": {
-              "extends": [
-                "type_:InlineType1"
-              ],
-              "properties": []
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "discriminantValue": "type2",
-            "additionalProperties": {
-              "extends": [
-                "type_:InlineType2"
-              ],
-              "properties": []
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
-    "type_:InlinedUndiscriminatedUnion1": {
-      "name": "InlinedUndiscriminatedUnion1",
+    "type_:UndiscriminatedUnion1InlineType2": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineType2",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "InlineType1",
-            "type": {
-              "type": "id",
-              "value": "type_:InlineType1"
+            "description": "lorem ipsum",
+            "key": "baz",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "InlineType2",
-            "type": {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
               "type": "id",
-              "value": "type_:InlineType2"
+              "value": "type_:ReferenceType"
             }
           }
-        ]
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     },
-    "type_:InlineEnum": {
-      "name": "InlineEnum",
+    "type_:InlineEnum1": {
+      "description": "lorem ipsum",
+      "name": "InlineEnum1",
       "shape": {
         "type": "enum",
         "values": [
@@ -181,6 +732,297 @@
             "value": "SNOWING"
           }
         ]
+      }
+    },
+    "type_:UndiscriminatedUnion1DiscriminatedUnion1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1DiscriminatedUnion1",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "type1",
+            "additionalProperties": {
+              "extends": [
+                "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "type2",
+            "additionalProperties": {
+              "extends": [
+                "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "discriminantValue": "ref",
+            "additionalProperties": {
+              "extends": [
+                "type_:ReferenceType"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "bar",
+            "valueType": {
+              "type": "id",
+              "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1DiscriminatedUnion1InlineType2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "baz",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1InlineEnum1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineEnum1",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "SUNNY"
+          },
+          {
+            "value": "CLOUDY"
+          },
+          {
+            "value": "RAINING"
+          },
+          {
+            "value": "SNOWING"
+          }
+        ]
+      }
+    },
+    "type_:UserId": {
+      "description": "lorem ipsum",
+      "name": "UserId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1InlineListItem1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineListItem1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1InlineSetItem1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineSetItem1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UndiscriminatedUnion1InlineMapItem1": {
+      "description": "lorem ipsum",
+      "name": "UndiscriminatedUnion1InlineMapItem1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "lorem ipsum",
+            "key": "ref",
+            "valueType": {
+              "type": "id",
+              "value": "type_:ReferenceType"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:ReferenceType": {
+      "description": "lorem ipsum",
+      "name": "ReferenceType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "lorem ipsum",
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
       }
     }
   },
@@ -220,7 +1062,7 @@
                   "key": "bar",
                   "valueType": {
                     "type": "id",
-                    "value": "type_:InlineType1"
+                    "value": "type_:RequestTypeInlineType1"
                   }
                 },
                 {
@@ -254,12 +1096,7 @@
             "headers": {},
             "requestBody": {
               "bar": {
-                "foo": "foo",
-                "bar": {
-                  "foo": "foo",
-                  "bar": "bar",
-                  "myEnum": "SUNNY"
-                }
+                "foo": "foo"
               },
               "foo": "foo"
             },
@@ -267,12 +1104,7 @@
               "type": "json",
               "value": {
                 "bar": {
-                  "foo": "foo",
-                  "bar": {
-                    "foo": "foo",
-                    "bar": "bar",
-                    "myEnum": "SUNNY"
-                  }
+                  "foo": "foo"
                 },
                 "foo": "foo"
               }
@@ -285,8 +1117,47 @@
                 "bar": {
                   "foo": "foo",
                   "bar": "bar",
-                  "myEnum": "SUNNY"
+                  "myEnum": "SUNNY",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "ref": {
+                  "foo": "foo"
                 }
+              },
+              "fooMap": {
+                "fooMap": {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              },
+              "fooList": [
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              ],
+              "fooSet": [
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              ],
+              "ref": {
+                "foo": "foo"
               }
             },
             "responseBodyV3": {
@@ -298,11 +1169,240 @@
                   "bar": {
                     "foo": "foo",
                     "bar": "bar",
-                    "myEnum": "SUNNY"
+                    "myEnum": "SUNNY",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  },
+                  "ref": {
+                    "foo": "foo"
                   }
+                },
+                "fooMap": {
+                  "fooMap": {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  }
+                },
+                "fooList": [
+                  {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  },
+                  {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  }
+                ],
+                "fooSet": [
+                  {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  }
+                ],
+                "ref": {
+                  "foo": "foo"
                 }
               }
             },
+            "codeSamples": []
+          }
+        ]
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "getDiscriminatedUnion",
+        "originalEndpointId": "endpoint_.getDiscriminatedUnion",
+        "name": "Get Discriminated Union",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/root"
+            },
+            {
+              "type": "literal",
+              "value": "/discriminated-union"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "bar",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:DiscriminatedUnion1"
+                  }
+                },
+                {
+                  "key": "foo",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/root/discriminated-union",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "bar": {
+                "type": "type1",
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "ref": {
+                  "foo": "foo"
+                }
+              },
+              "foo": "foo"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "bar": {
+                  "type": "type1",
+                  "foo": "foo",
+                  "bar": {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  },
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "foo": "foo"
+              }
+            },
+            "responseStatusCode": 204,
+            "codeSamples": []
+          }
+        ]
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "getUndiscriminatedUnion",
+        "originalEndpointId": "endpoint_.getUndiscriminatedUnion",
+        "name": "Get Undiscriminated Union",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/root"
+            },
+            {
+              "type": "literal",
+              "value": "/undiscriminated-union"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "bar",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:UndiscriminatedUnion1"
+                  }
+                },
+                {
+                  "key": "foo",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/root/undiscriminated-union",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "bar": {
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "ref": {
+                  "foo": "foo"
+                }
+              },
+              "foo": "foo"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "bar": {
+                  "foo": "foo",
+                  "bar": {
+                    "foo": "foo",
+                    "ref": {
+                      "foo": "foo"
+                    }
+                  },
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "foo": "foo"
+              }
+            },
+            "responseStatusCode": 204,
             "codeSamples": []
           }
         ]
@@ -311,13 +1411,37 @@
     "webhooks": [],
     "websockets": [],
     "types": [
+      "type_:AliasMapInline",
+      "type_:AliasSetInline",
+      "type_:AliasListInline",
+      "type_:AliasOptionalInline",
+      "type_:AliasInlineValue",
+      "type_:RequestTypeInlineType1",
       "type_:RootType1",
-      "type_:InlineType1",
-      "type_:InlineType2",
-      "type_:NestedInlineType1",
-      "type_:InlinedDiscriminatedUnion1",
-      "type_:InlinedUndiscriminatedUnion1",
-      "type_:InlineEnum"
+      "type_:RootType1FooMapValue",
+      "type_:RootType1FooListItem",
+      "type_:RootType1FooSetItem",
+      "type_:RootType1InlineType1",
+      "type_:RootType1InlineType1NestedInlineType1",
+      "type_:DiscriminatedUnion1",
+      "type_:DiscriminatedUnion1InlineType1",
+      "type_:DiscriminatedUnion1InlineType1InlineType1",
+      "type_:DiscriminatedUnion1InlineType2",
+      "type_:UndiscriminatedUnion1",
+      "type_:UndiscriminatedUnion1InlineType1",
+      "type_:UndiscriminatedUnion1InlineType1InlineType1",
+      "type_:UndiscriminatedUnion1InlineType2",
+      "type_:InlineEnum1",
+      "type_:UndiscriminatedUnion1DiscriminatedUnion1",
+      "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1",
+      "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
+      "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2",
+      "type_:UndiscriminatedUnion1InlineEnum1",
+      "type_:UserId",
+      "type_:UndiscriminatedUnion1InlineListItem1",
+      "type_:UndiscriminatedUnion1InlineSetItem1",
+      "type_:UndiscriminatedUnion1InlineMapItem1",
+      "type_:ReferenceType"
     ],
     "subpackages": []
   },

@@ -243,12 +243,14 @@ export function wrapDiscriminantedOneOf({
                     commonProperties: properties,
                     groupName,
                     encoding: undefined,
-                    source
+                    source,
+                    inline: undefined
                 })
             ),
             groupName,
             description,
-            availability
+            availability,
+            inline: undefined
         });
     }
     return SchemaWithExample.oneOf(
@@ -263,7 +265,8 @@ export function wrapDiscriminantedOneOf({
             commonProperties: properties,
             groupName,
             encoding: undefined,
-            source
+            source,
+            inline: undefined
         })
     );
 }

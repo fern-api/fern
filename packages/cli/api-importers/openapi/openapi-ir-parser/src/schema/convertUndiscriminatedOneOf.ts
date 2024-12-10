@@ -132,7 +132,8 @@ export function convertUndiscriminatedOneOf({
             _default: undefined,
             groupName,
             context,
-            source
+            source,
+            inline: undefined
         });
     }
 
@@ -265,7 +266,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             _default: undefined,
             groupName,
             context,
-            source
+            source,
+            inline: undefined
         });
     }
 
@@ -384,12 +386,14 @@ export function wrapUndiscriminantedOneOf({
                     schemas: subtypes,
                     groupName,
                     encoding,
-                    source
+                    source,
+                    inline: undefined
                 })
             ),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.oneOf(
@@ -402,7 +406,8 @@ export function wrapUndiscriminantedOneOf({
             schemas: subtypes,
             groupName,
             encoding,
-            source
+            source,
+            inline: undefined
         })
     );
 }

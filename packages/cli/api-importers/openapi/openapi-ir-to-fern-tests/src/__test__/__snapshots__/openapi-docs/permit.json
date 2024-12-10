@@ -1357,6 +1357,7 @@
               "array",
               "json",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1569,6 +1570,7 @@
               "userset",
               "resourceset",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1953,6 +1955,7 @@
               "failed",
               "canceled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1978,6 +1981,7 @@
               "read",
               "no_access",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1989,6 +1993,7 @@
               "project",
               "env",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2005,6 +2010,7 @@
               "connect_sdk",
               "done",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3845,6 +3851,7 @@ The actions represents the ways you can interact with a protected resource.",
               "active",
               "pending",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -9692,6 +9699,7 @@ allowed.",
               "fail",
               "overwrite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -10158,6 +10166,7 @@ types:
       Action to take when detecting a conflict when copying. Only applies to
       copying into an existing environment
     default: fail
+    inline: true
     source:
       openapi: ../openapi.json
 ",

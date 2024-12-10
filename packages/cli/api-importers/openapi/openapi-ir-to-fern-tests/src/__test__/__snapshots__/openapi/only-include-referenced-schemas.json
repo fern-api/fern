@@ -2844,6 +2844,7 @@
               "upfront_email_collection_change",
               "welcome_message_change",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3081,6 +3082,7 @@
               "comment",
               "note",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3122,6 +3124,7 @@
               "note",
               "quick_reply",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3279,6 +3282,7 @@
               "published",
               "draft",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3532,6 +3536,7 @@
               "admin",
               "team",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4506,6 +4511,7 @@
               "published",
               "draft",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4634,6 +4640,7 @@
               },
               "Tracker",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4676,7 +4683,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
-            "inline": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5223,6 +5230,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "ticket",
               "conversation",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5249,6 +5257,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "AND",
               "OR",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5319,6 +5328,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "draft",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5445,6 +5455,7 @@ Their responses are likely to contain a pages object that hosts pagination links
                 "value": "conversation.list",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5706,6 +5717,7 @@ Their responses are likely to contain a pages object that hosts pagination links
                 "value": "~",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5747,6 +5759,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
               "cancelled",
               "active",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5949,7 +5962,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
-            "inline": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6026,6 +6039,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
               "team",
               "user",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6102,6 +6116,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
               "comment",
               "quick_reply",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6114,7 +6129,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
-            "inline": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6345,6 +6360,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
               "published",
               "draft",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6396,6 +6412,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
               },
               "Tracker",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8152,6 +8169,7 @@ types:
       - temporary_expectation_change
       - upfront_email_collection_change
       - welcome_message_change
+    inline: true
     source:
       openapi: ../openapi.yml
   ActivityLog:
@@ -8272,6 +8290,7 @@ types:
     enum:
       - comment
       - note
+    inline: true
     source:
       openapi: ../openapi.yml
   AdminReplyConversationRequest:
@@ -8309,6 +8328,7 @@ types:
       - comment
       - note
       - quick_reply
+    inline: true
     source:
       openapi: ../openapi.yml
   AdminReplyTicketRequestReplyOptionsItem:
@@ -8451,6 +8471,7 @@ types:
       - published
       - draft
     docs: Whether the article is `published` or is a `draft` .
+    inline: true
     source:
       openapi: ../openapi.yml
   ArticleContent:
@@ -8658,6 +8679,7 @@ types:
     enum:
       - admin
       - team
+    inline: true
     source:
       openapi: ../openapi.yml
   AssignConversationRequest:
@@ -9414,6 +9436,7 @@ types:
       Whether the article will be `published` or will be a `draft`. Defaults to
       draft. For multilingual articles, this will be the state of the default
       language's content.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateArticleRequest:
@@ -9534,6 +9557,7 @@ types:
         name: BackOffice
       - Tracker
     docs: Category of the Ticket Type.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateTicketTypeRequest:
@@ -9595,6 +9619,7 @@ types:
       - type: optional<customObjectInstances.CustomObjectInstance>
     source:
       openapi: ../openapi.yml
+    inline: true
   CustomAttributes:
     type: map<string, CustomAttributesValue>
     docs: >-
@@ -9941,6 +9966,7 @@ types:
       - ticket
       - conversation
     docs: ticket or conversation
+    inline: true
     source:
       openapi: ../openapi.yml
   LinkedObject:
@@ -9981,6 +10007,7 @@ types:
       - AND
       - OR
     docs: An operator to allow boolean inspection between multiple fields.
+    inline: true
     source:
       openapi: ../openapi.yml
   MultipleFilterSearchRequestValue:
@@ -10010,6 +10037,7 @@ types:
     docs: >-
       News items will not be visible to your users in the assigned newsfeeds
       until they are set live.
+    inline: true
     source:
       openapi: ../openapi.yml
   NewsItemRequest:
@@ -10109,6 +10137,7 @@ types:
       - value: conversation.list
         name: ConversationList
     docs: The type of object
+    inline: true
     source:
       openapi: ../openapi.yml
   PaginatedResponseDataItem:
@@ -10281,6 +10310,7 @@ types:
     docs: >-
       The accepted operators you can use to define how you want to search for
       the value.
+    inline: true
     source:
       openapi: ../openapi.yml
   SingleFilterSearchRequest:
@@ -10310,6 +10340,7 @@ types:
                   - `hit`: If there’s at least one hit event in the underlying sla_events table, and no “missed” or “canceled” events for the conversation.
                   - `missed`: If there are any missed sla_events for the conversation and no canceled events. If there’s even a single missed sla event, the status will always be missed. A missed status is not applied when the SLA expires, only the next time a teammate replies.
                   - `active`: An SLA has been applied to a conversation, but has not yet been fulfilled. SLA status is active only if there are no “hit, “missed”, or “canceled” events.
+    inline: true
     source:
       openapi: ../openapi.yml
   SlaApplied:
@@ -10468,6 +10499,7 @@ types:
       - type: File
     source:
       openapi: ../openapi.yml
+    inline: true
   TicketCustomAttributes:
     type: map<string, TicketCustomAttributesValue>
     docs: >-
@@ -10497,6 +10529,7 @@ types:
       - team
       - user
     docs: The type of the author
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketPartAuthor:
@@ -10544,6 +10577,7 @@ types:
       - comment
       - quick_reply
     docs: Type of the part
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketReply:
@@ -10586,6 +10620,7 @@ types:
       - list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   TicketRequestCustomAttributes:
     type: map<string, TicketRequestCustomAttributesValue>
     docs: >-
@@ -10741,6 +10776,7 @@ types:
       Whether the article will be `published` or will be a `draft`. Defaults to
       draft. For multilingual articles, this will be the state of the default
       language's content.
+    inline: true
     source:
       openapi: ../openapi.yml
   UpdateArticleRequest:
@@ -10792,6 +10828,7 @@ types:
         name: BackOffice
       - Tracker
     docs: Category of the Ticket Type.
+    inline: true
     source:
       openapi: ../openapi.yml
   UpdateTicketTypeRequest:
@@ -11901,6 +11938,7 @@ types:
               "workflow_preview",
               "fin_preview",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11918,6 +11956,7 @@ types:
     docs: >-
       The type of the source that triggered AI Agent involvement in the
       conversation.
+    inline: true
     source:
       openapi: ../openapi.yml
   AiAgent:
@@ -11996,6 +12035,7 @@ imports:
               "content_snippet",
               "workflow_connector_action",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12011,6 +12051,7 @@ imports:
       - content_snippet
       - workflow_connector_action
     docs: The type of the content source.
+    inline: true
     source:
       openapi: ../openapi.yml
   ContentSource:
@@ -14617,6 +14658,7 @@ imports:
               "published",
               "draft",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14665,6 +14707,7 @@ imports:
               "highlight",
               "plain",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14692,6 +14735,7 @@ imports:
               "highlight",
               "plain",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17103,6 +17147,7 @@ types:
       Whether the article is `published` or is a `draft`. For multilingual
       articles, this will be the state of the default language's content.
     default: draft
+    inline: true
     source:
       openapi: ../openapi.yml
   Articles:
@@ -17188,6 +17233,7 @@ types:
       - highlight
       - plain
     docs: The type of text - `highlight` or `plain`.
+    inline: true
     source:
       openapi: ../openapi.yml
   ArticleSearchHighlightsHighlightedTitleItem:
@@ -17207,6 +17253,7 @@ types:
       - highlight
       - plain
     docs: The type of text - `highlight` or `plain`.
+    inline: true
     source:
       openapi: ../openapi.yml
   ArticleSearchHighlightsHighlightedSummaryItemItem:
@@ -26042,6 +26089,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "priority",
               "not_priority",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -26053,6 +26101,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "closed",
               "snoozed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -26087,6 +26136,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "user",
               "contact",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -29326,6 +29376,7 @@ types:
       - user
       - contact
     docs: The role associated to the contact - user or lead.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateConversationRequestFrom:
@@ -29406,6 +29457,7 @@ types:
       - closed
       - snoozed
     docs: Can be set to "open", "closed" or "snoozed".
+    inline: true
     source:
       openapi: ../openapi.yml
   ConversationPriority:
@@ -29413,6 +29465,7 @@ types:
       - priority
       - not_priority
     docs: If marked as priority, it will return priority or else not_priority.
+    inline: true
     source:
       openapi: ../openapi.yml
   Conversation:
@@ -30466,6 +30519,7 @@ You can update a data attribute.
               "datetime",
               "date",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30476,6 +30530,7 @@ You can update a data attribute.
               "contact",
               "company",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30566,6 +30621,7 @@ You can update a data attribute.
               "boolean",
               "date",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30576,6 +30632,7 @@ You can update a data attribute.
               "contact",
               "company",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30586,6 +30643,7 @@ You can update a data attribute.
               "company",
               "conversation",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30605,6 +30663,7 @@ You can update a data attribute.
       - contact
       - company
     docs: The model that the data attribute belongs to.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateDataAttributeRequestDataType:
@@ -30616,6 +30675,7 @@ You can update a data attribute.
       - datetime
       - date
     docs: The type of data stored for this attribute.
+    inline: true
     source:
       openapi: ../openapi.yml
   DataAttributeModel:
@@ -30625,6 +30685,7 @@ You can update a data attribute.
     docs: >-
       Value is `contact` for user/lead attributes and `company` for company
       attributes.
+    inline: true
     source:
       openapi: ../openapi.yml
   DataAttributeDataType:
@@ -30635,6 +30696,7 @@ You can update a data attribute.
       - boolean
       - date
     docs: The data type of the attribute.
+    inline: true
     source:
       openapi: ../openapi.yml
   DataAttribute:
@@ -32214,6 +32276,7 @@ Your exported message data will be streamed continuously back down to you in a g
               "no_data",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32405,6 +32468,7 @@ types:
       - no_data
       - canceled
     docs: The current state of your job.
+    inline: true
     source:
       openapi: ../openapi.yml
   DataExport:
@@ -35391,6 +35455,7 @@ This will return the Message model that has been created.
               "facebook",
               "twitter",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -35568,6 +35633,7 @@ types:
     docs: >-
       The type of message that was sent. Can be email, inapp, facebook or
       twitter.
+    inline: true
     source:
       openapi: ../openapi.yml
   Message:
@@ -36195,6 +36261,7 @@ types:
               "draft",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -36616,6 +36683,7 @@ types:
     docs: >-
       News items will not be visible to your users in the assigned newsfeeds
       until they are set live.
+    inline: true
     source:
       openapi: ../openapi.yml
   NewsItem:
@@ -37620,6 +37688,7 @@ types:
               "contact",
               "user",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -37714,6 +37783,7 @@ types:
       - contact
       - user
     docs: 'Type of the contact: contact (lead) or user.'
+    inline: true
     source:
       openapi: ../openapi.yml
   Segment:
@@ -38070,6 +38140,7 @@ This will return a subscription type model for the subscription type that was ad
               "opt_out",
               "opt_in",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -38079,6 +38150,7 @@ This will return a subscription type model for the subscription type that was ad
               "email",
               "sms_message",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -38090,6 +38162,7 @@ This will return a subscription type model for the subscription type that was ad
               "draft",
               "archived",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -38303,6 +38376,7 @@ types:
       - draft
       - archived
     docs: The state of the subscription type.
+    inline: true
     source:
       openapi: ../openapi.yml
   SubscriptionTypeConsentType:
@@ -38310,12 +38384,14 @@ types:
       - opt_out
       - opt_in
     docs: Describes the type of consent.
+    inline: true
     source:
       openapi: ../openapi.yml
   SubscriptionTypeContentTypesItem:
     enum:
       - email
       - sms_message
+    inline: true
     source:
       openapi: ../openapi.yml
   SubscriptionType:
@@ -40500,6 +40576,7 @@ types:
               "datetime",
               "files",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40517,6 +40594,7 @@ types:
       - datetime
       - files
     docs: The data type of the attribute
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -42962,6 +43040,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "Tracker",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43034,6 +43113,7 @@ The table below shows the operators you can use to define how you want to search
               "waiting_on_customer",
               "resolved",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43046,6 +43126,7 @@ The table below shows the operators you can use to define how you want to search
               "waiting_on_customer",
               "resolved",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43058,6 +43139,7 @@ The table below shows the operators you can use to define how you want to search
               "waiting_on_customer",
               "resolved",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43124,6 +43206,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "Tracker",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43152,6 +43235,7 @@ The table below shows the operators you can use to define how you want to search
               "waiting_on_customer",
               "resolved",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43212,6 +43296,7 @@ types:
       - waiting_on_customer
       - resolved
     docs: The state of the ticket.
+    inline: true
     source:
       openapi: ../openapi.yml
   UpdateTicketRequestAssignment:
@@ -43234,6 +43319,7 @@ types:
         name: BackOffice
       - Tracker
     docs: Category of the Ticket.
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketTicketState:
@@ -43243,6 +43329,7 @@ types:
       - waiting_on_customer
       - resolved
     docs: The state the ticket is currently in
+    inline: true
     source:
       openapi: ../openapi.yml
   Ticket:
@@ -43328,6 +43415,7 @@ types:
       - waiting_on_customer
       - resolved
     docs: The previous state of the ticket.
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketPartTicketState:
@@ -43337,6 +43425,7 @@ types:
       - waiting_on_customer
       - resolved
     docs: The state of the ticket.
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketPart:
@@ -43391,6 +43480,7 @@ types:
         name: BackOffice
       - Tracker
     docs: Category of the Ticket Type.
+    inline: true
     source:
       openapi: ../openapi.yml
   TicketType:

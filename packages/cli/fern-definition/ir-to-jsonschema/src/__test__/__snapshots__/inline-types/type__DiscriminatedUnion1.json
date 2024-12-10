@@ -5,7 +5,8 @@
       "type": "string",
       "enum": [
         "type1",
-        "type2"
+        "type2",
+        "ref"
       ]
     }
   },
@@ -22,13 +23,17 @@
           "type": "string"
         },
         "bar": {
-          "$ref": "#/definitions/NestedInlineType1"
+          "$ref": "#/definitions/DiscriminatedUnion1InlineType1InlineType1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
         }
       },
       "required": [
         "type",
         "foo",
-        "bar"
+        "bar",
+        "ref"
       ]
     },
     {
@@ -36,34 +41,60 @@
         "type": {
           "const": "type2"
         },
-        "foo": {
+        "baz": {
           "type": "string"
         },
-        "bar": {
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "type",
+        "baz",
+        "ref"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "ref"
+        },
+        "foo": {
           "type": "string"
         }
       },
       "required": [
         "type",
-        "foo",
-        "bar"
+        "foo"
       ]
     }
   ],
   "definitions": {
-    "NestedInlineType1": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "DiscriminatedUnion1InlineType1InlineType1": {
       "type": "object",
       "properties": {
         "foo": {
           "type": "string"
         },
-        "bar": {
-          "type": "string"
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
         }
       },
       "required": [
         "foo",
-        "bar"
+        "ref"
       ],
       "additionalProperties": false
     }
