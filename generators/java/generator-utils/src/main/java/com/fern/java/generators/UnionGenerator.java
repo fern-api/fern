@@ -5,12 +5,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.constants.Constants;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.SingleUnionType;
-import com.fern.ir.model.types.SingleUnionTypeProperties;
-import com.fern.ir.model.types.SingleUnionTypeProperty;
-import com.fern.ir.model.types.TypeReference;
-import com.fern.ir.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
@@ -192,7 +187,13 @@ public final class UnionGenerator extends AbstractFileGenerator {
                                             generatorContext
                                                     .getPoetTypeNameMapper()
                                                     .convertToTypeName(
-                                                            true, TypeReference.named(samePropertiesAsObject)),
+                                                            true,
+                                                            TypeReference.named(NamedType.builder()
+                                                                    .typeId(samePropertiesAsObject.getTypeId())
+                                                                    .fernFilepath(
+                                                                            samePropertiesAsObject.getFernFilepath())
+                                                                    .name(samePropertiesAsObject.getName())
+                                                                    .build())),
                                             "value")
                                     .build())
                             .addStatement("this.$L = $L", "value", "value")
@@ -275,7 +276,13 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     return Optional.of(FieldSpec.builder(
                                     generatorContext
                                             .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, TypeReference.named(samePropertiesAsObject)),
+                                            .convertToTypeName(
+                                                    true,
+                                                    TypeReference.named(NamedType.builder()
+                                                            .typeId(samePropertiesAsObject.getTypeId())
+                                                            .fernFilepath(samePropertiesAsObject.getFernFilepath())
+                                                            .name(samePropertiesAsObject.getName())
+                                                            .build())),
                                     "value",
                                     Modifier.PRIVATE)
                             .addAnnotation(JsonUnwrapped.class)
