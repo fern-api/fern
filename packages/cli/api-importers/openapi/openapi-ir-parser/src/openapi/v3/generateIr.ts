@@ -83,6 +83,13 @@ export function generateIr({
             return null;
         })
     );
+    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
+    const globalHeaders = getGlobalHeaders(openApi);
+    const idempotencyHeaders = getIdempotencyHeaders(openApi);
+    const audiences = options.audiences ?? [];
+    const endpointsWithExample: EndpointWithExample[] = [];
+    const webhooksWithExample: WebhookWithExample[] = [];
+
     const context = new OpenAPIV3ParserContext({
         document: openApi,
         taskContext,
@@ -91,21 +98,17 @@ export function generateIr({
         source,
         namespace
     });
-    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
-    const globalHeaders = getGlobalHeaders(openApi);
-    const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
-    const audiences = options.audiences ?? [];
+    if (context.filter.hasEndpoints()) {
+        taskContext.logger.debug("Endpoint filter applied...");
+    }
 
-    const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooksWithExample: WebhookWithExample[] = [];
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
         const convertedOperations = convertPathItem(path, pathItem, openApi, context);
-
         for (const operation of convertedOperations) {
             const operationAudiences = getAudiences({ operation });
             if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {

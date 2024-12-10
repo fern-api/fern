@@ -54,7 +54,7 @@ describe("fdr", async () => {
                 context
             });
 
-            const ir = await generateIntermediateRepresentation({
+            const ir = generateIntermediateRepresentation({
                 workspace: fernWorkspace,
                 generationLanguage: undefined,
                 audiences: { type: "all" },

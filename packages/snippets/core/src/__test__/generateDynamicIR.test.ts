@@ -30,13 +30,39 @@ describe("generateDynamicIR", () => {
                             }
                         }
                     }
+                },
+                "/filtered": {
+                    get: {
+                        summary: "This endpoint should be filtered out",
+                        operationId: "filtered",
+                        responses: {
+                            "200": {
+                                description: "Successful response",
+                                content: {
+                                    "application/json": {
+                                        schema: {
+                                            type: "object",
+                                            properties: {
+                                                message: { type: "string" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         };
-        const ir = await generateDynamicIR({
+        const ir = generateDynamicIR({
             spec: {
                 type: "openapi",
-                openapi
+                openapi,
+                settings: {
+                    filter: {
+                        endpoints: ["GET /testdata"]
+                    }
+                }
             },
             language: "go"
         });

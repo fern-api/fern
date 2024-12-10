@@ -64,7 +64,7 @@ describe("openapi-ir-in-memory", async () => {
                 }
 
                 const fixtureFilePath = await getTestFixturePath(join(FIXTURES_DIR, RelativeFilePath.of(fixture.name)));
-                const document = await loader.loadDocument({
+                const document = loader.loadDocument({
                     parsed: await readAndParseOpenAPI(fixtureFilePath)
                 });
                 expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);

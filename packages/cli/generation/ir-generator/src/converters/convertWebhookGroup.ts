@@ -19,7 +19,7 @@ import { convertHttpHeader } from "./services/convertHttpService";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
-export async function convertWebhookGroup({
+export function convertWebhookGroup({
     webhooks,
     file,
     typeResolver,
@@ -31,7 +31,7 @@ export async function convertWebhookGroup({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): Promise<WebhookGroup> {
+}): WebhookGroup {
     const webhookGroup: Webhook[] = [];
     for (const [webhookId, webhook] of Object.entries(webhooks)) {
         webhookGroup.push({
@@ -43,10 +43,8 @@ export async function convertWebhookGroup({
             name: file.casingsGenerator.generateName(webhookId),
             headers:
                 webhook.headers != null
-                    ? await Promise.all(
-                          Object.entries(webhook.headers).map(([headerKey, header]) =>
-                              convertHttpHeader({ headerKey, header, file })
-                          )
+                    ? Object.entries(webhook.headers).map(([headerKey, header]) =>
+                          convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),

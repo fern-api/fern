@@ -7,9 +7,8 @@ use Seed\Core\Json\JsonProperty;
 
 /**
  * A user object. This type is used throughout the following APIs:
- *
- * - createUser
- * - getUser
+ *   - createUser
+ *   - getUser
  */
 class User extends JsonSerializableType
 {
@@ -21,10 +20,9 @@ class User extends JsonSerializableType
 
     /**
      * @var string $name The user's name. This name is unique to each user. A few examples are included below:
-
-    - Alice
-    - Bob
-    - Charlie
+     - Alice
+     - Bob
+     - Charlie
      */
     #[JsonProperty('name')]
     public string $name;

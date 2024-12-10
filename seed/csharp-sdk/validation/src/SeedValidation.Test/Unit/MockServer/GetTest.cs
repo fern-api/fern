@@ -17,9 +17,9 @@ public class GetTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
@@ -29,9 +29,9 @@ public class GetTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("decimal", "1.1")
-                    .WithParam("even", "1")
-                    .WithParam("name", "name")
+                    .WithParam("decimal", "2.2")
+                    .WithParam("even", "100")
+                    .WithParam("name", "foo")
                     .UsingGet()
             )
             .RespondWith(
@@ -44,9 +44,9 @@ public class GetTest : BaseMockServerTest
         var response = await Client.GetAsync(
             new GetRequest
             {
-                Decimal = 1.1,
-                Even = 1,
-                Name = "name",
+                Decimal = 2.2,
+                Even = 100,
+                Name = "foo",
             },
             RequestOptions
         );

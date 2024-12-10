@@ -1,7 +1,7 @@
 import { Values } from "@fern-api/core-utils";
 import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
 
-export type DefinitionFileAstVisitor<R = void | Promise<void>> = {
+export type DefinitionFileAstVisitor<R = void | void> = {
     [K in keyof DefinitionFileAstNodeTypes]: DefinitionFileAstNodeVisitor<K, R>;
 };
 
@@ -96,7 +96,7 @@ export const TypeReferenceLocation = {
 } as const;
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 
-export type DefinitionFileAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes, R = void | Promise<void>> = (
+export type DefinitionFileAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes, R = void | void> = (
     node: DefinitionFileAstNodeTypes[K],
     nodePath: NodePath
 ) => R;

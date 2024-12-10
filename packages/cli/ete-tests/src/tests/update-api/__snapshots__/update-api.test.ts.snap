@@ -7,7 +7,7 @@ exports[`fern api update > fern api update 1`] = `
   "openapi": "3.1.0",
   "info": {
     "title": "Train Travel API",
-    "description": "API for finding and booking train trips across Europe.\\n\\n## Run in Postman\\n\\nExperiment with this API in Postman, using our Postman Collection.\\n\\n[<img src=\\"https://run.pstmn.io/button.svg\\" alt=\\"Run In Postman\\" style=\\"width: 128px; height: 32px;\\">](https://app.getpostman.com/run-collection/9265903-7a75a0d0-b108-4436-ba54-c6139698dc08?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D9265903-7a75a0d0-b108-4436-ba54-c6139698dc08%26entityType%3Dcollection%26workspaceId%3Df507f69d-9564-419c-89a2-cb8e4c8c7b8f)\\n",
+    "description": "API for finding and booking train trips across Europe.\\n\\n## Run in Postman\\n\\nExperiment with this API in Postman, using our Postman Collection.\\n\\n[![Run In Postman](https://run.pstmn.io/button.svg =128pxx32px)](https://app.getpostman.com/run-collection/9265903-7a75a0d0-b108-4436-ba54-c6139698dc08?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D9265903-7a75a0d0-b108-4436-ba54-c6139698dc08%26entityType%3Dcollection%26workspaceId%3Df507f69d-9564-419c-89a2-cb8e4c8c7b8f)\\n",
     "version": "1.0.0",
     "contact": {
       "name": "Train Support",
