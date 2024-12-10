@@ -78,6 +78,33 @@ describe("imdb (sync)", () => {
         });
         expect(response.snippet).toMatchSnapshot();
     });
+
+    it("GET /movies/{movieId} w/ exportedClientName", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
+            config: buildGeneratorConfig({
+                customConfig: {
+                    exportedClientName: "FernClient"
+                }
+            })
+        });
+        const response = generator.generateSync({
+            endpoint: {
+                method: "GET",
+                path: "/movies/{movieId}"
+            },
+            auth: dynamic.AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: {
+                movieId: "movie_xyz"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+        expect(response.snippet).toMatchSnapshot();
+    });
 });
 
 describe("imdb (errors)", () => {
