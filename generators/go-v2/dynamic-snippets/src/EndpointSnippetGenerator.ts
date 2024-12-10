@@ -15,13 +15,7 @@ export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
 
-    constructor({
-        context,
-        formatter
-    }: {
-        context: DynamicSnippetsGeneratorContext;
-        formatter?: AbstractFormatter;
-    }) {
+    constructor({ context, formatter }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
         this.context = context;
         this.formatter = formatter;
     }
@@ -59,7 +53,6 @@ export class EndpointSnippetGenerator {
             formatter: this.formatter
         });
     }
-
 
     private buildCodeBlock({
         endpoint,

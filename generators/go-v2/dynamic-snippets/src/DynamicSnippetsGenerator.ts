@@ -61,9 +61,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         return result.getResponseOrThrow({ endpoint: request.endpoint });
     }
 
-    public generateSync(
-        request: DynamicSnippets.EndpointSnippetRequest
-    ): DynamicSnippets.EndpointSnippetResponse {
+    public generateSync(request: DynamicSnippets.EndpointSnippetRequest): DynamicSnippets.EndpointSnippetResponse {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
