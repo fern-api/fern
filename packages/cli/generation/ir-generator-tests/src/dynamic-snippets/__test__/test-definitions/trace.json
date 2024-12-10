@@ -41282,5 +41282,37 @@
                 "type": "json"
             }
         }
+    },
+    "environments": {
+        "defaultEnvironment": "Prod",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Prod",
+                    "name": {
+                        "originalName": "Prod",
+                        "camelCase": {
+                            "unsafeName": "prod",
+                            "safeName": "prod"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "prod",
+                            "safeName": "prod"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PROD",
+                            "safeName": "PROD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Prod",
+                            "safeName": "Prod"
+                        }
+                    },
+                    "url": "https://api.trace.come",
+                    "docs": null
+                }
+            ]
+        }
     }
 }

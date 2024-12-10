@@ -1172,5 +1172,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

@@ -47,6 +47,7 @@ exports[`generateDynamicIR > go 1`] = `
       },
     },
   },
+  "environments": undefined,
   "headers": [],
   "types": {
     "type_:GetTestDataResponse": {

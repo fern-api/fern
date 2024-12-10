@@ -1665,5 +1665,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

@@ -2504,5 +2504,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

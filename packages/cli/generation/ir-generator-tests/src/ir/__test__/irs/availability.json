@@ -830,7 +830,8 @@
                     "type": "json"
                 }
             }
-        }
+        },
+        "environments": null
     },
     "subpackages": {
         "subpackage_service": {
