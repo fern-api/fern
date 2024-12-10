@@ -77,55 +77,37 @@ export class PythonFile extends AstNode {
         uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }>;
     }): void {
         const reservedNames = this.getReservedNames();
-
-        const numTimesNameUsedInFile: Record<string, number> = Array.from(reservedNames).reduce<Record<string, number>>(
-            (acc, name) => {
-                acc[name] = 1;
-                return acc;
-            },
-            {}
-        );
-
         const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
-        references.forEach((reference) => {
-            const name = reference.alias ?? reference.name;
-            if (numTimesNameUsedInFile[name] !== undefined) {
-                numTimesNameUsedInFile[name]++;
-            } else {
-                numTimesNameUsedInFile[name] = 1;
-            }
+
+        // Build up a map of refs to their name overrides, keeping track of howmany times we've seen a name as we go.
+        const completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }> = {};
+        const nameUsageCounts: Record<string, number> = {};
+
+        // Initialize counts for reserved names
+        reservedNames.forEach((name) => {
+            nameUsageCounts[name] = 1;
         });
 
-        const nameToTimesReferenced: Record<string, number> = Object.keys(numTimesNameUsedInFile).reduce<
-            Record<string, number>
-        >((acc, name) => {
-            acc[name] = reservedNames.has(name) ? 1 : 0;
-            return acc;
-        }, {});
-
-        const completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }> = {};
         references.forEach((reference) => {
             const name = reference.alias ?? reference.name;
-
-            let numTimesNameUsedInFile: number;
-            const rawNumTimesNameUsedInFile = nameToTimesReferenced[name];
-            if (rawNumTimesNameUsedInFile === undefined) {
-                numTimesNameUsedInFile = 0;
-                nameToTimesReferenced[name] = 1;
-            } else {
-                numTimesNameUsedInFile = rawNumTimesNameUsedInFile;
-                nameToTimesReferenced[name]++;
-            }
-
             const refIdentifier = reference.getCompletePath();
 
-            if (numTimesNameUsedInFile > 0) {
+            // Get current count for this name, accounting for reserved names used by statements in the file
+            const currentCount = nameUsageCounts[name] ?? 0;
+            nameUsageCounts[name] = currentCount + 1;
+
+            // For reserved names or names we've seen before, use an auto-generated alias with a naming convention
+            // of a numbered suffix.
+            if (reservedNames.has(name) || currentCount > 0) {
                 completeRefPathsToNameOverrides[refIdentifier] = {
-                    name: `${name}_${numTimesNameUsedInFile}`,
+                    name: `${name}_${currentCount}`,
                     isAlias: true
                 };
             } else {
-                completeRefPathsToNameOverrides[refIdentifier] = { name, isAlias: !!reference.alias };
+                completeRefPathsToNameOverrides[refIdentifier] = {
+                    name,
+                    isAlias: !!reference.alias
+                };
             }
         });
 
