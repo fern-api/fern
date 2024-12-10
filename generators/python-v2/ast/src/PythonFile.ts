@@ -2,7 +2,7 @@ import { AstNode } from "./core/AstNode";
 import { Comment } from "./Comment";
 import { Writer } from "./core/Writer";
 import { Reference } from "./Reference";
-import { ModulePath } from "./core/types";
+import { ImportedName, ModulePath } from "./core/types";
 import { StarImport } from "./StarImport";
 import { Class } from "./Class";
 import { Method } from "./Method";
@@ -76,15 +76,15 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }>;
     }): void {
-        const reservedNames = this.getReservedNames();
+        const usedNames = this.getUsedNames();
         const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
 
         // Build up a map of refs to their name overrides, keeping track of howmany times we've seen a name as we go.
-        const completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }> = {};
+        const completeRefPathsToNameOverrides: Record<string, ImportedName> = {};
         const nameUsageCounts: Record<string, number> = {};
 
-        // Initialize counts for reserved names
-        reservedNames.forEach((name) => {
+        // Initialize counts for used names
+        usedNames.forEach((name) => {
             nameUsageCounts[name] = 1;
         });
 
@@ -92,13 +92,13 @@ export class PythonFile extends AstNode {
             const name = reference.alias ?? reference.name;
             const refIdentifier = reference.getCompletePath();
 
-            // Get current count for this name, accounting for reserved names used by statements in the file
+            // Get current count for this name, accounting for used names used by statements in the file
             const currentCount = nameUsageCounts[name] ?? 0;
             nameUsageCounts[name] = currentCount + 1;
 
-            // For reserved names or names we've seen before, use an auto-generated alias with a naming convention
+            // For used names or names we've seen before, use an auto-generated alias with a naming convention
             // of a numbered suffix.
-            if (reservedNames.has(name) || currentCount > 0) {
+            if (usedNames.has(name) || currentCount > 0) {
                 completeRefPathsToNameOverrides[refIdentifier] = {
                     name: `${name}_${currentCount}`,
                     isAlias: true
@@ -114,20 +114,20 @@ export class PythonFile extends AstNode {
         writer.setRefNameOverrides(completeRefPathsToNameOverrides);
     }
 
-    private getReservedNames(): Set<string> {
-        const reservedNames = new Set<string>();
+    private getUsedNames(): Set<string> {
+        const usedNames = new Set<string>();
 
         this.statements.forEach((statement) => {
             if (statement instanceof Class) {
-                reservedNames.add(statement.name);
+                usedNames.add(statement.name);
             } else if (statement instanceof Method) {
-                reservedNames.add(statement.name);
+                usedNames.add(statement.name);
             } else if (statement instanceof Field) {
-                reservedNames.add(statement.name);
+                usedNames.add(statement.name);
             }
         });
 
-        return reservedNames;
+        return usedNames;
     }
 
     private deduplicateReferences() {
@@ -138,7 +138,7 @@ export class PythonFile extends AstNode {
         >();
         for (const reference of this.references) {
             const referenceName = reference.name;
-            const fullyQualifiedPath = reference.getFullyQualifiedModulePath();
+            const fullyQualifiedPath = reference.getFullyQualifiedPath();
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
 
             if (existingRefs) {

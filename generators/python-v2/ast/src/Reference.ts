@@ -68,11 +68,11 @@ export class Reference extends AstNode {
         }
     }
 
-    public getFullyQualifiedModulePath(): string {
+    public getFullyQualifiedPath(): string {
         return this.modulePath.join(".");
     }
 
     public getCompletePath(): string {
-        return `${this.getFullyQualifiedModulePath()}.${this.name}`;
+        return `${this.getFullyQualifiedPath()}.${this.name}`;
     }
 }

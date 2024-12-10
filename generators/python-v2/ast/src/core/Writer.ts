@@ -1,24 +1,23 @@
 import { AbstractWriter } from "@fern-api/base-generator";
 import { Config } from "@wasm-fmt/ruff_fmt";
 import { Reference } from "../Reference";
+import { ImportedName } from "./types";
 
 export declare namespace Writer {}
 
 export class Writer extends AbstractWriter {
-    private completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }> = {};
+    private fullyQualifiedPathsToImportedNames: Record<string, ImportedName> = {};
 
-    public setRefNameOverrides(
-        completeRefPathsToNameOverrides: Record<string, { name: string; isAlias: boolean }>
-    ): void {
-        this.completeRefPathsToNameOverrides = completeRefPathsToNameOverrides;
+    public setRefNameOverrides(completeRefPathsToNameOverrides: Record<string, ImportedName>): void {
+        this.fullyQualifiedPathsToImportedNames = completeRefPathsToNameOverrides;
     }
 
     public unsetRefNameOverrides(): void {
-        this.completeRefPathsToNameOverrides = {};
+        this.fullyQualifiedPathsToImportedNames = {};
     }
 
-    public getRefNameOverride(reference: Reference): { name: string; isAlias: boolean } {
-        const explicitNameOverride = this.completeRefPathsToNameOverrides[reference.getCompletePath()];
+    public getRefNameOverride(reference: Reference): ImportedName {
+        const explicitNameOverride = this.fullyQualifiedPathsToImportedNames[reference.getCompletePath()];
 
         if (explicitNameOverride) {
             return explicitNameOverride;
