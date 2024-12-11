@@ -22,7 +22,8 @@ groups:
         version: 0.39.3
         output:
           location: npm
-          package-name: fern-api/docs-parsers-fern-definition
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/docs-parsers-fern-definition"
         config:
           outputSourceFiles: true
           namespaceExport: FernDefinition
