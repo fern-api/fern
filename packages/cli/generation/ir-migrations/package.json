@@ -86,6 +86,7 @@
     "@fern-fern/ir-v50-sdk": "0.0.3",
     "@fern-fern/ir-v51-sdk": "0.0.1",
     "@fern-fern/ir-v52-sdk": "0.0.1",
+    "@fern-fern/ir-v53-sdk": "0.0.1",
     "@fern-fern/ir-v6-model": "0.0.33",
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",

@@ -194,14 +194,12 @@ types:
       json: JsonResponse
       fileDownload: FileDownloadResponse
       text: TextResponse
-      bytes: BytesResponse
 
   HttpResponseBody:
     union:
       json: JsonResponse
       fileDownload: FileDownloadResponse
       text: TextResponse
-      bytes: BytesResponse
       streaming: StreamingResponse
       streamParameter:
         type: StreamParameterResponse
@@ -236,9 +234,6 @@ types:
     extends: commons.WithDocs
 
   TextResponse:
-    extends: commons.WithDocs
-  
-  BytesResponse:
     extends: commons.WithDocs
 
   StreamParameterResponse:

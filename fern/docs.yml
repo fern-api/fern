@@ -155,6 +155,10 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/fern-definition/endpoints/multipart.mdx
                 slug: multipart
+              - page: Bytes
+                path: ./pages/api-definition/fern-definition/endpoints/bytes.mdx
+                icon: fa-regular fa-server
+                slug: bytes                
               - page: Server Sent Events
                 icon: fa-regular fa-signal-stream
                 path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
