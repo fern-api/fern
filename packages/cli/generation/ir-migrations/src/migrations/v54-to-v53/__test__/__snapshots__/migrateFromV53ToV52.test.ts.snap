@@ -626,14 +626,8 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
           "requestBody": null,
           "response": {
             "body": {
-              "type": "json",
-              "value": {
-                "docs": null,
-                "responseBodyType": {
-                  "_type": "unknown",
-                },
-                "type": "response",
-              },
+              "docs": null,
+              "type": "fileDownload",
             },
             "status-code": null,
           },
