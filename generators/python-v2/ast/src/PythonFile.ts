@@ -10,6 +10,12 @@ import { Field } from "./Field";
 import { Type } from "./Type";
 import { createPythonClassName } from "./core/utils";
 
+interface UniqueReferenceValue {
+    modulePath: ModulePath;
+    references: Reference[];
+    referenceNames: Set<string>;
+}
+
 export declare namespace PythonFile {
     interface Args {
         /* The path of the Python file relative to the module */
@@ -75,7 +81,7 @@ export class PythonFile extends AstNode {
         uniqueReferences
     }: {
         writer: Writer;
-        uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }>;
+        uniqueReferences: Map<string, UniqueReferenceValue>;
     }): void {
         const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
 
@@ -132,10 +138,7 @@ export class PythonFile extends AstNode {
 
     private deduplicateReferences() {
         // Deduplicate references by their fully qualified paths
-        const uniqueReferences = new Map<
-            string,
-            { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }
-        >();
+        const uniqueReferences = new Map<string, UniqueReferenceValue>();
         for (const reference of this.references) {
             const referenceName = reference.name;
             const fullyQualifiedPath = reference.getFullyQualifiedPath();
