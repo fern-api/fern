@@ -1220,16 +1220,16 @@ exports[`fern api update > fern api update 1`] = `
             "type": "string",
             "description": "The starting station of the trip",
             "examples": [
-              "Berlin Hauptbahnhof",
-              "Paris Gare du Nord"
+              "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
+              "b2e783e1-c824-4d63-b37a-d8d698862f1d"
             ]
           },
           "destination": {
             "type": "string",
             "description": "The destination station of the trip",
             "examples": [
-              "Paris Gare du Nord",
-              "Berlin Hauptbahnhof"
+              "b2e783e1-c824-4d63-b37a-d8d698862f1d",
+              "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e"
             ]
           },
           "departure_time": {
