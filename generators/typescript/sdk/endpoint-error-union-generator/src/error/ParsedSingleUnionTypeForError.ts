@@ -16,7 +16,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -33,7 +33,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         includeUtilsOnUnionMembers,
         noOptionalProperties,
         retainOriginalCasing,
-        inlineInlineTypes
+        enableInlineTypes
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
@@ -42,7 +42,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
                 errorDeclaration,
                 noOptionalProperties,
                 retainOriginalCasing,
-                inlineInlineTypes
+                enableInlineTypes
             }),
             includeUtilsOnUnionMembers
         });
@@ -91,13 +91,13 @@ function getSingleUnionTypeGenerator({
     errorDeclaration,
     noOptionalProperties,
     retainOriginalCasing,
-    inlineInlineTypes
+    enableInlineTypes
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
     noOptionalProperties: boolean;
     retainOriginalCasing: boolean;
-    inlineInlineTypes: boolean;
+    enableInlineTypes: boolean;
 }): SingleUnionTypeGenerator<SdkContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
@@ -118,6 +118,6 @@ function getSingleUnionTypeGenerator({
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
         getReferenceToPropertyTypeForInlineUnion: (context) => context.type.getReferenceToTypeForInlineUnion(type),
         noOptionalProperties,
-        inlineInlineTypes
+        enableInlineTypes
     });
 }

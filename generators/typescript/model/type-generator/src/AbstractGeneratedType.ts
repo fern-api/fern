@@ -15,7 +15,7 @@ export declare namespace AbstractGeneratedType {
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
         /** Whether inline types should be inlined */
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -30,7 +30,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     protected includeSerdeLayer: boolean;
     protected noOptionalProperties: boolean;
     protected retainOriginalCasing: boolean;
-    protected inlineInlineTypes: boolean;
+    protected enableInlineTypes: boolean;
 
     private docs: string | undefined;
 
@@ -44,7 +44,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
-        inlineInlineTypes
+        enableInlineTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -55,7 +55,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.includeSerdeLayer = includeSerdeLayer;
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.inlineInlineTypes = inlineInlineTypes;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     protected getDocs(context: Context): string | undefined {

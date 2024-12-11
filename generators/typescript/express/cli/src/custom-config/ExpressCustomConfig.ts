@@ -17,5 +17,5 @@ export interface ExpressCustomConfig {
     allowExtraFields: boolean;
     useBigInt: boolean;
     noOptionalProperties: boolean;
-    inlineInlineTypes: boolean;
+    enableInlineTypes: boolean;
 }

@@ -31,7 +31,7 @@ export declare namespace TypeContextImpl {
         retainOriginalCasing: boolean;
         useBigInt: boolean;
         context: BaseContext;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -59,7 +59,7 @@ export class TypeContextImpl implements TypeContext {
         includeSerdeLayer,
         retainOriginalCasing,
         useBigInt,
-        inlineInlineTypes,
+        enableInlineTypes,
         context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
@@ -79,14 +79,14 @@ export class TypeContextImpl implements TypeContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
     }
 

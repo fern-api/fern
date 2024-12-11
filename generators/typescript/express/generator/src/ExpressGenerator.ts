@@ -190,7 +190,7 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
-            inlineInlineTypes: false
+            enableInlineTypes: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -559,7 +559,7 @@ export class ExpressGenerator {
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             useBigInt: this.config.useBigInt,
-            inlineInlineTypes: false
+            enableInlineTypes: false
         });
     }
 }

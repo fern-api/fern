@@ -121,7 +121,7 @@ export declare namespace SdkGenerator {
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
         omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
@@ -302,7 +302,7 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
             retainOriginalCasing: config.retainOriginalCasing,
-            inlineInlineTypes: config.inlineInlineTypes
+            enableInlineTypes: config.enableInlineTypes
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -322,7 +322,7 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
-            inlineInlineTypes: config.inlineInlineTypes
+            enableInlineTypes: config.enableInlineTypes
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -546,10 +546,10 @@ export class SdkGenerator {
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
-        if (this.config.inlineInlineTypes) {
+        if (this.config.enableInlineTypes) {
             return Object.fromEntries(
                 Object.entries(this.intermediateRepresentation.types).filter(
-                    ([_, typeDeclaration]) => typeDeclaration.inline !== true
+                    ([_, typeDeclaration]) => !typeDeclaration.inline
                 )
             );
         }
@@ -1297,7 +1297,7 @@ export class SdkGenerator {
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
-            inlineInlineTypes: this.config.inlineInlineTypes,
+            enableInlineTypes: this.config.enableInlineTypes,
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
             useBigInt: this.config.useBigInt,

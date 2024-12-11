@@ -209,11 +209,11 @@ fixtures:
   inline-types:
     - customConfig:
         noSerdeLayer: true
-        inlineInlineTypes: true
+        enableInlineTypes: true
       outputFolder: inline
     - customConfig:
         noSerdeLayer: true
-        inlineInlineTypes: false
+        enableInlineTypes: false
       outputFolder: no-inline
 scripts:
   - docker: fernapi/ts-seed

@@ -50,7 +50,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        if (!this.inlineInlineTypes) {
+        if (!this.enableInlineTypes) {
             return undefined;
         }
 

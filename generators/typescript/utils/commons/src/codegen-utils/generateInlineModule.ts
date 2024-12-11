@@ -8,6 +8,7 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction
 } from "ts-morph";
+import { InlineConsts } from "./inlineConsts";
 
 export function generateInlinePropertiesModule({
     generateStatements,
@@ -27,37 +28,11 @@ export function generateInlinePropertiesModule({
         declarationKind: ModuleDeclarationKind.Namespace,
         statements: inlineProperties.flatMap(
             ([propertyName, typeReference, typeDeclaration]: [string, TypeReference, TypeDeclaration]) => {
-                const listOrSetStatementGenerator = () => {
-                    const itemTypeName = "Item";
-                    const statements: StatementStructures[] = [];
-                    const listType: TypeAliasDeclarationStructure = {
-                        kind: StructureKind.TypeAlias,
-                        name: propertyName,
-                        type: `${propertyName}.${itemTypeName}[]`,
-                        isExported: true
-                    };
-                    statements.push(listType);
-
-                    const listModule: ModuleDeclarationStructure = {
-                        kind: StructureKind.Module,
-                        declarationKind: ModuleDeclarationKind.Namespace,
-                        isExported: true,
-                        hasDeclareKeyword: false,
-                        name: propertyName,
-                        statements: generateStatements(typeDeclaration.name, itemTypeName)
-                    };
-
-                    statements.push(listModule);
-                    return statements;
-                };
                 return generateTypeVisitor(typeReference, {
-                    named: () => {
-                        return generateStatements(typeDeclaration.name, propertyName);
-                    },
-                    list: listOrSetStatementGenerator,
-                    set: listOrSetStatementGenerator,
+                    named: () => generateStatements(typeDeclaration.name, propertyName),
+                    list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
+                    set: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
                     map: () => {
-                        const valueTypeName = "Value";
                         const statements: StatementStructures[] = [];
                         const mapModule: ModuleDeclarationStructure = {
                             kind: StructureKind.Module,
@@ -65,7 +40,7 @@ export function generateInlinePropertiesModule({
                             isExported: true,
                             hasDeclareKeyword: false,
                             name: propertyName,
-                            statements: generateStatements(typeDeclaration.name, valueTypeName)
+                            statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
                         };
 
                         statements.push(mapModule);
@@ -81,49 +56,56 @@ export function generateInlinePropertiesModule({
     };
 }
 
+function propertyListOrSetStatementGenerator(
+    propertyName: string,
+    typeDeclaration: TypeDeclaration,
+    generateStatements: GenerateStatements
+) {
+    const statements: StatementStructures[] = [];
+    const listType: TypeAliasDeclarationStructure = {
+        kind: StructureKind.TypeAlias,
+        name: propertyName,
+        type: `${propertyName}.${InlineConsts.LIST_ITEM_TYPE_NAME}[]`,
+        isExported: true
+    };
+    statements.push(listType);
+
+    const listModule: ModuleDeclarationStructure = {
+        kind: StructureKind.Module,
+        declarationKind: ModuleDeclarationKind.Namespace,
+        isExported: true,
+        hasDeclareKeyword: false,
+        name: propertyName,
+        statements: generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME)
+    };
+
+    statements.push(listModule);
+    return statements;
+}
+
 export function generateInlineAliasModule({
     generateStatements,
     getTypeDeclaration,
     aliasTypeName,
     typeReference
 }: InlineAliasParams): ModuleDeclarationStructure | undefined {
-    const listOrSetStatementGenerator = (
-        listItemType: TypeReference
-    ): undefined | string | WriterFunction | (string | WriterFunction | StatementStructures)[] => {
-        const namedType = getNamedType(listItemType);
-        if (!namedType) {
-            return undefined;
-        }
-        const typeDeclaration = getTypeDeclaration(namedType);
-        if (typeDeclaration.inline !== true) {
-            return undefined;
-        }
-
-        const itemTypeName = "Item";
-        return generateStatements(typeDeclaration.name, itemTypeName);
-    };
     const inlineModuleStatements = generateTypeVisitor(typeReference, {
-        list: listOrSetStatementGenerator,
-        set: listOrSetStatementGenerator,
+        list: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
+        set: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
         map: (mapType: MapType) => {
-            const valueTypeName = "Value";
             const namedType = getNamedType(mapType.valueType);
             if (!namedType) {
                 return undefined;
             }
             const typeDeclaration = getTypeDeclaration(namedType);
-            if (typeDeclaration.inline !== true) {
+            if (!typeDeclaration.inline) {
                 return undefined;
             }
 
-            return generateStatements(typeDeclaration.name, valueTypeName);
+            return generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME);
         },
-        named: () => {
-            return undefined;
-        },
-        other: () => {
-            return undefined;
-        }
+        named: () => undefined,
+        other: () => undefined
     });
     if (!inlineModuleStatements) {
         return undefined;
@@ -136,6 +118,23 @@ export function generateInlineAliasModule({
         declarationKind: ModuleDeclarationKind.Namespace,
         statements: inlineModuleStatements
     };
+}
+
+function aliasListOrSetStatementGenerator(
+    listItemType: TypeReference,
+    generateStatements: GenerateStatements,
+    getTypeDeclaration: GetTypeDeclaration
+): undefined | string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+    const namedType = getNamedType(listItemType);
+    if (!namedType) {
+        return undefined;
+    }
+    const typeDeclaration = getTypeDeclaration(namedType);
+    if (!typeDeclaration.inline) {
+        return undefined;
+    }
+
+    return generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME);
 }
 
 function getInlineProperties(
@@ -162,7 +161,7 @@ function getInlineTypeDeclaration(
         return undefined;
     }
     const typeDeclaration = getTypeDeclaration(namedType);
-    if (typeDeclaration.inline !== true) {
+    if (!typeDeclaration.inline) {
         return undefined;
     }
 

@@ -3,6 +3,7 @@ import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { assertNever } from "@fern-api/core-utils";
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { InlineConsts } from "@fern-typescript/commons/src/codegen-utils/inlineConsts";
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
@@ -42,7 +43,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
 
         let typeNodeWithoutUndefined: ts.TypeNode;
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (this.inlineInlineTypes && typeDeclaration.inline) {
+        if (this.enableInlineTypes && typeDeclaration.inline) {
             if (ConvertTypeReferenceParams.isInlinePropertyParams(params)) {
                 typeNodeWithoutUndefined = this.createTypeRefenceForInlinePropertyNamedType(params);
             } else if (ConvertTypeReferenceParams.isInlineAliasParams(params)) {
@@ -82,13 +83,13 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         let name: ts.EntityName = ts.factory.createIdentifier(params.aliasTypeName);
         switch (params.genericIn) {
             case "list":
-                name = ts.factory.createQualifiedName(name, "Item");
+                name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME);
                 break;
             case "map":
-                name = ts.factory.createQualifiedName(name, "Value");
+                name = ts.factory.createQualifiedName(name, InlineConsts.MAP_VALUE_TYPE_NAME);
                 break;
             case "set":
-                name = ts.factory.createQualifiedName(name, "Item");
+                name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME);
                 break;
             default:
                 return ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName, params));
@@ -108,13 +109,13 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         );
         switch (genericIn) {
             case "list":
-                name = ts.factory.createQualifiedName(name, "Item");
+                name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME);
                 break;
             case "map":
-                name = ts.factory.createQualifiedName(name, "Value");
+                name = ts.factory.createQualifiedName(name, InlineConsts.MAP_VALUE_TYPE_NAME);
                 break;
             case "set":
-                name = ts.factory.createQualifiedName(name, "Item");
+                name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME);
                 break;
             case undefined:
                 break;

@@ -49,7 +49,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
                     noOptionalProperties: this.noOptionalProperties,
-                    inlineInlineTypes: this.inlineInlineTypes
+                    enableInlineTypes: this.enableInlineTypes
                 })
         );
 
@@ -74,7 +74,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             inline: this.inline,
-            inlineInlineTypes: this.inlineInlineTypes
+            enableInlineTypes: this.enableInlineTypes
         });
     }
 

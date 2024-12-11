@@ -33,7 +33,7 @@ export declare namespace TypeContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
         context: BaseContext;
     }
 }
@@ -66,7 +66,7 @@ export class TypeContextImpl implements TypeContext {
         includeSerdeLayer,
         retainOriginalCasing,
         useBigInt,
-        inlineInlineTypes,
+        enableInlineTypes,
         context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
@@ -88,14 +88,14 @@ export class TypeContextImpl implements TypeContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
     }
 

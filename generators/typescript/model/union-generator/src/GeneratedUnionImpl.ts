@@ -43,7 +43,7 @@ export declare namespace GeneratedUnionImpl {
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         inline: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -73,7 +73,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private includeConstBuilders: boolean;
     private noOptionalProperties: boolean;
     private inline: boolean;
-    private inlineInlineTypes: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         typeName,
@@ -90,7 +90,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         retainOriginalCasing,
         noOptionalProperties,
         inline,
-        inlineInlineTypes
+        enableInlineTypes
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -106,7 +106,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.includeConstBuilders = includeConstBuilders;
         this.noOptionalProperties = noOptionalProperties;
         this.inline = inline;
-        this.inlineInlineTypes = inlineInlineTypes;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public generateStatements(
@@ -287,7 +287,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         singleUnionType: ParsedSingleUnionType<Context>,
         context: Context
     ): ts.TypeNode {
-        if (this.inlineInlineTypes && this.inline) {
+        if (this.enableInlineTypes && this.inline) {
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(
                     ts.factory.createIdentifier(this.typeName),

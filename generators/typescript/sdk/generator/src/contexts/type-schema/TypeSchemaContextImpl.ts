@@ -27,7 +27,7 @@ export declare namespace TypeSchemaContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -58,7 +58,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         includeSerdeLayer,
         retainOriginalCasing,
         useBigInt,
-        inlineInlineTypes
+        enableInlineTypes
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
@@ -70,7 +70,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
@@ -79,7 +79,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            inlineInlineTypes
+            enableInlineTypes
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;
@@ -165,7 +165,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
-        throw new Error("Inline unions are not supported in schemas.");
+        throw new Error("Internal error; inline unions are not supported in schemas.");
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {

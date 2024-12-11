@@ -55,7 +55,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -69,7 +69,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
     protected inlineFileProperties: boolean;
-    private inlineInlineTypes: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         service,
@@ -79,7 +79,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
-        inlineInlineTypes
+        enableInlineTypes
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -88,7 +88,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
-        this.inlineInlineTypes = inlineInlineTypes;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -240,7 +240,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         inlinedRequestBody: InlinedRequestBody,
         context: SdkContext
     ): ModuleDeclarationStructure | undefined {
-        if (!this.inlineInlineTypes) {
+        if (!this.enableInlineTypes) {
             return undefined;
         }
 

@@ -18,7 +18,7 @@ export declare namespace AbstractTypeReferenceConverter {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         useBigInt: boolean;
-        inlineInlineTypes: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -89,20 +89,20 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected treatUnknownAsAny: boolean;
     protected includeSerdeLayer: boolean;
     protected useBigInt: boolean;
-    protected inlineInlineTypes: boolean;
+    protected enableInlineTypes: boolean;
 
     constructor({
         typeResolver,
         treatUnknownAsAny,
         includeSerdeLayer,
         useBigInt,
-        inlineInlineTypes
+        enableInlineTypes
     }: AbstractTypeReferenceConverter.Init) {
         this.typeResolver = typeResolver;
         this.treatUnknownAsAny = treatUnknownAsAny;
         this.includeSerdeLayer = includeSerdeLayer;
         this.useBigInt = useBigInt;
-        this.inlineInlineTypes = inlineInlineTypes;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public convert(params: ConvertTypeReferenceParams): T {

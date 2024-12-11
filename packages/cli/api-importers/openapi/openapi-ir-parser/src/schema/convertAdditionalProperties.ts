@@ -130,35 +130,23 @@ export function convertAdditionalProperties({
 function addInline(schema: SchemaWithExample): SchemaWithExample {
     switch (schema.type) {
         case "array":
-            schema.inline = true;
-            break;
         case "enum":
-            schema.inline = true;
-            break;
-        case "literal":
-            break;
         case "map":
-            schema.inline = true;
-            break;
-        case "nullable":
-            schema.inline = true;
-            schema.value = addInline(schema.value);
-            break;
         case "object":
             schema.inline = true;
             break;
-        case "oneOf":
-            schema.value.inline = true;
+        case "literal":
+        case "primitive":
+        case "reference":
+        case "unknown":
             break;
+        case "nullable":
         case "optional":
             schema.inline = true;
             schema.value = addInline(schema.value);
             break;
-        case "primitive":
-            break;
-        case "reference":
-            break;
-        case "unknown":
+        case "oneOf":
+            schema.value.inline = true;
             break;
         default:
             assertNever(schema);

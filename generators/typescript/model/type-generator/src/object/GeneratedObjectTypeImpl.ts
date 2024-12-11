@@ -206,7 +206,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        if (!this.inlineInlineTypes) {
+        if (!this.enableInlineTypes) {
             return undefined;
         }
         return generateInlinePropertiesModule({
