@@ -3,7 +3,7 @@
         Defaults are no longer set on datetimes when converting to docs shapes.
       type: fix
   irVersion: 53
-  version: 0.45.4-rc1
+  version: 0.45.4
 
 - changelogEntry:
     - summary: |
