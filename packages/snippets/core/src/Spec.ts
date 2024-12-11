@@ -6,6 +6,6 @@ export type Spec = OpenAPISpec;
 export interface OpenAPISpec {
     type: "openapi";
     openapi: OpenAPITypes.Document;
-    overrides?: OpenAPITypes.Document;
+    overrides?: Partial<OpenAPITypes.Document>;
     settings?: OpenAPIWorkspace.Settings;
 }
