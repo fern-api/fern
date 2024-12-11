@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Don't generate pagination with nonempty path. Fixes pagination seed tests breaking.
+      type: fix
+  createdAt: '2024-12-10'
+  irVersion: 53
+  version: 2.6.0
+- changelogEntry:
+    - summary: |
         Bump IR version to latest (v53)
       type: chore
   createdAt: '2024-12-10'
