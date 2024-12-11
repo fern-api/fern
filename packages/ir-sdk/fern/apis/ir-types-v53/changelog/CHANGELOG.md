@@ -5,15 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v54.0.0] - 2024-12-11
-
-- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages - 
-  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case. 
-
-## [v53.24.0] - 2024-11-04
-
-- Feature: The dynamic snippets IR supports a configurable baseURL and/or environment.
-
 ## [v53.23.0] - 2024-11-04
 
 - Internal: Update the Dynamic IR discriminator so that the generated types are unaffected
