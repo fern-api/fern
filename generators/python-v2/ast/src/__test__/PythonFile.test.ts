@@ -339,6 +339,19 @@ describe("PythonFile", () => {
 
         local_class.add(
             python.field({
+                name: "car",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "transportation", "vehicles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
                 name: "automobile",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
@@ -367,6 +380,6 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
-        expect(file.getReferences()).toHaveLength(3);
+        expect(file.getReferences()).toHaveLength(4);
     });
 });
