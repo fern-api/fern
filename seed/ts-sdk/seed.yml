@@ -206,7 +206,7 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
-  inline-types:
+  ts-inline-types:
     - customConfig:
         noSerdeLayer: true
         enableInlineTypes: true
