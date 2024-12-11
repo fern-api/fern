@@ -713,6 +713,9 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
                     @Override
                     public Void visitCursor(CursorPagination cursor) {
+                        if (cursor.getPage() == null || cursor.getPage().getProperty() == null) {
+                            return null;
+                        }
                         SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                                 cursor.getNext().getPropertyPath(),
                                 cursor.getNext().getProperty(),
@@ -797,6 +800,9 @@ public abstract class AbstractEndpointWriter {
 
                     @Override
                     public Void visitOffset(OffsetPagination offset) {
+                        if (offset.getPage() == null || offset.getPage().getProperty() == null) {
+                            return null;
+                        }
                         com.fern.ir.model.types.TypeReference pageType = offset.getPage()
                                 .getProperty()
                                 .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
