@@ -73,12 +73,9 @@ function convertHttpResponse(
         statusCode: response.statusCode,
         body:
             response.body?.type === "bytes"
-                ? IrVersions.V53.HttpResponseBody.json(
-                      IrVersions.V53.JsonResponse.response({
-                          docs: undefined,
-                          responseBodyType: IrVersions.V53.TypeReference.unknown()
-                      })
-                  )
+                ? IrVersions.V53.HttpResponseBody.fileDownload({
+                      docs: undefined
+                  })
                 : // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (response.body as any)
     };
