@@ -90,6 +90,10 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/openapi/endpoints/multipart.mdx
                 slug: multipart
+              - page: Bytes
+                path: ./pages/api-definition/openapi/endpoints/bytes.mdx
+                icon: fa-regular fa-server
+                slug: bytes
               - page: Server Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
                 icon: fa-regular fa-signal-stream
