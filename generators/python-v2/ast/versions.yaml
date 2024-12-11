@@ -1,3 +1,9 @@
+- version: 0.0.15
+  createdAt: '2024-12-11'
+  changelogEntry:
+    - type: internal
+      summary: Repeated class name import support.
+  irVersion: 33
 - version: 0.0.14
   createdAt: '2024-12-01'
   changelogEntry:
