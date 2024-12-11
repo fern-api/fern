@@ -7,6 +7,13 @@
 
 - changelogEntry:
     - summary: |
+        Bumped Java IR to latest (v53)
+      type: chore
+  irVersion: 53
+  version: 0.45.4-rc1
+
+- changelogEntry:
+    - summary: |
         The CLI prompts the user to confirm output directory overwrites on fern generate.
       type: fix
   irVersion: 53

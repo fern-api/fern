@@ -2,17 +2,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.types.AliasTypeDeclaration;
-import com.fern.ir.model.types.ContainerType;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.Literal;
-import com.fern.ir.model.types.MapType;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.PrimitiveTypeV1;
-import com.fern.ir.model.types.ResolvedNamedType;
-import com.fern.ir.model.types.ResolvedTypeReference;
-import com.fern.ir.model.types.TypeDeclaration;
-import com.fern.ir.model.types.TypeReference;
+import com.fern.ir.model.types.*;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -57,9 +47,9 @@ public final class PoetTypeNameMapper {
         }
 
         @Override
-        public TypeName visitNamed(DeclaredTypeName declaredTypeName) {
+        public TypeName visitNamed(NamedType named) {
             if (!customConfig.wrappedAliases()) {
-                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(declaredTypeName.getTypeId());
+                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(named.getTypeId());
                 boolean isAlias = typeDeclaration.getShape().isAlias();
                 if (isAlias) {
                     AliasTypeDeclaration aliasTypeDeclaration =
@@ -67,7 +57,11 @@ public final class PoetTypeNameMapper {
                     return aliasTypeDeclaration.getResolvedType().visit(this);
                 }
             }
-            return poetClassNameFactory.getTypeClassName(declaredTypeName);
+            return poetClassNameFactory.getTypeClassName(DeclaredTypeName.builder()
+                    .typeId(named.getTypeId())
+                    .fernFilepath(named.getFernFilepath())
+                    .name(named.getName())
+                    .build());
         }
 
         @Override
@@ -137,6 +131,30 @@ public final class PoetTypeNameMapper {
                 return TypeName.LONG;
             }
             return ClassName.get(Long.class);
+        }
+
+        @Override
+        public TypeName visitUint() {
+            if (primitiveAllowed) {
+                return TypeName.LONG;
+            }
+            return ClassName.get(Long.class);
+        }
+
+        @Override
+        public TypeName visitUint64() {
+            if (primitiveAllowed) {
+                return TypeName.LONG;
+            }
+            return ClassName.get(Long.class);
+        }
+
+        @Override
+        public TypeName visitFloat() {
+            if (primitiveAllowed) {
+                return TypeName.FLOAT;
+            }
+            return ClassName.get(Float.class);
         }
 
         @Override

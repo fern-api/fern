@@ -9,6 +9,8 @@ import * as FernIr from "../../../../../index";
  */
 export interface EndpointSnippetRequest {
     endpoint: FernIr.dynamic.EndpointLocation;
+    baseUrl: string | undefined;
+    environment: FernIr.dynamic.EnvironmentValues | undefined;
     auth: FernIr.dynamic.AuthValues | undefined;
     pathParameters: FernIr.dynamic.Values | undefined;
     queryParameters: FernIr.dynamic.Values | undefined;

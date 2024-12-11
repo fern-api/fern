@@ -1,6 +1,7 @@
 imports:
   commons: ../commons.yml
   endpoints: ./endpoints.yml
+  environment: ../environment.yml
   types: ./types.yml
 types:
   DynamicIntermediateRepresentation:
@@ -24,3 +25,4 @@ types:
           The headers that are required on every request. These headers
           are typically included in the SDK's client constructor.
         type: optional<list<types.NamedParameter>>
+      environments: optional<environment.EnvironmentsConfig>

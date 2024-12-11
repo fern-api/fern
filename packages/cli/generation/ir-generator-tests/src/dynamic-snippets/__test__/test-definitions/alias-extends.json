@@ -316,5 +316,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }
