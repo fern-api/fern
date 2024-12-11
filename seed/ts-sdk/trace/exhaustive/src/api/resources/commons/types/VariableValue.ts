@@ -18,58 +18,58 @@ export type VariableValue =
     | SeedTrace.VariableValue.NullValue
     | SeedTrace.VariableValue._Unknown;
 
-export declare namespace VariableValue {
-    interface IntegerValue extends _Utils {
+export namespace VariableValue {
+    export interface IntegerValue extends _Utils {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue extends _Utils {
+    export interface BooleanValue extends _Utils {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue extends _Utils {
+    export interface DoubleValue extends _Utils {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue extends _Utils {
+    export interface StringValue extends _Utils {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue extends _Utils {
+    export interface CharValue extends _Utils {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends SeedTrace.MapValue, _Utils {
+    export interface MapValue extends SeedTrace.MapValue, _Utils {
         type: "mapValue";
     }
 
-    interface ListValue extends _Utils {
+    export interface ListValue extends _Utils {
         type: "listValue";
         value: SeedTrace.VariableValue[];
     }
 
-    interface BinaryTreeValue extends SeedTrace.BinaryTreeValue, _Utils {
+    export interface BinaryTreeValue extends SeedTrace.BinaryTreeValue, _Utils {
         type: "binaryTreeValue";
     }
 
-    interface SinglyLinkedListValue extends SeedTrace.SinglyLinkedListValue, _Utils {
+    export interface SinglyLinkedListValue extends SeedTrace.SinglyLinkedListValue, _Utils {
         type: "singlyLinkedListValue";
     }
 
-    interface DoublyLinkedListValue extends SeedTrace.DoublyLinkedListValue, _Utils {
+    export interface DoublyLinkedListValue extends SeedTrace.DoublyLinkedListValue, _Utils {
         type: "doublyLinkedListValue";
     }
 
-    interface NullValue extends _Utils {
+    export interface NullValue extends _Utils {
         type: "nullValue";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -12,28 +12,28 @@ export type SubmissionRequest =
     | SeedTrace.SubmissionRequest.Stop
     | SeedTrace.SubmissionRequest._Unknown;
 
-export declare namespace SubmissionRequest {
-    interface InitializeProblemRequest extends SeedTrace.InitializeProblemRequest, _Utils {
+export namespace SubmissionRequest {
+    export interface InitializeProblemRequest extends SeedTrace.InitializeProblemRequest, _Utils {
         type: "initializeProblemRequest";
     }
 
-    interface InitializeWorkspaceRequest extends _Utils {
+    export interface InitializeWorkspaceRequest extends _Utils {
         type: "initializeWorkspaceRequest";
     }
 
-    interface SubmitV2 extends SeedTrace.SubmitRequestV2, _Utils {
+    export interface SubmitV2 extends SeedTrace.SubmitRequestV2, _Utils {
         type: "submitV2";
     }
 
-    interface WorkspaceSubmit extends SeedTrace.WorkspaceSubmitRequest, _Utils {
+    export interface WorkspaceSubmit extends SeedTrace.WorkspaceSubmitRequest, _Utils {
         type: "workspaceSubmit";
     }
 
-    interface Stop extends SeedTrace.StopRequest, _Utils {
+    export interface Stop extends SeedTrace.StopRequest, _Utils {
         type: "stop";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -26,15 +26,14 @@ export declare namespace File_ {
 }
 
 export class File_ {
-    constructor(protected readonly _options: File_.Options) {}
-
     protected _notification: Notification | undefined;
+    protected _service: Service | undefined;
+
+    constructor(protected readonly _options: File_.Options) {}
 
     public get notification(): Notification {
         return (this._notification ??= new Notification(this._options));
     }
-
-    protected _service: Service | undefined;
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

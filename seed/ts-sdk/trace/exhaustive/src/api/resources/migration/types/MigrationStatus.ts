@@ -10,7 +10,6 @@ export type MigrationStatus =
      * The migration is failed */
     | "FAILED"
     | "FINISHED";
-
 export const MigrationStatus = {
     Running: "RUNNING",
     Failed: "FAILED",
@@ -29,7 +28,7 @@ export const MigrationStatus = {
     },
 } as const;
 
-export declare namespace MigrationStatus {
+export namespace MigrationStatus {
     interface Visitor<R> {
         running: () => R;
         failed: () => R;

@@ -8,13 +8,13 @@ export type TestCaseImplementationDescriptionBoard =
     | SeedTrace.v2.TestCaseImplementationDescriptionBoard.Html
     | SeedTrace.v2.TestCaseImplementationDescriptionBoard.ParamId;
 
-export declare namespace TestCaseImplementationDescriptionBoard {
-    interface Html {
+export namespace TestCaseImplementationDescriptionBoard {
+    export interface Html {
         type: "html";
         value: string;
     }
 
-    interface ParamId {
+    export interface ParamId {
         type: "paramId";
         value: SeedTrace.v2.ParameterId;
     }

@@ -6,13 +6,13 @@ import * as SeedApi from "../../../index";
 
 export type ContainerValue = SeedApi.ContainerValue.List | SeedApi.ContainerValue.Optional;
 
-export declare namespace ContainerValue {
-    interface List {
+export namespace ContainerValue {
+    export interface List {
         type: "list";
         value: SeedApi.FieldValue[];
     }
 
-    interface Optional {
+    export interface Optional {
         type: "optional";
         value?: SeedApi.FieldValue;
     }

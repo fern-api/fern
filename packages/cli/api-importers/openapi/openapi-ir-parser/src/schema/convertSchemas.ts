@@ -126,7 +126,8 @@ export function convertReferenceObject(
             value: referenceSchema,
             description: undefined,
             availability: undefined,
-            groupName: undefined
+            groupName: undefined,
+            inline: undefined
         });
     } else {
         return referenceSchema;
@@ -269,7 +270,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             groupName,
             context,
-            source
+            source,
+            inline: undefined
         });
     }
 
@@ -299,7 +301,8 @@ export function convertSchemaObject(
                 ),
                 groupName,
                 description: schema.description,
-                availability
+                availability,
+                inline: undefined
             });
         } else if (secondElement === "null") {
             return SchemaWithExample.nullable({
@@ -323,7 +326,8 @@ export function convertSchemaObject(
                 ),
                 groupName,
                 description: schema.description,
-                availability
+                availability,
+                inline: undefined
             });
         }
     }
@@ -666,7 +670,8 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     groupName,
                     context,
-                    source
+                    source,
+                    inline: undefined
                 });
             }
 
@@ -1000,7 +1005,8 @@ function maybeInjectDescriptionOrGroupName(
             value: schema.value,
             description,
             availability: schema.availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
@@ -1010,7 +1016,8 @@ function maybeInjectDescriptionOrGroupName(
             value: schema.value,
             description,
             availability: schema.availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return schema;
@@ -1072,7 +1079,8 @@ export function wrapLiteral({
             }),
             groupName,
             description,
-            availability
+            availability,
+            inline: undefined
         });
     }
     return SchemaWithExample.literal({
@@ -1122,7 +1130,8 @@ export function wrapPrimitive({
             }),
             groupName,
             description,
-            availability
+            availability,
+            inline: undefined
         });
     }
     return SchemaWithExample.primitive({

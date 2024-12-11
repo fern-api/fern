@@ -2052,6 +2052,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "GATHERING",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2436,6 +2437,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "RUPAY",
               "JCB",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2447,6 +2449,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "DEBIT",
               "PREPAID",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2456,6 +2459,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "VIRTUAL",
               "PHYSICAL",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2602,6 +2606,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "CLOSED",
               "HIT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2614,6 +2619,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "DOCUMENTS_COLLECTED",
               "OTHER",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2661,6 +2667,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "REFUND",
               "DECLINED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2736,6 +2743,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "LARGE",
               "UNKNOWN",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3126,6 +3134,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": "N/A",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3406,6 +3415,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "ZMW",
               "ZWL",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3805,6 +3815,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "IN_PROGRESS",
               "MANUAL_REVIEW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4000,6 +4011,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "IP_ADDRESS",
               "STRING",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4010,6 +4022,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BLACKLIST",
               "FLAGRIGHT_LIBRARY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4067,6 +4080,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BusinessPayment",
               "PromotionPayment",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4106,6 +4120,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "WALLET",
               "CHECK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4203,6 +4218,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "LOW",
               "VERY_LOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4236,6 +4252,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BLOCK",
               "SUSPEND",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4274,6 +4291,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "ORIGIN",
               "DESTINATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4305,6 +4323,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "SANCTIONS_PEP",
               "SANCTIONS_PEP_ADVERSE_MEDIA",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4316,6 +4335,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "CTF",
               "SCREENING",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4420,6 +4440,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "PAYMENT_BENEFICIARY_NAME",
               "BANK_NAME",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4685,6 +4706,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "REFUNDED",
               "SUCCESSFUL",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4698,6 +4720,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "REFUND",
               "OTHER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4980,6 +5003,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "F",
               "NB",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5049,6 +5073,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "RETAIL",
               "PROFESSIONAL",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5058,6 +5083,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "REGISTERED",
               "UNREGISTERED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5075,6 +5101,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "SUSPENDED",
               "BLOCKED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5185,6 +5212,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "USER_STATE_UPDATED",
               "ALERT_CLOSED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5276,6 +5304,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     enum:
       - RETAIL
       - PROFESSIONAL
+    inline: true
     source:
       openapi: ../openapi.yml
   UserOptional:
@@ -5832,6 +5861,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - F
       - NB
     docs: Gender of the individual - Male, Female or Non-Binary
+    inline: true
     source:
       openapi: ../openapi.yml
   UserDetails:
@@ -5868,6 +5898,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - LARGE
       - UNKNOWN
     docs: Segmentation of the business user
+    inline: true
     source:
       openapi: ../openapi.yml
   CompanyGeneralDetails:
@@ -6034,6 +6065,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - RUPAY
       - JCB
     docs: Brand of Card
+    inline: true
     source:
       openapi: ../openapi.yml
   CardDetailsCardFunding:
@@ -6042,12 +6074,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - DEBIT
       - PREPAID
     docs: Funding of Card
+    inline: true
     source:
       openapi: ../openapi.yml
   CardDetailsCardType:
     enum:
       - VIRTUAL
       - PHYSICAL
+    inline: true
     source:
       openapi: ../openapi.yml
   CardDetails:
@@ -6229,6 +6263,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - BusinessPayment
       - PromotionPayment
     docs: Type of transaction
+    inline: true
     source:
       openapi: ../openapi.yml
   MpesaDetails:
@@ -6391,6 +6426,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - CLOSED
       - HIT
     docs: Status of a case. E.g. Open, Closed etc.
+    inline: true
     source:
       openapi: ../openapi.yml
   CaseManagementEventCaseStatusReason:
@@ -6402,6 +6438,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     docs: >-
       Case status reason. E.g. Closed & False Positive, Closed & Investigation
       Completed etc.
+    inline: true
     source:
       openapi: ../openapi.yml
   CaseManagementEvent:
@@ -6767,6 +6804,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - CANCELED
       - REFUND
       - DECLINED
+    inline: true
     source:
       openapi: ../openapi.yml
   CheckDetails:

@@ -8,13 +8,13 @@ import * as core from "../../../core";
 
 export const PostRootRequest: core.serialization.Schema<serializers.PostRootRequest.Raw, SeedObject.PostRootRequest> =
     core.serialization.object({
-        bar: core.serialization.lazyObject(() => serializers.InlineType1),
+        bar: core.serialization.lazyObject(() => serializers.RequestTypeInlineType1),
         foo: core.serialization.string(),
     });
 
 export declare namespace PostRootRequest {
     interface Raw {
-        bar: serializers.InlineType1.Raw;
+        bar: serializers.RequestTypeInlineType1.Raw;
         foo: string;
     }
 }

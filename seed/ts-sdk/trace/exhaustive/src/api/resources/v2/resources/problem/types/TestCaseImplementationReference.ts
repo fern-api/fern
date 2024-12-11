@@ -9,17 +9,17 @@ export type TestCaseImplementationReference =
     | SeedTrace.v2.TestCaseImplementationReference.Implementation
     | SeedTrace.v2.TestCaseImplementationReference._Unknown;
 
-export declare namespace TestCaseImplementationReference {
-    interface TemplateId extends _Utils {
+export namespace TestCaseImplementationReference {
+    export interface TemplateId extends _Utils {
         type: "templateId";
         value: SeedTrace.v2.TestCaseTemplateId;
     }
 
-    interface Implementation extends SeedTrace.v2.TestCaseImplementation, _Utils {
+    export interface Implementation extends SeedTrace.v2.TestCaseImplementation, _Utils {
         type: "implementation";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

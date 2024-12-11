@@ -5,6 +5,6 @@
 import * as SeedObject from "../../index";
 
 export interface PostRootRequest {
-    bar: SeedObject.InlineType1;
+    bar: SeedObject.RequestTypeInlineType1;
     foo: string;
 }

@@ -509,6 +509,7 @@
               "Monthly",
               "Annual",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -533,6 +534,7 @@
               "Engineering",
               "ChannelManager",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -607,6 +609,7 @@
               "StopSelling",
               "Terminated",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -729,6 +732,7 @@
               "cspCustomer",
               "billingGroup",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -775,6 +779,7 @@
               "percentage",
               "absolute",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -785,6 +790,7 @@
               "FLAT_RATE",
               "PER_USER",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -794,6 +800,7 @@
               "customerPromotion",
               "cspPromotion",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -816,6 +823,7 @@
               "withdrawn",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -825,6 +833,7 @@
               "pendingAcceptance",
               "accepted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -850,6 +859,7 @@
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -884,6 +894,7 @@
               "resourceNotFound",
               "schemaValidationError",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -893,6 +904,7 @@
               "informational",
               "warning",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -943,6 +955,7 @@
               "perMarket",
               "usd",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1007,6 +1020,7 @@
               "perMarket",
               "usd",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1027,6 +1041,7 @@
               "Month",
               "Year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1050,6 +1065,7 @@
               "Recurring",
               "Usage",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1073,6 +1089,7 @@
               "sharedcore",
               "transactions",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1162,6 +1179,7 @@
               "Public",
               "Private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1219,6 +1237,7 @@
               "ListingImage",
               "ListingVideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1231,6 +1250,7 @@
               "Processed",
               "ProcessFailed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1305,6 +1325,7 @@
                 "value": "contact-me",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1314,6 +1335,7 @@
               "ListingOnly",
               "ListAndSell",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1344,6 +1366,7 @@
               "Inprogress",
               "Published",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1359,6 +1382,7 @@
               "Published",
               "InStore",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1428,6 +1452,7 @@
               "AzureSkuVariant",
               "AzureTestDriveVariant",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1437,6 +1462,7 @@
               "InActive",
               "Active",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1460,6 +1486,7 @@
               "Days",
               "Months",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1471,6 +1498,7 @@
               "TimedUsage",
               "Unlimited",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1667,6 +1695,7 @@ This member is required.",
               "InvalidQuantity",
               "BadArgument",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2168,6 +2197,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "CONFIRMED",
               "PENDING_CONFIRMATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2283,6 +2313,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "Update",
               "Delete",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2292,6 +2323,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "None",
               "Csp",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2301,6 +2333,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "None",
               "DryRun",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2313,6 +2346,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "Suspended",
               "Unsubscribed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2434,6 +2468,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "MONTH",
               "YEAR",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2443,6 +2478,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "FLAT_RATE",
               "PER_USER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2567,6 +2603,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "QuantityChange",
               "Signup",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2593,6 +2630,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "ENTITLEMENT_TERM",
               "INTEGRATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2609,6 +2647,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "ISV",
               "CURRENT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2714,6 +2753,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "USAGE",
               "SUBSCRIPTION_PLUS_USAGE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3069,6 +3109,7 @@ This field is present only if the product has usage-based billing configured.",
                 "value": "ENTITLEMENT_SUSPENDED",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3138,6 +3179,7 @@ This field is present only if the product has usage-based billing configured.",
               "APPROVED",
               "REJECTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3153,6 +3195,7 @@ This field is present only if the product has usage-based billing configured.",
                 "value": "ACCOUNT_ACTIVE",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3273,6 +3316,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3301,6 +3345,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3311,6 +3356,7 @@ This field is present only if the product has usage-based billing configured.",
               "VERIFIED",
               "NOT_VERIFIED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3589,6 +3635,7 @@ This field is present only if the product has usage-based billing configured.",
               "NOTIFY_CONTACTS",
               "TEST",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3604,6 +3651,7 @@ This field is present only if the product has usage-based billing configured.",
               "DONE",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3671,6 +3719,7 @@ This field is present only if the product has usage-based billing configured.",
               "PRIVATE",
               "PUBLIC",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3863,6 +3912,7 @@ This field is present only if the product has usage-based billing configured.",
               "CollectableAmount",
               "DisbursedAmount",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3984,6 +4034,7 @@ This field is present only if the product has usage-based billing configured.",
               "DISTRIBUTION",
               "MONEY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4025,6 +4076,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4037,6 +4089,7 @@ This field is present only if the product has usage-based billing configured.",
               "PENDING_START",
               "UNKNOWN",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4076,6 +4129,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4123,6 +4177,7 @@ This field is present only if the product has usage-based billing configured.",
               "PRIVATE",
               "UNKNOWN",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4133,6 +4188,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4150,6 +4206,7 @@ This field is present only if the product has usage-based billing configured.",
               "CANCEL_FAILED",
               "CANCEL_SUCCESS",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4183,6 +4240,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4196,6 +4254,7 @@ This field is present only if the product has usage-based billing configured.",
               "PER_USER",
               "USAGE_BASED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4409,6 +4468,7 @@ the same customer, dimension, and time, but a different quantity.",
               "CustomerNotSubscribed",
               "DuplicateRecord",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -4738,6 +4798,7 @@ types:
     enum:
       - Monthly
       - Annual
+    inline: true
     source:
       openapi: ../swagger.json
   AzureIncludedBaseQuantity:
@@ -4752,6 +4813,7 @@ types:
       - CustomerSupport
       - Engineering
       - ChannelManager
+    inline: true
     source:
       openapi: ../swagger.json
   AzureListingContact:
@@ -4797,6 +4859,7 @@ types:
       - Enabled
       - StopSelling
       - Terminated
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketState:
@@ -4823,6 +4886,7 @@ types:
     enum:
       - customerPromotion
       - cspPromotion
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferState:
@@ -4831,12 +4895,14 @@ types:
       - live
       - withdrawn
       - deleted
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferSubState:
     enum:
       - pendingAcceptance
       - accepted
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOffer:
@@ -4905,6 +4971,7 @@ types:
     enum:
       - cspCustomer
       - billingGroup
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferBeneficiaryRecipient:
@@ -4917,6 +4984,7 @@ types:
     enum:
       - percentage
       - absolute
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferPricingPlanType:
@@ -4924,6 +4992,7 @@ types:
       - FLAT_RATE
       - PER_USER
     docs: The type of the plan, FLAT_RATE or PER_USER.
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferPricing:
@@ -4964,6 +5033,7 @@ types:
       - week
       - month
       - year
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceTerm:
@@ -4989,12 +5059,14 @@ types:
       - productLocked
       - resourceNotFound
       - schemaValidationError
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceValidationLevel:
     enum:
       - informational
       - warning
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceValidation:
@@ -5026,6 +5098,7 @@ types:
       - perMarket
       - usd
     docs: default "usd"
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceAndAvailabilityPrivateOfferCustomMeters:
@@ -5059,6 +5132,7 @@ types:
       - perMarket
       - usd
     docs: default "usd"
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceAndAvailabilityRecurrentPrice:
@@ -5081,6 +5155,7 @@ types:
     enum:
       - Month
       - Year
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceCadence:
@@ -5094,6 +5169,7 @@ types:
       - Flat
       - Recurring
       - Usage
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceSchedule:
@@ -5108,6 +5184,7 @@ types:
     enum:
       - sharedcore
       - transactions
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePricingUnit:
@@ -5163,6 +5240,7 @@ types:
     enum:
       - Public
       - Private
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductFeatureAvailability:
@@ -5210,6 +5288,7 @@ types:
       - ListingAsset
       - ListingImage
       - ListingVideo
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductListingAssetState:
@@ -5219,6 +5298,7 @@ types:
       - InProcessing
       - Processed
       - ProcessFailed
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductListingAsset:
@@ -5274,12 +5354,14 @@ types:
         name: FreeTrial
       - value: contact-me
         name: ContactMe
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSetupSellingOption:
     enum:
       - ListingOnly
       - ListAndSell
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSetup:
@@ -5297,6 +5379,7 @@ types:
     enum:
       - Inprogress
       - Published
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSubmissionSubState:
@@ -5309,6 +5392,7 @@ types:
       - Publishing
       - Published
       - InStore
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSubmission:
@@ -5331,12 +5415,14 @@ types:
     enum:
       - AzureSkuVariant
       - AzureTestDriveVariant
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantState:
     enum:
       - InActive
       - Active
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariant:
@@ -5386,6 +5472,7 @@ types:
       - Minute
       - Days
       - Months
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantTrialType:
@@ -5394,6 +5481,7 @@ types:
       - TimedAccess
       - TimedUsage
       - Unlimited
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantTrial:
@@ -5992,18 +6080,21 @@ types:
       - Read
       - Update
       - Delete
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscriptionSandboxType:
     enum:
       - None
       - Csp
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscriptionSessionMode:
     enum:
       - None
       - DryRun
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscription:
@@ -6787,6 +6878,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityBuyer:
@@ -6807,6 +6899,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityIntegrationStatus:
@@ -6814,6 +6907,7 @@ types:
       - CREATED
       - VERIFIED
       - NOT_VERIFIED
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityIntegration:
@@ -7050,6 +7144,7 @@ types:
       - PRIVATE
       - PUBLIC
     docs: The default visibility of offer is PRIVATE.
+    inline: true
     source:
       openapi: ../swagger.json
   SharedOfferInfo:
@@ -7340,6 +7435,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlementStatus:
@@ -7349,6 +7445,7 @@ types:
       - SUSPENDED
       - PENDING_START
       - UNKNOWN
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlement:
@@ -7381,6 +7478,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlementTerm:
@@ -7416,6 +7514,7 @@ types:
       - PER_USER
       - PRIVATE
       - UNKNOWN
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOfferPartner:
@@ -7423,6 +7522,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOfferStatus:
@@ -7437,6 +7537,7 @@ types:
       - PENDING_CANCEL
       - CANCEL_FAILED
       - CANCEL_SUCCESS
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOffer:
@@ -7469,6 +7570,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadProductProductType:
@@ -7479,6 +7581,7 @@ types:
       - FLAT_RATE
       - PER_USER
       - USAGE_BASED
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadProduct:
@@ -8996,6 +9099,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10480,6 +10584,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10489,6 +10594,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10499,6 +10605,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10508,6 +10615,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10518,6 +10626,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10528,6 +10637,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10538,6 +10648,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10547,6 +10658,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10557,6 +10669,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10566,6 +10679,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10985,6 +11099,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   GetIntegrationRequestPartner:
@@ -11031,6 +11146,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   VerifyIntegrationRequestPartner:
@@ -13146,6 +13262,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -14465,6 +14582,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -15210,6 +15328,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -15220,6 +15339,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -15231,6 +15351,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -15258,6 +15379,7 @@ service:
       - AZURE
       - GCP
     docs: Required.
+    inline: true
     source:
       openapi: ../swagger.json
 imports:

@@ -5,16 +5,42 @@
       "type": "string"
     },
     "bar": {
-      "$ref": "#/definitions/InlineType1"
+      "$ref": "#/definitions/RootType1InlineType1"
+    },
+    "fooMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/RootType1FooMapValue"
+      }
+    },
+    "fooList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RootType1FooListItem"
+      }
+    },
+    "fooSet": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RootType1FooSetItem"
+      },
+      "uniqueItems": true
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType"
     }
   },
   "required": [
     "foo",
-    "bar"
+    "bar",
+    "fooMap",
+    "fooList",
+    "fooSet",
+    "ref"
   ],
   "additionalProperties": false,
   "definitions": {
-    "InlineEnum": {
+    "InlineEnum1": {
       "type": "string",
       "enum": [
         "SUNNY",
@@ -23,7 +49,19 @@
         "SNOWING"
       ]
     },
-    "NestedInlineType1": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1InlineType1NestedInlineType1": {
       "type": "object",
       "properties": {
         "foo": {
@@ -33,29 +71,85 @@
           "type": "string"
         },
         "myEnum": {
-          "$ref": "#/definitions/InlineEnum"
+          "$ref": "#/definitions/InlineEnum1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
         }
       },
       "required": [
         "foo",
         "bar",
-        "myEnum"
+        "myEnum",
+        "ref"
       ],
       "additionalProperties": false
     },
-    "InlineType1": {
+    "RootType1InlineType1": {
       "type": "object",
       "properties": {
         "foo": {
           "type": "string"
         },
         "bar": {
-          "$ref": "#/definitions/NestedInlineType1"
+          "$ref": "#/definitions/RootType1InlineType1NestedInlineType1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
         }
       },
       "required": [
         "foo",
-        "bar"
+        "bar",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooMapValue": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooListItem": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooSetItem": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
       ],
       "additionalProperties": false
     }

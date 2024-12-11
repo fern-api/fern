@@ -1,0 +1,28 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/AliasInlineValue"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "definitions": {
+    "AliasInlineValue": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

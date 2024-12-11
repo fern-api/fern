@@ -16,6 +16,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -33,7 +34,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorDiscriminationStrategy,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        enableInlineTypes
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -57,7 +59,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         errorDiscriminationStrategy,
                         includeUtilsOnUnionMembers,
                         noOptionalProperties,
-                        retainOriginalCasing
+                        retainOriginalCasing,
+                        enableInlineTypes
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -73,7 +76,10 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             includeOtherInUnionTypes: true,
             includeSerdeLayer,
             noOptionalProperties,
-            retainOriginalCasing
+            retainOriginalCasing,
+            enableInlineTypes,
+            // generate separate root types for errors in union
+            inline: false
         });
     }
 
@@ -95,7 +101,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     }
 
     public writeToFile(context: SdkContext): void {
-        this.errorUnion.writeToFile(context);
+        context.sourceFile.addStatements(this.errorUnion.generateStatements(context));
     }
 
     public getErrorUnion(): GeneratedUnion<SdkContext> {

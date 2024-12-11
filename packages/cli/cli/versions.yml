@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        * Set `inline: true` for inline enums imported from OpenAPI.
+        * Set `inline: true` for maps generated from OpenAPI additionalProperties.
+      type: fix
+  irVersion: 53
+  version: 0.46.0-rc1
+
+- changelogEntry:
+    - summary: |
         The Fern Definition now supports `bytes` as a response type.
 
         ```yml service.yml
@@ -17,10 +25,10 @@
       type: fix
   irVersion: 53
   version: 0.45.4
-
+  
 - changelogEntry:
     - summary: |
-        Bumped Java IR to latest (v53)
+        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`.
       type: chore
   irVersion: 53
   version: 0.45.4-rc1
@@ -34,7 +42,7 @@
 
 - changelogEntry:
     - summary: |
-        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`. 
+        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`.
       type: fix
   irVersion: 53
   version: 0.45.3
@@ -67,7 +75,6 @@
       type: internal
   irVersion: 53
   version: 0.45.0
-
 
 - changelogEntry:
     - summary: |

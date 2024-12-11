@@ -9,12 +9,23 @@ import * as core from "../../core";
 export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Raw, SeedObject.RootType1> =
     core.serialization.object({
         foo: core.serialization.string(),
-        bar: core.serialization.lazyObject(() => serializers.InlineType1),
+        bar: core.serialization.lazyObject(() => serializers.RootType1InlineType1),
+        fooMap: core.serialization.record(
+            core.serialization.string(),
+            core.serialization.lazyObject(() => serializers.RootType1FooMapValue)
+        ),
+        fooList: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooListItem)),
+        fooSet: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooSetItem)),
+        ref: core.serialization.lazyObject(() => serializers.ReferenceType),
     });
 
 export declare namespace RootType1 {
     interface Raw {
         foo: string;
-        bar: serializers.InlineType1.Raw;
+        bar: serializers.RootType1InlineType1.Raw;
+        fooMap: Record<string, serializers.RootType1FooMapValue.Raw>;
+        fooList: serializers.RootType1FooListItem.Raw[];
+        fooSet: serializers.RootType1FooSetItem.Raw[];
+        ref: serializers.ReferenceType.Raw;
     }
 }

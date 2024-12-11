@@ -3821,11 +3821,13 @@
                                           "file": "../openapi.yml",
                                           "type": "openapi"
                                         },
+                                        "inline": true,
                                         "type": "undisciminated"
                                       },
                                       "type": "oneOf"
                                     },
                                     "groupName": [],
+                                    "inline": true,
                                     "type": "nullable"
                                   },
                                   "generatedName": "SqliteExecuteRequestStatementArgsArgsOne",
@@ -4311,11 +4313,13 @@
                                             "file": "../openapi.yml",
                                             "type": "openapi"
                                           },
+                                          "inline": true,
                                           "type": "undisciminated"
                                         },
                                         "type": "oneOf"
                                       },
                                       "groupName": [],
+                                      "inline": true,
                                       "type": "nullable"
                                     },
                                     "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOne",

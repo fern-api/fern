@@ -24,9 +24,9 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
 }
 
 export class SeedBearerTokenEnvironmentVariableClient {
-    constructor(protected readonly _options: SeedBearerTokenEnvironmentVariableClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedBearerTokenEnvironmentVariableClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

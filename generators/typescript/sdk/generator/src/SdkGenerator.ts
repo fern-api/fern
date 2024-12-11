@@ -7,7 +7,9 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
-    OAuthScheme
+    OAuthScheme,
+    TypeDeclaration,
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
@@ -119,6 +121,7 @@ export declare namespace SdkGenerator {
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
+        enableInlineTypes: boolean;
         omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
@@ -298,7 +301,8 @@ export class SdkGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             noOptionalProperties: config.noOptionalProperties,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            enableInlineTypes: config.enableInlineTypes
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -317,7 +321,8 @@ export class SdkGenerator {
             intermediateRepresentation,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            enableInlineTypes: config.enableInlineTypes
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -540,6 +545,17 @@ export class SdkGenerator {
               });
     }
 
+    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+        if (this.config.enableInlineTypes) {
+            return Object.fromEntries(
+                Object.entries(this.intermediateRepresentation.types).filter(
+                    ([_, typeDeclaration]) => !typeDeclaration.inline
+                )
+            );
+        }
+        return this.intermediateRepresentation.types;
+    }
+
     public async copyCoreUtilities({
         pathToSrc,
         pathToRoot
@@ -551,7 +567,7 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -564,7 +580,7 @@ export class SdkGenerator {
 
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -1281,6 +1297,7 @@ export class SdkGenerator {
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
+            enableInlineTypes: this.config.enableInlineTypes,
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
             useBigInt: this.config.useBigInt,

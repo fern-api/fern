@@ -9,16 +9,16 @@ export type TestCaseFunction =
     | SeedTrace.v2.v3.TestCaseFunction.Custom
     | SeedTrace.v2.v3.TestCaseFunction._Unknown;
 
-export declare namespace TestCaseFunction {
-    interface WithActualResult extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation, _Utils {
+export namespace TestCaseFunction {
+    export interface WithActualResult extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation, _Utils {
         type: "withActualResult";
     }
 
-    interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinition, _Utils {
+    export interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinition, _Utils {
         type: "custom";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -15737,6 +15737,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
+            "inline": true,
             "type": "undisciminated"
           },
           "type": "oneOf"
@@ -24903,6 +24904,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
+            "inline": true,
             "type": "undisciminated"
           },
           "type": "oneOf"
@@ -25936,6 +25938,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
+            "inline": true,
             "type": "undisciminated"
           },
           "type": "oneOf"

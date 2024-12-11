@@ -9,13 +9,13 @@ export type Error =
     | Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody
     | Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Unknown;
 
-export declare namespace Error {
-    interface BadRequestBody extends _Utils {
+export namespace Error {
+    export interface BadRequestBody extends _Utils {
         statusCode: 400;
         content: Fiddle.BadObjectRequestInfo;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         statusCode: void;
         content: core.Fetcher.Error;
     }

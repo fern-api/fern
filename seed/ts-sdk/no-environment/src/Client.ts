@@ -24,9 +24,9 @@ export declare namespace SeedNoEnvironmentClient {
 }
 
 export class SeedNoEnvironmentClient {
-    constructor(protected readonly _options: SeedNoEnvironmentClient.Options) {}
-
     protected _dummy: Dummy | undefined;
+
+    constructor(protected readonly _options: SeedNoEnvironmentClient.Options) {}
 
     public get dummy(): Dummy {
         return (this._dummy ??= new Dummy(this._options));

@@ -1,12 +1,13 @@
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -29,6 +30,8 @@ export declare namespace TypeContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        context: BaseContext;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -43,6 +46,7 @@ export class TypeContextImpl implements TypeContext {
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private context: BaseContext;
 
     constructor({
         sourceFile,
@@ -54,7 +58,9 @@ export class TypeContextImpl implements TypeContext {
         treatUnknownAsAny,
         includeSerdeLayer,
         retainOriginalCasing,
-        useBigInt
+        useBigInt,
+        enableInlineTypes,
+        context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -64,24 +70,61 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.context = context;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference });
+    }
+
+    public getReferenceToInlinePropertyType(
+        typeReference: TypeReference,
+        parentTypeName: string,
+        propertyName: string
+    ): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            type: "inlinePropertyParams",
+            parentTypeName,
+            propertyName
+        });
+    }
+
+    public getReferenceToInlineAliasType(typeReference: TypeReference, aliasTypeName: string): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            type: "inlineAliasParams",
+            aliasTypeName
+        });
+    }
+
+    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        const generatedType = this.getGeneratedType(typeName);
+        return generatedType.generateForInlineUnion(this.context);
+    }
+
+    public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
+        return this.typeReferenceToParsedTypeNodeConverter.convert({
+            typeReference,
+            type: "forInlineUnionParams"
+        });
     }
 
     public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
@@ -110,7 +153,7 @@ export class TypeContextImpl implements TypeContext {
         return this.getGeneratedType(typeDeclaration.name);
     }
 
-    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+    public getGeneratedType(typeName: DeclaredTypeName, typeNameOverride?: string): GeneratedType {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -120,12 +163,13 @@ export class TypeContextImpl implements TypeContext {
         return this.typeGenerator.generateType({
             shape: typeDeclaration.shape,
             docs: typeDeclaration.docs ?? undefined,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+            typeName: typeNameOverride ?? this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
             examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            inline: typeDeclaration.inline ?? false
         });
     }
 
@@ -135,11 +179,13 @@ export class TypeContextImpl implements TypeContext {
         { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
-            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional(valueType)(
-                valueToStringify
-            );
+            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional({
+                typeReference: valueType
+            })(valueToStringify);
         } else {
-            return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify);
+            return this.typeReferenceToStringExpressionConverter.convert({
+                typeReference: valueType
+            })(valueToStringify);
         }
     }
 

@@ -6993,6 +6993,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "ModelVersionExecConfigParametersLogitBias",
@@ -7471,6 +7472,7 @@
                     "type": "primitive"
                   },
                   "groupName": [],
+                  "inline": true,
                   "type": "nullable"
                 },
                 "generatedName": "NormalizedTokenLogProbsTopLogprobs",
@@ -8707,6 +8709,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "RegisterPromptModelParametersRequestLogitBias",

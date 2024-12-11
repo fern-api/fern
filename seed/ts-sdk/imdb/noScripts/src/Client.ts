@@ -24,10 +24,10 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
+    protected _imdb: Imdb | undefined;
+
     constructor(protected readonly _options: SeedApiClient.Options) {
     }
-
-    protected _imdb: Imdb | undefined;
 
     public get imdb(): Imdb {
         return (this._imdb ??= new Imdb(this._options));

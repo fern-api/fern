@@ -226,6 +226,7 @@
               "succeeded",
               "failed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -360,6 +361,7 @@
               "public",
               "local",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -371,6 +373,7 @@
               "rate_egress",
               "total_egress",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -412,6 +415,7 @@
               "medium",
               "large",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -490,6 +494,7 @@
               "Sydney",
               "Sao_Paulo",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -530,6 +535,7 @@
               "suspended",
               "destroyed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -561,6 +567,7 @@
               "udp",
               "tls",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -759,6 +766,7 @@ types:
       - running
       - succeeded
       - failed
+    inline: true
     source:
       openapi: ../openapi.json
   Build:
@@ -789,6 +797,7 @@ types:
       - private
       - public
       - local
+    inline: true
     source:
       openapi: ../openapi.json
   Lobby:
@@ -3132,6 +3141,7 @@ service:
               "private",
               "local",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3468,6 +3478,7 @@ types:
       - public
       - private
       - local
+    inline: true
     source:
       openapi: ../openapi.json
 ",

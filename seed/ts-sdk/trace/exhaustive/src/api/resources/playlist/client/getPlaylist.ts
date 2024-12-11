@@ -10,17 +10,17 @@ export type Error =
     | SeedTrace.playlist.getPlaylist.Error.UnauthorizedError
     | SeedTrace.playlist.getPlaylist.Error._Unknown;
 
-export declare namespace Error {
-    interface PlaylistIdNotFoundError extends _Utils {
+export namespace Error {
+    export interface PlaylistIdNotFoundError extends _Utils {
         errorName: "PlaylistIdNotFoundError";
         content: SeedTrace.PlaylistIdNotFoundErrorBody;
     }
 
-    interface UnauthorizedError extends _Utils {
+    export interface UnauthorizedError extends _Utils {
         errorName: "UnauthorizedError";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         errorName: void;
         content: core.Fetcher.Error;
     }

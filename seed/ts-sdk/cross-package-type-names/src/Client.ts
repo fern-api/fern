@@ -25,21 +25,19 @@ export declare namespace SeedCrossPackageTypeNamesClient {
 }
 
 export class SeedCrossPackageTypeNamesClient {
-    constructor(protected readonly _options: SeedCrossPackageTypeNamesClient.Options) {}
-
     protected _folderA: FolderA | undefined;
+    protected _folderD: FolderD | undefined;
+    protected _foo: Foo | undefined;
+
+    constructor(protected readonly _options: SeedCrossPackageTypeNamesClient.Options) {}
 
     public get folderA(): FolderA {
         return (this._folderA ??= new FolderA(this._options));
     }
 
-    protected _folderD: FolderD | undefined;
-
     public get folderD(): FolderD {
         return (this._folderD ??= new FolderD(this._options));
     }
-
-    protected _foo: Foo | undefined;
 
     public get foo(): Foo {
         return (this._foo ??= new Foo(this._options));

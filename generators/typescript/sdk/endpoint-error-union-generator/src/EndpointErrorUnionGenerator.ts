@@ -11,6 +11,7 @@ export declare namespace EndpointErrorUnionGenerator {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
+        enableInlineTypes: boolean;
     }
 
     export namespace generateEndpointErrorUnion {
@@ -27,19 +28,22 @@ export class EndpointErrorUnionGenerator {
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private noOptionalProperties: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         intermediateRepresentation,
         errorResolver,
         includeSerdeLayer,
         retainOriginalCasing,
-        noOptionalProperties
+        noOptionalProperties,
+        enableInlineTypes
     }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.noOptionalProperties = noOptionalProperties;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public generateEndpointErrorUnion({
@@ -53,7 +57,8 @@ export class EndpointErrorUnionGenerator {
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            enableInlineTypes: this.enableInlineTypes
         });
     }
 }

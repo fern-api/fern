@@ -6766,11 +6766,13 @@
                           "file": "../openapi.json",
                           "type": "openapi"
                         },
+                        "inline": true,
                         "type": "undisciminated"
                       },
                       "type": "oneOf"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "ConnectWebviewsCreateRequestCustomMetadata",
@@ -7692,6 +7694,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -8634,6 +8637,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -9000,11 +9004,13 @@
                           "file": "../openapi.json",
                           "type": "openapi"
                         },
+                        "inline": true,
                         "type": "undisciminated"
                       },
                       "type": "oneOf"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "ConnectedAccountsUpdateRequestCustomMetadata",
@@ -11724,6 +11730,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -12672,11 +12679,13 @@
                           "file": "../openapi.json",
                           "type": "openapi"
                         },
+                        "inline": true,
                         "type": "undisciminated"
                       },
                       "type": "oneOf"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "DevicesUpdateRequestCustomMetadata",
@@ -17795,6 +17804,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -23131,6 +23141,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -43301,6 +43312,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -55706,6 +55718,7 @@
                     "file": "../openapi.json",
                     "type": "openapi"
                   },
+                  "inline": true,
                   "type": "undisciminated"
                 },
                 "type": "oneOf"
@@ -56057,6 +56070,7 @@
                     "file": "../openapi.json",
                     "type": "openapi"
                   },
+                  "inline": true,
                   "type": "undisciminated"
                 },
                 "type": "oneOf"
@@ -60427,6 +60441,7 @@
                     "file": "../openapi.json",
                     "type": "openapi"
                   },
+                  "inline": true,
                   "type": "undisciminated"
                 },
                 "type": "oneOf"
@@ -65391,6 +65406,7 @@
                     "file": "../openapi.json",
                     "type": "openapi"
                   },
+                  "inline": true,
                   "type": "undisciminated"
                 },
                 "type": "oneOf"

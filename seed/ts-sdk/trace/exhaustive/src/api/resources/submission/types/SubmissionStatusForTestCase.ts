@@ -10,21 +10,21 @@ export type SubmissionStatusForTestCase =
     | SeedTrace.SubmissionStatusForTestCase.Traced
     | SeedTrace.SubmissionStatusForTestCase._Unknown;
 
-export declare namespace SubmissionStatusForTestCase {
-    interface Graded extends SeedTrace.TestCaseResultWithStdout, _Utils {
+export namespace SubmissionStatusForTestCase {
+    export interface Graded extends SeedTrace.TestCaseResultWithStdout, _Utils {
         type: "graded";
     }
 
-    interface GradedV2 extends _Utils {
+    export interface GradedV2 extends _Utils {
         type: "gradedV2";
         value: SeedTrace.TestCaseGrade;
     }
 
-    interface Traced extends SeedTrace.TracedTestCase, _Utils {
+    export interface Traced extends SeedTrace.TracedTestCase, _Utils {
         type: "traced";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

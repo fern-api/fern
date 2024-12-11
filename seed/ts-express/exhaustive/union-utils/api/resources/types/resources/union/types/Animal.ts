@@ -9,16 +9,16 @@ export type Animal =
     | SeedExhaustive.types.Animal.Cat
     | SeedExhaustive.types.Animal._Unknown;
 
-export declare namespace Animal {
-    interface Dog extends SeedExhaustive.types.Dog, _Utils {
+export namespace Animal {
+    export interface Dog extends SeedExhaustive.types.Dog, _Utils {
         animal: "dog";
     }
 
-    interface Cat extends SeedExhaustive.types.Cat, _Utils {
+    export interface Cat extends SeedExhaustive.types.Cat, _Utils {
         animal: "cat";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         animal: void;
     }
 

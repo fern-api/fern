@@ -15,16 +15,16 @@ export type ErrorInfo =
      *  */
     | SeedTrace.ErrorInfo.InternalError;
 
-export declare namespace ErrorInfo {
-    interface CompileError extends SeedTrace.CompileError {
+export namespace ErrorInfo {
+    export interface CompileError extends SeedTrace.CompileError {
         type: "compileError";
     }
 
-    interface RuntimeError extends SeedTrace.RuntimeError {
+    export interface RuntimeError extends SeedTrace.RuntimeError {
         type: "runtimeError";
     }
 
-    interface InternalError extends SeedTrace.InternalError {
+    export interface InternalError extends SeedTrace.InternalError {
         type: "internalError";
     }
 }

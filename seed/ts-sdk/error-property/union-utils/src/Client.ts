@@ -23,9 +23,9 @@ export declare namespace SeedErrorPropertyClient {
 }
 
 export class SeedErrorPropertyClient {
-    constructor(protected readonly _options: SeedErrorPropertyClient.Options) {}
-
     protected _propertyBasedError: PropertyBasedError | undefined;
+
+    constructor(protected readonly _options: SeedErrorPropertyClient.Options) {}
 
     public get propertyBasedError(): PropertyBasedError {
         return (this._propertyBasedError ??= new PropertyBasedError(this._options));

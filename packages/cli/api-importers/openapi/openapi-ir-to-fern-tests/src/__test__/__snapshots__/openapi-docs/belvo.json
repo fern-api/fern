@@ -6687,6 +6687,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "SUCCEEDED",
               "FAILED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7781,6 +7782,7 @@ We return one of the following enum values:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7800,6 +7802,7 @@ We return one of the following enum values:
               "SAVINGS",
               "SALARY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7817,6 +7820,7 @@ Can be either:
               "LOAN_ACCOUNT",
               "SAVINGS_ACCOUNT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7831,6 +7835,7 @@ Can be either:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7955,6 +7960,7 @@ Can be either:
               "INFLOW",
               "OUTFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7968,6 +7974,7 @@ Can be either:
               "CPF",
               "CNPJ",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7984,6 +7991,7 @@ Can be either:
               "TI",
               "NIT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8001,6 +8009,7 @@ Can be either:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8015,6 +8024,7 @@ Can be either:
               "NSS",
               "CURP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8026,6 +8036,7 @@ Can be either:
               "EMPLOYED",
               "UNEMPLOYED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8048,6 +8059,7 @@ Can be either:
               "ABSENCE",
               "SICK_LEAVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8066,6 +8078,7 @@ You can send through one of the following values:
               "MEDIUM",
               "LOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8092,6 +8105,7 @@ We return one of the following enum values:
               "MEDIUM",
               "LOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8114,6 +8128,7 @@ We return one of the following enum values:
               "IRREGULAR",
               "SINGLE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8146,6 +8161,7 @@ We return one of the following enum values:
               "DEPOSIT",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8159,6 +8175,7 @@ Can be either:
               "CHECKING_ACCOUNT",
               "SAVINGS_ACCOUNT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8186,6 +8203,7 @@ Can be either:
               "credentials",
               "openbanking",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8197,6 +8215,7 @@ Can be either:
               "healthy",
               "down",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8213,6 +8232,7 @@ Can be either:
               "fiscal",
               "employment",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8239,6 +8259,7 @@ We return one of the following values:
               "PENSION",
               "STOCK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8259,6 +8280,7 @@ We return one of the following values:
               "PENSION",
               "VARIABLE_INCOME",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8288,6 +8310,7 @@ You can send through one or more of the following values:
               "DEPOSIT",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8333,6 +8356,7 @@ For Mexico's SAT, we return one of the following values:
               "Pago",
               "Traslado",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8363,6 +8387,7 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
               "single",
               "recurrent",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8404,6 +8429,7 @@ We return one of the following values:
               "unconfirmed",
               "token_required",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8420,6 +8446,7 @@ We return one of the following values:
               "INSURANCE_FEE",
               "OTHERS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8434,6 +8461,7 @@ We return one of the following values:
               "MONTHLY",
               "YEARLY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8444,6 +8472,7 @@ We return one of the following values:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8458,6 +8487,7 @@ We return one of the following values:
               "PROCESSING",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8471,6 +8501,7 @@ We return one of the following values:
               "open_finance",
               "pse",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8486,6 +8517,7 @@ We return one of the following values:
               "belvo",
               "payments_way",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8501,6 +8533,7 @@ We return one of the following values:
               "ACTIVE",
               "INACTIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8514,6 +8547,7 @@ We return one of the following values:
               "INFLOW",
               "OUTFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8529,6 +8563,7 @@ We return one of the following values:
               "BRA",
               "COL",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8543,6 +8578,7 @@ We return one of the following values:
               "BRL",
               "COP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8566,6 +8602,7 @@ We return one of the following values:
               "REVERTED",
               "UNCATEGORIZED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8615,6 +8652,7 @@ We return one of the following values:
               },
               "Taxes",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8637,6 +8675,7 @@ We return one of the following values:
               "SUBSCRIPTION",
               "REGULAR",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8648,6 +8687,7 @@ We return one of the following values:
               "NEGATIVE",
               "NO_OBLIGATIONS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8661,6 +8701,7 @@ We return one of the following values:
               "PAID",
               "PROVISIONED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8674,6 +8715,7 @@ We return one of the following values:
               "NATIONAL",
               "FOREIGN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8688,6 +8730,7 @@ We return one of the following values:
               "OUTFLOW",
               "INFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -28189,6 +28232,7 @@ types:
       - FAILED
     docs: |
       The current status of the charge.
+    inline: true
     source:
       openapi: ../openapi.yml
   ChargePaymentMethodDetails:
@@ -58602,6 +58646,7 @@ types:
                 "value": "-created_at",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -58611,6 +58656,7 @@ types:
               "ACTIVE",
               "INACTIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

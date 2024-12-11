@@ -111,6 +111,7 @@ export declare namespace SdkContextImpl {
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
+        enableInlineTypes: boolean;
         omitUndefined: boolean;
         neverThrowErrors: boolean;
         useBigInt: boolean;
@@ -203,7 +204,8 @@ export class SdkContextImpl implements SdkContext {
         generateOAuthClients,
         omitUndefined,
         useBigInt,
-        neverThrowErrors
+        neverThrowErrors,
+        enableInlineTypes
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -250,7 +252,9 @@ export class SdkContextImpl implements SdkContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -264,7 +268,8 @@ export class SdkContextImpl implements SdkContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
@@ -296,7 +301,8 @@ export class SdkContextImpl implements SdkContext {
             importsManager,
             includeSerdeLayer,
             retainOriginalCasing,
-            inlineFileProperties
+            inlineFileProperties,
+            enableInlineTypes
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -25,9 +25,9 @@ export declare namespace Notification {
 }
 
 export class Notification {
-    constructor(protected readonly _options: Notification.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: Notification.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

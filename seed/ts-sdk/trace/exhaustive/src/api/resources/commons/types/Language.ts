@@ -3,7 +3,6 @@
  */
 
 export type Language = "JAVA" | "JAVASCRIPT" | "PYTHON";
-
 export const Language = {
     Java: "JAVA",
     Javascript: "JAVASCRIPT",
@@ -22,7 +21,7 @@ export const Language = {
     },
 } as const;
 
-export declare namespace Language {
+export namespace Language {
     interface Visitor<R> {
         java: () => R;
         javascript: () => R;

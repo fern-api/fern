@@ -26,6 +26,7 @@ export declare namespace SeedOauthClientCredentialsEnvironmentVariablesClient {
 
 export class SeedOauthClientCredentialsEnvironmentVariablesClient {
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected _auth: Auth | undefined;
 
     constructor(protected readonly _options: SeedOauthClientCredentialsEnvironmentVariablesClient.Options) {
         const clientId = this._options.clientId ?? process.env["CLIENT_ID"];
@@ -50,8 +51,6 @@ export class SeedOauthClientCredentialsEnvironmentVariablesClient {
             }),
         });
     }
-
-    protected _auth: Auth | undefined;
 
     public get auth(): Auth {
         return (this._auth ??= new Auth({

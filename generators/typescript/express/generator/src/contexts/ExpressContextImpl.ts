@@ -26,6 +26,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile } from "ts-morph";
+import { Logger } from "@fern-api/logger";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
@@ -45,6 +46,7 @@ import { TypeContextImpl } from "./type/TypeContextImpl";
 
 export declare namespace ExpressContextImpl {
     export interface Init {
+        logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -78,10 +80,12 @@ export declare namespace ExpressContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
 export class ExpressContextImpl implements ExpressContext {
+    public readonly logger: Logger;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -101,6 +105,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly expressErrorSchema: ExpressErrorSchemaContext;
 
     constructor({
+        logger,
         typeResolver,
         typeGenerator,
         typeDeclarationReferencer,
@@ -132,8 +137,10 @@ export class ExpressContextImpl implements ExpressContext {
         expressErrorSchemaGenerator,
         includeSerdeLayer,
         retainOriginalCasing,
+        enableInlineTypes,
         useBigInt
     }: ExpressContextImpl.Init) {
+        this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
@@ -156,7 +163,9 @@ export class ExpressContextImpl implements ExpressContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -170,7 +179,8 @@ export class ExpressContextImpl implements ExpressContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
 
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({

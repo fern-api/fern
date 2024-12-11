@@ -105,6 +105,7 @@ View a list of your organization's `LinkedAccount` objects.",
               "INCOMPLETE",
               "RELINK_NEEDED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -183,6 +184,7 @@ View a list of your organization's `LinkedAccount` objects.",
               "SAVINGS",
               "CHECKING",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -368,6 +370,7 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
               "mktg",
               "filestorage",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -389,6 +392,7 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
               "mktg",
               "filestorage",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -530,6 +534,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               "STRING",
               "LIST_OF_STRINGS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1035,6 +1040,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               "ZM",
               "ZW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1246,6 +1252,7 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
               "OVERTIME",
               "BONUS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2223,6 +2230,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "PENDING",
               "INACTIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2240,6 +2248,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "CONTRACTOR",
               "FREELANCE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2251,6 +2260,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "READ",
               "WRITE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2264,6 +2274,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "BASE64",
               "GZIP_BASE64",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2374,6 +2385,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "WHITE",
               "PREFER_NOT_TO_DISCLOSE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2389,6 +2401,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "NONEXEMPT",
               "OWNER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2409,6 +2422,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "OTHER",
               "PREFER_NOT_TO_DISCLOSE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2510,6 +2524,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "BUSINESS_UNIT",
               "GROUP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2571,6 +2586,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "ONGOING",
               "RESOLVED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3023,6 +3039,7 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
               "HOME",
               "WORK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3040,6 +3057,7 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
               "HEAD_OF_HOUSEHOLD",
               "QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3075,6 +3093,7 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
               "PATCH",
               "DELETE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3995,6 +4014,7 @@ Create a `MultipartFormField` to define a multipart form entry.",
               "ZWR",
               "ZWL",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4023,6 +4043,7 @@ Create a `MultipartFormField` to define a multipart form entry.",
               "PRO_RATA",
               "SEMIMONTHLY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4089,6 +4110,7 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
               "EVERY_SIX_MONTHS",
               "YEAR",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4177,6 +4199,7 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
               "VOLUNTEER",
               "BEREAVEMENT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4190,6 +4213,7 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
               "GDPR",
               "OTHER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4274,6 +4298,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "XML",
               "MULTIPART",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4293,6 +4318,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "VOLUNTEER",
               "BEREAVEMENT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4304,6 +4330,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "JSON",
               "BASE64_GZIP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4321,6 +4348,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "FAILED",
               "CLOSED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4338,6 +4366,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "TERMINATION",
               "SIGN_ON_BONUS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4349,6 +4378,7 @@ View the `RemoteResponse` returned from your `DataPassthrough`.",
               "IN_NEXT_SYNC",
               "IN_LAST_SYNC",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4389,6 +4419,7 @@ View the `SyncStatus` for an account to see how recently its models were synced.
               "PAUSED",
               "PARTIALLY_SYNCED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4782,6 +4813,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "CANCELLED",
               "DELETED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4793,6 +4825,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "HOURS",
               "DAYS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10270,6 +10303,7 @@ service:
               "CHECKING",
               "SAVINGS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10285,6 +10319,7 @@ service:
                 "value": "remote_created_at",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11524,6 +11559,7 @@ service:
               },
               "payroll_run",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11537,6 +11573,7 @@ service:
               },
               "payroll_run",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12362,6 +12399,7 @@ service:
               "INACTIVE",
               "PENDING",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13365,6 +13403,7 @@ service:
                 "value": "work_location,team,pay_group",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13420,6 +13459,7 @@ service:
               },
               "marital_status",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13475,6 +13515,7 @@ service:
               },
               "marital_status",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14478,6 +14519,7 @@ service:
                 "value": "work_location,team,pay_group",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14533,6 +14575,7 @@ service:
               },
               "marital_status",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14588,6 +14631,7 @@ service:
               },
               "marital_status",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16386,6 +16430,7 @@ service:
               },
               "pay_group",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16401,6 +16446,7 @@ service:
                 "value": "effective_date",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16456,6 +16502,7 @@ service:
               },
               "pay_period",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16511,6 +16558,7 @@ service:
               },
               "pay_period",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16524,6 +16572,7 @@ service:
               },
               "pay_group",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16579,6 +16628,7 @@ service:
               },
               "pay_period",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16634,6 +16684,7 @@ service:
               },
               "pay_period",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17599,6 +17650,7 @@ service:
               "ONGOING",
               "RESOLVED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17969,6 +18021,7 @@ service:
               "mktg",
               "ticketing",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19079,6 +19132,7 @@ service:
               },
               "run_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19091,6 +19145,7 @@ service:
               "SIGN_ON_BONUS",
               "TERMINATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19104,6 +19159,7 @@ service:
               },
               "run_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19117,6 +19173,7 @@ service:
               },
               "run_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19130,6 +19187,7 @@ service:
               },
               "run_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20515,6 +20573,7 @@ service:
                 "value": "employee,approver",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20541,6 +20600,7 @@ service:
               },
               "units",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20554,6 +20614,7 @@ service:
               "VACATION",
               "VOLUNTEER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20580,6 +20641,7 @@ service:
               },
               "units",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20592,6 +20654,7 @@ service:
               "DELETED",
               "REQUESTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20605,6 +20668,7 @@ service:
                 "value": "employee,approver",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20631,6 +20695,7 @@ service:
               },
               "units",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20657,6 +20722,7 @@ service:
               },
               "units",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21274,6 +21340,7 @@ service:
               "VACATION",
               "VOLUNTEER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
