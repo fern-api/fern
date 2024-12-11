@@ -31,7 +31,6 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/union-generator": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

@@ -1923,9 +1923,6 @@ importers:
 
   generators/typescript/model/type-generator:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0
@@ -1978,9 +1975,6 @@ importers:
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
       '@fern-typescript/resolvers':
         specifier: workspace:*
         version: link:../../utils/resolvers

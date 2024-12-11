@@ -140,7 +140,7 @@ function aliasListOrSetStatementGenerator(
 function getInlineProperties(
     properties: Property[],
     getTypeDeclaration: GetTypeDeclaration
-): Array<[string, TypeReference, TypeDeclaration]> {
+): [string, TypeReference, TypeDeclaration][] {
     return properties
         .map(({ propertyName, typeReference }): [string, TypeReference, TypeDeclaration] | undefined => {
             const declaration = getInlineTypeDeclaration(typeReference, getTypeDeclaration);
@@ -168,24 +168,24 @@ function getInlineTypeDeclaration(
     return typeDeclaration;
 }
 
-export type InlinePropertiesParams = {
+export interface InlinePropertiesParams {
     generateStatements: GenerateStatements;
     getTypeDeclaration: GetTypeDeclaration;
     parentTypeName: string;
-    properties: Array<Property>;
-};
+    properties: Property[];
+}
 
-type Property = {
+interface Property {
     typeReference: TypeReference;
     propertyName: string;
-};
+}
 
-export type InlineAliasParams = {
+export interface InlineAliasParams {
     generateStatements: GenerateStatements;
     getTypeDeclaration: GetTypeDeclaration;
     typeReference: TypeReference;
     aliasTypeName: string;
-};
+}
 
 type GenerateStatements = (
     typeName: DeclaredTypeName,
