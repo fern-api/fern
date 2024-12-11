@@ -52,7 +52,7 @@ public class ContentTypeClient {
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
+                .addHeader("Content-Type", "application/json-patch+json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -98,7 +98,7 @@ public class ContentTypeClient {
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
+                .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
