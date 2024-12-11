@@ -1,5 +1,4 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
@@ -80,6 +79,7 @@ function convertHttpResponse(
                           responseBodyType: IrVersions.V53.TypeReference.unknown()
                       })
                   )
-                : (response.body as any)
+                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (response.body as any)
     };
 }
