@@ -5199,6 +5199,9 @@ importers:
       '@fern-fern/ir-v52-sdk':
         specifier: 0.0.1
         version: 0.0.1
+      '@fern-fern/ir-v53-sdk':
+        specifier: 0.0.1
+        version: 0.0.1
       '@fern-fern/ir-v6-model':
         specifier: 0.0.33
         version: 0.0.33
@@ -8203,6 +8206,9 @@ packages:
 
   '@fern-fern/ir-v52-sdk@0.0.1':
     resolution: {integrity: sha512-UGmPWWaGAAAXUSq/A/uUuDl/iMO2+rJJ6ICBmXMlUFA/AAeSLhpxjbywGz3YU0NLgOBrVe0D00ZO9aW9TNx2/A==}
+
+  '@fern-fern/ir-v53-sdk@0.0.1':
+    resolution: {integrity: sha512-7KNvdLlWyYkkhVsplvVmVKm6+LCGKTQJxE7jqjmjg+1AUBC75zcGAkiHylDLB8gkOCLN3Qcs2RHljC0yHVLlOw==}
 
   '@fern-fern/ir-v6-model@0.0.33':
     resolution: {integrity: sha512-I3KLvdrRzSrh5CcpU0v/Mjn4ywZhzVwhqJC8IDIQiP1yPvsCnjgbTBNwLRG8KdJqHfLOgdt/hfVzjeuFugSlGA==}
@@ -15352,6 +15358,8 @@ snapshots:
   '@fern-fern/ir-v51-sdk@0.0.1': {}
 
   '@fern-fern/ir-v52-sdk@0.0.1': {}
+
+  '@fern-fern/ir-v53-sdk@0.0.1': {}
 
   '@fern-fern/ir-v6-model@0.0.33': {}
 

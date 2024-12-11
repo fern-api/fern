@@ -6,7 +6,13 @@ import {
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
-import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
+import {
+    isRawTextType,
+    parseRawFileType,
+    parseRawTextType,
+    parseRawBytesType,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
@@ -69,6 +75,10 @@ export function convertHttpResponseBody({
                 nonStreamResponse = NonStreamHttpResponseBody.text({ ...response });
                 break;
             }
+            case "bytes": {
+                nonStreamResponse = NonStreamHttpResponseBody.bytes({ ...response });
+                break;
+            }
             default:
                 assertNever(response);
         }
@@ -93,7 +103,7 @@ export function convertNonStreamHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | undefined {
+}): HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | HttpResponseBody.Bytes | undefined {
     const { response } = endpoint;
 
     if (response != null) {
@@ -106,6 +116,10 @@ export function convertNonStreamHttpResponseBody({
             });
         } else if (parseRawTextType(responseType) != null) {
             return HttpResponseBody.text({
+                docs
+            });
+        } else if (parseRawBytesType(responseType) != null) {
+            return HttpResponseBody.bytes({
                 docs
             });
         } else {

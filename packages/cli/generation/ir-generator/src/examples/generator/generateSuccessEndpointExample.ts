@@ -262,6 +262,8 @@ export function generateEndpointExample({
                 return { type: "failure", message: "Streaming unsupported" };
             case "text":
                 return { type: "failure", message: "Text unsupported" };
+            case "bytes":
+                return { type: "failure", message: "Bytes unsupported" };
             default:
                 assertNever(endpoint.response.body);
         }

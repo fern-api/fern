@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { JsonResponse } from "./JsonResponse";
 import { FileDownloadResponse } from "./FileDownloadResponse";
 import { TextResponse } from "./TextResponse";
+import { BytesResponse } from "./BytesResponse";
 import { StreamingResponse } from "./StreamingResponse";
 import { StreamParameterResponse } from "./StreamParameterResponse";
 
@@ -19,6 +20,7 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
             }),
             fileDownload: FileDownloadResponse,
             text: TextResponse,
+            bytes: BytesResponse,
             streaming: core.serialization.object({
                 value: StreamingResponse,
             }),
@@ -33,6 +35,8 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                         return FernIr.HttpResponseBody.fileDownload(value);
                     case "text":
                         return FernIr.HttpResponseBody.text(value);
+                    case "bytes":
+                        return FernIr.HttpResponseBody.bytes(value);
                     case "streaming":
                         return FernIr.HttpResponseBody.streaming(value.value);
                     case "streamParameter":
@@ -49,6 +53,7 @@ export declare namespace HttpResponseBody {
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | HttpResponseBody.Streaming
         | HttpResponseBody.StreamParameter;
 
@@ -63,6 +68,10 @@ export declare namespace HttpResponseBody {
 
     interface Text extends TextResponse.Raw {
         type: "text";
+    }
+
+    interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
     }
 
     interface Streaming {

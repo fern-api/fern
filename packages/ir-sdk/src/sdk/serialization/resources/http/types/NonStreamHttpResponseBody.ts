@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { JsonResponse } from "./JsonResponse";
 import { FileDownloadResponse } from "./FileDownloadResponse";
 import { TextResponse } from "./TextResponse";
+import { BytesResponse } from "./BytesResponse";
 
 export const NonStreamHttpResponseBody: core.serialization.Schema<
     serializers.NonStreamHttpResponseBody.Raw,
@@ -19,6 +20,7 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
         }),
         fileDownload: FileDownloadResponse,
         text: TextResponse,
+        bytes: BytesResponse,
     })
     .transform<FernIr.NonStreamHttpResponseBody>({
         transform: (value) => {
@@ -29,6 +31,8 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
                     return FernIr.NonStreamHttpResponseBody.fileDownload(value);
                 case "text":
                     return FernIr.NonStreamHttpResponseBody.text(value);
+                case "bytes":
+                    return FernIr.NonStreamHttpResponseBody.bytes(value);
                 default:
                     return value as FernIr.NonStreamHttpResponseBody;
             }
@@ -37,7 +41,11 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
     });
 
 export declare namespace NonStreamHttpResponseBody {
-    type Raw = NonStreamHttpResponseBody.Json | NonStreamHttpResponseBody.FileDownload | NonStreamHttpResponseBody.Text;
+    type Raw =
+        | NonStreamHttpResponseBody.Json
+        | NonStreamHttpResponseBody.FileDownload
+        | NonStreamHttpResponseBody.Text
+        | NonStreamHttpResponseBody.Bytes;
 
     interface Json {
         type: "json";
@@ -50,5 +58,9 @@ export declare namespace NonStreamHttpResponseBody {
 
     interface Text extends TextResponse.Raw {
         type: "text";
+    }
+
+    interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
     }
 }

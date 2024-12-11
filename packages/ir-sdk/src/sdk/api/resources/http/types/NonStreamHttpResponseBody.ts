@@ -7,7 +7,8 @@ import * as FernIr from "../../../index";
 export type NonStreamHttpResponseBody =
     | FernIr.NonStreamHttpResponseBody.Json
     | FernIr.NonStreamHttpResponseBody.FileDownload
-    | FernIr.NonStreamHttpResponseBody.Text;
+    | FernIr.NonStreamHttpResponseBody.Text
+    | FernIr.NonStreamHttpResponseBody.Bytes;
 
 export declare namespace NonStreamHttpResponseBody {
     interface Json extends _Utils {
@@ -23,6 +24,10 @@ export declare namespace NonStreamHttpResponseBody {
         type: "text";
     }
 
+    interface Bytes extends FernIr.BytesResponse, _Utils {
+        type: "bytes";
+    }
+
     interface _Utils {
         _visit: <_Result>(visitor: FernIr.NonStreamHttpResponseBody._Visitor<_Result>) => _Result;
     }
@@ -31,6 +36,7 @@ export declare namespace NonStreamHttpResponseBody {
         json: (value: FernIr.JsonResponse) => _Result;
         fileDownload: (value: FernIr.FileDownloadResponse) => _Result;
         text: (value: FernIr.TextResponse) => _Result;
+        bytes: (value: FernIr.BytesResponse) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -75,6 +81,19 @@ export const NonStreamHttpResponseBody = {
         };
     },
 
+    bytes: (value: FernIr.BytesResponse): FernIr.NonStreamHttpResponseBody.Bytes => {
+        return {
+            ...value,
+            type: "bytes",
+            _visit: function <_Result>(
+                this: FernIr.NonStreamHttpResponseBody.Bytes,
+                visitor: FernIr.NonStreamHttpResponseBody._Visitor<_Result>
+            ) {
+                return FernIr.NonStreamHttpResponseBody._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.NonStreamHttpResponseBody,
         visitor: FernIr.NonStreamHttpResponseBody._Visitor<_Result>
@@ -86,6 +105,8 @@ export const NonStreamHttpResponseBody = {
                 return visitor.fileDownload(value);
             case "text":
                 return visitor.text(value);
+            case "bytes":
+                return visitor.bytes(value);
             default:
                 return visitor._other(value as any);
         }
