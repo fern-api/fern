@@ -4,7 +4,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
-import { FernFilepath, dynamic, TypeId, Name } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, dynamic, TypeId, Name, EnvironmentId } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
@@ -369,8 +369,50 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getEnvironmentTypeReferenceFromID(environmentID: string): go.TypeReference | undefined {
+        if (this.ir.environments == null) {
+            return undefined;
+        }
+        const environments = this.ir.environments.environments;
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const environment = environments.environments.find((env) => env.id === environmentID);
+                if (environment == null) {
+                    return undefined;
+                }
+                return this.getEnvironmentTypeReference(environment.name);
+            }
+            case "multipleBaseUrls": {
+                const environment = environments.environments.find((env) => env.id === environmentID);
+                if (environment == null) {
+                    return undefined;
+                }
+                return this.getEnvironmentTypeReference(environment.name);
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    public isSingleEnvironmentID(environment: dynamic.EnvironmentValues): environment is EnvironmentId {
+        return typeof environment === "string";
+    }
+
+    public isMultiEnvironmentValues(
+        environment: dynamic.EnvironmentValues
+    ): environment is dynamic.MultipleEnvironmentUrlValues {
+        return typeof environment === "object";
+    }
+
     public newParameterNotRecognizedError(parameterName: string): Error {
         return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
+    }
+
+    private getEnvironmentTypeReference(name: Name): go.TypeReference {
+        return go.typeReference({
+            name: `Environments.${this.getTypeName(name)}`,
+            importPath: this.rootImportPath
+        });
     }
 
     private isListTypeReference(typeReference: dynamic.TypeReference): boolean {

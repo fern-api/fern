@@ -14,6 +14,8 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -35,6 +37,8 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -56,6 +60,8 @@ describe("examples", () => {
                     method: "POST",
                     path: "/movie"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -89,6 +95,8 @@ describe("examples", () => {
                     method: "POST",
                     path: "/big-entity"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -128,6 +136,8 @@ describe("examples (errors)", () => {
             auth: AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
+            baseUrl: undefined,
+            environment: undefined,
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,

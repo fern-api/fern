@@ -425,8 +425,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
-        specifier: ^53.23.0
-        version: 53.23.0
+        specifier: ^53.24.0
+        version: 53.24.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -522,8 +522,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
-        specifier: ^53.23.0
-        version: 53.23.0
+        specifier: ^53.24.0
+        version: 53.24.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -8076,8 +8076,8 @@ packages:
   '@fern-fern/ir-sdk@53.18.0':
     resolution: {integrity: sha512-KXHiAn8wjL9VIjjR9z8fXso0O2oaCMUSy9BSYRiGjEOmbIBUhplxSXjM3wSEXQ19hiPpsRYJTCCjnaZVP0OVrw==}
 
-  '@fern-fern/ir-sdk@53.23.0':
-    resolution: {integrity: sha512-9U6uGs9WFDnVg57VyM7s6LKCkA30JOYDQwuLrNh50Meme0m8ce4GDZ/naVncfhrGjWfxt7PSjy1vlVLBi+PKZA==}
+  '@fern-fern/ir-sdk@53.24.0':
+    resolution: {integrity: sha512-cR/GIvqLaK8Oeql0WLv8nUsYNfplBHXKHoHv49CJfRP0xMr/RLmiQCZm2RAH+hnMha282oEMXYQeZDoZhatjKw==}
 
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
@@ -15302,7 +15302,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@53.18.0': {}
 
-  '@fern-fern/ir-sdk@53.23.0': {}
+  '@fern-fern/ir-sdk@53.24.0': {}
 
   '@fern-fern/ir-sdk@53.7.0': {}
 

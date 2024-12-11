@@ -120,6 +120,32 @@ func do() () {
 "
 `;
 
+exports[`imdb (sync) > GET /movies/{movieId} w/ baseURL 1`] = `
+"package example
+
+import (
+    client "github.com/acme/acme-go/client"
+    option "github.com/acme/acme-go/option"
+    context "context"
+)
+
+func do() () {
+    client := client.NewClient(
+        option.WithBaseURL(
+            "http://localhost:8080",
+        ),
+        option.WithToken(
+            "<YOUR_API_KEY>",
+        ),
+    )
+    client.Imdb.GetMovie(
+        context.TODO(),
+        "movie_xyz",
+    )
+}
+"
+`;
+
 exports[`imdb (sync) > GET /movies/{movieId} w/ exportedClientName 1`] = `
 "package example
 

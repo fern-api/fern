@@ -14,6 +14,8 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-primitives"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -30,6 +32,8 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-objects"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -71,6 +75,8 @@ describe("exhaustive (errors)", () => {
                 method: "POST",
                 path: "/container/list-of-objects"
             },
+            baseUrl: undefined,
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
