@@ -8,6 +8,7 @@ import { Class } from "./Class";
 import { Method } from "./Method";
 import { Field } from "./Field";
 import { Type } from "./Type";
+import { createPythonClassName } from "./core/utils";
 
 export declare namespace PythonFile {
     interface Args {
@@ -76,45 +77,44 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[]; referenceNames: Set<string> }>;
     }): void {
-        const usedNames = this.getUsedNames();
         const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
 
-        // Build up a map of refs to their name overrides, keeping track of howmany times we've seen a name as we go.
+        // Build up a map of refs to their name overrides, keeping track of names that have been used as we go.
         const completeRefPathsToNameOverrides: Record<string, ImportedName> = {};
-        const nameUsageCounts: Record<string, number> = {};
-
-        // Initialize counts for used names
-        usedNames.forEach((name) => {
-            nameUsageCounts[name] = 1;
-        });
+        const usedNames = this.getInitialUsedNames();
 
         references.forEach((reference) => {
             const name = reference.alias ?? reference.name;
             const refIdentifier = reference.getCompletePath();
 
-            // Get current count for this name, accounting for used names used by statements in the file
-            const currentCount = nameUsageCounts[name] ?? 0;
-            nameUsageCounts[name] = currentCount + 1;
+            let nameOverride = name;
+            let modulePathIdx = reference.modulePath.length - 1;
+            let isAlias = !!reference.alias;
 
-            // For used names or names we've seen before, use an auto-generated alias with a naming convention
-            // of a numbered suffix.
-            if (usedNames.has(name) || currentCount > 0) {
-                completeRefPathsToNameOverrides[refIdentifier] = {
-                    name: `${name}_${currentCount}`,
-                    isAlias: true
-                };
-            } else {
-                completeRefPathsToNameOverrides[refIdentifier] = {
-                    name,
-                    isAlias: !!reference.alias
-                };
+            while (usedNames.has(nameOverride)) {
+                isAlias = true;
+
+                const module = reference.modulePath[modulePathIdx];
+                if (modulePathIdx < 0 || !module) {
+                    nameOverride = `_${nameOverride}`;
+                } else {
+                    nameOverride = `${createPythonClassName(module)}${nameOverride}`;
+                }
+
+                modulePathIdx--;
             }
+            usedNames.add(nameOverride);
+
+            completeRefPathsToNameOverrides[refIdentifier] = {
+                name: nameOverride,
+                isAlias
+            };
         });
 
         writer.setRefNameOverrides(completeRefPathsToNameOverrides);
     }
 
-    private getUsedNames(): Set<string> {
+    private getInitialUsedNames(): Set<string> {
         const usedNames = new Set<string>();
 
         this.statements.forEach((statement) => {

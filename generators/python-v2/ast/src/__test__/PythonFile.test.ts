@@ -339,10 +339,23 @@ describe("PythonFile", () => {
 
         local_class.add(
             python.field({
+                name: "automobile",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "automobiles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
                 name: "vehicle",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
-                        modulePath: ["root", "vehicles"],
+                        modulePath: ["root", "vehicles", "automobiles"],
                         name: "Car"
                     }),
                     arguments_: []
