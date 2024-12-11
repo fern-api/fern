@@ -22,9 +22,9 @@ var client = new SeedValidationClient();
 await client.CreateAsync(
     new CreateRequest
     {
-        Decimal = 1.1,
-        Even = 1,
-        Name = "name",
+        Decimal = 2.2,
+        Even = 100,
+        Name = "foo",
         Shape = Shape.Square,
     }
 );

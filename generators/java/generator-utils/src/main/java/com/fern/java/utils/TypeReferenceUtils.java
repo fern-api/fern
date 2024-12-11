@@ -1,12 +1,6 @@
 package com.fern.java.utils;
 
-import com.fern.ir.model.types.ContainerType;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.Literal;
-import com.fern.ir.model.types.MapType;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.PrimitiveTypeV1;
-import com.fern.ir.model.types.TypeReference;
+import com.fern.ir.model.types.*;
 import java.util.Optional;
 
 public class TypeReferenceUtils {
@@ -56,7 +50,7 @@ public class TypeReferenceUtils {
         }
 
         @Override
-        public String visitNamed(DeclaredTypeName named) {
+        public String visitNamed(NamedType named) {
             return named.getName().getPascalCase().getUnsafeName();
         }
 
@@ -169,6 +163,21 @@ public class TypeReferenceUtils {
         @Override
         public String visitLong() {
             return "Long";
+        }
+
+        @Override
+        public String visitUint() {
+            return "Long";
+        }
+
+        @Override
+        public String visitUint64() {
+            return "Long";
+        }
+
+        @Override
+        public String visitFloat() {
+            return "Float";
         }
 
         @Override

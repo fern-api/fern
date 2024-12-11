@@ -1,3 +1,5 @@
+import { generatorsYml } from "@fern-api/configuration";
+
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
     disableExamples: boolean;
@@ -27,6 +29,9 @@ export interface ParseOpenAPIOptions {
     /* Whether or not to use undiscriminated unions with literals. */
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 
+    /* The filter to apply to the OpenAPI document. */
+    filter: generatorsYml.OpenApiFilterSchema | undefined;
+
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
     asyncApiNaming: "v1" | "v2";
@@ -45,6 +50,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     preserveSchemaIds: false,
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
+    filter: undefined,
     asyncApiNaming: "v1"
 };
 
@@ -93,6 +99,7 @@ export function getParseOptions({
             overrides?.objectQueryParameters ??
             options?.objectQueryParameters ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.objectQueryParameters,
+        filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming
     };

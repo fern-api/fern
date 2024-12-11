@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 
 export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.OpenApiSettingsSchema.Raw,
@@ -17,6 +18,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     "respect-readonly-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
     "inline-path-parameters": core.serialization.boolean().optional(),
+    filter: OpenApiFilterSchema.optional(),
 });
 
 export declare namespace OpenApiSettingsSchema {
@@ -28,5 +30,6 @@ export declare namespace OpenApiSettingsSchema {
         "respect-readonly-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
+        filter?: OpenApiFilterSchema.Raw | null;
     }
 }

@@ -18,11 +18,7 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.NameAndWireValue;
-import com.fern.ir.model.http.FileProperty;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpMethod;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -139,6 +135,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint _unused,
+            String contentType,
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
@@ -201,10 +198,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             clientOptionsMember.name,
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
-                    .add(
-                            ".addHeader($S, $S);\n",
-                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                            AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+                    .add(".addHeader($S, $S);\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         } else {
             requestBodyCodeBlock.add(
                     ".headers($T.of($L.$L($L)));\n",

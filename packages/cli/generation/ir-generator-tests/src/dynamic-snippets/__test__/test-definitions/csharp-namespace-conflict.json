@@ -688,5 +688,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

@@ -6,6 +6,7 @@ import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
+import { OpenAPIFilter } from "./OpenAPIFilter";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
@@ -31,8 +32,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly DUMMY: SchemaParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
+    public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
-
     constructor({
         document,
         taskContext,
@@ -55,6 +56,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.options = options;
         this.source = source;
+        this.filter = new OpenAPIFilter({ context: taskContext, options });
         this.DUMMY = this.getDummy();
 
         this.namespace = namespace;
