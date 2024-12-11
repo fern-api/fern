@@ -497,6 +497,12 @@ importers:
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.24.0)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.24.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -6854,6 +6860,12 @@ importers:
 
   packages/snippets/core:
     devDependencies:
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.24.0)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.24.0)
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../cli/workspace/commons
@@ -7679,6 +7691,16 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss-selector-parser: ^6.0.13
+
+  '@esbuild-plugins/node-globals-polyfill@0.2.3':
+    resolution: {integrity: sha512-r3MIryXDeXDOZh7ih1l/yE9ZLORCd5e8vWg02azWRGj5SPTuoh69A2AIyn0Z31V/kHBfZ4HgWJ+OK3GTTwLmnw==}
+    peerDependencies:
+      esbuild: '*'
+
+  '@esbuild-plugins/node-modules-polyfill@0.2.2':
+    resolution: {integrity: sha512-LXV7QsWJxRuMYvKbiznh+U1ilIop3g2TeKRzUxOG5X3YITc8JyyTa90BmLwqqv0YnX4v32CSlG+vsziZp9dMvA==}
+    peerDependencies:
+      esbuild: '*'
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -10307,6 +10329,9 @@ packages:
   estree-util-visit@2.0.0:
     resolution: {integrity: sha512-m5KgiH85xAhhW8Wta0vShLcUvOsh3LLPI2YVwcbio1l7E09NTLL1EyMZFM1OyWowoH0skScNbhOPl4kcBgzTww==}
 
+  estree-walker@0.6.1:
+    resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
+
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
@@ -12656,6 +12681,16 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  rollup-plugin-inject@3.0.2:
+    resolution: {integrity: sha512-ptg9PQwzs3orn4jkgXJ74bfs5vYz1NCZlSQMBUA0wKcGp5i5pA1AO3fOUEte8enhGUC+iapTCzEWw2jEFFUO/w==}
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-inject.
+
+  rollup-plugin-node-polyfills@0.2.1:
+    resolution: {integrity: sha512-4kCrKPTJ6sK4/gLL/U5QzVT8cxJcofO0OU74tnB19F40cmuAKSzH5/siithxlofFEjwvw1YAhPmbvGNA6jEroA==}
+
+  rollup-pluginutils@2.8.2:
+    resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
+
   rollup@4.24.0:
     resolution: {integrity: sha512-DOmrlGSXNk1DM0ljiQA+i+o0rSLhtii1je5wgk60j49d1jHT5YYttBv1iWOnYSTG+fZZESUOSNiAl89SIet+Cg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -14910,6 +14945,16 @@ snapshots:
   '@csstools/selector-specificity@3.0.2(postcss-selector-parser@6.0.15)':
     dependencies:
       postcss-selector-parser: 6.0.15
+
+  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.24.0)':
+    dependencies:
+      esbuild: 0.24.0
+
+  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.24.0)':
+    dependencies:
+      esbuild: 0.24.0
+      escape-string-regexp: 4.0.0
+      rollup-plugin-node-polyfills: 0.2.1
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -17958,6 +18003,8 @@ snapshots:
       '@types/estree-jsx': 1.0.0
       '@types/unist': 3.0.2
 
+  estree-walker@0.6.1: {}
+
   estree-walker@2.0.2: {}
 
   estree-walker@3.0.3:
@@ -20911,6 +20958,20 @@ snapshots:
   rimraf@5.0.5:
     dependencies:
       glob: 10.3.10
+
+  rollup-plugin-inject@3.0.2:
+    dependencies:
+      estree-walker: 0.6.1
+      magic-string: 0.25.9
+      rollup-pluginutils: 2.8.2
+
+  rollup-plugin-node-polyfills@0.2.1:
+    dependencies:
+      rollup-plugin-inject: 3.0.2
+
+  rollup-pluginutils@2.8.2:
+    dependencies:
+      estree-walker: 0.6.1
 
   rollup@4.24.0:
     dependencies:

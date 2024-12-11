@@ -21,7 +21,7 @@ export class InMemoryOpenAPILoader {
         overrides
     }: {
         openapi: OpenAPI.Document;
-        overrides: OpenAPI.Document | undefined;
+        overrides: Partial<OpenAPI.Document> | undefined;
     }): OpenAPIV3.Document {
         if (isOpenAPIV2(openapi)) {
             throw new Error("Swagger v2.0 is not supported in the browser");

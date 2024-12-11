@@ -23,7 +23,7 @@ export declare namespace OpenAPIWorkspace {
 
     export interface Spec {
         parsed: OpenAPI.Document;
-        overrides?: OpenAPI.Document;
+        overrides?: Partial<OpenAPI.Document>;
         settings?: Settings;
     }
 
