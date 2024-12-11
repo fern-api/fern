@@ -8,6 +8,7 @@
         "types": {
           "GenerateContentResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "bar": "optional<string>",
             },

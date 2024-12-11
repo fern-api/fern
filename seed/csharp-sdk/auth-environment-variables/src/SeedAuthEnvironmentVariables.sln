@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables", "SeedAuthEnvironmentVariables\SeedAuthEnvironmentVariables.csproj", "{A1EC0B1A-6761-4257-BA4C-2EF2A081F494}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAuthEnvironmentVariables.Test", "SeedAuthEnvironmentVariables.Test\SeedAuthEnvironmentVariables.Test.csproj", "{64D98729-73F0-4B95-B48F-7A1AD850B969}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1EC0B1A-6761-4257-BA4C-2EF2A081F494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EC0B1A-6761-4257-BA4C-2EF2A081F494}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EC0B1A-6761-4257-BA4C-2EF2A081F494}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EC0B1A-6761-4257-BA4C-2EF2A081F494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D98729-73F0-4B95-B48F-7A1AD850B969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D98729-73F0-4B95-B48F-7A1AD850B969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D98729-73F0-4B95-B48F-7A1AD850B969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D98729-73F0-4B95-B48F-7A1AD850B969}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

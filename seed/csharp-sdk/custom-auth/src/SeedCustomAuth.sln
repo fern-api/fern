@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth", "SeedCustomAuth\SeedCustomAuth.csproj", "{A1A65329-A491-4889-B8B7-0D5EF88D4ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth.Test", "SeedCustomAuth.Test\SeedCustomAuth.Test.csproj", "{01297230-30F1-4B04-95E6-A0FF08761371}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1A65329-A491-4889-B8B7-0D5EF88D4ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1A65329-A491-4889-B8B7-0D5EF88D4ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1A65329-A491-4889-B8B7-0D5EF88D4ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1A65329-A491-4889-B8B7-0D5EF88D4ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01297230-30F1-4B04-95E6-A0FF08761371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01297230-30F1-4B04-95E6-A0FF08761371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01297230-30F1-4B04-95E6-A0FF08761371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01297230-30F1-4B04-95E6-A0FF08761371}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

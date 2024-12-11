@@ -1,4 +1,4 @@
-import { ROOT_API_FILENAME } from "@fern-api/configuration";
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";

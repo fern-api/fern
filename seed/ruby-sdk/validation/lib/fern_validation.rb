@@ -28,9 +28,9 @@ module SeedValidationClient
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.create(
-    #    decimal: 1.1,
-    #    even: 1,
-    #    name: "name",
+    #    decimal: 2.2,
+    #    even: 100,
+    #    name: "foo",
     #    shape: SQUARE
     #  )
     def create(decimal:, even:, name:, shape:, request_options: nil)
@@ -64,9 +64,9 @@ module SeedValidationClient
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.get(
-    #    decimal: 1.1,
-    #    even: 1,
-    #    name: "name"
+    #    decimal: 2.2,
+    #    even: 100,
+    #    name: "foo"
     #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -113,9 +113,9 @@ module SeedValidationClient
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.create(
-    #    decimal: 1.1,
-    #    even: 1,
-    #    name: "name",
+    #    decimal: 2.2,
+    #    even: 100,
+    #    name: "foo",
     #    shape: SQUARE
     #  )
     def create(decimal:, even:, name:, shape:, request_options: nil)
@@ -149,9 +149,9 @@ module SeedValidationClient
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.get(
-    #    decimal: 1.1,
-    #    even: 1,
-    #    name: "name"
+    #    decimal: 2.2,
+    #    even: 100,
+    #    name: "foo"
     #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @async_request_client.conn.get do |req|

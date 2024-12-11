@@ -4,7 +4,7 @@ import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } 
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";
-import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
 
 interface EndpointWithFilepath {

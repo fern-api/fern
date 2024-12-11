@@ -24,9 +24,9 @@ import { SeedValidationClient } from "@fern/validation";
 
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
-    decimal: 1.1,
-    even: 1,
-    name: "name",
+    decimal: 2.2,
+    even: 100,
+    name: "foo",
     shape: "SQUARE",
 });
 ```
@@ -64,18 +64,6 @@ try {
 ```
 
 ## Advanced
-
-### Raw Responses
-
-The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
-the parsed response body will be available in the `body` field, along with the response headers:
-
-```typescript
-const response = await client.create(...).asRaw();
-
-console.log(response.headers['X-My-Header']);
-console.log(response.body);
-```
 
 ### Additional Headers
 

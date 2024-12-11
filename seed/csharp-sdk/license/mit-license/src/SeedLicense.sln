@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedLicense", "SeedLicense\SeedLicense.csproj", "{700E2CC2-9309-4B6D-AA3A-CAA787DF937C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedLicense.Test", "SeedLicense.Test\SeedLicense.Test.csproj", "{9BD21D70-496C-4017-8285-CCF9723E7F64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{700E2CC2-9309-4B6D-AA3A-CAA787DF937C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{700E2CC2-9309-4B6D-AA3A-CAA787DF937C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{700E2CC2-9309-4B6D-AA3A-CAA787DF937C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{700E2CC2-9309-4B6D-AA3A-CAA787DF937C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD21D70-496C-4017-8285-CCF9723E7F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD21D70-496C-4017-8285-CCF9723E7F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD21D70-496C-4017-8285-CCF9723E7F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD21D70-496C-4017-8285-CCF9723E7F64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

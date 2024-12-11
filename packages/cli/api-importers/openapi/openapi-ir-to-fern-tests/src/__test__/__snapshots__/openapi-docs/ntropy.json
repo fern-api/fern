@@ -608,6 +608,7 @@
         "types": {
           "Account": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "closing_balance": {
                 "type": "optional<double>",
@@ -631,6 +632,7 @@
           },
           "AccountHolder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "type": "optional<Address>",
@@ -648,6 +650,7 @@
           },
           "AccountHolderExternal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The timestamp of when the account holder was created.",
@@ -720,6 +723,7 @@
           },
           "Address": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "city": {
                 "type": "optional<string>",
@@ -743,6 +747,7 @@
           },
           "BankStatement": {
             "docs": "Represents a bank statement with details about the file and its status.",
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The date and time when the job was created.",
@@ -774,6 +779,7 @@
           },
           "BankStatementAccount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "closing_balance": {
                 "docs": "The closing balance of the account for the statement period.",
@@ -830,6 +836,7 @@
           },
           "BankStatementError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "type": "BankStatementErrorCode",
@@ -852,6 +859,7 @@
           },
           "BankStatementFile": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "no_pages": {
                 "docs": "The number of pages in the bank statement file.",
@@ -868,6 +876,7 @@
           },
           "BankStatementResults": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accounts": {
                 "docs": "List of accounts in the bank statement.",
@@ -891,6 +900,7 @@
           },
           "BankStatementTransaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The amount of the transaction in the `currency`. Must be a positive value. For example, if the `currency` is USD, then it's the amount in dollars.",
@@ -952,6 +962,7 @@
           },
           "Batch": {
             "docs": "The `Batch` object represents the status and progress of an asynchronous batch enrichment job.",
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The timestamp of when the batch was created.",
@@ -985,6 +996,7 @@
           "BatchResult": {
             "docs": "The `BatchResult` object represents the result of a batch enrichment job, including its status and
 enriched transactions.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "A unique identifier for the batch.",
@@ -1019,6 +1031,7 @@ enriched transactions.",
           },
           "Categories": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accounting": {
                 "docs": "The corresponding accounting category. Only available for `business` transactions.",
@@ -1047,6 +1060,7 @@ enriched transactions.",
           },
           "CategorySet": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "incoming": {
                 "type": "list<string>",
@@ -1061,6 +1075,7 @@ enriched transactions.",
           },
           "Counterparty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique UUID identifier of the entity",
@@ -1512,6 +1527,7 @@ enriched transactions.",
           },
           "CustomCategorySet": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "incoming": {
                 "type": "list<string>",
@@ -1552,6 +1568,7 @@ enriched transactions.",
           },
           "EnrichedTransaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "categories": {
                 "type": "optional<Categories>",
@@ -1586,6 +1603,7 @@ enriched transactions.",
           },
           "EnrichmentResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transactions": {
                 "docs": "A list of enriched transactions resulting from the enrichment of this batch.",
@@ -1598,6 +1616,7 @@ enriched transactions.",
           },
           "Entities": {
             "docs": "Entities found by identity identification",
+            "inline": undefined,
             "properties": {
               "counterparty": {
                 "type": "optional<Counterparty>",
@@ -1612,6 +1631,7 @@ enriched transactions.",
           },
           "Entity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique UUID identifier of the entity",
@@ -1658,6 +1678,7 @@ enriched transactions.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1729,6 +1750,7 @@ enriched transactions.",
           },
           "FnCall!": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "!": {
                 "type": "expression",
@@ -1740,6 +1762,7 @@ enriched transactions.",
           },
           "FnCall&&": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "&&": "list<expression>",
             },
@@ -1749,6 +1772,7 @@ enriched transactions.",
           },
           "FnCall*": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "*": "list<expression>",
             },
@@ -1758,6 +1782,7 @@ enriched transactions.",
           },
           "FnCall+": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "+": "list<expression>",
             },
@@ -1767,6 +1792,7 @@ enriched transactions.",
           },
           "FnCall-": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "-": "list<expression>",
             },
@@ -1776,6 +1802,7 @@ enriched transactions.",
           },
           "FnCall/": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "/": "list<expression>",
             },
@@ -1785,6 +1812,7 @@ enriched transactions.",
           },
           "FnCall//": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "//": "list<expression>",
             },
@@ -1794,6 +1822,7 @@ enriched transactions.",
           },
           "FnCall<": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "<": "list<expression>",
             },
@@ -1803,6 +1832,7 @@ enriched transactions.",
           },
           "FnCall<=": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "<=": "list<expression>",
             },
@@ -1812,6 +1842,7 @@ enriched transactions.",
           },
           "FnCall==": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "==": "list<expression>",
             },
@@ -1821,6 +1852,7 @@ enriched transactions.",
           },
           "FnCall>": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               ">": "list<expression>",
             },
@@ -1830,6 +1862,7 @@ enriched transactions.",
           },
           "FnCall>=": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               ">=": "list<expression>",
             },
@@ -1839,6 +1872,7 @@ enriched transactions.",
           },
           "FnCallEndsWith": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ends_with": "list<expression>",
             },
@@ -1848,6 +1882,7 @@ enriched transactions.",
           },
           "FnCallGet": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "get": {
                 "type": "properties",
@@ -1859,6 +1894,7 @@ enriched transactions.",
           },
           "FnCallHasLabel": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "has_label": {
                 "type": "expression",
@@ -1870,6 +1906,7 @@ enriched transactions.",
           },
           "FnCallHasMcc": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "has_mcc": {
                 "type": "expression",
@@ -1881,6 +1918,7 @@ enriched transactions.",
           },
           "FnCallIsSubstring": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "is_substring": "list<expression>",
             },
@@ -1890,6 +1928,7 @@ enriched transactions.",
           },
           "FnCallStartsWith": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "starts_with": "list<expression>",
             },
@@ -1899,6 +1938,7 @@ enriched transactions.",
           },
           "FnCallToLower": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "to_lower": {
                 "type": "expression",
@@ -1910,6 +1950,7 @@ enriched transactions.",
           },
           "FnCallToUpper": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "to_upper": {
                 "type": "expression",
@@ -1921,6 +1962,7 @@ enriched transactions.",
           },
           "FnCall||": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "||": "list<expression>",
             },
@@ -1930,6 +1972,7 @@ enriched transactions.",
           },
           "HTTPValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
@@ -1941,6 +1984,7 @@ enriched transactions.",
           },
           "Intermediary": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique UUID identifier of the entity",
@@ -1982,6 +2026,7 @@ enriched transactions.",
           },
           "Location": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "raw_address": {
                 "docs": "An unstructured string containing the address",
@@ -1999,6 +2044,7 @@ enriched transactions.",
           "LocationInput": {
             "docs": "Location of where the transaction has taken place. This can greatly improve entity identification, especially
 under ambiguity.",
+            "inline": undefined,
             "properties": {
               "country": {
                 "docs": "The country where the transaction was made in ISO 3166-2 format",
@@ -2015,6 +2061,7 @@ under ambiguity.",
           },
           "LocationStructured": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "apple_maps_url": {
                 "docs": "A URL link to view the location on Apple Maps",
@@ -2069,6 +2116,7 @@ under ambiguity.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2095,6 +2143,7 @@ under ambiguity.",
           },
           "ModifyLabelsAddLabel": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "add_label": {
                 "type": "expression",
@@ -2106,6 +2155,7 @@ under ambiguity.",
           },
           "ModifyLabelsAddMcc": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "add_mcc": {
                 "type": "expression",
@@ -2117,6 +2167,7 @@ under ambiguity.",
           },
           "ModifyLabelsRemoveLabel": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "remove_label": {
                 "type": "expression",
@@ -2128,6 +2179,7 @@ under ambiguity.",
           },
           "ModifyLabelsRemoveMcc": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "remove_mcc": {
                 "type": "expression",
@@ -2139,6 +2191,7 @@ under ambiguity.",
           },
           "ModifyLabelsSetLabels": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "set_labels": "list<expression>",
             },
@@ -2148,6 +2201,7 @@ under ambiguity.",
           },
           "ModifyLabelsSetMcc": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "set_mcc": "list<expression>",
             },
@@ -2157,6 +2211,7 @@ under ambiguity.",
           },
           "PagedResponseAccountHolderExternal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<AccountHolderExternal>",
@@ -2169,6 +2224,7 @@ under ambiguity.",
           },
           "PagedResponseBankStatement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<BankStatement>",
@@ -2181,6 +2237,7 @@ under ambiguity.",
           },
           "PagedResponseBatch": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<Batch>",
@@ -2193,6 +2250,7 @@ under ambiguity.",
           },
           "PagedResponseReport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<Report>",
@@ -2207,6 +2265,7 @@ under ambiguity.",
           },
           "PagedResponseTransaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<Transaction>",
@@ -2219,6 +2278,7 @@ under ambiguity.",
           },
           "PagedResponseWebhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "list<Webhook>",
@@ -2232,6 +2292,7 @@ under ambiguity.",
           "Recurrence": {
             "docs": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about
 whether a transaction is a one-time event or a part of a recurring series.",
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "Whether the transaction is a one-time transfer `one-off`, regularly with varying pricing `recurring` or with fixed pricing `subscription`",
@@ -2244,6 +2305,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "RecurrenceGroup": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "average_amount": {
                 "docs": "The average amount per transaction in this group",
@@ -2335,6 +2397,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "Report": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The date and time when the report was created.",
@@ -2394,6 +2457,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "StatementInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_holder": {
                 "type": "optional<AccountHolder>",
@@ -2429,6 +2493,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "SyncEnrichmentOutput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transactions": {
                 "docs": "A list of enriched transactions resulting from the enrichment of this batch.",
@@ -2441,6 +2506,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "Transaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_holder_id": {
                 "docs": "The unique ID of the account holder of the transaction",
@@ -2527,6 +2593,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "TransactionError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "type": "TransactionErrorCode",
@@ -2549,6 +2616,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "TransactionInput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_holder_id": {
                 "docs": "The unique ID of the account holder. Unsetting it will disable [categorization](./docs/v3/enrichment/entities).",
@@ -2613,6 +2681,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "ValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loc": {
                 "type": "list<ValidationErrorLocItem>",
@@ -2628,6 +2697,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2638,6 +2708,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "Webhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The date and time when the webhook was created.",
@@ -2719,6 +2790,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2738,6 +2810,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2750,6 +2823,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "if": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "else": {
                 "type": "optional<list<action>>",
@@ -2787,6 +2861,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
           },
           "set": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "type": "EditableTxProp",
@@ -4388,6 +4463,7 @@ types:
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   ValidationError:
     properties:
       loc:
@@ -4476,112 +4552,133 @@ types:
       '&&': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall||:
     properties:
       '||': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall==:
     properties:
       '==': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall+:
     properties:
       +: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall-:
     properties:
       '-': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall*:
     properties:
       '*': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall/:
     properties:
       /: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall//:
     properties:
       //: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall<:
     properties:
       <: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall<=:
     properties:
       <=: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall>:
     properties:
       '>': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall>=:
     properties:
       '>=': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall!:
     properties:
       '!':
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallIsSubstring:
     properties:
       is_substring: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallStartsWith:
     properties:
       starts_with: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallEndsWith:
     properties:
       ends_with: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallToLower:
     properties:
       to_lower:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallToUpper:
     properties:
       to_upper:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallHasLabel:
     properties:
       has_label:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallHasMcc:
     properties:
       has_mcc:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCallGet:
     properties:
       get:
         type: properties
     source:
       openapi: ../openapi.yml
+    inline: true
   FnCall:
     discriminated: false
     union:
@@ -4632,34 +4729,40 @@ types:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabelsRemoveLabel:
     properties:
       remove_label:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabelsSetLabels:
     properties:
       set_labels: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabelsAddMcc:
     properties:
       add_mcc:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabelsRemoveMcc:
     properties:
       remove_mcc:
         type: expression
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabelsSetMcc:
     properties:
       set_mcc: list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
   ModifyLabels:
     discriminated: false
     union:
@@ -9365,10 +9468,6 @@ enriched = sdk.transactions.create([
                               },
                             ],
                           },
-                          "error": {
-                            "code": "account_holder_not_found",
-                            "message": "message",
-                          },
                           "id": "xbx8YP14g565Xk",
                           "location": {
                             "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
@@ -9866,9 +9965,6 @@ service:
                       google_maps_url: >-
                         https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277
                       apple_maps_url: https://maps.apple.com/?q=29.704558,-82.389277
-                  error:
-                    code: account_holder_not_found
-                    message: message
                   created_at: '2024-03-30T00:00:00Z'
                   id: xbx8YP14g565Xk
           code-samples:

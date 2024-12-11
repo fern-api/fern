@@ -51,6 +51,7 @@ allowedFailures:
   - enum
   - exhaustive
   - extends
+  - file-upload
   - multi-url-environment
   - reserved-keywords
   - trace

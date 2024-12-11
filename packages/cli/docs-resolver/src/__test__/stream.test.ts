@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation, IdGenerator } from "@fern-api/ir-generator";
@@ -8,6 +8,7 @@ import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
 import { NodeIdGenerator } from "../NodeIdGenerator";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 const context = createMockTaskContext();
 
@@ -24,7 +25,7 @@ it.skip("converts to api reference node", async () => {
         throw new Error("Workspace is null");
     }
 
-    const parsedDocsConfig = await docsYml.parseDocsConfiguration({
+    const parsedDocsConfig = await parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
@@ -60,7 +61,7 @@ it.skip("converts to api reference node", async () => {
 
     const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
 
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace: apiWorkspace,
         audiences: { type: "all" },
         generationLanguage: undefined,
@@ -70,7 +71,8 @@ it.skip("converts to api reference node", async () => {
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, apiWorkspace)
     });
 
     const apiDefinition = convertIrToApiDefinition(ir, apiDefinitionId);

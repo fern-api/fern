@@ -53,7 +53,7 @@ export class DockerTestRunner extends TestRunner {
             reviewers: undefined,
             audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
             generators: [
-                getGeneratorInvocation({
+                await getGeneratorInvocation({
                     absolutePathToOutput: outputDir,
                     docker: this.getParsedDockerName(),
                     language,

@@ -20,7 +20,7 @@ import {
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
-import hash from "object-hash";
+import { hashJSON } from "../../utils/hashJSON";
 
 export declare namespace generateEndpointExample {
     interface Args {
@@ -293,7 +293,7 @@ export function generateEndpointExample({
     return {
         type: "success",
         example: {
-            id: hash(result),
+            id: hashJSON(result),
             url: getUrlForExample(endpoint, result),
             ...result
         },

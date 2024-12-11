@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "type": "string"
+    },
+    "myEnum": {
+      "$ref": "#/definitions/InlineEnum"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "myEnum"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "InlineEnum": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    }
+  }
+}

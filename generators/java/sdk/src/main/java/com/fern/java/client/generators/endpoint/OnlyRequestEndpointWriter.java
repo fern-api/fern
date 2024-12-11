@@ -167,6 +167,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint endpoint,
+            String contentType,
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
@@ -192,10 +193,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                     @Override
                     public Void visitTypeReference(HttpRequestBodyReference typeReference) {
-                        builder.add(
-                                ".addHeader($S, $S)\n",
-                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                                AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+                        builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
                         return null;
                     }
 
@@ -228,10 +226,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             clientOptionsMember.name,
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
-            builder.add(
-                    ".addHeader($S, $S)\n",
-                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+            builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             return builder.add(".build();\n").unindent().build();
         }
     }

@@ -1,4 +1,4 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";

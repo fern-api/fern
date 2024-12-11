@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { Schema } from "@fern-api/openapi-ir";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -15,7 +15,8 @@ export function buildVariables(context: OpenApiIrConverterContext): void {
             schema: Schema.primitive(variableSchema),
             context,
             fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            namespace
+            namespace,
+            declarationDepth: 0
         });
         context.builder.addVariable({
             name: variable,

@@ -54,7 +54,7 @@ export function validateAgainstJsonSchema(
             return {
                 success: false,
                 error: {
-                    message: "Failed to parse",
+                    message: "Failed to parse because JSON schema validation failed",
                     keyword: "unknown",
                     instancePath: "",
                     schemaPath: "",
@@ -65,7 +65,7 @@ export function validateAgainstJsonSchema(
             return {
                 success: false,
                 error: {
-                    message: "Failed to parse",
+                    message: "Failed to parse because JSON schema validation failed",
                     keyword: "unknown",
                     instancePath: "",
                     schemaPath: "",

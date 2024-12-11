@@ -106,8 +106,7 @@
                     "valueType": {
                       "type": "primitive",
                       "value": {
-                        "type": "boolean",
-                        "default": false
+                        "type": "boolean"
                       }
                     }
                   },

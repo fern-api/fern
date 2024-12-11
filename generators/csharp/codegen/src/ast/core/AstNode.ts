@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/generator-commons";
+import { AbstractAstNode } from "@fern-api/base-generator";
 import { execSync } from "child_process";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { Writer } from "./Writer";

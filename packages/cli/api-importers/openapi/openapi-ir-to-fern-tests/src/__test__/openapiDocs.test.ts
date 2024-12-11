@@ -28,10 +28,15 @@ describe("openapi-ir-to-fern docs", async () => {
                         `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                     );
                 }
+
                 const definition = await workspace.workspace.getDefinition(
-                    { context },
+                    {
+                        context,
+                        absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
+                    },
                     { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
                 );
+
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
             },

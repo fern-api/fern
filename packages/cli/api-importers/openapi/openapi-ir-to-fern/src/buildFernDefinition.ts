@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
@@ -40,7 +40,13 @@ function addSchemas({
         }
 
         const declarationFile = getDeclarationFileForSchema(schema);
-        const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace });
+        const typeDeclaration = buildTypeDeclaration({
+            schema,
+            context,
+            declarationFile,
+            namespace,
+            declarationDepth: 0
+        });
 
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {

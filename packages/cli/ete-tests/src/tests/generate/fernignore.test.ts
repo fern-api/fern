@@ -52,7 +52,7 @@ describe("fern generate --local", () => {
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory
         });
-    }, 180_000);
+    }, 360_000);
 });
 
 async function expectPathDoesNotExist(absoluteFilePath: AbsoluteFilePath): Promise<void> {

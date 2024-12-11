@@ -607,6 +607,7 @@ channel:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
       currency specified in the payment.
+    inline: true
     properties:
       account_type:
         docs: >-
@@ -651,6 +652,7 @@ channel:
       openapi: openapi/trains/openapi.yml
   Card:
     docs: A card (debit or credit) to take payment from.
+    inline: true
     properties:
       address_city:
         type: optional<string>
@@ -921,6 +923,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1283,6 +1286,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1356,6 +1360,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1396,6 +1401,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml

@@ -4,7 +4,7 @@ import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { getAllOpenAPISpecs, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
@@ -59,12 +59,12 @@ async function writeDefinitionForOpenAPIWorkspace({
     includeModels: boolean;
     context: TaskContext;
 }): Promise<void> {
+    const loader = new OpenAPILoader(workspace.absoluteFilePath);
     const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
     for (const spec of specs) {
-        const ir = await parse({
-            absoluteFilePathToWorkspace: workspace.absoluteFilePath,
-            specs: [spec],
-            taskContext: context
+        const ir = parse({
+            context,
+            documents: await loader.loadDocuments({ context, specs: [spec] })
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let existingOverrides: any = {};

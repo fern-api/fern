@@ -1,5 +1,5 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import {
     FernFilepath,
     HttpHeader,

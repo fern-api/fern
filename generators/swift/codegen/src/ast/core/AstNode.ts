@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/generator-commons";
+import { AbstractAstNode } from "@fern-api/base-generator";
 import { Writer } from "./Writer";
 
 export abstract class AstNode extends AbstractAstNode {

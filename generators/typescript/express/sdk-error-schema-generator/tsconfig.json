@@ -8,7 +8,7 @@
   "include": ["../express-error-schema-generator/src"],
   "references": [
     { "path": "../../../abstract-schema-generator" },
-    { "path": "../../../commons" },
+    { "path": "../../../base" },
     { "path": "../../../contexts" }
   ]
 }

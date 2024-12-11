@@ -25,6 +25,7 @@
         "types": {
           "ClientProvidedResponseMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "clientRequestId": "optional<string>",
               "timeThresholdMs": "optional<long>",
@@ -35,6 +36,7 @@
           },
           "DefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "requestId": "optional<string>",
             },
@@ -44,6 +46,7 @@
           },
           "ErrorEnvelope": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "HttpStatus": "long",
               "Message": "string",
@@ -58,6 +61,7 @@
           },
           "ErrorMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Error code",
@@ -78,6 +82,7 @@
           },
           "ExtensionV1": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "date_created": {
                 "docs": "Date the extension was created",
@@ -108,6 +113,7 @@
           },
           "ExtensionV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ExtensionV1",
               "errors": "optional<list<Issue>>",
@@ -120,6 +126,7 @@
           },
           "ExternalSessionAiResponseMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "clientProvided": "optional<ClientProvidedResponseMetadata>",
               "requestId": "optional<string>",
@@ -142,6 +149,7 @@
           },
           "ExternalSessionAiResponseMetadataUsage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credits": {
                 "docs": "The credit usage for this request",
@@ -158,6 +166,7 @@
           },
           "Issue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Issue code",
@@ -178,6 +187,7 @@
           },
           "ListExtensionV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<list<ExtensionV1>>",
               "errors": "optional<list<Issue>>",
@@ -190,6 +200,7 @@
           },
           "ListProfileV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<list<ProfileV1>>",
               "errors": "optional<list<Issue>>",
@@ -202,6 +213,7 @@
           },
           "LiveViewConnectionInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "airtop_browser_url": {
                 "docs": "Websocket url to connect to the airtop browser",
@@ -218,6 +230,7 @@
           },
           "ModelResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "modelResponse": "string",
             },
@@ -227,6 +240,7 @@
           },
           "ModelResponseExternalSessionAiResponseMetadataWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ModelResponse",
               "errors": "optional<list<Issue>>",
@@ -239,6 +253,7 @@
           },
           "Pagination": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currentLimit": "long",
               "currentPage": "long",
@@ -255,6 +270,7 @@
           },
           "ProfileV1": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the profile",
@@ -291,6 +307,7 @@
           },
           "ProfileV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ProfileV1",
               "errors": "optional<list<Issue>>",
@@ -303,6 +320,7 @@
           },
           "ScrapeModelResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "modelResponse": "ScrapeResponseOutput",
             },
@@ -312,6 +330,7 @@
           },
           "ScrapeModelResponseExternalSessionAiResponseMetadataWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ScrapeModelResponse",
               "errors": "optional<list<Issue>>",
@@ -324,6 +343,7 @@
           },
           "ScrapeResponseContent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contentType": {
                 "docs": "The mime type of content extracted from the browser window",
@@ -340,6 +360,7 @@
           },
           "ScrapeResponseOutput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "scrapedContent": {
                 "docs": "The scraped content of the browser window",
@@ -360,6 +381,7 @@
           },
           "SessionConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "persist_profile": {
                 "docs": "Persist the profile",
@@ -396,6 +418,7 @@
           },
           "SessionConfigV1": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "persist_profile": {
                 "docs": "Persist the profile",
@@ -432,6 +455,7 @@
           },
           "SessionWithConnectionInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cdp_url": {
                 "docs": "Url to connect to chrome devtools protocol port on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
@@ -490,6 +514,7 @@
           },
           "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "SessionWithConnectionInfo",
               "errors": "optional<list<Issue>>",
@@ -502,6 +527,7 @@
           },
           "SessionsWithPagination": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Pagination info",
@@ -518,6 +544,7 @@
           },
           "SessionsWithPaginationEnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "SessionsWithPagination",
               "errors": "optional<list<Issue>>",
@@ -530,6 +557,7 @@
           },
           "StatusMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "event": {
                 "docs": "Event name",
@@ -566,6 +594,7 @@
           },
           "Window": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "liveViewUrl": {
                 "docs": "Url for live view session",
@@ -586,6 +615,7 @@
           },
           "WindowEnvelopeDefaultMetaWrapper": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Window",
               "errors": "optional<list<Issue>>",
@@ -2304,6 +2334,7 @@ service:
           },
           "SessionsEventsResponseError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "data": "root.ErrorMessage",
               "id": {
@@ -2321,6 +2352,7 @@ service:
           },
           "SessionsEventsResponseStatus": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "data": "root.StatusMessage",
               "id": {
@@ -2371,6 +2403,7 @@ service:
         docs: The retry time in milliseconds.
     source:
       openapi: ../openapi.yml
+    inline: true
   SessionsEventsResponseError:
     properties:
       data: root.ErrorMessage
@@ -2382,6 +2415,7 @@ service:
         docs: The retry time in milliseconds.
     source:
       openapi: ../openapi.yml
+    inline: true
   SessionsEventsResponse:
     discriminant: event
     base-properties: {}

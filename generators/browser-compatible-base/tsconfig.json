@@ -1,0 +1,19 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../packages/cli/logger"
+    },
+    {
+      "path": "../../packages/commons/core-utils"
+    },
+  ]
+}

@@ -14,6 +14,7 @@ import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
+import { confirm } from "@inquirer/prompts";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
@@ -305,6 +306,19 @@ export class CliContext {
             };
         }
         return this._isUpgradeAvailable;
+    }
+
+    /**
+     * Prompts the user for confirmation with a yes/no question
+     * @param message The message to display to the user
+     * @param defaultValue Optional default value (defaults to false)
+     * @returns Promise<boolean> representing the user's choice
+     */
+    public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+        return await confirm({
+            message,
+            default: defaultValue
+        });
     }
 }
 
