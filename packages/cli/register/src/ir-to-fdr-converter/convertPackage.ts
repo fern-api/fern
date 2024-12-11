@@ -520,6 +520,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
                 };
             },
             text: () => undefined, // TODO: support text/plain in FDR
+            bytes: () => undefined, // TODO: support text/plain in FDR
             streamParameter: () => undefined, // TODO: support stream parameter in FDR
             streaming: (streamingResponse) => {
                 if (streamingResponse.type === "text") {
