@@ -114,12 +114,14 @@ my_variable: ImportedClass.nested.attribute
 
 exports[`PythonFile > Write duplicative import names 1`] = `
 "from .cars import Car as CarsCar
-from .vehicles import Car as VehiclesCar
+from .automobiles import Car as AutomobilesCar
+from .vehicles.automobiles import Car as VehiclesAutomobilesCar
 
 
 class Car:
     car = CarsCar()
-    vehicle = VehiclesCar()
+    automobile = AutomobilesCar()
+    vehicle = VehiclesAutomobilesCar()
 "
 `;
 

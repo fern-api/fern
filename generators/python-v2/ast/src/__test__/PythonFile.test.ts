@@ -367,6 +367,6 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
-        expect(file.getReferences()).toHaveLength(2);
+        expect(file.getReferences()).toHaveLength(3);
     });
 });
