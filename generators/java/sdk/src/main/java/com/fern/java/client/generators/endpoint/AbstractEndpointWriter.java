@@ -200,10 +200,41 @@ public abstract class AbstractEndpointWriter {
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
                 || (httpEndpoint.getResponse().isPresent()
                         && httpEndpoint.getResponse().get().getBody().isPresent());
+        String contentType = httpEndpoint
+                .getRequestBody()
+                .flatMap(body -> body.visit(new HttpRequestBody.Visitor<Optional<String>>() {
+                    @Override
+                    public Optional<String> visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                        return inlinedRequestBody.getContentType();
+                    }
+
+                    @Override
+                    public Optional<String> visitReference(HttpRequestBodyReference httpRequestBodyReference) {
+                        return httpRequestBodyReference.getContentType();
+                    }
+
+                    @Override
+                    public Optional<String> visitFileUpload(FileUploadRequest fileUploadRequest) {
+                        // N.B. File upload headers are obtained from request configuration.
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public Optional<String> visitBytes(BytesRequest bytesRequest) {
+                        return bytesRequest.getContentType();
+                    }
+
+                    @Override
+                    public Optional<String> _visitUnknown(Object o) {
+                        throw new IllegalArgumentException("Unknown request type.");
+                    }
+                }))
+                .orElse(AbstractEndpointWriter.APPLICATION_JSON_HEADER);
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
                 clientOptionsField,
                 generatedClientOptions,
                 httpEndpoint,
+                contentType,
                 generatedObjectMapper,
                 generatedHttpUrl.inlinableBuild(),
                 sendContentType);
@@ -334,6 +365,7 @@ public abstract class AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint endpoint,
+            String contentType,
             GeneratedObjectMapper objectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType);
