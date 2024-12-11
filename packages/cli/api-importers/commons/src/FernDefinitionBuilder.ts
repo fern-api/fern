@@ -1,8 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, basename, dirname, join, relative, RelativeFilePath } from "@fern-api/path-utils";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
-import path, { basename, extname } from "path";
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export type HttpServiceInfo = Partial<
@@ -260,7 +259,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const importPrefix =
             alias ??
             camelCase(
-                (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
+                (dirname(fileToImport) + "/" + basename(fileToImport, { stripExtension: true })).replaceAll(
                     "__package__",
                     "root"
                 )
@@ -401,7 +400,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
         const basePath = this.basePath;
         if (basePath != null) {
-            fernFile.channel.path = path.join(basePath, channel.path);
+            fernFile.channel.path = join(basePath, channel.path);
         }
     }
 
@@ -456,7 +455,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                 id,
                                 {
                                     ...endpoint,
-                                    path: path.join(basePath, endpoint.path)
+                                    path: join(basePath, endpoint.path)
                                 }
                             ];
                         })
@@ -475,7 +474,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                     id,
                                     {
                                         ...endpoint,
-                                        path: path.join(basePath, endpoint.path)
+                                        path: join(basePath, endpoint.path)
                                     }
                                 ];
                             })

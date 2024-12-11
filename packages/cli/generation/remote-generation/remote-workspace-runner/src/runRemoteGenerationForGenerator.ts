@@ -14,6 +14,7 @@ import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -48,7 +49,7 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
@@ -58,7 +59,8 @@ export async function runRemoteGenerationForGenerator({
         readme,
         packageName,
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
-        context: interactiveTaskContext
+        context: interactiveTaskContext,
+        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace)
     });
 
     const sources = workspace.getSources();

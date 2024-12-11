@@ -21,7 +21,7 @@ import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
+import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;

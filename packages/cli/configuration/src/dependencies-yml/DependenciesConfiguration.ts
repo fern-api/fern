@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 export interface DependenciesConfiguration {
     dependencies: Record<string, Dependency>;

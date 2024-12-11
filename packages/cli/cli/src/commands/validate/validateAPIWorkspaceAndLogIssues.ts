@@ -3,6 +3,7 @@ import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import validatePackageName from "validate-npm-package-name";
 import { logViolations } from "./logViolations";
+import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
 
 export async function validateAPIWorkspaceWithoutExiting({
     workspace,
@@ -15,8 +16,15 @@ export async function validateAPIWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateFernWorkspace(workspace, context.logger);
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+    const apiViolations = validateFernWorkspace(workspace, context.logger);
+    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
+    const violations = [...apiViolations, ...generatorViolations];
+    const { hasErrors } = logViolations({
+        violations,
+        context,
+        logWarnings,
+        logSummary
+    });
 
     return { hasErrors };
 }

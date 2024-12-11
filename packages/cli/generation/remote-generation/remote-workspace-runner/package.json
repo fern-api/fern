@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@fern-api/auth": "workspace:*",
+    "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",

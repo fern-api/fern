@@ -1,4 +1,4 @@
-import { Argument, Arguments, isNamedArgument } from "@fern-api/generator-commons";
+import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
 import { Writer } from "../core/Writer";
 import { TypeInstantiation } from "../TypeInstantiation";
 

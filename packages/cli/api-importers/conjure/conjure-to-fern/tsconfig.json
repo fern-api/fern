@@ -1,11 +1,28 @@
 {
   "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../conjure-sdk" },
-    { "path": "../../commons" },
-    { "path": "../../../../commons/core-utils" },
-    { "path": "../../../fern-definition/schema" },
+    {
+      "path": "../conjure-sdk"
+    },
+    {
+      "path": "../../commons"
+    },
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../fern-definition/schema"
+    },
   ]
 }

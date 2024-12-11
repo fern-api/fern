@@ -10,15 +10,7 @@ export class GoFile extends Writer {
     }
 
     public async toString(): Promise<string> {
-        const packageStatement = `package ${this.packageName}\n\n`;
-        const imports = this.stringifyImports();
-        const content =
-            imports.length > 0
-                ? `${packageStatement}${imports}
-
-${this.buffer}`
-                : packageStatement + this.buffer;
-
+        const content = this.getContent();
         if (this.formatter != null) {
             try {
                 return this.formatter.format(content);
@@ -27,6 +19,28 @@ ${this.buffer}`
             }
         }
         return content;
+    }
+
+    public toStringSync(): string {
+        const content = this.getContent();
+        if (this.formatter != null) {
+            try {
+                return this.formatter.formatSync(content);
+            } catch (error) {
+                throw new Error(`Failed to format Go file: ${error}\n${content}`);
+            }
+        }
+        return content;
+    }
+
+    private getContent(): string {
+        const packageStatement = `package ${this.packageName}\n\n`;
+        const imports = this.stringifyImports();
+        return imports.length > 0
+            ? `${packageStatement}${imports}
+
+${this.buffer}`
+            : packageStatement + this.buffer;
     }
 
     private stringifyImports(): string {

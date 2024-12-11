@@ -34,71 +34,64 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.create({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name",
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo",
      *         shape: "SQUARE"
      *     })
      */
-    public create(
+    public async create(
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions
-    ): core.APIPromise<SeedValidation.Type> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
-                    method: "POST",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/validation",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/validation/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedValidation.Type> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/validation",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.Type.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedValidationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedValidationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.Type.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedValidationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedValidationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
-                    case "unknown":
-                        throw new errors.SeedValidationError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
+            case "unknown":
+                throw new errors.SeedValidationError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -107,74 +100,67 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.get({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name"
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo"
      *     })
      */
-    public get(
+    public async get(
         request: SeedValidation.GetRequest,
         requestOptions?: SeedValidationClient.RequestOptions
-    ): core.APIPromise<SeedValidation.Type> {
-        return core.APIPromise.from(
-            (async () => {
-                const { decimal, even, name } = request;
-                const _queryParams: Record<string, string | string[] | object | object[]> = {};
-                _queryParams["decimal"] = decimal.toString();
-                _queryParams["even"] = even.toString();
-                _queryParams["name"] = name;
-                const _response = await core.fetcher({
-                    url: await core.Supplier.get(this._options.environment),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/validation",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/validation/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    queryParameters: _queryParams,
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedValidation.Type> {
+        const { decimal, even, name } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        _queryParams["decimal"] = decimal.toString();
+        _queryParams["even"] = even.toString();
+        _queryParams["name"] = name;
+        const _response = await core.fetcher({
+            url: await core.Supplier.get(this._options.environment),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/validation",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.Type.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedValidationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedValidationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.Type.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedValidationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedValidationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
-                    case "unknown":
-                        throw new errors.SeedValidationError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
+            case "unknown":
+                throw new errors.SeedValidationError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

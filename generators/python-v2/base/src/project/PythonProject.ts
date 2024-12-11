@@ -1,4 +1,4 @@
-import { AbstractProject } from "@fern-api/generator-commons";
+import { AbstractProject } from "@fern-api/base-generator";
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
 import { WriteablePythonFile } from "./WriteablePythonFile";

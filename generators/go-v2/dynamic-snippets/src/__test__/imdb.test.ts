@@ -1,9 +1,9 @@
 import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { AuthValues } from "@fern-fern/ir-sdk/api/resources/dynamic";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 import { TestCase } from "./utils/TestCase";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 describe("imdb (success)", () => {
     const testCases: TestCase[] = [
@@ -14,7 +14,7 @@ describe("imdb (success)", () => {
                     method: "GET",
                     path: "/movies/{movieId}"
                 },
-                auth: AuthValues.bearer({
+                auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
                 pathParameters: {
@@ -32,7 +32,7 @@ describe("imdb (success)", () => {
                     method: "POST",
                     path: "/movies/create-movie"
                 },
-                auth: AuthValues.bearer({
+                auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
                 pathParameters: undefined,
@@ -46,7 +46,7 @@ describe("imdb (success)", () => {
         }
     ];
     const generator = buildDynamicSnippetsGenerator({
-        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("imdb.json")),
+        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
         config: buildGeneratorConfig()
     });
     test.each(testCases)("$description", async ({ giveRequest }) => {
@@ -55,10 +55,62 @@ describe("imdb (success)", () => {
     });
 });
 
+describe("imdb (sync)", () => {
+    it("GET /movies/{movieId}", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
+            config: buildGeneratorConfig()
+        });
+        const response = generator.generateSync({
+            endpoint: {
+                method: "GET",
+                path: "/movies/{movieId}"
+            },
+            auth: dynamic.AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: {
+                movieId: "movie_xyz"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+        expect(response.snippet).toMatchSnapshot();
+    });
+
+    it("GET /movies/{movieId} w/ exportedClientName", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
+            config: buildGeneratorConfig({
+                customConfig: {
+                    exportedClientName: "FernClient"
+                }
+            })
+        });
+        const response = generator.generateSync({
+            endpoint: {
+                method: "GET",
+                path: "/movies/{movieId}"
+            },
+            auth: dynamic.AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: {
+                movieId: "movie_xyz"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+        expect(response.snippet).toMatchSnapshot();
+    });
+});
+
 describe("imdb (errors)", () => {
     it("invalid path parameter", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("imdb.json")),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -66,7 +118,7 @@ describe("imdb (errors)", () => {
                 method: "GET",
                 path: "/movies/{movieId}"
             },
-            auth: AuthValues.bearer({
+            auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
             pathParameters: {
@@ -81,7 +133,7 @@ describe("imdb (errors)", () => {
 
     it("invalid request body", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("imdb.json")),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -89,7 +141,7 @@ describe("imdb (errors)", () => {
                 method: "POST",
                 path: "/movies/create-movie"
             },
-            auth: AuthValues.bearer({
+            auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
             pathParameters: undefined,
@@ -105,7 +157,7 @@ describe("imdb (errors)", () => {
 
     it("invalid request body property type", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("imdb.json")),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -113,7 +165,7 @@ describe("imdb (errors)", () => {
                 method: "POST",
                 path: "/movies/create-movie"
             },
-            auth: AuthValues.bearer({
+            auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
             pathParameters: undefined,

@@ -4,7 +4,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { PydanticModelCustomConfigSchema } from "./ModelCustomConfig";
 import { PydanticModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateV2Models } from "./v2/generateV2Models";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 
 export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
     PydanticModelCustomConfigSchema,

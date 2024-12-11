@@ -4,7 +4,7 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService,
     parseGeneratorConfig
-} from "@fern-api/generator-commons";
+} from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";

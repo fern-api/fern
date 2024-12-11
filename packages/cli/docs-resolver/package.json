@@ -27,7 +27,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/configuration": "workspace:*",
+    "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/fdr-sdk": "0.126.1-444264056",

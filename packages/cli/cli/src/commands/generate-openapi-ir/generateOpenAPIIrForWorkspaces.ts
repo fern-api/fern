@@ -1,9 +1,9 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
-import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { getAllOpenAPISpecs, LazyFernWorkspace, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -28,11 +28,11 @@ export async function generateOpenAPIIrForWorkspaces({
                 } else if (!(workspace instanceof OSSWorkspace)) {
                     return;
                 }
+                const openAPILoader = new OpenAPILoader(workspace.absoluteFilePath);
                 const openAPISpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
-                const openAPIIr = await parse({
-                    absoluteFilePathToWorkspace: workspace.absoluteFilePath,
-                    specs: openAPISpecs,
-                    taskContext: context
+                const openAPIIr = parse({
+                    context,
+                    documents: await openAPILoader.loadDocuments({ context, specs: openAPISpecs })
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);

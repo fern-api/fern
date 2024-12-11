@@ -40,74 +40,67 @@ export class BasicAuth {
      * @example
      *     await client.basicAuth.getWithBasicAuth()
      */
-    public getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): core.APIPromise<boolean> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/basic-auth",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/basic-auth/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
+    public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/basic-auth",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/basic-auth/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new SeedBasicAuth.UnauthorizedRequest(
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 401:
-                            throw new SeedBasicAuth.UnauthorizedRequest(
-                                serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    breadcrumbsPrefix: ["response"],
-                                })
-                            );
-                        default:
-                            throw new errors.SeedBasicAuthError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedBasicAuthError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
-                    case "unknown":
-                        throw new errors.SeedBasicAuthError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+                        })
+                    );
+                default:
+                    throw new errors.SeedBasicAuthError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
+            case "unknown":
+                throw new errors.SeedBasicAuthError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -124,77 +117,70 @@ export class BasicAuth {
      *         "key": "value"
      *     })
      */
-    public postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): core.APIPromise<boolean> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/basic-auth",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/basic-auth/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: request,
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
+    public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/basic-auth",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/basic-auth/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new SeedBasicAuth.UnauthorizedRequest(
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 401:
-                            throw new SeedBasicAuth.UnauthorizedRequest(
-                                serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    breadcrumbsPrefix: ["response"],
-                                })
-                            );
-                        case 400:
-                            throw new SeedBasicAuth.BadRequest();
-                        default:
-                            throw new errors.SeedBasicAuthError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedBasicAuthError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
-                    case "unknown":
-                        throw new errors.SeedBasicAuthError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+                        })
+                    );
+                case 400:
+                    throw new SeedBasicAuth.BadRequest();
+                default:
+                    throw new errors.SeedBasicAuthError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
+            case "unknown":
+                throw new errors.SeedBasicAuthError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

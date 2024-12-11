@@ -1,8 +1,8 @@
 import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
 import { TestCase } from "./utils/TestCase";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 describe("file-upload (success)", () => {
     const testCases: TestCase[] = [
@@ -60,7 +60,7 @@ describe("file-upload (success)", () => {
         }
     ];
     const generator = buildDynamicSnippetsGenerator({
-        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("file-upload.json")),
+        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/file-upload.json`),
         config: buildGeneratorConfig()
     });
     test.each(testCases)("$description", async ({ giveRequest }) => {

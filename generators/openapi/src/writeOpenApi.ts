@@ -11,7 +11,7 @@ import {
     ExitStatusUpdate,
     parseGeneratorConfig,
     parseIR
-} from "@fern-api/generator-commons";
+} from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mergeWithOverrides } from "@fern-api/core-utils";
 

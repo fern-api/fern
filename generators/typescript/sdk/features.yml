@@ -17,11 +17,11 @@ features:
     description: | 
       List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
  
-  - id: RAW_RESPONSES
-    advanced: true
-    description: | 
-      The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`, 
-      the parsed response body will be available in the `body` field, along with the response headers:
+  # - id: RAW_RESPONSES
+  #   advanced: true
+  #   description: | 
+  #     The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`, 
+  #     the parsed response body will be available in the `body` field, along with the response headers:
   
   - id: ADDITIONAL_HEADERS
     advanced: true

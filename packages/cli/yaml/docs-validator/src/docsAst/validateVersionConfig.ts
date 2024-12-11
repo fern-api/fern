@@ -1,5 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
 

@@ -23,6 +23,10 @@ export function convertPathItem(
     };
 
     for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
         const convertToWebhook = isWebhook({ operation: operation.operation });
         const convertedOperation = convertOperation({
             context,
@@ -57,6 +61,10 @@ export function convertPathItemToWebhooks(
     };
 
     for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
         const convertedOperation = convertOperation({
             context,
             pathItemContext: {

@@ -13,7 +13,7 @@ export const TypeReference: core.serialization.Schema<
     serializers.dynamic.TypeReference.Raw,
     FernIr.dynamic.TypeReference
 > = core.serialization
-    .union(core.serialization.discriminant("type", "_type"), {
+    .union("type", {
         list: core.serialization.object({
             value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
         }),
@@ -73,40 +73,40 @@ export declare namespace TypeReference {
         | TypeReference.Unknown;
 
     interface List {
-        _type: "list";
+        type: "list";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
     interface Literal {
-        _type: "literal";
+        type: "literal";
         value: LiteralType.Raw;
     }
 
     interface Map extends serializers.dynamic.MapType.Raw {
-        _type: "map";
+        type: "map";
     }
 
     interface Named {
-        _type: "named";
+        type: "named";
         value: TypeId.Raw;
     }
 
     interface Optional {
-        _type: "optional";
+        type: "optional";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
     interface Primitive {
-        _type: "primitive";
+        type: "primitive";
         value: PrimitiveTypeV1.Raw;
     }
 
     interface Set {
-        _type: "set";
+        type: "set";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
     interface Unknown {
-        _type: "unknown";
+        type: "unknown";
     }
 }

@@ -606,41 +606,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
 
             const statements = endpoint.getStatements(context);
-            const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
 
             const method = serviceClass.addMethod({
                 name: endpoint.endpoint.name.camelCase.unsafeName,
                 parameters: signature.parameters,
-                returnType: returnsAPIPromise
-                    ? getTextOfTsNode(
-                          context.coreUtilities.promiseUtils.APIPromise._getReferenceToType(
-                              signature.returnTypeWithoutPromise
-                          )
-                      )
-                    : getTextOfTsNode(
-                          ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
-                      ),
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                ),
                 scope: Scope.Public,
-                isAsync: !returnsAPIPromise, // if not returnsAPIPromise we return an `APIPromise`
-                statements: returnsAPIPromise
-                    ? [
-                          ts.factory.createReturnStatement(
-                              context.coreUtilities.promiseUtils.APIPromise.from(statements)
-                          )
-                      ].map(getTextOfTsNode)
-                    : statements.map(getTextOfTsNode),
+                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
+                statements: statements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
-                    returnType: context.neverThrowErrors
-                        ? getTextOfTsNode(
-                              ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
-                          )
-                        : getTextOfTsNode(
-                              context.coreUtilities.promiseUtils.APIPromise._getReferenceToType(
-                                  overload.returnTypeWithoutPromise
-                              )
-                          )
+                    returnType: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                    )
                 }))
             });
 

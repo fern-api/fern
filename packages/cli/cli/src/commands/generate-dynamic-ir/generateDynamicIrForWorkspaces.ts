@@ -1,4 +1,4 @@
-import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import path from "path";

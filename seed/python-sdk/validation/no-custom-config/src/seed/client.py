@@ -96,9 +96,9 @@ class SeedValidation:
             base_url="https://yourhost.com/path/to/api",
         )
         client.create(
-            decimal=1.1,
-            even=1,
-            name="name",
+            decimal=2.2,
+            even=100,
+            name="foo",
             shape="SQUARE",
         )
         """
@@ -155,9 +155,9 @@ class SeedValidation:
             base_url="https://yourhost.com/path/to/api",
         )
         client.get(
-            decimal=1.1,
-            even=1,
-            name="name",
+            decimal=2.2,
+            even=100,
+            name="foo",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -270,9 +270,9 @@ class AsyncSeedValidation:
 
         async def main() -> None:
             await client.create(
-                decimal=1.1,
-                even=1,
-                name="name",
+                decimal=2.2,
+                even=100,
+                name="foo",
                 shape="SQUARE",
             )
 
@@ -337,9 +337,9 @@ class AsyncSeedValidation:
 
         async def main() -> None:
             await client.get(
-                decimal=1.1,
-                even=1,
-                name="name",
+                decimal=2.2,
+                even=100,
+                name="foo",
             )
 
 

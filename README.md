@@ -1,14 +1,18 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
-    <img src="/fern/images/logo-primary.svg" height="80" align="center" alt="header" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="/fern/images/logo-white.svg">
+      <source media="(prefers-color-scheme: light)" srcset="/fern/images/logo-primary.svg">
+      <img alt="logo" src="/fern/images/logo-primary.svg" height="80" align="center">
+    </picture>
   </a>
 <br/>
 
 <br/>
 
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
-![License](https://img.shields.io/badge/License-MIT-blue)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 [![Slack](https://img.shields.io/badge/slack-pink.svg)](https://join.slack.com/t/fern-community/shared_invite/zt-2dpftfmif-MuAegl8AfP_PK8s2tx350Q)
 [![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)

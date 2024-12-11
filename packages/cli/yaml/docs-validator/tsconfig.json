@@ -1,16 +1,40 @@
 {
   "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../commons/core-utils" },
-    { "path": "../../../commons/fs-utils" },
-    { "path": "../../configuration" },
-    { "path": "../../docs-markdown-utils" },
-    { "path": "../../logger" },
-    { "path": "../../task-context" },
-    { "path": "../../workspace-loader" },
-    { "path": "../../project-loader" },
-    { "path": "../../fern-definition/schema" }
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../docs-markdown-utils"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../workspace/loader"
+    },
+    {
+      "path": "../../project-loader"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    }
   ]
 }

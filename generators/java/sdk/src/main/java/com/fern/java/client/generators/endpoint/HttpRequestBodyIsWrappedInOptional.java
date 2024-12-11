@@ -22,7 +22,7 @@ import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.types.ContainerType;
-import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.PrimitiveType;
 
 public class HttpRequestBodyIsWrappedInOptional {
@@ -72,7 +72,7 @@ public class HttpRequestBodyIsWrappedInOptional {
         }
 
         @Override
-        public Boolean visitNamed(DeclaredTypeName named) {
+        public Boolean visitNamed(NamedType named) {
             return false;
         }
 

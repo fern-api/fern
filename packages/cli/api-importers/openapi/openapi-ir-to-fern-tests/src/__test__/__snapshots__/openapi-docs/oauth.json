@@ -129,6 +129,7 @@
           },
           "AuthGetTokenResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": "optional<string>",
               "expires_in": {

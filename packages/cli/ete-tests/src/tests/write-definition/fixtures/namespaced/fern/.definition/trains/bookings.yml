@@ -25,6 +25,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml

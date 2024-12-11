@@ -41,68 +41,61 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLightweightProblems()
      */
-    public getLightweightProblems(
+    public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
-    ): core.APIPromise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        "/problems-v2/lightweight-problem-info"
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/lightweight-problem-info"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[];
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[],
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /problems-v2/lightweight-problem-info."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /problems-v2/lightweight-problem-info."
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -113,66 +106,57 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblems()
      */
-    public getProblems(requestOptions?: Problem.RequestOptions): core.APIPromise<SeedTrace.v2.v3.ProblemInfoV2[]> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        "/problems-v2/problem-info"
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    public async getProblems(requestOptions?: Problem.RequestOptions): Promise<SeedTrace.v2.v3.ProblemInfoV2[]> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/problem-info"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body as SeedTrace.v2.v3.ProblemInfoV2[];
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: _response.body as SeedTrace.v2.v3.ProblemInfoV2[],
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /problems-v2/problem-info."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /problems-v2/problem-info.");
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -184,69 +168,62 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLatestProblem("problemId")
      */
-    public getLatestProblem(
+    public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions
-    ): core.APIPromise<SeedTrace.v2.v3.ProblemInfoV2> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}."
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -259,72 +236,65 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblemVersion("problemId", 1)
      */
-    public getProblemVersion(
+    public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions
-    ): core.APIPromise<SeedTrace.v2.v3.ProblemInfoV2> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
-                            problemVersion
-                        )}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
+                    problemVersion
+                )}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}/version/{problemVersion}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}/version/{problemVersion}."
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

@@ -1,10 +1,10 @@
 import { Transport } from "@fern-api/ir-sdk";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
-import { SourceResolver } from "../../resolvers/SourceResolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { convertProtobufService } from "./convertProtobufService";
 
-export async function getTransportForService({
+export function getTransportForService({
     file,
     serviceDeclaration,
     sourceResolver
@@ -12,12 +12,12 @@ export async function getTransportForService({
     file: FernFileContext;
     serviceDeclaration: RawSchemas.HttpServiceSchema;
     sourceResolver: SourceResolver;
-}): Promise<Transport> {
+}): Transport {
     if (!isRawProtobufSourceSchema(serviceDeclaration.source)) {
         // anything not protobuf is http
         return Transport.http();
     }
-    return await createProtobufService(
+    return createProtobufService(
         file,
         serviceDeclaration.source,
         sourceResolver,
@@ -25,7 +25,7 @@ export async function getTransportForService({
     );
 }
 
-export async function getTransportForEndpoint({
+export function getTransportForEndpoint({
     file,
     serviceTransport,
     endpointDeclaration,
@@ -35,7 +35,7 @@ export async function getTransportForEndpoint({
     serviceTransport: Transport;
     endpointDeclaration: RawSchemas.HttpEndpointSchema;
     sourceResolver: SourceResolver;
-}): Promise<Transport | undefined> {
+}): Transport | undefined {
     const isGrpcService = serviceTransport.type === "grpc";
     const isHttpService = serviceTransport.type === "http";
     const isGrpcEndpoint = isRawProtobufSourceSchema(endpointDeclaration.source);
@@ -58,7 +58,7 @@ export async function getTransportForEndpoint({
             // if there's no config specifically for the endpoint, we'll return undefined to inherit the service's transport
             return undefined;
         } else {
-            return await createProtobufService(file, protoSource, sourceResolver, serviceNameOverride);
+            return createProtobufService(file, protoSource, sourceResolver, serviceNameOverride);
         }
     }
 
@@ -67,15 +67,15 @@ export async function getTransportForEndpoint({
     );
 }
 
-async function createProtobufService(
+function createProtobufService(
     file: FernFileContext,
     source: RawSchemas.ProtobufSourceSchema,
     sourceResolver: SourceResolver,
     serviceNameOverride: string | undefined
 ) {
-    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = sourceResolver.resolveSourceOrThrow({
         source,
-        file
+        relativeFilepath: file.relativeFilepath
     });
     if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         throw new Error(`Expected a protobuf source for ${source.proto}.`);

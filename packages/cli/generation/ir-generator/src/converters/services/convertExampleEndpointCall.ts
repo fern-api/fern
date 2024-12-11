@@ -18,7 +18,6 @@ import {
     RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
-import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -34,11 +33,7 @@ import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService
 import { getQueryParameterName } from "./convertQueryParameter";
 import urlJoin from "url-join";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-
-function hashJSON(obj: unknown): string {
-    const jsonString = JSON.stringify(obj);
-    return crypto.createHash("sha256").update(jsonString).digest("hex");
-}
+import { hashJSON } from "../../utils/hashJSON";
 
 export function convertExampleEndpointCall({
     service,

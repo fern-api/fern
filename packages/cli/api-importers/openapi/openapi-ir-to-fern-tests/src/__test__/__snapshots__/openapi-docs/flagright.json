@@ -2095,6 +2095,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "types": {
           "ACHDetails": {
             "docs": "Model for ACH payment method",
+            "inline": undefined,
             "properties": {
               "accountNumber": {
                 "docs": "Bank account number of the individual",
@@ -2162,6 +2163,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Address": {
             "docs": "Model for standardized address",
+            "inline": undefined,
             "properties": {
               "addressLines": {
                 "docs": "Address lines of the user's residence address",
@@ -2218,6 +2220,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "AlertClosedDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alertId": {
                 "type": "optional<string>",
@@ -2259,6 +2262,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Amount": {
             "docs": "Model for amount",
+            "inline": undefined,
             "properties": {
               "amountCurrency": {
                 "type": "CurrencyCode",
@@ -2278,6 +2282,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BusinessBase",
               "BusinessOptional",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2285,6 +2290,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "BusinessBase": {
             "docs": "Model for a business user base fields",
+            "inline": undefined,
             "properties": {
               "createdTimestamp": {
                 "docs": "Timestamp when the user was created",
@@ -2314,6 +2320,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "BusinessEntityLink": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "childUserIds": {
                 "type": "optional<list<string>>",
@@ -2328,6 +2335,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "BusinessOptional": {
             "docs": "Model for a business user - optional fields",
+            "inline": undefined,
             "properties": {
               "acquisitionChannel": {
                 "type": "optional<AcquisitionChannel>",
@@ -2417,6 +2425,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "BusinessUsersResponse": {
             "docs": "Model for business user risk score response",
+            "inline": undefined,
             "properties": {
               "userId": {
                 "docs": "user ID the risk score pertains to",
@@ -2438,6 +2447,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "Business",
             ],
+            "inline": undefined,
             "properties": {
               "executedRules": "optional<list<ExecutedRulesResult>>",
               "hitRules": "optional<list<HitRulesDetails>>",
@@ -2448,6 +2458,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CardDetails": {
             "docs": "Model for credit or debit card details",
+            "inline": undefined,
             "properties": {
               "3dsDone": {
                 "docs": "Whether 3ds was successfully enforced for the transaction",
@@ -2556,6 +2567,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CardExpiry": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "month": {
                 "type": "optional<double>",
@@ -2570,6 +2582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CardMerchantDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "MCC": {
                 "type": "optional<string>",
@@ -2610,6 +2623,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CaseClosedDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "caseId": {
                 "type": "optional<string>",
@@ -2639,6 +2653,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CaseManagementEvent": {
             "docs": "Model for case management events",
+            "inline": undefined,
             "properties": {
               "caseStatus": {
                 "docs": "Status of a case. E.g. Open, Closed etc.",
@@ -2710,6 +2725,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CheckDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "checkIdentifier": {
                 "type": "optional<string>",
@@ -2760,6 +2776,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CompanyFinancialDetails": {
             "docs": "Model for business user company financial details",
+            "inline": undefined,
             "properties": {
               "expectedTransactionAmountPerMonth": {
                 "type": "optional<Amount>",
@@ -2778,6 +2795,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CompanyGeneralDetails": {
             "docs": "Model for business user company general details",
+            "inline": undefined,
             "properties": {
               "businessIndustry": {
                 "docs": "The industry the business operates in for a business customer",
@@ -2829,6 +2847,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "CompanyRegistrationDetails": {
             "docs": "Model for business user company registration details",
+            "inline": undefined,
             "properties": {
               "dateOfRegistration": {
                 "type": "optional<string>",
@@ -2871,6 +2890,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ConsumerName": {
             "docs": "Model for a generic consumer name",
+            "inline": undefined,
             "properties": {
               "firstName": {
                 "docs": "First name of the user",
@@ -2909,6 +2929,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ConsumerUsersResponse": {
             "docs": "Model for consumer user risk score response",
+            "inline": undefined,
             "properties": {
               "userId": {
                 "docs": "user ID the risk score pertains to",
@@ -2927,6 +2948,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ContactDetails": {
             "docs": "Model for business user contact information details",
+            "inline": undefined,
             "properties": {
               "addresses": {
                 "docs": "Address(es) of the company",
@@ -3495,6 +3517,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Date": {
             "docs": "Model for date",
+            "inline": undefined,
             "properties": {
               "day": {
                 "docs": "Day of date",
@@ -3515,6 +3538,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "DeviceData": {
             "docs": "Model for device data",
+            "inline": undefined,
             "properties": {
               "appVersion": {
                 "docs": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
@@ -3609,6 +3633,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ExecutedRulesResult": {
             "docs": "Model for list of executed rules",
+            "inline": undefined,
             "properties": {
               "labels": {
                 "type": "optional<list<RuleLabels>>",
@@ -3661,6 +3686,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "FailedRulesResult": {
             "docs": "Model for list of rules failed execution. It means rules could not be run",
+            "inline": undefined,
             "properties": {
               "failureException": {
                 "type": "RuleFailureException",
@@ -3702,6 +3728,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "FalsePositiveDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "confidenceScore": "double",
               "isFalsePositive": "boolean",
@@ -3716,6 +3743,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "GenericBankAccountDetails": {
             "docs": "Model for any generic bank account",
+            "inline": undefined,
             "properties": {
               "accountNumber": {
                 "docs": "Bank account number",
@@ -3766,6 +3794,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "HitRulesDetails": {
             "docs": "Model for list of hit rules",
+            "inline": undefined,
             "properties": {
               "labels": {
                 "type": "optional<list<RuleLabels>>",
@@ -3817,6 +3846,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "IBANDetails": {
             "docs": "Standardized model for Bank Details",
+            "inline": undefined,
             "properties": {
               "BIC": {
                 "docs": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
@@ -3886,6 +3916,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "KYCStatusDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": {
                 "type": "optional<string>",
@@ -3900,6 +3931,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "LegalDocument": {
             "docs": "LegalDocument model generalizes User's identity document type (ex: Passport)",
+            "inline": undefined,
             "properties": {
               "documentExpirationDate": {
                 "docs": "User's identity document expiration date (UNIX timestamp in milliseconds)",
@@ -3946,6 +3978,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "LegalEntity": {
             "docs": "Model for business user legal entity details",
+            "inline": undefined,
             "properties": {
               "companyFinancialDetails": {
                 "type": "optional<CompanyFinancialDetails>",
@@ -3970,6 +4003,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ListData": {
             "docs": "Payload of a list, new or existed",
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "List items",
@@ -3985,6 +4019,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ListExisted": {
             "docs": "List with ID and header",
+            "inline": undefined,
             "properties": {
               "header": {
                 "type": "ListHeader",
@@ -4001,6 +4036,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ListHeader": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdTimestamp": "double",
               "listId": "string",
@@ -4017,6 +4053,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ListItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": "string",
               "metadata": {
@@ -4033,6 +4070,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ListMetadata": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "checksum": {
                 "type": "optional<string>",
@@ -4083,6 +4121,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "MCCDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Merchant code",
@@ -4099,6 +4138,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "MpesaDetails": {
             "docs": "Model for Mpesa payment method",
+            "inline": undefined,
             "properties": {
               "businessShortCode": {
                 "docs": "Business code",
@@ -4142,6 +4182,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "PEPStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isPepHit": "boolean",
               "pepCountry": {
@@ -4176,6 +4217,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Person": {
             "docs": "Model for a generic individual - different from User model by not having userId field",
+            "inline": undefined,
             "properties": {
               "contactDetails": {
                 "type": "optional<ContactDetails>",
@@ -4204,6 +4246,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "RulesResults",
             ],
+            "inline": undefined,
             "properties": {
               "message": "optional<string>",
               "userId": {
@@ -4226,6 +4269,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "TransactionMonitoringResult",
             ],
+            "inline": undefined,
             "properties": {
               "message": "optional<string>",
             },
@@ -4238,6 +4282,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "RulesResults",
             ],
+            "inline": undefined,
             "properties": {
               "message": "optional<string>",
               "userId": {
@@ -4269,6 +4314,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "RiskScoringResult": {
             "docs": "Model for results from Risk Scoring",
+            "inline": undefined,
             "properties": {
               "customerRiskAssessment": {
                 "docs": "Quantified dynamic risk score",
@@ -4301,6 +4347,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "RuleFailureException": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "exceptionDescription": {
                 "docs": "Name of the rule",
@@ -4338,6 +4385,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "RuleHitMeta": {
             "docs": "Details of rule execution, for internal purposes only",
+            "inline": undefined,
             "properties": {
               "falsePositiveDetails": "optional<FalsePositiveDetails>",
               "hitDirections": "optional<list<RuleHitDirection>>",
@@ -4379,6 +4427,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "RulesResults": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "executedRules": {
                 "docs": "Unique transaction identifier",
@@ -4395,6 +4444,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "SWIFTDetails": {
             "docs": "Model for SWIFT payment method",
+            "inline": undefined,
             "properties": {
               "accountNumber": {
                 "docs": "Account number",
@@ -4452,6 +4502,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "SanctionsDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "entityType": {
                 "type": "optional<SanctionsDetailsEntityType>",
@@ -4480,6 +4531,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Tag": {
             "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
+            "inline": undefined,
             "properties": {
               "key": {
                 "docs": "Key value when you are creating a custom variable",
@@ -4508,6 +4560,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "Thing": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "publishedAt": "optional<string>",
             },
@@ -4521,6 +4574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "TransactionBase",
               "TransactionUpdatable",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4528,6 +4582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionAmountDetails": {
             "docs": "Model for transaction amount details",
+            "inline": undefined,
             "properties": {
               "country": {
                 "type": "optional<CountryCode>",
@@ -4546,6 +4601,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionAmountLimit": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "day": {
                 "type": "optional<Amount>",
@@ -4566,6 +4622,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionBase": {
             "docs": "Model for transaction base Payload",
+            "inline": undefined,
             "properties": {
               "destinationUserId": {
                 "docs": "UserId for transaction's destination. In other words, where the value is being transferred to.",
@@ -4606,6 +4663,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionCountLimit": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "day": {
                 "type": "optional<double>",
@@ -4629,6 +4687,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "RulesResults",
             ],
+            "inline": undefined,
             "properties": {
               "eventId": "string",
               "transaction": "Transaction",
@@ -4639,6 +4698,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionLimit": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "averageTransactionAmountLimit": {
                 "type": "optional<TransactionAmountLimit>",
@@ -4656,6 +4716,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionLimits": {
             "docs": "Model for transaction limits for a given user",
+            "inline": undefined,
             "properties": {
               "maximumDailyTransactionLimit": {
                 "type": "optional<Amount>",
@@ -4685,6 +4746,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionLimitsPaymentMethodLimits": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ACH": "optional<TransactionLimit>",
               "CARD": "optional<TransactionLimit>",
@@ -4705,6 +4767,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "RulesResults",
             ],
+            "inline": undefined,
             "properties": {
               "transactionId": {
                 "docs": "Transaction ID that the results pertain to",
@@ -4746,6 +4809,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "TransactionUpdatable": {
             "docs": "Model for transaction additional payload",
+            "inline": undefined,
             "properties": {
               "destinationAmountDetails": {
                 "type": "optional<TransactionAmountDetails>",
@@ -4881,6 +4945,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "Transaction",
             ],
+            "inline": undefined,
             "properties": {
               "executedRules": "list<ExecutedRulesResult>",
               "hitRules": "list<HitRulesDetails>",
@@ -4891,6 +4956,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "UPIDetails": {
             "docs": "Model for UPI payment method",
+            "inline": undefined,
             "properties": {
               "bankProvider": {
                 "docs": "Bank provider name",
@@ -4941,6 +5007,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "UserBase",
               "UserOptional",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4948,6 +5015,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "UserBase": {
             "docs": "Model for User details",
+            "inline": undefined,
             "properties": {
               "createdTimestamp": {
                 "docs": "Timestamp when userId is created",
@@ -4980,6 +5048,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "UserDetails": {
             "docs": "Model for consumer user personal details",
+            "inline": undefined,
             "properties": {
               "countryOfNationality": {
                 "type": "optional<CountryCode>",
@@ -5025,6 +5094,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "RulesResults",
             ],
+            "inline": undefined,
             "properties": {
               "userId": {
                 "docs": "User ID that the results pertain to",
@@ -5037,6 +5107,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "UserOptional": {
             "docs": "Model for User details",
+            "inline": undefined,
             "properties": {
               "acquisitionChannel": {
                 "type": "optional<AcquisitionChannel>",
@@ -5115,6 +5186,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "UserStateDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": {
                 "type": "optional<string>",
@@ -5135,6 +5207,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extends": [
               "User",
             ],
+            "inline": undefined,
             "properties": {
               "executedRules": "optional<list<ExecutedRulesResult>>",
               "hitRules": "optional<list<HitRulesDetails>>",
@@ -5145,6 +5218,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "WalletDetails": {
             "docs": "Standardized model for a Generic wallet transaction",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the account holder for a specific wallet",
@@ -5186,6 +5260,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "WebhookEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdTimestamp": {
                 "type": "double",
@@ -6346,6 +6421,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       CHECK: optional<TransactionLimit>
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionLimits:
     docs: Model for transaction limits for a given user
     properties:

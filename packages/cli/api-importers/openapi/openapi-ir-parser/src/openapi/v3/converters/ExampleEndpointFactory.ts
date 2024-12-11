@@ -30,7 +30,7 @@ export class ExampleEndpointFactory {
 
     constructor(schemas: Record<string, SchemaWithExample>, context: OpenAPIV3ParserContext) {
         this.schemas = schemas;
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context);
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
         this.logger = context.logger;
     }
 
@@ -571,7 +571,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     generatedName: property.key,
                     nameOverride: undefined,
                     availability: undefined,
-                    readonly: undefined
+                    readonly: undefined,
+                    inline: undefined
                 };
             })
             .filter(isNonNullish),

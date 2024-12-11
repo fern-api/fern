@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { PathParameter } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildTypeReference } from "./buildTypeReference";
@@ -21,7 +21,8 @@ export function buildPathParameter({
         schema: pathParameter.schema,
         context,
         fileContainingReference,
-        namespace
+        namespace,
+        declarationDepth: 0
     });
     if (
         pathParameter.variableReference == null &&

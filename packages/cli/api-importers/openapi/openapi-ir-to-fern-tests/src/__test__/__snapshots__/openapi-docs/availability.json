@@ -261,6 +261,7 @@
           "DeprecatedParam": "string",
           "NotDeprecatedSettings": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "not_deprecated_setting": "optional<boolean>",
             },
@@ -271,6 +272,7 @@
           "WholeDeprecatedSettings": {
             "availability": "deprecated",
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "fine_setting": "optional<boolean>",
             },

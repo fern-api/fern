@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { Webhook } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
@@ -38,7 +38,8 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 schema: webhook.payload,
                 context,
                 fileContainingReference: webhookLocation.file,
-                namespace: maybeWebhookNamespace
+                namespace: maybeWebhookNamespace,
+                declarationDepth: 0
             }),
             examples:
                 webhook.examples != null

@@ -11,7 +11,7 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { Arguments, UnnamedArgument } from "@fern-api/generator-commons";
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { upperFirst } from "lodash-es";
 
 export declare namespace EndpointGenerator {
