@@ -6,18 +6,19 @@ import { ImportedName } from "./types";
 export declare namespace Writer {}
 
 export class Writer extends AbstractWriter {
-    private fullyQualifiedPathsToImportedNames: Record<string, ImportedName> = {};
+    private fullyQualifiedModulePathsToImportedNames: Record<string, ImportedName> = {};
 
     public setRefNameOverrides(completeRefPathsToNameOverrides: Record<string, ImportedName>): void {
-        this.fullyQualifiedPathsToImportedNames = completeRefPathsToNameOverrides;
+        this.fullyQualifiedModulePathsToImportedNames = completeRefPathsToNameOverrides;
     }
 
     public unsetRefNameOverrides(): void {
-        this.fullyQualifiedPathsToImportedNames = {};
+        this.fullyQualifiedModulePathsToImportedNames = {};
     }
 
     public getRefNameOverride(reference: Reference): ImportedName {
-        const explicitNameOverride = this.fullyQualifiedPathsToImportedNames[reference.getCompletePath()];
+        const explicitNameOverride =
+            this.fullyQualifiedModulePathsToImportedNames[reference.getFullyQualifiedModulePath()];
 
         if (explicitNameOverride) {
             return explicitNameOverride;

@@ -72,7 +72,7 @@ export class Reference extends AstNode {
         return this.modulePath.join(".");
     }
 
-    public getCompletePath(): string {
+    public getFullyQualifiedModulePath(): string {
         return `${this.getFullyQualifiedPath()}.${this.name}`;
     }
 }

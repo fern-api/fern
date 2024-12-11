@@ -91,7 +91,7 @@ export class PythonFile extends AstNode {
 
         references.forEach((reference) => {
             const name = reference.alias ?? reference.name;
-            const refIdentifier = reference.getCompletePath();
+            const fullyQualifiedModulePath = reference.getFullyQualifiedModulePath();
 
             let nameOverride = name;
             let modulePathIdx = reference.modulePath.length - 1;
@@ -111,7 +111,7 @@ export class PythonFile extends AstNode {
             }
             usedNames.add(nameOverride);
 
-            completeRefPathsToNameOverrides[refIdentifier] = {
+            completeRefPathsToNameOverrides[fullyQualifiedModulePath] = {
                 name: nameOverride,
                 isAlias
             };
