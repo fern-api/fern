@@ -824,5 +824,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }
