@@ -18,6 +18,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import {
+    generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getTextOfTsNode,
     maybeAddDocsNode,
@@ -243,118 +244,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             return undefined;
         }
 
-        const inlineProperties = this.getInlinePropertiesWithTypeDeclaration(inlinedRequestBody, context);
-        if (inlineProperties.size === 0) {
-            return;
-        }
-        return {
-            kind: StructureKind.Module,
-            name: inlinedRequestBody.name.pascalCase.safeName,
-            isExported: true,
-            hasDeclareKeyword: false,
-            declarationKind: ModuleDeclarationKind.Namespace,
-            statements: Array.from(inlineProperties.entries()).flatMap(
-                ([objectProperty, typeDeclaration]: [ObjectProperty, TypeDeclaration]) => {
-                    const typeName = objectProperty.name.name.pascalCase.safeName;
-                    const listOrSetStatementGenerator = () => {
-                        const itemTypeName = "Item";
-                        const statements: StatementStructures[] = [];
-                        const listType: TypeAliasDeclarationStructure = {
-                            kind: StructureKind.TypeAlias,
-                            name: typeName,
-                            type: `${typeName}.${itemTypeName}[]`,
-                            isExported: true
-                        };
-                        statements.push(listType);
-
-                        const generatedType = context.type.getGeneratedType(typeDeclaration.name, itemTypeName);
-
-                        const listModule: ModuleDeclarationStructure = {
-                            kind: StructureKind.Module,
-                            declarationKind: ModuleDeclarationKind.Namespace,
-                            isExported: true,
-                            hasDeclareKeyword: false,
-                            name: typeName,
-                            statements: generatedType.generateStatements(context)
-                        };
-
-                        statements.push(listModule);
-                        return statements;
-                    };
-                    return generateTypeVisitor(objectProperty.valueType, {
-                        named: () => {
-                            const generatedType = context.type.getGeneratedType(typeDeclaration.name, typeName);
-                            return generatedType.generateStatements(context);
-                        },
-                        list: listOrSetStatementGenerator,
-                        set: listOrSetStatementGenerator,
-                        map: () => {
-                            const valueTypeName = "Value";
-                            const statements: (string | WriterFunction | StatementStructures)[] = [];
-                            const generatedType = context.type.getGeneratedType(typeDeclaration.name, valueTypeName);
-
-                            const mapModule: ModuleDeclarationStructure = {
-                                kind: StructureKind.Module,
-                                declarationKind: ModuleDeclarationKind.Namespace,
-                                isExported: true,
-                                hasDeclareKeyword: false,
-                                name: typeName,
-                                statements: generatedType.generateStatements(context)
-                            };
-
-                            statements.push(mapModule);
-                            return statements;
-                        },
-                        other: () => {
-                            throw new Error(`Only named, list, map, and set properties can be inlined.
-                                Property: ${JSON.stringify(objectProperty)}`);
-                        }
-                    });
-                }
-            )
-        };
-    }
-
-    private getInlinePropertiesWithTypeDeclaration(
-        requestBody: InlinedRequestBody | FileUploadRequest,
-        context: SdkContext
-    ): Map<ObjectProperty, TypeDeclaration> {
-        const inlineProperties = new Map<ObjectProperty, TypeDeclaration>(
-            requestBody.properties
-                .map((prop) => {
-                    if ("type" in prop) {
-                        // fileupload prop
-                        switch (prop.type) {
-                            case "bodyProperty":
-                                return prop as InlinedRequestBodyProperty;
-                            case "file":
-                                return undefined;
-                            default:
-                                assertNever(prop);
-                        }
-                    } else {
-                        return prop;
-                    }
-                })
-                .filter((prop): prop is InlinedRequestBodyProperty => prop !== undefined)
-                .map((property): [ObjectProperty, NamedType] | undefined => {
-                    const namedType = getNamedType(property?.valueType);
-                    if (namedType) {
-                        return [property, namedType];
-                    }
-                    return undefined;
-                })
-                .filter((x): x is [ObjectProperty, TypeReference.Named] => x != null)
-                .map(([property, type]): [ObjectProperty, TypeDeclaration] | undefined => {
-                    const typeDeclaration = context.type.getTypeDeclaration(type);
-                    if (typeDeclaration.inline !== true) {
-                        return undefined;
-                    }
-                    return [property, typeDeclaration];
-                })
-                .filter((x): x is [ObjectProperty, TypeDeclaration] => x !== undefined)
-        );
-        return inlineProperties;
+        return generateInlinePropertiesModule({
+            parentTypeName: this.wrapperName,
+            properties: inlinedRequestBody.properties.map((prop) => ({
+                propertyName: prop.name.name.pascalCase.safeName,
+                typeReference: prop.valueType
+            })),
+            generateStatements: (typeName, typeNameOverride) =>
+                context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+            getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+        });
     }
 
     public areBodyPropertiesInlined(): boolean {

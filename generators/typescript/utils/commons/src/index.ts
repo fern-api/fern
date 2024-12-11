@@ -5,6 +5,7 @@ export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs";
 export { writerToString } from "./codegen-utils/writerToString";
+export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule";
 export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";
 export { DependencyManager, DependencyType, type PackageDependencies } from "./dependency-manager/DependencyManager";
