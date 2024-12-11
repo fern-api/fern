@@ -66,6 +66,7 @@ types:
       - nok
       - sek
       - try
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
@@ -123,6 +124,7 @@ types:
     enum:
       - individual
       - company
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentStatus:
@@ -131,6 +133,7 @@ types:
       - pending
       - succeeded
       - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   Card:
