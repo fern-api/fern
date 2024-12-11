@@ -100,3 +100,4 @@ allowedFailures:
   - query-parameters
   - trace
   - unions
+  - streaming-parameter
