@@ -14,6 +14,8 @@ describe("imdb (success)", () => {
                     method: "GET",
                     path: "/movies/{movieId}"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -32,6 +34,8 @@ describe("imdb (success)", () => {
                     method: "POST",
                     path: "/movies/create-movie"
                 },
+                baseUrl: undefined,
+                environment: undefined,
                 auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
@@ -66,6 +70,33 @@ describe("imdb (sync)", () => {
                 method: "GET",
                 path: "/movies/{movieId}"
             },
+            baseUrl: undefined,
+            environment: undefined,
+            auth: dynamic.AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: {
+                movieId: "movie_xyz"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+        expect(response.snippet).toMatchSnapshot();
+    });
+
+    it("GET /movies/{movieId} w/ baseURL", () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/imdb.json`),
+            config: buildGeneratorConfig()
+        });
+        const response = generator.generateSync({
+            endpoint: {
+                method: "GET",
+                path: "/movies/{movieId}"
+            },
+            baseUrl: "http://localhost:8080",
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
@@ -93,6 +124,8 @@ describe("imdb (sync)", () => {
                 method: "GET",
                 path: "/movies/{movieId}"
             },
+            baseUrl: undefined,
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
@@ -118,6 +151,8 @@ describe("imdb (errors)", () => {
                 method: "GET",
                 path: "/movies/{movieId}"
             },
+            baseUrl: undefined,
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
@@ -141,6 +176,8 @@ describe("imdb (errors)", () => {
                 method: "POST",
                 path: "/movies/create-movie"
             },
+            baseUrl: undefined,
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
@@ -165,6 +202,8 @@ describe("imdb (errors)", () => {
                 method: "POST",
                 path: "/movies/create-movie"
             },
+            baseUrl: undefined,
+            environment: undefined,
             auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),

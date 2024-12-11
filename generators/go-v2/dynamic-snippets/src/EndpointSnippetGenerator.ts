@@ -108,6 +108,13 @@ export class EndpointSnippetGenerator {
         snippet: DynamicSnippets.EndpointSnippetRequest;
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
+        const baseUrlArg = this.getConstructorBaseUrlArg({
+            baseUrl: snippet.baseUrl,
+            environment: snippet.environment
+        });
+        if (baseUrlArg != null) {
+            args.push(baseUrlArg);
+        }
         if (endpoint.auth != null) {
             if (snippet.auth != null) {
                 args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
@@ -185,6 +192,70 @@ export class EndpointSnippetGenerator {
                 })
             );
         });
+    }
+
+    private getConstructorBaseUrlArg({
+        baseUrl,
+        environment
+    }: {
+        baseUrl: string | undefined;
+        environment: DynamicSnippets.EnvironmentValues | undefined;
+    }): go.AstNode | undefined {
+        const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
+        if (baseUrlArg == null) {
+            return undefined;
+        }
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithBaseURL",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [baseUrlArg]
+                })
+            );
+        });
+    }
+
+    private getBaseUrlArg({
+        baseUrl,
+        environment
+    }: {
+        baseUrl: string | undefined;
+        environment: DynamicSnippets.EnvironmentValues | undefined;
+    }): go.AstNode | undefined {
+        if (baseUrl != null && environment != null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Cannot specify both baseUrl and environment options"
+            });
+            return undefined;
+        }
+        if (baseUrl != null) {
+            return go.TypeInstantiation.string(baseUrl);
+        }
+        if (environment != null) {
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const typeReference = this.context.getEnvironmentTypeReferenceFromID(environment);
+                if (typeReference == null) {
+                    this.context.errors.add({
+                        severity: Severity.Warning,
+                        message: `Environment "${environment}" was not found`
+                    });
+                    return undefined;
+                }
+                return go.TypeInstantiation.reference(typeReference);
+            }
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                this.context.errors.add({
+                    severity: Severity.Warning,
+                    message:
+                        "The Go SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+                });
+            }
+        }
+        return undefined;
     }
 
     private getConstructorBearerAuthArg({
