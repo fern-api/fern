@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@fern-api/configuration-loader": "workspace:*",
-    "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
@@ -39,7 +38,6 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-api/semver-utils": "workspace:*",
     "chalk": "^5.3.0",
     "lodash-es": "^4.17.21",
     "strip-ansi": "^7.1.0",

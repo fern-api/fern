@@ -41,6 +41,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
 
+    public clone(): DynamicSnippetsGeneratorContext {
+        return new DynamicSnippetsGeneratorContext({
+            ir: this.ir,
+            config: this.config
+        });
+    }
+
     public associateQueryParametersByWireValue({
         parameters,
         values
@@ -317,6 +324,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             }),
             arguments_: [go.TypeInstantiation.string(s)]
         });
+    }
+
+    public getClientConstructorName(): string {
+        if (this.customConfig?.exportedClientName != null) {
+            return `New${this.customConfig.exportedClientName}`;
+        }
+        return "NewClient";
     }
 
     public getClientImportPath(): string {

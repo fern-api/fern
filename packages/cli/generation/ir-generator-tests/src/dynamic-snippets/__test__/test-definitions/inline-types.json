@@ -3202,5 +3202,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

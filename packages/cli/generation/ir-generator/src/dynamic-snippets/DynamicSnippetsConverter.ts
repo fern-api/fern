@@ -59,7 +59,8 @@ export class DynamicSnippetsConverter {
             version: Version,
             types: this.convertNamedTypes(),
             headers: this.convertHeaders(),
-            endpoints: this.convertEndpoints()
+            endpoints: this.convertEndpoints(),
+            environments: this.ir.environments
         };
     }
 

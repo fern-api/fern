@@ -6,27 +6,23 @@ const path = require("path");
 main();
 
 async function main() {
-    await tsup.build({
+    tsup.build({
         entry: ['src/**/*.ts', '!src/__test__'],
         format: ['cjs'],
         clean: true,
-        // minify: true,
+        minify: true,
         dts: true,
         outDir: 'dist',
         target: "es2017",
-        external: [
-            // Exclude the optional dependencies that aren't supported in the browser.
-            'prettier',
-        ],
         tsconfig: "./build.tsconfig.json"
     });
 
     process.chdir(path.join(__dirname, "dist"));
 
     // The module expects the imports defined in the index.d.ts file.
-    await rename("index.d.cts", "index.d.ts");
+    rename("index.d.cts", "index.d.ts");
 
-    await writeFile(
+    writeFile(
         "package.json",
         JSON.stringify(
             {

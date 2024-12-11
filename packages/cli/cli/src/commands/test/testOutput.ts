@@ -44,7 +44,7 @@ export async function testOutput({
             workspace: fernWorkspace
         });
 
-        const ir = await generateIntermediateRepresentation({
+        const ir = generateIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,

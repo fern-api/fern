@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",

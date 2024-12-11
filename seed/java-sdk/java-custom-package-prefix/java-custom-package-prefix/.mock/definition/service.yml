@@ -1,0 +1,11 @@
+service:
+  auth: false
+  base-path: /test
+  endpoints:
+    test:
+      docs: A test endpoint
+      method: GET
+      path: /endpoint
+      response:
+        type: string
+        status-code: 200

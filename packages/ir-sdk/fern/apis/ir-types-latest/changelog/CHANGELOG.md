@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.24.0] - 2024-11-04
+
+- Feature: The dynamic snippets IR supports a configurable baseURL and/or environment.
+
 ## [v53.23.0] - 2024-11-04
 
 - Internal: Update the Dynamic IR discriminator so that the generated types are unaffected

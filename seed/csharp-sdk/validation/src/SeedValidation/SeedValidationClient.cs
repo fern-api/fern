@@ -38,9 +38,9 @@ public partial class SeedValidationClient
     /// await client.CreateAsync(
     ///     new CreateRequest
     ///     {
-    ///         Decimal = 1.1,
-    ///         Even = 1,
-    ///         Name = "name",
+    ///         Decimal = 2.2,
+    ///         Even = 100,
+    ///         Name = "foo",
     ///         Shape = Shape.Square,
     ///     }
     /// );
@@ -88,9 +88,9 @@ public partial class SeedValidationClient
     /// await client.GetAsync(
     ///     new GetRequest
     ///     {
-    ///         Decimal = 1.1,
-    ///         Even = 1,
-    ///         Name = "name",
+    ///         Decimal = 2.2,
+    ///         Even = 100,
+    ///         Name = "foo",
     ///     }
     /// );
     /// </code>

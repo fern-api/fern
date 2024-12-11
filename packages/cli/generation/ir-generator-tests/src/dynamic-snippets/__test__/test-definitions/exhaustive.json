@@ -8947,5 +8947,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }
