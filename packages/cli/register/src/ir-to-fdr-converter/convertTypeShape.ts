@@ -207,7 +207,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     long: () => {
                         return {
                             type: "long",
-                            default: 0,
+                            default: primitive.v2?.type === "long" ? primitive.v2.default : undefined,
                             minimum: undefined,
                             maximum: undefined
                         };
@@ -215,19 +215,19 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     boolean: () => {
                         return {
                             type: "boolean",
-                            default: false
+                            default: primitive.v2?.type === "boolean" ? primitive.v2.default : undefined
                         };
                     },
                     dateTime: () => {
                         return {
                             type: "datetime",
-                            default: new Date(0).toISOString()
+                            default: undefined
                         };
                     },
                     date: () => {
                         return {
                             type: "date",
-                            default: new Date(0).toISOString()
+                            default: undefined
                         };
                     },
                     uuid: () => {
@@ -239,13 +239,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     base64: () => {
                         return {
                             type: "base64",
-                            default: (0x00).toString()
+                            default: undefined
                         };
                     },
                     bigInteger: () => {
                         return {
                             type: "bigInteger",
-                            default: BigInt(0).toString()
+                            default: primitive.v2?.type === "bigInteger" ? primitive.v2.default : undefined
                         };
                     },
                     uint: () => {

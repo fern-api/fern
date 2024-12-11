@@ -16,8 +16,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -34,8 +33,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -185,8 +183,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -256,8 +253,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -412,8 +408,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1421,8 +1416,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -2664,8 +2658,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -2686,8 +2679,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           },
@@ -2906,8 +2898,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -3747,8 +3738,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "datetime"
               }
             }
           },
@@ -3847,8 +3837,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "datetime"
               }
             }
           },
@@ -4522,8 +4511,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           },
@@ -4624,8 +4612,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "datetime"
                 }
               }
             }
@@ -4782,8 +4769,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -4904,8 +4890,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -5514,8 +5499,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -5787,8 +5771,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -6136,8 +6119,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -6258,8 +6240,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -6868,8 +6849,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -7141,8 +7121,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }
@@ -8689,8 +8668,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "datetime"
                 }
               }
             },
@@ -8701,8 +8679,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "datetime",
-                    "default": "1970-01-01T00:00:00.000Z"
+                    "type": "datetime"
                   }
                 }
               }
