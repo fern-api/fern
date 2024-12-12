@@ -83,6 +83,85 @@
             "response": {
                 "type": "json"
             }
+        },
+        "endpoint_service.download": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "download",
+                    "camelCase": {
+                        "unsafeName": "download",
+                        "safeName": "download"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "download",
+                        "safeName": "download"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DOWNLOAD",
+                        "safeName": "DOWNLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Download",
+                        "safeName": "Download"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/download-content"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            }
         }
     },
     "environments": null

@@ -35,6 +35,30 @@
           },
           "errorsV2": [],
           "examples": []
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "download",
+          "originalEndpointId": "endpoint_service.download",
+          "name": "Download",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/download-content"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": []
         }
       ],
       "webhooks": [],
