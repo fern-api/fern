@@ -7,3 +7,4 @@ tests
 .prettierrc.yml
 tsconfig.json
 yarn.lock
+pnpm-lock.yaml
