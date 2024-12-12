@@ -1,3 +1,32 @@
+- version: 0.35.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add runtime validation for discriminated unions to prevent users from accidentally
+        sending the wrong type of value. With this, users will be expected to set exactly
+        one of the union's values like so:
+
+        ```go
+        package example
+
+        type Animal struct {
+          Type string
+          Cat  *Cat
+          Dog  *Dog
+        }
+
+        func do() {
+          union := &Animal{
+            Cat: &Cat{
+              Name: "Fluffy",
+            },
+          }
+        }
+        ```
+
+        If the user sets _both_ `Cat` and `Dog`, the user will receive an error when the
+        type is serialized to JSON (i.e. in the `json.Marshaler` implementation).
+  irVersion: 53
 - version: 0.34.0
   changelogEntry:
     - type: feat

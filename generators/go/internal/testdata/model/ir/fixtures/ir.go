@@ -119,6 +119,9 @@ func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 }
 
 func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -150,6 +153,40 @@ func (e *ErrorDiscriminationStrategy) Accept(visitor ErrorDiscriminationStrategy
 	case "property":
 		return visitor.VisitProperty(e.Property)
 	}
+}
+
+func (e *ErrorDiscriminationStrategy) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.StatusCode != nil {
+		fields = append(fields, "statusCode")
+	}
+	if e.Property != nil {
+		fields = append(fields, "property")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 // Complete representation of the API schema
