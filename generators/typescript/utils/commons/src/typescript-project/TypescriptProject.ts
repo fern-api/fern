@@ -77,8 +77,8 @@ export abstract class TypescriptProject {
             srcDirectory: RelativeFilePath.of(TypescriptProject.SRC_DIRECTORY),
             testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
-            yarnBuildCommand: this.getYarnBuildCommand(),
-            yarnFormatCommand: this.getYarnFormatCommand()
+            buildCommand: this.getBuildCommand(),
+            formatCommand: this.getFormatCommand()
         });
     }
 
@@ -127,6 +127,6 @@ export abstract class TypescriptProject {
     }
 
     protected abstract addFilesToVolume(): void | Promise<void>;
-    protected abstract getYarnFormatCommand(): string[];
-    protected abstract getYarnBuildCommand(): string[];
+    protected abstract getFormatCommand(): string[];
+    protected abstract getBuildCommand(): string[];
 }

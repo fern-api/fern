@@ -11,7 +11,7 @@ ROOT_DIR="$DOCKER_DIR/../../../../.."
 export GENERATOR_VERSION="$TAG"
 
 pnpm install
-pnpm run compile
+pnpm compile
 pnpm build:browser
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"

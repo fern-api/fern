@@ -63,11 +63,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [SimpleTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -90,7 +90,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 FERN_IGNORE_FILENAME,
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "tsconfig.json",
-                "yarn.lock"
+                "yarn.lock",
+                "pnpm-lock.yaml"
             ].join("\n")
         );
     }

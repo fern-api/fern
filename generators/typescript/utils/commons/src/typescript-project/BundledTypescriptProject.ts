@@ -61,11 +61,11 @@ export class BundledTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -274,8 +274,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
+                    `pnpm ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
+                    `pnpm ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
                 ].join(" && ")
             }
         };

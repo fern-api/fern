@@ -13,8 +13,8 @@ export declare namespace PersistedTypescriptProject {
         srcDirectory: RelativeFilePath;
         distDirectory: RelativeFilePath;
         testDirectory: RelativeFilePath;
-        yarnBuildCommand: string[];
-        yarnFormatCommand: string[];
+        buildCommand: string[];
+        formatCommand: string[];
         runScripts: boolean;
     }
 }
@@ -24,8 +24,8 @@ export class PersistedTypescriptProject {
     private srcDirectory: RelativeFilePath;
     private distDirectory: RelativeFilePath;
     private testDirectory: RelativeFilePath;
-    private yarnBuildCommand: string[];
-    private yarnFormatCommand: string[];
+    private buildCommand: string[];
+    private formatCommand: string[];
 
     private hasInstalled = false;
     private hasFormatted = false;
@@ -38,16 +38,16 @@ export class PersistedTypescriptProject {
         srcDirectory,
         distDirectory,
         testDirectory,
-        yarnBuildCommand,
-        yarnFormatCommand,
+        buildCommand,
+        formatCommand,
         runScripts
     }: PersistedTypescriptProject.Init) {
         this.directory = directory;
         this.srcDirectory = srcDirectory;
         this.distDirectory = distDirectory;
         this.testDirectory = testDirectory;
-        this.yarnBuildCommand = yarnBuildCommand;
-        this.yarnFormatCommand = yarnFormatCommand;
+        this.buildCommand = buildCommand;
+        this.formatCommand = formatCommand;
         this.runScripts = runScripts;
     }
 
@@ -68,17 +68,12 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pnpm = createLoggingExecutable("pnpm", {
             cwd: this.directory,
             logger
         });
 
-        await yarn(["install"], {
-            env: {
-                // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-            }
-        });
+        await pnpm(["install"]);
 
         this.hasInstalled = true;
     }
@@ -94,11 +89,11 @@ export class PersistedTypescriptProject {
 
         await this.installDependencies(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pnpm = createLoggingExecutable("pnpm", {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnFormatCommand);
+        await pnpm(this.formatCommand);
 
         this.hasFormatted = true;
     }
@@ -114,11 +109,11 @@ export class PersistedTypescriptProject {
 
         await this.format(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pnpm = createLoggingExecutable("pnpm", {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnBuildCommand);
+        await pnpm(this.buildCommand);
 
         this.hasBuilt = true;
     }
