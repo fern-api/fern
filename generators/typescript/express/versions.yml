@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Upgraces to v53 of the IR.
+    type: internal
+  irVersion: 53
+  version: 0.18.0
+
+- changelogEntry:
   - summary: Re-release the `0.17.5` version.
     type: feat
   irVersion: 53

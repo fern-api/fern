@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0] - 2024-12-12
+
+- Feature: The SDK now has first class support for `bytes` responses and returns them as
+  a `Promise<ArrayBuffer>`. This is particularly useful for usecases like text to speech 
+  where you would like to play the audio in the browser. 
+
+  Additional this feature ugprade the dependency of the generator to Intermediate Representation v54. 
+  Please upgrade the Fern CLI to `0.46.1` or above to use this generator. 
+
 ## [0.43.0] - 2024-12-11
 
 - Feature: Generate inline types for inline schemas by setting `enableInlineTypes` to `true` in the generator config.
