@@ -1,0 +1,96 @@
+- version: 0.0.16
+  createdAt: '2024-12-12'
+  changelogEntry:
+    - type: internal
+      summary: Actual repeated class name import support.
+  irVersion: 33
+- version: 0.0.15
+  createdAt: '2024-12-11'
+  changelogEntry:
+    - type: internal
+      summary: Repeated class name import support.
+  irVersion: 33
+- version: 0.0.14
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Patch base-generator@0.0.6 dependency.
+  irVersion: 33
+- version: 0.0.13
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Patch base-generator@0.0.5 dependency.
+  irVersion: 33
+- version: 0.0.12
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Add base-generator dependency.
+  irVersion: 33
+- version: 0.0.11
+  createdAt: '2024-11-22'
+  changelogEntry:
+    - type: internal
+      summary: Fixes
+  irVersion: 33
+- version: 0.0.10
+  createdAt: '2024-11-22'
+  changelogEntry:
+    - type: internal
+      summary: Class and Method imports.
+  irVersion: 33
+- version: 0.0.9
+  createdAt: '2024-11-17'
+  changelogEntry:
+    - type: internal
+      summary: Block string support.
+  irVersion: 33
+- version: 0.0.8
+  createdAt: '2024-11-10'
+  changelogEntry:
+    - type: internal
+      summary: AST Changes.
+  irVersion: 33
+- version: 0.0.7
+  createdAt: '2024-11-06'
+  changelogEntry:
+    - type: internal
+      summary: AST Changes.
+  irVersion: 33
+- version: 0.0.6
+  createdAt: '2024-11-05'
+  changelogEntry:
+    - type: internal
+      summary: Publish Commons 0.0.3.
+  irVersion: 33
+- version: 0.0.5
+  createdAt: '2024-11-05'
+  changelogEntry:
+    - type: internal
+      summary: Fix main field.
+  irVersion: 33
+- version: 0.0.4
+  createdAt: '2024-11-04'
+  changelogEntry:
+    - type: internal
+      summary: Publish Commons 0.0.2.
+  irVersion: 33
+- version: 0.0.3
+  createdAt: '2024-11-04'
+  changelogEntry:
+    - type: internal
+      summary: Publish Commons.
+  irVersion: 33
+- version: 0.0.2
+  createdAt: '2024-11-04'
+  changelogEntry:
+    - type: internal
+      summary: Types file.
+  irVersion: 33
+- version: 0.0.1
+  createdAt: '2024-11-04'
+  changelogEntry:
+    - type: internal
+      summary: Initial release.
+  irVersion: 33
