@@ -1,4 +1,0 @@
-default-group: local
-api:
-  path: ./openapi.json
-  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
