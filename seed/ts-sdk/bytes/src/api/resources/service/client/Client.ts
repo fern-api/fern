@@ -83,7 +83,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async download(requestOptions?: Service.RequestOptions): Promise<ArrayBuffer> {
-        const _response = await core.fetcher({
+        const _response = await core.fetcher<ArrayBuffer>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "download-content"),
             method: "GET",
             headers: {
@@ -103,7 +103,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return _response.body;
         }
 
         if (_response.error.reason === "status-code") {

@@ -425,12 +425,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 
+        let cast: ts.TypeNode | undefined = undefined;
+
         if (this.endpoint.response?.body?.type === "text") {
             fetcherArgs.responseType = "text";
         }
 
         if (this.endpoint.response?.body?.type === "bytes") {
             fetcherArgs.responseType = "arrayBuffer";
+            cast = ts.factory.createTypeReferenceNode("ArrayBuffer");
         }
 
         return [
@@ -444,7 +447,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: undefined
+                                cast
                             })
                         )
                     ],

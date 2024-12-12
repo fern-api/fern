@@ -238,7 +238,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Bytes | undefined;
+                    response:
+                        | HttpResponseBody.Json
+                        | HttpResponseBody.FileDownload
+                        | HttpResponseBody.Text
+                        | HttpResponseBody.Bytes
+                        | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,

@@ -83,7 +83,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     if (parsedBytesType != null) {
                         if (location === TypeReferenceLocation.RequestReference) {
                             return [];
-                        } if (location === TypeReferenceLocation.Response) {
+                        }
+                        if (location === TypeReferenceLocation.Response) {
                             return [];
                         } else {
                             return [

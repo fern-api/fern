@@ -55,4 +55,32 @@ class ServiceClient
             body: $response->getBody()->getContents(),
         );
     }
+
+    /**
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function download(?array $options = null): void
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "download-content",
+                    method: HttpMethod::GET,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
 }

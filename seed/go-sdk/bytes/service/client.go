@@ -8,6 +8,7 @@ import (
 	core "github.com/bytes/fern/core"
 	internal "github.com/bytes/fern/internal"
 	option "github.com/bytes/fern/option"
+	io "io"
 	http "net/http"
 )
 
@@ -66,4 +67,39 @@ func (c *Client) Upload(
 		return err
 	}
 	return nil
+}
+
+func (c *Client) Download(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (io.Reader, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/download-content"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	response := bytes.NewBuffer(nil)
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
 }

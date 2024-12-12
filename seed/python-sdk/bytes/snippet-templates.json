@@ -88,5 +88,61 @@
                 "type": "v1"
             }
         }
+    },
+    {
+        "sdk": {
+            "package": "fern_bytes",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/download-content",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.download"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedBytes"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBytes(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.download(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedBytes"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBytes(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.download(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
     }
 ]

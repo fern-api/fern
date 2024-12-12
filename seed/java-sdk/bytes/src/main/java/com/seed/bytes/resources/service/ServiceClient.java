@@ -7,6 +7,7 @@ import com.seed.bytes.core.ClientOptions;
 import com.seed.bytes.core.InputStreamRequestBody;
 import com.seed.bytes.core.ObjectMappers;
 import com.seed.bytes.core.RequestOptions;
+import com.seed.bytes.core.ResponseBodyInputStream;
 import com.seed.bytes.core.SeedBytesApiException;
 import com.seed.bytes.core.SeedBytesException;
 import java.io.ByteArrayInputStream;
@@ -68,5 +69,40 @@ public class ServiceClient {
 
     public void upload(byte[] request, RequestOptions requestOptions) {
         upload(new ByteArrayInputStream(request), requestOptions);
+    }
+
+    public InputStream download() {
+        return download(null);
+    }
+
+    public InputStream download(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("download-content")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new ResponseBodyInputStream(response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedBytesApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedBytesException("Network error executing HTTP request", e);
+        }
     }
 }
