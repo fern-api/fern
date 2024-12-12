@@ -752,6 +752,7 @@ async function getGithubLicense({
     });
 }
 
+// TODO: This is where we should add support for Go and PHP.
 function getGithubPublishInfo(
     output: generatorsYml.GeneratorOutputSchema,
     maybeGroupLevelMetadata: OutputMetadata | undefined,
