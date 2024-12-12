@@ -7,9 +7,9 @@ project_name=heavy_deps_project
 mkdir $project_name
 cd $project_name
 
-yarn init --yes
+pnpm init
 
-yarn add \
+pnpm add \
   @types/jest@29.5.5 \
   @types/node-fetch@2.6.9 \
   @types/node@17.0.33 \

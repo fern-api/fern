@@ -5,7 +5,6 @@
     "globals",
     "@types/node",
     "esbuild",
-    "@yarnpkg/esbuild-plugin-pnp",
     "ts-loader",
     "@fern-fern/ir-sdk"
   ],

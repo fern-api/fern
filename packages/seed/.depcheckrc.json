@@ -4,8 +4,7 @@
     "globals",
     "globals",
     "@types/node",
-    "esbuild",
-    "@yarnpkg/esbuild-plugin-pnp"
+    "esbuild"
   ],
   "ignore-patterns": [
     "lib",

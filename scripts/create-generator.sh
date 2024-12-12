@@ -62,10 +62,10 @@ echo "Directory '$new_name' created successfully at '$new_dir'"
 cd "$new_dir/codegen"
 
 echo "🌿 Install typescript dependencies"
-yarn install
+pnpm install
 
 echo "🌿 Running sample tests"
-yarn test -u
+pnpm test -u
 
 echo "🌿 Opening test result output"
 file="./src/ast/__test__/__snapshots__/Language.test.ts.snap"

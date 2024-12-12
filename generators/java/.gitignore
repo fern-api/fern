@@ -32,6 +32,6 @@ build
 **/jenkins-junit.xsd.episode
 
 **/node_modules/**
-**/yarn.lock
+**/pnpm-lock.yaml
 
 **/generated-java/**

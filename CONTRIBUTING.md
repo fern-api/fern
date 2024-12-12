@@ -111,7 +111,7 @@ in the generator.
 
 ### Generator Testing
 
-**Note**: Please make sure that the docker daemon is running before running commands below. 
+**Note**: Please make sure that the docker daemon is running before running commands below.
 
 To test our generators we have built a CLI called seed.
 
@@ -122,7 +122,7 @@ Seed handles building the generators from source and running them against all of
 Each generator configures a `seed.yml`. For example, the TypeScript generator's configuration lives [here](./seed/ts-sdk/seed.yml).
 
 Seed also handles running scripts against the generated code to make sure that the generated code compiles and works
-as intended. For example, in the TypeScript generator seed runs `yarn install` and `yarn build` to compile the source code.
+as intended. For example, in the TypeScript generator seed runs `pnpm install` and `pnpm build` to compile the source code.
 
 To build seed, simply run
 

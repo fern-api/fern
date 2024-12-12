@@ -4,9 +4,11 @@ RUN apk --no-cache add git zip \
   && git config --global user.name "fern" \
   && git config --global user.email "hey@buildwithfern.com"
 
-RUN yarn init --yes
+RUN npm install -g pnpm@9
 
-RUN  yarn add \
+RUN pnpm init
+
+RUN  pnpm add \
   # jest
   jest@29.7.0 \
   @types/jest@29.5.5 \
@@ -18,7 +20,7 @@ RUN  yarn add \
   # qs
   qs@6.11.2 \
   @types/qs@6.9.8 \
-  # url join 
+  # url join
   url-join@4.0.1 \
   @types/url-join@4.0.1 \
   # readable stream
@@ -44,7 +46,7 @@ RUN  yarn add \
   ts-loader@9.3.1 \
   webpack@5.94.0 \
   # fetch mock jest
-  fetch-mock-jest@1.5.1 
+  fetch-mock-jest@1.5.1
 
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue

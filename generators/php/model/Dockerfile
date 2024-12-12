@@ -5,7 +5,6 @@ RUN apk --no-cache add bash curl git zip && git config --global user.name "fern"
 
 RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer \
     && chmod +x /usr/local/bin/php-cs-fixer
-ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/php/model/dist /dist
 

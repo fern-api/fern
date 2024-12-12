@@ -6,10 +6,10 @@ image: fernapi/fern-typescript-express
 buildScripts:
   installScript:
     commands:
-      - yarn install
+      - pnpm install
   compileScript:
     commands:
-      - yarn build
+      - pnpm build
 
 publish:
   versionSubstitution: "$VERSION"

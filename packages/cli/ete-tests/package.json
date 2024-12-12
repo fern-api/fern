@@ -21,7 +21,7 @@
     "test": "vitest --run",
     "test:update": "vitest --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",

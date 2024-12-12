@@ -24,7 +24,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
-    "add-workspace": "yarn mrlint add-workspace",
+    "add-workspace": "pnpm mrlint add-workspace",
     "depcheck": "pnpm -r --no-bail depcheck",
     "codegen:local": "pnpm fern:local generate",
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/prod/cli.cjs",

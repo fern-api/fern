@@ -4,7 +4,7 @@ RUN apk --no-cache add git zip \
   && git config --global user.name "fern" \
   && git config --global user.email "hey@buildwithfern.com"
 
-ENV YARN_CACHE_FOLDER=/.yarn
+RUN npm install -g pnpm@9
 
 COPY generators/typescript/sdk/cli/browser-docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh

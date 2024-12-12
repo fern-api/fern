@@ -21,7 +21,7 @@
     "test": "vitest --run --passWithNoTests",
     "test:update": "vitest --run --passWithNoTests -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.7.18", 
+    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",

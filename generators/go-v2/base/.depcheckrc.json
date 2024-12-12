@@ -5,7 +5,6 @@
     "globals",
     "@types/node",
     "esbuild",
-    "@yarnpkg/esbuild-plugin-pnp",
     "@fern-fern/ir-sdk"
   ],
   "ignore-patterns": [

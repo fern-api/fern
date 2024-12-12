@@ -20,13 +20,13 @@
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts && cp -R ../codegen/src/asIs dist",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "publish:cli": "pnpm dist:cli && cd dist && pnpm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-php-sdk:latest ../../.."
   },
   "devDependencies": {
@@ -41,7 +41,6 @@
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.7.18",
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "esbuild": "^0.24.0",
     "eslint": "^8.56.0",

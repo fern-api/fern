@@ -307,9 +307,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -376,9 +373,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -467,9 +461,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -591,9 +582,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -624,9 +612,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -678,9 +663,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -790,9 +772,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -853,9 +832,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -913,9 +889,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1041,9 +1014,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1095,9 +1065,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1250,9 +1217,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1316,9 +1280,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -1365,9 +1326,6 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -4174,6 +4132,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/cli/dist/local: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -6818,9 +6778,6 @@ importers:
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.28
-      '@yarnpkg/esbuild-plugin-pnp':
-        specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -9176,12 +9133,6 @@ packages:
 
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
-
-  '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14':
-    resolution: {integrity: sha512-LRBInmvVs1pADGEdH4qFTl1MtQ4pUNNZfjWnQxk52ocYEqM0qY7AWTItJKSrLJ9sENsLPmacjuvUppfIyHOcSg==}
-    engines: {node: '>=14.15.0'}
-    peerDependencies:
-      esbuild: '>=0.10.0'
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -16657,11 +16608,6 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
-
-  '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14(esbuild@0.24.0)':
-    dependencies:
-      esbuild: 0.24.0
-      tslib: 1.14.1
 
   abab@2.0.6: {}
 

@@ -97,7 +97,7 @@ types:
         type: list<string>
         docs: |
           The command to build the generator locally.
-          `yarn workspace @fern-api/openapi-generator build` for example.
+          `pnpm --filter @fern-api/openapi-generator build` for example.
       runCommand:
         type: string
         docs: |
@@ -109,7 +109,7 @@ types:
           Environment variables to set when running the generator locally.
 
   BuildScripts:
-    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
+    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. pnpm install && pnpm build for the TS SDK)
     properties:
       preInstallScript: optional<Script>
       installScript: optional<Script>

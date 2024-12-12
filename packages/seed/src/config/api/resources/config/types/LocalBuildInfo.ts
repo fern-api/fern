@@ -7,7 +7,7 @@ export interface LocalBuildInfo {
     workingDirectory: string;
     /**
      * The command to build the generator locally.
-     * `yarn workspace @fern-api/openapi-generator build` for example.
+     * `pnpm --filter @fern-api/openapi-generator build` for example.
      */
     buildCommand: string[];
     /**

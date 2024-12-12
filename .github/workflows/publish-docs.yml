@@ -30,13 +30,13 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           node $cli_path generate --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
 
       # - name: Install fern-dev CLI
       #   run: |
-      #     npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
-      #     npm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
+      #     pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
+      #     pnpm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
 
       # - name: Publish Docs to dev
       #   env:
