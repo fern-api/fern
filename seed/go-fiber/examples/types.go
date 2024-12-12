@@ -1240,7 +1240,7 @@ type Moment struct {
 
 func (m *Moment) GetId() uuid.UUID {
 	if m == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return m.Id
 }

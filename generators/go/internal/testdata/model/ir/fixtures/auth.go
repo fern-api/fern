@@ -145,6 +145,9 @@ func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 }
 
 func (a AuthScheme) MarshalJSON() ([]byte, error) {
+	if err := a.validate(); err != nil {
+		return nil, err
+	}
 	switch a.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
@@ -174,6 +177,43 @@ func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
 	case "header":
 		return visitor.VisitHeader(a.Header)
 	}
+}
+
+func (a *AuthScheme) validate() error {
+	if a == nil {
+		return fmt.Errorf("type %T is nil", a)
+	}
+	var fields []string
+	if a.Bearer != nil {
+		fields = append(fields, "bearer")
+	}
+	if a.Basic != nil {
+		fields = append(fields, "basic")
+	}
+	if a.Header != nil {
+		fields = append(fields, "header")
+	}
+	if len(fields) == 0 {
+		if a.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", a, a.Type)
+		}
+		return fmt.Errorf("type %T is empty", a)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", a, fields)
+	}
+	if a.Type != "" {
+		field := fields[0]
+		if a.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				a,
+				a.Type,
+				a,
+			)
+		}
+	}
+	return nil
 }
 
 type AuthSchemesRequirement string
