@@ -160,6 +160,9 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 }
 
 func (s Shape) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -184,6 +187,40 @@ func (s *Shape) Accept(visitor ShapeVisitor) error {
 	case "square":
 		return visitor.VisitSquare(s.Square)
 	}
+}
+
+func (s *Shape) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Circle != nil {
+		fields = append(fields, "circle")
+	}
+	if s.Square != nil {
+		fields = append(fields, "square")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type Square struct {
