@@ -78,4 +78,53 @@ export class Service {
                 });
         }
     }
+
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public async download(requestOptions?: Service.RequestOptions): Promise<ArrayBuffer> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "download-content"),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/bytes",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/bytes/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            responseType: "arrayBuffer",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body as string;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedBytesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedBytesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedBytesTimeoutError("Timeout exceeded when calling GET /download-content.");
+            case "unknown":
+                throw new errors.SeedBytesError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
 }

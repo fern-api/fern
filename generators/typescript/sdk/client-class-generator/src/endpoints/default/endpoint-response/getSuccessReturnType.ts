@@ -10,6 +10,7 @@ export function getSuccessReturnType(
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Streaming
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | undefined,
     context: SdkContext,
     opts: {
@@ -27,6 +28,15 @@ export function getSuccessReturnType(
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
             });
         }
+        case "fileDownload": {
+            return getFileType({
+                targetRuntime: context.targetRuntime,
+                context,
+                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
+            });
+        }
+        case "bytes": 
+            return ts.factory.createTypeReferenceNode("ArrayBuffer");
         case "json":
             return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
         case "text":

@@ -35,6 +35,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
             | HttpResponseBody.FileDownload
             | HttpResponseBody.Streaming
             | HttpResponseBody.Text
+            | HttpResponseBody.Bytes
             | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
@@ -53,6 +54,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Streaming
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;

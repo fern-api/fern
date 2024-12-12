@@ -21,7 +21,7 @@ yarn add \
   js-base64@3.7.2"
   node-fetch@2.7.0 \
   prettier@2.7.1 \
-  qs@6.11.2 \
+  qs@6.13.0 \
   ts-jest@29.1.1 \
   typescript@4.6.4" \
   url-join@4.0.1

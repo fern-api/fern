@@ -210,6 +210,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         | HttpResponseBody.FileDownload
                         | HttpResponseBody.Text
                         | HttpResponseBody.Streaming
+                        | HttpResponseBody.Bytes
                         | undefined;
                 }) => {
                     if (neverThrowErrors) {
@@ -237,7 +238,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | undefined;
+                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Bytes | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,
@@ -307,6 +308,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined
                         }),
+                    bytes: (bytesResponse) => {
+                        return getDefaultEndpointImplementation({
+                            response: HttpResponseBody.bytes(bytesResponse)
+                        });
+                    },
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
                             response: HttpResponseBody.text(textResponse)

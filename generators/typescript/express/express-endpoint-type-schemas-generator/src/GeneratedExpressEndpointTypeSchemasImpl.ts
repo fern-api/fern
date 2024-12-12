@@ -196,6 +196,9 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         if (this.endpoint.response.body?.type === "text") {
             throw new Error("Text response is not supported");
         }
+        if (this.endpoint.response.body.type === "bytes") {
+            throw new Error("Bytes response is not supported");
+        }
 
         if (!this.includeSerdeLayer) {
             return referenceToParsedResponse;

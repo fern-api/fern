@@ -268,6 +268,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
 
         if (this.endpoint.response.body.type === "text") {
+            return referenceToRawResponse;
+        }
+
+        if (this.endpoint.response.body.type === "bytes") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
                 context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))

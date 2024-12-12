@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v54
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:

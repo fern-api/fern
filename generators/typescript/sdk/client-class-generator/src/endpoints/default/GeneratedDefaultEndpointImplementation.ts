@@ -429,6 +429,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = "text";
         }
 
+        if (this.endpoint.response?.body?.type === "bytes") {
+            fetcherArgs.responseType = "arrayBuffer";
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,

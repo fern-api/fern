@@ -936,6 +936,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             fileDownload: () => {
                 throw new Error("File download is not supported");
             },
+            bytes: () => {
+                throw new Error("Bytes is not supported");
+            },
             text: () => {
                 throw new Error("Text response is not supported");
             },
