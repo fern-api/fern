@@ -1,5 +1,19 @@
 - changelogEntry:
     - summary: |
+        Add support for setting the `User-Agent` header value for Go generators.
+      type: fix
+  irVersion: 53
+  version: 0.46.1
+
+- changelogEntry:
+    - summary: |
+        No changes; promote `0.46.0-rc1` release candidate to minor version.
+      type: internal
+  irVersion: 53
+  version: 0.46.0
+
+- changelogEntry:
+    - summary: |
         * Set `inline: true` for inline enums imported from OpenAPI.
         * Set `inline: true` for maps generated from OpenAPI additionalProperties.
       type: fix

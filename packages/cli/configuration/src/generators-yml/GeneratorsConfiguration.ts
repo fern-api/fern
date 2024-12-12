@@ -137,6 +137,9 @@ export function getPackageName({
 }: {
     generatorInvocation: GeneratorInvocation;
 }): string | undefined {
+    if (generatorInvocation.language === "go") {
+        return getGoPackageName(generatorInvocation);
+    }
     return generatorInvocation.outputMode._visit<string | undefined>({
         downloadFiles: () => undefined,
         github: (val) =>
@@ -159,6 +162,21 @@ export function getPackageName({
                 nuget: (val) => val.packageName,
                 _other: () => undefined
             }),
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Go doesn't use a central package manager; the Go Module Proxy simply uses the name
+ * of the GitHub repository.
+ */
+function getGoPackageName(generatorInvocation: GeneratorInvocation): string | undefined {
+    return generatorInvocation.outputMode._visit<string | undefined>({
+        downloadFiles: () => undefined,
+        github: (val) => `github.com/${val.owner}/${val.repo}`,
+        githubV2: (val) => `github.com/${val.owner}/${val.repo}`,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined

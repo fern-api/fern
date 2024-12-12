@@ -1,1 +1,0 @@
-export { SeedObjectError } from "./SeedObjectError";
