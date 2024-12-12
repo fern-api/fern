@@ -1,3 +1,9 @@
+- version: 0.0.17
+  createdAt: '2024-12-12'
+  changelogEntry:
+    - type: internal
+      summary: Fix import star.
+  irVersion: 33
 - version: 0.0.16
   createdAt: '2024-12-12'
   changelogEntry:
