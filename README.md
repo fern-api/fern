@@ -92,6 +92,7 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 | `fernapi/fern-ruby-sdk`            | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                  | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |
 | `fernapi/fern-go-sdk`              | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                      | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                            |
 | `fernapi/fern-csharp-sdk`          | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)                  | [cli.ts](./generators/csharp/sdk/src/cli.ts)                                  |
+| `fernapi/fern-php-sdk`             | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)                    | [cli.ts](./generators/php/sdk/src/cli.ts)                                     |
 
 ### Server-side Generators
 
