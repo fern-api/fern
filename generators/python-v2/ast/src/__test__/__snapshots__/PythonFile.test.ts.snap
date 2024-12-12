@@ -131,7 +131,8 @@ exports[`PythonFile > Write star imports 1`] = `
 "# flake8: noqa: F401, F403
 
 from uuid import UUID
-from .my_module import *
+from .my_module_a import *
+from .my_module_b import *
 
 my_id = UUID("1234")
 "
