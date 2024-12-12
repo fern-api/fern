@@ -2,7 +2,7 @@ FROM node:lts-slim
 
 RUN npm install -g pnpm@9
 
-RUN  pnpm add \
+RUN pnpm add \
   # jest
   jest@29.7.0 \
   @types/jest@29.5.5 \
@@ -43,6 +43,6 @@ RUN  pnpm add \
   fetch-mock-jest@1.5.1
 
 # Installs tsc
-RUN npm install -g typescript
+RUN pnpm install -g typescript
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
