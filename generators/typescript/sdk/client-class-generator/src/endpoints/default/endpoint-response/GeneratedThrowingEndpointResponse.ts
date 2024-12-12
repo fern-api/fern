@@ -495,7 +495,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         signal: getAbortSignalExpression({
                             abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
                         }),
-                        parse: ts.factory.createArrowFunction(
+                        parse: context.includeSerdeLayer ? ts.factory.createArrowFunction(
                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,
                             [
@@ -522,6 +522,23 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     )
                                 ],
                                 true
+                            )
+                        ) : ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [
+                                ts.factory.createParameterDeclaration(
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                )
+                            ],
+                            undefined,
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            ts.factory.createAsExpression(
+                                ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME),
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                             )
                         )
                     })

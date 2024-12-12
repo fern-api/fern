@@ -45,6 +45,8 @@ fixtures:
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig: null
+      outputFolder: no-serde-layer
     - customConfig:
         allowCustomFetcher: true
         timeoutInSeconds: 2
