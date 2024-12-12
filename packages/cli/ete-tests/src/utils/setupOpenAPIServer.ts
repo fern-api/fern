@@ -56,9 +56,12 @@ const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
 
 export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Promise<void> } {
     const app = express();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     app.get("/openapi.json", (req: any, res: any) => {
         res.json(TEST_OPENAPI_DOCUMENT);
     });
+
     const server = app.listen(4567);
     const cleanup = async () => {
         return new Promise<void>((resolve, reject) => {
