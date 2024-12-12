@@ -48,6 +48,7 @@ export function parseImagePaths(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    parseFrontmatterImagesforLogo(data, mapImage);
 
     const tree = parseMarkdownToTree(content);
 
@@ -206,6 +207,7 @@ export function replaceImagePathsAndUrls(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -399,6 +401,84 @@ function visitFrontmatterImages(
                       };
             }
             // else do nothing
+        }
+    }
+}
+
+function parseFrontmatterImagesforLogo(
+    data: Record<string, any>,
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    const value = data.logo;
+    if (value != null) {
+        if (typeof value === "string") {
+            const mappedImage = mapImage(value);
+            data.logo = mappedImage
+                ? {
+                      type: "fileId",
+                      value: CjsFdrSdk.FileId(mappedImage)
+                  }
+                : {
+                      type: "url",
+                      value: CjsFdrSdk.Url(value)
+                  };
+        } else if (typeof value === "object") {
+            if ("light" in value && typeof value.light === "string") {
+                const mappedImage = mapImage(value.light);
+                data.logo.light = mappedImage
+                    ? {
+                          type: "fileId",
+                          value: CjsFdrSdk.FileId(mappedImage)
+                      }
+                    : {
+                          type: "url",
+                          value: CjsFdrSdk.Url(value.light)
+                      };
+            }
+            if ("dark" in value && typeof value.dark === "string") {
+                const mappedImage = mapImage(value.dark);
+                data.logo.dark = mappedImage
+                    ? {
+                          type: "fileId",
+                          value: CjsFdrSdk.FileId(mappedImage)
+                      }
+                    : {
+                          type: "url",
+                          value: CjsFdrSdk.Url(value.dark)
+                      };
+            }
+        }
+    }
+}
+
+function replaceFrontmatterImagesforLogo(
+    data: Record<string, any>,
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    const value = data.logo;
+    if (value != null && typeof value === "object") {
+        if ("type" in value && value.type === "fileId") {
+            data.logo = {
+                type: "fileId",
+                value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
+            };
+        } else {
+            if ("light" in value && value.light != null) {
+                if ("type" in value.light && value.light.type === "fileId") {
+                    data.logo.light = {
+                        type: "fileId",
+                        value: CjsFdrSdk.FileId(mapImage(value.light.value) ?? value.light.value)
+                    };
+                }
+            }
+            if ("dark" in value && value.dark != null) {
+                if ("type" in value.dark && value.dark.type === "fileId") {
+                    data.logo.dark = {
+                        type: "fileId",
+                        value: CjsFdrSdk.FileId(mapImage(value.dark.value) ?? value.dark.value)
+                    };
+                }
+            }
         }
     }
 }
