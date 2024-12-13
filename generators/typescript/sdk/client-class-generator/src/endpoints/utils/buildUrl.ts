@@ -40,7 +40,9 @@ export function buildUrl({
             let referenceToPathParameterValue = getReferenceToPathParameter({
                 pathParameter,
                 generatedClientClass,
-                retainOriginalCasing
+                retainOriginalCasing,
+                requestVariableName: endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
+                shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest)
             });
 
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
@@ -73,24 +75,38 @@ export function buildUrl({
 function getReferenceToPathParameter({
     pathParameter,
     generatedClientClass,
-    retainOriginalCasing
+    retainOriginalCasing,
+    requestVariableName,
+    shouldInlinePathParameters
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
     retainOriginalCasing: boolean;
+    requestVariableName: string;
+    shouldInlinePathParameters: boolean;
 }): ts.Expression {
     if (pathParameter.variable != null) {
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {
-        case PathParameterLocation.Service:
-        case PathParameterLocation.Endpoint:
-            return ts.factory.createIdentifier(
-                getParameterNameForPathParameter({
-                    pathParameter,
-                    retainOriginalCasing
-                })
-            );
+        case PathParameterLocation.Service: {
+            const pathParamName = getParameterNameForPathParameter({
+                pathParameter,
+                retainOriginalCasing
+            });
+            return ts.factory.createIdentifier(pathParamName);
+        }
+        case PathParameterLocation.Endpoint: {
+            const pathParamName = getParameterNameForPathParameter({
+                pathParameter,
+                retainOriginalCasing
+            });
+            if (shouldInlinePathParameters) {
+                return ts.factory.createIdentifier(`${requestVariableName}.${pathParamName}`);
+            }
+
+            return ts.factory.createIdentifier(pathParamName);
+        }
         case PathParameterLocation.Root:
             return generatedClientClass.getReferenceToRootPathParameter(pathParameter);
         default:

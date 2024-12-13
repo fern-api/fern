@@ -105,7 +105,11 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         const result: ts.Expression[] = [
             context.externalDependencies.fs.createReadStream(ts.factory.createStringLiteral("/path/to/your/file"))
         ];
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             const exampleParameter = exampleParameters.find(
                 (param) => param.name.originalName === pathParameter.name.originalName
             );
@@ -142,7 +146,11 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             }
         ];
 
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             parameters.push({
                 name: getParameterNameForPathParameter({
                     pathParameter,

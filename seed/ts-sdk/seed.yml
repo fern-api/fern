@@ -126,6 +126,9 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
+    - customConfig:
+        inlinePathParameters: true
+      outputFolder: inline-path-parameters
   error-property:
     - customConfig:
         private: true

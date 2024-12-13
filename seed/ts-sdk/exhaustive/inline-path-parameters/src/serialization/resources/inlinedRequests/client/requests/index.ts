@@ -1,0 +1,1 @@
+export { PostWithObjectBody } from "./PostWithObjectBody";
