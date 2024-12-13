@@ -1,3 +1,9 @@
+- version: 0.0.18
+  createdAt: '2024-12-13'
+  changelogEntry:
+    - type: internal
+      summary: Fix latest bug.
+  irVersion: 33
 - version: 0.0.17
   createdAt: '2024-12-12'
   changelogEntry:
