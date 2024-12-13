@@ -1,7 +1,4 @@
-import {
-    AbstractDynamicSnippetsGenerator,
-    FernGeneratorExec
-} from "@fern-api/browser-compatible-base-generator";
+import { AbstractDynamicSnippetsGenerator, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic } from "@fern-fern/ir-sdk/api";
 
@@ -13,7 +10,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
 > {
     constructor({
         ir,
-        config,
+        config
     }: {
         ir: dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
@@ -21,9 +18,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         super(new DynamicSnippetsGeneratorContext({ ir, config }));
     }
 
-    public async generate(
-        request: dynamic.EndpointSnippetRequest
-    ): Promise<dynamic.EndpointSnippetResponse> {
+    public async generate(request: dynamic.EndpointSnippetRequest): Promise<dynamic.EndpointSnippetResponse> {
         return {
             snippet: "TODO: Implement me!",
             errors: undefined
