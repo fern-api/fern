@@ -16,6 +16,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Install Fern
+        run: npm install -g fern-api
+
       - name: Get current version and compute next version
         id: version
         run: |
