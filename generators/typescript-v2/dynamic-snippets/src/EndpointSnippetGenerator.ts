@@ -1,4 +1,4 @@
-import { dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 import { ts } from "@fern-api/typescript-ast";
 
 export class EndpointSnippetGenerator {

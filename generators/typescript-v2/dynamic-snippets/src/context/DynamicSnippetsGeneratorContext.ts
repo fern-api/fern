@@ -2,9 +2,9 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 
-export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext<dynamic.DynamicIntermediateRepresentation> {
+export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     constructor({
         ir,
         config
@@ -12,6 +12,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         ir: dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
     }) {
-        super(ir, config);
+        super({ ir, config });
     }
 }

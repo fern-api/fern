@@ -1,8 +1,8 @@
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 import { assertNever } from "@fern-api/core-utils";
-import { Severity } from "./ErrorReporter";
+import { Severity } from "@fern-api/browser-compatible-base-generator";
 
 export interface FilePropertyInfo {
     fileFields: go.StructField[];

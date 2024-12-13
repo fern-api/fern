@@ -1,4 +1,4 @@
-import { NameAndWireValue, dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue, dynamic } from "@fern-api/dynamic-ir-sdk/api";
 
 /**
  * A type instance that can be converted into a language-specific AST node.
@@ -8,6 +8,6 @@ import { NameAndWireValue, dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/
  */
 export interface TypeInstance {
     name: NameAndWireValue;
-    typeReference: DynamicSnippets.TypeReference;
+    typeReference: dynamic.TypeReference;
     value: unknown;
 }

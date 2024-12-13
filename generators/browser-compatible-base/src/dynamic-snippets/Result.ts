@@ -1,6 +1,6 @@
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { ErrorReporter } from "./context/ErrorReporter";
-import { dynamic } from "@fern-fern/ir-sdk/api";
+import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
+import { ErrorReporter } from "./ErrorReporter";
+import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 
 export class Result {
     public reporter: ErrorReporter | undefined;
@@ -13,7 +13,7 @@ export class Result {
         this.err = undefined;
     }
 
-    public update({ context, snippet }: { context: DynamicSnippetsGeneratorContext; snippet: string }): void {
+    public update({ context, snippet }: { context: AbstractDynamicSnippetsGeneratorContext; snippet: string }): void {
         if (this.reporter == null || this.reporter.size() > context.errors.size()) {
             this.reporter = context.errors.clone();
             this.snippet = snippet;

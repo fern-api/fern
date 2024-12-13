@@ -28,7 +28,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "54.0.0",
     "@fern-fern/generator-exec-sdk": "^0.0.898"
   },
   "devDependencies": {

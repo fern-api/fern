@@ -1,4 +1,3 @@
-import { dynamic } from "@fern-fern/ir-sdk/api";
 import { DynamicSnippetsGenerator } from "../DynamicSnippetsGenerator";
 
 describe("imdb", () => {
@@ -14,11 +13,12 @@ describe("imdb", () => {
                 method: "GET",
                 path: "/movies/{movieId}"
             },
-            baseUrl: undefined,
+            baseURL: undefined,
             environment: undefined,
-            auth: dynamic.AuthValues.bearer({
+            auth: {
+                type: "bearer",
                 token: "<YOUR_API_KEY>"
-            }),
+            },
             pathParameters: {
                 movieId: "movie_xyz"
             },

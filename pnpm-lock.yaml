@@ -209,6 +209,15 @@ importers:
 
   generators/browser-compatible-base:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: 54.0.0
+        version: 54.0.0
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../packages/cli/fern-definition/schema
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
@@ -509,9 +518,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/fern-definition-schema':
-        specifier: workspace:*
-        version: link:../../../packages/cli/fern-definition/schema
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^53.24.0
+        version: 53.24.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -521,9 +530,6 @@ importers:
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
-      '@fern-fern/ir-sdk':
-        specifier: ^53.24.0
-        version: 53.24.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -1437,12 +1443,12 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^53.23.0
+        version: 53.24.0
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-fern/ir-sdk':
-        specifier: ^53.23.0
-        version: 53.24.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -8073,6 +8079,12 @@ packages:
 
   '@fern-api/docs-parsers@0.0.10':
     resolution: {integrity: sha512-TO+XxWDSEq2PIirkNTWdsIX5zTrQMjVg+sdTmdTIICpQVAboupC0bG6IfAU+D933VYoy4ajrkqZbCYQSUjMOhg==}
+
+  '@fern-api/dynamic-ir-sdk@53.24.0':
+    resolution: {integrity: sha512-4XvzvSsh7lNZz5oYN0LH+FRpFGxg9TjfdipSJMpgHvPShe85m/tcfbOzbS0DHBpQGlKb/gHQtQRPAoBR1wdDAw==}
+
+  '@fern-api/dynamic-ir-sdk@54.0.0':
+    resolution: {integrity: sha512-5ewX7042AGuw697jA6ubulCIQbfTM2HC8UbHxTakE0px871HJTRwHNT2Y9o2kjMbsRXTzyYdb5lOVr+85sc/KQ==}
 
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
@@ -15220,6 +15232,10 @@ snapshots:
       - supports-color
       - terser
       - typescript
+
+  '@fern-api/dynamic-ir-sdk@53.24.0': {}
+
+  '@fern-api/dynamic-ir-sdk@54.0.0': {}
 
   '@fern-api/fdr-sdk@0.126.1-444264056(typescript@4.6.4)':
     dependencies:
