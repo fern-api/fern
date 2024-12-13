@@ -3,14 +3,13 @@ import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace, OpenAPILoader } from "@fern-api/lazy-fern-workspace";
 // TODO: clean up imports
 import { OpenApiDocumentConverterNode } from "@fern-api/docs-parsers";
 import { ErrorCollector } from "@fern-api/docs-parsers";
-import fs from "fs";
-import yaml from "js-yaml";
 import { BaseOpenApiV3_1ConverterNodeContext } from "@fern-api/docs-parsers";
 import { OpenAPIV3_1 } from "openapi-types";
+import { merge } from "lodash-es";
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,
@@ -31,49 +30,40 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
                     } else if (!(workspace instanceof OSSWorkspace)) {
                         return;
                     }
+
+                    const openApiLoader = new OpenAPILoader(workspace.absoluteFilePath);
                     const openApiSpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
 
-                    if (openApiSpecs.length === 0) {
-                        context.logger.error("No OpenAPI specs found in the workspace");
-                        return;
-                    }
+                    const openApiDocuments = await openApiLoader.loadDocuments({ context, specs: openApiSpecs });
 
-                    if (openApiSpecs.length > 1) {
-                        context.logger.error("Found multiple OpenAPI specs in the workspace.");
-                        return;
-                    }
-
-                    const openApi = openApiSpecs[0];
-
-                    if (openApi != null) {
-                        const input = yaml.load(
-                            fs.readFileSync(openApi.absoluteFilepath, "utf8")
-                        ) as OpenAPIV3_1.Document;
+                    let fdrApiDefinition: any;
+                    for (const openApi of openApiDocuments) {
+                        if (openApi.type !== "openapi") {
+                            continue;
+                        }
 
                         const oasContext: BaseOpenApiV3_1ConverterNodeContext = {
-                            document: input,
+                            document: openApi.value as OpenAPIV3_1.Document,
                             logger: context.logger,
                             errors: new ErrorCollector()
                         };
 
                         const openApiFdrJson = new OpenApiDocumentConverterNode({
-                            input,
+                            input: openApi.value as OpenAPIV3_1.Document,
                             context: oasContext,
                             accessPath: [],
                             pathId: workspace.workspaceName ?? "openapi parser"
                         });
 
-                        const fdrApiDefinition = openApiFdrJson.convert();
-
-                        const resolvedOutputFilePath = path.resolve(outputFilepath);
-                        await writeFile(
-                            resolvedOutputFilePath,
-                            await stringifyLargeObject(fdrApiDefinition, { pretty: true })
-                        );
-                        context.logger.info(`Wrote FDR API definition to ${resolvedOutputFilePath}`);
-                    } else {
-                        context.logger.error("No OpenAPI spec found in the workspace");
+                        fdrApiDefinition = merge(fdrApiDefinition, openApiFdrJson.convert());
                     }
+
+                    const resolvedOutputFilePath = path.resolve(outputFilepath);
+                    await writeFile(
+                        resolvedOutputFilePath,
+                        await stringifyLargeObject(fdrApiDefinition, { pretty: true })
+                    );
+                    context.logger.info(`Wrote FDR API definition to ${resolvedOutputFilePath}`);
                 });
             });
         })
