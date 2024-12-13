@@ -10,7 +10,8 @@ export interface MapSchemaWithExample
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithEncoding,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     key: FernOpenapiIr.PrimitiveSchemaWithExample;
     value: FernOpenapiIr.SchemaWithExample;
     example: unknown | undefined;

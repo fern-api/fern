@@ -7,8 +7,8 @@ import * as core from "../../../../core";
 
 export type Error = SeedTrace.problem.updateProblem.Error._Unknown;
 
-export declare namespace Error {
-    interface _Unknown extends _Utils {
+export namespace Error {
+    export interface _Unknown extends _Utils {
         errorName: void;
         content: core.Fetcher.Error;
     }

@@ -9,7 +9,7 @@ import {
     TypeReferenceToSchemaConverter
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { SourceFile } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
@@ -27,6 +27,7 @@ export declare namespace TypeSchemaContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -56,17 +57,20 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         treatUnknownAsAny,
         includeSerdeLayer,
         retainOriginalCasing,
-        useBigInt
+        useBigInt,
+        enableInlineTypes
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
@@ -74,7 +78,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             typeResolver,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;
@@ -104,7 +109,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                     includeSerdeLayer: this.includeSerdeLayer,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    inline: typeDeclaration.inline ?? false
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer
@@ -129,7 +135,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToRawTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference });
     }
 
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
@@ -146,8 +152,12 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
+    private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        throw new Error("Inline unions are not supported in Express Schemas");
+    }
+
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
-        return this.typeReferenceToSchemaConverter.convert(typeReference);
+        return this.typeReferenceToSchemaConverter.convert({ typeReference });
     }
 
     public getSchemaOfNamedType(

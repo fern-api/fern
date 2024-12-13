@@ -6,7 +6,6 @@
  * Keep in sync with SubmissionType.
  */
 export type SubmissionTypeEnum = "TEST";
-
 export const SubmissionTypeEnum = {
     Test: "TEST",
     _visit: <R>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum.Visitor<R>) => {
@@ -19,7 +18,7 @@ export const SubmissionTypeEnum = {
     },
 } as const;
 
-export declare namespace SubmissionTypeEnum {
+export namespace SubmissionTypeEnum {
     interface Visitor<R> {
         test: () => R;
         _other: () => R;

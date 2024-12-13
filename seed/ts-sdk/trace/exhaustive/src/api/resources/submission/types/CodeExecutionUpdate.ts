@@ -40,52 +40,52 @@ export type CodeExecutionUpdate =
     | SeedTrace.CodeExecutionUpdate.Finished
     | SeedTrace.CodeExecutionUpdate._Unknown;
 
-export declare namespace CodeExecutionUpdate {
-    interface BuildingExecutor extends SeedTrace.BuildingExecutorResponse, _Utils {
+export namespace CodeExecutionUpdate {
+    export interface BuildingExecutor extends SeedTrace.BuildingExecutorResponse, _Utils {
         type: "buildingExecutor";
     }
 
-    interface Running extends SeedTrace.RunningResponse, _Utils {
+    export interface Running extends SeedTrace.RunningResponse, _Utils {
         type: "running";
     }
 
-    interface Errored extends SeedTrace.ErroredResponse, _Utils {
+    export interface Errored extends SeedTrace.ErroredResponse, _Utils {
         type: "errored";
     }
 
-    interface Stopped extends SeedTrace.StoppedResponse, _Utils {
+    export interface Stopped extends SeedTrace.StoppedResponse, _Utils {
         type: "stopped";
     }
 
-    interface Graded extends SeedTrace.GradedResponse, _Utils {
+    export interface Graded extends SeedTrace.GradedResponse, _Utils {
         type: "graded";
     }
 
-    interface GradedV2 extends SeedTrace.GradedResponseV2, _Utils {
+    export interface GradedV2 extends SeedTrace.GradedResponseV2, _Utils {
         type: "gradedV2";
     }
 
-    interface WorkspaceRan extends SeedTrace.WorkspaceRanResponse, _Utils {
+    export interface WorkspaceRan extends SeedTrace.WorkspaceRanResponse, _Utils {
         type: "workspaceRan";
     }
 
-    interface Recording extends SeedTrace.RecordingResponseNotification, _Utils {
+    export interface Recording extends SeedTrace.RecordingResponseNotification, _Utils {
         type: "recording";
     }
 
-    interface Recorded extends SeedTrace.RecordedResponseNotification, _Utils {
+    export interface Recorded extends SeedTrace.RecordedResponseNotification, _Utils {
         type: "recorded";
     }
 
-    interface InvalidRequest extends SeedTrace.InvalidRequestResponse, _Utils {
+    export interface InvalidRequest extends SeedTrace.InvalidRequestResponse, _Utils {
         type: "invalidRequest";
     }
 
-    interface Finished extends SeedTrace.FinishedResponse, _Utils {
+    export interface Finished extends SeedTrace.FinishedResponse, _Utils {
         type: "finished";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -166,6 +166,9 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 }
 
 func (s Shape) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	if s.Circle != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	}
@@ -188,6 +191,40 @@ func (s *Shape) Accept(visitor ShapeVisitor) error {
 		return visitor.VisitSquare(s.Square)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *Shape) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Circle != nil {
+		fields = append(fields, "circle")
+	}
+	if s.Square != nil {
+		fields = append(fields, "square")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type Square struct {

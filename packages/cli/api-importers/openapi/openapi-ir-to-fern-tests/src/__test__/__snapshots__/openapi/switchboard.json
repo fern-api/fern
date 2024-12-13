@@ -143,6 +143,7 @@
               "partial_success",
               "failure",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -588,6 +589,7 @@
               "running",
               "ended",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -707,6 +709,7 @@ types:
       - success
       - partial_success
       - failure
+    inline: true
     source:
       openapi: ../openapi.yml
   ExternalSessionAiResponseMetadata:
@@ -990,6 +993,7 @@ types:
       - running
       - ended
     docs: Status of the session
+    inline: true
     source:
       openapi: ../openapi.yml
   StatusMessage:
@@ -2376,6 +2380,7 @@ service:
               "running",
               "ended",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

@@ -10,23 +10,23 @@ export type ProblemDescriptionBoard =
     | SeedTrace.ProblemDescriptionBoard.TestCaseId
     | SeedTrace.ProblemDescriptionBoard._Unknown;
 
-export declare namespace ProblemDescriptionBoard {
-    interface Html extends _Utils {
+export namespace ProblemDescriptionBoard {
+    export interface Html extends _Utils {
         type: "html";
         value: string;
     }
 
-    interface Variable extends _Utils {
+    export interface Variable extends _Utils {
         type: "variable";
         value: SeedTrace.VariableValue;
     }
 
-    interface TestCaseId extends _Utils {
+    export interface TestCaseId extends _Utils {
         type: "testCaseId";
         value: string;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

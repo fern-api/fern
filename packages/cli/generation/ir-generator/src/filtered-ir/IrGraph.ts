@@ -257,6 +257,7 @@ export class IrGraph {
                     }
                 },
                 text: noop,
+                bytes: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
                 }

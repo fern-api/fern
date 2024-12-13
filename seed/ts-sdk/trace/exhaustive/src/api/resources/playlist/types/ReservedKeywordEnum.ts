@@ -3,7 +3,6 @@
  */
 
 export type ReservedKeywordEnum = "is" | "as";
-
 export const ReservedKeywordEnum = {
     Is: "is",
     As: "as",
@@ -19,7 +18,7 @@ export const ReservedKeywordEnum = {
     },
 } as const;
 
-export declare namespace ReservedKeywordEnum {
+export namespace ReservedKeywordEnum {
     interface Visitor<R> {
         is: () => R;
         as: () => R;

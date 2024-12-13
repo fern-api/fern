@@ -249,12 +249,6 @@ func TestTime(t *testing.T) {
 	})
 
 	t.Run("union (optional)", func(t *testing.T) {
-		empty := union.NewUnionWithOptionalTimeFromDate(nil)
-
-		emptyBytes, err := json.Marshal(empty)
-		require.NoError(t, err)
-		assert.Equal(t, `{"type":"date"}`, string(emptyBytes))
-
 		value := union.NewUnionWithOptionalTimeFromDate(&date)
 
 		bytes, err := json.Marshal(value)

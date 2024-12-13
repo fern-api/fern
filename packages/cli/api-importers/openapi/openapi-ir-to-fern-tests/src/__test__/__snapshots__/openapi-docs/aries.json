@@ -427,6 +427,7 @@
                 "value": "present-proof",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -628,6 +629,7 @@
               "manual",
               "auto",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -644,6 +646,7 @@
                 "value": "didexchange/1.0",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -655,6 +658,7 @@
               "multi",
               "static",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -667,6 +671,7 @@
               "active",
               "error",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -679,6 +684,7 @@
               "inviter",
               "responder",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -865,6 +871,7 @@
               "allowed",
               "disallowed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -875,6 +882,7 @@
               "allowed",
               "disallowed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -885,6 +893,7 @@
               "allowed",
               "disallowed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -895,6 +904,7 @@
               "required",
               "preferred",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -954,6 +964,7 @@
               "managed",
               "unmanaged",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1700,6 +1711,7 @@
               "ed25519",
               "bls12381g2",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1710,6 +1722,7 @@
               "ed25519",
               "bls12381g2",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1721,6 +1734,7 @@
               "posted",
               "wallet_only",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2012,6 +2026,7 @@
               "USER",
               "ROLE_REMOVE",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2428,6 +2443,7 @@
               "GE",
               "GT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2596,6 +2612,7 @@
                 "value": ">",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2919,6 +2936,7 @@
                 "value": ">",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3765,6 +3783,7 @@
               "add",
               "remove",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4259,6 +4278,7 @@
               "sender",
               "receiver",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4286,6 +4306,7 @@
               "done",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4481,6 +4502,7 @@
                 "value": "goal-code",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5051,6 +5073,7 @@
               "TRANSACTION_ENDORSER",
               "reset",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5062,6 +5085,7 @@
               "TRANSACTION_ENDORSER",
               "reset",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5463,6 +5487,7 @@
               "self",
               "external",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5490,6 +5515,7 @@
               "holder",
               "issuer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5668,6 +5694,7 @@
               "self",
               "external",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5707,6 +5734,7 @@
               "prover",
               "verifier",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5717,6 +5745,7 @@
               "true",
               "false",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6062,6 +6091,7 @@
               "self",
               "external",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6130,6 +6160,7 @@
               "issuer",
               "holder",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6177,6 +6208,7 @@
               "abandoned",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6680,6 +6712,7 @@
               "self",
               "external",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6715,6 +6748,7 @@
               "prover",
               "verifier",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6750,6 +6784,7 @@
               "abandoned",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6760,6 +6795,7 @@
               "true",
               "false",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7042,6 +7078,7 @@
               "managed",
               "unmanaged",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7072,6 +7109,7 @@
               "required",
               "preferred",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7082,6 +7120,7 @@
               "ISSUANCE_ON_DEMAND",
               "ISSUANCE_BY_DEFAULT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7116,6 +7155,7 @@
               "required",
               "preferred",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7134,6 +7174,7 @@
               "all",
               "pick",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7394,6 +7435,7 @@ types:
       - value: present-proof
         name: PresentProof
     docs: Attachment type
+    inline: true
     source:
       openapi: ../openapi.yml
   AttachmentDef:
@@ -7464,6 +7506,7 @@ types:
       - manual
       - auto
     docs: 'Connection acceptance: manual or auto'
+    inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordConnectionProtocol:
@@ -7473,6 +7516,7 @@ types:
       - value: didexchange/1.0
         name: Didexchange10
     docs: Connection protocol used
+    inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordInvitationMode:
@@ -7481,6 +7525,7 @@ types:
       - multi
       - static
     docs: Invitation mode
+    inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordRoutingState:
@@ -7490,6 +7535,7 @@ types:
       - active
       - error
     docs: Routing state of connection
+    inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordTheirRole:
@@ -7499,6 +7545,7 @@ types:
       - inviter
       - responder
     docs: Their role in the connection protocol
+    inline: true
     source:
       openapi: ../openapi.yml
   ConnRecord:
@@ -7675,6 +7722,7 @@ types:
       - required
       - allowed
       - disallowed
+    inline: true
     source:
       openapi: ../openapi.yml
   ConstraintsStatusRevoked:
@@ -7682,6 +7730,7 @@ types:
       - required
       - allowed
       - disallowed
+    inline: true
     source:
       openapi: ../openapi.yml
   ConstraintsStatusSuspended:
@@ -7689,6 +7738,7 @@ types:
       - required
       - allowed
       - disallowed
+    inline: true
     source:
       openapi: ../openapi.yml
   ConstraintsSubjectIsIssuer:
@@ -7696,6 +7746,7 @@ types:
       - required
       - preferred
     docs: SubjectIsIssuer
+    inline: true
     source:
       openapi: ../openapi.yml
   Constraints:
@@ -7723,6 +7774,7 @@ types:
       - managed
       - unmanaged
     docs: Mode regarding management of wallet key
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateWalletResponseSettings:
@@ -8044,6 +8096,7 @@ types:
       - ed25519
       - bls12381g2
     docs: Key type associated with the DID
+    inline: true
     source:
       openapi: ../openapi.yml
   DidPosture:
@@ -8054,6 +8107,7 @@ types:
     docs: >-
       Whether DID is current public DID, posted to ledger but not current public
       DID, or local to the wallet
+    inline: true
     source:
       openapi: ../openapi.yml
   DID:
@@ -8090,6 +8144,7 @@ types:
     docs: >-
       Key type to use for the DID keypair. Validated with the chosen DID
       method's supported key types.
+    inline: true
     source:
       openapi: ../openapi.yml
   DIDCreateOptions:
@@ -8143,6 +8198,7 @@ types:
       - required
       - preferred
     docs: Preference
+    inline: true
     source:
       openapi: ../openapi.yml
   DIFField:
@@ -8167,6 +8223,7 @@ types:
       - required
       - preferred
     docs: Preference
+    inline: true
     source:
       openapi: ../openapi.yml
   DIFHolder:
@@ -8392,6 +8449,7 @@ types:
       - USER
       - ROLE_REMOVE
     docs: Ledger role
+    inline: true
     source:
       openapi: ../openapi.yml
   GetNymRoleResponse:
@@ -8630,6 +8688,7 @@ types:
       - GE
       - GT
     docs: Predicate type
+    inline: true
     source:
       openapi: ../openapi.yml
   IndyGEProofPred:
@@ -8716,6 +8775,7 @@ types:
       - value: '>'
         name: GreaterThan
     docs: Predicate type ('<', '<=', '>=', or '>')
+    inline: true
     source:
       openapi: ../openapi.yml
   IndyPresPredSpec:
@@ -8884,6 +8944,7 @@ types:
       - value: '>'
         name: GreaterThan
     docs: Predicate type ('<', '<=', '>=', or '>')
+    inline: true
     source:
       openapi: ../openapi.yml
   IndyProofReqPredSpec:
@@ -9082,6 +9143,7 @@ types:
       - ISSUANCE_ON_DEMAND
       - ISSUANCE_BY_DEFAULT
     docs: Issuance type
+    inline: true
     source:
       openapi: ../openapi.yml
   IndyRevRegDefValue:
@@ -9428,6 +9490,7 @@ types:
       - add
       - remove
     docs: Action for specific key
+    inline: true
     source:
       openapi: ../openapi.yml
   KeylistUpdateRule:
@@ -9721,6 +9784,7 @@ types:
       - sender
       - receiver
     docs: OOB Role
+    inline: true
     source:
       openapi: ../openapi.yml
   OobRecordState:
@@ -9737,6 +9801,7 @@ types:
       - done
       - deleted
     docs: Out of band message exchange state
+    inline: true
     source:
       openapi: ../openapi.yml
   OobRecord:
@@ -9893,6 +9958,7 @@ types:
       - value: goal-code
         name: GoalCode
     docs: feature type
+    inline: true
     source:
       openapi: ../openapi.yml
   QueryItem:
@@ -10147,6 +10213,7 @@ types:
       - all
       - pick
     docs: Selection
+    inline: true
     source:
       openapi: ../openapi.yml
   SubmissionRequirements:
@@ -10226,6 +10293,7 @@ types:
       - TRANSACTION_ENDORSER
       - reset
     docs: My transaction related job
+    inline: true
     source:
       openapi: ../openapi.yml
   TransactionJobsTransactionTheirJob:
@@ -10234,6 +10302,7 @@ types:
       - TRANSACTION_ENDORSER
       - reset
     docs: Their transaction related job
+    inline: true
     source:
       openapi: ../openapi.yml
   TransactionJobs:
@@ -10381,6 +10450,7 @@ types:
       - self
       - external
     docs: 'Issue-credential exchange initiator: self or external'
+    inline: true
     source:
       openapi: ../openapi.yml
   V10CredentialExchangeRole:
@@ -10388,6 +10458,7 @@ types:
       - holder
       - issuer
     docs: 'Issue-credential exchange role: holder or issuer'
+    inline: true
     source:
       openapi: ../openapi.yml
   V10CredentialExchange:
@@ -10536,6 +10607,7 @@ types:
       - self
       - external
     docs: 'Present-proof exchange initiator: self or external'
+    inline: true
     source:
       openapi: ../openapi.yml
   V10PresentationExchangeRole:
@@ -10543,6 +10615,7 @@ types:
       - prover
       - verifier
     docs: 'Present-proof exchange role: prover or verifier'
+    inline: true
     source:
       openapi: ../openapi.yml
   V10PresentationExchangeVerified:
@@ -10550,6 +10623,7 @@ types:
       - 'true'
       - 'false'
     docs: 'Whether presentation is verified: true or false'
+    inline: true
     source:
       openapi: ../openapi.yml
   V10PresentationExchange:
@@ -10664,6 +10738,7 @@ types:
       - self
       - external
     docs: 'Issue-credential exchange initiator: self or external'
+    inline: true
     source:
       openapi: ../openapi.yml
   V20CredExRecordRole:
@@ -10671,6 +10746,7 @@ types:
       - issuer
       - holder
     docs: 'Issue-credential exchange role: holder or issuer'
+    inline: true
     source:
       openapi: ../openapi.yml
   V20CredExRecordState:
@@ -10697,6 +10773,7 @@ types:
       - abandoned
       - deleted
     docs: Issue-credential exchange state
+    inline: true
     source:
       openapi: ../openapi.yml
   V20CredExRecord:
@@ -11118,6 +11195,7 @@ types:
       - self
       - external
     docs: 'Present-proof exchange initiator: self or external'
+    inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecordRole:
@@ -11125,6 +11203,7 @@ types:
       - prover
       - verifier
     docs: 'Present-proof exchange role: prover or verifier'
+    inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecordState:
@@ -11145,6 +11224,7 @@ types:
       - abandoned
       - deleted
     docs: Present-proof exchange state
+    inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecordVerified:
@@ -11152,6 +11232,7 @@ types:
       - 'true'
       - 'false'
     docs: 'Whether presentation is verified: ''true'' or ''false'''
+    inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecord:
@@ -11374,6 +11455,7 @@ types:
       - managed
       - unmanaged
     docs: Mode regarding management of wallet key
+    inline: true
     source:
       openapi: ../openapi.yml
   WalletRecordSettings:
@@ -13036,6 +13118,7 @@ docs: Simple messaging
                 "value": "didexchange/1.0",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13052,6 +13135,7 @@ docs: Simple messaging
               "active",
               "completed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13063,6 +13147,7 @@ docs: Simple messaging
               "inviter",
               "responder",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16700,6 +16785,7 @@ docs: Feature discovery v2
               "TRANSACTION_ENDORSER",
               "reset",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18414,6 +18500,7 @@ docs: Introduction of known parties
               "issuer",
               "holder",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18432,6 +18519,7 @@ docs: Introduction of known parties
               "credential_revoked",
               "abandoned",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20316,6 +20404,7 @@ types:
               "issuer",
               "holder",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20361,6 +20450,7 @@ types:
               },
               "abandoned",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21702,6 +21792,7 @@ docs: Sign and verify json-ld data
               "Profile",
               "LinkedDomains",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21714,6 +21805,7 @@ docs: Sign and verify json-ld data
               "NETWORK_MONITOR",
               "reset",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -22787,6 +22879,7 @@ docs: Interaction with ledger
               "client",
               "server",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -22797,6 +22890,7 @@ docs: Interaction with ledger
               "granted",
               "denied",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -23724,6 +23818,7 @@ types:
               "both",
               "base",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -23735,6 +23830,7 @@ types:
               "ARGON2I_INT",
               "RAW",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -23746,6 +23842,7 @@ types:
               "in_memory",
               "indy",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -23757,6 +23854,7 @@ types:
               "both",
               "base",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -23774,6 +23872,7 @@ types:
       Dispatch only to webhooks associated with this wallet.             base -
       Dispatch only to webhooks associated with the base wallet.            
       both - Dispatch to both webhook targets.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateWalletRequestWalletKeyDerivation:
@@ -23782,6 +23881,7 @@ types:
       - ARGON2I_INT
       - RAW
     docs: Key derivation
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateWalletRequestWalletType:
@@ -23790,6 +23890,7 @@ types:
       - in_memory
       - indy
     docs: Type of the wallet to create
+    inline: true
     source:
       openapi: ../openapi.yml
   UpdateWalletRequestWalletDispatchType:
@@ -23802,6 +23903,7 @@ types:
       Dispatch only to webhooks associated with this wallet.             base -
       Dispatch only to webhooks associated with the base wallet.            
       both - Dispatch to both webhook targets.
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -25546,6 +25648,7 @@ docs: Out-of-band connections
               "prover",
               "verifier",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -25562,6 +25665,7 @@ docs: Out-of-band connections
               "presentation_acked",
               "abandoned",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -26906,6 +27010,7 @@ types:
               "prover",
               "verifier",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -26939,6 +27044,7 @@ types:
               "done",
               "abandoned",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -28633,6 +28739,7 @@ docs: did resolver interface.
               "active",
               "full",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -28643,6 +28750,7 @@ docs: did resolver interface.
               "v1_0",
               "v2_0",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -28655,6 +28763,7 @@ docs: did resolver interface.
               "active",
               "full",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -29406,6 +29515,7 @@ types:
       - v1_0
       - v2_0
     docs: Specify which version of the revocation notification should be sent
+    inline: true
     source:
       openapi: ../openapi.yml
 ",
@@ -30609,6 +30719,7 @@ docs: Trust-ping over connection
               "Profile",
               "LinkedDomains",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30618,6 +30729,7 @@ docs: Trust-ping over connection
               "ed25519",
               "bls12381g2",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30627,6 +30739,7 @@ docs: Trust-ping over connection
               "key",
               "sov",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30637,6 +30750,7 @@ docs: Trust-ping over connection
               "posted",
               "wallet_only",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30671,6 +30785,7 @@ docs: Trust-ping over connection
     docs: >-
       Endpoint type to set (default 'Endpoint'); affects only public or posted
       DIDs
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:

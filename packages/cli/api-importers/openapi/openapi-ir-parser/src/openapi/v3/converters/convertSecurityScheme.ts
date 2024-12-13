@@ -101,7 +101,8 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             wrapAsNullable: false,
             groupName: undefined,
             context: undefined,
-            source
+            source,
+            inline: undefined
         });
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (schema.type === "enum") {

@@ -23,9 +23,9 @@ export declare namespace SeedNurseryApiClient {
 }
 
 export class SeedNurseryApiClient {
-    constructor(protected readonly _options: SeedNurseryApiClient.Options) {}
-
     protected _package: Package | undefined;
+
+    constructor(protected readonly _options: SeedNurseryApiClient.Options) {}
 
     public get package(): Package {
         return (this._package ??= new Package(this._options));

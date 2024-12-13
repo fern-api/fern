@@ -725,6 +725,7 @@ types:
               "contact",
               "user",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -737,6 +738,7 @@ types:
       - contact
       - user
     docs: 'Type of the contact: contact (lead) or user.'
+    inline: true
     source:
       openapi: ../openapi.yml
   Segment:

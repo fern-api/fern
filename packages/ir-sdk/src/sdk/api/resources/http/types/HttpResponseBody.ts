@@ -8,6 +8,7 @@ export type HttpResponseBody =
     | FernIr.HttpResponseBody.Json
     | FernIr.HttpResponseBody.FileDownload
     | FernIr.HttpResponseBody.Text
+    | FernIr.HttpResponseBody.Bytes
     | FernIr.HttpResponseBody.Streaming
     /**
      * If there is a parameter that controls whether the response is streaming or not. Note
@@ -29,6 +30,10 @@ export declare namespace HttpResponseBody {
         type: "text";
     }
 
+    interface Bytes extends FernIr.BytesResponse, _Utils {
+        type: "bytes";
+    }
+
     interface Streaming extends _Utils {
         type: "streaming";
         value: FernIr.StreamingResponse;
@@ -46,6 +51,7 @@ export declare namespace HttpResponseBody {
         json: (value: FernIr.JsonResponse) => _Result;
         fileDownload: (value: FernIr.FileDownloadResponse) => _Result;
         text: (value: FernIr.TextResponse) => _Result;
+        bytes: (value: FernIr.BytesResponse) => _Result;
         streaming: (value: FernIr.StreamingResponse) => _Result;
         streamParameter: (value: FernIr.StreamParameterResponse) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -92,6 +98,19 @@ export const HttpResponseBody = {
         };
     },
 
+    bytes: (value: FernIr.BytesResponse): FernIr.HttpResponseBody.Bytes => {
+        return {
+            ...value,
+            type: "bytes",
+            _visit: function <_Result>(
+                this: FernIr.HttpResponseBody.Bytes,
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+            ) {
+                return FernIr.HttpResponseBody._visit(this, visitor);
+            },
+        };
+    },
+
     streaming: (value: FernIr.StreamingResponse): FernIr.HttpResponseBody.Streaming => {
         return {
             value: value,
@@ -126,6 +145,8 @@ export const HttpResponseBody = {
                 return visitor.fileDownload(value);
             case "text":
                 return visitor.text(value);
+            case "bytes":
+                return visitor.bytes(value);
             case "streaming":
                 return visitor.streaming(value.value);
             case "streamParameter":

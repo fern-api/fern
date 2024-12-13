@@ -9,18 +9,18 @@ export type CreateProblemResponse =
     | SeedTrace.CreateProblemResponse.Error_
     | SeedTrace.CreateProblemResponse._Unknown;
 
-export declare namespace CreateProblemResponse {
-    interface Success extends _Utils {
+export namespace CreateProblemResponse {
+    export interface Success extends _Utils {
         type: "success";
         value: SeedTrace.ProblemId;
     }
 
-    interface Error_ extends _Utils {
+    export interface Error_ extends _Utils {
         type: "error";
         value: SeedTrace.CreateProblemError;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -24,9 +24,9 @@ export declare namespace SeedPaginationClient {
 }
 
 export class SeedPaginationClient {
-    constructor(protected readonly _options: SeedPaginationClient.Options) {}
-
     protected _users: Users | undefined;
+
+    constructor(protected readonly _options: SeedPaginationClient.Options) {}
 
     public get users(): Users {
         return (this._users ??= new Users(this._options));

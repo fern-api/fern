@@ -247,7 +247,8 @@ export function getSchemaFromFernType({
                           availability,
                           groupName,
                           encoding: undefined,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             list: (itemType) =>
@@ -260,7 +261,8 @@ export function getSchemaFromFernType({
                           description,
                           availability,
                           groupName,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             optional: (itemType) =>
@@ -272,7 +274,8 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
-                          groupName
+                          groupName,
+                          inline: undefined
                       })
                     : undefined,
             set: (itemType) =>
@@ -285,7 +288,8 @@ export function getSchemaFromFernType({
                           description,
                           availability,
                           groupName,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             literal: (literal) =>

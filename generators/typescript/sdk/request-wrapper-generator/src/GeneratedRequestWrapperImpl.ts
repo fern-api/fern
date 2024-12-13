@@ -1,7 +1,8 @@
-import { noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
     FileProperty,
+    FileUploadRequest,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
@@ -10,14 +11,20 @@ import {
     InlinedRequestBody,
     InlinedRequestBodyProperty,
     NameAndWireValue,
+    NamedType,
+    ObjectProperty,
     QueryParameter,
+    TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import {
+    generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getTextOfTsNode,
-    maybeAddDocs,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
     PackageId,
+    TypeReferenceNode,
     visitJavaScriptRuntime
 } from "@fern-typescript/commons";
 import {
@@ -26,7 +33,17 @@ import {
     RequestWrapperNonBodyProperty,
     SdkContext
 } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import {
+    ModuleDeclarationKind,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    StatementStructures,
+    StructureKind,
+    ts,
+    TypeAliasDeclarationStructure,
+    WriterFunction
+} from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -38,6 +55,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -51,6 +69,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
     protected inlineFileProperties: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         service,
@@ -59,7 +78,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         packageId,
         includeSerdeLayer,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        enableInlineTypes
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -68,6 +88,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -92,7 +113,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 ),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, queryParameter.docs);
+            maybeAddDocsNode(property, queryParameter.docs);
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
@@ -101,7 +122,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             });
-            maybeAddDocs(property, header.docs);
+            maybeAddDocsNode(property, header.docs);
         }
         if (this.endpoint.requestBody != null) {
             HttpRequestBody._visit(this.endpoint.requestBody, {
@@ -110,7 +131,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         inlinedRequestBody,
                         context
                     })) {
-                        requestInterface.addProperty(this.getInlineProperty(property, context));
+                        requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context));
+                    }
+                    const iModule = this.generateModule(inlinedRequestBody, context);
+                    if (iModule) {
+                        context.sourceFile.addModule(iModule);
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
@@ -125,7 +150,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     });
-                    maybeAddDocs(property, referenceToRequestBody.docs);
+                    maybeAddDocsNode(property, referenceToRequestBody.docs);
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
@@ -141,7 +166,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
-                                requestInterface.addProperty(this.getInlineProperty(inlinedProperty, context));
+                                requestInterface.addProperty(
+                                    this.getInlineProperty(fileUploadRequest, inlinedProperty, context)
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -186,16 +213,47 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getInlineProperty(
+        requestBody: InlinedRequestBody | FileUploadRequest,
         property: InlinedRequestBodyProperty,
         context: SdkContext
     ): OptionalKind<PropertySignatureStructure> {
-        const type = context.type.getReferenceToType(property.valueType);
+        const type = this.getTypeForBodyProperty(requestBody, property, context);
         return {
             name: `"${this.getInlinedRequestBodyPropertyKey(property)}"`,
             type: getTextOfTsNode(type.typeNodeWithoutUndefined),
             hasQuestionToken: type.isOptional,
             docs: property.docs != null ? [property.docs] : undefined
         };
+    }
+
+    private getTypeForBodyProperty(
+        requestBody: InlinedRequestBody | FileUploadRequest,
+        property: InlinedRequestBodyProperty,
+        context: SdkContext
+    ): TypeReferenceNode {
+        const propParentTypeName = requestBody.name.pascalCase.safeName;
+        const propName = property.name.name.pascalCase.safeName;
+        return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName);
+    }
+
+    private generateModule(
+        inlinedRequestBody: InlinedRequestBody,
+        context: SdkContext
+    ): ModuleDeclarationStructure | undefined {
+        if (!this.enableInlineTypes) {
+            return undefined;
+        }
+
+        return generateInlinePropertiesModule({
+            parentTypeName: this.wrapperName,
+            properties: inlinedRequestBody.properties.map((prop) => ({
+                propertyName: prop.name.name.pascalCase.safeName,
+                typeReference: prop.valueType
+            })),
+            generateStatements: (typeName, typeNameOverride) =>
+                context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+            getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+        });
     }
 
     public areBodyPropertiesInlined(): boolean {
@@ -496,5 +554,60 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+    }
+}
+function generateTypeVisitor<TOut>(
+    typeReference: TypeReference,
+    visitor: {
+        named: () => TOut;
+        list: () => TOut;
+        map: () => TOut;
+        set: () => TOut;
+        other: () => TOut;
+    }
+): TOut {
+    return typeReference._visit({
+        named: visitor.named,
+        primitive: visitor.other,
+        unknown: visitor.other,
+        container: (containerType) =>
+            containerType._visit({
+                list: visitor.list,
+                literal: visitor.other,
+                map: visitor.map,
+                set: visitor.set,
+                optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                _other: visitor.other
+            }),
+        _other: visitor.other
+    });
+}
+
+function getNamedType(typeReference: TypeReference): NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    assertNever(typeReference.container);
+            }
+        // fallthrough
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            assertNever(typeReference);
     }
 }

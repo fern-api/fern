@@ -28,15 +28,14 @@ export declare namespace SeedMultiUrlEnvironmentClient {
 }
 
 export class SeedMultiUrlEnvironmentClient {
-    constructor(protected readonly _options: SeedMultiUrlEnvironmentClient.Options) {}
-
     protected _ec2: Ec2 | undefined;
+    protected _s3: S3 | undefined;
+
+    constructor(protected readonly _options: SeedMultiUrlEnvironmentClient.Options) {}
 
     public get ec2(): Ec2 {
         return (this._ec2 ??= new Ec2(this._options));
     }
-
-    protected _s3: S3 | undefined;
 
     public get s3(): S3 {
         return (this._s3 ??= new S3(this._options));

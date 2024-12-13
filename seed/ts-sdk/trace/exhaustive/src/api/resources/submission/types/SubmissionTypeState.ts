@@ -9,16 +9,16 @@ export type SubmissionTypeState =
     | SeedTrace.SubmissionTypeState.Workspace
     | SeedTrace.SubmissionTypeState._Unknown;
 
-export declare namespace SubmissionTypeState {
-    interface Test extends SeedTrace.TestSubmissionState, _Utils {
+export namespace SubmissionTypeState {
+    export interface Test extends SeedTrace.TestSubmissionState, _Utils {
         type: "test";
     }
 
-    interface Workspace extends SeedTrace.WorkspaceSubmissionState, _Utils {
+    export interface Workspace extends SeedTrace.WorkspaceSubmissionState, _Utils {
         type: "workspace";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

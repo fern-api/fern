@@ -8,13 +8,13 @@ export type PlaylistIdNotFoundErrorBody =
     | SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId
     | SeedTrace.PlaylistIdNotFoundErrorBody._Unknown;
 
-export declare namespace PlaylistIdNotFoundErrorBody {
-    interface PlaylistId extends _Utils {
+export namespace PlaylistIdNotFoundErrorBody {
+    export interface PlaylistId extends _Utils {
         type: "playlistId";
         value: SeedTrace.PlaylistId;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

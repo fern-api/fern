@@ -59,7 +59,7 @@ type Foo struct {
 
 func (f *Foo) GetId() uuid.UUID {
 	if f == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return f.Id
 }

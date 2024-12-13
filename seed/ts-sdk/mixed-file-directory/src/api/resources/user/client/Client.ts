@@ -27,7 +27,13 @@ export declare namespace User {
 }
 
 export class User {
+    protected _events: Events | undefined;
+
     constructor(protected readonly _options: User.Options) {}
+
+    public get events(): Events {
+        return (this._events ??= new Events(this._options));
+    }
 
     /**
      * List all users.
@@ -98,11 +104,5 @@ export class User {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _events: Events | undefined;
-
-    public get events(): Events {
-        return (this._events ??= new Events(this._options));
     }
 }

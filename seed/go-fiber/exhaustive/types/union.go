@@ -72,6 +72,9 @@ func (a *Animal) UnmarshalJSON(data []byte) error {
 }
 
 func (a Animal) MarshalJSON() ([]byte, error) {
+	if err := a.validate(); err != nil {
+		return nil, err
+	}
 	switch a.Animal {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Animal, a)
@@ -96,6 +99,40 @@ func (a *Animal) Accept(visitor AnimalVisitor) error {
 	case "cat":
 		return visitor.VisitCat(a.Cat)
 	}
+}
+
+func (a *Animal) validate() error {
+	if a == nil {
+		return fmt.Errorf("type %T is nil", a)
+	}
+	var fields []string
+	if a.Dog != nil {
+		fields = append(fields, "dog")
+	}
+	if a.Cat != nil {
+		fields = append(fields, "cat")
+	}
+	if len(fields) == 0 {
+		if a.Animal != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", a, a.Animal)
+		}
+		return fmt.Errorf("type %T is empty", a)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", a, fields)
+	}
+	if a.Animal != "" {
+		field := fields[0]
+		if a.Animal != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				a,
+				a.Animal,
+				a,
+			)
+		}
+	}
+	return nil
 }
 
 type Cat struct {

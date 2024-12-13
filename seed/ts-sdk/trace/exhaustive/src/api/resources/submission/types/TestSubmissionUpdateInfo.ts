@@ -13,34 +13,34 @@ export type TestSubmissionUpdateInfo =
     | SeedTrace.TestSubmissionUpdateInfo.Finished
     | SeedTrace.TestSubmissionUpdateInfo._Unknown;
 
-export declare namespace TestSubmissionUpdateInfo {
-    interface Running extends _Utils {
+export namespace TestSubmissionUpdateInfo {
+    export interface Running extends _Utils {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Stopped extends _Utils {
+    export interface Stopped extends _Utils {
         type: "stopped";
     }
 
-    interface Errored extends _Utils {
+    export interface Errored extends _Utils {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate, _Utils {
+    export interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate, _Utils {
         type: "gradedTestCase";
     }
 
-    interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate, _Utils {
+    export interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate, _Utils {
         type: "recordedTestCase";
     }
 
-    interface Finished extends _Utils {
+    export interface Finished extends _Utils {
         type: "finished";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

@@ -32,9 +32,9 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
 }
 
 export class SeedAuthEnvironmentVariablesClient {
-    constructor(protected readonly _options: SeedAuthEnvironmentVariablesClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedAuthEnvironmentVariablesClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

@@ -126,7 +126,8 @@ export function convertParameters({
                       }),
                       description: undefined,
                       availability,
-                      groupName: undefined
+                      groupName: undefined,
+                      inline: undefined
                   });
         if (
             resolvedParameter.in === "header" &&

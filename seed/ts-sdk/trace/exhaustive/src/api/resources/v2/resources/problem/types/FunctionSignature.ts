@@ -12,20 +12,20 @@ export type FunctionSignature =
     | SeedTrace.v2.FunctionSignature.VoidThatTakesActualResult
     | SeedTrace.v2.FunctionSignature._Unknown;
 
-export declare namespace FunctionSignature {
-    interface Void extends SeedTrace.v2.VoidFunctionSignature, _Utils {
+export namespace FunctionSignature {
+    export interface Void extends SeedTrace.v2.VoidFunctionSignature, _Utils {
         type: "void";
     }
 
-    interface NonVoid extends SeedTrace.v2.NonVoidFunctionSignature, _Utils {
+    export interface NonVoid extends SeedTrace.v2.NonVoidFunctionSignature, _Utils {
         type: "nonVoid";
     }
 
-    interface VoidThatTakesActualResult extends SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult, _Utils {
+    export interface VoidThatTakesActualResult extends SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult, _Utils {
         type: "voidThatTakesActualResult";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

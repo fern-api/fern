@@ -6,16 +6,16 @@ import * as Fiddle from "../../../../../index";
 
 export type Animal = Fiddle.types.Animal.Dog | Fiddle.types.Animal.Cat | Fiddle.types.Animal._Unknown;
 
-export declare namespace Animal {
-    interface Dog extends Fiddle.types.Dog, _Utils {
+export namespace Animal {
+    export interface Dog extends Fiddle.types.Dog, _Utils {
         animal: "dog";
     }
 
-    interface Cat extends Fiddle.types.Cat, _Utils {
+    export interface Cat extends Fiddle.types.Cat, _Utils {
         animal: "cat";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         animal: void;
     }
 

@@ -108,7 +108,8 @@ export function convertObject({
                                             value: property.schema,
                                             description: undefined,
                                             availability: property.availability,
-                                            groupName: undefined
+                                            groupName: undefined,
+                                            inline: undefined
                                         })
                                     };
                                 }
@@ -195,7 +196,8 @@ export function convertObject({
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
-                      groupName
+                      groupName,
+                      inline: undefined
                   });
 
             const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
@@ -304,11 +306,13 @@ export function wrapObject({
                 fullExamples,
                 additionalProperties: isAdditionalPropertiesAny(additionalProperties),
                 availability: undefined,
-                source
+                source,
+                inline: undefined
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.object({
@@ -323,7 +327,8 @@ export function wrapObject({
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties),
         availability,
-        source
+        source,
+        inline: undefined
     });
 }
 

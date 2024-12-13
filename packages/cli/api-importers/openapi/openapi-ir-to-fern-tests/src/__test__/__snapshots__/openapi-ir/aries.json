@@ -35699,6 +35699,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "AttributeMimeTypesResultResults",
@@ -35958,6 +35959,7 @@
                   },
                   "generatedName": "ClearPendingRevocationsRequestPurgeValue",
                   "groupName": [],
+                  "inline": true,
                   "type": "array"
                 },
                 "generatedName": "ClearPendingRevocationsRequestPurge",
@@ -45478,6 +45480,7 @@
                       },
                       "type": "reference"
                     },
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
@@ -45526,6 +45529,7 @@
                       },
                       "type": "reference"
                     },
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrs",
@@ -51490,6 +51494,7 @@
                   },
                   "generatedName": "PublishRevocationsRrid2CridValue",
                   "groupName": [],
+                  "inline": true,
                   "type": "array"
                 },
                 "generatedName": "PublishRevocationsRrid2Crid",

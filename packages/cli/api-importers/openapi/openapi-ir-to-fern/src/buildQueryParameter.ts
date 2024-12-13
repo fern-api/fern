@@ -108,7 +108,8 @@ function getQueryParameterTypeReference({
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: undefined
                     }),
                     context,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
@@ -161,7 +162,8 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: undefined
                             }),
                             context,
                             fileContainingReference,
@@ -185,7 +187,8 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: undefined
                             }),
                             context,
                             fileContainingReference,
@@ -236,7 +239,8 @@ function getQueryParameterTypeReference({
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             availability: schema.availability,
-                            groupName: undefined
+                            groupName: undefined,
+                            inline: schema.inline
                         }),
                         context,
                         fileContainingReference,
@@ -270,7 +274,8 @@ function getQueryParameterTypeReference({
                         value: schema.value.value,
                         description: schema.description,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: schema.inline
                     }),
                     context,
                     fileContainingReference,
@@ -322,7 +327,8 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: schema.inline
                             }),
                             context,
                             fileContainingReference,
@@ -346,7 +352,8 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: schema.inline
                             }),
                             context,
                             fileContainingReference,
@@ -368,7 +375,8 @@ function getQueryParameterTypeReference({
                         value: oneOfSchema,
                         description: undefined,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: schema.inline
                     }),
                     context,
                     fileContainingReference,
@@ -413,7 +421,8 @@ function getQueryParameterTypeReference({
                     value: schema.value,
                     description: schema.description,
                     availability: schema.availability,
-                    groupName: undefined
+                    groupName: undefined,
+                    inline: schema.inline
                 }),
                 context,
                 fileContainingReference,

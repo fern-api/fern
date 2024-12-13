@@ -29,6 +29,8 @@ export declare namespace SeedAnyAuthClient {
 
 export class SeedAnyAuthClient {
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected _auth: Auth | undefined;
+    protected _user: User | undefined;
 
     constructor(protected readonly _options: SeedAnyAuthClient.Options) {
         const clientId = this._options.clientId ?? process.env["MY_CLIENT_ID"];
@@ -54,16 +56,12 @@ export class SeedAnyAuthClient {
         });
     }
 
-    protected _auth: Auth | undefined;
-
     public get auth(): Auth {
         return (this._auth ??= new Auth({
             ...this._options,
             token: async () => await this._oauthTokenProvider.getToken(),
         }));
     }
-
-    protected _user: User | undefined;
 
     public get user(): User {
         return (this._user ??= new User({

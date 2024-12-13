@@ -10,22 +10,22 @@ export type ActualResult =
     | SeedTrace.ActualResult.ExceptionV2
     | SeedTrace.ActualResult._Unknown;
 
-export declare namespace ActualResult {
-    interface Value extends _Utils {
+export namespace ActualResult {
+    export interface Value extends _Utils {
         type: "value";
         value: SeedTrace.VariableValue;
     }
 
-    interface Exception extends SeedTrace.ExceptionInfo, _Utils {
+    export interface Exception extends SeedTrace.ExceptionInfo, _Utils {
         type: "exception";
     }
 
-    interface ExceptionV2 extends _Utils {
+    export interface ExceptionV2 extends _Utils {
         type: "exceptionV2";
         value: SeedTrace.ExceptionV2;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 

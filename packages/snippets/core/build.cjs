@@ -1,26 +1,45 @@
+const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
+const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
 const packageJson = require("./package.json");
 const tsup = require('tsup');
-const { writeFile, rename } = require("fs/promises");
+const { writeFile, mkdir } = require("fs/promises");
 const path = require("path");
 
 main();
 
 async function main() {
-    await tsup.build({
+    const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
-        format: ['cjs'],
-        clean: true,
+        target: "es2017",
         minify: true,
         dts: true,
-        outDir: 'dist',
-        target: "es2017",
+        esbuildPlugins: [
+            NodeModulesPolyfillPlugin(),
+            NodeGlobalsPolyfillPlugin({
+                process: true,
+                buffer: true,
+                util: true
+            })
+        ],
         tsconfig: "./build.tsconfig.json"
+    };
+
+    await tsup.build({
+        ...config,
+        format: ['cjs'],
+        outDir: 'dist/cjs',
+        clean: true,
     });
 
-    process.chdir(path.join(__dirname, "dist"));
+    await tsup.build({
+        ...config,
+        format: ['esm'],
+        outDir: 'dist/esm',
+        clean: false,
+    });
 
-    // The module expects the imports defined in the index.d.ts file.
-    await rename("index.d.cts", "index.d.ts");
+    await mkdir(path.join(__dirname, "dist"), { recursive: true });
+    process.chdir(path.join(__dirname, "dist"));
 
     await writeFile(
         "package.json",
@@ -29,9 +48,26 @@ async function main() {
                 name: packageJson.name,
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
-                main: "index.cjs",
-                types: "index.d.ts",
-                files: ["index.cjs", "index.d.ts"]
+                type: "module",
+                exports: {
+                    // Conditional exports for ESM and CJS.
+                    "import": {
+                        "types": "./esm/index.d.ts",
+                        "default": "./esm/index.js"
+                    },
+                    "require": {
+                        "types": "./cjs/index.d.cts",
+                        "default": "./cjs/index.cjs"
+                    }
+                },
+                // Fallback for older tooling or direct imports.
+                main: "./cjs/index.cjs",
+                module: "./esm/index.js",
+                types: "./cjs/index.d.cts",
+                files: [
+                    "cjs",
+                    "esm"
+                ]
             },
             undefined,
             2

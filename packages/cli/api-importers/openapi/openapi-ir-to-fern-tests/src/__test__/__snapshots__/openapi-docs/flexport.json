@@ -1052,6 +1052,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1425,6 +1426,7 @@
               "requoted_quote",
               "archived_quote",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1464,6 +1466,7 @@
               "booked",
               "shipment",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1561,6 +1564,7 @@
               "contained_in_equipment",
               "contained_in_battery_powered_vehicles",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1634,6 +1638,7 @@
               "reviewed",
               "complete",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2034,6 +2039,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2131,6 +2137,7 @@
               "contained_in_equipment",
               "contained_in_battery_powered_vehicles",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2380,6 +2387,7 @@
               "DAP",
               "DDP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2392,6 +2400,7 @@
               "sub_line",
               "component_line",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2429,6 +2438,7 @@
               "gross_volume",
               "volume_weight",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2441,6 +2451,7 @@
               "truck",
               "rail",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2584,6 +2595,7 @@
               "YD",
               "Z3",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2647,6 +2659,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2764,6 +2777,7 @@
               "freight_collect",
               "freight_prepaid",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2783,6 +2797,7 @@
               "DAP",
               "DDP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2797,6 +2812,7 @@
               "delivery_order",
               "work_order",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2808,6 +2824,7 @@
               "high",
               "standard",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2820,6 +2837,7 @@
               "cancelled",
               "closed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2832,6 +2850,7 @@
               "truck",
               "rail",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2891,6 +2910,7 @@
               "buyers_agent",
               "sellers_agent",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2937,6 +2957,7 @@
               "icao",
               "us_cbp",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3026,6 +3047,7 @@
               "prs",
               "dpr",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3057,6 +3079,7 @@
               "collect",
               "prepaid",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3172,6 +3195,7 @@
               "customs_hold",
               "pending",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3222,6 +3246,7 @@
               "km",
               "mi",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3430,6 +3455,7 @@
               "terminal",
               "unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3462,6 +3488,7 @@
               "door_to_door",
               "door_to_port",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3656,6 +3683,7 @@
               "additional",
               "capital",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3711,6 +3739,7 @@
               "paid",
               "payment_pending",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3721,6 +3750,7 @@
               "Shipment",
               "Client",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3817,6 +3847,7 @@
               "cm",
               "in",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3827,6 +3858,7 @@
               "cm",
               "in",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3864,6 +3896,7 @@
               "gross_volume",
               "volume_weight",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4219,6 +4252,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4356,6 +4390,7 @@
               "buyers_agent",
               "sellers_agent",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4423,6 +4458,7 @@
                 "value": "/ocean/port",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4707,6 +4743,7 @@
               "freight_collect",
               "freight_prepaid",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4726,6 +4763,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4858,6 +4896,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4883,6 +4922,7 @@
               "sub_line",
               "component_line",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4962,6 +5002,7 @@
               "W",
               "X",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4975,6 +5016,7 @@
               "delivery_order",
               "work_order",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4984,6 +5026,7 @@
               "standard",
               "high",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5080,6 +5123,7 @@
               "closed",
               "cancelled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5350,6 +5394,7 @@
               "fifty_three_ft",
               "fifty_three_ft_hc",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5367,6 +5412,7 @@
               "bulk",
               "special",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5398,6 +5444,7 @@
               "not_applicable",
               "misflagged",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5455,6 +5502,7 @@
               "DDP",
               "DPU",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5584,6 +5632,7 @@
               "standard",
               "high",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5643,6 +5692,7 @@
               "gated_out",
               "final_destination",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5772,6 +5822,7 @@
               "truck_intl",
               "warehouse_storage",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5797,6 +5848,7 @@
               "collect",
               "prepaid",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5823,6 +5875,7 @@
               "drayage",
               "cartage",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5884,6 +5937,7 @@
               "cbm",
               "cbft",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5946,6 +6000,7 @@
               "kg",
               "lbs",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6585,6 +6640,7 @@
       - cbm
       - cbft
     docs: unit of measurement. "cbm" for cubic meters. "cbft" for cubic feet.
+    inline: true
     source:
       openapi: ../openapi.yml
   VolumeCreate:
@@ -6602,6 +6658,7 @@
       - kg
       - lbs
     docs: Required. Unit of measurement. "kg" for kilograms, "lbs" for pounds
+    inline: true
     source:
       openapi: ../openapi.yml
   WeightCreate:
@@ -6619,6 +6676,7 @@
       - cm
       - in
     docs: Required. Unit of measurement. "cm" for centimeters. "in" for inches.
+    inline: true
     source:
       openapi: ../openapi.yml
   LengthCreate:
@@ -6666,6 +6724,7 @@
       - packed_with_equipment
       - contained_in_equipment
       - contained_in_battery_powered_vehicles
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateCargo:
@@ -6836,6 +6895,7 @@
       - cm
       - in
     docs: Required. Unit of measurement. "cm" for centimeters. "in" for inches.
+    inline: true
     source:
       openapi: ../openapi.yml
   Length:
@@ -6893,6 +6953,7 @@
       - packed_with_equipment
       - contained_in_equipment
       - contained_in_battery_powered_vehicles
+    inline: true
     source:
       openapi: ../openapi.yml
   Cargo:
@@ -7136,6 +7197,7 @@
       - value: /ocean/port
         name: OceanPort
     docs: Type of the object
+    inline: true
     source:
       openapi: ../openapi.yml
   Placeport:
@@ -7213,6 +7275,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   OceanBookingDetail:
@@ -7244,6 +7307,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   AirBookingDetail:
@@ -7263,6 +7327,7 @@
     enum:
       - collect
       - prepaid
+    inline: true
     source:
       openapi: ../openapi.yml
   TruckingBookingDetail:
@@ -7296,6 +7361,7 @@
       - submitted
       - booked
       - shipment
+    inline: true
     source:
       openapi: ../openapi.yml
   BookingQuoteStatus:
@@ -7310,6 +7376,7 @@
       - rejected_quote
       - requoted_quote
       - archived_quote
+    inline: true
     source:
       openapi: ../openapi.yml
   Booking:
@@ -7398,6 +7465,7 @@
       - DDP
       - DPU
     docs: Always required. The Incoterm of your shipment
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOceanBooking:
@@ -7462,6 +7530,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateAirBooking:
@@ -7545,6 +7614,7 @@
     docs: >-
       Whether the shipper or consignee is responsible for payment of trucking
       freight. This can be `collect` (consignee) or `prepaid` (shipper).
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateTruckingBooking:
@@ -7570,6 +7640,7 @@
       - km
       - mi
     docs: Required. Unit of measurement. "km" for kilometers. "mi" for miles.
+    inline: true
     source:
       openapi: ../openapi.yml
   DistanceCreate:
@@ -7706,6 +7777,7 @@
       Status about if the digitization process for this commercial invoice is
       complete. If it is not complete, then the commercial invoice should be
       considered a draft that can change.
+    inline: true
     source:
       openapi: ../openapi.yml
   CommercialInvoice:
@@ -7770,6 +7842,7 @@
       - prs
       - dpr
     docs: Required. Unit of measurement.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateQuantity:
@@ -7823,6 +7896,7 @@
       - customs_hold
       - pending
     docs: The release status for this entry.
+    inline: true
     source:
       openapi: ../openapi.yml
   CustomsEntry:
@@ -8008,6 +8082,7 @@
       - denied
       - not_applicable
       - misflagged
+    inline: true
     source:
       openapi: ../openapi.yml
   ShipmentDangerousGoods:
@@ -8160,6 +8235,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   ShipmentPriority:
@@ -8167,6 +8243,7 @@
       - standard
       - high
     docs: The level of attention Flexport should give to this shipment
+    inline: true
     source:
       openapi: ../openapi.yml
   Shipment:
@@ -8435,6 +8512,7 @@
       - ftl
       - drayage
       - cartage
+    inline: true
     source:
       openapi: ../openapi.yml
   TruckingShipmentLeg:
@@ -8523,6 +8601,7 @@
       - ventilated
       - bulk
       - special
+    inline: true
     source:
       openapi: ../openapi.yml
   ShipmentContainerContainerSize:
@@ -8533,6 +8612,7 @@
       - fourty_five_ft_hc
       - fifty_three_ft
       - fifty_three_ft_hc
+    inline: true
     source:
       openapi: ../openapi.yml
   ShipmentContainer:
@@ -8590,6 +8670,7 @@
       - terminal
       - unknown
     docs: The main reason for the exception as an identifier.
+    inline: true
     source:
       openapi: ../openapi.yml
   Exception:
@@ -8683,6 +8764,7 @@
       - additional
       - capital
     docs: Category of the charge.
+    inline: true
     source:
       openapi: ../openapi.yml
   InvoiceItem:
@@ -8736,6 +8818,7 @@
       - paid
       - payment_pending
     docs: Status of the invoice
+    inline: true
     source:
       openapi: ../openapi.yml
   InvoiceType:
@@ -8745,6 +8828,7 @@
     docs: >-
       What the invoice is being issued for. Shipment related charges are type
       `Shipment` and non-shipment related charges are type `Client`
+    inline: true
     source:
       openapi: ../openapi.yml
   Invoice:
@@ -8990,6 +9074,7 @@
       - gross_volume
       - volume_weight
     docs: The type of measure
+    inline: true
     source:
       openapi: ../openapi.yml
   LineItemMeasurement:
@@ -9011,6 +9096,7 @@
       - sub_line
       - component_line
     default: main_line
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderLineItemIncoterm:
@@ -9027,6 +9113,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderLineItemUnitOfMeasure:
@@ -9076,6 +9163,7 @@
       - TDWB
       - W
       - X
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderLineItem:
@@ -9140,6 +9228,7 @@
       - buyers_agent
       - sellers_agent
     docs: The role that the party has
+    inline: true
     source:
       openapi: ../openapi.yml
   PartiesContactsItem:
@@ -9201,6 +9290,7 @@
       because they've finished shipping), while Cancelled POs denote POs that
       were mistakenly uploaded or that should not be used.
     default: open
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderIncoterm:
@@ -9217,6 +9307,7 @@
       - DAP
       - DDP
       - DPU
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderOrderClass:
@@ -9227,18 +9318,21 @@
       - delivery_order
       - work_order
     docs: Class of the purchase order.
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderFreightPaymnetTerms:
     enum:
       - freight_collect
       - freight_prepaid
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderPriority:
     enum:
       - standard
       - high
+    inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrder:
@@ -9317,6 +9411,7 @@
       - buyers_agent
       - sellers_agent
     docs: The role that the party has
+    inline: true
     source:
       openapi: ../openapi.yml
   CreatePartyContactsItem:
@@ -9364,6 +9459,7 @@
       - icao
       - us_cbp
     docs: The code type of the port
+    inline: true
     source:
       openapi: ../openapi.yml
   CreatePurchaseOrderPort:
@@ -9449,6 +9545,7 @@
       - gross_volume
       - volume_weight
     docs: The type of measure
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateLineItemMeasurement:
@@ -9474,6 +9571,7 @@
       - truck
       - rail
     docs: Required if there is no transportation_mode in purchase order
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateLineItemIncoterm:
@@ -9492,6 +9590,7 @@
     docs: >-
       Required if there is no incoterm in the line item's purchase order. The
       Incoterm of your line item.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateLineItemLineType:
@@ -9501,6 +9600,7 @@
       - component_line
     docs: type of the line item
     default: main_line
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateLineItemUnitOfMeasure:
@@ -9633,6 +9733,7 @@
       - Z3
     docs: The measurement per unit for this line item.
     default: EA
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateLineItem:
@@ -9731,6 +9832,7 @@
       because they've finished shipping), while Cancelled POs denote POs that
       were mistakenly uploaded or that should not be used
     default: open
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrderFreightPaymentTerms:
@@ -9738,6 +9840,7 @@
       - freight_collect
       - freight_prepaid
     docs: The freight payment term for the purchase order
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrderTransportationMode:
@@ -9747,6 +9850,7 @@
       - truck
       - rail
     docs: Required if there is no transportation_mode in purchase order
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrderIncoterm:
@@ -9765,6 +9869,7 @@
     docs: >-
       Required if there is no incoterm in each line item. The incoterm of your
       purchase order.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrderPriority:
@@ -9773,6 +9878,7 @@
       - standard
     docs: priority of the purchase order.
     default: standard
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrderOrderClass:
@@ -9784,6 +9890,7 @@
       - work_order
     docs: Class of the purchase order.
     default: purchase_order
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateOrUpdatePurchaseOrder:
@@ -11518,6 +11625,7 @@ errors:
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11527,6 +11635,7 @@ errors:
               "booked",
               "submitted",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11536,6 +11645,7 @@ errors:
               "cargo_ready_date",
               "created_at",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11573,6 +11683,7 @@ errors:
               "no",
               "notsure",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11626,6 +11737,7 @@ errors:
       contain goods subject to export control regulations? Export Control
       Regulations include dual use item control, Hong Kong strategic commodity
       control, US and EU export control, etc.
+    inline: true
     source:
       openapi: ../openapi.yml
   BookingCreateResponse:
@@ -13366,6 +13478,7 @@ docs: >-
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13799,6 +13912,7 @@ docs: >-
               "belly_freighter",
               "unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13811,6 +13925,7 @@ docs: >-
               "truck",
               "rail",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13826,6 +13941,7 @@ docs: >-
               "airport_transfer",
               "air_cartage",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13844,6 +13960,7 @@ docs: >-
       `truck`, or `rail`. If `transportation_mode` is `truck`, `ocean`, or
       `rail`, `country_code` in both `origin_address` and `destination_address`
       is required.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateCarbonCalculationFlightType:
@@ -13855,6 +13972,7 @@ docs: >-
       For `transportation_mode: air`, the type of plane used. One of
       `freighter`, `belly_freighter`, or `unknown`. Defaults to `unknown`.
     default: unknown
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateCarbonCalculationTruckingServiceType:
@@ -13870,6 +13988,7 @@ docs: >-
       For `transportation_mode: truck`, the type of service used. One of `ftl`,
       `ltl`, `drayage`, `cartage`, `last_mile`, `airport_transfer`, or
       `air_cartage`.
+    inline: true
     source:
       openapi: ../openapi.yml
   CarbonCalculationCreateResponse:
@@ -19886,6 +20005,7 @@ docs: Endpoints relating to Document objects
                 "value": "/shipment_leg",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20781,6 +20901,7 @@ Other details about this invoice",
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20792,6 +20913,7 @@ Other details about this invoice",
               "void",
               "paid",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -22385,6 +22507,7 @@ docs: Endpoints relating to Location objects
               "roadport",
               "seaport",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -24398,6 +24521,7 @@ docs: Endpoints relating to Product objects
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -24417,6 +24541,7 @@ docs: Endpoints relating to Product objects
               "buyers_agent",
               "sellers_agent",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -24427,6 +24552,7 @@ docs: Endpoints relating to Product objects
               "closed",
               "cancelled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -25649,6 +25775,7 @@ docs: >-
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -27176,6 +27303,7 @@ docs: >-
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -27189,6 +27317,7 @@ docs: >-
               "updated_at",
               "archived_at",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

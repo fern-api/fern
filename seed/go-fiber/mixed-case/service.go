@@ -174,6 +174,9 @@ func (r *Resource) UnmarshalJSON(data []byte) error {
 }
 
 func (r Resource) MarshalJSON() ([]byte, error) {
+	if err := r.validate(); err != nil {
+		return nil, err
+	}
 	switch r.ResourceType {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", r.ResourceType, r)
@@ -198,6 +201,40 @@ func (r *Resource) Accept(visitor ResourceVisitor) error {
 	case "Organization":
 		return visitor.VisitOrganization(r.Organization)
 	}
+}
+
+func (r *Resource) validate() error {
+	if r == nil {
+		return fmt.Errorf("type %T is nil", r)
+	}
+	var fields []string
+	if r.User != nil {
+		fields = append(fields, "user")
+	}
+	if r.Organization != nil {
+		fields = append(fields, "Organization")
+	}
+	if len(fields) == 0 {
+		if r.ResourceType != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", r, r.ResourceType)
+		}
+		return fmt.Errorf("type %T is empty", r)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", r, fields)
+	}
+	if r.ResourceType != "" {
+		field := fields[0]
+		if r.ResourceType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				r,
+				r.ResourceType,
+				r,
+			)
+		}
+	}
+	return nil
 }
 
 type ResourceStatus string

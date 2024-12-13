@@ -303,7 +303,10 @@ describe("PythonFile", () => {
         const file = python.file({
             path: ["root"],
             comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
-            imports: [python.starImport({ modulePath: ["root", "my_module"] })],
+            imports: [
+                python.starImport({ modulePath: ["root", "my_module_a"] }),
+                python.starImport({ modulePath: ["root", "my_module_b"] })
+            ],
             statements: [
                 python.field({
                     name: "my_id",
@@ -314,6 +317,72 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
-        expect(file.getReferences()).toHaveLength(2);
+        expect(file.getReferences()).toHaveLength(3);
+    });
+
+    it("Write duplicative import names", async () => {
+        const file = python.file({ path: ["root"] });
+
+        const local_class = python.class_({
+            name: "Car"
+        });
+
+        local_class.add(
+            python.field({
+                name: "car",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "cars"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
+                name: "car",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "transportation", "vehicles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
+                name: "automobile",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "automobiles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        local_class.add(
+            python.field({
+                name: "vehicle",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({
+                        modulePath: ["root", "vehicles", "automobiles"],
+                        name: "Car"
+                    }),
+                    arguments_: []
+                })
+            })
+        );
+
+        file.addStatement(local_class);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(file.getReferences()).toHaveLength(4);
     });
 });

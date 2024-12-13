@@ -13,13 +13,13 @@ import * as SeedExamples from "../../../../../index";
  */
 export type Data = SeedExamples.commons.Data.String | SeedExamples.commons.Data.Base64;
 
-export declare namespace Data {
-    interface String {
+export namespace Data {
+    export interface String {
         type: "string";
         value: string;
     }
 
-    interface Base64 {
+    export interface Base64 {
         type: "base64";
         value: string;
     }

@@ -3,7 +3,6 @@
  */
 
 export type WeatherReport = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
-
 export const WeatherReport = {
     Sunny: "SUNNY",
     Cloudy: "CLOUDY",
@@ -25,7 +24,7 @@ export const WeatherReport = {
     },
 } as const;
 
-export declare namespace WeatherReport {
+export namespace WeatherReport {
     interface Visitor<R> {
         sunny: () => R;
         cloudy: () => R;

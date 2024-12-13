@@ -125,6 +125,9 @@ func (e *Environments) UnmarshalJSON(data []byte) error {
 }
 
 func (e Environments) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -149,6 +152,40 @@ func (e *Environments) Accept(visitor EnvironmentsVisitor) error {
 	case "multipleBaseUrls":
 		return visitor.VisitMultipleBaseUrls(e.MultipleBaseUrls)
 	}
+}
+
+func (e *Environments) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.SingleBaseUrl != nil {
+		fields = append(fields, "singleBaseUrl")
+	}
+	if e.MultipleBaseUrls != nil {
+		fields = append(fields, "multipleBaseUrls")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type EnvironmentsConfig struct {

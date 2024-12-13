@@ -23,9 +23,9 @@ export declare namespace SeedResponsePropertyClient {
 }
 
 export class SeedResponsePropertyClient {
-    constructor(protected readonly _options: SeedResponsePropertyClient.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: SeedResponsePropertyClient.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

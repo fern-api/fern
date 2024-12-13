@@ -23,7 +23,8 @@ export function convertEnum({
     wrapAsNullable,
     groupName,
     context,
-    source
+    source,
+    inline
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -38,6 +39,7 @@ export function convertEnum({
     groupName: SdkGroupName | undefined;
     context: SchemaParserContext | undefined;
     source: Source;
+    inline: boolean | undefined;
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
@@ -80,7 +82,8 @@ export function convertEnum({
         description,
         availability,
         groupName,
-        source
+        source,
+        inline
     });
 }
 
@@ -94,7 +97,8 @@ export function wrapEnum({
     description,
     availability,
     groupName,
-    source
+    source,
+    inline
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -106,6 +110,7 @@ export function wrapEnum({
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
+    inline: boolean | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -122,11 +127,13 @@ export function wrapEnum({
                 availability,
                 example: undefined,
                 groupName,
-                source
+                source,
+                inline
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline
         });
     }
     return SchemaWithExample.enum({
@@ -139,7 +146,8 @@ export function wrapEnum({
         default: _default,
         example: undefined,
         groupName,
-        source
+        source,
+        inline
     });
 }
 

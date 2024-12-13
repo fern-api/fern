@@ -201,6 +201,7 @@
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -216,6 +217,7 @@
               "rpc",
               "httpnext",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -376,6 +378,7 @@
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -391,6 +394,7 @@
               "rpc",
               "httpnext",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -686,6 +690,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   ExtendedValType:
@@ -701,6 +706,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
       The type of a val. HTTP can receive web requests, Email can receive
       emails, Cron runs periodically, and Script can be used for libraries or
       one-off calculations
+    inline: true
     source:
       openapi: ../openapi.yml
   ExtendedValLinks:
@@ -799,6 +805,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   BasicValType:
@@ -814,6 +821,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
       The type of a val. HTTP can receive web requests, Email can receive
       emails, Cron runs periodically, and Script can be used for libraries or
       one-off calculations
+    inline: true
     source:
       openapi: ../openapi.yml
   BasicValLinks:
@@ -1219,6 +1227,7 @@ API endpoints",
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1234,6 +1243,7 @@ API endpoints",
               "rpc",
               "httpnext",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1332,6 +1342,7 @@ types:
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   AliasValResponseType:
@@ -1347,6 +1358,7 @@ types:
       The type of a val. HTTP can receive web requests, Email can receive
       emails, Cron runs periodically, and Script can be used for libraries or
       one-off calculations
+    inline: true
     source:
       openapi: ../openapi.yml
   AliasValResponseLinks:
@@ -2300,6 +2312,7 @@ give access to details and data from the requesting user.",
               "received",
               "given",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2426,6 +2439,7 @@ give access to details and data from the requesting user.",
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2511,6 +2525,7 @@ give access to details and data from the requesting user.",
               "free",
               "pro",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2647,6 +2662,7 @@ give access to details and data from the requesting user.",
       - free
       - pro
     docs: Your account tier
+    inline: true
     source:
       openapi: ../openapi.yml
   MeGetResponse:
@@ -2717,6 +2733,7 @@ give access to details and data from the requesting user.",
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   MeCommentsResponseDataItemValAuthor:
@@ -3413,6 +3430,7 @@ docs: Search
               "read",
               "deferred",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3550,6 +3568,7 @@ docs: Search
       - write
       - read
       - deferred
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -4797,6 +4816,7 @@ let you get, create, and run vals.",
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4809,6 +4829,7 @@ let you get, create, and run vals.",
               "script",
               "email",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4820,6 +4841,7 @@ let you get, create, and run vals.",
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4832,6 +4854,7 @@ let you get, create, and run vals.",
               "script",
               "email",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4885,6 +4908,7 @@ let you get, create, and run vals.",
               "unlisted",
               "private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4896,6 +4920,7 @@ let you get, create, and run vals.",
               "script",
               "email",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4931,6 +4956,7 @@ let you get, create, and run vals.",
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsCreateRequestType:
@@ -4942,6 +4968,7 @@ let you get, create, and run vals.",
       The type of the val you want to create. Note that this does not include
       interval vals, because they cannot be created through the API yet.
     default: script
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsUpdateRequestPrivacy:
@@ -4952,6 +4979,7 @@ let you get, create, and run vals.",
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsUpdateRequestType:
@@ -4962,6 +4990,7 @@ let you get, create, and run vals.",
     docs: >-
       The type of the val you want to update. Note that this does not include
       interval vals, because they cannot be created through the API yet.
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsListResponseDataItem:
@@ -4995,6 +5024,7 @@ let you get, create, and run vals.",
     docs: >-
       This val’s privacy setting. Unlisted vals do not appear on profile pages
       or elsewhere, but you can link to them.
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsCreateVersionRequestType:
@@ -5006,6 +5036,7 @@ let you get, create, and run vals.",
       The type of the val you want to create. Note that this does not include
       interval vals, because they cannot be created through the API yet.
     default: script
+    inline: true
     source:
       openapi: ../openapi.yml
   ValsCancelResponse:

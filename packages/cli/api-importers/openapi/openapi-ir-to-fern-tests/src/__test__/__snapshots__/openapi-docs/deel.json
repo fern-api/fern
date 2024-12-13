@@ -7396,6 +7396,7 @@
               "client",
               "contractor",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7614,6 +7615,7 @@
               "rejected",
               "waiting_for_client_payment",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8042,6 +8044,7 @@
               "shield_msa",
               "hris_direct_employee",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8057,6 +8060,7 @@
               "payg_tasks",
               "payg_milestones",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8068,6 +8072,7 @@
               "client",
               "contractor",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8093,6 +8098,7 @@
               "total",
               "status",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8220,6 +8226,7 @@
               "SICK_LEAVE",
               "OTHER",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8930,6 +8937,7 @@
               "STANDARD",
               "SPECIFIC",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8946,6 +8954,7 @@
                 "value": "Part-time",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8977,6 +8986,7 @@
               "Skilled",
               "Unskilled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9080,6 +9090,7 @@
               "ALLOWED_WITH_MAXIMUM_LIMITATION",
               "NOT_ALLOWED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9128,6 +9139,7 @@
               "STANDARD",
               "SPECIFIC",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9330,6 +9342,7 @@
               "LIMITED_ROLLOVER",
               "UNSET",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9565,6 +9578,7 @@
               "CALENDAR_DAYS",
               "FULL_AMOUNT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9640,6 +9654,7 @@
                 "value": "image/png",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9691,6 +9706,7 @@
               "CALENDAR_DAYS",
               "FULL_AMOUNT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9909,6 +9925,7 @@
               "ENABLED",
               "DISABLED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10397,6 +10414,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10418,6 +10436,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10623,6 +10642,7 @@
               "withholding_tax",
               "work",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10640,6 +10660,7 @@
               "time_off",
               "vat",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10676,6 +10697,7 @@
               "failed",
               "refunded",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10744,6 +10766,7 @@
               "failed",
               "refunded",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10768,6 +10791,7 @@
               "SHIELD_DEPOSIT",
               "EOR_MANAGEMENT_FEE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10832,6 +10856,7 @@
               "individual",
               "company",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10967,6 +10992,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11005,6 +11031,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11124,6 +11151,7 @@
                 "value": "tasks:write",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11474,6 +11502,7 @@
               "mercury_wire",
               "bt_pay_pal",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11510,6 +11539,7 @@
               "paid",
               "processing",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11843,6 +11873,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11871,6 +11902,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12084,6 +12116,7 @@
               "CALENDAR_DAYS",
               "FULL_AMOUNT",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12097,6 +12130,7 @@
               "hris_direct_employee",
               "service_account",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12231,6 +12265,7 @@
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12413,6 +12448,7 @@
               "APPROVED",
               "REJECTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12423,6 +12459,7 @@
               "SICK_LEAVE",
               "OTHER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12537,6 +12574,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12558,6 +12596,7 @@
               "approved",
               "declined",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12814,6 +12853,7 @@
               "enabled",
               "disabled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12839,6 +12879,7 @@
               "Friday",
               "Saturday",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12850,6 +12891,7 @@
               "DAY_OF_LAST_WEEK",
               "DAY_OF_MONTH",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12866,6 +12908,7 @@
                 "value": "calendar-month",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12877,6 +12920,7 @@
               "REGULAR",
               "WITHIN_MONTH",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12892,6 +12936,7 @@
               "semimonthly",
               "custom",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12907,6 +12952,7 @@
               "semimonthly",
               "custom",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14119,6 +14165,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   TimesheetReviewsToCreate:
@@ -14146,6 +14193,7 @@
       - approved
       - declined
     docs: Review status.
+    inline: true
     source:
       openapi: ../openapi.yml
   PgoTaskReviewsByIdToCreate:
@@ -14163,6 +14211,7 @@
       - approved
       - declined
     docs: Review status.
+    inline: true
     source:
       openapi: ../openapi.yml
   PgoTaskReviewsToCreate:
@@ -14180,6 +14229,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   TimesheetReviewToCreate:
@@ -14487,6 +14537,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentReviewsToCreate:
@@ -14509,6 +14560,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentReviewToCreate:
@@ -15090,6 +15142,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   MilestoneReviewsToCreate:
@@ -15103,6 +15156,7 @@
     enum:
       - approved
       - declined
+    inline: true
     source:
       openapi: ../openapi.yml
   MilestoneReviewToCreate:
@@ -15137,6 +15191,7 @@
       - CALENDAR_DAYS
       - FULL_AMOUNT
     docs: Either works days or calendar days
+    inline: true
     source:
       openapi: ../openapi.yml
   EstimateFirstPaymentCompensationDetails:
@@ -15185,6 +15240,7 @@
       - CALENDAR_DAYS
       - FULL_AMOUNT
     docs: Either works days or calendar days
+    inline: true
     source:
       openapi: ../openapi.yml
   ProRata:
@@ -15520,6 +15576,7 @@
       - CALENDAR_DAYS
       - FULL_AMOUNT
     docs: Either works days or calendar days
+    inline: true
     source:
       openapi: ../openapi.yml
   FinalPaymentCalculated:
@@ -15775,6 +15832,7 @@
       - value: Part-time
         name: PartTime
     docs: Is it a full-time contract or a part-time contract?
+    inline: true
     source:
       openapi: ../openapi.yml
   EorContractToCreateEmploymentTimeOffType:
@@ -15785,6 +15843,7 @@
       If you want to use standard number of holidays for this employee, choose
       "STANDARD". If you want to enter a specific number of holidays, choose
       "SPECIFIC" and enter the number of days in the holidays field.
+    inline: true
     source:
       openapi: ../openapi.yml
   EorContractToCreateEmployment:
@@ -15888,6 +15947,7 @@
       - Skilled
       - Unskilled
     docs: Type of worker.
+    inline: true
     source:
       openapi: ../openapi.yml
   EorContractToCreateQuoteAdditionalFields:
@@ -16054,6 +16114,7 @@
       - PRORATED
       - STANDARD
       - SPECIFIC
+    inline: true
     source:
       openapi: ../openapi.yml
   EorCountryValidationsPartTimeHoliday:
@@ -16138,6 +16199,7 @@
       - ALLOWED_WITHOUT_LIMITATION
       - ALLOWED_WITH_MAXIMUM_LIMITATION
       - NOT_ALLOWED
+    inline: true
     source:
       openapi: ../openapi.yml
   EorCountryValidationsDefiniteContract:
@@ -16497,6 +16559,7 @@
       - SICK_LEAVE
       - OTHER
     docs: Time off type.
+    inline: true
     source:
       openapi: ../openapi.yml
   CreateTimeoff:
@@ -16588,6 +16651,7 @@
       - enabled
       - disabled
     docs: Status of webhook.
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhookItem:
@@ -24517,6 +24581,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "CALENDAR_DAYS",
               "FULL_AMOUNT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31888,6 +31953,7 @@ docs: >-
               "enabled",
               "disabled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31898,6 +31964,7 @@ docs: >-
               "enabled",
               "disabled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32157,6 +32224,7 @@ types:
       - enabled
       - disabled
     docs: Status of webhook.
+    inline: true
     source:
       openapi: ../openapi.yml
   PatchWebhookRequestStatus:
@@ -32164,6 +32232,7 @@ types:
       - enabled
       - disabled
     docs: Status of webhook.
+    inline: true
     source:
       openapi: ../openapi.yml
 ",
