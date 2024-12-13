@@ -89,13 +89,7 @@ function getReferenceToPathParameter({
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {
-        case PathParameterLocation.Service: {
-            const pathParamName = getParameterNameForPathParameter({
-                pathParameter,
-                retainOriginalCasing
-            });
-            return ts.factory.createIdentifier(pathParamName);
-        }
+        case PathParameterLocation.Service:
         case PathParameterLocation.Endpoint: {
             const pathParamName = getParameterNameForPathParameter({
                 pathParameter,

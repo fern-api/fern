@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature: Inline path parameters into request types by setting `inlinePathParameters` to `true` in the generator config.
 
   Here's an example of how users would use the same endpoint method without and with `inlinePathParameters` set to `true`.
+
   Without `inlinePathParameters`:
 
   ```ts

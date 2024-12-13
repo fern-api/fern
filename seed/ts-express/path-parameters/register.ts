@@ -3,13 +3,16 @@
  */
 
 import express from "express";
+import { OrganizationsService } from "./api/resources/organizations/service/OrganizationsService";
 import { UserService } from "./api/resources/user/service/UserService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
+        organizations: OrganizationsService;
         user: UserService;
     }
 ): void {
+    (expressApp as any).use("/user", services.organizations.toRouter());
     (expressApp as any).use("/user", services.user.toRouter());
 }

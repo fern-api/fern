@@ -1,0 +1,39 @@
+types:
+  Organization:
+    properties:
+      name: string
+      tags: list<string>
+
+  User:
+    properties:
+      name: string
+      tags: list<string>
+
+service:
+  base-path: /user
+  auth: false
+  path-parameters:
+    organizationId: string
+  endpoints:
+    getOrganization:
+      path: "/organizations/{organizationId}"
+      method: GET
+      response: Organization
+
+    getOrganizationUser:
+      path: "/organizations/{organizationId}/users/{userId}"
+      method: GET
+      request:
+        name: GetOrganizationUserRequest
+        path-parameters:
+          userId: string
+      response: User
+
+    searchOrganizations:
+      path: "/organizations/{organizationId}/search"
+      method: GET
+      request:
+        name: SearchOrganizationsRequest
+        query-parameters:
+          limit: optional<integer>
+      response: list<Organization>

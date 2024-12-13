@@ -1,6 +1,7 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, RequestWrapperContext, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
@@ -64,8 +65,13 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         if (sdkRequest == null) {
             return false;
         }
-        if (sdkRequest.shape.type === "justRequestBody") {
-            return false;
+        switch (sdkRequest.shape.type) {
+            case "justRequestBody":
+                return false;
+            case "wrapper":
+                break;
+            default:
+                assertNever(sdkRequest.shape);
         }
         if (sdkRequest.shape.onlyPathParameters) {
             return true;

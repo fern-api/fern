@@ -98,7 +98,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             });
 
         const pathParamProperties = generatedType.shouldInlinePathParameters()
-            ? [...this.example.endpointPathParameters]
+            ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters]
                   .filter((pathParam) => this.isNotLiteral(pathParam.value.shape))
                   .map((pathParam) => {
                       return ts.factory.createPropertyAssignment(

@@ -126,9 +126,6 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
-    - customConfig:
-        inlinePathParameters: true
-      outputFolder: inline-path-parameters
   error-property:
     - customConfig:
         private: true
@@ -220,6 +217,11 @@ fixtures:
         noSerdeLayer: true
         enableInlineTypes: false
       outputFolder: no-inline
+  path-parameters:
+    - outputFolder: default
+    - customConfig:
+        inlinePathParameters: true
+      outputFolder: inline-path-parameters
 scripts:
   - docker: fernapi/ts-seed
     commands:

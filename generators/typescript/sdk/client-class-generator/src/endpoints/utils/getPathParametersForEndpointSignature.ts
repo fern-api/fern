@@ -12,6 +12,7 @@ export function getPathParametersForEndpointSignature({
     context: SdkContext;
 }): PathParameter[] {
     const shouldInlinePathParameters = context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest);
-    const pathParams = shouldInlinePathParameters ? [] : endpoint.pathParameters;
-    return getNonVariablePathParameters([...service.pathParameters, ...pathParams]);
+    return shouldInlinePathParameters
+        ? []
+        : getNonVariablePathParameters([...service.pathParameters, ...endpoint.pathParameters]);
 }

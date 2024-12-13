@@ -99,7 +99,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             case "justRequestBody":
                 return [];
             case "wrapper":
-                return this.endpoint.pathParameters;
+                return [...this.service.pathParameters, ...this.endpoint.pathParameters];
         }
     }
 
