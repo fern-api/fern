@@ -1,9 +1,6 @@
 name: publish-docs-parsers-fern-definition
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
