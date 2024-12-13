@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\User\Requests;
+namespace Seed\Organizations\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
 

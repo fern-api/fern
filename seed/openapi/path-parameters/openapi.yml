@@ -3,12 +3,17 @@ info:
   title: path-parameters
   version: ''
 paths:
-  /user/organizations/{organizationId}:
+  /{tenantId}/user/organizations/{organizationId}:
     get:
-      operationId: user_getOrganization
+      operationId: organizations_getOrganization
       tags:
-        - User
+        - Organizations
       parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
         - name: organizationId
           in: path
           required: true
@@ -21,30 +26,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-  /user/users/{userId}:
+  /{tenantId}/user/organizations/{organizationId}/users/{userId}:
     get:
-      operationId: user_getUser
+      operationId: organizations_getOrganizationUser
       tags:
-        - User
+        - Organizations
       parameters:
-        - name: userId
+        - name: tenantId
           in: path
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-  /user/organizations/{organizationId}/users/{userId}:
-    get:
-      operationId: user_getOrganizationUser
-      tags:
-        - User
-      parameters:
         - name: organizationId
           in: path
           required: true
@@ -62,38 +54,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /user/users/{userId}/search:
+  /{tenantId}/user/organizations/{organizationId}/search:
     get:
-      operationId: user_searchUsers
+      operationId: organizations_searchOrganizations
       tags:
-        - User
+        - Organizations
       parameters:
-        - name: userId
+        - name: tenantId
           in: path
           required: true
           schema:
             type: string
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            nullable: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-  /user/organizations/{organizationId}/search:
-    get:
-      operationId: user_searchOrganizations
-      tags:
-        - User
-      parameters:
         - name: organizationId
           in: path
           required: true
@@ -114,6 +85,60 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Organization'
+  /{tenantId}/user/users/{userId}:
+    get:
+      operationId: user_getUser
+      tags:
+        - User
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /{tenantId}/user/users/{userId}/search:
+    get:
+      operationId: user_searchUsers
+      tags:
+        - User
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 components:
   schemas:
     Organization:

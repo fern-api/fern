@@ -29,7 +29,7 @@ public class GetOrganizationUserTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/user/organizations/organizationId/users/userId")
+                    .WithPath("/tenantId/user/organizations/organizationId/users/userId")
                     .UsingGet()
             )
             .RespondWith(
@@ -39,7 +39,8 @@ public class GetOrganizationUserTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetOrganizationUserAsync(
+        var response = await Client.Organizations.GetOrganizationUserAsync(
+            "tenantId",
             "organizationId",
             "userId",
             new GetOrganizationUserRequest(),

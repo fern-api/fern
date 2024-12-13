@@ -4,61 +4,61 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/user/organizations/{organizationId}",
+                "path": "/{tenantId}/user/organizations/{organizationId}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getOrganization"
+                "identifier_override": "endpoint_organizations.getOrganization"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetOrganizationAsync(\"organizationId\");\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationAsync(\"tenantId\", \"organizationId\");\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/user/users/{userId}",
+                "path": "/{tenantId}/user/organizations/{organizationId}/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_organizations.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    \"tenantId\",\n    \"organizationId\",\n    \"userId\",\n    new GetOrganizationUserRequest()\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenantId}/user/organizations/{organizationId}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_organizations.searchOrganizations"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.SearchOrganizationsAsync(\n    \"tenantId\",\n    \"organizationId\",\n    new SearchOrganizationsRequest { Limit = 1 }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenantId}/user/users/{userId}",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"userId\", new GetUsersRequest());\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenantId\", \"userId\", new GetUsersRequest());\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/user/organizations/{organizationId}/users/{userId}",
-                "method": "GET",
-                "identifier_override": "endpoint_user.getOrganizationUser"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetOrganizationUserAsync(\n    \"organizationId\",\n    \"userId\",\n    new GetOrganizationUserRequest()\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/user/users/{userId}/search",
+                "path": "/{tenantId}/user/users/{userId}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"userId\", new SearchUsersRequest { Limit = 1 });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/user/organizations/{organizationId}/search",
-                "method": "GET",
-                "identifier_override": "endpoint_user.searchOrganizations"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchOrganizationsAsync(\n    \"organizationId\",\n    new SearchOrganizationsRequest { Limit = 1 }\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"tenantId\", \"userId\", new SearchUsersRequest { Limit = 1 });\n"
             }
         }
     ]

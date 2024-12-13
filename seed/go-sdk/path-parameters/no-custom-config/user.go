@@ -8,10 +8,6 @@ import (
 	internal "github.com/path-parameters/fern/internal"
 )
 
-type SearchOrganizationsRequest struct {
-	Limit *int `json:"-" url:"limit,omitempty"`
-}
-
 type SearchUsersRequest struct {
 	Limit *int `json:"-" url:"limit,omitempty"`
 }

@@ -28,8 +28,11 @@ public partial class SeedPathParametersClient
             }
         }
         _client = new RawClient(clientOptions);
+        Organizations = new OrganizationsClient(_client);
         User = new UserClient(_client);
     }
+
+    public OrganizationsClient Organizations { get; init; }
 
     public UserClient User { get; init; }
 }

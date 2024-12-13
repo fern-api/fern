@@ -8,22 +8,15 @@ import (
 	internal "github.com/fern-api/path-parameters-go/internal"
 )
 
-type GetOrganizationUserRequest struct {
-	OrganizationId string `json:"-" url:"-"`
-	UserId         string `json:"-" url:"-"`
-}
-
 type GetUsersRequest struct {
-	UserId string `json:"-" url:"-"`
-}
-
-type SearchOrganizationsRequest struct {
-	Limit *int `json:"-" url:"limit,omitempty"`
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
 }
 
 type SearchUsersRequest struct {
-	UserId string `json:"-" url:"-"`
-	Limit  *int   `json:"-" url:"limit,omitempty"`
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+	Limit    *int   `json:"-" url:"limit,omitempty"`
 }
 
 type Organization struct {

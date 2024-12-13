@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPathParameters", "SeedPathParameters\SeedPathParameters.csproj", "{B927B2D8-41E7-4141-AB25-E8DB3A3A4466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPathParameters.Test", "SeedPathParameters.Test\SeedPathParameters.Test.csproj", "{190BA834-590B-4D47-A74B-EEE8F6986EC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B927B2D8-41E7-4141-AB25-E8DB3A3A4466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B927B2D8-41E7-4141-AB25-E8DB3A3A4466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B927B2D8-41E7-4141-AB25-E8DB3A3A4466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B927B2D8-41E7-4141-AB25-E8DB3A3A4466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{190BA834-590B-4D47-A74B-EEE8F6986EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{190BA834-590B-4D47-A74B-EEE8F6986EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{190BA834-590B-4D47-A74B-EEE8F6986EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{190BA834-590B-4D47-A74B-EEE8F6986EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
