@@ -36,6 +36,7 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
 
                     const openApiDocuments = await openApiLoader.loadDocuments({ context, specs: openApiSpecs });
 
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     let fdrApiDefinition: any;
                     for (const openApi of openApiDocuments) {
                         if (openApi.type !== "openapi") {
