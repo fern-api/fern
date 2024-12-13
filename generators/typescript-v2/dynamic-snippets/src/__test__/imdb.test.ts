@@ -4,7 +4,9 @@ import { DynamicSnippetsGenerator } from "../DynamicSnippetsGenerator";
 describe("imdb", () => {
     it("success", async () => {
         const generator = new DynamicSnippetsGenerator({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ir: {} as any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             config: {} as any
         });
         const response = await generator.generate({
