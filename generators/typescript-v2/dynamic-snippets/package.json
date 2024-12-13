@@ -1,9 +1,10 @@
 {
-  "name": "@fern-api/typescript-codegen",
+  "name": "@fern-api/typescript-dynamic-snippets",
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern.git"
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/typescript-v2/dynamic-snippets"
   },
   "files": [
     "lib"
@@ -16,25 +17,29 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run --passWithNoTests",
-    "test:update": "vitest --run --passWithNoTests -u",
+    "test": "vitest --passWithNoTests --run",
+    "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/base-generator": "workspace:*",
-    "@fern-fern/ir-sdk": "53.23.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
+    "@fern-api/typescript-ast": "workspace:*",
+    "@fern-fern/ir-sdk": "^53.23.0",
     "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
+    "string.prototype.replaceall": "^1.0.10",
+    "tsup": "^8.3.5",
     "typescript": "4.6.4",
     "vitest": "^2.0.5"
   }
