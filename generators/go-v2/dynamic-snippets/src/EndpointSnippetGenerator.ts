@@ -1,10 +1,8 @@
-import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
-import { Severity } from "./context/ErrorReporter";
-import { Scope } from "./Scope";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -24,8 +22,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         request
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        request: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
         return await code.toString({
@@ -41,8 +39,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         request
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        request: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
         return code.toStringSync({
@@ -58,8 +56,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.AstNode {
         return go.func({
             name: SNIPPET_FUNC_NAME,
@@ -77,8 +75,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write(`${CLIENT_VAR_NAME} := `);
@@ -90,8 +88,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.MethodInvocation {
         return go.invokeMethod({
             on: go.codeblock(CLIENT_VAR_NAME),
@@ -104,12 +102,12 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         const baseUrlArg = this.getConstructorBaseUrlArg({
-            baseUrl: snippet.baseUrl,
+            baseUrl: snippet.baseURL,
             environment: snippet.environment
         });
         if (baseUrlArg != null) {
@@ -137,8 +135,8 @@ export class EndpointSnippetGenerator {
         auth,
         values
     }: {
-        auth: DynamicSnippets.Auth;
-        values: DynamicSnippets.AuthValues;
+        auth: FernIr.dynamic.Auth;
+        values: FernIr.dynamic.AuthValues;
     }): go.AstNode {
         switch (auth.type) {
             case "basic":
@@ -175,8 +173,8 @@ export class EndpointSnippetGenerator {
         auth,
         values
     }: {
-        auth: DynamicSnippets.BasicAuth;
-        values: DynamicSnippets.BasicAuthValues;
+        auth: FernIr.dynamic.BasicAuth;
+        values: FernIr.dynamic.BasicAuthValues;
     }): go.AstNode {
         return go.codeblock((writer) => {
             writer.writeNode(
@@ -199,7 +197,7 @@ export class EndpointSnippetGenerator {
         environment
     }: {
         baseUrl: string | undefined;
-        environment: DynamicSnippets.EnvironmentValues | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): go.AstNode | undefined {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
         if (baseUrlArg == null) {
@@ -223,7 +221,7 @@ export class EndpointSnippetGenerator {
         environment
     }: {
         baseUrl: string | undefined;
-        environment: DynamicSnippets.EnvironmentValues | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): go.AstNode | undefined {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
@@ -241,7 +239,7 @@ export class EndpointSnippetGenerator {
                 if (typeReference == null) {
                     this.context.errors.add({
                         severity: Severity.Warning,
-                        message: `Environment "${environment}" was not found`
+                        message: `Environment ${JSON.stringify(environment)} was not found`
                     });
                     return undefined;
                 }
@@ -262,8 +260,8 @@ export class EndpointSnippetGenerator {
         auth,
         values
     }: {
-        auth: DynamicSnippets.BearerAuth;
-        values: DynamicSnippets.BearerAuthValues;
+        auth: FernIr.dynamic.BearerAuth;
+        values: FernIr.dynamic.BearerAuthValues;
     }): go.AstNode {
         return go.codeblock((writer) => {
             writer.writeNode(
@@ -282,8 +280,8 @@ export class EndpointSnippetGenerator {
         auth,
         values
     }: {
-        auth: DynamicSnippets.HeaderAuth;
-        values: DynamicSnippets.HeaderAuthValues;
+        auth: FernIr.dynamic.HeaderAuth;
+        values: FernIr.dynamic.HeaderAuthValues;
     }): go.AstNode {
         return go.codeblock((writer) => {
             writer.writeNode(
@@ -307,8 +305,8 @@ export class EndpointSnippetGenerator {
         headers,
         values
     }: {
-        headers: DynamicSnippets.NamedParameter[];
-        values: DynamicSnippets.Values;
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         for (const header of headers) {
@@ -324,7 +322,7 @@ export class EndpointSnippetGenerator {
         header,
         value
     }: {
-        header: DynamicSnippets.NamedParameter;
+        header: FernIr.dynamic.NamedParameter;
         value: unknown;
     }): go.AstNode | undefined {
         const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
@@ -353,8 +351,8 @@ export class EndpointSnippetGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: DynamicSnippets.Endpoint;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.AstNode[] {
         switch (endpoint.request.type) {
             case "inlined":
@@ -368,8 +366,8 @@ export class EndpointSnippetGenerator {
         request,
         snippet
     }: {
-        request: DynamicSnippets.BodyRequest;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
 
@@ -393,7 +391,7 @@ export class EndpointSnippetGenerator {
         body,
         value
     }: {
-        body: DynamicSnippets.ReferencedRequestBodyType;
+        body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
     }): go.TypeInstantiation {
         switch (body.type) {
@@ -420,8 +418,8 @@ export class EndpointSnippetGenerator {
         request,
         snippet
     }: {
-        request: DynamicSnippets.InlinedRequest;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
 
@@ -463,8 +461,8 @@ export class EndpointSnippetGenerator {
         request,
         snippet
     }: {
-        request: DynamicSnippets.InlinedRequest;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): FilePropertyInfo {
         if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
             return {
@@ -484,8 +482,8 @@ export class EndpointSnippetGenerator {
         pathParameterFields,
         filePropertyInfo
     }: {
-        request: DynamicSnippets.InlinedRequest;
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
         pathParameterFields: go.StructField[];
         filePropertyInfo: FilePropertyInfo;
     }): go.TypeInstantiation {
@@ -536,7 +534,7 @@ export class EndpointSnippetGenerator {
         value,
         filePropertyInfo
     }: {
-        body: DynamicSnippets.InlinedRequestBody;
+        body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
     }): go.StructField[] {
@@ -565,7 +563,7 @@ export class EndpointSnippetGenerator {
         body,
         value
     }: {
-        body: DynamicSnippets.ReferencedRequestBody;
+        body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
     }): go.StructField {
         return {
@@ -578,7 +576,7 @@ export class EndpointSnippetGenerator {
         body,
         value
     }: {
-        body: DynamicSnippets.ReferencedRequestBodyType;
+        body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
     }): go.TypeInstantiation {
         switch (body.type) {
@@ -593,7 +591,7 @@ export class EndpointSnippetGenerator {
         parameters,
         value
     }: {
-        parameters: DynamicSnippets.NamedParameter[];
+        parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): go.StructField[] {
         const fields: go.StructField[] = [];
@@ -616,8 +614,8 @@ export class EndpointSnippetGenerator {
         namedParameters,
         snippet
     }: {
-        namedParameters: DynamicSnippets.NamedParameter[];
-        snippet: DynamicSnippets.EndpointSnippetRequest;
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.StructField[] {
         const args: go.StructField[] = [];
 
@@ -635,7 +633,7 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
-    private getMethod({ endpoint }: { endpoint: DynamicSnippets.Endpoint }): string {
+    private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => this.context.getMethodName(val))
@@ -658,8 +656,8 @@ export class EndpointSnippetGenerator {
         auth,
         values
     }: {
-        auth: DynamicSnippets.Auth;
-        values: DynamicSnippets.AuthValues;
+        auth: FernIr.dynamic.Auth;
+        values: FernIr.dynamic.AuthValues;
     }): Error {
         return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
     }

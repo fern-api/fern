@@ -2,7 +2,6 @@ import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGener
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { dynamic } from "@fern-fern/ir-sdk/api";
 import { TestCase } from "./utils/TestCase";
 
 describe("exhaustive", () => {
@@ -14,11 +13,12 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-primitives"
                 },
-                baseUrl: undefined,
+                baseURL: undefined,
                 environment: undefined,
-                auth: dynamic.AuthValues.bearer({
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -32,11 +32,12 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-objects"
                 },
-                baseUrl: undefined,
+                baseURL: undefined,
                 environment: undefined,
-                auth: dynamic.AuthValues.bearer({
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -75,11 +76,12 @@ describe("exhaustive (errors)", () => {
                 method: "POST",
                 path: "/container/list-of-objects"
             },
-            baseUrl: undefined,
+            baseURL: undefined,
             environment: undefined,
-            auth: dynamic.AuthValues.bearer({
+            auth: {
+                type: "bearer",
                 token: "<YOUR_API_KEY>"
-            }),
+            },
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,

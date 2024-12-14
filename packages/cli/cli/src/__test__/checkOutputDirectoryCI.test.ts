@@ -10,7 +10,7 @@ vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(true)
 }));
 
-describe("checkOutputDirectory in CI", () => {
+describe.sequential("checkOutputDirectory in CI", () => {
     let mockCliContext: Partial<CliContext>;
 
     beforeEach(() => {

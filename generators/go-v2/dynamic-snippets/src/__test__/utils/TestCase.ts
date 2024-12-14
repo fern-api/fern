@@ -1,6 +1,6 @@
-import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 export interface TestCase {
     description: string;
-    giveRequest: DynamicSnippets.EndpointSnippetRequest;
+    giveRequest: FernIr.dynamic.EndpointSnippetRequest;
 }
