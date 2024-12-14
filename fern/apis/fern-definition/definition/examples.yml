@@ -4,6 +4,8 @@ imports:
 types: 
   
   ExampleTypeSchema: 
+    audiences:
+      - docs-parsers
     extends: 
       - commons.WithName
       - commons.WithDocsSchema
@@ -30,6 +32,8 @@ types:
   ExampleEndpointCallArraySchema: list<ExampleEndpointCallSchema>
   
   ExampleEndpointCallSchema:
+    audiences:
+      - docs-parsers
     extends: 
       - commons.WithName
       - commons.WithDocsSchema     
@@ -43,6 +47,8 @@ types:
       code-samples: optional<list<ExampleCodeSampleSchema>>
   
   ExampleWebhookCallSchema: 
+    audiences:
+      - docs-parsers
     extends: 
       - commons.WithName
       - commons.WithDocsSchema      

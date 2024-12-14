@@ -1390,11 +1390,11 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  generators/typescript/codegen:
+  generators/typescript-v2/ast:
     devDependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -1424,7 +1424,52 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/typescript-v2/dynamic-snippets:
+    devDependencies:
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.24.0)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.24.0)
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
+      '@fern-api/typescript-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-fern/ir-sdk':
+        specifier: ^53.23.0
+        version: 53.24.0
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      string.prototype.replaceall:
+        specifier: ^1.0.10
+        version: 1.0.10
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2482,9 +2527,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
-      '@fern-api/typescript-codegen':
+      '@fern-api/typescript-ast':
         specifier: workspace:*
-        version: link:../../codegen
+        version: link:../../../typescript-v2/ast
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.17
         version: 0.0.17
@@ -3805,8 +3850,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.10
-        version: 0.0.10(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
+        specifier: ^0.0.12
+        version: 0.0.12(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -4173,6 +4218,8 @@ importers:
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/local: {}
 
   packages/cli/configuration:
     dependencies:
@@ -8026,8 +8073,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.10':
-    resolution: {integrity: sha512-TO+XxWDSEq2PIirkNTWdsIX5zTrQMjVg+sdTmdTIICpQVAboupC0bG6IfAU+D933VYoy4ajrkqZbCYQSUjMOhg==}
+  '@fern-api/docs-parsers@0.0.12':
+    resolution: {integrity: sha512-bTnhztE8xZlnyzm3lvnvv+DGGup81qD/A8k2f9OP4I9kxzGsR7p/U/OnEDD+ztXWvlemdH7QxKLjzVmZBLLeJg==}
 
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
@@ -15148,10 +15195,11 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.10(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
+  '@fern-api/docs-parsers@0.0.12(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
+      ajv: 8.17.1
       es-toolkit: 1.26.0
       openapi-types: 12.1.3
       ts-essentials: 10.0.1(typescript@4.6.4)
