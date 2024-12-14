@@ -49,7 +49,7 @@ export function parseImagePaths(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
-    parseFrontmatterImagesforLogo(data, mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     const tree = parseMarkdownToTree(content);
 
@@ -428,28 +428,6 @@ export function convertImageToFileIdOrUrl(
               type: "url",
               value: CjsFdrSdk.Url(value)
           };
-}
-
-function parseFrontmatterImagesforLogo(
-    data: Record<string, any>,
-    mapImage: (image: string | undefined) => string | undefined
-) {
-    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
-    if (!parsedValue.success) {
-        return;
-    }
-    const parsedFrontmatterLogo = parsedValue.data;
-
-    if (typeof parsedFrontmatterLogo === "string") {
-        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
-    } else {
-        if (parsedFrontmatterLogo.light != null) {
-            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
-        }
-        if (parsedFrontmatterLogo.dark != null) {
-            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
-        }
-    }
 }
 
 function replaceFrontmatterImagesforLogo(
