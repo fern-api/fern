@@ -5,13 +5,13 @@ import {
     Result
 } from "@fern-api/browser-compatible-base-generator";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,
-    dynamic.EndpointSnippetRequest,
-    dynamic.EndpointSnippetResponse
+    FernIr.dynamic.EndpointSnippetRequest,
+    FernIr.dynamic.EndpointSnippetResponse
 > {
     private formatter: AbstractFormatter | undefined;
 
@@ -20,7 +20,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         config,
         formatter
     }: {
-        ir: dynamic.DynamicIntermediateRepresentation;
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         formatter?: AbstractFormatter;
     }) {
@@ -28,7 +28,9 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         this.formatter = formatter;
     }
 
-    public async generate(request: dynamic.EndpointSnippetRequest): Promise<dynamic.EndpointSnippetResponse> {
+    public async generate(
+        request: FernIr.dynamic.EndpointSnippetRequest
+    ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
@@ -58,7 +60,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         return result.getResponseOrThrow({ endpoint: request.endpoint });
     }
 
-    public generateSync(request: dynamic.EndpointSnippetRequest): dynamic.EndpointSnippetResponse {
+    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);

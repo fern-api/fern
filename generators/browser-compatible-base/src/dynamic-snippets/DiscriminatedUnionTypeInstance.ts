@@ -1,10 +1,10 @@
-import { NameAndWireValue, dynamic } from "@fern-api/dynamic-ir-sdk/api";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 /**
  * A discriminated union type instance that can be converted into a language-specific AST node.
  */
 export interface DiscriminatedUnionTypeInstance {
-    discriminantValue: NameAndWireValue;
-    singleDiscriminatedUnionType: dynamic.SingleDiscriminatedUnionType;
+    discriminantValue: FernIr.NameAndWireValue;
+    singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     value: unknown;
 }

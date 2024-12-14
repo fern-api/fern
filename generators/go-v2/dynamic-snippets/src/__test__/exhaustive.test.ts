@@ -2,7 +2,6 @@ import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGener
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
 import { TestCase } from "./utils/TestCase";
 
 describe("exhaustive", () => {

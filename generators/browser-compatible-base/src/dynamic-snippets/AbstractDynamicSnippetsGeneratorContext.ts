@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "../GeneratorNotificationService";
-import { dynamic, TypeId, EnvironmentId } from "@fern-api/dynamic-ir-sdk/api";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "./TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance";
@@ -10,14 +10,14 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.GeneratorConfig;
     public errors: ErrorReporter;
 
-    private _ir: dynamic.DynamicIntermediateRepresentation;
+    private _ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     private httpEndpointReferenceParser: HttpEndpointReferenceParser;
 
     constructor({
         ir,
         config
     }: {
-        ir: dynamic.DynamicIntermediateRepresentation;
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
     }) {
         this._ir = ir;
@@ -30,8 +30,8 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         parameters,
         values
     }: {
-        parameters: dynamic.NamedParameter[];
-        values: dynamic.Values;
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
@@ -62,8 +62,8 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         values,
         ignoreMissingParameters
     }: {
-        parameters: dynamic.NamedParameter[];
-        values: dynamic.Values;
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
@@ -111,7 +111,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return value as Record<string, unknown>;
     }
 
-    public resolveNamedType({ typeId }: { typeId: TypeId }): dynamic.NamedType | undefined {
+    public resolveNamedType({ typeId }: { typeId: FernIr.TypeId }): FernIr.dynamic.NamedType | undefined {
         const namedType = this._ir.types[typeId];
         if (namedType == null) {
             this.errors.add({
@@ -127,7 +127,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         discriminatedUnion,
         value
     }: {
-        discriminatedUnion: dynamic.DiscriminatedUnionType;
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): DiscriminatedUnionTypeInstance | undefined {
         const record = this.getRecord(value);
@@ -171,7 +171,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         };
     }
 
-    public resolveEndpointOrThrow(rawEndpoint: string): dynamic.Endpoint[] {
+    public resolveEndpointOrThrow(rawEndpoint: string): FernIr.dynamic.Endpoint[] {
         const parsedEndpoint = this.httpEndpointReferenceParser.tryParse(rawEndpoint);
         if (parsedEndpoint == null) {
             throw new Error(`Failed to parse endpoint reference "${rawEndpoint}"`);
@@ -179,8 +179,8 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return this.resolveEndpointLocationOrThrow(parsedEndpoint);
     }
 
-    public resolveEndpointLocationOrThrow(location: dynamic.EndpointLocation): dynamic.Endpoint[] {
-        const endpoints: dynamic.Endpoint[] = [];
+    public resolveEndpointLocationOrThrow(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
+        const endpoints: FernIr.dynamic.Endpoint[] = [];
         for (const endpoint of Object.values(this._ir.endpoints)) {
             if (this.parsedEndpointMatches({ endpoint, parsedEndpoint: location })) {
                 endpoints.push(endpoint);
@@ -192,7 +192,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return endpoints;
     }
 
-    public fileUploadHasBodyProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
+    public fileUploadHasBodyProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
                 case "file":
@@ -206,7 +206,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         });
     }
 
-    public fileUploadHasFileProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
+    public fileUploadHasFileProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
                 case "file":
@@ -220,7 +220,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         });
     }
 
-    public isFileUploadRequestBody(body: dynamic.InlinedRequestBody): body is dynamic.InlinedRequestBody.FileUpload {
+    public isFileUploadRequestBody(
+        body: FernIr.dynamic.InlinedRequestBody
+    ): body is FernIr.dynamic.InlinedRequestBody.FileUpload {
         switch (body.type) {
             case "fileUpload":
                 return true;
@@ -232,13 +234,13 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
     }
 
-    public isSingleEnvironmentID(environment: dynamic.EnvironmentValues): environment is EnvironmentId {
+    public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
         return typeof environment === "string";
     }
 
     public isMultiEnvironmentValues(
-        environment: dynamic.EnvironmentValues
-    ): environment is dynamic.MultipleEnvironmentUrlValues {
+        environment: FernIr.dynamic.EnvironmentValues
+    ): environment is FernIr.dynamic.MultipleEnvironmentUrlValues {
         return typeof environment === "object";
     }
 
@@ -246,7 +248,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
     }
 
-    private isListTypeReference(typeReference: dynamic.TypeReference): boolean {
+    private isListTypeReference(typeReference: FernIr.dynamic.TypeReference): boolean {
         if (typeReference.type === "optional") {
             return this.isListTypeReference(typeReference.value);
         }
@@ -257,7 +259,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         endpoint,
         parsedEndpoint
     }: {
-        endpoint: dynamic.Endpoint;
+        endpoint: FernIr.dynamic.Endpoint;
         parsedEndpoint: HttpEndpointReferenceParser.Parsed;
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;

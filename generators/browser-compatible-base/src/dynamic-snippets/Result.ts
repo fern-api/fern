@@ -1,6 +1,6 @@
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 import { ErrorReporter } from "./ErrorReporter";
-import { dynamic } from "@fern-api/dynamic-ir-sdk/api";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 export class Result {
     public reporter: ErrorReporter | undefined;
@@ -20,7 +20,11 @@ export class Result {
         }
     }
 
-    public getResponseOrThrow({ endpoint }: { endpoint: dynamic.EndpointLocation }): dynamic.EndpointSnippetResponse {
+    public getResponseOrThrow({
+        endpoint
+    }: {
+        endpoint: FernIr.dynamic.EndpointLocation;
+    }): FernIr.dynamic.EndpointSnippetResponse {
         if (this.snippet != null && this.reporter != null) {
             return {
                 snippet: this.snippet,
