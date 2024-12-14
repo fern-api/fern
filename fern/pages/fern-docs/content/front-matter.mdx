@@ -177,6 +177,28 @@ Controls the conditional rendering of the on-page feedback form at the bottom of
   <img src="./on-page-feedback.png" alt="On-page feedback feature" />
 </Frame>
 
+## Page logo
+
+**Name**: `logo`<br />
+**Type**: object<br />
+**Default**: None
+
+You can override the site-wide logo for a page by setting a field named `logo` in any page's frontmatter like this:
+
+<CodeBlock title='index.mdx logo example'>
+
+```mdx
+---
+logo:
+  light: /path/to/page-logo.png
+  dark: /path/to/page-logo.png
+---
+```
+
+</CodeBlock>
+
+This field specifies the logo for this page. If no logo is set, the site-wide [logo configuration](/learn/docs/getting-started/global-configuration#logo-configuration) is used.
+
 ## SEO metadata
 
 Fern also supports adding SEO-specific metadata in the frontmatter. 

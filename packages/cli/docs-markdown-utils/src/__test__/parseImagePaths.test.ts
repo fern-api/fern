@@ -140,6 +140,90 @@ describe("parseImagePaths", () => {
         );
     });
 
+    it("should parse logo from frontmatter text", () => {
+        const page = '---\nlogo: "path/to/image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            type: fileId
+            value: /Volume/git/fern/my/docs/folder/path/to/image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse url logo from frontmatter text", () => {
+        const page = '---\nlogo: "https://someurl.com"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            type: url
+            value: 'https://someurl.com'
+          ---"
+        `
+        );
+    });
+
+    it("should parse light and dark logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  light: "path/to/light-image.png"\n  dark: "path/to/dark-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([
+            "/Volume/git/fern/my/docs/folder/path/to/light-image.png",
+            "/Volume/git/fern/my/docs/folder/path/to/dark-image.png"
+        ]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            light:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/light-image.png
+            dark:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/dark-image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse light logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  light: "path/to/light-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/light-image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            light:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/light-image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse dark logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  dark: "path/to/dark-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/dark-image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            dark:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/dark-image.png
+          ---"
+        `
+        );
+    });
+
     it("should parse the same result when run twice for frontmatter text", () => {
         const page = '---\nimage: "path/to/image.png"\n---';
         const result = parseImagePaths(page, PATHS);
