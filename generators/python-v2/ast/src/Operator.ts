@@ -41,8 +41,10 @@ export class Operator extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(`${this.lhs.toString()} `);
+        this.lhs.write(writer);
+        writer.write(" ");
         writer.write(this.getOperatorString());
-        writer.write(` ${this.rhs.toString()}`);
+        writer.write(" ");
+        this.rhs.write(writer);
     }
 }

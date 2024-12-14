@@ -156,6 +156,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 }
 
 func (u Union) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -194,6 +197,40 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 	case "bar":
 		return visitor.VisitBar(u.Bar)
 	}
+}
+
+func (u *Union) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if u.Bar != nil {
+		fields = append(fields, "bar")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithBaseProperties struct {
@@ -292,6 +329,9 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -339,6 +379,43 @@ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor)
 	case "foo":
 		return visitor.VisitFoo(u.Foo)
 	}
+}
+
+func (u *UnionWithBaseProperties) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Integer != 0 {
+		fields = append(fields, "integer")
+	}
+	if u.String != "" {
+		fields = append(fields, "string")
+	}
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithDiscriminant struct {
@@ -410,6 +487,9 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -448,6 +528,40 @@ func (u *UnionWithDiscriminant) Accept(visitor UnionWithDiscriminantVisitor) err
 	case "bar":
 		return visitor.VisitBar(u.Bar)
 	}
+}
+
+func (u *UnionWithDiscriminant) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if u.Bar != nil {
+		fields = append(fields, "bar")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithLiteral struct {
@@ -514,6 +628,9 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -542,6 +659,37 @@ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 	case "fern":
 		return visitor.VisitFern(u.fern)
 	}
+}
+
+func (u *UnionWithLiteral) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.fern != "" {
+		fields = append(fields, "fern")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithOptionalTime struct {
@@ -612,6 +760,9 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -650,6 +801,40 @@ func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) err
 	case "dateimte":
 		return visitor.VisitDateimte(u.Dateimte)
 	}
+}
+
+func (u *UnionWithOptionalTime) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Date != nil {
+		fields = append(fields, "date")
+	}
+	if u.Dateimte != nil {
+		fields = append(fields, "dateimte")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithPrimitive struct {
@@ -720,6 +905,9 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -758,6 +946,40 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	case "string":
 		return visitor.VisitString(u.String)
 	}
+}
+
+func (u *UnionWithPrimitive) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Integer != 0 {
+		fields = append(fields, "integer")
+	}
+	if u.String != "" {
+		fields = append(fields, "string")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithSingleElement struct {
@@ -806,6 +1028,9 @@ func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithSingleElement) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -825,6 +1050,37 @@ func (u *UnionWithSingleElement) Accept(visitor UnionWithSingleElementVisitor) e
 	case "foo":
 		return visitor.VisitFoo(u.Foo)
 	}
+}
+
+func (u *UnionWithSingleElement) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithTime struct {
@@ -915,6 +1171,9 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -965,6 +1224,43 @@ func (u *UnionWithTime) Accept(visitor UnionWithTimeVisitor) error {
 	case "datetime":
 		return visitor.VisitDatetime(u.Datetime)
 	}
+}
+
+func (u *UnionWithTime) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Value != 0 {
+		fields = append(fields, "value")
+	}
+	if !u.Date.IsZero() {
+		fields = append(fields, "date")
+	}
+	if !u.Datetime.IsZero() {
+		fields = append(fields, "datetime")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithUnknown struct {
@@ -1031,6 +1327,9 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -1062,6 +1361,40 @@ func (u *UnionWithUnknown) Accept(visitor UnionWithUnknownVisitor) error {
 	case "unknown":
 		return visitor.VisitUnknown(u.Unknown)
 	}
+}
+
+func (u *UnionWithUnknown) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if u.Unknown != nil {
+		fields = append(fields, "unknown")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type UnionWithoutKey struct {
@@ -1129,6 +1462,9 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -1153,4 +1489,38 @@ func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
 	case "bar":
 		return visitor.VisitBar(u.Bar)
 	}
+}
+
+func (u *UnionWithoutKey) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Foo != nil {
+		fields = append(fields, "foo")
+	}
+	if u.Bar != nil {
+		fields = append(fields, "bar")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }

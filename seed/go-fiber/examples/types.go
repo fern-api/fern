@@ -673,6 +673,9 @@ func (e *Exception) UnmarshalJSON(data []byte) error {
 }
 
 func (e Exception) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -704,6 +707,40 @@ func (e *Exception) Accept(visitor ExceptionVisitor) error {
 	case "timeout":
 		return visitor.VisitTimeout(e.Timeout)
 	}
+}
+
+func (e *Exception) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Generic != nil {
+		fields = append(fields, "generic")
+	}
+	if e.Timeout != nil {
+		fields = append(fields, "timeout")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExceptionInfo struct {
@@ -1034,6 +1071,9 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 }
 
 func (m Metadata) MarshalJSON() ([]byte, error) {
+	if err := m.validate(); err != nil {
+		return nil, err
+	}
 	switch m.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", m.Type, m)
@@ -1080,6 +1120,40 @@ func (m *Metadata) Accept(visitor MetadataVisitor) error {
 	case "markdown":
 		return visitor.VisitMarkdown(m.Markdown)
 	}
+}
+
+func (m *Metadata) validate() error {
+	if m == nil {
+		return fmt.Errorf("type %T is nil", m)
+	}
+	var fields []string
+	if m.Html != "" {
+		fields = append(fields, "html")
+	}
+	if m.Markdown != "" {
+		fields = append(fields, "markdown")
+	}
+	if len(fields) == 0 {
+		if m.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", m, m.Type)
+		}
+		return fmt.Errorf("type %T is empty", m)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", m, fields)
+	}
+	if m.Type != "" {
+		field := fields[0]
+		if m.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				m,
+				m.Type,
+				m,
+			)
+		}
+	}
+	return nil
 }
 
 type Migration struct {
@@ -1166,7 +1240,7 @@ type Moment struct {
 
 func (m *Moment) GetId() uuid.UUID {
 	if m == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return m.Id
 }
@@ -1660,6 +1734,9 @@ func (t *Test) UnmarshalJSON(data []byte) error {
 }
 
 func (t Test) MarshalJSON() ([]byte, error) {
+	if err := t.validate(); err != nil {
+		return nil, err
+	}
 	switch t.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
@@ -1698,6 +1775,40 @@ func (t *Test) Accept(visitor TestVisitor) error {
 	case "or":
 		return visitor.VisitOr(t.Or)
 	}
+}
+
+func (t *Test) validate() error {
+	if t == nil {
+		return fmt.Errorf("type %T is nil", t)
+	}
+	var fields []string
+	if t.And != false {
+		fields = append(fields, "and")
+	}
+	if t.Or != false {
+		fields = append(fields, "or")
+	}
+	if len(fields) == 0 {
+		if t.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", t, t.Type)
+		}
+		return fmt.Errorf("type %T is empty", t)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", t, fields)
+	}
+	if t.Type != "" {
+		field := fields[0]
+		if t.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				t,
+				t.Type,
+				t,
+			)
+		}
+	}
+	return nil
 }
 
 type Tree struct {

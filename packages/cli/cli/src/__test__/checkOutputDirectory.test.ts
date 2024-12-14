@@ -12,7 +12,7 @@ vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(false)
 }));
 
-describe("checkOutputDirectory", () => {
+describe.sequential("checkOutputDirectory", () => {
     let mockCliContext: {
         confirmPrompt: Mock & ((message: string, defaultValue?: boolean) => Promise<boolean>);
     };

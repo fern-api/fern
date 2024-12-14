@@ -1,8 +1,7 @@
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 
 export abstract class AbstractDynamicSnippetsGenerator<
-    DynamicIntermediateRepresentation,
-    Context extends AbstractDynamicSnippetsGeneratorContext<DynamicIntermediateRepresentation>,
+    Context extends AbstractDynamicSnippetsGeneratorContext,
     EndpointSnippetRequest,
     EndpointSnippetResponse
 > {
