@@ -7,6 +7,7 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
+import { z } from "zod";
 
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
@@ -405,48 +406,48 @@ function visitFrontmatterImages(
     }
 }
 
+const LogoOverrideFrontmatterSchema = z.union([
+    z.string(),
+    z.object({
+        light: z.string().optional(),
+        dark: z.string().optional()
+    })
+]);
+
+export function convertImageToFileIdOrUrl(
+    value: string,
+    mapImage: (image: string | undefined) => string | undefined
+): CjsFdrSdk.docs.latest.FileIdOrUrl {
+    const mappedImage = mapImage(value);
+    return mappedImage
+        ? {
+              type: "fileId",
+              value: CjsFdrSdk.FileId(mappedImage)
+          }
+        : {
+              type: "url",
+              value: CjsFdrSdk.Url(value)
+          };
+}
+
 function parseFrontmatterImagesforLogo(
     data: Record<string, any>,
     mapImage: (image: string | undefined) => string | undefined
 ) {
-    const value = data.logo;
-    if (value != null) {
-        if (typeof value === "string") {
-            const mappedImage = mapImage(value);
-            data.logo = mappedImage
-                ? {
-                      type: "fileId",
-                      value: CjsFdrSdk.FileId(mappedImage)
-                  }
-                : {
-                      type: "url",
-                      value: CjsFdrSdk.Url(value)
-                  };
-        } else if (typeof value === "object") {
-            if ("light" in value && typeof value.light === "string") {
-                const mappedImage = mapImage(value.light);
-                data.logo.light = mappedImage
-                    ? {
-                          type: "fileId",
-                          value: CjsFdrSdk.FileId(mappedImage)
-                      }
-                    : {
-                          type: "url",
-                          value: CjsFdrSdk.Url(value.light)
-                      };
-            }
-            if ("dark" in value && typeof value.dark === "string") {
-                const mappedImage = mapImage(value.dark);
-                data.logo.dark = mappedImage
-                    ? {
-                          type: "fileId",
-                          value: CjsFdrSdk.FileId(mappedImage)
-                      }
-                    : {
-                          type: "url",
-                          value: CjsFdrSdk.Url(value.dark)
-                      };
-            }
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    if (!parsedValue.success) {
+        return;
+    }
+    const parsedFrontmatterLogo = parsedValue.data;
+
+    if (typeof parsedFrontmatterLogo === "string") {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    } else {
+        if (parsedFrontmatterLogo.light != null) {
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+        }
+        if (parsedFrontmatterLogo.dark != null) {
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
         }
     }
 }
@@ -455,30 +456,20 @@ function replaceFrontmatterImagesforLogo(
     data: Record<string, any>,
     mapImage: (image: string | undefined) => string | undefined
 ) {
-    const value = data.logo;
-    if (value != null && typeof value === "object") {
-        if ("type" in value && value.type === "fileId") {
-            data.logo = {
-                type: "fileId",
-                value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
-            };
-        } else {
-            if ("light" in value && value.light != null) {
-                if ("type" in value.light && value.light.type === "fileId") {
-                    data.logo.light = {
-                        type: "fileId",
-                        value: CjsFdrSdk.FileId(mapImage(value.light.value) ?? value.light.value)
-                    };
-                }
-            }
-            if ("dark" in value && value.dark != null) {
-                if ("type" in value.dark && value.dark.type === "fileId") {
-                    data.logo.dark = {
-                        type: "fileId",
-                        value: CjsFdrSdk.FileId(mapImage(value.dark.value) ?? value.dark.value)
-                    };
-                }
-            }
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    if (!parsedValue.success) {
+        return;
+    }
+    const parsedFrontmatterLogo = parsedValue.data;
+
+    if (typeof parsedFrontmatterLogo === "string") {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    } else {
+        if (parsedFrontmatterLogo.light != null) {
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+        }
+        if (parsedFrontmatterLogo.dark != null) {
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
         }
     }
 }
