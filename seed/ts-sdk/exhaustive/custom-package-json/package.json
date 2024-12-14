@@ -7,7 +7,7 @@
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
         "bundle": "node build.js",
-        "build": "pnpm compile && pnpm bundle"
+        "build": "yarn compile && yarn bundle"
     },
     "files": [
         "exampleFile",

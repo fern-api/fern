@@ -4,11 +4,11 @@ RUN apk --no-cache add git zip \
   && git config --global user.name "fern" \
   && git config --global user.email "hey@buildwithfern.com"
 
-RUN npm install -g pnpm@9
+ENV YARN_CACHE_FOLDER=/.yarn
 
-RUN pnpm init
+RUN yarn init --yes
 
-RUN  pnpm add \
+RUN  yarn add \
   # jest
   jest@29.7.0 \
   @types/jest@29.5.5 \

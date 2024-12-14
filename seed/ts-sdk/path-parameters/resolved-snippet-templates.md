@@ -2,6 +2,35 @@
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.organizations.getOrganization("organizationId");
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.organizations.getOrganizationUser("organizationId", "userId");
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.organizations.searchOrganizations("organizationId", {
+  limit: 1,
+});
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.getOrganization("organizationId");
  
 ```                        

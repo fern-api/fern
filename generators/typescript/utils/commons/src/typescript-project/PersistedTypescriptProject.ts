@@ -68,12 +68,12 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const pnpm = createLoggingExecutable("pnpm", {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         });
 
-        await pnpm(["install"]);
+        await yarn(["install"]);
 
         this.hasInstalled = true;
     }
@@ -89,11 +89,11 @@ export class PersistedTypescriptProject {
 
         await this.installDependencies(logger);
 
-        const pnpm = createLoggingExecutable("pnpm", {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         });
-        await pnpm(this.formatCommand);
+        await yarn(this.formatCommand);
 
         this.hasFormatted = true;
     }
@@ -109,11 +109,11 @@ export class PersistedTypescriptProject {
 
         await this.format(logger);
 
-        const pnpm = createLoggingExecutable("pnpm", {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         });
-        await pnpm(this.buildCommand);
+        await yarn(this.buildCommand);
 
         this.hasBuilt = true;
     }

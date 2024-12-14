@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core";
+import { Organizations } from "./api/resources/organizations/client/Client";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedPathParametersClient {
@@ -23,9 +24,14 @@ export declare namespace SeedPathParametersClient {
 }
 
 export class SeedPathParametersClient {
+    protected _organizations: Organizations | undefined;
     protected _user: User | undefined;
 
     constructor(protected readonly _options: SeedPathParametersClient.Options) {}
+
+    public get organizations(): Organizations {
+        return (this._organizations ??= new Organizations(this._options));
+    }
 
     public get user(): User {
         return (this._user ??= new User(this._options));
