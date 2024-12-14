@@ -239,7 +239,7 @@ export class EndpointSnippetGenerator {
                 if (typeReference == null) {
                     this.context.errors.add({
                         severity: Severity.Warning,
-                        message: `Environment "${JSON.stringify(environment)}" was not found`
+                        message: `Environment ${JSON.stringify(environment)} was not found`
                     });
                     return undefined;
                 }
