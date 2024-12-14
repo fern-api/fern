@@ -13,3 +13,19 @@ groups:
           outputSourceFiles: true
           namespaceExport: FernDefinition
           retainOriginalCasing: true
+  
+  docs-parsers:
+    audiences:
+      - docs-parsers
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.39.3
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/docs-parsers-fern-definition"
+        config:
+          outputSourceFiles: true
+          namespaceExport: FernDefinition
+          retainOriginalCasing: true
+        
