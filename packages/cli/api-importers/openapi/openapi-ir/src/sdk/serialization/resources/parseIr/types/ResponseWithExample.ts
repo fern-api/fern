@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { FileResponse } from "../../finalIr/types/FileResponse";
 import { JsonResponseWithExample } from "./JsonResponseWithExample";
 import { TextResponse } from "../../finalIr/types/TextResponse";
-import { JsonResponse } from "../../finalIr/types/JsonResponse";
 
 export const ResponseWithExample: core.serialization.Schema<
     serializers.ResponseWithExample.Raw,
@@ -18,7 +17,7 @@ export const ResponseWithExample: core.serialization.Schema<
         file: FileResponse,
         json: JsonResponseWithExample,
         text: TextResponse,
-        streamingSse: JsonResponse,
+        streamingSse: JsonResponseWithExample,
         streamingText: TextResponse,
         streamingJson: JsonResponseWithExample,
     })
@@ -65,7 +64,7 @@ export declare namespace ResponseWithExample {
         type: "text";
     }
 
-    interface StreamingSse extends JsonResponse.Raw {
+    interface StreamingSse extends JsonResponseWithExample.Raw {
         type: "streamingSse";
     }
 
