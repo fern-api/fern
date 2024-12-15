@@ -2,7 +2,7 @@
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getOrganization("organizationId");
+await client.organizations.getOrganization("tenantId", "organizationId");
  
 ```                        
 
@@ -11,7 +11,11 @@ await client.user.getOrganization("organizationId");
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getUser("userId");
+await client.organizations.getOrganizationUser(
+  "tenantId",
+  "organizationId",
+  "userId"
+);
  
 ```                        
 
@@ -20,16 +24,7 @@ await client.user.getUser("userId");
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getOrganizationUser("organizationId", "userId");
- 
-```                        
-
-
-```typescript
-import { SeedPathParametersClient } from "@fern/path-parameters";
-
-const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.searchUsers("userId", {
+await client.organizations.searchOrganizations("tenantId", "organizationId", {
   limit: 1,
 });
  
@@ -40,7 +35,16 @@ await client.user.searchUsers("userId", {
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.searchOrganizations("organizationId", {
+await client.user.getUser("tenantId", "userId");
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.searchUsers("tenantId", "userId", {
   limit: 1,
 });
  

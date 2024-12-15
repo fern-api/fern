@@ -1,9 +1,4 @@
 types:
-  Organization:
-    properties:
-      name: string
-      tags: list<string>
-
   User:
     properties:
       name: string
@@ -13,15 +8,8 @@ service:
   base-path: /user
   auth: false
   endpoints:
-    getOrganization:
-      path: "/organizations/{organizationId}"
-      method: GET
-      path-parameters:
-        organizationId: string
-      response: Organization
-
     getUser:
-      path: "/users/{userId}"
+      path: "/{userId}"
       method: GET
       request:
         name: GetUsersRequest
@@ -29,18 +17,8 @@ service:
           userId: string
       response: User
 
-    getOrganizationUser:
-      path: "/organizations/{organizationId}/users/{userId}"
-      method: GET
-      request:
-        name: GetOrganizationUserRequest
-        path-parameters:
-          organizationId: string
-          userId: string
-      response: User
-
     searchUsers:
-      path: "/users/{userId}/search"
+      path: "/{userId}/search"
       method: GET
       request:
         name: SearchUsersRequest
@@ -49,14 +27,3 @@ service:
         query-parameters:
           limit: optional<integer>
       response: list<User>
-
-    searchOrganizations:
-      path: "/organizations/{organizationId}/search"
-      method: GET
-      path-parameters:
-        organizationId: string
-      request:
-        name: SearchOrganizationsRequest
-        query-parameters:
-          limit: optional<integer>
-      response: list<Organization>

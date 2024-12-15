@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import resources.user.types.Organization;
 import resources.user.types.User;
 
 @RequestMapping(
@@ -20,35 +19,15 @@ import resources.user.types.User;
 )
 public interface UserService {
   @GetMapping(
-      value = "/organizations/{organizationId}",
-      produces = "application/json"
-  )
-  Organization getOrganization(@PathVariable("organizationId") String organizationId);
-
-  @GetMapping(
-      value = "/users/{userId}",
+      value = "/{userId}",
       produces = "application/json"
   )
   User getUser(@PathVariable("userId") String userId);
 
   @GetMapping(
-      value = "/organizations/{organizationId}/users/{userId}",
-      produces = "application/json"
-  )
-  User getOrganizationUser(@PathVariable("organizationId") String organizationId,
-      @PathVariable("userId") String userId);
-
-  @GetMapping(
-      value = "/users/{userId}/search",
+      value = "/{userId}/search",
       produces = "application/json"
   )
   List<User> searchUsers(@PathVariable("userId") String userId,
-      @RequestParam("limit") Optional<Integer> limit);
-
-  @GetMapping(
-      value = "/organizations/{organizationId}/search",
-      produces = "application/json"
-  )
-  List<Organization> searchOrganizations(@PathVariable("organizationId") String organizationId,
       @RequestParam("limit") Optional<Integer> limit);
 }

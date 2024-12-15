@@ -6,9 +6,9 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/user/organizations/{organizationId}",
+            "path": "/{tenantId}/organizations/{organizationId}/",
             "method": "GET",
-            "identifierOverride": "endpoint_user.getOrganization"
+            "identifierOverride": "endpoint_organizations.getOrganization"
         },
         "snippetTemplate": {
             "clientInstantiation": {
@@ -45,7 +45,7 @@
             },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await client.user.getOrganization(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.organizations.getOrganization(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -56,6 +56,22 @@
                             "isOptional": false,
                             "inputDelimiter": ",\n\t",
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "tenantId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -90,7 +106,251 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/user/users/{userId}",
+            "path": "/{tenantId}/organizations/{organizationId}/users/{userId}",
+            "method": "GET",
+            "identifierOverride": "endpoint_organizations.getOrganizationUser"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
+                ],
+                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.organizations.getOrganizationUser(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "tenantId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "organizationId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "userId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/path-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/{tenantId}/organizations/{organizationId}/search",
+            "method": "GET",
+            "identifierOverride": "endpoint_organizations.searchOrganizations"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
+                ],
+                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.organizations.searchOrganizations(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "tenantId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "organizationId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "limit: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "limit",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/path-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/{tenantId}/user/{userId}",
             "method": "GET",
             "identifierOverride": "endpoint_user.getUser"
         },
@@ -148,91 +408,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "userId",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/path-parameters",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/user/organizations/{organizationId}/users/{userId}",
-            "method": "GET",
-            "identifierOverride": "endpoint_user.getOrganizationUser"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [
-                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
-                ],
-                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
-                "isOptional": false,
-                "inputDelimiter": ",",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{ $FERN_INPUT }",
-                            "isOptional": true,
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
-            "functionInvocation": {
-                "imports": [],
-                "templateString": "await client.user.getOrganizationUser(\n\t$FERN_INPUT\n)",
-                "isOptional": false,
-                "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "$FERN_INPUT",
-                                        "isOptional": true,
-                                        "templateInputs": [
-                                            {
-                                                "location": "PATH",
-                                                "path": "organizationId",
+                                                "path": "tenantId",
                                                 "type": "payload"
                                             }
                                         ],
@@ -274,7 +450,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/user/users/{userId}/search",
+            "path": "/{tenantId}/user/{userId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -332,110 +508,14 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "userId",
+                                                "path": "tenantId",
                                                 "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
                                     },
                                     "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "limit: $FERN_INPUT",
-                                        "isOptional": true,
-                                        "templateInputs": [
-                                            {
-                                                "location": "QUERY",
-                                                "path": "limit",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/path-parameters",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/user/organizations/{organizationId}/search",
-            "method": "GET",
-            "identifierOverride": "endpoint_user.searchOrganizations"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [
-                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
-                ],
-                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
-                "isOptional": false,
-                "inputDelimiter": ",",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{ $FERN_INPUT }",
-                            "isOptional": true,
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
-            "functionInvocation": {
-                "imports": [],
-                "templateString": "await client.user.searchOrganizations(\n\t$FERN_INPUT\n)",
-                "isOptional": false,
-                "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -444,7 +524,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "organizationId",
+                                                "path": "userId",
                                                 "type": "payload"
                                             }
                                         ],
