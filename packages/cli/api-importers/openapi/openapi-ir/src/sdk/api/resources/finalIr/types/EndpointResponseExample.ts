@@ -12,9 +12,8 @@ export type EndpointResponseExample =
     | FernOpenapiIr.EndpointResponseExample.WithoutStreaming;
 
 export declare namespace EndpointResponseExample {
-    interface WithStreaming extends _Utils {
+    interface WithStreaming extends FernOpenapiIr.StreamingResponseExample, _Utils {
         type: "withStreaming";
-        value: FernOpenapiIr.FullExample[];
     }
 
     interface WithoutStreaming extends _Utils {
@@ -27,16 +26,18 @@ export declare namespace EndpointResponseExample {
     }
 
     interface _Visitor<_Result> {
-        withStreaming: (value: FernOpenapiIr.FullExample[]) => _Result;
+        withStreaming: (value: FernOpenapiIr.StreamingResponseExample) => _Result;
         withoutStreaming: (value: FernOpenapiIr.FullExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const EndpointResponseExample = {
-    withStreaming: (value: FernOpenapiIr.FullExample[]): FernOpenapiIr.EndpointResponseExample.WithStreaming => {
+    withStreaming: (
+        value: FernOpenapiIr.StreamingResponseExample
+    ): FernOpenapiIr.EndpointResponseExample.WithStreaming => {
         return {
-            value: value,
+            ...value,
             type: "withStreaming",
             _visit: function <_Result>(
                 this: FernOpenapiIr.EndpointResponseExample.WithStreaming,
@@ -66,7 +67,7 @@ export const EndpointResponseExample = {
     ): _Result => {
         switch (value.type) {
             case "withStreaming":
-                return visitor.withStreaming(value.value);
+                return visitor.withStreaming(value);
             case "withoutStreaming":
                 return visitor.withoutStreaming(value.value);
             default:

@@ -26,6 +26,7 @@ export * from "./FernExample";
 export * from "./EndpointExample";
 export * from "./FullEndpointExample";
 export * from "./EndpointResponseExample";
+export * from "./StreamingResponseExample";
 export * from "./PathParameterExample";
 export * from "./QueryParameterExample";
 export * from "./HeaderExample";
