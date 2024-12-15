@@ -426,7 +426,7 @@ export class Params {
      * PUT to update with path param
      *
      * @param {string} param
-     * @param {Fiddle.endpoints.ModifyResourceAtPath} request
+     * @param {Fiddle.endpoints.ModifyResourceAtInlinedPath} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -436,7 +436,7 @@ export class Params {
      */
     public async modifyWithInlinePath(
         param: string,
-        request: Fiddle.endpoints.ModifyResourceAtPath,
+        request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
         const _response = await core.fetcher({

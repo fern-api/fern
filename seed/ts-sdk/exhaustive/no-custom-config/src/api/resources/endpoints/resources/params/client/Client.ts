@@ -519,7 +519,7 @@ export class Params {
      * PUT to update with path param
      *
      * @param {string} param
-     * @param {SeedExhaustive.endpoints.ModifyResourceAtPath} request
+     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -529,7 +529,7 @@ export class Params {
      */
     public async modifyWithInlinePath(
         param: string,
-        request: SeedExhaustive.endpoints.ModifyResourceAtPath,
+        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions
     ): Promise<string> {
         const _response = await core.fetcher({

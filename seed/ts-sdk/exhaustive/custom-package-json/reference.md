@@ -1757,7 +1757,7 @@ await client.endpoints.params.modifyWithInlinePath("param", {
 <dl>
 <dd>
 
-**request:** `Fiddle.endpoints.ModifyResourceAtPath`
+**request:** `Fiddle.endpoints.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>

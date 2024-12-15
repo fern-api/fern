@@ -1757,7 +1757,7 @@ await client.endpoints.params.modifyWithInlinePath("param", {
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.ModifyResourceAtPath`
+**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>

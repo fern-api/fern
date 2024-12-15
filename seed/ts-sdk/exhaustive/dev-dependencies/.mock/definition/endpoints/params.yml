@@ -82,7 +82,7 @@ service:
       path: /path/{param}
       method: PUT
       request:
-        name: ModifyResourceAtPath
+        name: ModifyResourceAtInlinedPath
         body: string
         path-parameters:
           param: string
