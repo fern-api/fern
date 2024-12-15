@@ -7396,22 +7396,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ModifyResourceAtPath",
+                        "originalName": "ModifyResourceAtInlinedPath",
                         "camelCase": {
-                            "unsafeName": "modifyResourceAtPath",
-                            "safeName": "modifyResourceAtPath"
+                            "unsafeName": "modifyResourceAtInlinedPath",
+                            "safeName": "modifyResourceAtInlinedPath"
                         },
                         "snakeCase": {
-                            "unsafeName": "modify_resource_at_path",
-                            "safeName": "modify_resource_at_path"
+                            "unsafeName": "modify_resource_at_inlined_path",
+                            "safeName": "modify_resource_at_inlined_path"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "MODIFY_RESOURCE_AT_PATH",
-                            "safeName": "MODIFY_RESOURCE_AT_PATH"
+                            "unsafeName": "MODIFY_RESOURCE_AT_INLINED_PATH",
+                            "safeName": "MODIFY_RESOURCE_AT_INLINED_PATH"
                         },
                         "pascalCase": {
-                            "unsafeName": "ModifyResourceAtPath",
-                            "safeName": "ModifyResourceAtPath"
+                            "unsafeName": "ModifyResourceAtInlinedPath",
+                            "safeName": "ModifyResourceAtInlinedPath"
                         }
                     },
                     "fernFilepath": {
