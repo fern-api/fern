@@ -106,7 +106,7 @@ function convertObject(object: Record<PropertyKey, FullExample>): RawSchemas.Exa
 
 function convertSseExample(fullExamples: FullExample[]): RawSchemas.ExampleSseEventSchema[] {
     return fullExamples.map((fullExample) => {
-        return { event: "", data: convertFullExample(fullExample) }
+        return { event: "", data: convertFullExample(fullExample) };
     });
 }
 
