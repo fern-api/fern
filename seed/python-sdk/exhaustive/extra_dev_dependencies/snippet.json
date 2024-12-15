@@ -290,19 +290,6 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_inline_path(\n    param=\"param\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_inline_path(\n        param=\"param\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
@@ -342,19 +329,6 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_inline_path_and_query(\n    param=\"param\",\n    query=\"query\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_inline_path_and_query(\n        param=\"param\",\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithPath"
@@ -362,19 +336,6 @@
             "snippet": {
                 "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_path(\n    param=\"param\",\n    request=\"string\",\n)\n",
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.modify_with_path(\n        param=\"param\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_inline_path(\n    param=\"param\",\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.modify_with_inline_path(\n        param=\"param\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

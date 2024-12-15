@@ -63,52 +63,6 @@ class ParamsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        GET with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.params.get_with_inline_path(
-            param="param",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def get_with_query(
         self, *, query: str, number: int, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
@@ -259,54 +213,6 @@ class ParamsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_with_inline_path_and_query(
-        self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        GET with path and query params
-
-        Parameters
-        ----------
-        param : str
-
-        query : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.params.get_with_inline_path_and_query(
-            param="param",
-            query="query",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
-            method="GET",
-            params={
-                "query": query,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def modify_with_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
@@ -335,59 +241,6 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.modify_with_path(
-            param="param",
-            request="string",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def modify_with_inline_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.params.modify_with_inline_path(
             param="param",
             request="string",
         )
@@ -447,60 +300,6 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.get_with_path(
-                param="param",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        GET with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.params.get_with_inline_path(
                 param="param",
             )
 
@@ -700,62 +499,6 @@ class AsyncParamsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_with_inline_path_and_query(
-        self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        GET with path and query params
-
-        Parameters
-        ----------
-        param : str
-
-        query : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.params.get_with_inline_path_and_query(
-                param="param",
-                query="query",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
-            method="GET",
-            params={
-                "query": query,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def modify_with_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
@@ -789,67 +532,6 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.modify_with_path(
-                param="param",
-                request="string",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def modify_with_inline_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.params.modify_with_inline_path(
                 param="param",
                 request="string",
             )

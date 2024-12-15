@@ -244,17 +244,6 @@
         },
         {
             "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithInlinePath(\"param\");\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
@@ -288,17 +277,6 @@
         },
         {
             "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithInlinePathAndQuery(\"param\", {\n    query: \"query\"\n});\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithPath"
@@ -306,17 +284,6 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithPath(\"param\", \"string\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithInlinePath(\"param\", {\n    body: \"string\"\n});\n"
             }
         },
         {

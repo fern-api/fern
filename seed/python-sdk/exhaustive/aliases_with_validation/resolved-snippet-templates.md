@@ -413,17 +413,6 @@ client.endpoints.params.get_with_path(
 from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.params.get_with_inline_path(
-	param="param"
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_query(
 	query="query",
 	number=1
@@ -460,31 +449,7 @@ client.endpoints.params.get_with_path_and_query(
 from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.params.get_with_inline_path_and_query(
-	param="param",
-	query="query"
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.modify_with_path(
-	param="param",
-	request="string"
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-client.endpoints.params.modify_with_inline_path(
 	param="param",
 	request="string"
 )

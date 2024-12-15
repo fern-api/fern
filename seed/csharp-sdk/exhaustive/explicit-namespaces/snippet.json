@@ -268,18 +268,6 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(\"param\", new GetWithInlinePath());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
@@ -316,18 +304,6 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    \"param\",\n    new GetWithInlinePathAndQuery { Query = \"query\" }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithPath"
@@ -335,18 +311,6 @@
             "snippet": {
                 "type": "typescript",
                 "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithPathAsync(\"param\", \"string\");\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    \"param\",\n    new ModifyResourceAtInlinedPath { Body = \"string\" }\n);\n"
             }
         },
         {

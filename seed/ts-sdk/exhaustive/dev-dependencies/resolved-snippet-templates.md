@@ -451,18 +451,6 @@ const client = new FiddleClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.endpoints.params.getWithInlinePath("param");
- 
-```                        
-
-
-```typescript
-import { FiddleClient } from "@fern/exhaustive";
-
-const client = new FiddleClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
 await client.endpoints.params.getWithQuery({
   query: "query",
   number: 1,
@@ -503,36 +491,8 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-await client.endpoints.params.getWithInlinePathAndQuery("param", {
-  query: "query",
-});
- 
-```                        
-
-
-```typescript
-import { FiddleClient } from "@fern/exhaustive";
-
 const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.params.modifyWithPath(
-	"param",
-	{
-		"string"
-	}
-)
- 
-```                        
-
-
-```typescript
-import { FiddleClient } from "@fern/exhaustive";
-
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
-await client.endpoints.params.modifyWithInlinePath(
 	"param",
 	{
 		"string"
