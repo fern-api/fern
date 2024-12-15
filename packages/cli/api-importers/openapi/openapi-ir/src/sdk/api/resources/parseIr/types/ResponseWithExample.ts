@@ -27,7 +27,7 @@ export declare namespace ResponseWithExample {
         type: "text";
     }
 
-    interface StreamingSse extends FernOpenapiIr.JsonResponse, _Utils {
+    interface StreamingSse extends FernOpenapiIr.JsonResponseWithExample, _Utils {
         type: "streamingSse";
     }
 
@@ -47,7 +47,7 @@ export declare namespace ResponseWithExample {
         file: (value: FernOpenapiIr.FileResponse) => _Result;
         json: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         text: (value: FernOpenapiIr.TextResponse) => _Result;
-        streamingSse: (value: FernOpenapiIr.JsonResponse) => _Result;
+        streamingSse: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -94,7 +94,7 @@ export const ResponseWithExample = {
         };
     },
 
-    streamingSse: (value: FernOpenapiIr.JsonResponse): FernOpenapiIr.ResponseWithExample.StreamingSse => {
+    streamingSse: (value: FernOpenapiIr.JsonResponseWithExample): FernOpenapiIr.ResponseWithExample.StreamingSse => {
         return {
             ...value,
             type: "streamingSse",

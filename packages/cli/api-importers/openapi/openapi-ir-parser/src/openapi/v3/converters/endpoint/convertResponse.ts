@@ -171,15 +171,14 @@ function convertResolvedResponse({
                 return ResponseWithExample.streamingSse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
-                    schema: convertSchemaWithExampleToSchema(
-                        convertSchema(
-                            textEventStreamObject.schema,
-                            false,
-                            context,
-                            responseBreadcrumbs,
-                            source,
-                            namespace
-                        )
+                    fullExamples: textEventStreamObject.examples,
+                    schema: convertSchema(
+                        textEventStreamObject.schema,
+                        false,
+                        context,
+                        responseBreadcrumbs,
+                        source,
+                        namespace
                     ),
                     source
                 });
@@ -209,15 +208,14 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
-                        schema: convertSchemaWithExampleToSchema(
-                            convertSchema(
-                                jsonMediaObject.schema,
-                                false,
-                                context,
-                                responseBreadcrumbs,
-                                source,
-                                namespace
-                            )
+                        fullExamples: jsonMediaObject.examples,
+                        schema: convertSchema(
+                            jsonMediaObject.schema,
+                            false,
+                            context,
+                            responseBreadcrumbs,
+                            source,
+                            namespace
                         ),
                         source
                     });

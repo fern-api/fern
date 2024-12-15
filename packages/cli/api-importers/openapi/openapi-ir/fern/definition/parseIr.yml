@@ -112,7 +112,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
-      streamingSse: finalIr.JsonResponse
+      streamingSse: JsonResponseWithExample
       streamingText: finalIr.TextResponse
       streamingJson:
         type: JsonResponseWithExample
