@@ -11,7 +11,6 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     interface Options {
         environment: core.Supplier<string>;
-        tenantId: string;
     }
 
     interface RequestOptions {
@@ -30,6 +29,71 @@ export class User {
     constructor(protected readonly _options: User.Options) {}
 
     /**
+     * @param {string} organizationId
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getOrganization("organizationId")
+     */
+    public async getOrganization(
+        organizationId: string,
+        requestOptions?: User.RequestOptions
+    ): Promise<SeedPathParameters.Organization> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.Organization.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * @param {string} userId
      * @param {SeedPathParameters.GetUsersRequest} request
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
@@ -45,7 +109,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/users/${encodeURIComponent(userId)}`
+                `/user/users/${encodeURIComponent(userId)}`
             ),
             method: "GET",
             headers: {
@@ -87,7 +151,76 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/users/{userId}."
+                    "Timeout exceeded when calling GET /user/users/{userId}."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {string} organizationId
+     * @param {string} userId
+     * @param {SeedPathParameters.GetOrganizationUserRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getOrganizationUser("organizationId", "userId")
+     */
+    public async getOrganizationUser(
+        organizationId: string,
+        userId: string,
+        request: SeedPathParameters.GetOrganizationUserRequest = {},
+        requestOptions?: User.RequestOptions
+    ): Promise<SeedPathParameters.User> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.User.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}/users/{userId}."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -120,7 +253,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/users/${encodeURIComponent(userId)}/search`
+                `/user/users/${encodeURIComponent(userId)}/search`
             ),
             method: "GET",
             headers: {
@@ -163,7 +296,83 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/users/{userId}/search."
+                    "Timeout exceeded when calling GET /user/users/{userId}/search."
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {string} organizationId
+     * @param {SeedPathParameters.SearchOrganizationsRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.searchOrganizations("organizationId", {
+     *         limit: 1
+     *     })
+     */
+    public async searchOrganizations(
+        organizationId: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        requestOptions?: User.RequestOptions
+    ): Promise<SeedPathParameters.Organization[]> {
+        const { limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/user/organizations/${encodeURIComponent(organizationId)}/search`
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.user.searchOrganizations.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /user/organizations/{organizationId}/search."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

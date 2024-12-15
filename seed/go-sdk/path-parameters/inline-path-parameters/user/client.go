@@ -31,6 +31,45 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+func (c *Client) GetOrganization(
+	ctx context.Context,
+	organizationId string,
+	opts ...option.RequestOption,
+) (*pathparametersgo.Organization, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/user/organizations/%v",
+		organizationId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response *pathparametersgo.Organization
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *pathparametersgo.GetUsersRequest,
@@ -43,8 +82,47 @@ func (c *Client) GetUser(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/users/%v",
-		request.TenantId,
+		baseURL+"/user/users/%v",
+		request.UserId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response *pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) GetOrganizationUser(
+	ctx context.Context,
+	request *pathparametersgo.GetOrganizationUserRequest,
+	opts ...option.RequestOption,
+) (*pathparametersgo.User, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/user/organizations/%v/users/%v",
+		request.OrganizationId,
 		request.UserId,
 	)
 	headers := internal.MergeHeaders(
@@ -83,8 +161,7 @@ func (c *Client) SearchUsers(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/users/%v/search",
-		request.TenantId,
+		baseURL+"/user/users/%v/search",
 		request.UserId,
 	)
 	queryParams, err := internal.QueryValues(request)
@@ -100,6 +177,53 @@ func (c *Client) SearchUsers(
 	)
 
 	var response []*pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) SearchOrganizations(
+	ctx context.Context,
+	organizationId string,
+	request *pathparametersgo.SearchOrganizationsRequest,
+	opts ...option.RequestOption,
+) ([]*pathparametersgo.Organization, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/user/organizations/%v/search",
+		organizationId,
+	)
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response []*pathparametersgo.Organization
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{

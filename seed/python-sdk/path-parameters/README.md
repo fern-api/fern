@@ -25,8 +25,7 @@ from seed import SeedPathParameters
 client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
-client.organizations.get_organization(
-    tenant_id="tenantId",
+client.user.get_organization(
     organization_id="organizationId",
 )
 ```
@@ -46,8 +45,7 @@ client = AsyncSeedPathParameters(
 
 
 async def main() -> None:
-    await client.organizations.get_organization(
-        tenant_id="tenantId",
+    await client.user.get_organization(
         organization_id="organizationId",
     )
 
@@ -64,7 +62,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.organizations.get_organization(...)
+    client.user.get_organization(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -87,7 +85,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.organizations.get_organization(..., request_options={
+client.user.get_organization(..., request_options={
     "max_retries": 1
 })
 ```
@@ -107,7 +105,7 @@ client = SeedPathParameters(
 
 
 # Override timeout for a specific method
-client.organizations.get_organization(..., request_options={
+client.user.get_organization(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

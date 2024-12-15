@@ -2,18 +2,12 @@
 
 namespace Seed;
 
-use Seed\Organizations\OrganizationsClient;
 use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var OrganizationsClient $organizations
-     */
-    public OrganizationsClient $organizations;
-
     /**
      * @var UserClient $user
      */
@@ -59,7 +53,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->organizations = new OrganizationsClient($this->client);
         $this->user = new UserClient($this->client);
     }
 }

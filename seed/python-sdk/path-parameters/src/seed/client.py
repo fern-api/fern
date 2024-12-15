@@ -3,10 +3,8 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
-from .organizations.client import OrganizationsClient
 from .user.client import UserClient
 from .core.client_wrapper import AsyncClientWrapper
-from .organizations.client import AsyncOrganizationsClient
 from .user.client import AsyncUserClient
 
 
@@ -55,7 +53,6 @@ class SeedPathParameters:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         self.user = UserClient(client_wrapper=self._client_wrapper)
 
 
@@ -104,5 +101,4 @@ class AsyncSeedPathParameters:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         self.user = AsyncUserClient(client_wrapper=self._client_wrapper)

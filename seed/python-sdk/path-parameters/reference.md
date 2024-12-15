@@ -1,6 +1,6 @@
 # Reference
-## Organizations
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...)</code></summary>
+## User
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_organization</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -18,8 +18,7 @@ from seed import SeedPathParameters
 client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
-client.organizations.get_organization(
-    tenant_id="tenantId",
+client.user.get_organization(
     organization_id="organizationId",
 )
 
@@ -33,14 +32,6 @@ client.organizations.get_organization(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `str` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -65,7 +56,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -83,9 +74,7 @@ from seed import SeedPathParameters
 client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
-client.organizations.get_organization_user(
-    tenant_id="tenantId",
-    organization_id="organizationId",
+client.user.get_user(
     user_id="userId",
 )
 
@@ -99,22 +88,6 @@ client.organizations.get_organization_user(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization_id:** `str` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -139,7 +112,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_organization_user</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -157,83 +130,8 @@ from seed import SeedPathParameters
 client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
-client.organizations.search_organizations(
-    tenant_id="tenantId",
+client.user.get_organization_user(
     organization_id="organizationId",
-    limit=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedPathParameters
-
-client = SeedPathParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.user.get_user(
-    tenant_id="tenantId",
     user_id="userId",
 )
 
@@ -251,7 +149,7 @@ client.user.get_user(
 <dl>
 <dd>
 
-**tenant_id:** `str` 
+**organization_id:** `str` 
     
 </dd>
 </dl>
@@ -298,7 +196,6 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.search_users(
-    tenant_id="tenantId",
     user_id="userId",
     limit=1,
 )
@@ -317,7 +214,7 @@ client.user.search_users(
 <dl>
 <dd>
 
-**tenant_id:** `str` 
+**user_id:** `str` 
     
 </dd>
 </dl>
@@ -325,7 +222,64 @@ client.user.search_users(
 <dl>
 <dd>
 
-**user_id:** `str` 
+**limit:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="src/seed/user/client.py">search_organizations</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedPathParameters
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.search_organizations(
+    organization_id="organizationId",
+    limit=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organization_id:** `str` 
     
 </dd>
 </dl>

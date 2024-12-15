@@ -8,11 +8,10 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.SearchUsers(
+    client.User.SearchOrganizations(
         context.TODO(),
-        "tenantId",
-        "userId",
-        &fern.SearchUsersRequest{
+        "organizationId",
+        &fern.SearchOrganizationsRequest{
             Limit: fern.Int(
                 1,
             ),

@@ -1,4 +1,1 @@
 name: path-parameters
-base-path: "/{tenantId}"
-path-parameters:
-  tenantId: string

@@ -8,11 +8,9 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.Organizations.GetOrganizationUser(
+    client.User.GetUser(
         context.TODO(),
-        &path.GetOrganizationUserRequest{
-            TenantId: "tenantId",
-            OrganizationId: "organizationId",
+        &path.GetUsersRequest{
             UserId: "userId",
         },
     )

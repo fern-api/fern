@@ -16,7 +16,7 @@
     {
       "_type": "container",
       "description": null,
-      "name": "Organizations",
+      "name": "User",
       "item": [
         {
           "_type": "endpoint",
@@ -24,23 +24,17 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId",
+              "raw": "{{baseUrl}}/user/organizations/:organizationId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
                 "user",
                 "organizations",
                 ":organizationId"
               ],
               "query": [],
               "variable": [
-                {
-                  "key": "tenantId",
-                  "description": null,
-                  "value": "tenantId"
-                },
                 {
                   "key": "organizationId",
                   "description": null,
@@ -67,23 +61,17 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId",
+                  "raw": "{{baseUrl}}/user/organizations/:organizationId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
                     "user",
                     "organizations",
                     ":organizationId"
                   ],
                   "query": [],
                   "variable": [
-                    {
-                      "key": "tenantId",
-                      "description": null,
-                      "value": "tenantId"
-                    },
                     {
                       "key": "organizationId",
                       "description": null,
@@ -110,34 +98,21 @@
         },
         {
           "_type": "endpoint",
-          "name": "Get Organization User",
+          "name": "Get User",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId/users/:userId",
+              "raw": "{{baseUrl}}/user/users/:userId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
                 "user",
-                "organizations",
-                ":organizationId",
                 "users",
                 ":userId"
               ],
               "query": [],
               "variable": [
-                {
-                  "key": "tenantId",
-                  "description": null,
-                  "value": "tenantId"
-                },
-                {
-                  "key": "organizationId",
-                  "description": null,
-                  "value": "organizationId"
-                },
                 {
                   "key": "userId",
                   "description": null,
@@ -164,30 +139,17 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId/users/:userId",
+                  "raw": "{{baseUrl}}/user/users/:userId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
                     "user",
-                    "organizations",
-                    ":organizationId",
                     "users",
                     ":userId"
                   ],
                   "query": [],
                   "variable": [
-                    {
-                      "key": "tenantId",
-                      "description": null,
-                      "value": "tenantId"
-                    },
-                    {
-                      "key": "organizationId",
-                      "description": null,
-                      "value": "organizationId"
-                    },
                     {
                       "key": "userId",
                       "description": null,
@@ -214,137 +176,27 @@
         },
         {
           "_type": "endpoint",
-          "name": "Search Organizations",
+          "name": "Get Organization User",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId/search?limit=1",
+              "raw": "{{baseUrl}}/user/organizations/:organizationId/users/:userId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
                 "user",
                 "organizations",
                 ":organizationId",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "description": null,
-                  "value": "1"
-                }
-              ],
-              "variable": [
-                {
-                  "key": "tenantId",
-                  "description": null,
-                  "value": "tenantId"
-                },
-                {
-                  "key": "organizationId",
-                  "description": null,
-                  "value": "organizationId"
-                }
-              ]
-            },
-            "header": [
-              {
-                "type": "text",
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null,
-            "body": null
-          },
-          "response": [
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/organizations/:organizationId/search?limit=1",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    ":tenantId",
-                    "user",
-                    "organizations",
-                    ":organizationId",
-                    "search"
-                  ],
-                  "query": [
-                    {
-                      "key": "limit",
-                      "description": null,
-                      "value": "1"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "key": "tenantId",
-                      "description": null,
-                      "value": "tenantId"
-                    },
-                    {
-                      "key": "organizationId",
-                      "description": null,
-                      "value": "organizationId"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "[\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    },\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    }\n]",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "_type": "container",
-      "description": null,
-      "name": "User",
-      "item": [
-        {
-          "_type": "endpoint",
-          "name": "Get User",
-          "request": {
-            "description": null,
-            "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/users/:userId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                ":tenantId",
-                "user",
                 "users",
                 ":userId"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "organizationId",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "organizationId"
                 },
                 {
                   "key": "userId",
@@ -372,22 +224,23 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/users/:userId",
+                  "raw": "{{baseUrl}}/user/organizations/:organizationId/users/:userId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
                     "user",
+                    "organizations",
+                    ":organizationId",
                     "users",
                     ":userId"
                   ],
                   "query": [],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "organizationId",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "organizationId"
                     },
                     {
                       "key": "userId",
@@ -419,12 +272,11 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/users/:userId/search?limit=1",
+              "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
                 "user",
                 "users",
                 ":userId",
@@ -438,11 +290,6 @@
                 }
               ],
               "variable": [
-                {
-                  "key": "tenantId",
-                  "description": null,
-                  "value": "tenantId"
-                },
                 {
                   "key": "userId",
                   "description": null,
@@ -469,12 +316,11 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/users/:userId/search?limit=1",
+                  "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
                     "user",
                     "users",
                     ":userId",
@@ -489,14 +335,101 @@
                   ],
                   "variable": [
                     {
-                      "key": "tenantId",
-                      "description": null,
-                      "value": "tenantId"
-                    },
-                    {
                       "key": "userId",
                       "description": null,
                       "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    },\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Organizations",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "organizations",
+                ":organizationId",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "organizationId",
+                  "description": null,
+                  "value": "organizationId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "organizations",
+                    ":organizationId",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId",
+                      "description": null,
+                      "value": "organizationId"
                     }
                   ]
                 },

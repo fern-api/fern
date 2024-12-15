@@ -8,11 +8,13 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.GetUser(
+    client.User.SearchUsers(
         context.TODO(),
-        &path.GetUsersRequest{
-            TenantId: "tenantId",
+        &path.SearchUsersRequest{
             UserId: "userId",
+            Limit: path.Int(
+                1,
+            ),
         },
     )
 }

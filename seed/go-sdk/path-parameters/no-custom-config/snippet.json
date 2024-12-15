@@ -2,57 +2,57 @@
     "endpoints": [
         {
             "id": {
-                "path": "/{tenantId}/user/organizations/{organizationId}",
+                "path": "/user/organizations/{organizationId}",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getOrganization"
+                "identifier_override": "endpoint_user.getOrganization"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganization(\n\tcontext.TODO(),\n\t\"tenantId\",\n\t\"organizationId\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetOrganization(\n\tcontext.TODO(),\n\t\"organizationId\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/{tenantId}/user/organizations/{organizationId}/search",
+                "path": "/user/organizations/{organizationId}/search",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.searchOrganizations"
+                "identifier_override": "endpoint_user.searchOrganizations"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.SearchOrganizations(\n\tcontext.TODO(),\n\t\"tenantId\",\n\t\"organizationId\",\n\t\u0026fern.SearchOrganizationsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchOrganizations(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\u0026fern.SearchOrganizationsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         },
         {
             "id": {
-                "path": "/{tenantId}/user/organizations/{organizationId}/users/{userId}",
+                "path": "/user/organizations/{organizationId}/users/{userId}",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getOrganizationUser"
+                "identifier_override": "endpoint_user.getOrganizationUser"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganizationUser(\n\tcontext.TODO(),\n\t\"tenantId\",\n\t\"organizationId\",\n\t\"userId\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetOrganizationUser(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\"userId\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/{tenantId}/user/users/{userId}",
+                "path": "/user/users/{userId}",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\"tenantId\",\n\t\"userId\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/{tenantId}/user/users/{userId}/search",
+                "path": "/user/users/{userId}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\"tenantId\",\n\t\"userId\",\n\t\u0026fern.SearchUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.SearchUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         }
     ]

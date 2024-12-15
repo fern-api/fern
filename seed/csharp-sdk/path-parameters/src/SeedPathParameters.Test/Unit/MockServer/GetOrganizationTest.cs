@@ -28,7 +28,7 @@ public class GetOrganizationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/tenantId/user/organizations/organizationId")
+                    .WithPath("/user/organizations/organizationId")
                     .UsingGet()
             )
             .RespondWith(
@@ -38,11 +38,7 @@ public class GetOrganizationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Organizations.GetOrganizationAsync(
-            "tenantId",
-            "organizationId",
-            RequestOptions
-        );
+        var response = await Client.User.GetOrganizationAsync("organizationId", RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()
