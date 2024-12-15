@@ -3333,7 +3333,8 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "value": [
+            "sse": true,
+            "events": [
               {
                 "value": {
                   "value": {
