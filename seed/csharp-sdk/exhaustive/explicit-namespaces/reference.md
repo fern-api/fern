@@ -1483,7 +1483,11 @@ await client.Endpoints.Params.ModifyWithPathAsync("param", "string");
 </dl>
 </details>
 
+<<<<<<< HEAD
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">ModifyWithInlinePathAsync</a>(param, ModifyResourceAtInlinedPath { ... }) -> string</code></summary>
+=======
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">ModifyWithInlinePathAsync</a>(param, ModifyResourceAtPath { ... }) -> string</code></summary>
+>>>>>>> c1d6ca465f (fix seed)
 <dl>
 <dd>
 
@@ -1512,7 +1516,11 @@ PUT to update with path param
 ```csharp
 await client.Endpoints.Params.ModifyWithInlinePathAsync(
     "param",
+<<<<<<< HEAD
     new ModifyResourceAtInlinedPath { Body = "string" }
+=======
+    new ModifyResourceAtPath { Body = "string" }
+>>>>>>> c1d6ca465f (fix seed)
 );
 ```
 </dd>
@@ -1536,7 +1544,11 @@ await client.Endpoints.Params.ModifyWithInlinePathAsync(
 <dl>
 <dd>
 
+<<<<<<< HEAD
 **request:** `ModifyResourceAtInlinedPath` 
+=======
+**request:** `ModifyResourceAtPath` 
+>>>>>>> c1d6ca465f (fix seed)
     
 </dd>
 </dl>

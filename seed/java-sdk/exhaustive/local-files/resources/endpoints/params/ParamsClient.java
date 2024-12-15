@@ -16,7 +16,11 @@ import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuer
 import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
+<<<<<<< HEAD
 import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+=======
+import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtPath;
+>>>>>>> c1d6ca465f (fix seed)
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Object;
@@ -323,14 +327,22 @@ public class ParamsClient {
           /**
            * PUT to update with path param
            */
+<<<<<<< HEAD
           public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
+=======
+          public String modifyWithInlinePath(String param, ModifyResourceAtPath request) {
+>>>>>>> c1d6ca465f (fix seed)
             return modifyWithInlinePath(param,request,null);
           }
 
           /**
            * PUT to update with path param
            */
+<<<<<<< HEAD
           public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request,
+=======
+          public String modifyWithInlinePath(String param, ModifyResourceAtPath request,
+>>>>>>> c1d6ca465f (fix seed)
               RequestOptions requestOptions) {
             HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
               .addPathSegments("params")

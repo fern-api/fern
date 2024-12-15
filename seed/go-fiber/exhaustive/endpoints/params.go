@@ -24,11 +24,19 @@ type GetWithQuery struct {
 	Number int    `query:"number"`
 }
 
+<<<<<<< HEAD
 type ModifyResourceAtInlinedPath struct {
 	Body string `json:"-" url:"-"`
 }
 
 func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
+=======
+type ModifyResourceAtPath struct {
+	Body string `json:"-" url:"-"`
+}
+
+func (m *ModifyResourceAtPath) UnmarshalJSON(data []byte) error {
+>>>>>>> c1d6ca465f (fix seed)
 	var body string
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
@@ -37,6 +45,10 @@ func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+<<<<<<< HEAD
 func (m *ModifyResourceAtInlinedPath) MarshalJSON() ([]byte, error) {
+=======
+func (m *ModifyResourceAtPath) MarshalJSON() ([]byte, error) {
+>>>>>>> c1d6ca465f (fix seed)
 	return json.Marshal(m.Body)
 }

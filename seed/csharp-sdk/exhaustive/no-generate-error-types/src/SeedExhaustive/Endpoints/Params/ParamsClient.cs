@@ -328,13 +328,21 @@ public partial class ParamsClient
     /// <code>
     /// await client.Endpoints.Params.ModifyWithInlinePathAsync(
     ///     "param",
+<<<<<<< HEAD
     ///     new ModifyResourceAtInlinedPath { Body = "string" }
+=======
+    ///     new ModifyResourceAtPath { Body = "string" }
+>>>>>>> c1d6ca465f (fix seed)
     /// );
     /// </code>
     /// </example>
     public async Task<string> ModifyWithInlinePathAsync(
         string param,
+<<<<<<< HEAD
         ModifyResourceAtInlinedPath request,
+=======
+        ModifyResourceAtPath request,
+>>>>>>> c1d6ca465f (fix seed)
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

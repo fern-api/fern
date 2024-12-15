@@ -15,7 +15,11 @@ use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
+<<<<<<< HEAD
 use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
+=======
+use Seed\Endpoints\Params\Requests\ModifyResourceAtPath;
+>>>>>>> c1d6ca465f (fix seed)
 
 class ParamsClient
 {
@@ -306,7 +310,11 @@ class ParamsClient
      * PUT to update with path param
      *
      * @param string $param
+<<<<<<< HEAD
      * @param ModifyResourceAtInlinedPath $request
+=======
+     * @param ModifyResourceAtPath $request
+>>>>>>> c1d6ca465f (fix seed)
      * @param ?array{
      *   baseUrl?: string,
      * } $options
@@ -314,7 +322,11 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
+<<<<<<< HEAD
     public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string
+=======
+    public function modifyWithInlinePath(string $param, ModifyResourceAtPath $request, ?array $options = null): string
+>>>>>>> c1d6ca465f (fix seed)
     {
         try {
             $response = $this->client->sendRequest(

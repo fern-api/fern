@@ -40,7 +40,11 @@ public class ModifyWithInlinePathTest : BaseMockServerTest
 
         var response = await Client.Endpoints.Params.ModifyWithInlinePathAsync(
             "param",
+<<<<<<< HEAD
             new ModifyResourceAtInlinedPath { Body = "string" },
+=======
+            new ModifyResourceAtPath { Body = "string" },
+>>>>>>> c1d6ca465f (fix seed)
             RequestOptions
         );
         JToken

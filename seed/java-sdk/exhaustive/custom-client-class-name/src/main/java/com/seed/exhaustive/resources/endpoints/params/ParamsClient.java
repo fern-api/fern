@@ -15,7 +15,11 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
+<<<<<<< HEAD
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+=======
+import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtPath;
+>>>>>>> c1d6ca465f (fix seed)
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -338,15 +342,23 @@ public class ParamsClient {
     /**
      * PUT to update with path param
      */
+<<<<<<< HEAD
     public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
+=======
+    public String modifyWithInlinePath(String param, ModifyResourceAtPath request) {
+>>>>>>> c1d6ca465f (fix seed)
         return modifyWithInlinePath(param, request, null);
     }
 
     /**
      * PUT to update with path param
      */
+<<<<<<< HEAD
     public String modifyWithInlinePath(
             String param, ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+=======
+    public String modifyWithInlinePath(String param, ModifyResourceAtPath request, RequestOptions requestOptions) {
+>>>>>>> c1d6ca465f (fix seed)
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")

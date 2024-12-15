@@ -346,7 +346,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    \"param\",\n    new ModifyResourceAtInlinedPath { Body = \"string\" }\n);\n"
+=======
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    \"param\",\n    new ModifyResourceAtPath { Body = \"string\" }\n);\n"
+>>>>>>> c1d6ca465f (fix seed)
             }
         },
         {

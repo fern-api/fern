@@ -6,7 +6,6 @@ package com.customprefix;
 import com.customprefix.core.ClientOptions;
 import com.customprefix.core.Suppliers;
 import com.customprefix.resources.imdb.ImdbClient;
-import com.customprefix.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class SeedApiClient {
@@ -14,20 +13,13 @@ public class SeedApiClient {
 
     protected final Supplier<ImdbClient> imdbClient;
 
-    protected final Supplier<ServiceClient> serviceClient;
-
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.imdbClient = Suppliers.memoize(() -> new ImdbClient(clientOptions));
-        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
     public ImdbClient imdb() {
         return this.imdbClient.get();
-    }
-
-    public ServiceClient service() {
-        return this.serviceClient.get();
     }
 
     public static SeedApiClientBuilder builder() {

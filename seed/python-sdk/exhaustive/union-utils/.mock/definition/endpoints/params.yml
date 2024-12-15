@@ -82,7 +82,11 @@ service:
       path: /path/{param}
       method: PUT
       request:
+<<<<<<< HEAD
         name: ModifyResourceAtInlinedPath
+=======
+        name: ModifyResourceAtPath
+>>>>>>> c1d6ca465f (fix seed)
         body: string
         path-parameters:
           param: string
