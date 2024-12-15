@@ -797,12 +797,13 @@ export class TemplateGenerator {
     private getRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
         const isObjectInlined = false;
         const rp: FdrSnippetTemplate.TemplateInput[] = [];
-        this.endpoint.queryParameters.forEach((pathParameter) => {
+
+        this.endpoint.queryParameters.forEach((queryParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
-                typeReference: pathParameter.valueType,
-                name: this.getPropertyKey(pathParameter.name.name),
+                typeReference: queryParameter.valueType,
+                name: this.getPropertyKey(queryParameter.name.name),
                 location: FdrSnippetTemplate.PayloadLocation.Query,
-                wireOrOriginalName: pathParameter.name.wireValue,
+                wireOrOriginalName: queryParameter.name.wireValue,
                 nameBreadcrumbs: undefined,
                 indentationLevel: 2,
                 isObjectInlined

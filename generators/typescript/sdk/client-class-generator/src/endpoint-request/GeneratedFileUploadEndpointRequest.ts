@@ -132,7 +132,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 }
             }
         }
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             const exampleParameter = exampleParameters.find(
                 (param) => param.name.originalName === pathParameter.name.originalName
             );
@@ -178,7 +182,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 }
             }
         }
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             parameters.push({
                 name: getParameterNameForPathParameter({
                     pathParameter,

@@ -5,11 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0] - 2024-12-13
+
+- Feature: Inline path parameters into request types by setting `inlinePathParameters` to `true` in the generator config.
+
+  Here's an example of how users would use the same endpoint method without and with `inlinePathParameters` set to `true`.
+
+  Without `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo("pathParamValue", { id: "SOME_ID" });
+  ```
+
+  With `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo({ pathParamName: "pathParamValue", id: "SOME_ID" });
+  ```
+
 ## [0.43.1] - 2024-12-11
 
 - Fix: When `noSerdeLayer` is enabled, streaming endpoints were failing to compile because 
   they assumed that the serialization layer existed. This is now fixed. 
-
 
 ## [0.43.0] - 2024-12-11
 

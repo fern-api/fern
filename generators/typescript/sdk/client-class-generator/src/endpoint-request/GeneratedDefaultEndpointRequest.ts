@@ -103,7 +103,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             parameters.push({
                 name: getParameterNameForPathParameter({
                     pathParameter,
@@ -130,7 +134,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             const exampleParameter = exampleParameters.find(
                 (param) => param.name.originalName === pathParameter.name.originalName
             );

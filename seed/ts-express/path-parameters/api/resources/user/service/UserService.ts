@@ -8,42 +8,9 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export interface UserServiceMethods {
-    getOrganization(
-        req: express.Request<
-            {
-                organizationId: string;
-            },
-            SeedPathParameters.Organization,
-            never,
-            never
-        >,
-        res: {
-            send: (responseBody: SeedPathParameters.Organization) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        },
-        next: express.NextFunction
-    ): void | Promise<void>;
     getUser(
         req: express.Request<
             {
-                userId: string;
-            },
-            SeedPathParameters.User,
-            never,
-            never
-        >,
-        res: {
-            send: (responseBody: SeedPathParameters.User) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        },
-        next: express.NextFunction
-    ): void | Promise<void>;
-    getOrganizationUser(
-        req: express.Request<
-            {
-                organizationId: string;
                 userId: string;
             },
             SeedPathParameters.User,
@@ -75,24 +42,6 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
-    searchOrganizations(
-        req: express.Request<
-            {
-                organizationId: string;
-            },
-            SeedPathParameters.Organization[],
-            never,
-            {
-                limit?: number;
-            }
-        >,
-        res: {
-            send: (responseBody: SeedPathParameters.Organization[]) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        },
-        next: express.NextFunction
-    ): void | Promise<void>;
 }
 
 export class UserService {
@@ -113,37 +62,7 @@ export class UserService {
     }
 
     public toRouter(): express.Router {
-        this.router.get("/organizations/:organizationId", async (req, res, next) => {
-            try {
-                await this.methods.getOrganization(
-                    req as any,
-                    {
-                        send: async (responseBody) => {
-                            res.json(
-                                serializers.Organization.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
-                        },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    },
-                    next
-                );
-                next();
-            } catch (error) {
-                if (error instanceof errors.SeedPathParametersError) {
-                    console.warn(
-                        `Endpoint 'getOrganization' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
-                    );
-                    await error.send(res);
-                } else {
-                    res.status(500).json("Internal Server Error");
-                }
-                next(error);
-            }
-        });
-        this.router.get("/users/:userId", async (req, res, next) => {
+        this.router.get("/:userId", async (req, res, next) => {
             try {
                 await this.methods.getUser(
                     req as any,
@@ -171,35 +90,7 @@ export class UserService {
                 next(error);
             }
         });
-        this.router.get("/organizations/:organizationId/users/:userId", async (req, res, next) => {
-            try {
-                await this.methods.getOrganizationUser(
-                    req as any,
-                    {
-                        send: async (responseBody) => {
-                            res.json(serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
-                        },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    },
-                    next
-                );
-                next();
-            } catch (error) {
-                if (error instanceof errors.SeedPathParametersError) {
-                    console.warn(
-                        `Endpoint 'getOrganizationUser' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
-                    );
-                    await error.send(res);
-                } else {
-                    res.status(500).json("Internal Server Error");
-                }
-                next(error);
-            }
-        });
-        this.router.get("/users/:userId/search", async (req, res, next) => {
+        this.router.get("/:userId/search", async (req, res, next) => {
             try {
                 await this.methods.searchUsers(
                     req as any,
@@ -221,38 +112,6 @@ export class UserService {
                 if (error instanceof errors.SeedPathParametersError) {
                     console.warn(
                         `Endpoint 'searchUsers' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
-                    );
-                    await error.send(res);
-                } else {
-                    res.status(500).json("Internal Server Error");
-                }
-                next(error);
-            }
-        });
-        this.router.get("/organizations/:organizationId/search", async (req, res, next) => {
-            try {
-                await this.methods.searchOrganizations(
-                    req as any,
-                    {
-                        send: async (responseBody) => {
-                            res.json(
-                                serializers.user.searchOrganizations.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
-                        },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    },
-                    next
-                );
-                next();
-            } catch (error) {
-                if (error instanceof errors.SeedPathParametersError) {
-                    console.warn(
-                        `Endpoint 'searchOrganizations' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition."
                     );
