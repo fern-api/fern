@@ -115,7 +115,13 @@ export class ExampleEndpointFactory {
                         endpoint.response?.type === "streamingJson" ||
                         endpoint.response?.type === "streamingSse"
                     ) {
-                        responseExamples.push([undefined, EndpointResponseExample.withStreaming([example])]);
+                        responseExamples.push([
+                            undefined,
+                            EndpointResponseExample.withStreaming({
+                                sse: endpoint.response?.type === "streamingSse",
+                                events: [example]
+                            })
+                        ]);
                     }
                 }
             } else {
@@ -138,7 +144,13 @@ export class ExampleEndpointFactory {
                             endpoint.response?.type === "streamingJson" ||
                             endpoint.response?.type === "streamingSse"
                         ) {
-                            responseExamples.push([exampleId, EndpointResponseExample.withStreaming([example])]);
+                            responseExamples.push([
+                                undefined,
+                                EndpointResponseExample.withStreaming({
+                                    sse: endpoint.response?.type === "streamingSse",
+                                    events: [example]
+                                })
+                            ]);
                         }
                     }
                 }

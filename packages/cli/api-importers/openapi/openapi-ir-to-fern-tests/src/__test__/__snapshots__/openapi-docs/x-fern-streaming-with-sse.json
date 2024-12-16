@@ -58,7 +58,10 @@
                   },
                   "response": {
                     "stream": [
-                      "string",
+                      {
+                        "data": "string",
+                        "event": "",
+                      },
                     ],
                   },
                 },
@@ -120,7 +123,8 @@
             prompt: prompt
           response:
             stream:
-              - string
+              - event: ''
+                data: string
   source:
     openapi: ../openapi.yml
 ",

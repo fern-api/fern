@@ -2110,13 +2110,16 @@ service:
                     "stream": [
                       {
                         "data": {
-                          "code": "code",
-                          "event": "event",
-                          "message": "message",
+                          "data": {
+                            "code": "code",
+                            "event": "event",
+                            "message": "message",
+                          },
+                          "event": "error",
+                          "id": 1,
+                          "retry": 1,
                         },
-                        "event": "error",
-                        "id": 1,
-                        "retry": 1,
+                        "event": "",
                       },
                     ],
                   },
@@ -2797,13 +2800,15 @@ service:
             id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
           response:
             stream:
-              - event: error
+              - event: ''
                 data:
-                  code: code
-                  event: event
-                  message: message
-                id: 1
-                retry: 1
+                  event: error
+                  data:
+                    code: code
+                    event: event
+                    message: message
+                  id: 1
+                  retry: 1
       audiences:
         - public
   source:
