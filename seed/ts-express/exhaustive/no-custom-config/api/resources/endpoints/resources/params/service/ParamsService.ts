@@ -23,6 +23,22 @@ export interface ParamsServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
+    getWithInlinePath(
+        req: express.Request<
+            {
+                param: string;
+            },
+            string,
+            never,
+            never
+        >,
+        res: {
+            send: (responseBody: string) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
     getWithQuery(
         req: express.Request<
             never,
@@ -75,7 +91,41 @@ export interface ParamsServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
+    getWithInlinePathAndQuery(
+        req: express.Request<
+            {
+                param: string;
+            },
+            never,
+            never,
+            {
+                query: string;
+            }
+        >,
+        res: {
+            send: () => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
     modifyWithPath(
+        req: express.Request<
+            {
+                param: string;
+            },
+            string,
+            string,
+            never
+        >,
+        res: {
+            send: (responseBody: string) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    modifyWithInlinePath(
         req: express.Request<
             {
                 param: string;
@@ -133,6 +183,38 @@ export class ParamsService {
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithPath' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/path/:param", async (req, res, next) => {
+            try {
+                await this.methods.getWithInlinePath(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.endpoints.params.getWithInlinePath.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedExhaustiveError) {
+                    console.warn(
+                        `Endpoint 'getWithInlinePath' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition."
                     );
@@ -227,6 +309,34 @@ export class ParamsService {
                 next(error);
             }
         });
+        this.router.get("/path-query/:param", async (req, res, next) => {
+            try {
+                await this.methods.getWithInlinePathAndQuery(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedExhaustiveError) {
+                    console.warn(
+                        `Endpoint 'getWithInlinePathAndQuery' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
         this.router.put("/path/:param", async (req, res, next) => {
             const request = serializers.endpoints.params.modifyWithPath.Request.parse(req.body);
             if (request.ok) {
@@ -252,6 +362,50 @@ export class ParamsService {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'modifyWithPath' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.put("/path/:param", async (req, res, next) => {
+            const request = serializers.endpoints.params.modifyWithInlinePath.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.modifyWithInlinePath(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.endpoints.params.modifyWithInlinePath.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedExhaustiveError) {
+                        console.warn(
+                            `Endpoint 'modifyWithInlinePath' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition."
                         );

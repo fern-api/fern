@@ -535,7 +535,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createIdentifier(optionsInterface.name)
                             )
                         )
-                    )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
                 }
             ];
             const readClientId =
@@ -1274,7 +1277,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             const isOptional =
-                referenceToHeaderType.isOptional || !this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+                referenceToHeaderType.isOptional ||
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                header.headerEnvVar != null;
             properties.push({
                 name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
