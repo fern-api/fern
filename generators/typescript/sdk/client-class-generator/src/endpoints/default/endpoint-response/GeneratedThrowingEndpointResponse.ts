@@ -7,6 +7,7 @@ import {
     Name,
     NameAndWireValue,
     OffsetPagination,
+    RequestProperty,
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -211,6 +212,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // initializeOffset uses the offset property if set
         const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+
+        const defaultValue = this.getDefaultValue(offset.page);
+
         const pagePropertyPath = [
             "request",
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
@@ -241,7 +245,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             pagePropertyAccess,
                             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                            ts.factory.createNumericLiteral("0")
+                            ts.factory.createNumericLiteral(defaultValue.toString())
                         )
                     )
                 ],
@@ -368,6 +372,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         return context.retainOriginalCasing || !context.includeSerdeLayer
             ? name.wireValue
             : name.name.camelCase.safeName;
+    }
+
+    public getDefaultValue(page: RequestProperty): number {
+        if (page.property.valueType.type === "primitive") {
+            const v2PrimitiveType = page.property.valueType.primitive.v2;
+            if (v2PrimitiveType?.type === "integer") {
+                return v2PrimitiveType.default ?? 0;
+            }
+        }
+        return 0;
     }
 
     public getResponseVariableName(): string {
