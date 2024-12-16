@@ -96,6 +96,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     context.type.getGeneratedExample(header.value).build(context, opts)
                 );
             });
+
+        const pathParamProperties = generatedType.shouldInlinePathParameters()
+            ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters]
+                  .filter((pathParam) => this.isNotLiteral(pathParam.value.shape))
+                  .map((pathParam) => {
+                      return ts.factory.createPropertyAssignment(
+                          asObjectProperty(
+                              generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
+                          ),
+                          context.type.getGeneratedExample(pathParam.value).build(context, opts)
+                      );
+                  })
+            : [];
+
         const queryParamProperties = [...this.example.queryParameters]
             .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
             .map((queryParam) => {
@@ -166,7 +180,13 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             }) ?? [];
 
         return ts.factory.createObjectLiteralExpression(
-            [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
+            [
+                ...fileProperties,
+                ...headerProperties,
+                ...pathParamProperties,
+                ...queryParamProperties,
+                ...bodyProperties
+            ],
             true
         );
     }

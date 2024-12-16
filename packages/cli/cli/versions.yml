@@ -1,5 +1,20 @@
 - changelogEntry:
     - summary: |
+        The generated SSE examples always have `data` and `event` keys so that they are correct.
+      type: fix
+  irVersion: 53
+  version: 0.46.4
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports generating examples for streaming SSE (server-sent-event)
+        endpoints. 
+      type: fix
+  irVersion: 53
+  version: 0.46.3
+
+- changelogEntry:
+    - summary: |
         The Fern CLI now supports parsing a `logo` option from your frontmatter. If 
         you would like to override logo on a specific page you can do so by adding 
         the following: 

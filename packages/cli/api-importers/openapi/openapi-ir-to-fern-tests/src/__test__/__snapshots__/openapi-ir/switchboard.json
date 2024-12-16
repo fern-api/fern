@@ -3082,20 +3082,17 @@
       "generatedRequestName": "SessionsEventsRequest",
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "schema": {
           "value": {
-            "commonProperties": [],
             "description": "Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.",
             "discriminantProperty": "event",
             "generatedName": "SessionsEventsResponse",
             "title": "Server Sent Events",
             "schemas": {
               "status": {
-                "allOf": [],
                 "properties": [
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseStatusData",
                     "key": "data",
                     "schema": {
                       "generatedName": "SessionsEventsResponseStatusData",
@@ -3107,55 +3104,59 @@
                       "type": "reference"
                     },
                     "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseStatusData",
                     "readonly": false
                   },
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseStatusId",
                     "key": "id",
                     "schema": {
                       "generatedName": "sessionsEventsResponseStatusId",
                       "title": "Event status",
                       "value": {
-                        "description": "The event ID.",
+                        "generatedName": "SessionsEventsResponseStatusId",
                         "schema": {
                           "type": "int"
                         },
-                        "generatedName": "SessionsEventsResponseStatusId",
+                        "description": "The event ID.",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseStatusId"
                   },
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseStatusRetry",
                     "key": "retry",
                     "schema": {
                       "generatedName": "sessionsEventsResponseStatusRetry",
                       "title": "Event status",
                       "value": {
-                        "description": "The retry time in milliseconds.",
+                        "generatedName": "SessionsEventsResponseStatusRetry",
                         "schema": {
                           "type": "int"
                         },
-                        "generatedName": "SessionsEventsResponseStatusRetry",
+                        "description": "The retry time in milliseconds.",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseStatusRetry"
                   }
                 ],
-                "allOfPropertyConflicts": [],
                 "generatedName": "SessionsEventsResponseStatus",
                 "title": "Event status",
+                "allOf": [],
+                "allOfPropertyConflicts": [],
                 "groupName": [],
+                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -3164,11 +3165,8 @@
                 "type": "object"
               },
               "error": {
-                "allOf": [],
                 "properties": [
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseErrorData",
                     "key": "data",
                     "schema": {
                       "generatedName": "SessionsEventsResponseErrorData",
@@ -3180,55 +3178,59 @@
                       "type": "reference"
                     },
                     "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseErrorData",
                     "readonly": false
                   },
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseErrorId",
                     "key": "id",
                     "schema": {
                       "generatedName": "sessionsEventsResponseErrorId",
                       "title": "Event error",
                       "value": {
-                        "description": "The event ID.",
+                        "generatedName": "SessionsEventsResponseErrorId",
                         "schema": {
                           "type": "int"
                         },
-                        "generatedName": "SessionsEventsResponseErrorId",
+                        "description": "The event ID.",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseErrorId"
                   },
                   {
-                    "conflict": {},
-                    "generatedName": "sessionsEventsResponseErrorRetry",
                     "key": "retry",
                     "schema": {
                       "generatedName": "sessionsEventsResponseErrorRetry",
                       "title": "Event error",
                       "value": {
-                        "description": "The retry time in milliseconds.",
+                        "generatedName": "SessionsEventsResponseErrorRetry",
                         "schema": {
                           "type": "int"
                         },
-                        "generatedName": "SessionsEventsResponseErrorRetry",
+                        "description": "The retry time in milliseconds.",
                         "groupName": [],
                         "type": "primitive"
                       },
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "sessionsEventsResponseErrorRetry"
                   }
                 ],
-                "allOfPropertyConflicts": [],
                 "generatedName": "SessionsEventsResponseError",
                 "title": "Event error",
+                "allOf": [],
+                "allOfPropertyConflicts": [],
                 "groupName": [],
+                "fullExamples": [],
                 "additionalProperties": false,
                 "source": {
                   "file": "../openapi.yml",
@@ -3237,6 +3239,7 @@
                 "type": "object"
               }
             },
+            "commonProperties": [],
             "groupName": [],
             "source": {
               "file": "../openapi.yml",
@@ -3313,7 +3316,87 @@
       "authed": false,
       "method": "GET",
       "path": "/sessions/{id}/events",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "value": {
+                  "value": {
+                    "event": {
+                      "value": {
+                        "value": "error",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "data": {
+                      "properties": {
+                        "code": {
+                          "value": {
+                            "value": "code",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "event": {
+                          "value": {
+                            "value": "event",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "message": {
+                          "value": {
+                            "value": "message",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "retry": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

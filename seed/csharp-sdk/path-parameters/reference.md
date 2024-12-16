@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetOrganizationAsync</a>(organizationId) -> Organization</code></summary>
+## Organizations
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.User.GetOrganizationAsync("organizationId");
+await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
 ```
 </dd>
 </dl>
@@ -24,6 +24,14 @@ await client.User.GetOrganizationAsync("organizationId");
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -40,7 +48,7 @@ await client.User.GetOrganizationAsync("organizationId");
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(userId, GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -53,55 +61,8 @@ await client.User.GetOrganizationAsync("organizationId");
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("userId", new GetUsersRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `GetUsersRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetOrganizationUserAsync</a>(organizationId, userId, GetOrganizationUserRequest { ... }) -> User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.User.GetOrganizationUserAsync(
+await client.Organizations.GetOrganizationUserAsync(
+    "tenantId",
     "organizationId",
     "userId",
     new GetOrganizationUserRequest()
@@ -116,6 +77,14 @@ await client.User.GetOrganizationUserAsync(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -148,7 +117,7 @@ await client.User.GetOrganizationUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SearchOrganizationsRequest { ... }) -> IEnumerable<Organization></code></summary>
 <dl>
 <dd>
 
@@ -161,55 +130,8 @@ await client.User.GetOrganizationUserAsync(
 <dd>
 
 ```csharp
-await client.User.SearchUsersAsync("userId", new SearchUsersRequest { Limit = 1 });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SearchUsersRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchOrganizationsAsync</a>(organizationId, SearchOrganizationsRequest { ... }) -> IEnumerable<Organization></code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.User.SearchOrganizationsAsync(
+await client.Organizations.SearchOrganizationsAsync(
+    "tenantId",
     "organizationId",
     new SearchOrganizationsRequest { Limit = 1 }
 );
@@ -227,6 +149,14 @@ await client.User.SearchOrganizationsAsync(
 <dl>
 <dd>
 
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **organizationId:** `string` 
     
 </dd>
@@ -236,6 +166,119 @@ await client.User.SearchOrganizationsAsync(
 <dd>
 
 **request:** `SearchOrganizationsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## User
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetUsersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.SearchUsersAsync("tenantId", "userId", new SearchUsersRequest { Limit = 1 });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SearchUsersRequest` 
     
 </dd>
 </dl>

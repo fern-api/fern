@@ -114,7 +114,8 @@
             "type": "object"
           },
           "response": {
-            "value": [
+            "sse": false,
+            "events": [
               {
                 "properties": {
                   "id": {
@@ -378,7 +379,8 @@
             "type": "object"
           },
           "response": {
-            "value": [
+            "sse": false,
+            "events": [
               {
                 "properties": {
                   "id": {
@@ -734,7 +736,8 @@
             "type": "object"
           },
           "response": {
-            "value": [
+            "sse": false,
+            "events": [
               {
                 "properties": {
                   "id": {

@@ -111,6 +111,7 @@ export declare namespace SdkContextImpl {
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
+        inlinePathParameters: boolean;
         enableInlineTypes: boolean;
         omitUndefined: boolean;
         neverThrowErrors: boolean;
@@ -150,6 +151,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
+    public readonly inlinePathParameters: boolean;
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
@@ -201,6 +203,7 @@ export class SdkContextImpl implements SdkContext {
         retainOriginalCasing,
         targetRuntime,
         inlineFileProperties,
+        inlinePathParameters,
         generateOAuthClients,
         omitUndefined,
         useBigInt,
@@ -215,6 +218,7 @@ export class SdkContextImpl implements SdkContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.inlineFileProperties = inlineFileProperties;
+        this.inlinePathParameters = inlinePathParameters;
         this.targetRuntime = targetRuntime;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
@@ -302,6 +306,7 @@ export class SdkContextImpl implements SdkContext {
             includeSerdeLayer,
             retainOriginalCasing,
             inlineFileProperties,
+            inlinePathParameters,
             enableInlineTypes
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({

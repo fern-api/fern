@@ -11,9 +11,12 @@ import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Object;
@@ -55,6 +58,53 @@ public class ParamsClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
+      ResponseBody responseBody = response.body();
+      if (response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+      }
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+    }
+    catch (IOException e) {
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+    }
+  }
+
+  /**
+   * GET with path param
+   */
+  public String getWithInlinePath(String param) {
+    return getWithInlinePath(param,GetWithInlinePath.builder().build());
+  }
+
+  /**
+   * GET with path param
+   */
+  public String getWithInlinePath(String param, GetWithInlinePath request) {
+    return getWithInlinePath(param,request,null);
+  }
+
+  /**
+   * GET with path param
+   */
+  public String getWithInlinePath(String param, GetWithInlinePath request,
+      RequestOptions requestOptions) {
+    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+      .addPathSegments("params")
+      .addPathSegments("path")
+      .addPathSegment(param)
+      .build();
+    Request.Builder _requestBuilder = new Request.Builder()
+      .url(httpUrl)
+      .method("GET", null)
+      .headers(Headers.of(clientOptions.headers(requestOptions)))
+      .addHeader("Content-Type", "application/json");
+    Request okhttpRequest = _requestBuilder.build();
     OkHttpClient client = clientOptions.httpClient();
     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
       client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -186,48 +236,134 @@ public class ParamsClient {
         }
 
         /**
-         * PUT to update with path param
+         * GET with path and query params
          */
-        public String modifyWithPath(String param, String request) {
-          return modifyWithPath(param,request,null);
+        public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request) {
+          getWithInlinePathAndQuery(param,request,null);
         }
 
         /**
-         * PUT to update with path param
+         * GET with path and query params
          */
-        public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
-          HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request,
+            RequestOptions requestOptions) {
+          HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegments("params")
-            .addPathSegments("path")
-            .addPathSegment(param)
-            .build();
-          RequestBody body;
-          try {
-            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-          }
-          catch(JsonProcessingException e) {
-            throw new SeedExhaustiveException("Failed to serialize request", e);
-          }
-          Request okhttpRequest = new Request.Builder()
-            .url(httpUrl)
-            .method("PUT", body)
-            .headers(Headers.of(clientOptions.headers(requestOptions)))
-            .addHeader("Content-Type", "application/json")
-            .build();
-          OkHttpClient client = clientOptions.httpClient();
-          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-          }
-          try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-              return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+            .addPathSegments("path-query")
+            .addPathSegment(param);httpUrl.addQueryParameter("query", request.getQuery());
+            Request.Builder _requestBuilder = new Request.Builder()
+              .url(httpUrl.build())
+              .method("GET", null)
+              .headers(Headers.of(clientOptions.headers(requestOptions)));
+            Request okhttpRequest = _requestBuilder.build();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+              client = clientOptions.httpClientWithTimeout(requestOptions);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+            try (Response response = client.newCall(okhttpRequest).execute()) {
+              ResponseBody responseBody = response.body();
+              if (response.isSuccessful()) {
+                return;
+              }
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+            }
+            catch (IOException e) {
+              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            }
           }
-          catch (IOException e) {
-            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+
+          /**
+           * PUT to update with path param
+           */
+          public String modifyWithPath(String param, String request) {
+            return modifyWithPath(param,request,null);
+          }
+
+          /**
+           * PUT to update with path param
+           */
+          public String modifyWithPath(String param, String request,
+              RequestOptions requestOptions) {
+            HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+              .addPathSegments("params")
+              .addPathSegments("path")
+              .addPathSegment(param)
+              .build();
+            RequestBody body;
+            try {
+              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+            catch(JsonProcessingException e) {
+              throw new SeedExhaustiveException("Failed to serialize request", e);
+            }
+            Request okhttpRequest = new Request.Builder()
+              .url(httpUrl)
+              .method("PUT", body)
+              .headers(Headers.of(clientOptions.headers(requestOptions)))
+              .addHeader("Content-Type", "application/json")
+              .build();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+              client = clientOptions.httpClientWithTimeout(requestOptions);
+            }
+            try (Response response = client.newCall(okhttpRequest).execute()) {
+              ResponseBody responseBody = response.body();
+              if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+              }
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+            }
+            catch (IOException e) {
+              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            }
+          }
+
+          /**
+           * PUT to update with path param
+           */
+          public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
+            return modifyWithInlinePath(param,request,null);
+          }
+
+          /**
+           * PUT to update with path param
+           */
+          public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request,
+              RequestOptions requestOptions) {
+            HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+              .addPathSegments("params")
+              .addPathSegments("path")
+              .addPathSegment(param)
+              .build();
+            RequestBody body;
+            try {
+              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+            catch(JsonProcessingException e) {
+              throw new SeedExhaustiveException("Failed to serialize request", e);
+            }
+            Request okhttpRequest = new Request.Builder()
+              .url(httpUrl)
+              .method("PUT", body)
+              .headers(Headers.of(clientOptions.headers(requestOptions)))
+              .addHeader("Content-Type", "application/json")
+              .build();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+              client = clientOptions.httpClientWithTimeout(requestOptions);
+            }
+            try (Response response = client.newCall(okhttpRequest).execute()) {
+              ResponseBody responseBody = response.body();
+              if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+              }
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+            }
+            catch (IOException e) {
+              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            }
           }
         }
-      }

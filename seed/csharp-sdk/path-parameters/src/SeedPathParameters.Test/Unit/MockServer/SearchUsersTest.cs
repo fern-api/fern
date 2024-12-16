@@ -38,7 +38,7 @@ public class SearchUsersTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/user/users/userId/search")
+                    .WithPath("/tenantId/user/userId/search")
                     .WithParam("limit", "1")
                     .UsingGet()
             )
@@ -50,6 +50,7 @@ public class SearchUsersTest : BaseMockServerTest
             );
 
         var response = await Client.User.SearchUsersAsync(
+            "tenantId",
             "userId",
             new SearchUsersRequest { Limit = 1 },
             RequestOptions

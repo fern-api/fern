@@ -6,9 +6,9 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/user/organizations/{organizationId}",
+            "path": "/{tenantId}/organizations/{organizationId}",
             "method": "GET",
-            "identifierOverride": "endpoint_user.getOrganization"
+            "identifierOverride": "endpoint_organizations.getOrganization"
         },
         "snippetTemplate": {
             "clientInstantiation": {
@@ -24,18 +24,74 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.get_organization(\n\t$FERN_INPUT\n)",
+                "templateString": "client.organizations.get_organization(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedPathParameters"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.organizations.get_organization(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_path-parameters",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{tenantId}/organizations/{organizationId}/users/{userId}",
+            "method": "GET",
+            "identifierOverride": "endpoint_organizations.getOrganizationUser"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedPathParameters"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.organizations.get_organization_user(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "organization_id=$FERN_INPUT",
+                            "templateString": "user_id=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "organizationId",
+                                    "path": "userId",
                                     "type": "payload"
                                 }
                             ],
@@ -63,18 +119,18 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.get_organization(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.organizations.get_organization_user(\n\t$FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "organization_id=$FERN_INPUT",
+                                "templateString": "user_id=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "PATH",
-                                        "path": "organizationId",
+                                        "path": "userId",
                                         "type": "payload"
                                     }
                                 ],
@@ -96,7 +152,97 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/user/users/{userId}",
+            "path": "/{tenantId}/organizations/{organizationId}/search",
+            "method": "GET",
+            "identifierOverride": "endpoint_organizations.searchOrganizations"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedPathParameters"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.organizations.search_organizations(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "limit=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "limit",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedPathParameters"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.organizations.search_organizations(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "limit=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "limit",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_path-parameters",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{tenantId}/user/{userId}",
             "method": "GET",
             "identifierOverride": "endpoint_user.getUser"
         },
@@ -186,129 +332,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/user/organizations/{organizationId}/users/{userId}",
-            "method": "GET",
-            "identifierOverride": "endpoint_user.getOrganizationUser"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [
-                    "from seed import SeedPathParameters"
-                ],
-                "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
-                "templateInputs": [],
-                "inputDelimiter": ",",
-                "type": "generic"
-            },
-            "functionInvocation": {
-                "imports": [],
-                "isOptional": true,
-                "templateString": "client.user.get_organization_user(\n\t$FERN_INPUT\n)",
-                "templateInputs": [
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "templateString": "organization_id=$FERN_INPUT",
-                            "templateInputs": [
-                                {
-                                    "location": "PATH",
-                                    "path": "organizationId",
-                                    "type": "payload"
-                                }
-                            ],
-                            "type": "generic"
-                        }
-                    },
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "templateString": "user_id=$FERN_INPUT",
-                            "templateInputs": [
-                                {
-                                    "location": "PATH",
-                                    "path": "userId",
-                                    "type": "payload"
-                                }
-                            ],
-                            "type": "generic"
-                        }
-                    }
-                ],
-                "inputDelimiter": ",\n\t",
-                "type": "generic"
-            },
-            "type": "v1"
-        },
-        "additionalTemplates": {
-            "async": {
-                "clientInstantiation": {
-                    "imports": [
-                        "from seed import AsyncSeedPathParameters"
-                    ],
-                    "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
-                    "templateInputs": [],
-                    "inputDelimiter": ",",
-                    "type": "generic"
-                },
-                "functionInvocation": {
-                    "imports": [],
-                    "isOptional": true,
-                    "templateString": "await client.user.get_organization_user(\n\t$FERN_INPUT\n)",
-                    "templateInputs": [
-                        {
-                            "type": "template",
-                            "value": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "organization_id=$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "PATH",
-                                        "path": "organizationId",
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "value": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "user_id=$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "PATH",
-                                        "path": "userId",
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            }
-                        }
-                    ],
-                    "inputDelimiter": ",\n\t",
-                    "type": "generic"
-                },
-                "type": "v1"
-            }
-        }
-    },
-    {
-        "sdk": {
-            "package": "fern_path-parameters",
-            "version": "0.0.1",
-            "type": "python"
-        },
-        "endpointId": {
-            "path": "/user/users/{userId}/search",
+            "path": "/{tenantId}/user/{userId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -393,128 +417,6 @@
                                     {
                                         "location": "PATH",
                                         "path": "userId",
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "value": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "limit=$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "QUERY",
-                                        "path": "limit",
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            }
-                        }
-                    ],
-                    "inputDelimiter": ",\n\t",
-                    "type": "generic"
-                },
-                "type": "v1"
-            }
-        }
-    },
-    {
-        "sdk": {
-            "package": "fern_path-parameters",
-            "version": "0.0.1",
-            "type": "python"
-        },
-        "endpointId": {
-            "path": "/user/organizations/{organizationId}/search",
-            "method": "GET",
-            "identifierOverride": "endpoint_user.searchOrganizations"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [
-                    "from seed import SeedPathParameters"
-                ],
-                "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
-                "templateInputs": [],
-                "inputDelimiter": ",",
-                "type": "generic"
-            },
-            "functionInvocation": {
-                "imports": [],
-                "isOptional": true,
-                "templateString": "client.user.search_organizations(\n\t$FERN_INPUT\n)",
-                "templateInputs": [
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "templateString": "organization_id=$FERN_INPUT",
-                            "templateInputs": [
-                                {
-                                    "location": "PATH",
-                                    "path": "organizationId",
-                                    "type": "payload"
-                                }
-                            ],
-                            "type": "generic"
-                        }
-                    },
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "templateString": "limit=$FERN_INPUT",
-                            "templateInputs": [
-                                {
-                                    "location": "QUERY",
-                                    "path": "limit",
-                                    "type": "payload"
-                                }
-                            ],
-                            "type": "generic"
-                        }
-                    }
-                ],
-                "inputDelimiter": ",\n\t",
-                "type": "generic"
-            },
-            "type": "v1"
-        },
-        "additionalTemplates": {
-            "async": {
-                "clientInstantiation": {
-                    "imports": [
-                        "from seed import AsyncSeedPathParameters"
-                    ],
-                    "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
-                    "templateInputs": [],
-                    "inputDelimiter": ",",
-                    "type": "generic"
-                },
-                "functionInvocation": {
-                    "imports": [],
-                    "isOptional": true,
-                    "templateString": "await client.user.search_organizations(\n\t$FERN_INPUT\n)",
-                    "templateInputs": [
-                        {
-                            "type": "template",
-                            "value": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "organization_id=$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "PATH",
-                                        "path": "organizationId",
                                         "type": "payload"
                                     }
                                 ],
