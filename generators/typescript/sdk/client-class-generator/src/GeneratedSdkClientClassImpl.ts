@@ -535,7 +535,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createIdentifier(optionsInterface.name)
                             )
                         )
-                    )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
                 }
             ];
             const readClientId =
@@ -581,13 +584,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                 ${readClientSecret}
 
-                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
-                    ${setClientId},
-                    ${setClientSecret},
-                    ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
-                        environment: this._options.environment,
-                    }),
-                });
+                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} != null
+                    ? new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
+                        ${setClientId},
+                        ${setClientSecret},
+                        ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                            environment: this._options.environment,
+                        }),
+                    })
+                    : undefined;
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -1042,7 +1047,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
-        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
+        if (
+            !this.requireDefaultEnvironment &&
+            context.environments.getGeneratedEnvironments().hasDefaultEnvironment()
+        ) {
             const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
             const environment =
                 firstEnvironment != null
