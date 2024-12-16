@@ -97,18 +97,10 @@ World!\``);
             const actual = ts.codeblock((writer) => {
                 writer.write("let myObj = ");
                 writer.writeNode(
-                    ts.TypeLiteral.object([
-                        {
-                            name: "name",
-                            valueType: ts.Type.string(),
-                            value: ts.TypeLiteral.string("John Smith")
-                        },
-                        {
-                            name: "hometown",
-                            valueType: ts.Type.string(),
-                            value: ts.TypeLiteral.string("New York, New York")
-                        }
-                    ])
+                    ts.TypeLiteral.object({
+                        name: ts.TypeLiteral.string("John Smith"),
+                        hometown: ts.TypeLiteral.string("New York, New York")
+                    })
                 );
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();
