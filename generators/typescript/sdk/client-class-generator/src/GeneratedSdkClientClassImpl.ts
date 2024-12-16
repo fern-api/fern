@@ -584,15 +584,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                 ${readClientSecret}
 
-                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} != null
-                    ? new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
-                        ${setClientId},
-                        ${setClientSecret},
-                        ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
-                            environment: this._options.environment,
-                        }),
-                    })
-                    : undefined;
+                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
+                    ${setClientId},
+                    ${setClientSecret},
+                    ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                        environment: this._options.environment,
+                    }),
+                });
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -1047,10 +1045,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
-        if (
-            !this.requireDefaultEnvironment &&
-            context.environments.getGeneratedEnvironments().hasDefaultEnvironment()
-        ) {
+        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
             const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
             const environment =
                 firstEnvironment != null
@@ -1282,7 +1277,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             const isOptional =
-                referenceToHeaderType.isOptional || !this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+                referenceToHeaderType.isOptional ||
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                header.headerEnvVar != null;
             properties.push({
                 name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
