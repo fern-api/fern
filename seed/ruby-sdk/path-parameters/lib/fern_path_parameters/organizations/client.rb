@@ -23,7 +23,7 @@ module SeedPathParametersClient
     # @return [SeedPathParametersClient::Organizations::Organization]
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
-    #  path_parameters.organizations.get_organization(tenant_id: "tenantId", organization_id: "organizationId")
+    #  path_parameters.organizations.get_organization(tenant_id: "tenant_id", organization_id: "organization_id")
     def get_organization(tenant_id:, organization_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -51,9 +51,9 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.organizations.get_organization_user(
-    #    tenant_id: "tenantId",
-    #    organization_id: "organizationId",
-    #    user_id: "userId"
+    #    tenant_id: "tenant_id",
+    #    organization_id: "organization_id",
+    #    user_id: "user_id"
     #  )
     def get_organization_user(tenant_id:, organization_id:, user_id:, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -82,8 +82,8 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.organizations.search_organizations(
-    #    tenant_id: "tenantId",
-    #    organization_id: "organizationId",
+    #    tenant_id: "tenant_id",
+    #    organization_id: "organization_id",
     #    limit: 1
     #  )
     def search_organizations(tenant_id:, organization_id:, limit: nil, request_options: nil)
@@ -124,7 +124,7 @@ module SeedPathParametersClient
     # @return [SeedPathParametersClient::Organizations::Organization]
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
-    #  path_parameters.organizations.get_organization(tenant_id: "tenantId", organization_id: "organizationId")
+    #  path_parameters.organizations.get_organization(tenant_id: "tenant_id", organization_id: "organization_id")
     def get_organization(tenant_id:, organization_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -154,9 +154,9 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.organizations.get_organization_user(
-    #    tenant_id: "tenantId",
-    #    organization_id: "organizationId",
-    #    user_id: "userId"
+    #    tenant_id: "tenant_id",
+    #    organization_id: "organization_id",
+    #    user_id: "user_id"
     #  )
     def get_organization_user(tenant_id:, organization_id:, user_id:, request_options: nil)
       Async do
@@ -187,8 +187,8 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.organizations.search_organizations(
-    #    tenant_id: "tenantId",
-    #    organization_id: "organizationId",
+    #    tenant_id: "tenant_id",
+    #    organization_id: "organization_id",
     #    limit: 1
     #  )
     def search_organizations(tenant_id:, organization_id:, limit: nil, request_options: nil)

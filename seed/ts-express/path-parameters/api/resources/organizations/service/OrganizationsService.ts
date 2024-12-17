@@ -11,7 +11,7 @@ export interface OrganizationsServiceMethods {
     getOrganization(
         req: express.Request<
             {
-                organizationId: string;
+                organization_id: string;
             },
             SeedPathParameters.Organization,
             never,
@@ -27,8 +27,8 @@ export interface OrganizationsServiceMethods {
     getOrganizationUser(
         req: express.Request<
             {
-                organizationId: string;
-                userId: string;
+                organization_id: string;
+                user_id: string;
             },
             SeedPathParameters.User,
             never,
@@ -44,7 +44,7 @@ export interface OrganizationsServiceMethods {
     searchOrganizations(
         req: express.Request<
             {
-                organizationId: string;
+                organization_id: string;
             },
             SeedPathParameters.Organization[],
             never,
@@ -109,7 +109,7 @@ export class OrganizationsService {
                 next(error);
             }
         });
-        this.router.get("/users/:userId", async (req, res, next) => {
+        this.router.get("/users/:user_id", async (req, res, next) => {
             try {
                 await this.methods.getOrganizationUser(
                     req as any,

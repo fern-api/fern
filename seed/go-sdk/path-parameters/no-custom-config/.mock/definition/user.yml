@@ -9,21 +9,21 @@ service:
   auth: false
   endpoints:
     getUser:
-      path: "/{userId}"
+      path: "/{user_id}"
       method: GET
       request:
         name: GetUsersRequest
         path-parameters:
-          userId: string
+          user_id: string
       response: User
 
     searchUsers:
-      path: "/{userId}/search"
+      path: "/{user_id}/search"
       method: GET
       request:
         name: SearchUsersRequest
         path-parameters:
-          userId: string
+          user_id: string
         query-parameters:
           limit: optional<integer>
       response: list<User>

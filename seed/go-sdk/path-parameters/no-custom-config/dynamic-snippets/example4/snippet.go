@@ -10,8 +10,8 @@ func do() () {
     client := client.NewClient()
     client.User.SearchUsers(
         context.TODO(),
-        "tenantId",
-        "userId",
+        "tenant_id",
+        "user_id",
         &fern.SearchUsersRequest{
             Limit: fern.Int(
                 1,

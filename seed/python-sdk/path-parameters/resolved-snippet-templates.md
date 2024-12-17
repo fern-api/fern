@@ -14,7 +14,7 @@ client.organizations.get_organization(
 
 client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
 client.organizations.get_organization_user(
-	user_id="userId"
+	user_id="user_id"
 )
  
 ```                        
@@ -36,7 +36,7 @@ client.organizations.search_organizations(
 
 client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
 client.user.get_user(
-	user_id="userId"
+	user_id="user_id"
 )
  
 ```                        
@@ -47,7 +47,7 @@ client.user.get_user(
 
 client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
 client.user.search_users(
-	user_id="userId",
+	user_id="user_id",
 	limit=1
 )
  

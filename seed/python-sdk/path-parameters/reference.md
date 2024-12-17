@@ -19,8 +19,8 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.get_organization(
-    tenant_id="tenantId",
-    organization_id="organizationId",
+    tenant_id="tenant_id",
+    organization_id="organization_id",
 )
 
 ```
@@ -84,9 +84,9 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.get_organization_user(
-    tenant_id="tenantId",
-    organization_id="organizationId",
-    user_id="userId",
+    tenant_id="tenant_id",
+    organization_id="organization_id",
+    user_id="user_id",
 )
 
 ```
@@ -158,8 +158,8 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.search_organizations(
-    tenant_id="tenantId",
-    organization_id="organizationId",
+    tenant_id="tenant_id",
+    organization_id="organization_id",
     limit=1,
 )
 
@@ -233,8 +233,8 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.get_user(
-    tenant_id="tenantId",
-    user_id="userId",
+    tenant_id="tenant_id",
+    user_id="user_id",
 )
 
 ```
@@ -298,8 +298,8 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.search_users(
-    tenant_id="tenantId",
-    user_id="userId",
+    tenant_id="tenant_id",
+    user_id="user_id",
     limit=1,
 )
 

@@ -40,8 +40,8 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user(
-            tenant_id="tenantId",
-            user_id="userId",
+            tenant_id="tenant_id",
+            user_id="user_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -95,8 +95,8 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.search_users(
-            tenant_id="tenantId",
-            user_id="userId",
+            tenant_id="tenant_id",
+            user_id="user_id",
             limit=1,
         )
         """
@@ -157,8 +157,8 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.get_user(
-                tenant_id="tenantId",
-                user_id="userId",
+                tenant_id="tenant_id",
+                user_id="user_id",
             )
 
 
@@ -220,8 +220,8 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.search_users(
-                tenant_id="tenantId",
-                user_id="userId",
+                tenant_id="tenant_id",
+                user_id="user_id",
                 limit=1,
             )
 

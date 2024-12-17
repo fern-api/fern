@@ -328,7 +328,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{tenantId}/organizations/{organizationId}/"
+                "path": "/{tenant_id}/organizations/{organization_id}/"
             },
             "request": {
                 "type": "body",
@@ -336,7 +336,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenantId",
+                                "originalName": "tenant_id",
                                 "camelCase": {
                                     "unsafeName": "tenantID",
                                     "safeName": "tenantID"
@@ -354,7 +354,7 @@
                                     "safeName": "TenantID"
                                 }
                             },
-                            "wireValue": "tenantId"
+                            "wireValue": "tenant_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -364,7 +364,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "organizationId",
+                                "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
                                     "safeName": "organizationID"
@@ -382,7 +382,7 @@
                                     "safeName": "OrganizationID"
                                 }
                             },
-                            "wireValue": "organizationId"
+                            "wireValue": "organization_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -464,7 +464,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{tenantId}/organizations/{organizationId}/users/{userId}"
+                "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}"
             },
             "request": {
                 "type": "inlined",
@@ -536,7 +536,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenantId",
+                                "originalName": "tenant_id",
                                 "camelCase": {
                                     "unsafeName": "tenantID",
                                     "safeName": "tenantID"
@@ -554,7 +554,7 @@
                                     "safeName": "TenantID"
                                 }
                             },
-                            "wireValue": "tenantId"
+                            "wireValue": "tenant_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -564,7 +564,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "organizationId",
+                                "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
                                     "safeName": "organizationID"
@@ -582,7 +582,7 @@
                                     "safeName": "OrganizationID"
                                 }
                             },
-                            "wireValue": "organizationId"
+                            "wireValue": "organization_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -592,7 +592,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "userId",
+                                "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
                                     "safeName": "userID"
@@ -610,7 +610,7 @@
                                     "safeName": "UserID"
                                 }
                             },
-                            "wireValue": "userId"
+                            "wireValue": "user_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -698,7 +698,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{tenantId}/organizations/{organizationId}/search"
+                "path": "/{tenant_id}/organizations/{organization_id}/search"
             },
             "request": {
                 "type": "inlined",
@@ -770,7 +770,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenantId",
+                                "originalName": "tenant_id",
                                 "camelCase": {
                                     "unsafeName": "tenantID",
                                     "safeName": "tenantID"
@@ -788,7 +788,7 @@
                                     "safeName": "TenantID"
                                 }
                             },
-                            "wireValue": "tenantId"
+                            "wireValue": "tenant_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -798,7 +798,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "organizationId",
+                                "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
                                     "safeName": "organizationID"
@@ -816,7 +816,7 @@
                                     "safeName": "OrganizationID"
                                 }
                             },
-                            "wireValue": "organizationId"
+                            "wireValue": "organization_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -936,7 +936,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{tenantId}/user/{userId}"
+                "path": "/{tenant_id}/user/{user_id}"
             },
             "request": {
                 "type": "inlined",
@@ -1008,7 +1008,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenantId",
+                                "originalName": "tenant_id",
                                 "camelCase": {
                                     "unsafeName": "tenantID",
                                     "safeName": "tenantID"
@@ -1026,7 +1026,7 @@
                                     "safeName": "TenantID"
                                 }
                             },
-                            "wireValue": "tenantId"
+                            "wireValue": "tenant_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1036,7 +1036,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "userId",
+                                "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
                                     "safeName": "userID"
@@ -1054,7 +1054,7 @@
                                     "safeName": "UserID"
                                 }
                             },
-                            "wireValue": "userId"
+                            "wireValue": "user_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1142,7 +1142,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{tenantId}/user/{userId}/search"
+                "path": "/{tenant_id}/user/{user_id}/search"
             },
             "request": {
                 "type": "inlined",
@@ -1214,7 +1214,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenantId",
+                                "originalName": "tenant_id",
                                 "camelCase": {
                                     "unsafeName": "tenantID",
                                     "safeName": "tenantID"
@@ -1232,7 +1232,7 @@
                                     "safeName": "TenantID"
                                 }
                             },
-                            "wireValue": "tenantId"
+                            "wireValue": "tenant_id"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1242,7 +1242,7 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "userId",
+                                "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
                                     "safeName": "userID"
@@ -1260,7 +1260,7 @@
                                     "safeName": "UserID"
                                 }
                             },
-                            "wireValue": "userId"
+                            "wireValue": "user_id"
                         },
                         "typeReference": {
                             "type": "primitive",

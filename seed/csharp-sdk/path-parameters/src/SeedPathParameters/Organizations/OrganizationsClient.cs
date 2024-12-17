@@ -18,7 +18,7 @@ public partial class OrganizationsClient
 
     /// <example>
     /// <code>
-    /// await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
+    /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
     /// </code>
     /// </example>
     public async Task<Organization> GetOrganizationAsync(
@@ -61,9 +61,9 @@ public partial class OrganizationsClient
     /// <example>
     /// <code>
     /// await client.Organizations.GetOrganizationUserAsync(
-    ///     "tenantId",
-    ///     "organizationId",
-    ///     "userId",
+    ///     "tenant_id",
+    ///     "organization_id",
+    ///     "user_id",
     ///     new GetOrganizationUserRequest()
     /// );
     /// </code>
@@ -110,8 +110,8 @@ public partial class OrganizationsClient
     /// <example>
     /// <code>
     /// await client.Organizations.SearchOrganizationsAsync(
-    ///     "tenantId",
-    ///     "organizationId",
+    ///     "tenant_id",
+    ///     "organization_id",
     ///     new SearchOrganizationsRequest { Limit = 1 }
     /// );
     /// </code>

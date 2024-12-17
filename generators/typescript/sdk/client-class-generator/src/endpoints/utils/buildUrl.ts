@@ -1,9 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
+import {
+    getParameterNameForPositionalPathParameter,
+    getParameterNameForPropertyPathParameter
+} from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
-import { getParameterNameForPathParameter } from "./getParameterNameForPathParameter";
 
 export function buildUrl({
     endpoint,
@@ -41,6 +44,7 @@ export function buildUrl({
                 pathParameter,
                 generatedClientClass,
                 retainOriginalCasing,
+                includeSerdeLayer,
                 requestVariableName: endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
                 shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest)
             });
@@ -75,12 +79,14 @@ export function buildUrl({
 function getReferenceToPathParameter({
     pathParameter,
     generatedClientClass,
+    includeSerdeLayer,
     retainOriginalCasing,
     requestVariableName,
     shouldInlinePathParameters
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
+    includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     requestVariableName: string;
     shouldInlinePathParameters: boolean;
@@ -91,15 +97,20 @@ function getReferenceToPathParameter({
     switch (pathParameter.location) {
         case PathParameterLocation.Service:
         case PathParameterLocation.Endpoint: {
-            const pathParamName = getParameterNameForPathParameter({
-                pathParameter,
-                retainOriginalCasing
-            });
             if (shouldInlinePathParameters) {
+                const pathParamName = getParameterNameForPropertyPathParameter({
+                    pathParameter,
+                    retainOriginalCasing,
+                    includeSerdeLayer
+                });
                 return ts.factory.createIdentifier(`${requestVariableName}.${pathParamName}`);
+            } else {
+                const pathParamName = getParameterNameForPositionalPathParameter({
+                    pathParameter,
+                    retainOriginalCasing
+                });
+                return ts.factory.createIdentifier(pathParamName);
             }
-
-            return ts.factory.createIdentifier(pathParamName);
         }
         case PathParameterLocation.Root:
             return generatedClientClass.getReferenceToRootPathParameter(pathParameter);

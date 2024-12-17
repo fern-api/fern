@@ -19,6 +19,8 @@ import {
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
+    getParameterNameForPropertyPathParameter,
+    getParameterNameForPropertyPathParameterName,
     getTextOfTsNode,
     maybeAddDocsNode,
     PackageId,
@@ -481,7 +483,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
         return {
             safeName: name.camelCase.safeName,
-            propertyName: name.camelCase.unsafeName
+            propertyName: getParameterNameForPropertyPathParameterName({
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                pathParameterName: name
+            })
         };
     }
 
