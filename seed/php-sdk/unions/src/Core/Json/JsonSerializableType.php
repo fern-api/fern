@@ -76,7 +76,7 @@ abstract class JsonSerializableType implements \JsonSerializable
                     } elseif ($discriminatedType instanceof ArrayType) {
                         $arrayType = $discriminatedType->type;
                     } elseif ($discriminatedType instanceof Union) {
-                        $unionType = $discriminatedType->types;
+                        $unionType = $discriminatedType;
                     }
 
                     $jsonKey = $value;
@@ -101,7 +101,9 @@ abstract class JsonSerializableType implements \JsonSerializable
                 if ($unionTypeAttr && is_null($unionType)) {
                     $unionType = $unionTypeAttr->newInstance();
                 }
-                $value = JsonSerializer::serializeUnion($value, $unionType);
+                if ($unionType) {
+                    $value = JsonSerializer::serializeUnion($value, $unionType);
+                }
             }
 
             // Handle arrays with type annotations
@@ -110,7 +112,9 @@ abstract class JsonSerializableType implements \JsonSerializable
                 if ($arrayTypeAttr && is_null($arrayType)) {
                     $arrayType = $arrayTypeAttr->newInstance()->type;
                 }
-                $value = JsonSerializer::serializeArray($value, $arrayType);
+                if ($arrayType) {
+                    $value = JsonSerializer::serializeArray($value, $arrayType);
+                }
             }
 
             // Handle object
@@ -184,17 +188,17 @@ abstract class JsonSerializableType implements \JsonSerializable
                     if ($discriminantAttr && count($discriminantAttr->getArguments()) === 1) {
                         $propertyName = 'value';
                         $existingTypes = $discriminantAttr->getArguments()[0];
-                        if (array_key_exists($value, $existingTypes)) {
+                        if (is_string($value) && array_key_exists($value, $existingTypes)) {
                             $args['type'] = $value;
                             $discriminatedType = $existingTypes[$value];
 
-                            if (array_key_exists($value, $data)) {
+                            if (is_string($value) && array_key_exists($value, $data)) {
                                 if ($discriminatedType instanceof Date) {
                                     $dateType = $discriminatedType->type;
                                 } elseif ($discriminatedType instanceof ArrayType) {
                                     $arrayType = $discriminatedType->type;
                                 } elseif ($discriminatedType instanceof Union) {
-                                    $unionType = $discriminatedType->types;
+                                    $unionType = $discriminatedType;
                                 }
 
                                 $value = $data[$value];
@@ -229,7 +233,9 @@ abstract class JsonSerializableType implements \JsonSerializable
                     if ($arrayTypeAttr && is_null($arrayType)) {
                         $arrayType = $arrayTypeAttr->newInstance()->type;
                     }
-                    $value = JsonDeserializer::deserializeArray($value, $arrayType);
+                    if ($arrayType) {
+                        $value = JsonDeserializer::deserializeArray($value, $arrayType);
+                    }
                 }
 
                 // Handle Union annotations
@@ -238,7 +244,9 @@ abstract class JsonSerializableType implements \JsonSerializable
                     if ($unionTypeAttr && is_null($unionType)) {
                         $unionType = $unionTypeAttr->newInstance();
                     }
-                    $value = JsonDeserializer::deserializeUnion($value, $unionType);
+                    if ($unionType) {
+                        $value = JsonDeserializer::deserializeUnion($value, $unionType);
+                    }
                 }
 
                 // Handle object
