@@ -7,8 +7,11 @@ use Exception;
 use JsonException;
 use ReflectionNamedType;
 use ReflectionProperty;
+use Seed\Core\Json\JsonSkip;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Date;
+use Seed\Core\Types\Discriminant;
+use Seed\Core\Types\DiscriminatedUnion;
 use Seed\Core\Types\Union;
 
 /**
@@ -121,13 +124,58 @@ abstract class JsonSerializableType implements \JsonSerializable
 
         $args = [];
         foreach ($reflectionClass->getProperties() as $property) {
+            $jsonSkipAttr = $property->getAttributes(JsonSkip::class)[0] ?? null;
+            if ($jsonSkipAttr) {
+                continue;
+            }
+
             $jsonKey = self::getJsonKey($property) ?? $property->getName();
+            $propertyName = $property->getName();
 
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
+                $dateTypeAttr = null;
+                $arrayTypeAttr = null;
+                $unionTypeAttr = null;
+                $typeName = null;
+
+                // Handle discriminated union
+                if ($reflectionClass->isSubclassOf(DiscriminatedUnion::class)) {
+                    $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
+                    $propertyName = 'value';
+
+                    if ($discriminantAttr && count($discriminantAttr->getArguments()) === 1) {
+                        $existingTypes = $discriminantAttr->getArguments()[0];
+                        if (array_key_exists($value, $existingTypes)) {
+                            $args['type'] = $value;
+                            $discriminatedType = $existingTypes[$value];
+
+                            if (array_key_exists($value, $data)) {
+                                if ($discriminatedType instanceof Date) {
+                                    $dateTypeAttr = $discriminatedType;
+                                } elseif ($discriminatedType instanceof ArrayType) {
+                                    $dateTypeAttr = $discriminatedType;
+                                } elseif ($discriminatedType instanceof Union) {
+                                    $dateTypeAttr = $discriminatedType;
+                                }
+
+                                $value = $data[$value];
+                                $typeName = $discriminatedType;
+                            } else {
+                                // Inline properties are only possible with objects
+                                $value = JsonDeserializer::deserializeObject($data, $discriminatedType);
+                            }
+                        } else {
+                            $args['type'] = '_unknown';
+                        }
+                    }
+                }
+
                 // Handle Date annotation
-                $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
+                if (is_null($dateTypeAttr)) {
+                    $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
+                }
                 if ($dateTypeAttr) {
                     $dateType = $dateTypeAttr->newInstance()->type;
                     if (!is_string($value)) {
@@ -139,14 +187,18 @@ abstract class JsonSerializableType implements \JsonSerializable
                 }
 
                 // Handle Array annotation
-                $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
+                if (is_null($arrayTypeAttr)) {
+                    $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
+                }
                 if (is_array($value) && $arrayTypeAttr) {
                     $arrayType = $arrayTypeAttr->newInstance()->type;
                     $value = JsonDeserializer::deserializeArray($value, $arrayType);
                 }
 
                 // Handle Union annotations
-                $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+                if (is_null($unionTypeAttr)) {
+                    $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+                }
                 if ($unionTypeAttr) {
                     $unionType = $unionTypeAttr->newInstance();
                     $value = JsonDeserializer::deserializeUnion($value, $unionType);
@@ -154,14 +206,17 @@ abstract class JsonSerializableType implements \JsonSerializable
 
                 // Handle object
                 $type = $property->getType();
-                if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
-                    $value = JsonDeserializer::deserializeObject($value, $type->getName());
+                if (!is_null($typeName) || is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
+                    if (is_null($typeName)) {
+                        $typeName = $type->getName();
+                    }
+                    $value = JsonDeserializer::deserializeObject($value, $typeName);
                 }
 
-                $args[$property->getName()] = $value;
+                $args[$propertyName] = $value;
             } else {
                 $defaultValue = $property->getDefaultValue() ?? null;
-                $args[$property->getName()] = $defaultValue;
+                $args[$propertyName] = $defaultValue;
             }
         }
         // @phpstan-ignore-next-line
