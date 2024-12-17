@@ -81,7 +81,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "tenantId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -90,7 +90,7 @@
                 }
               },
               {
-                "key": "organizationId",
+                "key": "organization_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -106,7 +106,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "tenantId"
+                "value": "tenant_id"
               },
               {
                 "type": "literal",
@@ -118,7 +118,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
               },
               {
                 "type": "literal",
@@ -144,10 +144,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/tenantId/organizations/organizationId/",
+              "path": "/tenant_id/organizations/organization_id/",
               "pathParameters": {
-                "tenantId": "tenantId",
-                "organizationId": "organizationId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -182,7 +182,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "tenantId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -191,7 +191,7 @@
                 }
               },
               {
-                "key": "organizationId",
+                "key": "organization_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -200,7 +200,7 @@
                 }
               },
               {
-                "key": "userId",
+                "key": "user_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -216,7 +216,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "tenantId"
+                "value": "tenant_id"
               },
               {
                 "type": "literal",
@@ -228,7 +228,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
               },
               {
                 "type": "literal",
@@ -240,7 +240,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "userId"
+                "value": "user_id"
               },
               {
                 "type": "literal",
@@ -262,11 +262,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/tenantId/organizations/organizationId/users/userId",
+              "path": "/tenant_id/organizations/organization_id/users/user_id",
               "pathParameters": {
-                "tenantId": "tenantId",
-                "organizationId": "organizationId",
-                "userId": "userId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id",
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -301,7 +301,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "tenantId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -310,7 +310,7 @@
                 }
               },
               {
-                "key": "organizationId",
+                "key": "organization_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -326,7 +326,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "tenantId"
+                "value": "tenant_id"
               },
               {
                 "type": "literal",
@@ -338,7 +338,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
               },
               {
                 "type": "literal",
@@ -380,10 +380,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/tenantId/organizations/organizationId/search",
+              "path": "/tenant_id/organizations/organization_id/search",
               "pathParameters": {
-                "tenantId": "tenantId",
-                "organizationId": "organizationId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -448,7 +448,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "tenantId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -457,7 +457,7 @@
                 }
               },
               {
-                "key": "userId",
+                "key": "user_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -473,7 +473,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "tenantId"
+                "value": "tenant_id"
               },
               {
                 "type": "literal",
@@ -489,7 +489,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "userId"
+                "value": "user_id"
               },
               {
                 "type": "literal",
@@ -511,10 +511,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/tenantId/user/userId",
+              "path": "/tenant_id/user/user_id",
               "pathParameters": {
-                "tenantId": "tenantId",
-                "userId": "userId"
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -549,7 +549,7 @@
           "path": {
             "pathParameters": [
               {
-                "key": "tenantId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -558,7 +558,7 @@
                 }
               },
               {
-                "key": "userId",
+                "key": "user_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -574,7 +574,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "tenantId"
+                "value": "tenant_id"
               },
               {
                 "type": "literal",
@@ -590,7 +590,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "userId"
+                "value": "user_id"
               },
               {
                 "type": "literal",
@@ -628,10 +628,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/tenantId/user/userId/search",
+              "path": "/tenant_id/user/user_id/search",
               "pathParameters": {
-                "tenantId": "tenantId",
-                "userId": "userId"
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
