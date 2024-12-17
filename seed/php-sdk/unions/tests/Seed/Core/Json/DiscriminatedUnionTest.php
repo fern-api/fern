@@ -27,11 +27,12 @@ class DiscriminatedUnionTest extends TestCase
         $this->assertNotNull($shape->value, "Shape value must not be null");
         $this->assertTrue($shape->value instanceof Circle);
         $this->assertEquals($shape->value->radius, 1.0, "Circle radius must match definition");
+        $this->assertJsonStringEqualsJsonString($shape->toJson(), $expected_json);
     }
 
     public function testRoundtripSerdeFlat(): void
     {
-        $expected_json = json_encode(
+        $flat_json = json_encode(
             [
                 'type' => 'circle',
                 'radius' => 1.0
@@ -39,12 +40,23 @@ class DiscriminatedUnionTest extends TestCase
             JSON_THROW_ON_ERROR
         );
 
-        $shape = Shape::fromJson($expected_json);
+        $expected_json = json_encode(
+            [
+                'type' => 'circle',
+                'circle' => [
+                    'radius' => 1.0
+                ]
+            ],
+            JSON_THROW_ON_ERROR
+        );
+
+        $shape = Shape::fromJson($flat_json);
 
         $this->assertTrue($shape instanceof Shape, "Deserialized object must be of type Shape");
         $this->assertEquals($shape->type, 'circle', "Type property must be circle");
         $this->assertNotNull($shape->value, "Shape value must not be null");
         $this->assertTrue($shape->value instanceof Circle);
         $this->assertEquals($shape->value->radius, 1.0, "Circle radius must match definition");
+        $this->assertJsonStringEqualsJsonString($shape->toJson(), $expected_json);
     }
 }
