@@ -4,13 +4,20 @@
     "**/.yarn": true,
   },
   "eslint.nodePath": ".yarn/sdks",
-  "eslint.execArgv": ["--max_old_space_size=16384"],
-  "eslint.workingDirectories": [ "./packages", "./generators" ],
+  "eslint.execArgv": [
+    "--max_old_space_size=16384"
+  ],
+  "eslint.workingDirectories": [
+    "./packages",
+    "./generators"
+  ],
   "prettier.prettierPath": "node_modules/prettier/index.js",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": [
+    "source.fixAll",
+    "source.sortMembers"
   ],
   "editor.defaultFormatter": null,
   "[typescript]": {
