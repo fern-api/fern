@@ -37,7 +37,6 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
-        includeSerdeLayer: boolean;
     }
 }
 
@@ -56,7 +55,6 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
-    private includeSerdeLayer: boolean;
 
     constructor({
         ir,
@@ -66,8 +64,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing,
-        includeSerdeLayer
+        retainOriginalCasing
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -76,7 +73,6 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.includeSerdeLayer = includeSerdeLayer;
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
