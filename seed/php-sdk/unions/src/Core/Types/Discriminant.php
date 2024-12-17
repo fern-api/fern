@@ -8,12 +8,7 @@ use Attribute;
 class Discriminant
 {
     /**
-     * @var array<string, string> types
+     * @param array<string, string> $types
      */
-    public readonly array $types;
-
-    public function __construct($types)
-    {
-        $this->types = $types;
-    }
+    public function __construct(public readonly array $types) {}
 }

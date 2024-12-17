@@ -38,13 +38,14 @@ class UnionWithLiteral extends DiscriminatedUnion
     public function __construct(
         private readonly ?array $options = null,
     ) {
-        if (is_null($options)) {
+        if (is_null($this->options)) {
             throw new \Exception("Missing all required properties");
         }
-        if (!array_key_exists('base', $options)) {
+        if (array_key_exists('base', $this->options)) {
+            $this->base = $this->options['base'];
+        } else {
             throw new \Exception("Missing required property 'base'");
         }
-        $this->base = $this->options['base'];
         $this->type = $this->options['type'] ?? '_unknown';
         $this->value = $this->options['value'] ?? null;
     }
@@ -74,7 +75,7 @@ class UnionWithLiteral extends DiscriminatedUnion
             );
         }
 
-        if ($this->type === 'fern') {
+        if ($this->value !== 'fern') {
             throw new \Exception(
                 "Expected value to be \"fern\"."
             );
