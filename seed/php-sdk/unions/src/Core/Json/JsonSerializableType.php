@@ -58,9 +58,9 @@ abstract class JsonSerializableType implements \JsonSerializable
             }
             $value = $property->getValue($this);
 
-            $dateTypeAttr = null;
-            $arrayTypeAttr = null;
-            $unionTypeAttr = null;
+            $dateType = null;
+            $arrayType = null;
+            $unionType = null;
 
             // Handle discriminated union
             if ($this instanceof DiscriminatedUnion) {
@@ -72,11 +72,11 @@ abstract class JsonSerializableType implements \JsonSerializable
                     $discriminatedType = $existingTypes[$value] ?? null;
 
                     if ($discriminatedType instanceof Date) {
-                        $dateTypeAttr = $discriminatedType;
+                        $dateType = $discriminatedType->type;
                     } elseif ($discriminatedType instanceof ArrayType) {
-                        $dateTypeAttr = $discriminatedType;
+                        $arrayType = $discriminatedType->type;
                     } elseif ($discriminatedType instanceof Union) {
-                        $dateTypeAttr = $discriminatedType;
+                        $unionType = $discriminatedType->types;
                     }
 
                     $jsonKey = $value;
@@ -85,30 +85,26 @@ abstract class JsonSerializableType implements \JsonSerializable
             }
 
             // Handle DateTime properties
-            if (is_null($dateTypeAttr)) {
-                $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
-            }
-            if ($dateTypeAttr && $value instanceof DateTime) {
-                $dateType = $dateTypeAttr->newInstance()->type;
+            $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
+            if (($dateType || $dateTypeAttr) && $value instanceof DateTime) {
+                if (is_null($dateType)) {
+                    $dateType = $dateTypeAttr->newInstance()->type;
+                }
                 $value = ($dateType === Date::TYPE_DATE)
                     ? JsonSerializer::serializeDate($value)
                     : JsonSerializer::serializeDateTime($value);
             }
 
             // Handle Union annotations
-            if (is_null($unionTypeAttr)) {
-                $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
-            }
-            if ($unionTypeAttr) {
+            $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+            if ($unionType || $unionTypeAttr) {
                 $unionType = $unionTypeAttr->newInstance();
                 $value = JsonSerializer::serializeUnion($value, $unionType);
             }
 
             // Handle arrays with type annotations
-            if (is_null($arrayTypeAttr)) {
-                $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
-            }
-            if ($arrayTypeAttr && is_array($value)) {
+            $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
+            if (($arrayType || $arrayTypeAttr) && is_array($value)) {
                 $arrayType = $arrayTypeAttr->newInstance()->type;
                 $value = JsonSerializer::serializeArray($value, $arrayType);
             }
@@ -172,17 +168,17 @@ abstract class JsonSerializableType implements \JsonSerializable
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
-                $dateTypeAttr = null;
-                $arrayTypeAttr = null;
-                $unionTypeAttr = null;
+                $dateType = null;
+                $arrayType = null;
+                $unionType = null;
                 $typeName = null;
 
                 // Handle discriminated union
                 if ($reflectionClass->isSubclassOf(DiscriminatedUnion::class)) {
                     $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
-                    $propertyName = 'value';
 
                     if ($discriminantAttr && count($discriminantAttr->getArguments()) === 1) {
+                        $propertyName = 'value';
                         $existingTypes = $discriminantAttr->getArguments()[0];
                         if (array_key_exists($value, $existingTypes)) {
                             $args['type'] = $value;
@@ -190,11 +186,11 @@ abstract class JsonSerializableType implements \JsonSerializable
 
                             if (array_key_exists($value, $data)) {
                                 if ($discriminatedType instanceof Date) {
-                                    $dateTypeAttr = $discriminatedType;
+                                    $dateType = $discriminatedType->type;
                                 } elseif ($discriminatedType instanceof ArrayType) {
-                                    $dateTypeAttr = $discriminatedType;
+                                    $arrayType = $discriminatedType->type;
                                 } elseif ($discriminatedType instanceof Union) {
-                                    $dateTypeAttr = $discriminatedType;
+                                    $unionType = $discriminatedType->types;
                                 }
 
                                 $value = $data[$value];
@@ -210,11 +206,11 @@ abstract class JsonSerializableType implements \JsonSerializable
                 }
 
                 // Handle Date annotation
-                if (is_null($dateTypeAttr)) {
-                    $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
-                }
-                if ($dateTypeAttr) {
-                    $dateType = $dateTypeAttr->newInstance()->type;
+                $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
+                if ($dateType || $dateTypeAttr) {
+                    if (is_null($dateType)) {
+                        $dateType = $dateTypeAttr->newInstance()->type;
+                    }
                     if (!is_string($value)) {
                         throw new JsonException("Unexpected non-string type for date.");
                     }
@@ -224,26 +220,26 @@ abstract class JsonSerializableType implements \JsonSerializable
                 }
 
                 // Handle Array annotation
-                if (is_null($arrayTypeAttr)) {
-                    $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
-                }
-                if (is_array($value) && $arrayTypeAttr) {
-                    $arrayType = $arrayTypeAttr->newInstance()->type;
+                $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
+                if (is_array($value) && ($arrayTypeAttr || $arrayType)) {
+                    if (is_null($arrayType)) {
+                        $arrayType = $arrayTypeAttr->newInstance()->type;
+                    }
                     $value = JsonDeserializer::deserializeArray($value, $arrayType);
                 }
 
                 // Handle Union annotations
-                if (is_null($unionTypeAttr)) {
-                    $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
-                }
-                if ($unionTypeAttr) {
-                    $unionType = $unionTypeAttr->newInstance();
+                $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+                if ($unionType || $unionTypeAttr) {
+                    if (is_null($unionType)) {
+                        $unionType = $unionTypeAttr->newInstance();
+                    }
                     $value = JsonDeserializer::deserializeUnion($value, $unionType);
                 }
 
                 // Handle object
                 $type = $property->getType();
-                if (!is_null($typeName) || is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
+                if (is_array($value) && ($typeName || $type instanceof ReflectionNamedType && !$type->isBuiltin())) {
                     if (is_null($typeName)) {
                         $typeName = $type->getName();
                     }
