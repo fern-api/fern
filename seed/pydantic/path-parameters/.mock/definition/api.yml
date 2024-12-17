@@ -1,4 +1,4 @@
 name: path-parameters
-base-path: "/{tenantId}"
+base-path: "/{tenant_id}"
 path-parameters:
-  tenantId: string
+  tenant_id: string

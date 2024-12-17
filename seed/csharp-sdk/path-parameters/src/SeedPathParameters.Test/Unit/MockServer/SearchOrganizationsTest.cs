@@ -38,7 +38,7 @@ public class SearchOrganizationsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/tenantId/organizations/organizationId/search")
+                    .WithPath("/tenant_id/organizations/organization_id/search")
                     .WithParam("limit", "1")
                     .UsingGet()
             )
@@ -50,8 +50,8 @@ public class SearchOrganizationsTest : BaseMockServerTest
             );
 
         var response = await Client.Organizations.SearchOrganizationsAsync(
-            "tenantId",
-            "organizationId",
+            "tenant_id",
+            "organization_id",
             new SearchOrganizationsRequest { Limit = 1 },
             RequestOptions
         );

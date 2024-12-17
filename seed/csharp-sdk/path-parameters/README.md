@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedPathParameters;
 
 var client = new SeedPathParametersClient();
-await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
+await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 ```
 
 ## Exception Handling

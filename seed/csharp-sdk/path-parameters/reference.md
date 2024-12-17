@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
+await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 ```
 </dd>
 </dl>
@@ -62,9 +62,9 @@ await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
 
 ```csharp
 await client.Organizations.GetOrganizationUserAsync(
-    "tenantId",
-    "organizationId",
-    "userId",
+    "tenant_id",
+    "organization_id",
+    "user_id",
     new GetOrganizationUserRequest()
 );
 ```
@@ -131,8 +131,8 @@ await client.Organizations.GetOrganizationUserAsync(
 
 ```csharp
 await client.Organizations.SearchOrganizationsAsync(
-    "tenantId",
-    "organizationId",
+    "tenant_id",
+    "organization_id",
     new SearchOrganizationsRequest { Limit = 1 }
 );
 ```
@@ -191,7 +191,7 @@ await client.Organizations.SearchOrganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
+await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 ```
 </dd>
 </dl>
@@ -247,7 +247,7 @@ await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
 <dd>
 
 ```csharp
-await client.User.SearchUsersAsync("tenantId", "userId", new SearchUsersRequest { Limit = 1 });
+await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>

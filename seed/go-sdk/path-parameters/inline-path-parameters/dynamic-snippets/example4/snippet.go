@@ -11,8 +11,8 @@ func do() () {
     client.User.SearchUsers(
         context.TODO(),
         &path.SearchUsersRequest{
-            TenantId: "tenantId",
-            UserId: "userId",
+            TenantId: "tenant_id",
+            UserId: "user_id",
             Limit: path.Int(
                 1,
             ),

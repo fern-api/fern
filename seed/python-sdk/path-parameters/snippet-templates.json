@@ -6,7 +6,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}",
+            "path": "/{tenant_id}/organizations/{organization_id}",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.getOrganization"
         },
@@ -62,7 +62,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}/users/{userId}",
+            "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.getOrganizationUser"
         },
@@ -91,7 +91,7 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "userId",
+                                    "path": "user_id",
                                     "type": "payload"
                                 }
                             ],
@@ -130,7 +130,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "PATH",
-                                        "path": "userId",
+                                        "path": "user_id",
                                         "type": "payload"
                                     }
                                 ],
@@ -152,7 +152,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}/search",
+            "path": "/{tenant_id}/organizations/{organization_id}/search",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.searchOrganizations"
         },
@@ -242,7 +242,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{tenantId}/user/{userId}",
+            "path": "/{tenant_id}/user/{user_id}",
             "method": "GET",
             "identifierOverride": "endpoint_user.getUser"
         },
@@ -271,7 +271,7 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "userId",
+                                    "path": "user_id",
                                     "type": "payload"
                                 }
                             ],
@@ -310,7 +310,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "PATH",
-                                        "path": "userId",
+                                        "path": "user_id",
                                         "type": "payload"
                                     }
                                 ],
@@ -332,7 +332,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{tenantId}/user/{userId}/search",
+            "path": "/{tenant_id}/user/{user_id}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -361,7 +361,7 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "userId",
+                                    "path": "user_id",
                                     "type": "payload"
                                 }
                             ],
@@ -416,7 +416,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "PATH",
-                                        "path": "userId",
+                                        "path": "user_id",
                                         "type": "payload"
                                     }
                                 ],

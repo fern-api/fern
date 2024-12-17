@@ -11,7 +11,7 @@ export interface UserServiceMethods {
     getUser(
         req: express.Request<
             {
-                userId: string;
+                user_id: string;
             },
             SeedPathParameters.User,
             never,
@@ -27,7 +27,7 @@ export interface UserServiceMethods {
     searchUsers(
         req: express.Request<
             {
-                userId: string;
+                user_id: string;
             },
             SeedPathParameters.User[],
             never,
@@ -62,7 +62,7 @@ export class UserService {
     }
 
     public toRouter(): express.Router {
-        this.router.get("/:userId", async (req, res, next) => {
+        this.router.get("/:user_id", async (req, res, next) => {
             try {
                 await this.methods.getUser(
                     req as any,
@@ -90,7 +90,7 @@ export class UserService {
                 next(error);
             }
         });
-        this.router.get("/:userId/search", async (req, res, next) => {
+        this.router.get("/:user_id/search", async (req, res, next) => {
             try {
                 await this.methods.searchUsers(
                     req as any,
