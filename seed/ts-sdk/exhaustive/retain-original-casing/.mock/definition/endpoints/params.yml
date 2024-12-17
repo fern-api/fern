@@ -10,16 +10,6 @@ service:
       method: GET
       response: string
 
-    getWithInlinePath:
-      docs: GET with path param
-      path: /path/{param}
-      method: GET
-      response: string
-      request:
-        name: getWithInlinePath
-        path-parameters:
-          param: string
-
     getWithQuery:
       docs: GET with query param
       path: ""
@@ -55,17 +45,6 @@ service:
         query-parameters:
           query: string #mandatory for test
 
-    getWithInlinePathAndQuery:
-      docs: GET with path and query params
-      path: /path-query/{param}
-      method: GET
-      request:
-        name: getWithInlinePathAndQuery
-        query-parameters:
-          query: string #mandatory for test
-        path-parameters:
-          param: string
-
     modifyWithPath:
       docs: PUT to update with path param
       path: /path/{param}
@@ -75,15 +54,4 @@ service:
       request:
         name: ModifyResourceAtPath
         body: string
-      response: string
-
-    modifyWithInlinePath:
-      docs: PUT to update with path param
-      path: /path/{param}
-      method: PUT
-      request:
-        name: ModifyResourceAtInlinedPath
-        body: string
-        path-parameters:
-          param: string
       response: string
