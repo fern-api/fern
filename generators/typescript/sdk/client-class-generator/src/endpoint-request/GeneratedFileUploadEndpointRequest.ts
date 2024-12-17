@@ -8,6 +8,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
+    getParameterNameForPositionalPathParameter,
     GetReferenceOpts,
     getTextOfTsNode,
     ImportsManager,
@@ -21,7 +22,6 @@ import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFor
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
@@ -37,6 +37,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        includeSerdeLayer: boolean;
         inlineFileProperties: boolean;
         importsManager: ImportsManager;
     }
@@ -56,6 +57,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
+    private includeSerdeLayer: boolean;
     private inlineFileProperties: boolean;
 
     constructor({
@@ -67,6 +69,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         generatedSdkClientClass,
         targetRuntime,
         retainOriginalCasing,
+        includeSerdeLayer,
         inlineFileProperties,
         importsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
@@ -77,6 +80,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         if (
@@ -188,7 +192,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             context
         })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),

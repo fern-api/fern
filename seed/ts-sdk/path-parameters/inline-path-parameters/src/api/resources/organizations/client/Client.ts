@@ -34,7 +34,7 @@ export class Organizations {
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.organizations.getOrganization("organizationId")
+     *     await client.organizations.getOrganization("organization_id")
      */
     public async getOrganization(
         organizationId: string,
@@ -85,7 +85,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/organizations/{organizationId}/."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -100,8 +100,8 @@ export class Organizations {
      *
      * @example
      *     await client.organizations.getOrganizationUser({
-     *         organizationId: "organizationId",
-     *         userId: "userId"
+     *         organizationId: "organization_id",
+     *         userId: "user_id"
      *     })
      */
     public async getOrganizationUser(
@@ -155,7 +155,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/organizations/{organizationId}/users/{userId}."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/users/{user_id}."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -170,7 +170,7 @@ export class Organizations {
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.organizations.searchOrganizations("organizationId", {
+     *     await client.organizations.searchOrganizations("organization_id", {
      *         limit: 1
      *     })
      */
@@ -233,7 +233,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/organizations/{organizationId}/search."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/search."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

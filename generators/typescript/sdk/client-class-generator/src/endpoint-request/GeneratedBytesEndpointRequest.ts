@@ -1,6 +1,5 @@
 import {
     ExampleEndpointCall,
-    FileProperty,
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
@@ -8,6 +7,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
+    getParameterNameForPositionalPathParameter,
     GetReferenceOpts,
     getTextOfTsNode,
     ImportsManager,
@@ -22,7 +22,6 @@ import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 
 export declare namespace GeneratedBytesEndpointRequest {
@@ -35,6 +34,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -50,6 +50,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         ir,
@@ -59,7 +60,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         requestBody,
         generatedSdkClientClass,
         targetRuntime,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeSerdeLayer
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -68,6 +70,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeSerdeLayer = includeSerdeLayer;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -152,7 +155,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             context
         })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),

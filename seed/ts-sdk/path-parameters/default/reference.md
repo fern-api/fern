@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.organizations.getOrganization("organizationId");
+await client.organizations.getOrganization("organization_id");
 ```
 
 </dd>
@@ -63,7 +63,7 @@ await client.organizations.getOrganization("organizationId");
 <dd>
 
 ```typescript
-await client.organizations.getOrganizationUser("organizationId", "userId");
+await client.organizations.getOrganizationUser("organization_id", "user_id");
 ```
 
 </dd>
@@ -127,7 +127,7 @@ await client.organizations.getOrganizationUser("organizationId", "userId");
 <dd>
 
 ```typescript
-await client.organizations.searchOrganizations("organizationId", {
+await client.organizations.searchOrganizations("organization_id", {
     limit: 1,
 });
 ```
@@ -187,7 +187,7 @@ await client.organizations.searchOrganizations("organizationId", {
 <dd>
 
 ```typescript
-await client.user.getUser("userId");
+await client.user.getUser("user_id");
 ```
 
 </dd>
@@ -243,7 +243,7 @@ await client.user.getUser("userId");
 <dd>
 
 ```typescript
-await client.user.searchUsers("userId", {
+await client.user.searchUsers("user_id", {
     limit: 1,
 });
 ```

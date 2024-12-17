@@ -9,12 +9,17 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    Fetcher,
+    getParameterNameForPositionalPathParameter,
+    GetReferenceOpts,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
@@ -32,6 +37,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -50,6 +56,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         ir,
@@ -59,7 +66,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeSerdeLayer
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -68,6 +76,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -109,7 +118,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             context
         })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
