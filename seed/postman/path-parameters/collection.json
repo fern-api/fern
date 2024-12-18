@@ -407,6 +407,202 @@
         },
         {
           "_type": "endpoint",
+          "name": "Create User",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:tenant_id/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":tenant_id",
+                "user"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tenant_id",
+                  "description": null,
+                  "value": "tenant_id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:tenant_id/user",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":tenant_id",
+                    "user"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "tenant_id",
+                      "description": null,
+                      "value": "tenant_id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Update User",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":tenant_id",
+                "user",
+                ":user_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tenant_id",
+                  "description": null,
+                  "value": "tenant_id"
+                },
+                {
+                  "key": "user_id",
+                  "description": null,
+                  "value": "user_id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":tenant_id",
+                    "user",
+                    ":user_id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "tenant_id",
+                      "description": null,
+                      "value": "tenant_id"
+                    },
+                    {
+                      "key": "user_id",
+                      "description": null,
+                      "value": "user_id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "Search Users",
           "request": {
             "description": null,

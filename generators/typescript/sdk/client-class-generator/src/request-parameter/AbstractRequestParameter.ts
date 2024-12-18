@@ -52,6 +52,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     public abstract getInitialStatements(context: SdkContext, args: { variablesInScope: string[] }): ts.Statement[];
     public abstract getAllQueryParameters(context: SdkContext): QueryParameter[];
     public abstract getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined;
+    public abstract getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression;
     public abstract getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression;
     public abstract getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression;
     public abstract withQueryParameter(

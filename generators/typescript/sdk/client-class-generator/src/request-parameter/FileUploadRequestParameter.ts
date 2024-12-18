@@ -67,6 +67,19 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         });
     }
 
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        const pathParameter = this.endpoint.allPathParameters.find(
+            (pathParam) => pathParam.name.originalName === pathParameterKey
+        );
+        if (pathParameter == null) {
+            throw new Error("Path parameter does not exist: " + pathParameterKey);
+        }
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        return this.getReferenceToProperty(
+            generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter).propertyName
+        );
+    }
+
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey

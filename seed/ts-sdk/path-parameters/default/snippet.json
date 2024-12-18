@@ -46,6 +46,28 @@
         },
         {
             "id": {
+                "path": "/{tenant_id}/user/",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    tags: [\"tags\", \"tags\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser(\"user_id\", {\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"

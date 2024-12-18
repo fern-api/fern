@@ -1,12 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
-import {
-    getParameterNameForPositionalPathParameter,
-    getParameterNameForPropertyPathParameter
-} from "@fern-typescript/commons";
+import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+
+export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;
 
 export function buildUrl({
     endpoint,
@@ -14,7 +13,8 @@ export function buildUrl({
     context,
     includeSerdeLayer,
     retainOriginalCasing,
-    omitUndefined
+    omitUndefined,
+    getReferenceToPathParameterVariableFromRequest
 }: {
     endpoint: HttpEndpoint;
     generatedClientClass: GeneratedSdkClientClassImpl;
@@ -22,6 +22,7 @@ export function buildUrl({
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     omitUndefined: boolean;
+    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -29,7 +30,6 @@ export function buildUrl({
         }
         return ts.factory.createStringLiteral(endpoint.fullPath.head);
     }
-
     return ts.factory.createTemplateExpression(
         ts.factory.createTemplateHead(endpoint.fullPath.head),
         endpoint.fullPath.parts.map((part, index) => {
@@ -44,9 +44,8 @@ export function buildUrl({
                 pathParameter,
                 generatedClientClass,
                 retainOriginalCasing,
-                includeSerdeLayer,
-                requestVariableName: endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
-                shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest)
+                shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
+                getReferenceToPathParameterVariableFromRequest
             });
 
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
@@ -79,17 +78,15 @@ export function buildUrl({
 function getReferenceToPathParameter({
     pathParameter,
     generatedClientClass,
-    includeSerdeLayer,
     retainOriginalCasing,
-    requestVariableName,
-    shouldInlinePathParameters
+    shouldInlinePathParameters,
+    getReferenceToPathParameterVariableFromRequest
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
-    includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
-    requestVariableName: string;
     shouldInlinePathParameters: boolean;
+    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression {
     if (pathParameter.variable != null) {
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
@@ -98,12 +95,7 @@ function getReferenceToPathParameter({
         case PathParameterLocation.Service:
         case PathParameterLocation.Endpoint: {
             if (shouldInlinePathParameters) {
-                const pathParamName = getParameterNameForPropertyPathParameter({
-                    pathParameter,
-                    retainOriginalCasing,
-                    includeSerdeLayer
-                });
-                return ts.factory.createIdentifier(`${requestVariableName}.${pathParamName}`);
+                return getReferenceToPathParameterVariableFromRequest(pathParameter);
             } else {
                 const pathParamName = getParameterNameForPositionalPathParameter({
                     pathParameter,
