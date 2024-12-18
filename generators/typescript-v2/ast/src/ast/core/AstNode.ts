@@ -6,6 +6,12 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
+    public async toStringAsync(): Promise<string> {
+        const writer = new Writer();
+        this.write(writer);
+        return writer.toString();
+    }
+
     public toString(): string {
         const writer = new Writer();
         this.write(writer);

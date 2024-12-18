@@ -25,6 +25,8 @@ export class Variable extends AstNode {
         }
         if (this.args.const) {
             writer.write("const ");
+        } else {
+            writer.write("let ");
         }
         writer.write(`${this.args.name} = `);
         writer.writeNode(this.args.initializer);
