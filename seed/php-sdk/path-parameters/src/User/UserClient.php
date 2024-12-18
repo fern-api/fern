@@ -11,6 +11,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\User\Requests\UpdateUserRequest;
 use Seed\User\Requests\SearchUsersRequest;
 use Seed\Core\Json\JsonDecoder;
 
@@ -49,6 +50,83 @@ class UserClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/$tenantId/user/$userId",
                     method: HttpMethod::GET,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return User::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param string $tenantId
+     * @param User $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return User
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function createUser(string $tenantId, User $request, ?array $options = null): User
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/$tenantId/user/",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return User::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param string $tenantId
+     * @param string $userId
+     * @param UpdateUserRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return User
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function updateUser(string $tenantId, string $userId, UpdateUserRequest $request, ?array $options = null): User
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/$tenantId/user/$userId",
+                    method: HttpMethod::PATCH,
+                    body: $request->body,
                 ),
             );
             $statusCode = $response->getStatusCode();

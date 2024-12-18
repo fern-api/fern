@@ -43,6 +43,63 @@ module SeedPathParametersClient
     end
 
     # @param tenant_id [String]
+    # @param request [Hash] Request of type SeedPathParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param request_options [SeedPathParametersClient::RequestOptions]
+    # @return [SeedPathParametersClient::User::User]
+    # @example
+    #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
+    #  path_parameters.user.create_user(tenant_id: "tenant_id", request: { name: "name", tags: ["tags", "tags"] })
+    def create_user(tenant_id:, request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/#{tenant_id}/user"
+      end
+      SeedPathParametersClient::User::User.from_json(json_object: response.body)
+    end
+
+    # @param tenant_id [String]
+    # @param user_id [String]
+    # @param request [Hash] Request of type SeedPathParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param request_options [SeedPathParametersClient::RequestOptions]
+    # @return [SeedPathParametersClient::User::User]
+    # @example
+    #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
+    #  path_parameters.user.update_user(
+    #    tenant_id: "tenant_id",
+    #    user_id: "user_id",
+    #    request: { name: "name", tags: ["tags", "tags"] }
+    #  )
+    def update_user(tenant_id:, user_id:, request:, request_options: nil)
+      response = @request_client.conn.patch do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/#{tenant_id}/user/#{user_id}"
+      end
+      SeedPathParametersClient::User::User.from_json(json_object: response.body)
+    end
+
+    # @param tenant_id [String]
     # @param user_id [String]
     # @param limit [Integer]
     # @param request_options [SeedPathParametersClient::RequestOptions]
@@ -108,6 +165,67 @@ module SeedPathParametersClient
           unless request_options.nil? || request_options&.additional_body_parameters.nil?
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact
           end
+          req.url "#{@request_client.get_url(request_options: request_options)}/#{tenant_id}/user/#{user_id}"
+        end
+        SeedPathParametersClient::User::User.from_json(json_object: response.body)
+      end
+    end
+
+    # @param tenant_id [String]
+    # @param request [Hash] Request of type SeedPathParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param request_options [SeedPathParametersClient::RequestOptions]
+    # @return [SeedPathParametersClient::User::User]
+    # @example
+    #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
+    #  path_parameters.user.create_user(tenant_id: "tenant_id", request: { name: "name", tags: ["tags", "tags"] })
+    def create_user(tenant_id:, request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/#{tenant_id}/user"
+        end
+        SeedPathParametersClient::User::User.from_json(json_object: response.body)
+      end
+    end
+
+    # @param tenant_id [String]
+    # @param user_id [String]
+    # @param request [Hash] Request of type SeedPathParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param request_options [SeedPathParametersClient::RequestOptions]
+    # @return [SeedPathParametersClient::User::User]
+    # @example
+    #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
+    #  path_parameters.user.update_user(
+    #    tenant_id: "tenant_id",
+    #    user_id: "user_id",
+    #    request: { name: "name", tags: ["tags", "tags"] }
+    #  )
+    def update_user(tenant_id:, user_id:, request:, request_options: nil)
+      Async do
+        response = @request_client.conn.patch do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/#{tenant_id}/user/#{user_id}"
         end
         SeedPathParametersClient::User::User.from_json(json_object: response.body)

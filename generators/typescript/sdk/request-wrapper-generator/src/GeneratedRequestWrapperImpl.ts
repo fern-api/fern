@@ -19,7 +19,6 @@ import {
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameter,
     getParameterNameForPropertyPathParameterName,
     getTextOfTsNode,
     maybeAddDocsNode,
@@ -347,6 +346,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
         const properties = [
+            ...this.getPathParamsForRequestWrapper().map((pathParameter) =>
+                this.getPropertyNameOfPathParameter(pathParameter)
+            ),
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
             ),

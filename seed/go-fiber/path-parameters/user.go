@@ -58,3 +58,20 @@ func (u *User) String() string {
 	}
 	return fmt.Sprintf("%#v", u)
 }
+
+type UpdateUserRequest struct {
+	Body *User `json:"-" url:"-"`
+}
+
+func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
+	body := new(User)
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	u.Body = body
+	return nil
+}
+
+func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(u.Body)
+}
