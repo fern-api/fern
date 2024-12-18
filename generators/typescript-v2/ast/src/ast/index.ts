@@ -10,3 +10,4 @@ export { Method } from "./Method";
 export { FunctionInvocation } from "./FunctionInvocation";
 export { MethodInvocation } from "./MethodInvocation";
 export { Comment } from "./Comment";
+export { ClassInstantiation } from "./ClassInstantiation";
