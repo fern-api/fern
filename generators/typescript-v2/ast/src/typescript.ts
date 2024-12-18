@@ -32,6 +32,10 @@ export function parameter(args: AST.Parameter.Args): AST.Parameter {
     return new AST.Parameter(args);
 }
 
+export function classInstantiation(args: AST.ClassInstantiation.Args): AST.ClassInstantiation {
+    return new AST.ClassInstantiation(args);
+}
+
 export * from "./ast";
 export { Type as Types, TypeLiteral, Reference } from "./ast";
 export * from "./ast/core";
