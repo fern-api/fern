@@ -19,6 +19,6 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
-        return ts.TypeLiteral.string("TODO: Implement me!").toString();
+        return "TODO: Implement me!";
     }
 }
