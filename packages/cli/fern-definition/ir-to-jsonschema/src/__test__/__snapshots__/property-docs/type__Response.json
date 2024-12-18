@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "fooWithDocs": {
+      "type": "string",
+      "description": "A foo property that should show doc comments."
+    },
+    "fooNoDocs": {
+      "type": "string"
+    },
+    "fooLongDocs": {
+      "type": "string",
+      "description": "A foo property that should show doc comments.\nThere should be a line break in between these two sentences."
+    },
+    "fooDocsOnComplexType": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Doc comments should be at the right level of indentation."
+    }
+  },
+  "required": [
+    "fooWithDocs",
+    "fooNoDocs",
+    "fooLongDocs"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
