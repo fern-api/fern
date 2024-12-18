@@ -18,7 +18,7 @@ type InternalType =
     | Undefined
     | Null
     | Never
-    | Nop;
+    | NoOp;
 
 interface String_ {
     type: "string";
@@ -86,8 +86,8 @@ interface Never {
     type: "never";
 }
 
-interface Nop {
-    type: "nop";
+interface NoOp {
+    type: "noOp";
 }
 
 interface ObjectField {
@@ -153,7 +153,7 @@ export class Type extends AstNode {
             case "never":
                 writer.write("never");
                 break;
-            case "nop":
+            case "noOp":
                 break;
             default:
                 assertNever(this.internalType);
@@ -249,9 +249,9 @@ export class Type extends AstNode {
         });
     }
 
-    public static nop(): Type {
+    public static noOp(): Type {
         return new this({
-            type: "nop"
+            type: "noOp"
         });
     }
 

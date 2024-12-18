@@ -12,7 +12,7 @@ export declare namespace Method {
         reference: Reference;
         name: string;
         parameters: Parameter[];
-        return_: Type[];
+        return_?: Type;
         body?: CodeBlock;
         docs?: string;
     }
@@ -30,34 +30,21 @@ export class Method extends Function {
         writer.writeNode(new Comment({ docs: this.docs }));
         // TODO: Add visibility, make this nest in an object eventually
         writer.write("function ");
-        writer.write(`${this._name}`);
+        writer.write(`${this.name}`);
         writer.writeLine("(");
         writer.delimit({
-            nodes: this._parameters,
+            nodes: this.parameters,
             delimiter: ",\n",
             writeFunction: (parameter) => parameter.writeWithType(writer)
         });
         writer.writeLine(")");
-        if (this._return_.length > 0) {
+        if (this.return_ != null) {
             writer.write(": ");
-            if (this._return_.length === 1) {
-                const returnType = this._return_[0];
-                if (returnType != null) {
-                    writer.writeNode(returnType);
-                }
-            } else {
-                writer.writeLine("(");
-                writer.delimit({
-                    nodes: this._return_,
-                    delimiter: ", ",
-                    writeFunction: (type) => type.write(writer)
-                });
-                writer.write(")");
-            }
+            writer.writeNode(this.return_);
         }
         writer.writeLine(" {");
         writer.indent();
-        this._body?.write(writer);
+        this.body?.write(writer);
         writer.dedent();
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("}");

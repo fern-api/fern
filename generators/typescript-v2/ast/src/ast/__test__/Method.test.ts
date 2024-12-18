@@ -21,8 +21,7 @@ describe("Invocation", () => {
                     name: "AbstractBaseUrlFactoryHandler"
                 }),
                 name: "withBaseURL",
-                parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
-                return_: []
+                parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })]
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();
         });
@@ -36,7 +35,7 @@ describe("Invocation", () => {
                 }),
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
-                return_: [ts.Types.string()],
+                return_: ts.Types.string(),
                 body: ts.codeblock((writer) => {
                     writer.writeLine("console.log('foo')");
                     writer.writeLine("return baseUrl + 'foo';");

@@ -6,19 +6,19 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
-    public async toString(): Promise<string> {
+    public async toStringAsync(): Promise<string> {
         const writer = new Writer();
         this.write(writer);
         return writer.toString();
     }
 
-    public toStringSync(): string {
+    public toString(): string {
         const writer = new Writer();
         this.write(writer);
         return writer.toString();
     }
 
     public toStringFormatted(): string {
-        return prettier.format(this.toStringSync(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
+        return prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
     }
 }

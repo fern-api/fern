@@ -24,7 +24,7 @@ export class DynamicTypeLiteralMapper {
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
         if (args.value == null) {
-            return ts.TypeLiteral.nop();
+            return ts.TypeLiteral.noOp();
         }
         switch (args.typeReference.type) {
             case "list":
@@ -38,16 +38,16 @@ export class DynamicTypeLiteralMapper {
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return this.convertNamed({ named, value: args.value });
             }
             case "optional":
-                return ts.TypeLiteral.nop();
+                return ts.TypeLiteral.noOp();
             case "unknown":
-                return ts.TypeLiteral.nop();
+                return ts.TypeLiteral.noOp();
             default:
-                return ts.TypeLiteral.nop();
+                return ts.TypeLiteral.noOp();
         }
     }
 
@@ -65,7 +65,7 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value });
             default:
-                return ts.TypeLiteral.nop();
+                return ts.TypeLiteral.noOp();
         }
     }
 
@@ -92,7 +92,7 @@ export class DynamicTypeLiteralMapper {
                 severity: Severity.Critical,
                 message: `Expected array but got: ${typeof value}`
             });
-            return ts.TypeLiteral.nop();
+            return ts.TypeLiteral.noOp();
         }
         return ts.TypeLiteral.array({
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
@@ -108,7 +108,7 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): ts.TypeLiteral {
-        return ts.TypeLiteral.nop();
+        return ts.TypeLiteral.noOp();
         // TODO: Implement this
     }
 
@@ -121,6 +121,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): ts.TypeLiteral {
+        let num, bool, str;
         switch (primitive) {
             case "INTEGER":
             case "LONG":
@@ -128,15 +129,15 @@ export class DynamicTypeLiteralMapper {
             case "UINT_64":
             case "FLOAT":
             case "DOUBLE":
-                const num = this.getValueAsNumber({ value, as });
+                num = this.getValueAsNumber({ value, as });
                 if (num == null) {
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return ts.TypeLiteral.number(num);
             case "BOOLEAN":
-                const bool = this.getValueAsBoolean({ value, as });
+                bool = this.getValueAsBoolean({ value, as });
                 if (bool == null) {
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return ts.TypeLiteral.boolean(bool);
             case "STRING":
@@ -145,17 +146,11 @@ export class DynamicTypeLiteralMapper {
             case "UUID":
             case "BASE_64":
             case "BIG_INTEGER":
-                const str = this.getValueAsString({ value });
+                str = this.getValueAsString({ value });
                 if (str == null) {
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return ts.TypeLiteral.string(str);
-
-            // const bigInt = this.getValueAsBigInt({ value });
-            // if (bigInt == null) {
-            //     return ts.TypeLiteral.nop();
-            // }
-            // return ts.TypeLiteral.bigint(bigInt);
             default:
                 assertNever(primitive);
         }

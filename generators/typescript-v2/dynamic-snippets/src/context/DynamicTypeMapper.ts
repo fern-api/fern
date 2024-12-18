@@ -18,27 +18,24 @@ export class DynamicTypeMapper {
     }
 
     public convert(args: DynamicTypeMapper.Args): ts.Type {
+        let named;
         switch (args.typeReference.type) {
+            case "named":
+                named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named == null) {
+                    return ts.Types.noOp();
+                }
+                return this.convertNamed({ named });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "list":
                 return ts.Types.array(this.convert({ typeReference: args.typeReference }));
             case "map":
-                return ts.Types.nop();
-            // return ts.Types.map(
-            //     this.convert({ typeReference: args.typeReference.key }),
-            //     this.convert({ typeReference: args.typeReference.value })
-            // );
+                return ts.Types.noOp();
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
-            case "named":
-                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
-                if (named == null) {
-                    return ts.Types.nop();
-                }
-                return this.convertNamed({ named });
         }
-        return ts.Types.nop();
+        return ts.Types.noOp();
     }
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): ts.Type {
@@ -68,7 +65,7 @@ export class DynamicTypeMapper {
             case "BASE_64":
                 return ts.Types.string();
             case "BIG_INTEGER":
-                return ts.Types.bigint();
+                return ts.Types.noOp();
             default:
                 assertNever(primitive);
         }
@@ -90,24 +87,24 @@ export class DynamicTypeMapper {
             case "alias":
                 return this.convertAlias({ alias: named });
             case "enum":
-                return ts.Types.nop();
+                return ts.Types.noOp();
             case "object":
                 return this.convertObject({ obj: named });
             case "discriminatedUnion":
-                return ts.Types.nop();
+                return ts.Types.noOp();
             case "undiscriminatedUnion":
-                return ts.Types.nop();
+                return ts.Types.noOp();
             default:
                 assertNever(named);
         }
     }
 
     private convertAlias({ alias }: { alias: FernIr.dynamic.AliasType }): ts.Type {
-        return ts.Types.nop();
+        return ts.Types.noOp();
     }
 
     private convertEnum({ enum: enumType }: { enum: FernIr.dynamic.EnumType }): ts.Type {
-        return ts.Types.nop();
+        return ts.Types.noOp();
     }
 
     private convertObject({ obj }: { obj: FernIr.dynamic.ObjectType }): ts.Type {

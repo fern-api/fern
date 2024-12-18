@@ -25,7 +25,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toString();
+        return await code.toStringAsync();
     }
 
     public generateSnippetSync({
@@ -36,7 +36,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toStringSync();
+        return code.toString();
     }
 
     private buildCodeBlock({
@@ -46,10 +46,9 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.AstNode {
-        return ts.func({
+        return ts.function_({
             name: SNIPPET_FUNC_NAME,
             parameters: [] as ts.Parameter[],
-            return_: [] as ts.Type[],
             body: ts.codeblock((writer) => {
                 writer.writeNode(this.constructClient({ endpoint, snippet }));
                 writer.writeLine();
@@ -74,7 +73,7 @@ export class EndpointSnippetGenerator {
 
     private getRootClientFuncInvocation(arguments_: ts.AstNode[]): ts.FunctionInvocation {
         return ts.invokeFunction({
-            func: ts.reference({
+            function_: ts.reference({
                 name: this.context.getClientConstructorName()
                 //importPath: this.context.getClientImportPath()
             }),
@@ -152,7 +151,7 @@ export class EndpointSnippetGenerator {
             typeReference: header.typeReference,
             value
         });
-        if (ts.TypeLiteral.isNop(typeInstantiation)) {
+        if (ts.TypeLiteral.isNoOp(typeInstantiation)) {
             // Literal header values (e.g. "X-API-Version") should not be included in the
             // client constructor.
             return undefined;
@@ -160,7 +159,7 @@ export class EndpointSnippetGenerator {
         return ts.codeblock((writer) => {
             writer.writeNode(
                 ts.invokeFunction({
-                    func: ts.reference({
+                    function_: ts.reference({
                         name: `With${header.name.name.pascalCase.unsafeName}`
                         //importFrom: this.context.getOptionImportPath()
                     }),
@@ -184,7 +183,7 @@ export class EndpointSnippetGenerator {
                         severity: Severity.Critical,
                         message: this.newAuthMismatchError({ auth, values }).message
                     });
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
@@ -193,7 +192,7 @@ export class EndpointSnippetGenerator {
                         severity: Severity.Critical,
                         message: this.newAuthMismatchError({ auth, values }).message
                     });
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return this.getConstructorBearerAuthArg({ auth, values });
             case "header":
@@ -202,7 +201,7 @@ export class EndpointSnippetGenerator {
                         severity: Severity.Critical,
                         message: this.newAuthMismatchError({ auth, values }).message
                     });
-                    return ts.TypeLiteral.nop();
+                    return ts.TypeLiteral.noOp();
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
         }
@@ -218,7 +217,7 @@ export class EndpointSnippetGenerator {
         return ts.codeblock((writer) => {
             writer.writeNode(
                 ts.invokeFunction({
-                    func: ts.reference({
+                    function_: ts.reference({
                         name: "WithBasicAuth"
                         //importFrom: this.context.getOptionImportPath()
                     }),
@@ -238,7 +237,7 @@ export class EndpointSnippetGenerator {
         return ts.codeblock((writer) => {
             writer.writeNode(
                 ts.invokeFunction({
-                    func: ts.reference({
+                    function_: ts.reference({
                         name: `With${auth.token.pascalCase.unsafeName}`
                         //importFrom: this.context.getOptionImportPath()
                     }),
@@ -258,7 +257,7 @@ export class EndpointSnippetGenerator {
         return ts.codeblock((writer) => {
             writer.writeNode(
                 ts.invokeFunction({
-                    func: ts.reference({
+                    function_: ts.reference({
                         name: `With${auth.header.name.name.pascalCase.unsafeName}`
                     }),
                     arguments_: [
@@ -285,7 +284,7 @@ export class EndpointSnippetGenerator {
         return ts.codeblock((writer) => {
             writer.writeNode(
                 ts.invokeFunction({
-                    func: ts.reference({ name: "withBaseURL" /*importPath: SNIPPET_IMPORT_PATH*/ }),
+                    function_: ts.reference({ name: "withBaseURL" /*importPath: SNIPPET_IMPORT_PATH*/ }),
                     arguments_: [ts.TypeLiteral.string(baseUrl)]
                 })
             );
@@ -456,7 +455,7 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: ts.TypeLiteral[]
+        pathParameterFields: ts.TypeLiteral[];
     }): ts.TypeLiteral {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
@@ -519,7 +518,7 @@ export class EndpointSnippetGenerator {
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
-                return [ts.TypeLiteral.nop()]; // return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
+                return [ts.TypeLiteral.noOp()]; // return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
         }
     }
 

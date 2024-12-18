@@ -55,12 +55,12 @@ export class TypescriptTypeMapper {
             case "map": {
                 const key = this.convert({ reference: container.keyType });
                 const value = this.convert({ reference: container.valueType });
-                return ts.Type.nop();
+                return ts.Type.noOp();
             }
             case "set":
                 return Type.array(this.convert({ reference: container.set }));
             case "optional":
-                return ts.Type.nop();
+                return ts.Type.noOp();
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -97,6 +97,6 @@ export class TypescriptTypeMapper {
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-        return ts.Type.nop();
+        return ts.Type.noOp();
     }
 }

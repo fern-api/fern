@@ -16,7 +16,6 @@ describe("Invocation", () => {
             const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
-                return_: [],
                 body: undefined,
                 docs: undefined
             });
@@ -32,7 +31,7 @@ describe("Invocation", () => {
                     ts.parameter({ name: "baseUrl", type: ts.Types.string() }),
                     ts.parameter({ name: "foo", type: ts.Types.string() })
                 ],
-                return_: [ts.Types.string()],
+                return_: ts.Types.string(),
                 body: undefined,
                 docs: undefined
             });
@@ -45,7 +44,7 @@ describe("Invocation", () => {
             const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
-                return_: [ts.Types.string()],
+                return_: ts.Types.string(),
                 body: ts.codeblock("console.log('foo');\nreturn baseUrl + 'foo';"),
                 docs: undefined
             });
@@ -58,8 +57,11 @@ describe("Invocation", () => {
             const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
-                return_: [ts.Types.string()],
-                body: ts.codeblock("console.log('foo');\nreturn baseUrl + 'foo';"),
+                return_: ts.Types.string(),
+                body: ts.codeblock((writer) => {
+                    writer.writeLine("console.log('foo')");
+                    writer.writeLine("return baseUrl + 'foo';");
+                }),
                 docs: "This is a comment"
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();

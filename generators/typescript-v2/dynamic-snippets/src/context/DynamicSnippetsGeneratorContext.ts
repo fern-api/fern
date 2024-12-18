@@ -66,7 +66,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getContextTodoFunctionInvocation(): ts.FunctionInvocation {
         return ts.invokeFunction({
-            func: ts.reference({
+            function_: ts.reference({
                 name: "TODO"
             }),
             arguments_: []
@@ -82,7 +82,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getNewStringsReaderFunctionInvocation(s: string): ts.FunctionInvocation {
         // TODO: Implement
         return ts.invokeFunction({
-            func: ts.reference({
+            function_: ts.reference({
                 name: "TODO-file-reader"
             }),
             arguments_: [ts.TypeLiteral.string(s)]

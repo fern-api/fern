@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
 import { Type } from "./Type";
 
-type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | Nop;
+type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | NoOp;
 
 interface Array_ {
     type: "array";
@@ -48,8 +48,8 @@ interface Tuple {
     values: TypeLiteral[];
 }
 
-interface Nop {
-    type: "nop";
+interface NoOp {
+    type: "noOp";
 }
 
 export class TypeLiteral extends AstNode {
@@ -97,7 +97,7 @@ export class TypeLiteral extends AstNode {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
-            case "nop":
+            case "noOp":
                 break;
             default: {
                 assertNever(this.internalType);
@@ -204,11 +204,11 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "bigint", value });
     }
 
-    public static nop(): TypeLiteral {
-        return new this({ type: "nop" });
+    public static noOp(): TypeLiteral {
+        return new this({ type: "noOp" });
     }
 
-    public static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === "nop";
+    public static isNoOp(typeLiteral: TypeLiteral): boolean {
+        return typeLiteral.internalType.type === "noOp";
     }
 }
