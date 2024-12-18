@@ -1404,6 +1404,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0
@@ -4224,8 +4227,6 @@ importers:
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/local: {}
 
   packages/cli/configuration:
     dependencies:

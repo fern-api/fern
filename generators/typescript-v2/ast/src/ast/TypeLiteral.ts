@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
 import { Type } from "./Type";
 
-type InternalTypeLiteral = Array_ | Boolean_ | Number_ | Object_ | String_ | Tuple;
+type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | Nop;
 
 interface Array_ {
     type: "array";
@@ -20,14 +20,19 @@ interface Number_ {
     value: number;
 }
 
+interface BigInt_ {
+    type: "bigint";
+    value: bigint;
+}
+
 interface Object_ {
     type: "object";
     fields: ObjectField[];
 }
 
 interface ObjectField {
+    type: "objectField";
     name: string;
-    valueType: Type;
     value: TypeLiteral;
 }
 
@@ -41,6 +46,10 @@ interface Tuple {
     // TODO: In theory this should be a tuple type, not an array of types
     valueTypes: Type[];
     values: TypeLiteral[];
+}
+
+interface Nop {
+    type: "nop";
 }
 
 export class TypeLiteral extends AstNode {
@@ -63,8 +72,17 @@ export class TypeLiteral extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             }
+            case "bigint": {
+                writer.write(this.internalType.value.toString());
+                break;
+            }
             case "object": {
                 this.writeObject({ writer, object: this.internalType });
+                break;
+            }
+            case "objectField": {
+                writer.write(`${this.internalType.name}: `);
+                this.internalType.value.write(writer);
                 break;
             }
             case "string": {
@@ -79,6 +97,8 @@ export class TypeLiteral extends AstNode {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
+            case "nop":
+                break;
             default: {
                 assertNever(this.internalType);
             }
@@ -145,10 +165,23 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "number", value });
     }
 
-    public static object(fields: ObjectField[]): TypeLiteral {
+    public static object(fields: Record<string, TypeLiteral>): TypeLiteral {
+        const objectFields: ObjectField[] = Object.entries(fields).map(([name, value]) => ({
+            type: "objectField",
+            name,
+            value
+        }));
         return new this({
             type: "object",
-            fields
+            fields: objectFields
+        });
+    }
+
+    public static objectField(name: string, value: TypeLiteral): TypeLiteral {
+        return new this({
+            type: "objectField",
+            name,
+            value
         });
     }
 
@@ -165,5 +198,17 @@ export class TypeLiteral extends AstNode {
             valueTypes,
             values
         });
+    }
+
+    public static bigint(value: bigint): TypeLiteral {
+        return new this({ type: "bigint", value });
+    }
+
+    public static nop(): TypeLiteral {
+        return new this({ type: "nop" });
+    }
+
+    public static isNop(typeLiteral: TypeLiteral): boolean {
+        return typeLiteral.internalType.type === "nop";
     }
 }
