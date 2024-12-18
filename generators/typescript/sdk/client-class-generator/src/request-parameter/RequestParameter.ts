@@ -9,6 +9,7 @@ export interface RequestParameter {
     getParameterDeclaration: (context: SdkContext) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+    getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
     getAllQueryParameters: (context: SdkContext) => QueryParameter[];
     getReferenceToNonLiteralHeader: (header: HttpHeader, context: SdkContext) => ts.Expression;
     withQueryParameter: (

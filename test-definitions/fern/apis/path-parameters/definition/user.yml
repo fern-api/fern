@@ -17,6 +17,24 @@ service:
           user_id: string
       response: User
 
+    createUser:
+      path: "/"
+      method: POST
+      request:
+        name: CreateUserRequest
+        body: User
+      response: User
+
+    updateUser:
+      path: "/{user_id}"
+      method: PATCH
+      request:
+        name: UpdateUserRequest
+        body: User
+        path-parameters:
+          user_id: string
+      response: User
+
     searchUsers:
       path: "/{user_id}/search"
       method: GET

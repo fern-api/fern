@@ -44,6 +44,30 @@ await client.user.getUser("tenant_id", "user_id");
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.createUser("tenant_id", {
+  name: "name",
+  tags: ["tags", "tags"],
+});
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.updateUser("tenant_id", "user_id", {
+  name: "name",
+  tags: ["tags", "tags"],
+});
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.searchUsers("tenant_id", "user_id", {
   limit: 1,
 });

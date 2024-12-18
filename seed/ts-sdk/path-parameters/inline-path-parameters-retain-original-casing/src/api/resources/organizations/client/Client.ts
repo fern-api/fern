@@ -108,12 +108,13 @@ export class Organizations {
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions
     ): Promise<SeedPathParameters.User> {
+        const { organization_id: organizationId, user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
                 `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(
-                    request.organization_id
-                )}/users/${encodeURIComponent(request.user_id)}`
+                    organizationId
+                )}/users/${encodeURIComponent(userId)}`
             ),
             method: "GET",
             headers: {

@@ -79,6 +79,28 @@
         },
         {
             "id": {
+                "path": "/{tenant_id}/user/",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.create_user(tenant_id: \"tenant_id\", request: { name: \"name\", tags: [\"tags\", \"tags\"] })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.update_user(\n  tenant_id: \"tenant_id\",\n  user_id: \"user_id\",\n  request: { name: \"name\", tags: [\"tags\", \"tags\"] }\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.searchUsers"
@@ -96,6 +118,28 @@
             },
             "snippet": {
                 "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.get_user(tenant_id: \"tenant_id\", user_id: \"user_id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.create_user(tenant_id: \"tenant_id\", request: { name: \"name\", tags: [\"tags\", \"tags\"] })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.update_user(\n  tenant_id: \"tenant_id\",\n  user_id: \"user_id\",\n  request: { name: \"name\", tags: [\"tags\", \"tags\"] }\n)",
                 "type": "ruby"
             }
         },
