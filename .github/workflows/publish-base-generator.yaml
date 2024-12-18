@@ -1,0 +1,46 @@
+# Generators are registered within seed.yml, once their tests are passing
+name: Publish @fern-api/base-generator
+
+on:
+  push:
+    branches:
+      # - main
+      - vargas/publish-python-ast
+  #   paths:
+  #     - "generators/commons/versions.yml"
+  # workflow_dispatch:
+  #   inputs:
+  #     version:
+  #       description: "The version of the generator commons to publish."
+  #       required: true
+  #       type: string
+
+env:
+  PACKAGE_NAME: "@fern-api/base-generator"
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+jobs:
+  publish:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: 🧪 Build
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} test
+
+      - name: Run publish
+        working-directory: generators/base
+        run: |
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.6
+          cd lib
+          echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
+          npm publish --access public

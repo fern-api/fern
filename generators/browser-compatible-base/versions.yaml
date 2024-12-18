@@ -1,0 +1,12 @@
+- version: 0.0.2
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Include dynamic-snippets.
+  irVersion: 33
+- version: 0.0.1
+  createdAt: '2024-12-01'
+  changelogEntry:
+    - type: internal
+      summary: Initial release.
+  irVersion: 33
