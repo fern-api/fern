@@ -46,6 +46,37 @@ client.user.get_user(
 
 
 client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client.user.create_user(
+	name="name",
+	tags=[
+		"tags",
+		"tags"
+	]
+)
+ 
+```                        
+
+
+```python
+
+
+client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client.user.update_user(
+	user_id="user_id",
+	name="name",
+	tags=[
+		"tags",
+		"tags"
+	]
+)
+ 
+```                        
+
+
+```python
+
+
+client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
 client.user.search_users(
 	user_id="user_id",
 	limit=1

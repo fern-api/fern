@@ -8,14 +8,17 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.CreateUser(
+    client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
-        &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
+        "user_id",
+        &fern.UpdateUserRequest{
+            Body: &fern.User{
+                Name: "name",
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
             },
         },
     )
