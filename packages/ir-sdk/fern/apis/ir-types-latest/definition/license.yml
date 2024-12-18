@@ -1,0 +1,25 @@
+types:
+  LicenseConfig:
+    docs: Configuration for the license to use for the generated SDK
+    union:
+      mit:
+        type: MITLicense
+        docs: Use the MIT license
+      apache2:
+        type: Apache2License 
+        docs: Use the Apache 2.0 license
+      custom:
+        type: CustomLicense
+        docs: Use a custom license
+        
+  MITLicense:
+    properties: {}
+
+  Apache2License:
+    properties: {}
+
+  CustomLicense:
+    properties:
+      text:
+        type: string
+        docs: The full text of the custom license
