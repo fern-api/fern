@@ -22,7 +22,7 @@ module SeedPathParametersClient
     # @return [SeedPathParametersClient::User::User]
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
-    #  path_parameters.user.get_user(tenant_id: "tenantId", user_id: "userId")
+    #  path_parameters.user.get_user(tenant_id: "tenant_id", user_id: "user_id")
     def get_user(tenant_id:, user_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -50,8 +50,8 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.user.search_users(
-    #    tenant_id: "tenantId",
-    #    user_id: "userId",
+    #    tenant_id: "tenant_id",
+    #    user_id: "user_id",
     #    limit: 1
     #  )
     def search_users(tenant_id:, user_id:, limit: nil, request_options: nil)
@@ -92,7 +92,7 @@ module SeedPathParametersClient
     # @return [SeedPathParametersClient::User::User]
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
-    #  path_parameters.user.get_user(tenant_id: "tenantId", user_id: "userId")
+    #  path_parameters.user.get_user(tenant_id: "tenant_id", user_id: "user_id")
     def get_user(tenant_id:, user_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -122,8 +122,8 @@ module SeedPathParametersClient
     # @example
     #  path_parameters = SeedPathParametersClient::Client.new(base_url: "https://api.example.com")
     #  path_parameters.user.search_users(
-    #    tenant_id: "tenantId",
-    #    user_id: "userId",
+    #    tenant_id: "tenant_id",
+    #    user_id: "user_id",
     #    limit: 1
     #  )
     def search_users(tenant_id:, user_id:, limit: nil, request_options: nil)

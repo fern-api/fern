@@ -9,12 +9,17 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    Fetcher,
+    getParameterNameForPositionalPathParameter,
+    GetReferenceOpts,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
@@ -109,7 +114,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             context
         })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),

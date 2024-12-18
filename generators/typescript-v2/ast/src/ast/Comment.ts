@@ -2,9 +2,9 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Comment {
-    type Args = {
+    interface Args {
         docs: string | undefined;
-    };
+    }
 }
 
 export class Comment extends AstNode {
@@ -17,11 +17,11 @@ export class Comment extends AstNode {
 
     public write(writer: Writer): void {
         if (this.docs != null) {
-            writer.writeLine(`/**`);
+            writer.writeLine("/**");
             this.docs.split("\n").forEach((line) => {
                 writer.writeLine(` * ${line}`);
             });
-            writer.writeLine(`*/`);
+            writer.writeLine("*/");
         }
     }
 }

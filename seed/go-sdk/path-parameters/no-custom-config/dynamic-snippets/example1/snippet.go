@@ -9,8 +9,8 @@ func do() () {
     client := client.NewClient()
     client.Organizations.GetOrganizationUser(
         context.TODO(),
-        "tenantId",
-        "organizationId",
-        "userId",
+        "tenant_id",
+        "organization_id",
+        "user_id",
     )
 }

@@ -3,20 +3,18 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { BaseTypescriptCustomConfigSchema, resolveRootImportPath } from "@fern-api/typescript-ast";
+import { BaseTypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { ts } from "@fern-api/typescript-ast";
-import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseTypescriptCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
-    public filePropertyMapper: FilePropertyMapper;
-    public rootImportPath: string;
+    public rootImportPath = ".";
 
     constructor({
         ir,
@@ -31,8 +29,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             config.customConfig != null ? (config.customConfig as BaseTypescriptCustomConfigSchema) : undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
-        this.filePropertyMapper = new FilePropertyMapper({ context: this });
-        this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -50,18 +46,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return false;
     }
 
-    private includeRequestBodyInWrappedRequest({ body }: { body: FernIr.dynamic.InlinedRequestBody }): boolean {
-        return false;
-    }
-
-    private includeFileUploadBodyInWrappedRequest({
-        fileUpload
-    }: {
-        fileUpload: FernIr.dynamic.FileUploadRequestBody;
-    }): boolean {
-        return false;
-    }
-
     public getMethodName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
     }
@@ -71,8 +55,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getImportPath(fernFilepath: FernIr.FernFilepath): string {
-        const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase());
-        return [this.rootImportPath, ...parts].join("/");
+        return fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase()).join("/");
     }
 
     public getContextTypeReference(): ts.Reference {
@@ -94,22 +77,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return ts.reference({
             name: "TODO-file-reader"
         });
-        /*
-        import * as fs from 'fs';
-
-        function readFile(filePath: string): Promise<string> {
-        return new Promise((resolve, reject) => {
-            fs.readFile(filePath, 'utf-8', (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-            });
-        });
-        }
-        */
-        // TODO: Implement
     }
 
     public getNewStringsReaderFunctionInvocation(s: string): ts.FunctionInvocation {
@@ -123,9 +90,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClientConstructorName(): string {
-        if (this.customConfig?.exportedClientName != null) {
-            return `New${this.customConfig.exportedClientName}`;
-        }
         return "NewClient";
     }
 

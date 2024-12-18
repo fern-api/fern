@@ -29,7 +29,6 @@ export function invokeMethod(args: AST.MethodInvocation.Args): AST.MethodInvocat
 }
 
 export function parameter(args: AST.Parameter.Args): AST.Parameter {
-    const foo = AST.Parameter;
     return new AST.Parameter(args);
 }
 

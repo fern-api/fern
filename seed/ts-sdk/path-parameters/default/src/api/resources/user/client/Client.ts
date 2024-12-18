@@ -35,7 +35,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("userId")
+     *     await client.user.getUser("user_id")
      */
     public async getUser(
         userId: string,
@@ -87,7 +87,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/{userId}."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -102,7 +102,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.searchUsers("userId", {
+     *     await client.user.searchUsers("user_id", {
      *         limit: 1
      *     })
      */
@@ -163,7 +163,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/{userId}/search."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search."
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

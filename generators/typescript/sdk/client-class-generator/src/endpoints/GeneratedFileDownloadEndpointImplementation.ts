@@ -156,6 +156,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined
         });
+
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {

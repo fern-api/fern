@@ -20,8 +20,6 @@ import { TypescriptTypeMapper } from "./TypescriptTypeMapper";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ts } from "..";
 
-import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
-
 export interface FileLocation {
     importPath: string;
     directory: RelativeFilePath;
@@ -30,7 +28,7 @@ export interface FileLocation {
 export abstract class AbstractTypescriptGeneratorContext<
     CustomConfig extends BaseTypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
-    private rootImportPath: string;
+    private rootImportPath: string = ".";
     public readonly typescriptTypeMapper: TypescriptTypeMapper;
 
     public constructor(
@@ -41,10 +39,6 @@ export abstract class AbstractTypescriptGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.typescriptTypeMapper = new TypescriptTypeMapper(this);
-        this.rootImportPath = resolveRootImportPath({
-            config: this.config,
-            customConfig: this.customConfig
-        });
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {

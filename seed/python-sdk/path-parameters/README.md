@@ -26,8 +26,8 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.get_organization(
-    tenant_id="tenantId",
-    organization_id="organizationId",
+    tenant_id="tenant_id",
+    organization_id="organization_id",
 )
 ```
 
@@ -47,8 +47,8 @@ client = AsyncSeedPathParameters(
 
 async def main() -> None:
     await client.organizations.get_organization(
-        tenant_id="tenantId",
-        organization_id="organizationId",
+        tenant_id="tenant_id",
+        organization_id="organization_id",
     )
 
 

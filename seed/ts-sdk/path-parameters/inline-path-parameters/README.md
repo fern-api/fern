@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.organizations.getOrganization("organizationId");
+await client.organizations.getOrganization("organization_id");
 ```
 
 ## Request And Response Types

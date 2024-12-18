@@ -2,7 +2,6 @@ import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGenera
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { ts } from "@fern-api/typescript-ast";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -27,13 +26,6 @@ export class EndpointSnippetGenerator {
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
         return await code.toString();
-        // {
-        //     packageName: SNIPPET_PACKAGE_NAME,
-        //     importPath: SNIPPET_IMPORT_PATH,
-        //     rootImportPath: this.context.rootImportPath,
-        //     customConfig: this.context.customConfig ?? {},
-        //     formatter: this.formatter
-        // });
     }
 
     public generateSnippetSync({
@@ -45,8 +37,6 @@ export class EndpointSnippetGenerator {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
         return code.toStringSync();
-
-        // return ts.TypeLiteral.string("TODO: Implement me!").toString();
     }
 
     private buildCodeBlock({
@@ -427,8 +417,7 @@ export class EndpointSnippetGenerator {
                     snippet,
                     pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
                         ? pathParameterFields
-                        : [],
-                    filePropertyInfo: undefined
+                        : []
                 })
             );
         }
@@ -463,13 +452,11 @@ export class EndpointSnippetGenerator {
     private getInlinedRequestArg({
         request,
         snippet,
-        pathParameterFields,
-        filePropertyInfo
+        pathParameterFields
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: ts.TypeLiteral[];
-        filePropertyInfo: FilePropertyInfo | undefined;
+        pathParameterFields: ts.TypeLiteral[]
     }): ts.TypeLiteral {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
@@ -534,14 +521,6 @@ export class EndpointSnippetGenerator {
             case "fileUpload":
                 return [ts.TypeLiteral.nop()]; // return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
         }
-    }
-
-    private getFileUploadRequestBodyStructFields({
-        filePropertyInfo
-    }: {
-        filePropertyInfo: FilePropertyInfo;
-    }): ts.TypeLiteral[] {
-        return [ts.TypeLiteral.nop()];
     }
 
     private getReferencedRequestBodyPropertyStructField({

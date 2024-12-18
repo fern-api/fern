@@ -8,14 +8,14 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Method {
-    type Args = {
+    interface Args {
         reference: Reference;
         name: string;
         parameters: Parameter[];
         return_: Type[];
         body?: CodeBlock;
         docs?: string;
-    };
+    }
 }
 
 export class Method extends Func {
@@ -29,15 +29,30 @@ export class Method extends Func {
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }));
         // TODO: Add visibility, make this nest in an object eventually
-        writer.write(`function `);
+        writer.write("function ");
         writer.write(`${this._name}`);
-        writer.delimit(this._parameters, ", ", (parameter) => parameter.writeWithType(writer), "(", ")");
+        writer.write("(");
+        writer.delimit({
+            nodes: this._parameters,
+            delimiter: ",\n",
+            writeFunction: (parameter) => parameter.writeWithType(writer)
+        });
+        writer.write("\n)");
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {
-                writer.writeNode(this._return_[0]!);
+                const returnType = this._return_[0];
+                if (returnType != null) {
+                    writer.writeNode(returnType);
+                }
             } else {
-                writer.delimit(this._return_, ", ", (type) => type.write(writer), "(", ")");
+                writer.write("(");
+                writer.delimit({
+                    nodes: this._return_,
+                    delimiter: ", ",
+                    writeFunction: (type) => type.write(writer)
+                });
+                writer.write(")");
             }
         }
         writer.writeLine(" {");

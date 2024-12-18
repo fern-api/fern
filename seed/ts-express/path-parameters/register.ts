@@ -13,6 +13,6 @@ export function register(
         user: UserService;
     }
 ): void {
-    (expressApp as any).use("/organizations/:organizationId", services.organizations.toRouter());
+    (expressApp as any).use("/organizations/:organization_id", services.organizations.toRouter());
     (expressApp as any).use("/user", services.user.toRouter());
 }

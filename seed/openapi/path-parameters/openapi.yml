@@ -3,18 +3,18 @@ info:
   title: path-parameters
   version: ''
 paths:
-  /{tenantId}/organizations/{organizationId}/:
+  /{tenant_id}/organizations/{organization_id}/:
     get:
       operationId: organizations_getOrganization
       tags:
         - Organizations
       parameters:
-        - name: tenantId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: organizationId
+        - name: organization_id
           in: path
           required: true
           schema:
@@ -26,23 +26,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-  /{tenantId}/organizations/{organizationId}/users/{userId}:
+  /{tenant_id}/organizations/{organization_id}/users/{user_id}:
     get:
       operationId: organizations_getOrganizationUser
       tags:
         - Organizations
       parameters:
-        - name: tenantId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: organizationId
+        - name: organization_id
           in: path
           required: true
           schema:
             type: string
-        - name: userId
+        - name: user_id
           in: path
           required: true
           schema:
@@ -54,18 +54,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /{tenantId}/organizations/{organizationId}/search:
+  /{tenant_id}/organizations/{organization_id}/search:
     get:
       operationId: organizations_searchOrganizations
       tags:
         - Organizations
       parameters:
-        - name: tenantId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: organizationId
+        - name: organization_id
           in: path
           required: true
           schema:
@@ -85,18 +85,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Organization'
-  /{tenantId}/user/{userId}:
+  /{tenant_id}/user/{user_id}:
     get:
       operationId: user_getUser
       tags:
         - User
       parameters:
-        - name: tenantId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: userId
+        - name: user_id
           in: path
           required: true
           schema:
@@ -108,18 +108,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /{tenantId}/user/{userId}/search:
+  /{tenant_id}/user/{user_id}/search:
     get:
       operationId: user_searchUsers
       tags:
         - User
       parameters:
-        - name: tenantId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: userId
+        - name: user_id
           in: path
           required: true
           schema:

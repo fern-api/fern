@@ -212,6 +212,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public getGlobalHeaderNames(): Set<string> {
         const headerNames = Object.keys(this.rootApiFile.headers ?? {});
+        // Get headers from auth schemes
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
+                if (isHeaderAuthScheme(scheme)) {
+                    headerNames.push(scheme.header);
+                }
+            }
+        }
         const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null) {
             headerNames.push(maybeVersionHeader);
@@ -560,4 +568,10 @@ function getSharedSuffix(strings: string[]): string {
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
+}
+
+function isHeaderAuthScheme(
+    scheme: RawSchemas.AuthSchemeDeclarationSchema
+): scheme is RawSchemas.HeaderAuthSchemeSchema {
+    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
 }

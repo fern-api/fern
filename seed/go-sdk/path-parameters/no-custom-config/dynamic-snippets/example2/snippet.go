@@ -10,8 +10,8 @@ func do() () {
     client := client.NewClient()
     client.Organizations.SearchOrganizations(
         context.TODO(),
-        "tenantId",
-        "organizationId",
+        "tenant_id",
+        "organization_id",
         &fern.SearchOrganizationsRequest{
             Limit: fern.Int(
                 1,
