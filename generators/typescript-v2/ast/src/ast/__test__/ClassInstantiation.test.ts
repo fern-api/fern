@@ -20,4 +20,17 @@ describe("ClassInstantiation", () => {
             expect(actual.toString()).toMatchSnapshot();
         });
     });
+
+    describe("new Instantiation with 2 arguments", () => {
+        it("Should generate a new instantiation with arguments", () => {
+            const actual = ts.classInstantiation({
+                class_: ts.reference({ name: "TestClass" }),
+                arguments_: [
+                    ts.TypeLiteral.string("https://api.example.com"),
+                    ts.TypeLiteral.string("https://api.otherexample.com")
+                ]
+            });
+            expect(actual.toString()).toMatchSnapshot();
+        });
+    });
 });
