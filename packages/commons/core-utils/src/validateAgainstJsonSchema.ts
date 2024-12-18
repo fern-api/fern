@@ -10,6 +10,7 @@ export declare namespace validateAgainstJsonSchema {
     export interface ValidationFailure {
         success: false;
         error: JsonSchemaError | undefined;
+        allErrors: JsonSchemaError[];
     }
 
     export type JsonSchemaError = ErrorObject;
@@ -39,7 +40,8 @@ export function validateAgainstJsonSchema(
                     error: {
                         ...validate.errors[0],
                         message: `Encountered unexpected property ${additionalProp}`
-                    }
+                    },
+                    allErrors: validate.errors ?? []
                 };
             } else if (validate.errors?.[0].keyword === "required") {
                 const missingProperty = validate.errors[0].params.missingProperty;
@@ -48,35 +50,33 @@ export function validateAgainstJsonSchema(
                     error: {
                         ...validate.errors[0],
                         message: `Missing required property '${missingProperty}'`
-                    }
+                    },
+                    allErrors: validate.errors ?? []
                 };
             }
             return {
                 success: false,
                 error: {
-                    message: "Failed to parse because JSON schema validation failed",
-                    keyword: "unknown",
-                    instancePath: "",
-                    schemaPath: "",
-                    params: {}
-                }
+                    ...validate.errors[0],
+                    message: "Failed to parse because JSON schema validation failed"
+                },
+                allErrors: validate.errors ?? []
             };
         } catch (error) {
             return {
                 success: false,
                 error: {
                     message: "Failed to parse because JSON schema validation failed",
-                    keyword: "unknown",
-                    instancePath: "",
-                    schemaPath: "",
-                    params: {}
-                }
+                    ...validate.errors[0]
+                },
+                allErrors: validate.errors ?? []
             };
         }
     } else {
         return {
             success: false,
-            error: undefined
+            error: undefined,
+            allErrors: []
         };
     }
 }
