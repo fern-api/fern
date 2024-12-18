@@ -28,7 +28,6 @@
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/ir-sdk": "53.23.0",
     "@types/jest": "^29.5.12",
     "@types/node": "18.7.18",

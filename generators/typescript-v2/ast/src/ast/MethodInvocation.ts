@@ -27,6 +27,12 @@ export class MethodInvocation extends AstNode {
         this.on.write(writer);
         writer.write(".");
         writer.write(this.method);
-        writer.delimit(this.arguments_, ", ", (argument) => argument.write(writer), "(", ")");
+        writer.write("(");
+        writer.delimit({
+            nodes: this.arguments_,
+            delimiter: ", ",
+            writeFunction: (argument) => argument.write(writer)
+        });
+        writer.write(")");
     }
 }

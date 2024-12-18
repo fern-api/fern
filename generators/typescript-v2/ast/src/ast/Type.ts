@@ -109,7 +109,7 @@ export class Type extends AstNode {
                 writer.write("number");
                 break;
             case "bigint":
-                writer.write("bigint");
+                // TODO: Add bigint configuration
                 break;
             case "boolean":
                 writer.write("boolean");

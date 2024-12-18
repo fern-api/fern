@@ -1404,9 +1404,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/path-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0

@@ -31,7 +31,13 @@ export class Method extends Func {
         // TODO: Add visibility, make this nest in an object eventually
         writer.write("function ");
         writer.write(`${this._name}`);
-        writer.delimit(this._parameters, ", ", (parameter) => parameter.writeWithType(writer), "(", ")");
+        writer.write("(");
+        writer.delimit({
+            nodes: this._parameters,
+            delimiter: ",\n",
+            writeFunction: (parameter) => parameter.writeWithType(writer)
+        });
+        writer.write("\n)");
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {
@@ -40,7 +46,13 @@ export class Method extends Func {
                     writer.writeNode(returnType);
                 }
             } else {
-                writer.delimit(this._return_, ", ", (type) => type.write(writer), "(", ")");
+                writer.write("(");
+                writer.delimit({
+                    nodes: this._return_,
+                    delimiter: ", ",
+                    writeFunction: (type) => type.write(writer)
+                });
+                writer.write(")");
             }
         }
         writer.writeLine(" {");

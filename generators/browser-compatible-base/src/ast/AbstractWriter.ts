@@ -150,14 +150,15 @@ export class AbstractWriter {
         this.indentLevel--;
     }
 
-    public delimit<T extends AbstractAstNode>(
-        nodes: T[],
-        delimiter: string,
-        writeFunction: (node: T) => void,
-        prefix = "",
-        suffix = ""
-    ): void {
-        this.write(prefix);
+    public delimit<T extends AbstractAstNode>({
+        nodes,
+        delimiter,
+        writeFunction
+    }: {
+        nodes: T[];
+        delimiter: string;
+        writeFunction: (node: T) => void;
+    }): void {
         if (nodes.length > 0) {
             const firstNode = nodes[0];
             if (firstNode != null) {
@@ -171,7 +172,6 @@ export class AbstractWriter {
                 }
             }
         }
-        this.write(suffix);
     }
 
     /*******************************

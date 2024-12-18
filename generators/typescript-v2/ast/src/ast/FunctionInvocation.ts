@@ -22,6 +22,12 @@ export class FunctionInvocation extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(this.func);
-        writer.delimit(this.arguments_, ", ", (argument) => argument.write(writer), "(", ")");
+        writer.write("(");
+        writer.delimit({
+            nodes: this.arguments_,
+            delimiter: ", ",
+            writeFunction: (argument) => argument.write(writer)
+        });
+        writer.write(")");
     }
 }

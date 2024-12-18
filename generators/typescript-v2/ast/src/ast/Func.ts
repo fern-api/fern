@@ -53,10 +53,15 @@ export class Func extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }));
-        writer.write("const ");
+        writer.write("function ");
         writer.write(`${this.name}`);
-        writer.write(" = ");
-        writer.delimit(this._parameters, ", ", (parameter) => parameter.writeWithType(writer), "(", ")");
+        writer.write("(");
+        writer.delimit({
+            nodes: this._parameters,
+            delimiter: ",\n",
+            writeFunction: (parameter) => parameter.writeWithType(writer)
+        });
+        writer.write("\n)");
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {
@@ -66,11 +71,14 @@ export class Func extends AstNode {
                 }
             } else {
                 writer.write("(");
-                writer.delimit(this._return_, ", ", (type) => type.write(writer), "(", ")");
+                writer.delimit({
+                    nodes: this._return_,
+                    delimiter: ", ",
+                    writeFunction: (type) => type.write(writer)
+                });
                 writer.write(")");
             }
         }
-        writer.write(" => ");
         writer.writeLine("{");
         writer.indent();
         this.body?.write(writer);
