@@ -9,7 +9,7 @@ export abstract class AstNode extends AbstractAstNode {
     public async toString(): Promise<string> {
         const writer = new Writer();
         this.write(writer);
-        return Promise.resolve(writer.toString());
+        return writer.toString();
     }
 
     public toStringSync(): string {

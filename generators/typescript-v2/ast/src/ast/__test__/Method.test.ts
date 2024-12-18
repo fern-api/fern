@@ -6,7 +6,6 @@ describe("Invocation", () => {
             const actual = ts.invokeMethod({
                 on: ts.reference({
                     name: "AbstractBaseUrlFactoryHandler"
-                    // importFrom: "fern"
                 }),
                 method: "withBaseURL",
                 arguments_: [ts.TypeLiteral.string("https://api.example.com")]
@@ -20,7 +19,6 @@ describe("Invocation", () => {
             const actual = ts.method({
                 reference: ts.reference({
                     name: "AbstractBaseUrlFactoryHandler"
-                    // importFrom: "fern"
                 }),
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
@@ -35,12 +33,14 @@ describe("Invocation", () => {
             const actual = ts.method({
                 reference: ts.reference({
                     name: "AbstractBaseUrlFactoryHandler"
-                    // importFrom: "fern"
                 }),
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
                 return_: [ts.Types.string()],
-                body: ts.codeblock("console.log('foo');\nreturn baseUrl + 'foo';"),
+                body: ts.codeblock((writer) => {
+                    writer.writeLine("console.log('foo')");
+                    writer.writeLine("return baseUrl + 'foo';");
+                }),
                 docs: "This is a comment"
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();
