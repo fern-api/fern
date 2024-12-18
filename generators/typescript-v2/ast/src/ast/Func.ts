@@ -6,13 +6,13 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Func {
-    type Args = {
+    interface Args {
         name: string;
         parameters: Parameter[];
         return_: Type[];
         body: CodeBlock | undefined;
         docs: string | undefined;
-    };
+    }
 }
 
 export class Func extends AstNode {

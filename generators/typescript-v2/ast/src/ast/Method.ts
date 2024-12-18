@@ -8,14 +8,14 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Method {
-    type Args = {
+    interface Args {
         reference: Reference;
         name: string;
         parameters: Parameter[];
         return_: Type[];
         body?: CodeBlock;
         docs?: string;
-    };
+    }
 }
 
 export class Method extends Func {
@@ -35,7 +35,10 @@ export class Method extends Func {
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {
-                writer.writeNode(this._return_[0]!);
+                const returnType = this._return_[0];
+                if (returnType != null) {
+                    writer.writeNode(returnType);
+                }
             } else {
                 writer.delimit(this._return_, ", ", (type) => type.write(writer), "(", ")");
             }

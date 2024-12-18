@@ -159,7 +159,7 @@ export class AbstractWriter {
     ): void {
         this.write(prefix);
         if (nodes.length > 0) {
-            const firstNode = nodes[0]!;
+            const firstNode = nodes[0];
             if (firstNode != null) {
                 writeFunction(firstNode);
             }

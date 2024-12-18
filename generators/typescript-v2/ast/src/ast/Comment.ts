@@ -2,9 +2,9 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Comment {
-    type Args = {
+    interface Args {
         docs: string | undefined;
-    };
+    }
 }
 
 export class Comment extends AstNode {
