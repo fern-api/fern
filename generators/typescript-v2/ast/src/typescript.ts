@@ -12,8 +12,8 @@ export function reference(arg: AST.Reference.Args): AST.Reference {
     return new AST.Reference(arg);
 }
 
-export function func(args: AST.Func.Args): AST.Func {
-    return new AST.Func(args);
+export function function_(args: AST.Function.Args): AST.Function {
+    return new AST.Function(args);
 }
 
 export function method(args: AST.Method.Args): AST.Method {

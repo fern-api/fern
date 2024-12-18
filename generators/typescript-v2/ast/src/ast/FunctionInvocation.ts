@@ -1,27 +1,26 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Func } from "./Func";
 import { Reference } from "./Reference";
 
 export declare namespace FunctionInvocation {
     interface Args {
-        func: Reference;
+        function_: Reference;
         arguments_: AstNode[];
     }
 }
 
 export class FunctionInvocation extends AstNode {
-    private func: Reference;
+    private function_: Reference;
     private arguments_: AstNode[];
 
-    constructor({ func, arguments_ }: FunctionInvocation.Args) {
+    constructor({ function_, arguments_ }: FunctionInvocation.Args) {
         super();
-        this.func = func;
+        this.function_ = function_;
         this.arguments_ = arguments_;
     }
 
     public write(writer: Writer): void {
-        writer.writeNode(this.func);
+        writer.writeNode(this.function_);
         writer.write("(");
         writer.delimit({
             nodes: this.arguments_,

@@ -4,7 +4,7 @@ describe("Invocation", () => {
     describe("invokeFunction", () => {
         it("Should generate an invokeFunction", () => {
             const actual = ts.invokeFunction({
-                func: ts.reference({ name: "withBaseURL" }),
+                function_: ts.reference({ name: "withBaseURL" }),
                 arguments_: [ts.TypeLiteral.string("https://api.example.com")]
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();
@@ -13,7 +13,7 @@ describe("Invocation", () => {
 
     describe("function", () => {
         it("Should generate a function", () => {
-            const actual = ts.func({
+            const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
                 return_: [],
@@ -26,7 +26,7 @@ describe("Invocation", () => {
 
     describe("function with return type", () => {
         it("Should generate a function with a return type", () => {
-            const actual = ts.func({
+            const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [
                     ts.parameter({ name: "baseUrl", type: ts.Types.string() }),
@@ -42,7 +42,7 @@ describe("Invocation", () => {
 
     describe("function with a body", () => {
         it("Should generate a function with a body", () => {
-            const actual = ts.func({
+            const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
                 return_: [ts.Types.string()],
@@ -55,7 +55,7 @@ describe("Invocation", () => {
 
     describe("function with a comment", () => {
         it("Should generate a function with a body", () => {
-            const actual = ts.func({
+            const actual = ts.function_({
                 name: "withBaseURL",
                 parameters: [ts.parameter({ name: "baseUrl", type: ts.Types.string() })],
                 return_: [ts.Types.string()],

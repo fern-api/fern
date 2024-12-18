@@ -5,7 +5,7 @@ import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-export declare namespace Func {
+export declare namespace Function {
     interface Args {
         name: string;
         parameters: Parameter[];
@@ -15,14 +15,14 @@ export declare namespace Func {
     }
 }
 
-export class Func extends AstNode {
+export class Function extends AstNode {
     protected _name: string;
     protected _parameters: Parameter[];
     protected _return_: Type[];
     protected _body: CodeBlock | undefined;
     protected _docs: string | undefined;
 
-    constructor({ name, parameters, return_, body, docs }: Func.Args) {
+    constructor({ name, parameters, return_, body, docs }: Function.Args) {
         super();
         this._name = name;
         this._parameters = parameters;
@@ -55,13 +55,13 @@ export class Func extends AstNode {
         writer.writeNode(new Comment({ docs: this.docs }));
         writer.write("function ");
         writer.write(`${this.name}`);
-        writer.write("(");
+        writer.writeLine("(");
         writer.delimit({
             nodes: this._parameters,
             delimiter: ",\n",
             writeFunction: (parameter) => parameter.writeWithType(writer)
         });
-        writer.write("\n)");
+        writer.writeLine(")");
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {

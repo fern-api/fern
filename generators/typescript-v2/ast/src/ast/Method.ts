@@ -2,7 +2,7 @@ import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { Func } from "./Func";
+import { Function } from "./Function";
 import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -18,7 +18,7 @@ export declare namespace Method {
     }
 }
 
-export class Method extends Func {
+export class Method extends Function {
     public readonly reference: Reference;
 
     constructor({ reference, name, parameters, return_, body, docs }: Method.Args) {
@@ -31,13 +31,13 @@ export class Method extends Func {
         // TODO: Add visibility, make this nest in an object eventually
         writer.write("function ");
         writer.write(`${this._name}`);
-        writer.write("(");
+        writer.writeLine("(");
         writer.delimit({
             nodes: this._parameters,
             delimiter: ",\n",
             writeFunction: (parameter) => parameter.writeWithType(writer)
         });
-        writer.write("\n)");
+        writer.writeLine(")");
         if (this._return_.length > 0) {
             writer.write(": ");
             if (this._return_.length === 1) {
@@ -46,7 +46,7 @@ export class Method extends Func {
                     writer.writeNode(returnType);
                 }
             } else {
-                writer.write("(");
+                writer.writeLine("(");
                 writer.delimit({
                     nodes: this._return_,
                     delimiter: ", ",
