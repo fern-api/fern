@@ -359,7 +359,12 @@ export class IrGraph {
         }
     }
 
-    public addChannel(file: FernFileContext, channelId: string, channel: WebSocketChannel, rawChannel?: RawSchemas.WebSocketChannelSchema): void {
+    public addChannel(
+        file: FernFileContext,
+        channelId: string,
+        channel: WebSocketChannel,
+        rawChannel?: RawSchemas.WebSocketChannelSchema
+    ): void {
         if (channelId == null) {
             return;
         }
@@ -380,7 +385,7 @@ export class IrGraph {
                     }
                 },
                 _other: () => undefined
-            })
+            });
         }
 
         referencedSubpackages.add(file.fernFilepath);
@@ -391,7 +396,11 @@ export class IrGraph {
         };
     }
 
-    public markChannelForAudiences(file: FernFileContext, channelId: WebSocketChannelId, audiences: AudienceId[]): void {
+    public markChannelForAudiences(
+        file: FernFileContext,
+        channelId: WebSocketChannelId,
+        audiences: AudienceId[]
+    ): void {
         if (channelId == null) {
             return;
         }

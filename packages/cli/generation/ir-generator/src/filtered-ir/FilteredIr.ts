@@ -1,4 +1,12 @@
-import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook, WebSocketChannel, WebSocketChannelId } from "@fern-api/ir-sdk";
+import {
+    ErrorDeclaration,
+    HttpEndpoint,
+    HttpService,
+    TypeDeclaration,
+    Webhook,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
 import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 

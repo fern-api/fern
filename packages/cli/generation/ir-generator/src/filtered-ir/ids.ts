@@ -71,4 +71,3 @@ export interface ChannelNode {
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;
 }
-

@@ -359,7 +359,7 @@ export function generateIntermediateRepresentation({
 
                 irGraph.addChannel(file, websocketChannelId, websocketChannel, channel);
                 if (channel.audiences != null) {
-                    irGraph.markChannelForAudiences(file, websocketChannelId, channel.audiences); 
+                    irGraph.markChannelForAudiences(file, websocketChannelId, channel.audiences);
                 }
 
                 if (intermediateRepresentation.websocketChannels != null) {
