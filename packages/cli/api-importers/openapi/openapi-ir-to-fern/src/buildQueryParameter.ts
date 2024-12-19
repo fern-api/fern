@@ -6,7 +6,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getTypeFromTypeReference, getDefaultFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
     queryParameter,
@@ -30,6 +30,7 @@ export function buildQueryParameter({
     }
 
     let queryParameterType = getTypeFromTypeReference(typeReference.value);
+    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
 
     // we can assume unknown-typed query parameteters are strings by default
     if (queryParameterType === "unknown") {
@@ -50,6 +51,10 @@ export function buildQueryParameter({
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
+
+    if (queryParameterDefault != null) {
+        queryParameterSchema.default = queryParameterDefault;
+    }
 
     if (typeReference.allowMultiple) {
         queryParameterSchema["allow-multiple"] = true;

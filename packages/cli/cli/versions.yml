@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The generated Fern Definition now properly supports default values for query parameters.
+      type: fix
+  irVersion: 53
+  version: 0.46.7
+
+- changelogEntry:
+    - summary: |
         The audiences property on WebSocket channels is now respected when filtering 
         the IR graph based on configured audiences.
       type: fix
