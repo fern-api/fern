@@ -85,7 +85,7 @@ errors:
       },
       {
         "contents": "instances:
-  - url: https://fern.dev.docs.buildwithfern.com
+  - url: https://fern.docs.dev.buildwithfern.com
 title: fern | Documentation
 navigation:
   - api: API Reference
