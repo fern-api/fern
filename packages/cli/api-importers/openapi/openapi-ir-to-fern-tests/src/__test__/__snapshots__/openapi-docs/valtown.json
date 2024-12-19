@@ -2123,6 +2123,7 @@ give access to details and data from the requesting user.",
                 "name": "MeCommentsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -2134,6 +2135,7 @@ give access to details and data from the requesting user.",
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -2145,6 +2147,7 @@ give access to details and data from the requesting user.",
                     },
                   },
                   "relationship": {
+                    "default": "any",
                     "docs": "Whether to get comments you have received, given, or both",
                     "type": "MeCommentsRequestRelationship",
                   },
@@ -2247,6 +2250,7 @@ give access to details and data from the requesting user.",
                 "name": "MeLikesRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -2258,6 +2262,7 @@ give access to details and data from the requesting user.",
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -2318,6 +2323,7 @@ give access to details and data from the requesting user.",
                 "name": "MeReferencesRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -2329,6 +2335,7 @@ give access to details and data from the requesting user.",
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -2956,11 +2963,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -3007,11 +3016,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -3024,6 +3035,7 @@ service:
             docs: Include items created before this date
           relationship:
             type: MeCommentsRequestRelationship
+            default: any
             docs: Whether to get comments you have received, given, or both
       response:
         docs: A paginated result set
@@ -3062,11 +3074,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -3170,6 +3184,7 @@ imports:
                 "name": "SearchValsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -3181,6 +3196,7 @@ imports:
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -3256,11 +3272,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -3827,6 +3845,7 @@ docs: SQLite
                 "name": "UsersValsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -3838,6 +3857,7 @@ docs: SQLite
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -3925,11 +3945,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -4512,6 +4534,7 @@ let you get, create, and run vals.",
                 "name": "ValsGetVersionRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -4523,6 +4546,7 @@ let you get, create, and run vals.",
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -4586,6 +4610,7 @@ let you get, create, and run vals.",
                 "name": "ValsListRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 20,
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
                     "validation": {
@@ -4597,6 +4622,7 @@ let you get, create, and run vals.",
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
                     "validation": {
@@ -5449,11 +5475,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1
@@ -5574,11 +5602,13 @@ service:
         query-parameters:
           offset:
             type: integer
+            default: 0
             docs: Number of items to skip in order to deliver paginated results
             validation:
               min: 0
           limit:
             type: integer
+            default: 20
             docs: Maximum items to return in each paginated response
             validation:
               min: 1

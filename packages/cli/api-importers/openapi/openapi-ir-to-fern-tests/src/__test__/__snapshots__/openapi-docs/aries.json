@@ -22340,6 +22340,7 @@ docs: Interaction with ledger
                     },
                   },
                   "role": {
+                    "default": "server",
                     "docs": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
                     "type": "optional<GetKeylistsRequestRole>",
                   },
@@ -22661,10 +22662,12 @@ docs: Interaction with ledger
                 "path-parameters": undefined,
                 "query-parameters": {
                   "paginate_limit": {
+                    "default": -1,
                     "docs": "limit number of results",
                     "type": "optional<integer>",
                   },
                   "paginate_offset": {
+                    "default": 0,
                     "docs": "offset to use in pagination",
                     "type": "optional<integer>",
                   },
@@ -22986,6 +22989,7 @@ service:
               format: uuid
           role:
             type: optional<GetKeylistsRequestRole>
+            default: server
             docs: >-
               Filer on role, 'client' for keys         mediated by other agents,
               'server' for keys         mediated by this agent
@@ -23028,9 +23032,11 @@ service:
         query-parameters:
           paginate_limit:
             type: optional<integer>
+            default: -1
             docs: limit number of results
           paginate_offset:
             type: optional<integer>
+            default: 0
             docs: offset to use in pagination
         body:
           properties:
