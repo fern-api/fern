@@ -28,7 +28,7 @@ export interface FileLocation {
 export abstract class AbstractTypescriptGeneratorContext<
     CustomConfig extends BaseTypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
-    private rootImportPath: string = ".";
+    private rootImportPath = ".";
     public readonly typescriptTypeMapper: TypescriptTypeMapper;
 
     public constructor(
