@@ -64,11 +64,6 @@ public class OrganizationsClient {
         }
     }
 
-    public User getOrganizationUser(String organizationId, String userId) {
-        return getOrganizationUser(
-                organizationId, userId, GetOrganizationUserRequest.builder().build());
-    }
-
     public User getOrganizationUser(String organizationId, String userId, GetOrganizationUserRequest request) {
         return getOrganizationUser(organizationId, userId, request, null);
     }
