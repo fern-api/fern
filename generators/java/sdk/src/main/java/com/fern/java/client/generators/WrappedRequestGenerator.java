@@ -141,9 +141,9 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
                 .extraProperties(false)
                 .addAllExtends(extendedInterfaces)
+                .addAllProperties(pathParameterObjectProperties)
                 .addAllProperties(headerObjectProperties)
                 .addAllProperties(queryParameterObjectProperties)
-                .addAllProperties(pathParameterObjectProperties)
                 .addAllProperties(objectProperties)
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
@@ -165,15 +165,15 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .requestBodyGetter(httpEndpoint
                         .getRequestBody()
                         .map(httpRequestBody -> httpRequestBody.visit(requestBodyGetterFactory)))
+                .addAllPathParams(pathParameterObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
+                        .collect(Collectors.toList()))
                 .addAllHeaderParams(headerObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .addAllQueryParams(queryParameterObjectProperties.stream()
-                        .map(objectProperty ->
-                                generatedObject.objectPropertyGetters().get(objectProperty))
-                        .collect(Collectors.toList()))
-                .addAllPathParams(pathParameterObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))

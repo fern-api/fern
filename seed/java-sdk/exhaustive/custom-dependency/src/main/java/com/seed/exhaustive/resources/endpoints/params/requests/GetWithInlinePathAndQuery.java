@@ -19,26 +19,26 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetWithInlinePathAndQuery.Builder.class)
 public final class GetWithInlinePathAndQuery {
-    private final String query;
-
     private final String param;
+
+    private final String query;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithInlinePathAndQuery(String query, String param, Map<String, Object> additionalProperties) {
-        this.query = query;
+    private GetWithInlinePathAndQuery(String param, String query, Map<String, Object> additionalProperties) {
         this.param = param;
+        this.query = query;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("query")
-    public String getQuery() {
-        return query;
     }
 
     @JsonProperty("param")
     public String getParam() {
         return param;
+    }
+
+    @JsonProperty("query")
+    public String getQuery() {
+        return query;
     }
 
     @java.lang.Override
@@ -53,12 +53,12 @@ public final class GetWithInlinePathAndQuery {
     }
 
     private boolean equalTo(GetWithInlinePathAndQuery other) {
-        return query.equals(other.query) && param.equals(other.param);
+        return param.equals(other.param) && query.equals(other.query);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query, this.param);
+        return Objects.hash(this.param, this.query);
     }
 
     @java.lang.Override
@@ -66,18 +66,18 @@ public final class GetWithInlinePathAndQuery {
         return ObjectMappers.stringify(this);
     }
 
-    public static QueryStage builder() {
+    public static ParamStage builder() {
         return new Builder();
     }
 
-    public interface QueryStage {
-        ParamStage query(@NotNull String query);
+    public interface ParamStage {
+        QueryStage param(@NotNull String param);
 
         Builder from(GetWithInlinePathAndQuery other);
     }
 
-    public interface ParamStage {
-        _FinalStage param(@NotNull String param);
+    public interface QueryStage {
+        _FinalStage query(@NotNull String query);
     }
 
     public interface _FinalStage {
@@ -85,10 +85,10 @@ public final class GetWithInlinePathAndQuery {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, ParamStage, _FinalStage {
-        private String query;
-
+    public static final class Builder implements ParamStage, QueryStage, _FinalStage {
         private String param;
+
+        private String query;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -97,28 +97,28 @@ public final class GetWithInlinePathAndQuery {
 
         @java.lang.Override
         public Builder from(GetWithInlinePathAndQuery other) {
-            query(other.getQuery());
             param(other.getParam());
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("query")
-        public ParamStage query(@NotNull String query) {
-            this.query = Objects.requireNonNull(query, "query must not be null");
+            query(other.getQuery());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("param")
-        public _FinalStage param(@NotNull String param) {
+        public QueryStage param(@NotNull String param) {
             this.param = Objects.requireNonNull(param, "param must not be null");
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("query")
+        public _FinalStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
+            return this;
+        }
+
+        @java.lang.Override
         public GetWithInlinePathAndQuery build() {
-            return new GetWithInlinePathAndQuery(query, param, additionalProperties);
+            return new GetWithInlinePathAndQuery(param, query, additionalProperties);
         }
     }
 }
