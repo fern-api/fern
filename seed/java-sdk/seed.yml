@@ -41,27 +41,34 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        inline-path-parameters: true
         custom-dependencies:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
       outputFolder: custom-dependency
     - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
+        inline-path-parameters: true
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
+        inline-path-parameters: true
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: custom-error-names
     - customConfig:
+        inline-path-parameters: true
         client-class-name: Best
       outputFolder: custom-client-class-name
     - customConfig:
+        inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
     - customConfig:
+        inline-path-parameters: true
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - publishConfig:

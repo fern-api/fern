@@ -19,13 +19,21 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ModifyResourceAtInlinedPath.Builder.class)
 public final class ModifyResourceAtInlinedPath {
+    private final String param;
+
     private final String body;
 
     private final Map<String, Object> additionalProperties;
 
-    private ModifyResourceAtInlinedPath(String body, Map<String, Object> additionalProperties) {
+    private ModifyResourceAtInlinedPath(String param, String body, Map<String, Object> additionalProperties) {
+        this.param = param;
         this.body = body;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("param")
+    public String getParam() {
+        return param;
     }
 
     @JsonProperty("body")
@@ -45,12 +53,12 @@ public final class ModifyResourceAtInlinedPath {
     }
 
     private boolean equalTo(ModifyResourceAtInlinedPath other) {
-        return body.equals(other.body);
+        return param.equals(other.param) && body.equals(other.body);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.body);
+        return Objects.hash(this.param, this.body);
     }
 
     @java.lang.Override
@@ -58,14 +66,18 @@ public final class ModifyResourceAtInlinedPath {
         return ObjectMappers.stringify(this);
     }
 
-    public static BodyStage builder() {
+    public static ParamStage builder() {
         return new Builder();
+    }
+
+    public interface ParamStage {
+        BodyStage param(@NotNull String param);
+
+        Builder from(ModifyResourceAtInlinedPath other);
     }
 
     public interface BodyStage {
         _FinalStage body(@NotNull String body);
-
-        Builder from(ModifyResourceAtInlinedPath other);
     }
 
     public interface _FinalStage {
@@ -73,7 +85,9 @@ public final class ModifyResourceAtInlinedPath {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements BodyStage, _FinalStage {
+    public static final class Builder implements ParamStage, BodyStage, _FinalStage {
+        private String param;
+
         private String body;
 
         @JsonAnySetter
@@ -83,7 +97,15 @@ public final class ModifyResourceAtInlinedPath {
 
         @java.lang.Override
         public Builder from(ModifyResourceAtInlinedPath other) {
+            param(other.getParam());
             body(other.getBody());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("param")
+        public BodyStage param(@NotNull String param) {
+            this.param = Objects.requireNonNull(param, "param must not be null");
             return this;
         }
 
@@ -96,7 +118,7 @@ public final class ModifyResourceAtInlinedPath {
 
         @java.lang.Override
         public ModifyResourceAtInlinedPath build() {
-            return new ModifyResourceAtInlinedPath(body, additionalProperties);
+            return new ModifyResourceAtInlinedPath(param, body, additionalProperties);
         }
     }
 }

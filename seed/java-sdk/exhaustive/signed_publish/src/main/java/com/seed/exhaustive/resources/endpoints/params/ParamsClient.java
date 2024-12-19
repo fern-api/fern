@@ -77,13 +77,6 @@ public class ParamsClient {
     /**
      * GET with path param
      */
-    public String getWithInlinePath(String param) {
-        return getWithInlinePath(param, GetWithInlinePath.builder().build());
-    }
-
-    /**
-     * GET with path param
-     */
     public String getWithInlinePath(String param, GetWithInlinePath request) {
         return getWithInlinePath(param, request, null);
     }

@@ -17,6 +17,8 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
 
     public abstract List<EnrichedObjectProperty> queryParams();
 
+    public abstract List<EnrichedObjectProperty> pathParams();
+
     public abstract Optional<RequestBodyGetter> requestBodyGetter();
 
     public static ImmutableGeneratedWrappedRequest.ClassNameBuildStage builder() {
