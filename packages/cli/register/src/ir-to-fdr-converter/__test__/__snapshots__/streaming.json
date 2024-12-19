@@ -104,7 +104,36 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/generate-stream",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "stream": true,
+                "num_events": 1
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "stream": true,
+                  "num_events": 1
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "stream",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         },
         {
           "auth": false,
