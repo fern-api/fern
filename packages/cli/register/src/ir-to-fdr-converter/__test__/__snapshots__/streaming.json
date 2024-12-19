@@ -125,7 +125,10 @@
               "responseBodyV3": {
                 "type": "stream",
                 "value": [
-                  "string"
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
                 ]
               },
               "codeSamples": []

@@ -304,18 +304,57 @@ export function generateEndpointExample({
                 break;
             }
             case "streaming": {
-                const generatedExample = generateTypeReferenceExample({
-                    currentDepth: 0,
-                    maxDepth: 10,
-                    typeDeclarations,
-                    typeReference: TEXT_TYPE_REFERENCE,
-                    skipOptionalProperties: false
-                });
-                if (generatedExample.type === "failure") {
-                    return generatedExample;
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined; 
+                switch (endpoint.response.body.value.type) {
+                    case "sse": {
+                        generatedExample = generateTypeReferenceExample({
+                            currentDepth: 0,
+                            maxDepth: 10,
+                            typeDeclarations,
+                            typeReference: endpoint.response.body.value.payload,
+                            skipOptionalProperties: false
+                        });
+                        if (generatedExample.type === "failure") {
+                            return generatedExample;
+                        }
+                        const { example, jsonExample } = generatedExample;
+                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample}, event: "" }]));
+                        break;
+                    }
+                    case "json": {
+                        generatedExample = generateTypeReferenceExample({
+                            currentDepth: 0,
+                            maxDepth: 10,
+                            typeDeclarations,
+                            typeReference: endpoint.response.body.value.payload,
+                            skipOptionalProperties: false
+                        });
+                        if (generatedExample.type === "failure") {
+                            return generatedExample;
+                        }
+                        const { example, jsonExample } = generatedExample;
+                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                        break;
+                    }
+                    case "text": {
+                        generatedExample = generateTypeReferenceExample({
+                            currentDepth: 0,
+                            maxDepth: 10,
+                            typeDeclarations,
+                            typeReference: TEXT_TYPE_REFERENCE,
+                            skipOptionalProperties: false
+                        });
+                        if (generatedExample.type === "failure") {
+                            return generatedExample;
+                        }
+                        const { example, jsonExample } = generatedExample;
+                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                        break;
+                    }
+                    default: 
+                        assertNever(endpoint.response.body.value);
                 }
-                const { example, jsonExample } = generatedExample;
-                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                
                 break;
             }
             case "text": {

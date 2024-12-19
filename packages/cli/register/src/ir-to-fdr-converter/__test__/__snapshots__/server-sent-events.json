@@ -112,9 +112,15 @@
               },
               "responseStatusCode": 200,
               "responseBodyV3": {
-                "type": "stream",
+                "type": "sse",
                 "value": [
-                  "string"
+                  {
+                    "event": "",
+                    "data": {
+                      "delta": "delta",
+                      "tokens": 1
+                    }
+                  }
                 ]
               },
               "codeSamples": []
