@@ -66,22 +66,26 @@ abstract class JsonSerializableType implements \JsonSerializable
             if ($this instanceof DiscriminatedUnion) {
                 $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
 
-                if ($discriminantAttr && count($discriminantAttr->getArguments()) === 1) {
-                    $result[$jsonKey] = $value;
-                    $existingTypes = $discriminantAttr->getArguments()[0];
-                    $discriminatedType = $existingTypes[$value] ?? null;
-
-                    if ($discriminatedType instanceof Date) {
-                        $dateType = $discriminatedType->type;
-                    } elseif ($discriminatedType instanceof ArrayType) {
-                        $arrayType = $discriminatedType->type;
-                    } elseif ($discriminatedType instanceof Union) {
-                        $unionType = $discriminatedType;
-                    }
-
-                    $jsonKey = $value;
-                    $value = $this->value;
+                if (is_null($discriminantAttr) || count($discriminantAttr->getArguments()) !== 1) {
+                    throw new \InvalidArgumentException(
+                        "Discriminant attribute must be defined and have exactly one argument for a subclass of DiscriminatedUnion"
+                    );
                 }
+
+                $result[$jsonKey] = $value;
+                $existingTypes = $discriminantAttr->getArguments()[0];
+                $discriminatedType = $existingTypes[$value] ?? null;
+
+                if ($discriminatedType instanceof Date) {
+                    $dateType = $discriminatedType->type;
+                } elseif ($discriminatedType instanceof ArrayType) {
+                    $arrayType = $discriminatedType->type;
+                } elseif ($discriminatedType instanceof Union) {
+                    $unionType = $discriminatedType;
+                }
+
+                $jsonKey = $value;
+                $value = $this->value;
             }
 
             // Handle DateTime properties
