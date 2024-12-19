@@ -56,12 +56,12 @@ export declare namespace generateEndpointExample {
 }
 
 const TEXT_TYPE_REFERENCE = TypeReference.primitive({
-    v1: PrimitiveTypeV1.String, 
+    v1: PrimitiveTypeV1.String,
     v2: PrimitiveTypeV2.string({
         default: undefined,
-        validation: undefined,
+        validation: undefined
     })
-})
+});
 
 export function generateEndpointExample({
     ir,
@@ -269,13 +269,13 @@ export function generateEndpointExample({
                 break;
             }
             case "streamParameter": {
-                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined; 
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined;
                 switch (endpoint.response.body.nonStreamResponse.type) {
-                    case "bytes": 
+                    case "bytes":
                         return { type: "failure", message: "Bytes unsupported" };
-                    case "fileDownload": 
+                    case "fileDownload":
                         return { type: "failure", message: "File download unsupported" };
-                    case "json": 
+                    case "json":
                         generatedExample = generateTypeReferenceExample({
                             currentDepth: 0,
                             maxDepth: 10,
@@ -284,7 +284,7 @@ export function generateEndpointExample({
                             skipOptionalProperties: false
                         });
                         break;
-                    case "text": 
+                    case "text":
                         generatedExample = generateTypeReferenceExample({
                             currentDepth: 0,
                             maxDepth: 10,
@@ -293,7 +293,7 @@ export function generateEndpointExample({
                             skipOptionalProperties: false
                         });
                         break;
-                    default: 
+                    default:
                         assertNever(endpoint.response.body.nonStreamResponse);
                 }
                 if (generatedExample.type === "failure") {
@@ -304,7 +304,7 @@ export function generateEndpointExample({
                 break;
             }
             case "streaming": {
-                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined; 
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined;
                 switch (endpoint.response.body.value.type) {
                     case "sse": {
                         generatedExample = generateTypeReferenceExample({
@@ -318,7 +318,9 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
-                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample}, event: "" }]));
+                        result.response = ExampleResponse.ok(
+                            ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample }, event: "" }])
+                        );
                         break;
                     }
                     case "json": {
@@ -333,7 +335,9 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
-                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                        result.response = ExampleResponse.ok(
+                            ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
+                        );
                         break;
                     }
                     case "text": {
@@ -348,13 +352,15 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
-                        result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                        result.response = ExampleResponse.ok(
+                            ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
+                        );
                         break;
                     }
-                    default: 
+                    default:
                         assertNever(endpoint.response.body.value);
                 }
-                
+
                 break;
             }
             case "text": {
