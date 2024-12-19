@@ -512,7 +512,9 @@ class EndpointFunctionGenerator:
                     param = pagination.page
                     page_param_name = request_property_to_name(param.property)
                     page_param_default = retrieve_pagination_default(param.property.root.value_type)
-                    writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else {page_param_default}")
+                    writer.write_line(
+                        f"{page_param_name} = {page_param_name} if {page_param_name} is not None else {page_param_default}"
+                    )
 
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
