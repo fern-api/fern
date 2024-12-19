@@ -109,7 +109,7 @@ function convertService(
                 };
                 examples.push(convertedExample);
             }
-        } 
+        }
         const endpoint = {
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,

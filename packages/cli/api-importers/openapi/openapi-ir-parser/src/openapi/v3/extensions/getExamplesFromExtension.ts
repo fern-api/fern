@@ -14,23 +14,22 @@ export function getExamplesFromExtension(
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
-    const exampleEndpointCalls =
-        getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
-            operationObject,
-            FernOpenAPIExtension.EXAMPLES
-        );
-
-    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (exampleEndpointCalls ?? []).filter(
-        (example) => {
-            const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
-            if (!maybeFernExample.ok) {
-                context.logger.error(
-                    `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
-                );
-            }
-            return maybeFernExample.ok;
-        }
+    const exampleEndpointCalls = getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
+        operationObject,
+        FernOpenAPIExtension.EXAMPLES
     );
+
+    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (
+        exampleEndpointCalls ?? []
+    ).filter((example) => {
+        const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
+        if (!maybeFernExample.ok) {
+            context.logger.error(
+                `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
+            );
+        }
+        return maybeFernExample.ok;
+    });
 
     const redoclyCodeSamplesKebabCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
