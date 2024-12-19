@@ -21,16 +21,24 @@ import org.jetbrains.annotations.NotNull;
 public final class GetWithInlinePathAndQuery {
     private final String query;
 
+    private final String param;
+
     private final Map<String, Object> additionalProperties;
 
-    private GetWithInlinePathAndQuery(String query, Map<String, Object> additionalProperties) {
+    private GetWithInlinePathAndQuery(String query, String param, Map<String, Object> additionalProperties) {
         this.query = query;
+        this.param = param;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("query")
     public String getQuery() {
         return query;
+    }
+
+    @JsonProperty("param")
+    public String getParam() {
+        return param;
     }
 
     @java.lang.Override
@@ -45,12 +53,12 @@ public final class GetWithInlinePathAndQuery {
     }
 
     private boolean equalTo(GetWithInlinePathAndQuery other) {
-        return query.equals(other.query);
+        return query.equals(other.query) && param.equals(other.param);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query);
+        return Objects.hash(this.query, this.param);
     }
 
     @java.lang.Override
@@ -63,9 +71,13 @@ public final class GetWithInlinePathAndQuery {
     }
 
     public interface QueryStage {
-        _FinalStage query(@NotNull String query);
+        ParamStage query(@NotNull String query);
 
         Builder from(GetWithInlinePathAndQuery other);
+    }
+
+    public interface ParamStage {
+        _FinalStage param(@NotNull String param);
     }
 
     public interface _FinalStage {
@@ -73,8 +85,10 @@ public final class GetWithInlinePathAndQuery {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, _FinalStage {
+    public static final class Builder implements QueryStage, ParamStage, _FinalStage {
         private String query;
+
+        private String param;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -84,19 +98,27 @@ public final class GetWithInlinePathAndQuery {
         @java.lang.Override
         public Builder from(GetWithInlinePathAndQuery other) {
             query(other.getQuery());
+            param(other.getParam());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(@NotNull String query) {
+        public ParamStage query(@NotNull String query) {
             this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("param")
+        public _FinalStage param(@NotNull String param) {
+            this.param = Objects.requireNonNull(param, "param must not be null");
+            return this;
+        }
+
+        @java.lang.Override
         public GetWithInlinePathAndQuery build() {
-            return new GetWithInlinePathAndQuery(query, additionalProperties);
+            return new GetWithInlinePathAndQuery(query, param, additionalProperties);
         }
     }
 }

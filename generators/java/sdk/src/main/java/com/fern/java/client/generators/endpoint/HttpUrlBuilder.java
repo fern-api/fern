@@ -198,6 +198,7 @@ public final class HttpUrlBuilder {
                                     .getRequestParameterName()
                                     .getCamelCase()
                                     .getSafeName()
+                            // TODO(agateno): How do we get the getter name from the request body file?
                             + ".get" + paramName.substring(0, 1).toUpperCase(Locale.ROOT) + paramName.substring(1)
                             + "()";
                 }
