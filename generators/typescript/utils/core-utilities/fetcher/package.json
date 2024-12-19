@@ -42,7 +42,7 @@
     "@types/readable-stream": "^4.0.15",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
-    "express": "^4.21.2",
+    "express": "^4.20.0",
     "form-data": "4.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
