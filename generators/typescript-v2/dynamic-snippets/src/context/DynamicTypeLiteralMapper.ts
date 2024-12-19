@@ -64,6 +64,8 @@ export class DynamicTypeLiteralMapper {
         switch (named.type) {
             case "object":
                 return this.convertObject({ object_: named, value });
+            case "alias":
+                return this.convertAlias({ alias: named, value });
             default:
                 return ts.TypeLiteral.noOp();
         }
@@ -84,6 +86,10 @@ export class DynamicTypeLiteralMapper {
             }
         });
         return ts.TypeLiteral.object(fields);
+    }
+
+    private convertAlias({ alias, value }: { alias: FernIr.dynamic.AliasType; value: unknown }): ts.TypeLiteral {
+        return this.convert({ typeReference: alias.typeReference, value });
     }
 
     private convertList({ list, value }: { list: FernIr.dynamic.TypeReference.List; value: unknown }): ts.TypeLiteral {

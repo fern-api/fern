@@ -44,48 +44,54 @@ exports[`imdb (errors) > invalid request body property type 1`] = `
     ],
     "severity": "CRITICAL",
   },
+  {
+    "message": "Expected string but got number",
+    "path": [
+      "requestBody",
+      "title",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": "Expected number but got string",
+    "path": [
+      "requestBody",
+      "rating",
+    ],
+    "severity": "CRITICAL",
+  },
 ]
 `;
 
 exports[`imdb (success) > 'GET /movies/{movieId} (simple)' 1`] = `
-"const do = () => {
-    const client = NewClient(WithToken("<YOUR_API_KEY>"))
-    client.Imdb.GetMovie(TODO(), MovieID: )
-}
+"const client = new NewClient(WithToken("<YOUR_API_KEY>"));
+client.Imdb.GetMovie(TODO(), "movie_xyz");
 "
 `;
 
 exports[`imdb (success) > 'POST /movies/create-movie (simple)' 1`] = `
-"const do = () => {
-    const client = NewClient(WithToken("<YOUR_API_KEY>"))
-    client.Imdb.CreateMovie(TODO(), {
-        Title: "The Matrix",
-        Rating: 8.2,
-    })
-}
+"const client = new NewClient(WithToken("<YOUR_API_KEY>"));
+client.Imdb.CreateMovie(TODO(), {
+    Title: "The Matrix",
+    Rating: 8.2,
+});
 "
 `;
 
 exports[`imdb (sync) > GET /movies/{movieId} 1`] = `
-"const do = () => {
-    const client = NewClient(WithToken("<YOUR_API_KEY>"))
-    client.Imdb.GetMovie(TODO(), MovieID: )
-}
+"const client = new NewClient(WithToken("<YOUR_API_KEY>"));
+client.Imdb.GetMovie(TODO(), "movie_xyz");
 "
 `;
 
 exports[`imdb (sync) > GET /movies/{movieId} w/ baseURL 1`] = `
-"const do = () => {
-    const client = NewClient(withBaseURL("http://localhost:8080"), WithToken("<YOUR_API_KEY>"))
-    client.Imdb.GetMovie(TODO(), MovieID: )
-}
+"const client = new NewClient(withBaseURL("http://localhost:8080"), WithToken("<YOUR_API_KEY>"));
+client.Imdb.GetMovie(TODO(), "movie_xyz");
 "
 `;
 
 exports[`imdb (sync) > GET /movies/{movieId} w/ exportedClientName 1`] = `
-"const do = () => {
-    const client = NewFernClient(WithToken("<YOUR_API_KEY>"))
-    client.Imdb.GetMovie(TODO(), MovieID: )
-}
+"const client = new NewClient(WithToken("<YOUR_API_KEY>"));
+client.Imdb.GetMovie(TODO(), "movie_xyz");
 "
 `;

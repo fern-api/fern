@@ -54,6 +54,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.unsafeName;
     }
 
+    public getPathParameterName(name: FernIr.Name): string {
+        return name.originalName;
+    }
+
     public getImportPath(fernFilepath: FernIr.FernFilepath): string {
         return fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase()).join("/");
     }

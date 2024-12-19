@@ -25,7 +25,11 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toStringAsync();
+        try {
+            return code.toStringFormattedAsync();
+        } catch (error) {
+            return code.toStringAsync();
+        }
     }
 
     public generateSnippetSync({
@@ -36,7 +40,11 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toString();
+        try {
+            return code.toStringFormatted();
+        } catch (error) {
+            return code.toString();
+        }
     }
 
     private buildCodeBlock({
@@ -46,15 +54,10 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.AstNode {
-        return ts.function_({
-            name: SNIPPET_FUNC_NAME,
-            parameters: [] as ts.Parameter[],
-            body: ts.codeblock((writer) => {
-                writer.writeNode(this.constructClient({ endpoint, snippet }));
-                writer.writeLine();
-                writer.writeNode(this.callMethod({ endpoint, snippet }));
-            }),
-            docs: undefined
+        return ts.codeblock((writer) => {
+            writer.writeNode(this.constructClient({ endpoint, snippet }));
+            writer.writeLine();
+            writer.writeNode(this.callMethod({ endpoint, snippet }));
         });
     }
 
@@ -65,19 +68,18 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.CodeBlock {
-        return ts.codeblock((writer) => {
-            writer.write(`const ${CLIENT_VAR_NAME} = `);
-            writer.writeNode(this.getRootClientFuncInvocation(this.getConstructorArgs({ endpoint, snippet })));
+        const clientType = ts.reference({ name: this.context.getClientConstructorName() });
+        const clientClassInstantiation = ts.classInstantiation({
+            class_: clientType,
+            arguments_: this.getConstructorArgs({ endpoint, snippet })
         });
-    }
-
-    private getRootClientFuncInvocation(arguments_: ts.AstNode[]): ts.FunctionInvocation {
-        return ts.invokeFunction({
-            function_: ts.reference({
-                name: this.context.getClientConstructorName()
-                //importPath: this.context.getClientImportPath()
-            }),
-            arguments_
+        const initializerBlock = ts.codeblock((writer) => {
+            writer.writeNode(clientClassInstantiation);
+        });
+        const clientVar = ts.variable({ name: CLIENT_VAR_NAME, const: true, initializer: initializerBlock });
+        return ts.codeblock((writer) => {
+            clientVar.write(writer);
+            writer.writeLine(";");
         });
     }
 
@@ -88,11 +90,12 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.MethodInvocation {
-        return ts.invokeMethod({
+        const method = ts.invokeMethod({
             on: ts.reference({ name: CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
             arguments_: [this.context.getContextTodoFunctionInvocation(), ...this.getMethodArgs({ endpoint, snippet })]
         });
+        return method;
     }
 
     private getConstructorArgs({
@@ -352,7 +355,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.scope(Scope.PathParameters);
         if (request.pathParameters != null) {
             const pathParameterFields = this.getPathParameters({ namedParameters: request.pathParameters, snippet });
-            args.push(...pathParameterFields);
+            args.push(...Object.values(pathParameterFields));
         }
         this.context.errors.unscope();
 
@@ -374,11 +377,22 @@ export class EndpointSnippetGenerator {
     }): ts.TypeLiteral {
         switch (body.type) {
             case "bytes": {
-                return ts.TypeLiteral.string(value as string);
+                return this.getBytesBodyRequestArg({ value });
             }
             case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
         }
+    }
+
+    private getBytesBodyRequestArg({ value }: { value: unknown }): ts.TypeLiteral {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected bytes value to be a string, got ${typeof value}`
+            });
+            return ts.TypeLiteral.noOp();
+        }
+        return ts.TypeLiteral.string(value as string);
     }
 
     private getMethodArgsForInlinedRequest({
@@ -391,18 +405,21 @@ export class EndpointSnippetGenerator {
         const args: ts.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: ts.TypeLiteral[] = [];
+        const pathParameterFields: Record<string, ts.TypeLiteral> = {};
         if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+            Object.entries(this.getPathParameters({ namedParameters: request.pathParameters, snippet })).forEach(
+                ([key, value]) => {
+                    pathParameterFields[key] = value;
+                }
+            );
         }
         this.context.errors.unscope();
 
         // this.context.errors.scope(Scope.RequestBody);
         // const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         // this.context.errors.unscope();
-
         if (!this.context.includePathParametersInWrappedRequest({ request })) {
-            args.push(...pathParameterFields.map((field) => field));
+            args.push(...Object.values(pathParameterFields));
         }
 
         // if (!this.context.customConfig?.inlineFileProperties) {
@@ -416,7 +433,7 @@ export class EndpointSnippetGenerator {
                     snippet,
                     pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
                         ? pathParameterFields
-                        : []
+                        : {}
                 })
             );
         }
@@ -429,20 +446,16 @@ export class EndpointSnippetGenerator {
     }: {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ts.TypeLiteral[] {
-        const args: ts.TypeLiteral[] = [];
+    }): Record<string, ts.TypeLiteral> {
+        const args: Record<string, ts.TypeLiteral> = {};
 
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(
-                ts.TypeLiteral.objectField(
-                    this.context.getTypeName(parameter.name.name),
-                    this.context.dynamicTypeLiteralMapper.convert(parameter)
-                )
-            );
+            args[this.context.getPathParameterName(parameter.name.name)] =
+                this.context.dynamicTypeLiteralMapper.convert(parameter);
         }
 
         return args;
@@ -455,19 +468,18 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: ts.TypeLiteral[];
+        pathParameterFields: Record<string, ts.TypeLiteral>;
     }): ts.TypeLiteral {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
-        const queryParameterFields = queryParameters.map((queryParameter) =>
-            ts.TypeLiteral.objectField(
-                queryParameter.name.name.pascalCase.unsafeName,
-                this.context.dynamicTypeLiteralMapper.convert(queryParameter)
-            )
-        );
+        const queryParameterFields: Record<string, ts.TypeLiteral> = {};
+        for (const parameter of queryParameters) {
+            queryParameterFields[parameter.name.name.pascalCase.unsafeName] =
+                this.context.dynamicTypeLiteralMapper.convert(parameter);
+        }
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.Headers);
@@ -475,29 +487,36 @@ export class EndpointSnippetGenerator {
             parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
-        const headerFields = headers.map((header) =>
-            ts.TypeLiteral.objectField(
-                header.name.name.pascalCase.unsafeName,
-                this.context.dynamicTypeLiteralMapper.convert(header)
-            )
-        );
+        const headerFields: Record<string, ts.TypeLiteral> = {};
+        for (const header of headers) {
+            headerFields[header.name.name.pascalCase.unsafeName] =
+                this.context.dynamicTypeLiteralMapper.convert(header);
+        }
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        const requestBodyFields =
-            request.body != null
-                ? this.getInlinedRequestBodyStructFields({
-                      body: request.body,
-                      value: snippet.requestBody
-                  })
-                : [];
+        const requestBodyFields: Record<string, ts.TypeLiteral> = {};
+        if (request.body != null) {
+            Object.entries(
+                this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody })
+            ).forEach(([key, value]) => {
+                requestBodyFields[key] = value;
+            });
+        }
         this.context.errors.unscope();
 
         const fields: Record<string, ts.TypeLiteral> = {};
-        [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields].forEach((field) => {
-            if (field.internalType.type === "objectField") {
-                fields[field.internalType.name] = field.internalType.value;
-            }
+        Object.entries(pathParameterFields).forEach(([key, value]) => {
+            fields[key] = value;
+        });
+        Object.entries(queryParameterFields).forEach(([key, value]) => {
+            fields[key] = value;
+        });
+        Object.entries(headerFields).forEach(([key, value]) => {
+            fields[key] = value;
+        });
+        Object.entries(requestBodyFields).forEach(([key, value]) => {
+            fields[key] = value;
         });
 
         return ts.TypeLiteral.object(fields);
@@ -567,7 +586,7 @@ export class EndpointSnippetGenerator {
             fields.push(
                 ts.TypeLiteral.objectField(
                     this.context.getTypeName(parameter.name.name),
-                    this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    this.context.dynamicTypeLiteralMapper.convert({ typeReference: parameter.typeReference, value })
                 )
             );
         }
