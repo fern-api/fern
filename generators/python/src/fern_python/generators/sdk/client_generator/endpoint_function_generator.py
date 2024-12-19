@@ -21,6 +21,7 @@ from fern_python.generators.sdk.client_generator.pagination.abstract_paginator i
 )
 from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
+    retrieve_pagination_default,
 )
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
@@ -510,7 +511,8 @@ class EndpointFunctionGenerator:
                 if pagination.type == "offset":
                     param = pagination.page
                     page_param_name = request_property_to_name(param.property)
-                    writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else 1")
+                    page_param_default = retrieve_pagination_default(param.property.root.value_type)
+                    writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else {page_param_default}")
 
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
