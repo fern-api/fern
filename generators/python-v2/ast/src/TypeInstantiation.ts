@@ -26,6 +26,8 @@ interface Str {
     value: string;
     config?: {
         multiline?: boolean;
+        startOnNewLine?: boolean;
+        endWithNewLine?: boolean;
     };
 }
 
@@ -85,7 +87,14 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bool", value });
     }
 
-    public static str(value: string, config = { multiline: false }): TypeInstantiation {
+    public static str(
+        value: string,
+        config: { multiline?: boolean; startOnNewLine?: boolean; endWithNewLine?: boolean } = {
+            multiline: false,
+            startOnNewLine: false,
+            endWithNewLine: false
+        }
+    ): TypeInstantiation {
         return new this({ type: "str", value, config });
     }
 
@@ -147,7 +156,13 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "str":
                 if (this.internalType.config?.multiline) {
-                    this.writeStringWithTripleQuotes({ writer, value: this.internalType.value });
+                    const { startOnNewLine, endWithNewLine } = this.internalType.config;
+                    this.writeStringWithTripleQuotes({
+                        writer,
+                        value: this.internalType.value,
+                        startOnNewLine,
+                        endWithNewLine
+                    });
                 } else {
                     writer.write(
                         `"${this.escapeString(this.internalType.value, { doubleQuote: true, newline: true })}"`
@@ -210,14 +225,45 @@ export class TypeInstantiation extends AstNode {
         }
     }
 
-    private writeStringWithTripleQuotes({ writer, value }: { writer: Writer; value: string }): void {
+    private writeStringWithTripleQuotes({
+        writer,
+        value,
+        startOnNewLine,
+        endWithNewLine
+    }: {
+        writer: Writer;
+        value: string;
+        startOnNewLine?: boolean;
+        endWithNewLine?: boolean;
+    }): void {
         writer.write('"""');
-        const parts = value.split("\n");
-        const head = parts[0] + "\n";
-        const tail = parts.slice(1).join("\n");
-        writer.write(this.escapeString(head));
-        writer.writeNoIndent(this.escapeString(tail));
-        writer.write('"""');
+        const lines = value.split("\n");
+
+        // If there is only one line, we can just write it as a single line string
+        if (lines.length <= 1) {
+            writer.write(this.escapeString(this.escapeString(lines[0] ?? "")));
+            writer.write('"""');
+            return;
+        }
+
+        if (startOnNewLine) {
+            writer.write("\\\n");
+        }
+
+        lines.forEach((line, idx) => {
+            writer.writeNoIndent(this.escapeString(line));
+
+            // If this is the last line, add a newline escape
+            if (idx === lines.length - 1) {
+                if (endWithNewLine) {
+                    writer.write("\\\n");
+                }
+            } else {
+                writer.write("\n");
+            }
+        });
+
+        writer.writeNoIndent('"""');
     }
 
     private escapeString(
