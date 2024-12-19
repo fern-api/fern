@@ -19,8 +19,6 @@ export function getExamplesFromExtension(
             operationObject,
             FernOpenAPIExtension.EXAMPLES
         );
-    
-    context.logger.error(`exampleEndpointCalls ${JSON.stringify(exampleEndpointCalls)}`);
 
     const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (exampleEndpointCalls ?? []).filter(
         (example) => {
