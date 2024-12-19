@@ -10,7 +10,6 @@ abstract class DiscriminatedUnion extends JsonSerializableType
     /**
      * @var string type
      */
-    #[JsonProperty('type')]
     public string $type;
 
     /**

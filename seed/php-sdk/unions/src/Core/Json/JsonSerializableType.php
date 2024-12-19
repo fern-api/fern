@@ -63,12 +63,11 @@ abstract class JsonSerializableType implements \JsonSerializable
             $unionType = null;
 
             // Handle discriminated union
-            if ($this instanceof DiscriminatedUnion) {
-                $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
-
-                if (is_null($discriminantAttr) || count($discriminantAttr->getArguments()) !== 1) {
+            $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
+            if ($discriminantAttr && $this instanceof DiscriminatedUnion) {
+                if (count($discriminantAttr->getArguments()) !== 1) {
                     throw new \InvalidArgumentException(
-                        "Discriminant attribute must be defined and have exactly one argument for a subclass of DiscriminatedUnion"
+                        "Discriminant attribute must have exactly one argument for a subclass of DiscriminatedUnion"
                     );
                 }
 
@@ -186,34 +185,37 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $typeName = null;
 
                 // Handle discriminated union
-                if ($reflectionClass->isSubclassOf(DiscriminatedUnion::class)) {
-                    $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
+                $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
+                if ($discriminantAttr && $reflectionClass->isSubclassOf(DiscriminatedUnion::class)) {
+                    if (count($discriminantAttr->getArguments()) !== 1) {
+                        throw new \InvalidArgumentException(
+                            "Discriminant attribute must have exactly one argument for a subclass of DiscriminatedUnion"
+                        );
+                    }
 
-                    if ($discriminantAttr && count($discriminantAttr->getArguments()) === 1) {
-                        $propertyName = 'value';
-                        $existingTypes = $discriminantAttr->getArguments()[0];
-                        if (is_string($value) && array_key_exists($value, $existingTypes)) {
-                            $args['type'] = $value;
-                            $discriminatedType = $existingTypes[$value];
+                    $propertyName = 'value';
+                    $existingTypes = $discriminantAttr->getArguments()[0];
+                    if (is_string($value) && array_key_exists($value, $existingTypes)) {
+                        $args['type'] = $value;
+                        $discriminatedType = $existingTypes[$value];
 
-                            if (is_string($value) && array_key_exists($value, $data)) {
-                                if ($discriminatedType instanceof Date) {
-                                    $dateType = $discriminatedType->type;
-                                } elseif ($discriminatedType instanceof ArrayType) {
-                                    $arrayType = $discriminatedType->type;
-                                } elseif ($discriminatedType instanceof Union) {
-                                    $unionType = $discriminatedType;
-                                }
-
-                                $value = $data[$value];
-                                $typeName = $discriminatedType;
-                            } else {
-                                // Inline properties are only possible with objects
-                                $value = JsonDeserializer::deserializeObject($data, $discriminatedType);
+                        if (is_string($value) && array_key_exists($value, $data)) {
+                            if ($discriminatedType instanceof Date) {
+                                $dateType = $discriminatedType->type;
+                            } elseif ($discriminatedType instanceof ArrayType) {
+                                $arrayType = $discriminatedType->type;
+                            } elseif ($discriminatedType instanceof Union) {
+                                $unionType = $discriminatedType;
                             }
+
+                            $value = $data[$value];
+                            $typeName = $discriminatedType;
                         } else {
-                            $args['type'] = '_unknown';
+                            // Inline properties are only possible with objects
+                            $value = JsonDeserializer::deserializeObject($data, $discriminatedType);
                         }
+                    } else {
+                        $args['type'] = '_unknown';
                     }
                 }
 
