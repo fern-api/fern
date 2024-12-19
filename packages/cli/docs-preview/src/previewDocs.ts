@@ -18,15 +18,19 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { v4 as uuidv4 } from "uuid";
+import { generateFdrFromOpenApiWorkspace } from "@fern-api/docs-resolver";
+import { isNonNullish } from "../../../commons/core-utils/src";
 
 export async function getPreviewDocsDefinition({
     domain,
     project,
-    context
+    context,
+    v2
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
+    v2?: boolean;
 }): Promise<DocsV1Read.DocsDefinition> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
@@ -80,7 +84,19 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: apiCollector.getAPIsForDefinition(),
+        apis: v2 ? {} : apiCollector.getAPIsForDefinition(),
+        apisV2: v2
+            ? Object.fromEntries(
+                  (
+                      await Promise.all(
+                          fernWorkspaces.map((workspace) => [
+                              uuidv4(),
+                              generateFdrFromOpenApiWorkspace(workspace, context)
+                          ])
+                      )
+                  ).filter(isNonNullish)
+              )
+            : {},
         config: readDocsConfig,
         files: {},
         filesV2,

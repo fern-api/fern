@@ -8,12 +8,14 @@ export async function previewDocsWorkspace({
     loadProject,
     cliContext,
     port,
-    bundlePath
+    bundlePath,
+    v2
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
     bundlePath?: string;
+    v2?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -58,7 +60,8 @@ export async function previewDocsWorkspace({
             },
             context,
             port,
-            bundlePath
+            bundlePath,
+            v2
         });
     });
 }
