@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The audiences property on WebSocket channels is now respected when filtering 
+        the IR graph based on configured audiences.
+      type: fix
+  irVersion: 53
+  version: 0.46.6
+
+- changelogEntry:
+    - summary: |
         Previously, when the CLI failed to validate the fern definition yaml file against a JSON Schema, 
         we would log `Failed to parse` without a schema path. Now we grab a relevant schema path. 
       type: fix

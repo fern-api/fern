@@ -1,6 +1,7 @@
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
-import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
+import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
     ExampleType,
     HttpEndpoint,
@@ -14,8 +15,9 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
+import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
@@ -31,6 +33,8 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
+import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 import { addExtendedPropertiesToIr } from "./extended-properties/addExtendedPropertiesToIr";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -45,13 +49,9 @@ import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
-import { SourceResolver } from "@fern-api/source-resolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
-import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
-import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
-import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 
 export function generateIntermediateRepresentation({
     workspace,
@@ -356,6 +356,12 @@ export function generateIntermediateRepresentation({
                     exampleResolver,
                     workspace
                 });
+
+                irGraph.addChannel(file, websocketChannelId, websocketChannel, channel);
+                if (channel.audiences != null) {
+                    irGraph.markChannelForAudiences(file, websocketChannelId, channel.audiences); 
+                }
+
                 if (intermediateRepresentation.websocketChannels != null) {
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
                     packageTreeGenerator.addWebSocketChannel(websocketChannelId, file.fernFilepath);

@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-api/ir-sdk";
+import { FernFilepath, WebSocketChannelId } from "@fern-api/ir-sdk";
 
 export type AudienceId = string;
 export type EnvironmentId = string;
@@ -65,3 +65,10 @@ export interface WebhookNode {
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;
 }
+
+export interface ChannelNode {
+    channelId: WebSocketChannelId;
+    referencedTypes: Set<TypeId>;
+    referencedSubpackages: Set<FernFilepath>;
+}
+
