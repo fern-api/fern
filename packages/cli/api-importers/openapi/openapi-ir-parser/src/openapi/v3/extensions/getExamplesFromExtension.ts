@@ -1,5 +1,5 @@
-import { EndpointExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { EndpointExample } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -14,16 +14,15 @@ export function getExamplesFromExtension(
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
-    const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
-        getExtension(
+    const exampleEndpointCalls =
+        getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
             operationObject,
             FernOpenAPIExtension.EXAMPLES
-            // RawSchemas.ExampleEndpointCallArraySchema,
-            // context.logger,
-            // [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
-        ) ?? [];
+        );
+    
+    context.logger.error(`exampleEndpointCalls ${JSON.stringify(exampleEndpointCalls)}`);
 
-    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = exampleEndpointCalls.filter(
+    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (exampleEndpointCalls ?? []).filter(
         (example) => {
             const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
             if (!maybeFernExample.ok) {

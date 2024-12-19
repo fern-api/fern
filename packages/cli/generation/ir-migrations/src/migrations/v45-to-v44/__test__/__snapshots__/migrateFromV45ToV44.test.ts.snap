@@ -1980,6 +1980,75 @@ exports[`migrateFromV45ToV44 > snapshot 1`] = `
               "servicePathParameters": [],
               "url": "/list/stream",
             },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "pageNum",
+                        "unsafeName": "pageNum",
+                      },
+                      "originalName": "pageNum",
+                      "pascalCase": {
+                        "safeName": "PageNum",
+                        "unsafeName": "PageNum",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "PAGE_NUM",
+                        "unsafeName": "PAGE_NUM",
+                      },
+                      "snakeCase": {
+                        "safeName": "page_num",
+                        "unsafeName": "page_num",
+                      },
+                    },
+                    "wireValue": "pageNum",
+                  },
+                  "value": {
+                    "jsonExample": 1,
+                    "shape": {
+                      "primitive": {
+                        "integer": 1,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "request": null,
+              "response": {
+                "type": "ok",
+                "value": {
+                  "type": "stream",
+                  "value": [
+                    {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
+                },
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/list/stream",
+            },
           ],
           "fullPath": {
             "head": "/list/stream",
@@ -2574,6 +2643,75 @@ exports[`migrateFromV45ToV44 > snapshot 1`] = `
                         },
                       },
                       "event": "data",
+                    },
+                  ],
+                },
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "/list/sse",
+            },
+            {
+              "codeSamples": null,
+              "docs": null,
+              "endpointHeaders": [],
+              "endpointPathParameters": [],
+              "exampleType": "generated",
+              "name": null,
+              "queryParameters": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "pageNum",
+                        "unsafeName": "pageNum",
+                      },
+                      "originalName": "pageNum",
+                      "pascalCase": {
+                        "safeName": "PageNum",
+                        "unsafeName": "PageNum",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "PAGE_NUM",
+                        "unsafeName": "PAGE_NUM",
+                      },
+                      "snakeCase": {
+                        "safeName": "page_num",
+                        "unsafeName": "page_num",
+                      },
+                    },
+                    "wireValue": "pageNum",
+                  },
+                  "value": {
+                    "jsonExample": 1,
+                    "shape": {
+                      "primitive": {
+                        "integer": 1,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "request": null,
+              "response": {
+                "type": "ok",
+                "value": {
+                  "type": "stream",
+                  "value": [
+                    {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                   ],
                 },
