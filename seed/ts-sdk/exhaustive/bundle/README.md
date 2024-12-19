@@ -34,7 +34,7 @@ following namespace:
 ```typescript
 import { Fiddle } from "@fern/exhaustive";
 
-const request: Fiddle.GetWithInlinePath = {
+const request: Fiddle.GetWithQuery = {
     ...
 };
 ```
