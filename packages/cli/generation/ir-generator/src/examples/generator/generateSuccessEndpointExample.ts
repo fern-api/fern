@@ -1,26 +1,30 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
-    HttpEndpoint,
-    TypeDeclaration,
-    TypeId,
+    ErrorDeclaration,
     ExampleEndpointCall,
+    ExampleEndpointSuccessResponse,
+    ExampleHeader,
+    ExampleInlinedRequestBodyProperty,
+    ExamplePathParameter,
+    ExampleQueryParameterShape,
+    ExampleRequestBody,
+    ExampleResponse,
+    ExampleTypeReference,
+    HttpEndpoint,
+    HttpHeader,
     HttpService,
     IntermediateRepresentation,
-    ExamplePathParameter,
     PathParameter,
-    ExampleQueryParameterShape,
-    ExampleResponse,
-    HttpHeader,
-    ExampleHeader,
-    ExampleEndpointSuccessResponse,
-    ExampleRequestBody,
-    ExampleInlinedRequestBodyProperty,
-    ErrorDeclaration
+    PrimitiveTypeV1,
+    PrimitiveTypeV2,
+    TypeDeclaration,
+    TypeId,
+    TypeReference
 } from "@fern-api/ir-sdk";
+import { hashJSON } from "../../utils/hashJSON";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
-import { hashJSON } from "../../utils/hashJSON";
 
 export declare namespace generateEndpointExample {
     interface Args {
@@ -50,6 +54,14 @@ export declare namespace generateEndpointExample {
         add: (example: K) => void;
     }
 }
+
+const TEXT_TYPE_REFERENCE = TypeReference.primitive({
+    v1: PrimitiveTypeV1.String, 
+    v2: PrimitiveTypeV2.string({
+        default: undefined,
+        validation: undefined,
+    })
+})
 
 export function generateEndpointExample({
     ir,
@@ -256,12 +268,71 @@ export function generateEndpointExample({
                 result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
                 break;
             }
-            case "streamParameter":
-                return { type: "failure", message: "Stream parameter unsupported" };
-            case "streaming":
-                return { type: "failure", message: "Streaming unsupported" };
-            case "text":
-                return { type: "failure", message: "Text unsupported" };
+            case "streamParameter": {
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined; 
+                switch (endpoint.response.body.nonStreamResponse.type) {
+                    case "bytes": 
+                        return { type: "failure", message: "Bytes unsupported" };
+                    case "fileDownload": 
+                        return { type: "failure", message: "File download unsupported" };
+                    case "json": 
+                        generatedExample = generateTypeReferenceExample({
+                            currentDepth: 0,
+                            maxDepth: 10,
+                            typeDeclarations,
+                            typeReference: endpoint.response.body.nonStreamResponse.value.responseBodyType,
+                            skipOptionalProperties: false
+                        });
+                        break;
+                    case "text": 
+                        generatedExample = generateTypeReferenceExample({
+                            currentDepth: 0,
+                            maxDepth: 10,
+                            typeDeclarations,
+                            typeReference: TEXT_TYPE_REFERENCE,
+                            skipOptionalProperties: false
+                        });
+                        break;
+                    default: 
+                        assertNever(endpoint.response.body.nonStreamResponse);
+                }
+                if (generatedExample.type === "failure") {
+                    return generatedExample;
+                }
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
+                break;
+            }
+            case "streaming": {
+                const generatedExample = generateTypeReferenceExample({
+                    currentDepth: 0,
+                    maxDepth: 10,
+                    typeDeclarations,
+                    typeReference: TEXT_TYPE_REFERENCE,
+                    skipOptionalProperties: false
+                });
+                if (generatedExample.type === "failure") {
+                    return generatedExample;
+                }
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }]));
+                break;
+            }
+            case "text": {
+                const generatedExample = generateTypeReferenceExample({
+                    currentDepth: 0,
+                    maxDepth: 10,
+                    typeDeclarations,
+                    typeReference: TEXT_TYPE_REFERENCE,
+                    skipOptionalProperties: false
+                });
+                if (generatedExample.type === "failure") {
+                    return generatedExample;
+                }
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
+                break;
+            }
             case "bytes":
                 return { type: "failure", message: "Bytes unsupported" };
             default:
