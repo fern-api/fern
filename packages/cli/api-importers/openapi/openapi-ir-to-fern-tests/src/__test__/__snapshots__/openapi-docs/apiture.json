@@ -13538,6 +13538,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.AccountAllowsFilter>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -13558,6 +13559,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.ProductType>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -13605,6 +13607,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "optional<root.ResourceId>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -13620,6 +13623,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "root.AchSecCode",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -13708,6 +13712,7 @@ service:
               `account.allows.view` are all `true` for the caller.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -13718,6 +13723,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -13940,6 +13946,7 @@ service:
               authenticated caller's customer ID (not their access ID).
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -13950,6 +13957,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -14309,6 +14317,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 "name": "InstitutionsListTransferScheduleRequest",
                 "query-parameters": {
                   "count": {
+                    "default": 6,
                     "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
                     "type": "optional<integer>",
                     "validation": {
@@ -14593,6 +14602,7 @@ service:
               `credit`, dates are adjusted to the previous business day.
           count:
             type: optional<integer>
+            default: 6
             docs: >-
               The maximum amount of dates to calculate and include in the
               response. If an end date is provided, the total count may be lower
@@ -15117,6 +15127,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                 "name": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15128,6 +15139,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -15251,6 +15263,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -15261,6 +15274,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -15644,6 +15658,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     "type": "optional<root.DateRange>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15685,6 +15700,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -15761,6 +15777,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -15771,6 +15788,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -16278,6 +16296,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<boolean>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -16293,6 +16312,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<root.DateRange>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -16487,6 +16507,7 @@ service:
               finished processing. If omitted, list all transfers.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -16497,6 +16518,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
