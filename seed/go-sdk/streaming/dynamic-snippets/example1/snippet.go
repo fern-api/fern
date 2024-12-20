@@ -11,7 +11,7 @@ func do() () {
     client.Dummy.Generate(
         context.TODO(),
         &v2.Generateequest{
-            NumEvents: 1,
+            NumEvents: 5,
         },
     )
 }
