@@ -558,8 +558,9 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: |
-            seed/go-sdk/
+          # We don't actually need to store the content of the seed snapshots - we just need
+          # to verify that snapshots for the hash have been generated.
+          path: generators/go/sdk/versions.yml
           key: seed-go-sdk-${{ steps.hash.outputs.hash }}
           lookup-only: true  # Don't save to the cache until we know it's successful.
 
@@ -605,7 +606,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true' && steps.validate.outputs.valid == 'true'
         uses: actions/cache@v3
         with:
-          path: seed/go-sdk
+          # We don't actually need to store the content of the seed snapshots - we just need
+          # to verify that snapshots for the hash have been generated.
+          path: generators/go/sdk/versions.yml
           key: go-sdk-${{ steps.hash.outputs.hash }}
 
   csharp-model:

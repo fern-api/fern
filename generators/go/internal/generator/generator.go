@@ -35,6 +35,8 @@ const (
 //
 // This is an edit that should trigger seed, but only for go-sdk. If successful,
 // it should cache the result as long as no other Go source files are edited.
+//
+// Another edit to create a cache miss.
 type Mode uint8
 
 const (
