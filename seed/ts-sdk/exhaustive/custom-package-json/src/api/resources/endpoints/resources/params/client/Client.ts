@@ -82,61 +82,6 @@ export class Params {
     }
 
     /**
-     * GET with path param
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.GetWithInlinePath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithInlinePath("param")
-     */
-    public async getWithInlinePath(
-        param: string,
-        request: Fiddle.endpoints.GetWithInlinePath = {},
-        requestOptions?: Params.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-            };
-        }
-
-        return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithInlinePath.Error._unknown(_response.error),
-        };
-    }
-
-    /**
      * GET with query param
      *
      * @param {Fiddle.endpoints.GetWithQuery} request
@@ -309,62 +254,6 @@ export class Params {
     }
 
     /**
-     * GET with path and query params
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.GetWithInlinePathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithInlinePathAndQuery("param", {
-     *         query: "query"
-     *     })
-     */
-    public async getWithInlinePathAndQuery(
-        param: string,
-        request: Fiddle.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: Params.RequestOptions
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
-        const { query } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        _queryParams["query"] = query;
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/params/path-query/${encodeURIComponent(param)}`
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: undefined,
-            };
-        }
-
-        return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._unknown(_response.error),
-        };
-    }
-
-    /**
      * PUT to update with path param
      *
      * @param {string} param
@@ -419,66 +308,6 @@ export class Params {
         return {
             ok: false,
             error: Fiddle.endpoints.params.modifyWithPath.Error._unknown(_response.error),
-        };
-    }
-
-    /**
-     * PUT to update with path param
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.ModifyResourceAtInlinedPath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.modifyWithInlinePath("param", {
-     *         body: "string"
-     *     })
-     */
-    public async modifyWithInlinePath(
-        param: string,
-        request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: Params.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
-            ),
-            method: "PUT",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.endpoints.params.modifyWithInlinePath.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-            };
-        }
-
-        return {
-            ok: false,
-            error: Fiddle.endpoints.params.modifyWithInlinePath.Error._unknown(_response.error),
         };
     }
 

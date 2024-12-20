@@ -34,7 +34,7 @@ following namespace:
 ```typescript
 import { SeedExhaustive } from "@fern/exhaustive";
 
-const request: SeedExhaustive.GetWithInlinePath = {
+const request: SeedExhaustive.GetWithQuery = {
     ...
 };
 ```
