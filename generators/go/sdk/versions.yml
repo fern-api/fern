@@ -1,3 +1,5 @@
+# This additional edit shouldn't affect the cache.
+
 - version: 0.35.0
   changelogEntry:
     - type: feat
