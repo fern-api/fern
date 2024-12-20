@@ -2,7 +2,6 @@
 
 namespace Seed\Core\Types;
 
-use Seed\Core\Json\JsonProperty;
 use Seed\Core\Json\JsonSerializableType;
 
 abstract class DiscriminatedUnion extends JsonSerializableType
