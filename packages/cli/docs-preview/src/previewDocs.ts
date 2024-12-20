@@ -48,6 +48,9 @@ export async function getPreviewDocsDefinition({
         )
     );
 
+    // TODO: remove this once we remove V1 API generation
+    const apiDefinitionIds: FdrAPI.ApiDefinitionId[] = [];
+
     const apiCollector = new ReferencedAPICollector(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
@@ -71,7 +74,11 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts)
+        async (opts) => {
+            const id = apiCollector.addReferencedAPI(opts);
+            apiDefinitionIds.push(FdrAPI.ApiDefinitionId(id));
+            return id;
+        }
     );
 
     const writeDocsDefinition = await resolver.resolve();
@@ -89,9 +96,9 @@ export async function getPreviewDocsDefinition({
             ? Object.fromEntries(
                   (
                       await Promise.all(
-                          fernWorkspaces.map((workspace) => [
-                              uuidv4(),
-                              generateFdrFromOpenApiWorkspace(workspace, context)
+                          project.apiWorkspaces.map(async (workspace, i) => [
+                              apiDefinitionIds[i],
+                              await generateFdrFromOpenApiWorkspace(workspace, context)
                           ])
                       )
                   ).filter(isNonNullish)

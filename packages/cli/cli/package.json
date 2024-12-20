@@ -46,7 +46,7 @@
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-parsers": "^0.0.13",  
+    "@fern-api/docs-parsers": "^0.0.14",  
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/docs-validator": "workspace:*", 

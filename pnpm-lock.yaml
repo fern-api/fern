@@ -3856,8 +3856,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.13
-        version: 0.0.13(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
+        specifier: ^0.0.14
+        version: 0.0.14(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -4623,8 +4623,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.13
-        version: 0.0.13(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
+        specifier: ^0.0.14
+        version: 0.0.14(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)
       '@fern-api/fdr-sdk':
         specifier: 0.127.3-6479103bd
         version: 0.127.3-6479103bd(typescript@4.6.4)
@@ -8094,8 +8094,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.13':
-    resolution: {integrity: sha512-pmMUD28tWPGutTGDR2Q8vx/3v9YHlYMCUP2uVsI94Qam51Pm/uPVFikYoPrSxDYfG1NNcxGVddC7FKW18S99Xw==}
+  '@fern-api/docs-parsers@0.0.14':
+    resolution: {integrity: sha512-82MLnKAATRiCjD3Xcf60Mw9vGSZ2yj7iy8xaRGWBGudDjZBb2p4kcj95musonaF2f/IFNkq4iX3AONgB7FNhYA==}
 
   '@fern-api/dynamic-ir-sdk@53.24.0':
     resolution: {integrity: sha512-4XvzvSsh7lNZz5oYN0LH+FRpFGxg9TjfdipSJMpgHvPShe85m/tcfbOzbS0DHBpQGlKb/gHQtQRPAoBR1wdDAw==}
@@ -10248,9 +10248,6 @@ packages:
   es-to-primitive@1.2.1:
     resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
     engines: {node: '>= 0.4'}
-
-  es-toolkit@1.26.0:
-    resolution: {integrity: sha512-gg6ZaI4eTwzkQGkdEG+t4b4VH2mTxodBQ2KvyTKAQFIag3Vvxoq3XZ1ie4ijIQmVxiipL2+dZLDMkh1VIvAFyg==}
 
   es-toolkit@1.30.1:
     resolution: {integrity: sha512-ZXflqanzH8BpHkDhFa10bBf6ONDCe84EPUm7SSICGzuuROSluT2ynTPtwn9PcRelMtorCRozSknI/U0MNYp0Uw==}
@@ -15236,11 +15233,11 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.13(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
+  '@fern-api/docs-parsers@0.0.14(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@4.6.4)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
-      es-toolkit: 1.26.0
+      es-toolkit: 1.30.1
       openapi-types: 12.1.3
       ts-essentials: 10.0.1(typescript@4.6.4)
       uuid: 9.0.1
@@ -17844,8 +17841,6 @@ snapshots:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
-
-  es-toolkit@1.26.0: {}
 
   es-toolkit@1.30.1: {}
 
