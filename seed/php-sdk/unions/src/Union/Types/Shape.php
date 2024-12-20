@@ -42,7 +42,7 @@ class Shape extends DiscriminatedUnion
     ): Shape {
         return new Shape([
             'type' => 'circle',
-            'circle' => $circle
+            'value' => $circle
         ]);
     }
 
@@ -51,7 +51,7 @@ class Shape extends DiscriminatedUnion
     ): Shape {
         return new Shape([
             'type' => 'square',
-            'square' => $square
+            'value' => $square
         ]);
     }
 
@@ -59,7 +59,7 @@ class Shape extends DiscriminatedUnion
         mixed $_unknown
     ): Shape {
         return new Shape([
-            '_unknown' => $_unknown
+            'value' => $_unknown
         ]);
     }
 

@@ -40,7 +40,7 @@ class UnionWithPrimitive extends DiscriminatedUnion
     ): UnionWithPrimitive {
         return new UnionWithPrimitive([
             'type' => 'integer',
-            'integer' => $integer
+            'value' => $integer
         ]);
     }
 
@@ -49,7 +49,7 @@ class UnionWithPrimitive extends DiscriminatedUnion
     ): UnionWithPrimitive {
         return new UnionWithPrimitive([
             'type' => 'string',
-            'string' => $string
+            'value' => $string
         ]);
     }
 
@@ -57,7 +57,7 @@ class UnionWithPrimitive extends DiscriminatedUnion
         mixed $_unknown
     ): UnionWithPrimitive {
         return new UnionWithPrimitive([
-            '_unknown' => $_unknown
+            'value' => $_unknown
         ]);
     }
 

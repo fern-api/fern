@@ -48,7 +48,7 @@ class UnionWithLiteral extends DiscriminatedUnion
         return new UnionWithLiteral([
             'base' => 'base',
             'type' => 'fern',
-            'fern' => 'fern'
+            'value' => 'fern'
         ]);
     }
 
@@ -57,7 +57,7 @@ class UnionWithLiteral extends DiscriminatedUnion
     ): UnionWithLiteral {
         return new UnionWithLiteral([
             'base' => 'base',
-            '_unknown' => $_unknown
+            'value' => $_unknown
         ]);
     }
 

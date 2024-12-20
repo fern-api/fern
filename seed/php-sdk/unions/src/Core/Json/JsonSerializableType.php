@@ -193,10 +193,10 @@ abstract class JsonSerializableType implements \JsonSerializable
                         );
                     }
 
-                    $propertyName = 'value';
+                    $propertyName = DiscriminatedUnion::VALUE_KEY;
                     $existingTypes = $discriminantAttr->getArguments()[0];
                     if (is_string($value) && array_key_exists($value, $existingTypes)) {
-                        $args['type'] = $value;
+                        $args[DiscriminatedUnion::TYPE_KEY] = $value;
                         $discriminatedType = $existingTypes[$value];
 
                         if (is_string($value) && array_key_exists($value, $data)) {
@@ -215,7 +215,7 @@ abstract class JsonSerializableType implements \JsonSerializable
                             $value = JsonDeserializer::deserializeObject($data, $discriminatedType);
                         }
                     } else {
-                        $args['type'] = '_unknown';
+                        $args[DiscriminatedUnion::TYPE_KEY] = '_unknown';
                     }
                 }
 
