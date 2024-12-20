@@ -5,10 +5,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_a/aa:B": {
@@ -16,10 +13,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_a/aa:SubTestType": {
@@ -42,10 +36,7 @@
               "value": "type_a/aa:B"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_b:TestType": {
@@ -68,10 +59,7 @@
               "value": "type_a/aa:B"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_tasktest:Task": {
@@ -89,10 +77,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
