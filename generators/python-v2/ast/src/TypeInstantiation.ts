@@ -6,6 +6,12 @@ import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
+interface StrFormatConfig {
+    multiline?: boolean;
+    startOnNewLine?: boolean;
+    endWithNewLine?: boolean;
+}
+
 interface Int {
     type: "int";
     value: number;
@@ -24,11 +30,7 @@ interface Bool {
 interface Str {
     type: "str";
     value: string;
-    config?: {
-        multiline?: boolean;
-        startOnNewLine?: boolean;
-        endWithNewLine?: boolean;
-    };
+    config?: StrFormatConfig;
 }
 
 interface Bytes {
@@ -89,7 +91,7 @@ export class TypeInstantiation extends AstNode {
 
     public static str(
         value: string,
-        config: { multiline?: boolean; startOnNewLine?: boolean; endWithNewLine?: boolean } = {
+        config: StrFormatConfig = {
             multiline: false,
             startOnNewLine: false,
             endWithNewLine: false
@@ -233,9 +235,7 @@ export class TypeInstantiation extends AstNode {
     }: {
         writer: Writer;
         value: string;
-        startOnNewLine?: boolean;
-        endWithNewLine?: boolean;
-    }): void {
+    } & Pick<StrFormatConfig, "startOnNewLine" | "endWithNewLine">): void {
         writer.write('"""');
         const lines = value.split("\n");
 
