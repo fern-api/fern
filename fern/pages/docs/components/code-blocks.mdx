@@ -55,8 +55,8 @@ You can add a title to your code snippet by adding a title after the language id
 
 ## Line highlighting
 
-You can highlight specific lines in your code snippet by adding a comment `[!code highlight]` or by 
-placing a numeric range inside `{}` after the language identifier.
+You can highlight specific lines in your code snippet by placing a numeric range inside `{}` 
+after the language identifier.
 
 <Tabs>
     <Tab title="Example">
@@ -68,18 +68,7 @@ placing a numeric range inside `{}` after the language identifier.
         console.log("Line 5");
         ```
     </Tab>
-    <Tab title = "Markdown (Using Comments)">
-        ````markdown
-        ```javascript
-        console.log("Line 1");
-        console.log("Line 2"); // [!code highlight]
-        console.log("Line 3"); // [!code highlight]
-        console.log("Line 4"); // [!code highlight]
-        console.log("Line 5");
-        ```
-        ````
-    </Tab>
-    <Tab title = "Markdown (Using Attribute)">
+    <Tab title = "Markdown">
         ````markdown
         ```javascript {2-4}
         console.log("Line 1");
