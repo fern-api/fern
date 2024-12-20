@@ -12130,7 +12130,14 @@ service:
                     "contract_id": "37nex2x",
                   },
                   "request": {
-                    "data": {},
+                    "data": {
+                      "amount": 100,
+                      "currency_code": "USD",
+                      "effective_date": "1999-12-31",
+                      "first_payment_date": "1999-12-31",
+                      "job_title_name": "3D Designer",
+                      "seniority_id": 1,
+                    },
                   },
                   "response": {
                     "body": {
@@ -12203,15 +12210,21 @@ service:
                         "currency_code": "USD",
                         "cycle_end": 25,
                         "cycle_end_type": "DAY_OF_WEEK",
+                        "first_payment": 500,
                         "frequency": "weekly",
+                        "notice_period": 15,
+                        "pay_before_weekends": true,
                         "payment_due_days": 5,
                         "payment_due_type": "REGULAR",
                         "scale": "hourly",
                       },
+                      "country_code": "US",
                       "job_title": {},
                       "meta": {
                         "documents_required": true,
                       },
+                      "notice_period": 15,
+                      "start_date": "1999-12-31",
                       "title": "title",
                       "type": "pay_as_you_go_time_based",
                     },
@@ -12371,15 +12384,21 @@ service:
                         "currency_code": "USD",
                         "cycle_end": 25,
                         "cycle_end_type": "DAY_OF_WEEK",
+                        "first_payment": 500,
                         "frequency": "weekly",
+                        "notice_period": 15,
+                        "pay_before_weekends": true,
                         "payment_due_days": 5,
                         "payment_due_type": "REGULAR",
                         "scale": "hourly",
                       },
+                      "country_code": "US",
                       "job_title": {},
                       "meta": {
                         "documents_required": true,
                       },
+                      "notice_period": 15,
+                      "start_date": "1999-12-31",
                       "title": "title",
                       "type": "ongoing_time_based",
                     },
@@ -12535,17 +12554,24 @@ service:
                         },
                       },
                       "compensation_details": {
+                        "amount": 100,
                         "currency_code": "USD",
                         "cycle_end": 25,
                         "cycle_end_type": "DAY_OF_WEEK",
+                        "first_payment": 500,
                         "frequency": "weekly",
+                        "notice_period": 15,
+                        "pay_before_weekends": true,
                         "payment_due_days": 5,
                         "payment_due_type": "REGULAR",
                       },
+                      "country_code": "US",
                       "job_title": {},
                       "meta": {
                         "documents_required": true,
                       },
+                      "notice_period": 15,
+                      "start_date": "1999-12-31",
                       "title": "title",
                       "type": "payg_milestones",
                     },
@@ -12701,17 +12727,24 @@ service:
                         },
                       },
                       "compensation_details": {
+                        "amount": 100,
                         "currency_code": "USD",
                         "cycle_end": 25,
                         "cycle_end_type": "DAY_OF_WEEK",
+                        "first_payment": 500,
                         "frequency": "weekly",
+                        "notice_period": 15,
+                        "pay_before_weekends": true,
                         "payment_due_days": 5,
                         "payment_due_type": "REGULAR",
                       },
+                      "country_code": "US",
                       "job_title": {},
                       "meta": {
                         "documents_required": true,
                       },
+                      "notice_period": 15,
+                      "start_date": "1999-12-31",
                       "title": "title",
                       "type": "payg_tasks",
                     },
@@ -12871,15 +12904,21 @@ service:
                         "currency_code": "USD",
                         "cycle_end": 25,
                         "cycle_end_type": "DAY_OF_WEEK",
+                        "first_payment": 500,
                         "frequency": "weekly",
+                        "notice_period": 15,
+                        "pay_before_weekends": true,
                         "payment_due_days": 5,
                         "payment_due_type": "REGULAR",
                         "scale": "hourly",
                       },
+                      "country_code": "US",
                       "job_title": {},
                       "meta": {
                         "documents_required": true,
                       },
+                      "notice_period": 15,
+                      "start_date": "1999-12-31",
                       "title": "title",
                       "type": "pay_as_you_go_time_based",
                     },
@@ -13213,12 +13252,15 @@ service:
         - request:
             data:
               title: title
+              country_code: US
+              start_date: '1999-12-31'
               client:
                 legal_entity:
                   id: 1.1
                 team:
                   id: 1.1
               job_title: {}
+              notice_period: 15
               meta:
                 documents_required: true
               type: pay_as_you_go_time_based
@@ -13231,6 +13273,9 @@ service:
                 cycle_end_type: DAY_OF_WEEK
                 payment_due_type: REGULAR
                 payment_due_days: 5
+                pay_before_weekends: true
+                first_payment: 500
+                notice_period: 15
           response:
             body:
               data:
@@ -13340,22 +13385,29 @@ service:
         - request:
             data:
               title: title
+              country_code: US
+              start_date: '1999-12-31'
               client:
                 legal_entity:
                   id: 1.1
                 team:
                   id: 1.1
               job_title: {}
+              notice_period: 15
               meta:
                 documents_required: true
               type: payg_tasks
               compensation_details:
+                amount: 100
                 currency_code: USD
                 frequency: weekly
                 cycle_end: 25
                 cycle_end_type: DAY_OF_WEEK
                 payment_due_type: REGULAR
                 payment_due_days: 5
+                pay_before_weekends: true
+                first_payment: 500
+                notice_period: 15
           response:
             body:
               data:
@@ -13465,22 +13517,29 @@ service:
         - request:
             data:
               title: title
+              country_code: US
+              start_date: '1999-12-31'
               client:
                 legal_entity:
                   id: 1.1
                 team:
                   id: 1.1
               job_title: {}
+              notice_period: 15
               meta:
                 documents_required: true
               type: payg_milestones
               compensation_details:
+                amount: 100
                 currency_code: USD
                 frequency: weekly
                 cycle_end: 25
                 cycle_end_type: DAY_OF_WEEK
                 payment_due_type: REGULAR
                 payment_due_days: 5
+                pay_before_weekends: true
+                first_payment: 500
+                notice_period: 15
           response:
             body:
               data:
@@ -13590,12 +13649,15 @@ service:
         - request:
             data:
               title: title
+              country_code: US
+              start_date: '1999-12-31'
               client:
                 legal_entity:
                   id: 1.1
                 team:
                   id: 1.1
               job_title: {}
+              notice_period: 15
               meta:
                 documents_required: true
               type: ongoing_time_based
@@ -13608,6 +13670,9 @@ service:
                 cycle_end_type: DAY_OF_WEEK
                 payment_due_type: REGULAR
                 payment_due_days: 5
+                pay_before_weekends: true
+                first_payment: 500
+                notice_period: 15
           response:
             body:
               data:
@@ -13718,12 +13783,15 @@ service:
         - request:
             data:
               title: title
+              country_code: US
+              start_date: '1999-12-31'
               client:
                 legal_entity:
                   id: 1.1
                 team:
                   id: 1.1
               job_title: {}
+              notice_period: 15
               meta:
                 documents_required: true
               type: pay_as_you_go_time_based
@@ -13736,6 +13804,9 @@ service:
                 cycle_end_type: DAY_OF_WEEK
                 payment_due_type: REGULAR
                 payment_due_days: 5
+                pay_before_weekends: true
+                first_payment: 500
+                notice_period: 15
           response:
             body:
               data:
@@ -13886,7 +13957,13 @@ service:
         - path-parameters:
             contract_id: 37nex2x
           request:
-            data: {}
+            data:
+              amount: 100
+              currency_code: USD
+              effective_date: '1999-12-31'
+              first_payment_date: '1999-12-31'
+              job_title_name: 3D Designer
+              seniority_id: 1
           response:
             body:
               data:
@@ -14776,7 +14853,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 {
                   "request": {
                     "data": {
-                      "compensation_details": {},
+                      "compensation_details": {
+                        "amount": 2500,
+                        "currency_code": "USD",
+                      },
                       "country_code": "US",
                       "start_date": "1999-12-31",
                       "type": "ongoing_time_based",
@@ -15560,7 +15640,9 @@ service:
               type: ongoing_time_based
               country_code: US
               start_date: '1999-12-31'
-              compensation_details: {}
+              compensation_details:
+                amount: 2500
+                currency_code: USD
           response:
             body:
               data:
@@ -15648,7 +15730,15 @@ types:
                     "data": {
                       "client": {},
                       "compensation_details": {},
-                      "employment": {},
+                      "employee": {
+                        "email": "employee@email.com",
+                        "first_name": "Jane",
+                        "last_name": "Doe",
+                        "nationality": "US",
+                      },
+                      "employment": {
+                        "country": "US",
+                      },
                       "seniority": {},
                     },
                   },
@@ -15925,7 +16015,13 @@ service:
       examples:
         - request:
             data:
-              employment: {}
+              employee:
+                first_name: Jane
+                last_name: Doe
+                email: employee@email.com
+                nationality: US
+              employment:
+                country: US
               seniority: {}
               client: {}
               compensation_details: {}
@@ -16021,6 +16117,7 @@ docs: Employee of Record (EOR).
                       "first_name": "John",
                       "last_name": "Doe",
                       "nationality": "CA",
+                      "state": "AC",
                       "work_email": "john.doe@domain.com",
                     },
                     "job_information": {
@@ -16129,6 +16226,7 @@ service:
               work_email: john.doe@domain.com
               nationality: CA
               country: BR
+              state: AC
             team_information:
               team_id: 1.1
               legal_entity_id: 1.1
@@ -16215,6 +16313,7 @@ docs: API end-points related to HRIS data.
                       "amount": 2500,
                       "contract_id": "contract_id",
                       "date_submitted": "1999-12-31",
+                      "description": "Bonus for being awesome.",
                       "type": "bonus",
                     },
                   },
@@ -17070,6 +17169,7 @@ service:
               date_submitted: '1999-12-31'
               type: bonus
               amount: 2500
+              description: Bonus for being awesome.
           response:
             body:
               data:
@@ -19133,6 +19233,7 @@ docs: Helper end-points for additional information about your organizations
                     "data": {
                       "amount": "123.45",
                       "date_submitted": "1999-12-31",
+                      "description": "Make the button pop.",
                     },
                   },
                   "response": {
@@ -19535,6 +19636,7 @@ service:
             data:
               amount: '123.45'
               date_submitted: '1999-12-31'
+              description: Make the button pop.
           response:
             body:
               data:
@@ -19724,6 +19826,12 @@ docs: End-points to manage tasks for a given contract
                   },
                   "request": {
                     "data": {
+                      "end_date": "2022-09-05",
+                      "is_end_date_half_day": false,
+                      "is_start_date_half_day": false,
+                      "other_timeoff_name": "Birthday",
+                      "reason": "Holiday",
+                      "start_date": "2022-09-03",
                       "type": "VACATION",
                       "with_multiple_dates": true,
                     },
@@ -19907,6 +20015,12 @@ docs: End-points to manage tasks for a given contract
                   },
                   "request": {
                     "data": {
+                      "end_date": "2022-09-05",
+                      "is_end_date_half_day": false,
+                      "is_start_date_half_day": false,
+                      "other_timeoff_name": "Birthday",
+                      "reason": "Holiday",
+                      "start_date": "2022-09-03",
                       "type": "VACATION",
                       "with_multiple_dates": true,
                     },
@@ -20307,6 +20421,7 @@ docs: End-points to manage tasks for a given contract
                   },
                   "request": {
                     "data": {
+                      "denial_reason": "Not allowed for this day.",
                       "is_approved": true,
                     },
                   },
@@ -20464,7 +20579,13 @@ service:
           request:
             data:
               type: VACATION
+              start_date: '2022-09-03'
+              end_date: '2022-09-05'
               with_multiple_dates: true
+              reason: Holiday
+              is_start_date_half_day: false
+              is_end_date_half_day: false
+              other_timeoff_name: Birthday
           response:
             body:
               data:
@@ -20573,7 +20694,13 @@ service:
           request:
             data:
               type: VACATION
+              start_date: '2022-09-03'
+              end_date: '2022-09-05'
               with_multiple_dates: true
+              reason: Holiday
+              is_start_date_half_day: false
+              is_end_date_half_day: false
+              other_timeoff_name: Birthday
           response:
             body:
               data:
@@ -20827,6 +20954,7 @@ service:
           request:
             data:
               is_approved: true
+              denial_reason: Not allowed for this day.
           response:
             body:
               data:
@@ -22052,9 +22180,11 @@ docs: >-
                     "id": "id",
                   },
                   "request": {
+                    "description": "My first webhook",
                     "events": [
                       "contract.created",
                     ],
+                    "name": "Demo webhook",
                     "status": "enabled",
                     "url": "https://mywebhook.com/listening",
                   },
@@ -22204,9 +22334,11 @@ docs: >-
                 {
                   "request": {
                     "api_version": "v1",
+                    "description": "I like it very much.",
                     "events": [
                       "contract.created",
                     ],
+                    "name": "My first webhook.",
                     "status": "enabled",
                     "url": "https://mywebhook.com",
                   },
@@ -22453,6 +22585,8 @@ service:
         - root.InternalServerError
       examples:
         - request:
+            name: My first webhook.
+            description: I like it very much.
             status: enabled
             url: https://mywebhook.com
             api_version: v1
@@ -22587,6 +22721,8 @@ service:
         - path-parameters:
             id: id
           request:
+            name: Demo webhook
+            description: My first webhook
             status: enabled
             url: https://mywebhook.com/listening
             events:

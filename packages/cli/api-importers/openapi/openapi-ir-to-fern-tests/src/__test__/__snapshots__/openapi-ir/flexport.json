@@ -749,9 +749,30 @@
                 },
                 "type": "primitive"
               },
+              "new_wants_flexport_freight": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "new_wants_bco": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
               "new_origin_address_ref": {
                 "value": {
                   "value": "warehouse_cn",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "new_origin_port_us_cbp_port_code": {
+                "value": {
+                  "value": "57078",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -763,12 +784,64 @@
                 },
                 "type": "primitive"
               },
+              "new_destination_address_ref": {
+                "value": {
+                  "value": "id-123456",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "new_destination_port_us_cbp_port_code": {
+                "value": {
+                  "value": "57078",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "new_destination_port_loc_code": {
+                "value": {
+                  "value": "CNYTN",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "new_cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
                   "type": "string"
                 },
                 "type": "primitive"
+              },
+              "new_product_descriptions": {
+                "value": [
+                  {
+                    "properties": {
+                      "description": {
+                        "value": {
+                          "value": "Wristwatches",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "description_for_export_customs": {
+                        "value": {
+                          "value": "手表",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "hs_code": {
+                        "value": {
+                          "value": "9101.01",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
               },
               "new_cargo": {
                 "properties": {
@@ -6450,6 +6523,139 @@
                       "type": "boolean"
                     },
                     "type": "primitive"
+                  },
+                  "origin_port_us_cbp_port_code": {
+                    "value": {
+                      "value": "57078",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "origin_port_loc_code": {
+                    "value": {
+                      "value": "CNYTN",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "destination_port_us_cbp_port_code": {
+                    "value": {
+                      "value": "2704",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "destination_port_loc_code": {
+                    "value": {
+                      "value": "USLAX",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "air_booking": {
+                "properties": {
+                  "incoterm": {
+                    "value": "EXW",
+                    "type": "enum"
+                  },
+                  "product_descriptions": {
+                    "value": [
+                      {
+                        "properties": {
+                          "description": {
+                            "value": {
+                              "value": "Wristwatches",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "description_for_export_customs": {
+                            "value": {
+                              "value": "手表",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "description_for_export_customs_locale": {
+                            "value": {
+                              "value": "zh_CN",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "hs_code": {
+                            "value": {
+                              "value": "9101.01",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "wants_pickup_service": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "wants_delivery_service": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "origin_port_loc_code": {
+                    "value": {
+                      "value": "HKHKG",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "origin_port_iata_code": {
+                    "value": {
+                      "value": "HKG",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "origin_port_icao_code": {
+                    "value": {
+                      "value": "VHHH",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "trucking_booking": {
+                "properties": {
+                  "is_ltl": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "payment_terms": {
+                    "value": "collect",
+                    "type": "enum"
+                  },
+                  "description_of_products": {
+                    "value": {
+                      "value": "watches",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"
@@ -6485,6 +6691,27 @@
               "wants_export_customs_service": {
                 "value": {
                   "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "wants_flexport_freight": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "wants_import_customs_service": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "wants_bco": {
+                "value": {
+                  "value": false,
                   "type": "boolean"
                 },
                 "type": "primitive"
@@ -6710,6 +6937,20 @@
                   }
                 ],
                 "type": "array"
+              },
+              "eccn_codes": {
+                "value": {
+                  "value": "3A001, 5A002",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "flow_direct": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
               }
             },
             "type": "object"
@@ -10258,6 +10499,13 @@
                 },
                 "type": "object"
               },
+              "teus": {
+                "value": {
+                  "value": "2",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "origin_coordinates": {
                 "properties": {
                   "latitude": {
@@ -11848,6 +12096,20 @@
           "headers": [],
           "request": {
             "properties": {
+              "shipment_id": {
+                "value": {
+                  "value": 79683,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "shipment_ref": {
+                "value": {
+                  "value": "PO-123",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "invoice_number": {
                 "value": {
                   "value": "INVOICE-04-05-2020",
@@ -11862,14 +12124,64 @@
                 },
                 "type": "primitive"
               },
+              "is_related_parties": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
               "proration_amount": {
-                "properties": {},
+                "properties": {
+                  "amount": {
+                    "value": {
+                      "value": "12.34",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "currency_code": {
+                    "value": {
+                      "value": "USD",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
                 "type": "object"
               },
               "line_items": {
                 "value": [
                   {
                     "properties": {
+                      "document_line_number": {
+                        "value": {
+                          "value": 4,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "purchase_order_number": {
+                        "value": {
+                          "value": "9876-ABC",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "container_number": {
+                        "value": {
+                          "value": "522932-1",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country_of_origin": {
+                        "value": {
+                          "value": "CN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "product_sku": {
                         "value": {
                           "value": "PRODUCT-123",
@@ -11894,11 +12206,41 @@
                         "type": "object"
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "amount": {
+                            "value": {
+                              "value": "12.34",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "currency_code": {
+                            "value": {
+                              "value": "USD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
                         "type": "object"
                       },
                       "price_per_unit": {
-                        "properties": {},
+                        "properties": {
+                          "amount": {
+                            "value": {
+                              "value": "12.34",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "currency_code": {
+                            "value": {
+                              "value": "USD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
                         "type": "object"
                       }
                     },
@@ -12935,7 +13277,175 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "invoice_number": {
+                "value": {
+                  "value": "INVOICE-04-05-2020",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "currency_code": {
+                "value": {
+                  "value": "USD",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "is_related_parties": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "line_items": {
+                "value": [
+                  {
+                    "properties": {
+                      "document_line_number": {
+                        "value": {
+                          "value": 4,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "purchase_order_number": {
+                        "value": {
+                          "value": "9876-ABC",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "container_number": {
+                        "value": {
+                          "value": "522932-1",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country_of_origin": {
+                        "value": {
+                          "value": "CN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "product_sku": {
+                        "value": {
+                          "value": "PRODUCT-123",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "quantity": {
+                        "properties": {
+                          "value": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "unit": {
+                            "value": "pcs",
+                            "type": "enum"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "value": {
+                        "properties": {
+                          "amount": {
+                            "value": {
+                              "value": "12.34",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "currency_code": {
+                            "value": {
+                              "value": "USD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "price_per_unit": {
+                        "properties": {
+                          "amount": {
+                            "value": {
+                              "value": "12.34",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "currency_code": {
+                            "value": {
+                              "value": "USD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "metadata": {
+                "value": [
+                  {
+                    "key": {
+                      "value": "purchase_order",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "12345",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "type": "unknown"
+                    }
+                  },
+                  {
+                    "key": {
+                      "value": "sku",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "abc123",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "type": "unknown"
+                    }
+                  }
+                ],
+                "type": "map"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -16881,6 +17391,13 @@
               "document": {
                 "value": {
                   "value": "SGVsbG8sIFdvcmxkIQ==",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "user_email": {
+                "value": {
+                  "value": "johndoe@flexport.com",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -24548,6 +25065,13 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              },
+              "ref": {
+                "value": {
+                  "value": "zoomit-ref",
+                  "type": "string"
+                },
+                "type": "primitive"
               }
             },
             "type": "object"
@@ -25779,7 +26303,22 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Updated Zoomit",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "ref": {
+                "value": {
+                  "value": "zoomit_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -27263,9 +27802,104 @@
                 },
                 "type": "primitive"
               },
+              "company_id": {
+                "value": {
+                  "value": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "company_ref": {
+                "value": {
+                  "value": "Zoomit",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "mailing_address": {
-                "properties": {},
+                "properties": {
+                  "street_address": {
+                    "value": {
+                      "value": "1641 Settlers Lane",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "street_address2": {
+                    "value": {
+                      "value": "STE 2918",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "city": {
+                    "value": {
+                      "value": "Albany",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "MN",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "zip": {
+                    "value": {
+                      "value": "56307",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "unlocode": {
+                    "value": {
+                      "value": "USAL2",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
                 "type": "object"
+              },
+              "ref": {
+                "value": {
+                  "value": "my-zoomit-ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "vat_numbers": {
+                "value": [
+                  {
+                    "properties": {
+                      "country_code": {
+                        "value": {
+                          "value": "GB",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "number": {
+                        "value": {
+                          "value": "GB 123456789",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
               }
             },
             "type": "object"
@@ -28362,7 +28996,46 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Zoomit V2",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "ref": {
+                "value": {
+                  "value": "zoomit-us",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "vat_numbers": {
+                "value": [
+                  {
+                    "properties": {
+                      "country_code": {
+                        "value": {
+                          "value": "GB",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "number": {
+                        "value": {
+                          "value": "GB 123456789",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -29651,6 +30324,13 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              },
+              "company_id": {
+                "value": {
+                  "value": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string"
+                },
+                "type": "primitive"
               }
             },
             "type": "object"
@@ -30639,7 +31319,29 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "John Smith",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "john_new_email@example.com",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "phone_number": {
+                "value": {
+                  "value": "861-555-7777",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -32041,8 +32743,98 @@
                 "type": "primitive"
               },
               "address": {
-                "properties": {},
+                "properties": {
+                  "street_address": {
+                    "value": {
+                      "value": "1641 Settlers Lane",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "street_address2": {
+                    "value": {
+                      "value": "STE 2918",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "city": {
+                    "value": {
+                      "value": "Albany",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "MN",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "zip": {
+                    "value": {
+                      "value": "56307",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "unlocode": {
+                    "value": {
+                      "value": "USAL2",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
                 "type": "object"
+              },
+              "ref": {
+                "value": {
+                  "value": "zoomit-management-co",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "metadata": {
+                "value": [
+                  {
+                    "key": {
+                      "value": "color",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "blue",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          {
+                            "value": {
+                              "value": "green",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "type": "unknown"
+                    }
+                  }
+                ],
+                "type": "map"
               }
             },
             "type": "object"
@@ -33275,7 +34067,55 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Zoomit V2",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "ref": {
+                "value": {
+                  "value": "zoomit-management-co",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "metadata": {
+                "value": [
+                  {
+                    "key": {
+                      "value": "color",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "blue",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          {
+                            "value": {
+                              "value": "green",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "type": "unknown"
+                    }
+                  }
+                ],
+                "type": "map"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -39345,6 +40185,13 @@
                 },
                 "type": "primitive"
               },
+              "description": {
+                "value": {
+                  "value": "The best 12V AC Adapter on the market",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "product_category": {
                 "value": {
                   "value": "Cosmetics",
@@ -39358,6 +40205,97 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              },
+              "client_verified": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "product_properties": {
+                "value": [
+                  {
+                    "properties": {
+                      "type": {
+                        "value": {
+                          "value": "color",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "blue",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "classifications": {
+                "value": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "0301.00",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "region": {
+                        "value": {
+                          "value": "US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "suppliers": {
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": 12345,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "ref": {
+                        "value": {
+                          "value": "FACTORY-123",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country_of_origin": {
+                        "value": {
+                          "value": "CN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
               }
             },
             "type": "object"
@@ -40510,7 +41448,134 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "AC Adapter 12V",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "sku": {
+                "value": {
+                  "value": "WDVCDFD-RM00472",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "description": {
+                "value": {
+                  "value": "The best 12V AC Adapter on the market",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "product_category": {
+                "value": {
+                  "value": "Cosmetics",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "country_of_origin": {
+                "value": {
+                  "value": "China",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "client_verified": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "product_properties": {
+                "value": [
+                  {
+                    "properties": {
+                      "type": {
+                        "value": {
+                          "value": "color",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "blue",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "classifications": {
+                "value": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "0301.00",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "region": {
+                        "value": {
+                          "value": "US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "suppliers": {
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": 12345,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "ref": {
+                        "value": {
+                          "value": "FACTORY-123",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country_of_origin": {
+                        "value": {
+                          "value": "CN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
             "type": "object"
           },
           "response": {
@@ -49150,11 +50215,95 @@
                         },
                         "type": "primitive"
                       },
+                      "line_item_number": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
                       "product": {
                         "properties": {
+                          "sku": {
+                            "value": {
+                              "value": "SKU-123",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
                           "name": {
                             "value": {
                               "value": "AC Adapter 12",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "product_category": {
+                            "value": {
+                              "value": "Cosmetics",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country_of_origin": {
+                            "value": {
+                              "value": "US",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "color": {
+                            "value": {
+                              "value": "red",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "dangerous": {
+                            "value": {
+                              "value": false,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "ean_ucc_13": {
+                            "value": {
+                              "value": "0123456789012",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "ean_ucc_8": {
+                            "value": {
+                              "value": "01234567",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "lot_number": {
+                            "value": {
+                              "value": "123-456",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "size": {
+                            "value": {
+                              "value": "M",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "style": {
+                            "value": {
+                              "value": "classical",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "upc": {
+                            "value": {
+                              "value": "012345678912",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -49162,10 +50311,146 @@
                         },
                         "type": "object"
                       },
+                      "origin_port": {
+                        "properties": {
+                          "code": {
+                            "value": {
+                              "value": "USFBN",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "code_type": {
+                            "value": "unlocode",
+                            "type": "enum"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "destination_port": {
+                        "properties": {
+                          "code": {
+                            "value": {
+                              "value": "USFBN",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "code_type": {
+                            "value": "unlocode",
+                            "type": "enum"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "must_arrive_date": {
+                        "value": {
+                          "value": "2019-09-30",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cargo_ready_date": {
+                        "value": {
+                          "value": "2019-06-30",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "origin_location_ref": {
+                        "value": {
+                          "value": "id-123456",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "destination_locations": {
+                        "value": [
+                          {
+                            "properties": {
+                              "location_ref": {
+                                "value": {
+                                  "value": "id-1234",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "units": {
+                                "value": {
+                                  "value": 1,
+                                  "type": "int"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        ],
+                        "type": "array"
+                      },
                       "units": {
                         "value": {
                           "value": 100,
                           "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "hs_codes": {
+                        "value": [
+                          {
+                            "properties": {
+                              "code": {
+                                "value": {
+                                  "value": "7608.20.00.00",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "country_code": {
+                                "value": {
+                                  "value": "CA",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "measurements": {
+                        "value": [
+                          {
+                            "properties": {
+                              "measure_type": {
+                                "value": "length",
+                                "type": "enum"
+                              },
+                              "unit_of_measure": {
+                                "value": {
+                                  "value": "EA",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "1.0",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "assigned_party_ref": {
+                        "value": {
+                          "value": "id-12321",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -58231,7 +59516,34 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "metadata": {
+                "value": [
+                  {
+                    "key": {
+                      "value": "purchase_order",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "12345",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "type": "unknown"
+                    }
+                  }
+                ],
+                "type": "map"
+              }
+            },
             "type": "object"
           },
           "response": {

@@ -334,6 +334,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "AC",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"
@@ -1223,8 +1230,49 @@
             "properties": {
               "data": {
                 "properties": {
+                  "employee": {
+                    "properties": {
+                      "first_name": {
+                        "value": {
+                          "value": "Jane",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "last_name": {
+                        "value": {
+                          "value": "Doe",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "email": {
+                        "value": {
+                          "value": "employee@email.com",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "nationality": {
+                        "value": {
+                          "value": "US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
                   "employment": {
-                    "properties": {},
+                    "properties": {
+                      "country": {
+                        "value": {
+                          "value": "US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
                     "type": "object"
                   },
                   "seniority": {
@@ -1721,6 +1769,20 @@
                     },
                     "type": "primitive"
                   },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "start_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "client": {
                     "properties": {
                       "legal_entity": {
@@ -1753,6 +1815,13 @@
                   "job_title": {
                     "properties": {},
                     "type": "object"
+                  },
+                  "notice_period": {
+                    "value": {
+                      "value": 15,
+                      "type": "double"
+                    },
+                    "type": "primitive"
                   },
                   "meta": {
                     "properties": {
@@ -1815,6 +1884,27 @@
                       "payment_due_days": {
                         "value": {
                           "value": 5,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "pay_before_weekends": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "first_payment": {
+                        "value": {
+                          "value": 500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "notice_period": {
+                        "value": {
+                          "value": 15,
                           "type": "double"
                         },
                         "type": "primitive"
@@ -2613,6 +2703,20 @@
                     },
                     "type": "primitive"
                   },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "start_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "client": {
                     "properties": {
                       "legal_entity": {
@@ -2646,6 +2750,13 @@
                     "properties": {},
                     "type": "object"
                   },
+                  "notice_period": {
+                    "value": {
+                      "value": 15,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
                   "meta": {
                     "properties": {
                       "documents_required": {
@@ -2667,6 +2778,13 @@
                   },
                   "compensation_details": {
                     "properties": {
+                      "amount": {
+                        "value": {
+                          "value": 100,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
                       "currency_code": {
                         "value": {
                           "value": "USD",
@@ -2696,6 +2814,27 @@
                       "payment_due_days": {
                         "value": {
                           "value": 5,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "pay_before_weekends": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "first_payment": {
+                        "value": {
+                          "value": 500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "notice_period": {
+                        "value": {
+                          "value": 15,
                           "type": "double"
                         },
                         "type": "primitive"
@@ -3494,6 +3633,20 @@
                     },
                     "type": "primitive"
                   },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "start_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "client": {
                     "properties": {
                       "legal_entity": {
@@ -3527,6 +3680,13 @@
                     "properties": {},
                     "type": "object"
                   },
+                  "notice_period": {
+                    "value": {
+                      "value": 15,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
                   "meta": {
                     "properties": {
                       "documents_required": {
@@ -3548,6 +3708,13 @@
                   },
                   "compensation_details": {
                     "properties": {
+                      "amount": {
+                        "value": {
+                          "value": 100,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
                       "currency_code": {
                         "value": {
                           "value": "USD",
@@ -3577,6 +3744,27 @@
                       "payment_due_days": {
                         "value": {
                           "value": 5,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "pay_before_weekends": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "first_payment": {
+                        "value": {
+                          "value": 500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "notice_period": {
+                        "value": {
+                          "value": 15,
                           "type": "double"
                         },
                         "type": "primitive"
@@ -4375,6 +4563,20 @@
                     },
                     "type": "primitive"
                   },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "start_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "client": {
                     "properties": {
                       "legal_entity": {
@@ -4407,6 +4609,13 @@
                   "job_title": {
                     "properties": {},
                     "type": "object"
+                  },
+                  "notice_period": {
+                    "value": {
+                      "value": 15,
+                      "type": "double"
+                    },
+                    "type": "primitive"
                   },
                   "meta": {
                     "properties": {
@@ -4469,6 +4678,27 @@
                       "payment_due_days": {
                         "value": {
                           "value": 5,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "pay_before_weekends": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "first_payment": {
+                        "value": {
+                          "value": 500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "notice_period": {
+                        "value": {
+                          "value": 15,
                           "type": "double"
                         },
                         "type": "primitive"
@@ -5884,6 +6114,20 @@
                     },
                     "type": "primitive"
                   },
+                  "country_code": {
+                    "value": {
+                      "value": "US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "start_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "client": {
                     "properties": {
                       "legal_entity": {
@@ -5916,6 +6160,13 @@
                   "job_title": {
                     "properties": {},
                     "type": "object"
+                  },
+                  "notice_period": {
+                    "value": {
+                      "value": 15,
+                      "type": "double"
+                    },
+                    "type": "primitive"
                   },
                   "meta": {
                     "properties": {
@@ -5978,6 +6229,27 @@
                       "payment_due_days": {
                         "value": {
                           "value": 5,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "pay_before_weekends": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "first_payment": {
+                        "value": {
+                          "value": 500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "notice_period": {
+                        "value": {
+                          "value": 15,
                           "type": "double"
                         },
                         "type": "primitive"
@@ -9095,6 +9367,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "description": {
+                    "value": {
+                      "value": "Make the button pop.",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"
@@ -10714,7 +10993,50 @@
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "amount": {
+                    "value": {
+                      "value": 100,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "currency_code": {
+                    "value": {
+                      "value": "USD",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "effective_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "first_payment_date": {
+                    "value": {
+                      "value": "1999-12-31",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "job_title_name": {
+                    "value": {
+                      "value": "3D Designer",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "seniority_id": {
+                    "value": {
+                      "value": 1,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  }
+                },
                 "type": "object"
               }
             },
@@ -17092,7 +17414,22 @@
                     "type": "primitive"
                   },
                   "compensation_details": {
-                    "properties": {},
+                    "properties": {
+                      "amount": {
+                        "value": {
+                          "value": 2500,
+                          "type": "double"
+                        },
+                        "type": "primitive"
+                      },
+                      "currency_code": {
+                        "value": {
+                          "value": "USD",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
                     "type": "object"
                   }
                 },
@@ -17890,10 +18227,52 @@
                     "value": "VACATION",
                     "type": "enum"
                   },
+                  "start_date": {
+                    "value": {
+                      "value": "2022-09-03",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "end_date": {
+                    "value": {
+                      "value": "2022-09-05",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "with_multiple_dates": {
                     "value": {
                       "value": true,
                       "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "Holiday",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "is_start_date_half_day": {
+                    "value": {
+                      "value": false,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "is_end_date_half_day": {
+                    "value": {
+                      "value": false,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "other_timeoff_name": {
+                    "value": {
+                      "value": "Birthday",
+                      "type": "string"
                     },
                     "type": "primitive"
                   }
@@ -18592,10 +18971,52 @@
                     "value": "VACATION",
                     "type": "enum"
                   },
+                  "start_date": {
+                    "value": {
+                      "value": "2022-09-03",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "end_date": {
+                    "value": {
+                      "value": "2022-09-05",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "with_multiple_dates": {
                     "value": {
                       "value": true,
                       "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "Holiday",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "is_start_date_half_day": {
+                    "value": {
+                      "value": false,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "is_end_date_half_day": {
+                    "value": {
+                      "value": false,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "other_timeoff_name": {
+                    "value": {
+                      "value": "Birthday",
+                      "type": "string"
                     },
                     "type": "primitive"
                   }
@@ -23688,6 +24109,13 @@
                     "value": {
                       "value": 2500,
                       "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "description": {
+                    "value": {
+                      "value": "Bonus for being awesome.",
+                      "type": "string"
                     },
                     "type": "primitive"
                   }
@@ -29089,6 +29517,13 @@
                       "type": "boolean"
                     },
                     "type": "primitive"
+                  },
+                  "denial_reason": {
+                    "value": {
+                      "value": "Not allowed for this day.",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"
@@ -31931,6 +32366,20 @@
           "headers": [],
           "request": {
             "properties": {
+              "name": {
+                "value": {
+                  "value": "My first webhook.",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "description": {
+                "value": {
+                  "value": "I like it very much.",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "status": {
                 "value": "enabled",
                 "type": "enum"
@@ -32907,6 +33356,20 @@
           "headers": [],
           "request": {
             "properties": {
+              "name": {
+                "value": {
+                  "value": "Demo webhook",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "description": {
+                "value": {
+                  "value": "My first webhook",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
               "status": {
                 "value": "enabled",
                 "type": "enum"

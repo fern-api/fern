@@ -123,6 +123,7 @@ export class ExampleTypeFactory {
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
                     (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
+                    this.context.logger.debug(`Skipping optional property because example is null and ignoreOptionals=${options.ignoreOptionals} or exceeds max depth (depth=${depth}, maxDepth=${options.maxDepth})`);
                     return undefined;
                 }
                 if (Object.is(example, null)) {
@@ -361,6 +362,7 @@ export class ExampleTypeFactory {
                 // use fullExample schema, with fallback to inlined example
                 const objectExample = getFullExampleAsObject(example ?? schema.example);
                 if (objectExample != null && Object.entries(objectExample).length > 0) {
+                    this.context.logger.error("Using example for map:", JSON.stringify(objectExample));
                     const kvs: KeyValuePair[] = [];
                     for (const [key, value] of Object.entries(objectExample)) {
                         const keyExample = this.buildExampleFromPrimitive({
@@ -390,6 +392,7 @@ export class ExampleTypeFactory {
                 // we special case this to not create a nested map, but rather have a cleaner "Any Object" example
                 // of: "object": {"key": "value"} as opposed to "object": {"object": {"key": "value"}}
                 if (schema.key.schema.type === "string" && schema.value.type === "unknown") {
+                    this.context.logger.error("Generating example for map of string to unknown");
                     return FullExample.map([
                         {
                             key: PrimitiveExample.string("key"),
@@ -397,6 +400,7 @@ export class ExampleTypeFactory {
                         }
                     ]);
                 }
+                this.context.logger.error("Generating example for map with key schema type " + schema.key.schema.type + " and value type " + schema.value.type);
                 const keyExample = this.buildExampleFromPrimitive({
                     schema: schema.key.schema,
                     example: undefined,
@@ -421,6 +425,7 @@ export class ExampleTypeFactory {
                     },
                     skipReadonly
                 });
+                this.context.logger.error("Generated value example:", JSON.stringify(valueExample));
                 if (valueExample != null) {
                     return FullExample.map([
                         {
@@ -429,6 +434,8 @@ export class ExampleTypeFactory {
                         }
                     ]);
                 }
+                this.context.logger.error("Returning map with no entries");
+
                 return FullExample.map([]);
             }
             case "object": {
@@ -449,6 +456,9 @@ export class ExampleTypeFactory {
                     }
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
+
+                    this.context.logger.debug(`Processing property ${property}`);
+
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,

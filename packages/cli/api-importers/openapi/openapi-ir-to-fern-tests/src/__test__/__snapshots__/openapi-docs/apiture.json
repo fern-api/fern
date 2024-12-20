@@ -16008,15 +16008,18 @@ Note: This operation requires an identity challenge if the financial institution
                     "amount": "275.00",
                     "memo": "Cover check for car repair",
                     "schedule": {
+                      "amountLimit": "3456.78",
                       "frequency": "once",
                       "scheduledOn": "2022-06-28",
                     },
                     "sourceAccount": {
                       "id": "bd9b7af2-6f9b",
+                      "label": "Checking *1008",
                       "location": "internal",
                     },
                     "targetAccount": {
                       "id": "88b1ca3e-d0f3",
+                      "label": "Checking *1008",
                       "location": "internal",
                     },
                   },
@@ -16353,11 +16356,19 @@ Note: This operation requires an identity challenge if the financial institution
                   "request": {
                     "amount": "275.00",
                     "schedule": {
+                      "amountLimit": "3456.78",
                       "frequency": "once",
                       "scheduledOn": "2022-06-28",
                     },
+                    "sourceAccount": {
+                      "id": "e821ce54-c715",
+                      "label": "Premiere Checking *6789",
+                      "location": "internal",
+                      "type": "checking",
+                    },
                     "targetAccount": {
                       "id": "88b1ca3e-d0f3",
+                      "label": "Checking *1008",
                     },
                   },
                   "response": {
@@ -16648,14 +16659,17 @@ service:
             amount: '275.00'
             sourceAccount:
               id: bd9b7af2-6f9b
+              label: Checking *1008
               location: internal
             targetAccount:
               id: 88b1ca3e-d0f3
+              label: Checking *1008
               location: internal
             memo: Cover check for car repair
             schedule:
               scheduledOn: '2022-06-28'
               frequency: once
+              amountLimit: '3456.78'
           response:
             body:
               createdAt: '2022-04-18T07:21:35Z'
@@ -16817,11 +16831,18 @@ service:
             transferId: transferId
           request:
             amount: '275.00'
+            sourceAccount:
+              id: e821ce54-c715
+              label: Premiere Checking *6789
+              type: checking
+              location: internal
             targetAccount:
               id: 88b1ca3e-d0f3
+              label: Checking *1008
             schedule:
               scheduledOn: '2022-06-28'
               frequency: once
+              amountLimit: '3456.78'
           response:
             body:
               createdAt: '2022-04-18T07:21:35Z'

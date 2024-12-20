@@ -18,4 +18,6 @@ export interface OpenApiSettingsSchema {
     "inline-path-parameters"?: boolean;
     /** Filter to apply to the OpenAPI specification. */
     filter?: FernDefinition.OpenApiFilterSchema;
+    /** Fine-tune your example generation */
+    "example-generation"?: FernDefinition.OpenApiExampleGenerationSchema;
 }

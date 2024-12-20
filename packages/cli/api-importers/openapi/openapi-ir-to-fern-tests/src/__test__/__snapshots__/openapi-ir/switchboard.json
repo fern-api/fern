@@ -3852,6 +3852,13 @@
           "headers": [],
           "request": {
             "properties": {
+              "followPaginationLinks": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
               "prompt": {
                 "value": {
                   "value": "What is the main idea of this page?",
@@ -4461,7 +4468,15 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "What is the main idea of this page?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
             "type": "object"
           },
           "response": {

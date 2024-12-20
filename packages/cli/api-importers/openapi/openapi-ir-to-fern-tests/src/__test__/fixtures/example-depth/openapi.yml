@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  title: Tree API
+  version: 1.0.0
+  description: API for working with tree data structures
+
+paths:
+  /tree:
+    get:
+      summary: Get tree
+      operationId: getTree
+      responses:
+        '200':
+          description: Successfully retrieved tree
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreeNode'
+
+components:
+  schemas:
+    TreeNode:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The value stored in this node
+          example: "root"
+        left:
+          description: Child nodes of this tree node
+          $ref: '#/components/schemas/TreeNode'
+        right:
+          description: Child nodes of this tree node
+          $ref: '#/components/schemas/TreeNode'
