@@ -16,6 +16,7 @@ import {
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
 
+// TODO: Remove this; only used to trigger the PHP generator.
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
 }
