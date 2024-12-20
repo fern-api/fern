@@ -1,3 +1,9 @@
+- version: 0.0.19
+  createdAt: '2024-12-20'
+  changelogEntry:
+    - type: internal
+      summary: Fix block str support.
+  irVersion: 33
 - version: 0.0.18
   createdAt: '2024-12-13'
   changelogEntry:
