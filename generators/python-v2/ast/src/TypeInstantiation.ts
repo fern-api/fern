@@ -6,6 +6,12 @@ import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
+interface StrFormatConfig {
+    multiline?: boolean;
+    startOnNewLine?: boolean;
+    endWithNewLine?: boolean;
+}
+
 interface Int {
     type: "int";
     value: number;
@@ -24,9 +30,7 @@ interface Bool {
 interface Str {
     type: "str";
     value: string;
-    config?: {
-        multiline?: boolean;
-    };
+    config?: StrFormatConfig;
 }
 
 interface Bytes {
@@ -85,7 +89,14 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bool", value });
     }
 
-    public static str(value: string, config = { multiline: false }): TypeInstantiation {
+    public static str(
+        value: string,
+        config: StrFormatConfig = {
+            multiline: false,
+            startOnNewLine: false,
+            endWithNewLine: false
+        }
+    ): TypeInstantiation {
         return new this({ type: "str", value, config });
     }
 
@@ -147,7 +158,13 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "str":
                 if (this.internalType.config?.multiline) {
-                    this.writeStringWithTripleQuotes({ writer, value: this.internalType.value });
+                    const { startOnNewLine, endWithNewLine } = this.internalType.config;
+                    this.writeStringWithTripleQuotes({
+                        writer,
+                        value: this.internalType.value,
+                        startOnNewLine,
+                        endWithNewLine
+                    });
                 } else {
                     writer.write(
                         `"${this.escapeString(this.internalType.value, { doubleQuote: true, newline: true })}"`
@@ -210,14 +227,43 @@ export class TypeInstantiation extends AstNode {
         }
     }
 
-    private writeStringWithTripleQuotes({ writer, value }: { writer: Writer; value: string }): void {
+    private writeStringWithTripleQuotes({
+        writer,
+        value,
+        startOnNewLine,
+        endWithNewLine
+    }: {
+        writer: Writer;
+        value: string;
+    } & Pick<StrFormatConfig, "startOnNewLine" | "endWithNewLine">): void {
         writer.write('"""');
-        const parts = value.split("\n");
-        const head = parts[0] + "\n";
-        const tail = parts.slice(1).join("\n");
-        writer.write(this.escapeString(head));
-        writer.writeNoIndent(this.escapeString(tail));
-        writer.write('"""');
+        const lines = value.split("\n");
+
+        // If there is only one line, we can just write it as a single line string
+        if (lines.length <= 1) {
+            writer.write(this.escapeString(this.escapeString(lines[0] ?? "")));
+            writer.write('"""');
+            return;
+        }
+
+        if (startOnNewLine) {
+            writer.writeNoIndent("\\\n");
+        }
+
+        lines.forEach((line, idx) => {
+            writer.writeNoIndent(this.escapeString(line));
+
+            // If this is the last line, add a newline escape
+            if (idx === lines.length - 1) {
+                if (endWithNewLine) {
+                    writer.writeNoIndent("\\\n");
+                }
+            } else {
+                writer.writeNoIndent("\n");
+            }
+        });
+
+        writer.writeNoIndent('"""');
     }
 
     private escapeString(
