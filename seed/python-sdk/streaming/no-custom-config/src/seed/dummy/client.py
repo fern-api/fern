@@ -32,6 +32,19 @@ class DummyClient:
         Yields
         ------
         typing.Iterator[StreamResponse]
+
+        Examples
+        --------
+        from seed import SeedStreaming
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.dummy.generate_stream(
+            num_events=1,
+        )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
             "generate-stream",
@@ -132,6 +145,27 @@ class AsyncDummyClient:
         Yields
         ------
         typing.AsyncIterator[StreamResponse]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.dummy.generate_stream(
+                num_events=1,
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "generate-stream",
