@@ -591,14 +591,15 @@ jobs:
         run: |
           # Run git diff check
           if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
-            echo "Results are valid, saving to cache"
+            echo "Results are valid, saving to cache if not already."
             echo "valid=true" >> $GITHUB_OUTPUT
           else
-            echo "Changes detected in git-tracked files, not saving to cache"
+            echo "Changes detected in git-tracked files, not saving to cache."
             exit 1  # Fail the workflow if changes detected
           fi
 
       - name: Save cache
+        if: steps.validate.outputs.valid == 'true'
         uses: actions/cache/save@v4
         with:
           path: seed/go-sdk
