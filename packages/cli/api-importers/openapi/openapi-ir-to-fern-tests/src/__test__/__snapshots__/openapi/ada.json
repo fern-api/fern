@@ -355,6 +355,21 @@ types:
                 "root.TooManyRequestsError",
                 "root.InternalServerError",
               ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "end_user_id": "end_user_id",
+                  },
+                  "request": {
+                    "key": "value",
+                  },
+                  "response": {
+                    "body": {
+                      "key": "value",
+                    },
+                  },
+                },
+              ],
               "method": "PATCH",
               "pagination": undefined,
               "path": "/end-users/v1/{end_user_id}",
@@ -439,6 +454,14 @@ service:
         - root.ContentTooLargeError
         - root.TooManyRequestsError
         - root.InternalServerError
+      examples:
+        - path-parameters:
+            end_user_id: end_user_id
+          request:
+            key: value
+          response:
+            body:
+              key: value
     getEndUsers:
       path: /end-users/v1
       method: GET

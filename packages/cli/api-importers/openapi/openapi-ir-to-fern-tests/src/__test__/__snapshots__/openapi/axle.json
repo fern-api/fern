@@ -904,6 +904,9 @@ service:
                   "headers": {},
                   "request": {
                     "redirectUri": "https://example.com/redirect",
+                    "user": {
+                      "id": "id",
+                    },
                     "webhookUri": "https://example.com/webhook",
                   },
                   "response": {
@@ -1056,6 +1059,8 @@ service:
           request:
             redirectUri: https://example.com/redirect
             webhookUri: https://example.com/webhook
+            user:
+              id: id
           response:
             body:
               success: true

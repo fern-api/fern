@@ -823,6 +823,237 @@ Each consumer Business entity needs three mandatory fields:
                   "name": "example-1",
                   "request": {
                     "createdTimestamp": 1.1,
+                    "directors": [
+                      {
+                        "contactDetails": {
+                          "addresses": [
+                            {
+                              "addressLines": [
+                                "Klara-Franke Str 20",
+                              ],
+                              "city": "Berlin",
+                              "country": "Germany",
+                              "postcode": "10557",
+                              "state": "Berlin",
+                              "tags": [
+                                {
+                                  "key": "customKey",
+                                  "value": "customValue",
+                                },
+                              ],
+                            },
+                          ],
+                          "contactNumbers": [
+                            "+371 123132",
+                          ],
+                          "emailIds": [
+                            "baran@flagright.com",
+                          ],
+                          "websites": [
+                            "flagright.com",
+                          ],
+                        },
+                        "generalDetails": {
+                          "countryOfNationality": "DE",
+                          "countryOfResidence": "US",
+                          "dateOfBirth": "1991-01-01",
+                          "name": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                        },
+                        "legalDocuments": [
+                          {
+                            "documentExpirationDate": 1839939034000,
+                            "documentIssuedCountry": "DE",
+                            "documentIssuedDate": 1639939034000,
+                            "documentNumber": "Z9431P",
+                            "documentType": "passport",
+                            "nameOnDocument": {
+                              "firstName": "Baran",
+                              "lastName": "Ozkan",
+                              "middleName": "Realblood",
+                            },
+                            "tags": [
+                              {
+                                "key": "customerType",
+                                "value": "wallet",
+                              },
+                            ],
+                          },
+                        ],
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "legalEntity": {
+                      "companyFinancialDetails": {
+                        "expectedTransactionAmountPerMonth": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "expectedTurnoverPerMonth": {
+                          "amountCurrency": "USD",
+                          "amountValue": 8000,
+                        },
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                      "companyGeneralDetails": {
+                        "businessIndustry": [
+                          "Farming",
+                        ],
+                        "legalName": "Ozkan Hazelnut Export JSC",
+                        "mainProductsServicesSold": [
+                          "Hazelnut",
+                        ],
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                      "companyRegistrationDetails": {
+                        "registrationCountry": "DE",
+                        "registrationIdentifier": "PSJ554342",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
+                    "savedPaymentDetails": [
+                      {
+                        "method": "CHECK",
+                        "shippingAddress": {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                    "shareHolders": [
+                      {
+                        "contactDetails": {
+                          "addresses": [
+                            {
+                              "addressLines": [
+                                "Klara-Franke Str 20",
+                              ],
+                              "city": "Berlin",
+                              "country": "Germany",
+                              "postcode": "10557",
+                              "state": "Berlin",
+                              "tags": [
+                                {
+                                  "key": "customKey",
+                                  "value": "customValue",
+                                },
+                              ],
+                            },
+                          ],
+                          "contactNumbers": [
+                            "+371 123132",
+                          ],
+                          "emailIds": [
+                            "baran@flagright.com",
+                          ],
+                          "websites": [
+                            "flagright.com",
+                          ],
+                        },
+                        "generalDetails": {
+                          "countryOfNationality": "DE",
+                          "countryOfResidence": "US",
+                          "dateOfBirth": "1991-01-01",
+                          "name": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                        },
+                        "legalDocuments": [
+                          {
+                            "documentExpirationDate": 1839939034000,
+                            "documentIssuedCountry": "DE",
+                            "documentIssuedDate": 1639939034000,
+                            "documentNumber": "Z9431P",
+                            "documentType": "passport",
+                            "nameOnDocument": {
+                              "firstName": "Baran",
+                              "lastName": "Ozkan",
+                              "middleName": "Realblood",
+                            },
+                            "tags": [
+                              {
+                                "key": "customerType",
+                                "value": "wallet",
+                              },
+                            ],
+                          },
+                        ],
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                    "transactionLimits": {
+                      "maximumDailyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumMonthlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumQuarterlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumWeeklyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumYearlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                    },
                     "userId": "userId",
                   },
                   "response": {
@@ -907,6 +1138,261 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 {
                   "request": {
                     "timestamp": 1.1,
+                    "updatedBusinessUserAttributes": {
+                      "directors": [
+                        {
+                          "contactDetails": {
+                            "addresses": [
+                              {
+                                "addressLines": [
+                                  "Klara-Franke Str 20",
+                                ],
+                                "city": "Berlin",
+                                "country": "Germany",
+                                "postcode": "10557",
+                                "state": "Berlin",
+                                "tags": [
+                                  {
+                                    "key": "customKey",
+                                    "value": "customValue",
+                                  },
+                                ],
+                              },
+                            ],
+                            "contactNumbers": [
+                              "+371 123132",
+                            ],
+                            "emailIds": [
+                              "baran@flagright.com",
+                            ],
+                            "websites": [
+                              "flagright.com",
+                            ],
+                          },
+                          "generalDetails": {
+                            "countryOfNationality": "DE",
+                            "countryOfResidence": "US",
+                            "dateOfBirth": "1991-01-01",
+                            "name": {
+                              "firstName": "Baran",
+                              "lastName": "Ozkan",
+                              "middleName": "Realblood",
+                            },
+                          },
+                          "legalDocuments": [
+                            {
+                              "documentExpirationDate": 1839939034000,
+                              "documentIssuedCountry": "DE",
+                              "documentIssuedDate": 1639939034000,
+                              "documentNumber": "Z9431P",
+                              "documentType": "passport",
+                              "nameOnDocument": {
+                                "firstName": "Baran",
+                                "lastName": "Ozkan",
+                                "middleName": "Realblood",
+                              },
+                              "tags": [
+                                {
+                                  "key": "customerType",
+                                  "value": "wallet",
+                                },
+                              ],
+                            },
+                          ],
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "legalEntity": {
+                        "companyFinancialDetails": {
+                          "expectedTransactionAmountPerMonth": {
+                            "amountCurrency": "GBP",
+                            "amountValue": 800,
+                          },
+                          "expectedTurnoverPerMonth": {
+                            "amountCurrency": "USD",
+                            "amountValue": 8000,
+                          },
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        "companyGeneralDetails": {
+                          "businessIndustry": [
+                            "Farming",
+                          ],
+                          "legalName": "Ozkan Hazelnut Export JSC",
+                          "mainProductsServicesSold": [
+                            "Hazelnut",
+                          ],
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        "companyRegistrationDetails": {
+                          "registrationCountry": "DE",
+                          "registrationIdentifier": "PSJ554342",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                        "contactDetails": {
+                          "addresses": [
+                            {
+                              "addressLines": [
+                                "Klara-Franke Str 20",
+                              ],
+                              "city": "Berlin",
+                              "country": "Germany",
+                              "postcode": "10557",
+                              "state": "Berlin",
+                              "tags": [
+                                {
+                                  "key": "customKey",
+                                  "value": "customValue",
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        "reasonForAccountOpening": [
+                          "string",
+                        ],
+                      },
+                      "savedPaymentDetails": [
+                        {
+                          "method": "CHECK",
+                          "shippingAddress": {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "shareHolders": [
+                        {
+                          "contactDetails": {
+                            "addresses": [
+                              {
+                                "addressLines": [
+                                  "Klara-Franke Str 20",
+                                ],
+                                "city": "Berlin",
+                                "country": "Germany",
+                                "postcode": "10557",
+                                "state": "Berlin",
+                                "tags": [
+                                  {
+                                    "key": "customKey",
+                                    "value": "customValue",
+                                  },
+                                ],
+                              },
+                            ],
+                            "contactNumbers": [
+                              "+371 123132",
+                            ],
+                            "emailIds": [
+                              "baran@flagright.com",
+                            ],
+                            "websites": [
+                              "flagright.com",
+                            ],
+                          },
+                          "generalDetails": {
+                            "countryOfNationality": "DE",
+                            "countryOfResidence": "US",
+                            "dateOfBirth": "1991-01-01",
+                            "name": {
+                              "firstName": "Baran",
+                              "lastName": "Ozkan",
+                              "middleName": "Realblood",
+                            },
+                          },
+                          "legalDocuments": [
+                            {
+                              "documentExpirationDate": 1839939034000,
+                              "documentIssuedCountry": "DE",
+                              "documentIssuedDate": 1639939034000,
+                              "documentNumber": "Z9431P",
+                              "documentType": "passport",
+                              "nameOnDocument": {
+                                "firstName": "Baran",
+                                "lastName": "Ozkan",
+                                "middleName": "Realblood",
+                              },
+                              "tags": [
+                                {
+                                  "key": "customerType",
+                                  "value": "wallet",
+                                },
+                              ],
+                            },
+                          ],
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "transactionLimits": {
+                        "maximumDailyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumMonthlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumQuarterlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumWeeklyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumYearlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                      },
+                    },
                     "userId": "userId",
                   },
                   "response": {
@@ -1538,6 +2024,11 @@ Each consumer User entity needs three mandatory fields:
                         "documentIssuedDate": 1639939034000,
                         "documentNumber": "Z9431P",
                         "documentType": "passport",
+                        "nameOnDocument": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
                         "tags": [
                           {
                             "key": "customerType",
@@ -1552,6 +2043,32 @@ Each consumer User entity needs three mandatory fields:
                         "value": "customValue",
                       },
                     ],
+                    "transactionLimits": {
+                      "maximumDailyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumMonthlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumQuarterlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumWeeklyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "maximumYearlyTransactionLimit": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                    },
                     "userDetails": {
                       "countryOfNationality": "DE",
                       "countryOfResidence": "US",
@@ -1661,6 +2178,75 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "timestamp": 1431231244001,
                     "transactionId": "443dea26147a406b957d9ee3a1247b11",
                     "transactionState": "SUCCESSFUL",
+                    "updatedTransactionAttributes": {
+                      "destinationAmountDetails": {
+                        "country": "IN",
+                        "transactionAmount": 68351.34,
+                        "transactionCurrency": "INR",
+                      },
+                      "destinationPaymentDetails": {
+                        "method": "CHECK",
+                        "shippingAddress": {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      },
+                      "deviceData": {
+                        "appVersion": "1.1.0",
+                        "batteryLevel": 95,
+                        "deviceIdentifier": "3c49f915d04485e34caba",
+                        "deviceLatitude": 13.0033,
+                        "deviceLongitude": 76.1004,
+                        "deviceMaker": "ASUS",
+                        "deviceModel": "Zenphone M2 Pro Max",
+                        "deviceYear": "2018",
+                        "ipAddress": "10.23.191.2",
+                        "operatingSystem": "Android 11.2",
+                        "vpnUsed": false,
+                      },
+                      "originAmountDetails": {
+                        "country": "DE",
+                        "transactionAmount": 800,
+                        "transactionCurrency": "EUR",
+                      },
+                      "originPaymentDetails": {
+                        "method": "CHECK",
+                        "shippingAddress": {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      },
+                      "promotionCodeUsed": true,
+                      "reference": "loan repayment",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
                   },
                   "response": {
                     "body": {
@@ -1877,6 +2463,88 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 {
                   "request": {
                     "timestamp": 1.1,
+                    "updatedConsumerUserAttributes": {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+37112345432",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                        ],
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                          ],
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "transactionLimits": {
+                        "maximumDailyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumMonthlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumQuarterlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumWeeklyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                        "maximumYearlyTransactionLimit": {
+                          "amountCurrency": "GBP",
+                          "amountValue": 800,
+                        },
+                      },
+                    },
                     "userId": "userId",
                   },
                   "response": {
@@ -8061,6 +8729,56 @@ service:
             transactionId: 443dea26147a406b957d9ee3a1247b11
             eventId: aaeeb166147a406b957dd9147a406b957
             eventDescription: Transaction created
+            updatedTransactionAttributes:
+              originAmountDetails:
+                transactionAmount: 800
+                transactionCurrency: EUR
+                country: DE
+              destinationAmountDetails:
+                transactionAmount: 68351.34
+                transactionCurrency: INR
+                country: IN
+              originPaymentDetails:
+                method: CHECK
+                shippingAddress:
+                  addressLines:
+                    - Klara-Franke Str 20
+                  postcode: '10557'
+                  city: Berlin
+                  state: Berlin
+                  country: Germany
+                  tags:
+                    - key: customKey
+                      value: customValue
+              destinationPaymentDetails:
+                method: CHECK
+                shippingAddress:
+                  addressLines:
+                    - Klara-Franke Str 20
+                  postcode: '10557'
+                  city: Berlin
+                  state: Berlin
+                  country: Germany
+                  tags:
+                    - key: customKey
+                      value: customValue
+              promotionCodeUsed: true
+              reference: loan repayment
+              deviceData:
+                batteryLevel: 95
+                deviceLatitude: 13.0033
+                deviceLongitude: 76.1004
+                ipAddress: 10.23.191.2
+                deviceIdentifier: 3c49f915d04485e34caba
+                vpnUsed: false
+                operatingSystem: Android 11.2
+                deviceMaker: ASUS
+                deviceModel: Zenphone M2 Pro Max
+                deviceYear: '2018'
+                appVersion: 1.1.0
+              tags:
+                - key: customKey
+                  value: customValue
             metaData:
               batteryLevel: 76.3
               deviceLatitude: 13.009711
@@ -8216,6 +8934,10 @@ service:
                 tags:
                   - key: customerType
                     value: wallet
+                nameOnDocument:
+                  firstName: Baran
+                  middleName: Realblood
+                  lastName: Ozkan
             contactDetails:
               emailIds:
                 - baran@flagright.com
@@ -8233,6 +8955,25 @@ service:
                   tags:
                     - key: customKey
                       value: customValue
+            transactionLimits:
+              maximumDailyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumWeeklyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumMonthlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumQuarterlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumYearlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
             tags:
               - key: customKey
                 value: customValue
@@ -8436,6 +9177,150 @@ service:
       examples:
         - name: example-1
           request:
+            legalEntity:
+              companyGeneralDetails:
+                legalName: Ozkan Hazelnut Export JSC
+                businessIndustry:
+                  - Farming
+                mainProductsServicesSold:
+                  - Hazelnut
+                tags:
+                  - key: customKey
+                    value: customValue
+              companyFinancialDetails:
+                expectedTransactionAmountPerMonth:
+                  amountValue: 800
+                  amountCurrency: GBP
+                expectedTurnoverPerMonth:
+                  amountValue: 8000
+                  amountCurrency: USD
+                tags:
+                  - key: customKey
+                    value: customValue
+              companyRegistrationDetails:
+                registrationIdentifier: PSJ554342
+                registrationCountry: DE
+                tags:
+                  - key: customKey
+                    value: customValue
+            shareHolders:
+              - generalDetails:
+                  name:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  dateOfBirth: '1991-01-01'
+                  countryOfResidence: US
+                  countryOfNationality: DE
+                legalDocuments:
+                  - documentType: passport
+                    documentNumber: Z9431P
+                    documentIssuedDate: 1639939034000
+                    documentExpirationDate: 1839939034000
+                    documentIssuedCountry: DE
+                    tags:
+                      - key: customerType
+                        value: wallet
+                    nameOnDocument:
+                      firstName: Baran
+                      middleName: Realblood
+                      lastName: Ozkan
+                contactDetails:
+                  emailIds:
+                    - baran@flagright.com
+                  contactNumbers:
+                    - +371 123132
+                  websites:
+                    - flagright.com
+                  addresses:
+                    - addressLines:
+                        - Klara-Franke Str 20
+                      postcode: '10557'
+                      city: Berlin
+                      state: Berlin
+                      country: Germany
+                      tags:
+                        - key: customKey
+                          value: customValue
+                tags:
+                  - key: customKey
+                    value: customValue
+            directors:
+              - generalDetails:
+                  name:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  dateOfBirth: '1991-01-01'
+                  countryOfResidence: US
+                  countryOfNationality: DE
+                legalDocuments:
+                  - documentType: passport
+                    documentNumber: Z9431P
+                    documentIssuedDate: 1639939034000
+                    documentExpirationDate: 1839939034000
+                    documentIssuedCountry: DE
+                    tags:
+                      - key: customerType
+                        value: wallet
+                    nameOnDocument:
+                      firstName: Baran
+                      middleName: Realblood
+                      lastName: Ozkan
+                contactDetails:
+                  emailIds:
+                    - baran@flagright.com
+                  contactNumbers:
+                    - +371 123132
+                  websites:
+                    - flagright.com
+                  addresses:
+                    - addressLines:
+                        - Klara-Franke Str 20
+                      postcode: '10557'
+                      city: Berlin
+                      state: Berlin
+                      country: Germany
+                      tags:
+                        - key: customKey
+                          value: customValue
+                tags:
+                  - key: customKey
+                    value: customValue
+            transactionLimits:
+              maximumDailyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumWeeklyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumMonthlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumQuarterlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+              maximumYearlyTransactionLimit:
+                amountValue: 800
+                amountCurrency: GBP
+            savedPaymentDetails:
+              - method: CHECK
+                shippingAddress:
+                  addressLines:
+                    - Klara-Franke Str 20
+                  postcode: '10557'
+                  city: Berlin
+                  state: Berlin
+                  country: Germany
+                  tags:
+                    - key: customKey
+                      value: customValue
+            tags:
+              - key: customKey
+                value: customValue
             userId: userId
             createdTimestamp: 1.1
           response:
@@ -8781,6 +9666,59 @@ service:
         - request:
             timestamp: 1.1
             userId: userId
+            updatedConsumerUserAttributes:
+              legalDocuments:
+                - documentType: passport
+                  documentNumber: Z9431P
+                  documentIssuedDate: 1639939034000
+                  documentExpirationDate: 1839939034000
+                  documentIssuedCountry: DE
+                  tags:
+                    - key: customerType
+                      value: wallet
+                  nameOnDocument:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+              contactDetails:
+                emailIds:
+                  - baran@flagright.com
+                contactNumbers:
+                  - '+37112345432'
+                websites:
+                  - flagright.com
+                addresses:
+                  - addressLines:
+                      - Klara-Franke Str 20
+                    postcode: '10557'
+                    city: Berlin
+                    state: Berlin
+                    country: Germany
+                    tags:
+                      - key: customKey
+                        value: customValue
+              transactionLimits:
+                maximumDailyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumWeeklyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumMonthlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumQuarterlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumYearlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+              tags:
+                - key: customKey
+                  value: customValue
           response:
             body:
               userStateDetails:
@@ -8969,6 +9907,164 @@ service:
         - request:
             timestamp: 1.1
             userId: userId
+            updatedBusinessUserAttributes:
+              legalEntity:
+                companyGeneralDetails:
+                  legalName: Ozkan Hazelnut Export JSC
+                  businessIndustry:
+                    - Farming
+                  mainProductsServicesSold:
+                    - Hazelnut
+                  tags:
+                    - key: customKey
+                      value: customValue
+                companyFinancialDetails:
+                  expectedTransactionAmountPerMonth:
+                    amountValue: 800
+                    amountCurrency: GBP
+                  expectedTurnoverPerMonth:
+                    amountValue: 8000
+                    amountCurrency: USD
+                  tags:
+                    - key: customKey
+                      value: customValue
+                companyRegistrationDetails:
+                  registrationIdentifier: PSJ554342
+                  registrationCountry: DE
+                  tags:
+                    - key: customKey
+                      value: customValue
+                reasonForAccountOpening:
+                  - string
+                contactDetails:
+                  addresses:
+                    - addressLines:
+                        - Klara-Franke Str 20
+                      postcode: '10557'
+                      city: Berlin
+                      state: Berlin
+                      country: Germany
+                      tags:
+                        - key: customKey
+                          value: customValue
+              shareHolders:
+                - generalDetails:
+                    name:
+                      firstName: Baran
+                      middleName: Realblood
+                      lastName: Ozkan
+                    dateOfBirth: '1991-01-01'
+                    countryOfResidence: US
+                    countryOfNationality: DE
+                  legalDocuments:
+                    - documentType: passport
+                      documentNumber: Z9431P
+                      documentIssuedDate: 1639939034000
+                      documentExpirationDate: 1839939034000
+                      documentIssuedCountry: DE
+                      tags:
+                        - key: customerType
+                          value: wallet
+                      nameOnDocument:
+                        firstName: Baran
+                        middleName: Realblood
+                        lastName: Ozkan
+                  contactDetails:
+                    emailIds:
+                      - baran@flagright.com
+                    contactNumbers:
+                      - +371 123132
+                    websites:
+                      - flagright.com
+                    addresses:
+                      - addressLines:
+                          - Klara-Franke Str 20
+                        postcode: '10557'
+                        city: Berlin
+                        state: Berlin
+                        country: Germany
+                        tags:
+                          - key: customKey
+                            value: customValue
+                  tags:
+                    - key: customKey
+                      value: customValue
+              directors:
+                - generalDetails:
+                    name:
+                      firstName: Baran
+                      middleName: Realblood
+                      lastName: Ozkan
+                    dateOfBirth: '1991-01-01'
+                    countryOfResidence: US
+                    countryOfNationality: DE
+                  legalDocuments:
+                    - documentType: passport
+                      documentNumber: Z9431P
+                      documentIssuedDate: 1639939034000
+                      documentExpirationDate: 1839939034000
+                      documentIssuedCountry: DE
+                      tags:
+                        - key: customerType
+                          value: wallet
+                      nameOnDocument:
+                        firstName: Baran
+                        middleName: Realblood
+                        lastName: Ozkan
+                  contactDetails:
+                    emailIds:
+                      - baran@flagright.com
+                    contactNumbers:
+                      - +371 123132
+                    websites:
+                      - flagright.com
+                    addresses:
+                      - addressLines:
+                          - Klara-Franke Str 20
+                        postcode: '10557'
+                        city: Berlin
+                        state: Berlin
+                        country: Germany
+                        tags:
+                          - key: customKey
+                            value: customValue
+                  tags:
+                    - key: customKey
+                      value: customValue
+              transactionLimits:
+                maximumDailyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumWeeklyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumMonthlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumQuarterlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+                maximumYearlyTransactionLimit:
+                  amountValue: 800
+                  amountCurrency: GBP
+              savedPaymentDetails:
+                - method: CHECK
+                  shippingAddress:
+                    addressLines:
+                      - Klara-Franke Str 20
+                    postcode: '10557'
+                    city: Berlin
+                    state: Berlin
+                    country: Germany
+                    tags:
+                      - key: customKey
+                        value: customValue
+              tags:
+                - key: customKey
+                  value: customValue
           response:
             body:
               userStateDetails:

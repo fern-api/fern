@@ -15356,6 +15356,13 @@
                     },
                     "type": "primitive"
                   },
+                  "label": {
+                    "value": {
+                      "value": "Checking *1008",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "location": {
                     "value": "internal",
                     "type": "enum"
@@ -15368,6 +15375,13 @@
                   "id": {
                     "value": {
                       "value": "88b1ca3e-d0f3",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "label": {
+                    "value": {
+                      "value": "Checking *1008",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -15398,6 +15412,13 @@
                   "frequency": {
                     "value": "once",
                     "type": "enum"
+                  },
+                  "amountLimit": {
+                    "value": {
+                      "value": "3456.78",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"
@@ -17637,11 +17658,45 @@
                 },
                 "type": "primitive"
               },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "e821ce54-c715",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "label": {
+                    "value": {
+                      "value": "Premiere Checking *6789",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": {
+                    "value": "checking",
+                    "type": "enum"
+                  },
+                  "location": {
+                    "value": "internal",
+                    "type": "enum"
+                  }
+                },
+                "type": "object"
+              },
               "targetAccount": {
                 "properties": {
                   "id": {
                     "value": {
                       "value": "88b1ca3e-d0f3",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "label": {
+                    "value": {
+                      "value": "Checking *1008",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -17661,6 +17716,13 @@
                   "frequency": {
                     "value": "once",
                     "type": "enum"
+                  },
+                  "amountLimit": {
+                    "value": {
+                      "value": "3456.78",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "object"

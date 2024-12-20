@@ -14675,9 +14675,12 @@ imports:
                       "fr": {
                         "author_id": 991267407,
                         "body": "Corps de l'article",
+                        "created_at": 1663597223,
                         "description": "Description de l'article",
                         "state": "published",
                         "title": "Merci pour tout",
+                        "updated_at": 1663597260,
+                        "url": "http://intercom.test/help/en/articles/3-default-language",
                       },
                     },
                   },
@@ -15129,6 +15132,8 @@ imports:
                     "author_id": 1295,
                     "body": "Body of the Article",
                     "description": "Description of the Article",
+                    "parent_id": 18,
+                    "parent_type": "collection",
                     "state": "published",
                     "title": "Thanks for everything",
                   },
@@ -16277,7 +16282,11 @@ imports:
                     "id": 1,
                   },
                   "request": {
+                    "author_id": 1295,
                     "body": "<p>New gifts in store for the jolly season</p>",
+                    "description": "Description of the Article",
+                    "parent_id": "18",
+                    "parent_type": "collection",
                     "title": "Christmas is here!",
                   },
                   "response": {
@@ -16728,7 +16737,11 @@ imports:
                     "id": 1,
                   },
                   "request": {
+                    "author_id": 1295,
                     "body": "<p>New gifts in store for the jolly season</p>",
+                    "description": "Description of the Article",
+                    "parent_id": "18",
+                    "parent_type": "collection",
                     "title": "Christmas is here!",
                   },
                   "response": {
@@ -17523,6 +17536,9 @@ service:
                 body: Corps de l'article
                 author_id: 991267407
                 state: published
+                created_at: 1663597223
+                updated_at: 1663597260
+                url: http://intercom.test/help/en/articles/3-default-language
           response:
             body:
               type: article
@@ -17930,6 +17946,8 @@ service:
             body: Body of the Article
             author_id: 1295
             state: published
+            parent_id: 18
+            parent_type: collection
           response:
             body:
               type: article
@@ -18784,7 +18802,11 @@ service:
             id: 1
           request:
             title: Christmas is here!
+            description: Description of the Article
             body: <p>New gifts in store for the jolly season</p>
+            author_id: 1295
+            parent_id: '18'
+            parent_type: collection
           response:
             body:
               type: article
@@ -19190,7 +19212,11 @@ service:
             id: 1
           request:
             title: Christmas is here!
+            description: Description of the Article
             body: <p>New gifts in store for the jolly season</p>
+            author_id: 1295
+            parent_id: '18'
+            parent_type: collection
           response:
             body:
               type: article
@@ -20452,8 +20478,80 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                   "name": "Successful",
                   "request": {
                     "company_id": "company_remote_id",
+                    "custom_attributes": {
+                      "monthly_spend": "custom_attributes",
+                      "paid_subscriber": "custom_attributes",
+                      "team_mates": "custom_attributes",
+                    },
+                    "industry": "Manufacturing",
+                    "monthly_spend": 1000,
                     "name": "my company",
+                    "plan": "Enterprise",
                     "remote_created_at": 1374138000,
+                    "website": "https://www.example.com",
+                  },
+                  "response": {
+                    "body": {
+                      "app_id": "this_is_an_id116_that_should_be_at_least_",
+                      "company_id": "company_remote_id",
+                      "created_at": 1719492732,
+                      "custom_attributes": {
+                        "creation_source": "api",
+                      },
+                      "id": "667d607c8a68186f43bafd1e",
+                      "industry": "Software",
+                      "last_request_at": 1663597223,
+                      "monthly_spend": 0,
+                      "name": "my company",
+                      "plan": {
+                        "id": "269315",
+                        "name": "Pro",
+                        "type": "plan",
+                      },
+                      "remote_created_at": 1374138000,
+                      "segments": {
+                        "segments": [
+                          {
+                            "created_at": 1394621988,
+                            "id": "56203d253cba154d39010062",
+                            "name": "Active",
+                            "updated_at": 1394622004,
+                          },
+                        ],
+                        "type": "segment.list",
+                      },
+                      "session_count": 0,
+                      "size": 100,
+                      "tags": {
+                        "tags": [
+                          {
+                            "key": "value",
+                          },
+                        ],
+                        "type": "tag.list",
+                      },
+                      "type": "company",
+                      "updated_at": 1719492732,
+                      "user_count": 0,
+                      "website": "https://www.intercom.com",
+                    },
+                  },
+                },
+                {
+                  "name": "Bad Request",
+                  "request": {
+                    "company_id": "625e90fc55ab113b6d92175f",
+                    "custom_attributes": {
+                      "monthly_spend": "custom_attributes",
+                      "paid_subscriber": "custom_attributes",
+                      "team_mates": "custom_attributes",
+                    },
+                    "industry": "Manufacturing",
+                    "monthly_spend": 1000,
+                    "name": "Intercom",
+                    "plan": "Enterprise",
+                    "remote_created_at": 1394531169,
+                    "website": "https://www.example.com",
                   },
                   "response": {
                     "body": {
@@ -21246,7 +21344,62 @@ service:
           request:
             name: my company
             company_id: company_remote_id
+            plan: Enterprise
+            website: https://www.example.com
+            industry: Manufacturing
+            custom_attributes:
+              paid_subscriber: custom_attributes
+              monthly_spend: custom_attributes
+              team_mates: custom_attributes
             remote_created_at: 1374138000
+            monthly_spend: 1000
+          response:
+            body:
+              type: company
+              id: 667d607c8a68186f43bafd1e
+              name: my company
+              app_id: this_is_an_id116_that_should_be_at_least_
+              plan:
+                type: plan
+                id: '269315'
+                name: Pro
+              company_id: company_remote_id
+              remote_created_at: 1374138000
+              created_at: 1719492732
+              updated_at: 1719492732
+              last_request_at: 1663597223
+              size: 100
+              website: https://www.intercom.com
+              industry: Software
+              monthly_spend: 0
+              session_count: 0
+              user_count: 0
+              custom_attributes:
+                creation_source: api
+              tags:
+                type: tag.list
+                tags:
+                  - key: value
+              segments:
+                type: segment.list
+                segments:
+                  - id: 56203d253cba154d39010062
+                    name: Active
+                    created_at: 1394621988
+                    updated_at: 1394622004
+        - name: Bad Request
+          request:
+            name: Intercom
+            company_id: 625e90fc55ab113b6d92175f
+            plan: Enterprise
+            website: https://www.example.com
+            industry: Manufacturing
+            custom_attributes:
+              paid_subscriber: custom_attributes
+              monthly_spend: custom_attributes
+              team_mates: custom_attributes
+            remote_created_at: 1394531169
+            monthly_spend: 1000
           response:
             body:
               type: company
@@ -25152,6 +25305,10 @@ It is not possible to use this endpoint with Workflows.
                     "id": 1,
                   },
                   "request": {
+                    "attributes": {
+                      "_default_description_": "The button is not working",
+                      "_default_title_": "Found a bug",
+                    },
                     "ticket_type_id": "79",
                   },
                   "response": {
@@ -25276,6 +25433,10 @@ It is not possible to use this endpoint with Workflows.
                     "id": 1,
                   },
                   "request": {
+                    "attributes": {
+                      "_default_description_": "The button is not working",
+                      "_default_title_": "Found a bug",
+                    },
                     "ticket_type_id": "80",
                   },
                   "response": {
@@ -27258,6 +27419,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "request": {
                     "body": "Thanks again :)",
+                    "created_at": 1590000000,
                     "intercom_user_id": "667d60f18a68186f43bafdf4",
                     "message_type": "comment",
                     "type": "user",
@@ -27381,6 +27543,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   "request": {
                     "admin_id": "3156780",
                     "body": "<html> <body>  <h2>An Unordered HTML List</h2>  <ul>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ul>    <h2>An Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ol>   </body> </html>",
+                    "created_at": 1590000000,
                     "message_type": "note",
                     "type": "admin",
                   },
@@ -27508,6 +27671,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "request": {
                     "body": "Thanks again :)",
+                    "created_at": 1590000000,
                     "intercom_user_id": "667d60f78a68186f43bafdf7",
                     "message_type": "comment",
                     "type": "user",
@@ -27630,6 +27794,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                   "request": {
                     "body": "Thanks again :)",
+                    "created_at": 1590000000,
                     "intercom_user_id": "667d60f98a68186f43bafdf8",
                     "message_type": "comment",
                     "type": "user",
@@ -29713,6 +29878,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
+            created_at: 1590000000
             intercom_user_id: 667d60f18a68186f43bafdf4
           response:
             body:
@@ -29807,6 +29973,7 @@ service:
               Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>  
               <li>Milk</li> </ol>   </body> </html>
             admin_id: '3156780'
+            created_at: 1590000000
           response:
             body:
               type: conversation
@@ -29903,6 +30070,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
+            created_at: 1590000000
             intercom_user_id: 667d60f78a68186f43bafdf7
           response:
             body:
@@ -29992,6 +30160,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
+            created_at: 1590000000
             intercom_user_id: 667d60f98a68186f43bafdf8
           response:
             body:
@@ -31751,6 +31920,9 @@ service:
             id: 1
           request:
             ticket_type_id: '79'
+            attributes:
+              _default_title_: Found a bug
+              _default_description_: The button is not working
           response:
             body:
               type: ticket
@@ -31845,6 +32017,9 @@ service:
             id: 1
           request:
             ticket_type_id: '80'
+            attributes:
+              _default_title_: Found a bug
+              _default_description_: The button is not working
           response:
             body:
               type: ticket
@@ -32206,6 +32381,8 @@ types:
                   "name": "Successful",
                   "request": {
                     "data_type": "string",
+                    "description": "My Data Attribute Description",
+                    "messenger_writable": false,
                     "model": "company",
                     "name": "Mithril Shirt",
                   },
@@ -32238,6 +32415,8 @@ types:
                   "name": "Same name already exists",
                   "request": {
                     "data_type": "integer",
+                    "description": "My Data Attribute Description",
+                    "messenger_writable": false,
                     "model": "contact",
                     "name": "The One Ring",
                   },
@@ -32270,6 +32449,8 @@ types:
                   "name": "Invalid name",
                   "request": {
                     "data_type": "string",
+                    "description": "My Data Attribute Description",
+                    "messenger_writable": false,
                     "model": "company",
                     "name": "!nv@l!d n@me",
                   },
@@ -32302,6 +32483,8 @@ types:
                   "name": "Attribute already exists",
                   "request": {
                     "data_type": "string",
+                    "description": "My Data Attribute Description",
+                    "messenger_writable": false,
                     "model": "company",
                     "name": "The One Ring",
                   },
@@ -32334,6 +32517,8 @@ types:
                   "name": "Invalid Data Type",
                   "request": {
                     "data_type": "string",
+                    "description": "My Data Attribute Description",
+                    "messenger_writable": false,
                     "model": "company",
                     "name": "The Second Ring",
                   },
@@ -32367,6 +32552,7 @@ types:
                   "request": {
                     "data_type": "string",
                     "description": "Just a plain old ring",
+                    "messenger_writable": false,
                     "model": "contact",
                     "name": "My Data Attribute",
                     "options": [
@@ -32887,6 +33073,7 @@ You can update a data attribute.
                   "request": {
                     "archived": false,
                     "description": "Just a plain old ring",
+                    "messenger_writable": false,
                     "options": [
                       "options",
                       "options",
@@ -32925,6 +33112,7 @@ You can update a data attribute.
                   "request": {
                     "archived": false,
                     "description": "Too few options",
+                    "messenger_writable": false,
                     "options": [
                       "option1",
                       "option2",
@@ -32963,6 +33151,7 @@ You can update a data attribute.
                   "request": {
                     "archived": false,
                     "description": "Just a plain old ring",
+                    "messenger_writable": false,
                     "options": [
                       "options",
                       "options",
@@ -33001,6 +33190,7 @@ You can update a data attribute.
                   "request": {
                     "archived": true,
                     "description": "Trying to archieve",
+                    "messenger_writable": false,
                   },
                   "response": {
                     "body": {
@@ -33753,6 +33943,8 @@ service:
             name: Mithril Shirt
             model: company
             data_type: string
+            description: My Data Attribute Description
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33779,6 +33971,8 @@ service:
             name: The One Ring
             model: contact
             data_type: integer
+            description: My Data Attribute Description
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33805,6 +33999,8 @@ service:
             name: '!nv@l!d n@me'
             model: company
             data_type: string
+            description: My Data Attribute Description
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33831,6 +34027,8 @@ service:
             name: The One Ring
             model: company
             data_type: string
+            description: My Data Attribute Description
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33857,6 +34055,8 @@ service:
             name: The Second Ring
             model: company
             data_type: string
+            description: My Data Attribute Description
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33886,6 +34086,7 @@ service:
             description: Just a plain old ring
             options:
               - options
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33968,6 +34169,7 @@ service:
             options:
               - options
               - options
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -33998,6 +34200,7 @@ service:
             options:
               - option1
               - option2
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -34028,6 +34231,7 @@ service:
             options:
               - options
               - options
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -34055,6 +34259,7 @@ service:
           request:
             archived: true
             description: Trying to archieve
+            messenger_writable: false
           response:
             body:
               type: data_attribute
@@ -34143,6 +34348,13 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               "errors": [
                 "root.CreateDataEventRequestUnauthorizedError",
               ],
+              "examples": [
+                {
+                  "request": {
+                    "key": "value",
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/events",
@@ -34165,7 +34377,9 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               ],
               "examples": [
                 {
-                  "request": {},
+                  "request": {
+                    "user_id": "314159",
+                  },
                 },
               ],
               "method": "POST",
@@ -34657,6 +34871,9 @@ service:
         content-type: application/json
       errors:
         - root.CreateDataEventRequestUnauthorizedError
+      examples:
+        - request:
+            key: value
     dataEventSummaries:
       path: /events/summaries
       method: POST
@@ -34688,7 +34905,8 @@ service:
       errors:
         - root.DataEventSummariesRequestUnauthorizedError
       examples:
-        - request: {}
+        - request:
+            user_id: '314159'
   source:
     openapi: ../openapi.yml
   display-name: Data Events
@@ -35161,6 +35379,7 @@ types:
                 {
                   "name": "collection created",
                   "request": {
+                    "description": "English description",
                     "name": "Thanks for everything",
                   },
                   "response": {
@@ -36062,6 +36281,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                     "id": 1,
                   },
                   "request": {
+                    "description": "English description",
                     "name": "Update collection name",
                   },
                   "response": {
@@ -36274,6 +36494,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                     "id": 1,
                   },
                   "request": {
+                    "description": "English description",
                     "name": "Update collection name",
                   },
                   "response": {
@@ -36755,6 +36976,7 @@ service:
         - name: collection created
           request:
             name: Thanks for everything
+            description: English description
           response:
             body:
               id: '165'
@@ -37320,6 +37542,7 @@ service:
             id: 1
           request:
             name: Update collection name
+            description: English description
           response:
             body:
               id: '176'
@@ -37488,6 +37711,7 @@ service:
             id: 1
           request:
             name: Update collection name
+            description: English description
           response:
             body:
               id: '176'
@@ -38728,6 +38952,7 @@ types:
                   },
                   "request": {
                     "body": "<p>New gifts in store for the jolly season</p>",
+                    "deliver_silently": true,
                     "reactions": [
                       "😝",
                       "😂",
@@ -38769,6 +38994,7 @@ types:
                   },
                   "request": {
                     "body": "<p>New gifts in store for the jolly season</p>",
+                    "deliver_silently": true,
                     "reactions": [
                       "😝",
                       "😂",
@@ -39130,6 +39356,7 @@ service:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
             sender_id: 991267745
+            deliver_silently: true
             reactions:
               - 😝
               - 😂
@@ -39159,6 +39386,7 @@ service:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
             sender_id: 991267748
+            deliver_silently: true
             reactions:
               - 😝
               - 😂
@@ -41590,6 +41818,7 @@ Each operation will return a tag object.
                 {
                   "name": "Action successful",
                   "request": {
+                    "id": "656452352",
                     "name": "test",
                   },
                   "response": {
@@ -41608,6 +41837,7 @@ Each operation will return a tag object.
                 {
                   "name": "Invalid parameters",
                   "request": {
+                    "id": "656452352",
                     "name": "Independent",
                   },
                   "response": {
@@ -41629,6 +41859,7 @@ Each operation will return a tag object.
                     "companies": [
                       {
                         "company_id": "123",
+                        "id": "531ee472cce572a6ec000006",
                       },
                     ],
                     "name": "test",
@@ -42450,6 +42681,7 @@ service:
         - name: Action successful
           request:
             name: test
+            id: '656452352'
           response:
             body:
               type: tag
@@ -42462,6 +42694,7 @@ service:
         - name: Invalid parameters
           request:
             name: Independent
+            id: '656452352'
           response:
             body:
               type: tag
@@ -42475,7 +42708,8 @@ service:
           request:
             name: test
             companies:
-              - company_id: '123'
+              - id: 531ee472cce572a6ec000006
+                company_id: '123'
           response:
             body:
               type: tag
@@ -42984,10 +43218,16 @@ types:
                     "ticket_type_id": "ticket_type_id",
                   },
                   "request": {
+                    "allow_multiple_values": false,
                     "data_type": "string",
                     "description": "Attribute Description",
+                    "list_items": "Low Priority,Medium Priority,High Priority",
+                    "multiline": false,
                     "name": "Attribute Title",
                     "required_to_create": false,
+                    "required_to_create_for_contacts": false,
+                    "visible_on_create": true,
+                    "visible_to_contacts": true,
                   },
                   "response": {
                     "body": {
@@ -43101,7 +43341,16 @@ types:
                     "ticket_type_id": "ticket_type_id",
                   },
                   "request": {
+                    "allow_multiple_values": false,
+                    "archived": false,
                     "description": "New Attribute Description",
+                    "list_items": "Low Priority,Medium Priority,High Priority",
+                    "multiline": false,
+                    "name": "Bug Priority",
+                    "required_to_create": false,
+                    "required_to_create_for_contacts": false,
+                    "visible_on_create": true,
+                    "visible_to_contacts": true,
                   },
                   "response": {
                     "body": {
@@ -43331,6 +43580,12 @@ service:
             description: Attribute Description
             data_type: string
             required_to_create: false
+            required_to_create_for_contacts: false
+            visible_on_create: true
+            visible_to_contacts: true
+            multiline: false
+            list_items: Low Priority,Medium Priority,High Priority
+            allow_multiple_values: false
           response:
             body:
               type: ticket_type_attribute
@@ -43439,7 +43694,16 @@ service:
             ticket_type_id: ticket_type_id
             id: id
           request:
+            name: Bug Priority
             description: New Attribute Description
+            required_to_create: false
+            required_to_create_for_contacts: false
+            visible_on_create: true
+            visible_to_contacts: true
+            multiline: false
+            list_items: Low Priority,Medium Priority,High Priority
+            allow_multiple_values: false
+            archived: false
           response:
             body:
               type: ticket_type_attribute
@@ -43498,6 +43762,7 @@ docs: Everything about your ticket type attributes
                     "category": "Customer",
                     "description": "Customer Report Template",
                     "icon": "🎟️",
+                    "is_internal": false,
                     "name": "Customer Issue",
                   },
                   "response": {
@@ -43689,6 +43954,10 @@ You can update a ticket type.
                     "id": "id",
                   },
                   "request": {
+                    "archived": false,
+                    "description": "A bug has been occured",
+                    "icon": "🐞",
+                    "is_internal": false,
                     "name": "Bug Report 2",
                   },
                   "response": {
@@ -43831,6 +44100,7 @@ service:
             description: Customer Report Template
             category: Customer
             icon: 🎟️
+            is_internal: false
           response:
             body:
               type: ticket_type
@@ -43955,6 +44225,10 @@ service:
             id: id
           request:
             name: Bug Report 2
+            description: A bug has been occured
+            icon: 🐞
+            archived: false
+            is_internal: false
           response:
             body:
               type: ticket_type
@@ -44015,11 +44289,13 @@ docs: Everything about your ticket types
                 {
                   "name": "Successful response",
                   "request": {
+                    "company_id": "1234",
                     "contacts": [
                       {
                         "id": "667d61b78a68186f43bafe8d",
                       },
                     ],
+                    "created_at": 1590000000,
                     "ticket_attributes": {
                       "_default_description_": "there is a problem",
                       "_default_title_": "example",
@@ -44298,6 +44574,7 @@ docs: Everything about your ticket types
                   },
                   "request": {
                     "body": "Thanks again :)",
+                    "created_at": 1590000000,
                     "intercom_user_id": "667d619d8a68186f43bafe82",
                     "message_type": "comment",
                     "type": "user",
@@ -44350,6 +44627,7 @@ docs: Everything about your ticket types
                   "request": {
                     "admin_id": "3156780",
                     "body": "<html> <body>  <h2>An Unordered HTML List</h2>  <ul>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ul>    <h2>An Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ol>   </body> </html>",
+                    "created_at": 1590000000,
                     "message_type": "note",
                     "type": "admin",
                   },
@@ -44400,6 +44678,8 @@ docs: Everything about your ticket types
                   },
                   "request": {
                     "admin_id": "3156780",
+                    "body": "Hello there!",
+                    "created_at": 1590000000,
                     "message_type": "quick_reply",
                     "reply_options": [
                       {
@@ -44449,6 +44729,7 @@ docs: Everything about your ticket types
                   },
                   "request": {
                     "body": "Thanks again :)",
+                    "created_at": 1590000000,
                     "intercom_user_id": "667d61a68a68186f43bafe85",
                     "message_type": "comment",
                     "type": "user",
@@ -44738,6 +45019,7 @@ The table below shows the operators you can use to define how you want to search
                       "admin_id": "991267883",
                       "assignee_id": "991267885",
                     },
+                    "is_shared": true,
                     "open": true,
                     "snoozed_until": 1673609604,
                     "state": "in_progress",
@@ -44978,6 +45260,9 @@ The table below shows the operators you can use to define how you want to search
                       "admin_id": "123",
                       "assignee_id": "991267893",
                     },
+                    "is_shared": true,
+                    "open": true,
+                    "snoozed_until": 1673609604,
                     "state": "in_progress",
                     "ticket_attributes": {
                       "_default_description_": "there is a problem",
@@ -45216,6 +45501,9 @@ The table below shows the operators you can use to define how you want to search
                       "admin_id": "991267899",
                       "assignee_id": "456",
                     },
+                    "is_shared": true,
+                    "open": true,
+                    "snoozed_until": 1673609604,
                     "state": "in_progress",
                     "ticket_attributes": {
                       "_default_description_": "there is a problem",
@@ -46201,6 +46489,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
+            created_at: 1590000000
             intercom_user_id: 667d619d8a68186f43bafe82
           response:
             body:
@@ -46248,6 +46537,7 @@ service:
               Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>  
               <li>Milk</li> </ol>   </body> </html>
             admin_id: '3156780'
+            created_at: 1590000000
           response:
             body:
               type: ticket_part
@@ -46288,7 +46578,9 @@ service:
           request:
             message_type: quick_reply
             type: admin
+            body: Hello there!
             admin_id: '3156780'
+            created_at: 1590000000
             reply_options:
               - text: 'Yes'
                 uuid: 22d6d1f4-1a19-41d0-94c2-e54031f78aca
@@ -46323,6 +46615,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
+            created_at: 1590000000
             intercom_user_id: 667d61a68a68186f43bafe85
           response:
             body:
@@ -46402,6 +46695,8 @@ service:
             ticket_type_id: '1234'
             contacts:
               - id: 667d61b78a68186f43bafe8d
+            company_id: '1234'
+            created_at: 1590000000
             ticket_attributes:
               _default_title_: example
               _default_description_: there is a problem
@@ -46617,6 +46912,7 @@ service:
               _default_description_: there is a problem
             state: in_progress
             open: true
+            is_shared: true
             snoozed_until: 1673609604
             assignment:
               admin_id: '991267883'
@@ -46802,6 +47098,9 @@ service:
               _default_title_: example
               _default_description_: there is a problem
             state: in_progress
+            open: true
+            is_shared: true
+            snoozed_until: 1673609604
             assignment:
               admin_id: '123'
               assignee_id: '991267893'
@@ -46986,6 +47285,9 @@ service:
               _default_title_: example
               _default_description_: there is a problem
             state: in_progress
+            open: true
+            is_shared: true
+            snoozed_until: 1673609604
             assignment:
               admin_id: '991267899'
               assignee_id: '456'

@@ -10877,6 +10877,22 @@ errors:
                 {
                   "name": "Success",
                   "request": {
+                    "air_booking": {
+                      "incoterm": "EXW",
+                      "origin_port_iata_code": "HKG",
+                      "origin_port_icao_code": "VHHH",
+                      "origin_port_loc_code": "HKHKG",
+                      "product_descriptions": [
+                        {
+                          "description": "Wristwatches",
+                          "description_for_export_customs": "手表",
+                          "description_for_export_customs_locale": "zh_CN",
+                          "hs_code": "9101.01",
+                        },
+                      ],
+                      "wants_delivery_service": true,
+                      "wants_pickup_service": true,
+                    },
                     "cargo": {
                       "contains_hazmat": true,
                       "contains_li_ion": true,
@@ -10928,6 +10944,8 @@ errors:
                     "consignee_entity_ref": "zoomit_ref",
                     "delivery_date": "2019-07-31",
                     "destination_address_ref": "my-albany-ref",
+                    "eccn_codes": "3A001, 5A002",
+                    "flow_direct": true,
                     "metadata": [
                       {},
                     ],
@@ -10939,8 +10957,12 @@ errors:
                         "forty_ft_hc": 4,
                         "twenty_ft": 2,
                       },
+                      "destination_port_loc_code": "USLAX",
+                      "destination_port_us_cbp_port_code": "2704",
                       "incoterm": "FOB",
                       "is_lcl": false,
+                      "origin_port_loc_code": "CNYTN",
+                      "origin_port_us_cbp_port_code": "57078",
                       "product_descriptions": [
                         {
                           "description": "Watches",
@@ -10955,7 +10977,15 @@ errors:
                     "origin_address_ref": "id-274346",
                     "shipper_entity_ref": "zoomit-us",
                     "special_instructions": "Handle carefully",
+                    "trucking_booking": {
+                      "description_of_products": "watches",
+                      "is_ltl": true,
+                      "payment_terms": "collect",
+                    },
+                    "wants_bco": false,
                     "wants_export_customs_service": true,
+                    "wants_flexport_freight": false,
+                    "wants_import_customs_service": false,
                   },
                   "response": {
                     "body": {
@@ -12170,11 +12200,34 @@ service:
                   hs_code: '9101.00'
               wants_pickup_service: false
               wants_delivery_service: false
+              origin_port_us_cbp_port_code: '57078'
+              origin_port_loc_code: CNYTN
+              destination_port_us_cbp_port_code: '2704'
+              destination_port_loc_code: USLAX
+            air_booking:
+              incoterm: EXW
+              product_descriptions:
+                - description: Wristwatches
+                  description_for_export_customs: 手表
+                  description_for_export_customs_locale: zh_CN
+                  hs_code: '9101.01'
+              wants_pickup_service: true
+              wants_delivery_service: true
+              origin_port_loc_code: HKHKG
+              origin_port_iata_code: HKG
+              origin_port_icao_code: VHHH
+            trucking_booking:
+              is_ltl: true
+              payment_terms: collect
+              description_of_products: watches
             origin_address_ref: id-274346
             destination_address_ref: my-albany-ref
             cargo_ready_date: '2019-06-30'
             delivery_date: '2019-07-31'
             wants_export_customs_service: true
+            wants_flexport_freight: false
+            wants_import_customs_service: false
+            wants_bco: false
             cargo:
               volume:
                 value: 472.62
@@ -12213,6 +12266,8 @@ service:
             special_instructions: Handle carefully
             metadata:
               - {}
+            eccn_codes: 3A001, 5A002
+            flow_direct: true
           response:
             body:
               _object: /api/response
@@ -12713,12 +12768,25 @@ docs: Endpoints relating to Booking objects
                       "forty_ft_hc": 4,
                       "twenty_ft": 2,
                     },
+                    "new_destination_address_ref": "id-123456",
+                    "new_destination_port_loc_code": "CNYTN",
+                    "new_destination_port_us_cbp_port_code": "57078",
                     "new_metadata": [
                       {},
                     ],
                     "new_name": "Valentine's Day - 2020",
                     "new_origin_address_ref": "warehouse_cn",
                     "new_origin_port_loc_code": "CNSZP",
+                    "new_origin_port_us_cbp_port_code": "57078",
+                    "new_product_descriptions": [
+                      {
+                        "description": "Wristwatches",
+                        "description_for_export_customs": "手表",
+                        "hs_code": "9101.01",
+                      },
+                    ],
+                    "new_wants_bco": true,
+                    "new_wants_flexport_freight": true,
                     "new_wants_import_customs_service": false,
                     "new_wants_pickup_service": false,
                   },
@@ -13059,9 +13127,19 @@ service:
               forty_five_ft_hc: 5
             new_wants_pickup_service: false
             new_wants_import_customs_service: false
+            new_wants_flexport_freight: true
+            new_wants_bco: true
             new_origin_address_ref: warehouse_cn
+            new_origin_port_us_cbp_port_code: '57078'
             new_origin_port_loc_code: CNSZP
+            new_destination_address_ref: id-123456
+            new_destination_port_us_cbp_port_code: '57078'
+            new_destination_port_loc_code: CNYTN
             new_cargo_ready_date: '2019-06-30'
+            new_product_descriptions:
+              - description: Wristwatches
+                description_for_export_customs: 手表
+                hs_code: '9101.01'
             new_cargo:
               volume:
                 value: 472.62
@@ -13788,6 +13866,7 @@ docs: >-
                       "latitude": "37.78",
                       "longitude": "-12.41",
                     },
+                    "teus": "2",
                     "transportation_mode": "air",
                     "weight": {
                       "unit": "kg",
@@ -14129,6 +14208,7 @@ service:
             weight:
               value: 40
               unit: kg
+            teus: '2'
             origin_coordinates:
               latitude: '37.78'
               longitude: '-12.41'
@@ -14175,18 +14255,34 @@ docs: Endpoints relating to Carbon Calculations
                   "request": {
                     "currency_code": "USD",
                     "invoice_number": "INVOICE-04-05-2020",
+                    "is_related_parties": false,
                     "line_items": [
                       {
-                        "price_per_unit": {},
+                        "container_number": "522932-1",
+                        "country_of_origin": "CN",
+                        "document_line_number": 4,
+                        "price_per_unit": {
+                          "amount": "12.34",
+                          "currency_code": "USD",
+                        },
                         "product_sku": "PRODUCT-123",
+                        "purchase_order_number": "9876-ABC",
                         "quantity": {
                           "unit": "pcs",
                           "value": 1.1,
                         },
-                        "value": {},
+                        "value": {
+                          "amount": "12.34",
+                          "currency_code": "USD",
+                        },
                       },
                     ],
-                    "proration_amount": {},
+                    "proration_amount": {
+                      "amount": "12.34",
+                      "currency_code": "USD",
+                    },
+                    "shipment_id": 79683,
+                    "shipment_ref": "PO-123",
                   },
                   "response": {
                     "body": {
@@ -14700,7 +14796,40 @@ docs: Endpoints relating to Carbon Calculations
               "examples": [
                 {
                   "name": "Success",
-                  "request": {},
+                  "request": {
+                    "currency_code": "USD",
+                    "invoice_number": "INVOICE-04-05-2020",
+                    "is_related_parties": false,
+                    "line_items": [
+                      {
+                        "container_number": "522932-1",
+                        "country_of_origin": "CN",
+                        "document_line_number": 4,
+                        "price_per_unit": {
+                          "amount": "12.34",
+                          "currency_code": "USD",
+                        },
+                        "product_sku": "PRODUCT-123",
+                        "purchase_order_number": "9876-ABC",
+                        "quantity": {
+                          "unit": "pcs",
+                          "value": 1.1,
+                        },
+                        "value": {
+                          "amount": "12.34",
+                          "currency_code": "USD",
+                        },
+                      },
+                    ],
+                    "metadata": {
+                      "purchase_order": [
+                        "12345",
+                      ],
+                      "sku": [
+                        "abc123",
+                      ],
+                    },
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -15171,16 +15300,29 @@ service:
       examples:
         - name: Success
           request:
+            shipment_id: 79683
+            shipment_ref: PO-123
             invoice_number: INVOICE-04-05-2020
             currency_code: USD
-            proration_amount: {}
+            is_related_parties: false
+            proration_amount:
+              amount: '12.34'
+              currency_code: USD
             line_items:
-              - product_sku: PRODUCT-123
+              - document_line_number: 4
+                purchase_order_number: 9876-ABC
+                container_number: 522932-1
+                country_of_origin: CN
+                product_sku: PRODUCT-123
                 quantity:
                   value: 1.1
                   unit: pcs
-                value: {}
-                price_per_unit: {}
+                value:
+                  amount: '12.34'
+                  currency_code: USD
+                price_per_unit:
+                  amount: '12.34'
+                  currency_code: USD
           response:
             body:
               _object: /api/response
@@ -15312,7 +15454,30 @@ service:
         - root.CommercialInvoicesUpdateRequestBadRequestError
       examples:
         - name: Success
-          request: {}
+          request:
+            invoice_number: INVOICE-04-05-2020
+            currency_code: USD
+            is_related_parties: false
+            line_items:
+              - document_line_number: 4
+                purchase_order_number: 9876-ABC
+                container_number: 522932-1
+                country_of_origin: CN
+                product_sku: PRODUCT-123
+                quantity:
+                  value: 1.1
+                  unit: pcs
+                value:
+                  amount: '12.34'
+                  currency_code: USD
+                price_per_unit:
+                  amount: '12.34'
+                  currency_code: USD
+            metadata:
+              purchase_order:
+                - '12345'
+              sku:
+                - abc123
           response:
             body:
               _object: /api/response
@@ -15542,6 +15707,7 @@ docs: Endpoints relating to Commercial Invoice objects
                   "name": "response",
                   "request": {
                     "name": "Zoomit",
+                    "ref": "zoomit-ref",
                   },
                   "response": {
                     "body": {
@@ -15941,7 +16107,10 @@ docs: Endpoints relating to Commercial Invoice objects
                   "path-parameters": {
                     "id": "K67EZV1K8cQ5afQErZwk1Q",
                   },
-                  "request": {},
+                  "request": {
+                    "name": "Updated Zoomit",
+                    "ref": "zoomit_ref",
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -16304,6 +16473,7 @@ service:
         - name: response
           request:
             name: Zoomit
+            ref: zoomit-ref
           response:
             body:
               _object: /api/response
@@ -16443,7 +16613,9 @@ service:
         - name: response
           path-parameters:
             id: K67EZV1K8cQ5afQErZwk1Q
-          request: {}
+          request:
+            name: Updated Zoomit
+            ref: zoomit_ref
           response:
             body:
               _object: /api/response
@@ -16688,8 +16860,25 @@ docs: Endpoints relating to Company objects
                 {
                   "name": "response",
                   "request": {
-                    "mailing_address": {},
+                    "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
+                    "company_ref": "Zoomit",
+                    "mailing_address": {
+                      "city": "Albany",
+                      "country_code": "US",
+                      "state": "MN",
+                      "street_address": "1641 Settlers Lane",
+                      "street_address2": "STE 2918",
+                      "unlocode": "USAL2",
+                      "zip": "56307",
+                    },
                     "name": "Zoomit",
+                    "ref": "my-zoomit-ref",
+                    "vat_numbers": [
+                      {
+                        "country_code": "GB",
+                        "number": "GB 123456789",
+                      },
+                    ],
                   },
                   "response": {
                     "body": {
@@ -16850,7 +17039,16 @@ docs: Endpoints relating to Company objects
                   "path-parameters": {
                     "id": "id",
                   },
-                  "request": {},
+                  "request": {
+                    "name": "Zoomit V2",
+                    "ref": "zoomit-us",
+                    "vat_numbers": [
+                      {
+                        "country_code": "GB",
+                        "number": "GB 123456789",
+                      },
+                    ],
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -17175,7 +17373,20 @@ service:
         - name: response
           request:
             name: Zoomit
-            mailing_address: {}
+            company_id: 2UXaj4xcHoW8nwh9UVOMpw
+            company_ref: Zoomit
+            mailing_address:
+              street_address: 1641 Settlers Lane
+              street_address2: STE 2918
+              city: Albany
+              state: MN
+              country_code: US
+              zip: '56307'
+              unlocode: USAL2
+            ref: my-zoomit-ref
+            vat_numbers:
+              - country_code: GB
+                number: GB 123456789
           response:
             body:
               _object: /api/response
@@ -17286,7 +17497,12 @@ service:
         - name: response
           path-parameters:
             id: id
-          request: {}
+          request:
+            name: Zoomit V2
+            ref: zoomit-us
+            vat_numbers:
+              - country_code: GB
+                number: GB 123456789
           response:
             body:
               _object: /api/response
@@ -17342,6 +17558,7 @@ docs: Endpoints relating to CompanyEntity objects
                 {
                   "name": "response",
                   "request": {
+                    "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                     "email": "john@example.com",
                     "name": "John Smith",
                     "phone_number": "861-555-5555",
@@ -17581,7 +17798,11 @@ docs: Endpoints relating to CompanyEntity objects
                   "path-parameters": {
                     "id": "FHLKEFHHoW8nwh9UVOMpw",
                   },
-                  "request": {},
+                  "request": {
+                    "email": "john_new_email@example.com",
+                    "name": "John Smith",
+                    "phone_number": "861-555-7777",
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -17879,6 +18100,7 @@ service:
             name: John Smith
             email: john@example.com
             phone_number: 861-555-5555
+            company_id: 2UXaj4xcHoW8nwh9UVOMpw
           response:
             body:
               _object: /api/response
@@ -17977,7 +18199,10 @@ service:
         - name: response
           path-parameters:
             id: FHLKEFHHoW8nwh9UVOMpw
-          request: {}
+          request:
+            name: John Smith
+            email: john_new_email@example.com
+            phone_number: 861-555-7777
           response:
             body:
               _object: /api/response
@@ -19281,6 +19506,7 @@ docs: Endpoints relating to Customs Entry objects
                     "file_name": "Flexport-Booking.pdf",
                     "mime_type": "application/pdf",
                     "shipment_id": 1234567,
+                    "user_email": "johndoe@flexport.com",
                   },
                   "response": {
                     "body": {
@@ -19726,6 +19952,7 @@ service:
             mime_type: application/pdf
             document_type: packing_list
             document: SGVsbG8sIFdvcmxkIQ==
+            user_email: johndoe@flexport.com
             shipment_id: 1234567
           response:
             body:
@@ -21694,9 +21921,24 @@ docs: Endpoints relating to Invoice objects
                 {
                   "name": "response",
                   "request": {
-                    "address": {},
+                    "address": {
+                      "city": "Albany",
+                      "country_code": "US",
+                      "state": "MN",
+                      "street_address": "1641 Settlers Lane",
+                      "street_address2": "STE 2918",
+                      "unlocode": "USAL2",
+                      "zip": "56307",
+                    },
                     "company_id": "xyz_123_ABC",
+                    "metadata": {
+                      "color": [
+                        "blue",
+                        "green",
+                      ],
+                    },
                     "name": "Zoomit",
+                    "ref": "zoomit-management-co",
                   },
                   "response": {
                     "body": {
@@ -21872,7 +22114,16 @@ docs: Endpoints relating to Invoice objects
                   "path-parameters": {
                     "id": "id",
                   },
-                  "request": {},
+                  "request": {
+                    "metadata": {
+                      "color": [
+                        "blue",
+                        "green",
+                      ],
+                    },
+                    "name": "Zoomit V2",
+                    "ref": "zoomit-management-co",
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -22218,7 +22469,19 @@ service:
           request:
             name: Zoomit
             company_id: xyz_123_ABC
-            address: {}
+            address:
+              street_address: 1641 Settlers Lane
+              street_address2: STE 2918
+              city: Albany
+              state: MN
+              country_code: US
+              zip: '56307'
+              unlocode: USAL2
+            ref: zoomit-management-co
+            metadata:
+              color:
+                - blue
+                - green
           response:
             body:
               _object: /api/response
@@ -22354,7 +22617,13 @@ service:
         - name: response
           path-parameters:
             id: id
-          request: {}
+          request:
+            name: Zoomit V2
+            ref: zoomit-management-co
+            metadata:
+              color:
+                - blue
+                - green
           response:
             body:
               _object: /api/response
@@ -22752,10 +23021,33 @@ docs: Endpoints relating to Ports objects
                 {
                   "name": "Success",
                   "request": {
+                    "classifications": [
+                      {
+                        "codes": [
+                          "0301.00",
+                        ],
+                        "region": "US",
+                      },
+                    ],
+                    "client_verified": true,
                     "country_of_origin": "China",
+                    "description": "The best 12V AC Adapter on the market",
                     "name": "AC Adapter 12V",
                     "product_category": "Cosmetics",
+                    "product_properties": [
+                      {
+                        "type": "color",
+                        "value": "blue",
+                      },
+                    ],
                     "sku": "WDVCDFD-RM00472",
+                    "suppliers": [
+                      {
+                        "country_of_origin": "CN",
+                        "id": 12345,
+                        "ref": "FACTORY-123",
+                      },
+                    ],
                   },
                   "response": {
                     "body": {
@@ -23033,7 +23325,35 @@ docs: Endpoints relating to Ports objects
                   "path-parameters": {
                     "id": "id",
                   },
-                  "request": {},
+                  "request": {
+                    "classifications": [
+                      {
+                        "codes": [
+                          "0301.00",
+                        ],
+                        "region": "US",
+                      },
+                    ],
+                    "client_verified": true,
+                    "country_of_origin": "China",
+                    "description": "The best 12V AC Adapter on the market",
+                    "name": "AC Adapter 12V",
+                    "product_category": "Cosmetics",
+                    "product_properties": [
+                      {
+                        "type": "color",
+                        "value": "blue",
+                      },
+                    ],
+                    "sku": "WDVCDFD-RM00472",
+                    "suppliers": [
+                      {
+                        "country_of_origin": "CN",
+                        "id": 12345,
+                        "ref": "FACTORY-123",
+                      },
+                    ],
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -23388,8 +23708,21 @@ service:
           request:
             name: AC Adapter 12V
             sku: WDVCDFD-RM00472
+            description: The best 12V AC Adapter on the market
             product_category: Cosmetics
             country_of_origin: China
+            client_verified: true
+            product_properties:
+              - type: color
+                value: blue
+            classifications:
+              - codes:
+                  - '0301.00'
+                region: US
+            suppliers:
+              - id: 12345
+                ref: FACTORY-123
+                country_of_origin: CN
           response:
             body:
               _object: /api/response
@@ -23527,7 +23860,24 @@ service:
         - name: Success
           path-parameters:
             id: id
-          request: {}
+          request:
+            name: AC Adapter 12V
+            sku: WDVCDFD-RM00472
+            description: The best 12V AC Adapter on the market
+            product_category: Cosmetics
+            country_of_origin: China
+            client_verified: true
+            product_properties:
+              - type: color
+                value: blue
+            classifications:
+              - codes:
+                  - '0301.00'
+                region: US
+            suppliers:
+              - id: 12345
+                ref: FACTORY-123
+                country_of_origin: CN
           response:
             body:
               _object: /api/response
@@ -24369,9 +24719,52 @@ docs: Endpoints relating to Product objects
                     "issue_date": "2019-06-30",
                     "line_items": [
                       {
+                        "assigned_party_ref": "id-12321",
+                        "cargo_ready_date": "2019-06-30",
+                        "destination_locations": [
+                          {
+                            "location_ref": "id-1234",
+                            "units": 1,
+                          },
+                        ],
+                        "destination_port": {
+                          "code": "USFBN",
+                          "code_type": "unlocode",
+                        },
+                        "hs_codes": [
+                          {
+                            "code": "7608.20.00.00",
+                            "country_code": "CA",
+                          },
+                        ],
                         "item_key": "item_key_1",
+                        "line_item_number": 1,
+                        "measurements": [
+                          {
+                            "measure_type": "length",
+                            "unit_of_measure": "EA",
+                            "value": "1.0",
+                          },
+                        ],
+                        "must_arrive_date": "2019-09-30",
+                        "origin_location_ref": "id-123456",
+                        "origin_port": {
+                          "code": "USFBN",
+                          "code_type": "unlocode",
+                        },
                         "product": {
+                          "color": "red",
+                          "country_of_origin": "US",
+                          "dangerous": false,
+                          "ean_ucc_13": "0123456789012",
+                          "ean_ucc_8": "01234567",
+                          "lot_number": "123-456",
                           "name": "AC Adapter 12",
+                          "product_category": "Cosmetics",
+                          "size": "M",
+                          "sku": "SKU-123",
+                          "style": "classical",
+                          "upc": "012345678912",
                         },
                         "units": 100,
                       },
@@ -25355,9 +25748,41 @@ service:
             order_type: Apparel
             line_items:
               - item_key: item_key_1
+                line_item_number: 1
                 product:
+                  sku: SKU-123
                   name: AC Adapter 12
+                  product_category: Cosmetics
+                  country_of_origin: US
+                  color: red
+                  dangerous: false
+                  ean_ucc_13: '0123456789012'
+                  ean_ucc_8: '01234567'
+                  lot_number: 123-456
+                  size: M
+                  style: classical
+                  upc: '012345678912'
+                origin_port:
+                  code: USFBN
+                  code_type: unlocode
+                destination_port:
+                  code: USFBN
+                  code_type: unlocode
+                must_arrive_date: '2019-09-30'
+                cargo_ready_date: '2019-06-30'
+                origin_location_ref: id-123456
+                destination_locations:
+                  - location_ref: id-1234
+                    units: 1
                 units: 100
+                hs_codes:
+                  - code: 7608.20.00.00
+                    country_code: CA
+                measurements:
+                  - measure_type: length
+                    unit_of_measure: EA
+                    value: '1.0'
+                assigned_party_ref: id-12321
           response:
             body:
               id: 2983
@@ -27036,7 +27461,13 @@ docs: >-
                   "path-parameters": {
                     "id": 1,
                   },
-                  "request": {},
+                  "request": {
+                    "metadata": {
+                      "purchase_order": [
+                        "12345",
+                      ],
+                    },
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -28227,7 +28658,10 @@ service:
         - name: response
           path-parameters:
             id: 1
-          request: {}
+          request:
+            metadata:
+              purchase_order:
+                - '12345'
           response:
             body:
               _object: /api/response

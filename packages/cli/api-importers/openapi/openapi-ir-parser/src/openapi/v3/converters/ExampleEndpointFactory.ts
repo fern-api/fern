@@ -1,4 +1,5 @@
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import {
     CustomCodeSample,
@@ -16,7 +17,6 @@ import {
     SchemaWithExample,
     SupportedSdkLanguage
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
@@ -26,9 +26,8 @@ import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private logger: Logger;
-    private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, context: OpenAPIV3ParserContext) {
+    constructor(private readonly schemas: Record<string, SchemaWithExample>, private readonly context: OpenAPIV3ParserContext) {
         this.schemas = schemas;
         this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
         this.logger = context.logger;
@@ -60,7 +59,8 @@ export class ExampleEndpointFactory {
                     example: undefined,
                     options: {
                         isParameter: false,
-                        ignoreOptionals: true
+                        ignoreOptionals: false,
+                        maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                     }
                 });
                 if (example != null) {
@@ -75,7 +75,8 @@ export class ExampleEndpointFactory {
                         example: rawExample,
                         options: {
                             isParameter: false,
-                            ignoreOptionals: true
+                            ignoreOptionals: false,
+                            maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                         }
                     });
                     if (example != null) {
@@ -103,7 +104,7 @@ export class ExampleEndpointFactory {
                     exampleId: undefined,
                     example: undefined,
                     options: {
-                        maxDepth: 3,
+                        maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                         isParameter: false,
                         ignoreOptionals: false
                     }
@@ -132,7 +133,7 @@ export class ExampleEndpointFactory {
                         exampleId,
                         example: rawExample,
                         options: {
-                            maxDepth: 3,
+                            maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                             isParameter: false,
                             ignoreOptionals: false
                         }

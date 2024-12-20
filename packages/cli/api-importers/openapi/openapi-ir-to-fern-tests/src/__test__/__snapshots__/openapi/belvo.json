@@ -22959,7 +22959,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -23140,7 +23142,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -23319,7 +23323,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -23501,7 +23507,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -23718,7 +23726,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -23944,6 +23954,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -24116,6 +24127,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -24286,6 +24298,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -24459,6 +24472,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -24667,6 +24681,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -25218,6 +25233,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: c21f3914-bcbe-44c4-a2e8-a5e33f6888d4
@@ -25360,6 +25376,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 0f82c5db-13a2-43c7-a69a-e036160aba3a
@@ -25500,6 +25517,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 0f82c5db-13a2-43c7-a69a-e036160aba3a
@@ -25643,6 +25661,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 3d5b0f90-90df-455d-a647-5b74feb746f6
@@ -25806,6 +25825,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 3d5b0f90-90df-455d-a647-5b74feb746f6
@@ -26001,7 +26021,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: c21f3914-bcbe-44c4-a2e8-a5e33f6888d4
@@ -26152,7 +26174,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 0f82c5db-13a2-43c7-a69a-e036160aba3a
@@ -26301,7 +26325,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 0f82c5db-13a2-43c7-a69a-e036160aba3a
@@ -26453,7 +26479,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 3d5b0f90-90df-455d-a647-5b74feb746f6
@@ -26625,7 +26653,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 3d5b0f90-90df-455d-a647-5b74feb746f6
@@ -28576,7 +28606,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -28778,9 +28810,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                     "date_from": "2021-01-18",
                     "date_to": "2021-02-15",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -29327,8 +29361,10 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            account: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2021-01-18'
             date_to: '2021-02-15'
+            token: 1234ab
           response:
             body:
               - id: b834e69b-1aa4-465d-969c-07c886a4fbed
@@ -29503,7 +29539,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: b834e69b-1aa4-465d-969c-07c886a4fbed
@@ -32839,6 +32877,8 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
                 {
                   "name": "Income Verfification",
                   "request": {
+                    "date_from": "2022-08-01",
+                    "date_to": "2022-12-30",
                     "language": "pt",
                     "transactions": [
                       {
@@ -33076,6 +33116,8 @@ service:
                 amount: 650.89
                 currency: BRL
                 institution: Erebor Retail Brasil
+            date_from: '2022-08-01'
+            date_to: '2022-12-30'
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -33779,7 +33821,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -33935,7 +33979,10 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "date_from": "2020-08-01",
+                    "date_to": "2020-12-30",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -34351,6 +34398,9 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            date_from: '2020-08-01'
+            date_to: '2020-12-30'
+            token: 1234ab
           response:
             body:
               id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -34505,7 +34555,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -36339,6 +36391,7 @@ client.connect()
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -36506,6 +36559,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -36804,6 +36858,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
@@ -36944,6 +36999,7 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
           response:
             body:
@@ -39887,7 +39943,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -40125,6 +40183,8 @@ client.connect()
                     "date_from": "2020-01-01",
                     "date_to": "2020-02-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
+                    "type": "INFLOW",
                   },
                   "response": {
                     "body": [
@@ -40330,6 +40390,8 @@ client.connect()
                     "date_from": "2020-01-01",
                     "date_to": "2020-02-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
+                    "type": "INFLOW",
                   },
                   "response": {
                     "body": [
@@ -40535,6 +40597,8 @@ client.connect()
                     "date_from": "2020-01-01",
                     "date_to": "2020-02-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
+                    "type": "INFLOW",
                   },
                   "response": {
                     "body": [
@@ -40740,6 +40804,8 @@ client.connect()
                     "date_from": "2020-01-01",
                     "date_to": "2020-02-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
+                    "type": "INFLOW",
                   },
                   "response": {
                     "body": [
@@ -40945,6 +41011,8 @@ client.connect()
                     "date_from": "2020-01-01",
                     "date_to": "2020-02-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
+                    "type": "INFLOW",
                   },
                   "response": {
                     "body": [
@@ -42401,6 +42469,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-01-01'
             date_to: '2020-02-01'
+            type: INFLOW
+            save_data: true
           response:
             body:
               - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
@@ -42574,6 +42644,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-01-01'
             date_to: '2020-02-01'
+            type: INFLOW
+            save_data: true
           response:
             body:
               - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
@@ -42747,6 +42819,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-01-01'
             date_to: '2020-02-01'
+            type: INFLOW
+            save_data: true
           response:
             body:
               - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
@@ -42920,6 +42994,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-01-01'
             date_to: '2020-02-01'
+            type: INFLOW
+            save_data: true
           response:
             body:
               - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
@@ -43093,6 +43169,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-01-01'
             date_to: '2020-02-01'
+            type: INFLOW
+            save_data: true
           response:
             body:
               - id: 90d90e38-0087-4b6d-b6dc-94ea561bb9cb
@@ -43301,7 +43379,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: c749315b-eec2-435d-a458-06912878564f
@@ -45234,6 +45314,7 @@ client.connect()
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -45389,8 +45470,19 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "certificate": "1234567890abcd=",
+                    "credentials_storage": "store",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "fetch_historical": true,
                     "institution": "erebor_mx_retail",
+                    "password": "password",
+                    "password2": "pin",
+                    "private_key": "1234567890abcd=",
+                    "token": "1234ab",
                     "username": "username",
+                    "username2": "secondusername",
+                    "username3": "thirdusername",
+                    "username_type": "001",
                   },
                   "response": {
                     "body": {
@@ -45677,7 +45769,12 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "certificate": "1234567890abcd=",
                     "password": "password",
+                    "password2": "pin",
+                    "private_key": "1234567890abcd=",
+                    "token": "1234ab",
+                    "username_type": "001",
                   },
                   "response": {
                     "body": {
@@ -46322,6 +46419,17 @@ service:
           request:
             institution: erebor_mx_retail
             username: username
+            password: password
+            external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
+            username2: secondusername
+            username3: thirdusername
+            password2: pin
+            token: 1234ab
+            fetch_historical: true
+            credentials_storage: store
+            username_type: '001'
+            certificate: 1234567890abcd=
+            private_key: 1234567890abcd=
           response:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
@@ -46456,6 +46564,7 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
           response:
             body:
@@ -46808,6 +46917,11 @@ service:
             fields: link,balance,account
           request:
             password: password
+            password2: pin
+            token: 1234ab
+            username_type: '001'
+            certificate: 1234567890abcd=
+            private_key: 1234567890abcd=
           response:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
@@ -47745,7 +47859,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -47897,6 +48013,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -48200,6 +48317,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 2b22f123-7c3a-4518-9ac2-863eb5d4613c
@@ -48332,7 +48450,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 2b22f123-7c3a-4518-9ac2-863eb5d4613c
@@ -49102,10 +49222,14 @@ A payment intent captures all payment information (such as the amount to be char
                     "amount": "350000",
                     "customer": "06dc2f14-1217-4480-9b36-550a944a39d1",
                     "description": "Training shoes",
+                    "metadata": {
+                      "internal_reference_id": "GGq73487w2",
+                    },
                     "payment_method_details": {
                       "pse": {
                         "belvo_flow": true,
                         "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
+                        "callback_url": "https://www.acmecorp.com/checkout/3487321",
                       },
                     },
                     "provider": "belvo",
@@ -49638,6 +49762,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                     "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                   },
                   "request": {
+                    "confirm": true,
                     "payment_method_details": {},
                   },
                   "response": {
@@ -50065,8 +50190,11 @@ service:
             payment_method_details:
               pse:
                 beneficiary_bank_account: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
+                callback_url: https://www.acmecorp.com/checkout/3487321
                 belvo_flow: true
             provider: belvo
+            metadata:
+              internal_reference_id: GGq73487w2
           response:
             body:
               id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
@@ -50313,6 +50441,7 @@ service:
             id: a3b92311-1888-449f-acaa-49ae28d68fcd
           request:
             payment_method_details: {}
+            confirm: true
           response:
             body:
               id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
@@ -50466,9 +50595,11 @@ types:
                     "amount": "1234.12",
                     "customer": "06dc2f14-1217-4480-9b36-550a944a39d1",
                     "description": "Shoe payment",
+                    "expires_in": "7d",
                     "payment_method_details": {
                       "open_finance": {
                         "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
+                        "callback_url": "https://www.acmecorp.com/checkout/3487321",
                       },
                     },
                     "provider": "belvo",
@@ -51102,6 +51233,8 @@ service:
             payment_method_details:
               open_finance:
                 beneficiary_bank_account: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
+                callback_url: https://www.acmecorp.com/checkout/3487321
+            expires_in: 7d
           response:
             body:
               id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
@@ -51863,6 +51996,8 @@ docs: >
               "examples": [
                 {
                   "request": {
+                    "auth_header": "Authorization",
+                    "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
                     "name": "Your webhook name",
                     "url": "https://mycompany.com/security/webhook",
                   },
@@ -52011,6 +52146,8 @@ service:
         - request:
             name: Your webhook name
             url: https://mycompany.com/security/webhook
+            auth_header: Authorization
+            auth_token: Bearer hv7alD71j0dzXf09iKfg7u
           response:
             body:
               - id: 32ab6809-6253-4fb0-be0f-94cce6ebb692
@@ -52418,6 +52555,7 @@ docs: >+
                     "date_from": "2020-08-05",
                     "date_to": "2020-10-05",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -52807,6 +52945,7 @@ service:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
             date_from: '2020-08-05'
             date_to: '2020-10-05'
+            token: 1234ab
           response:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
@@ -53582,7 +53721,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -53769,7 +53910,10 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "date_from": "2022-08-01",
+                    "date_to": "2022-12-30",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -54224,6 +54368,9 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
+            date_from: '2022-08-01'
+            date_to: '2022-12-30'
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -54385,7 +54532,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -55545,7 +55694,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -55761,6 +55912,7 @@ client.connect()
                   },
                   "request": {
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -56155,6 +56307,7 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            token: 1234ab
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -56344,7 +56497,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 076c66e5-90f5-4e01-99c7-50e32f65ae42
@@ -57692,6 +57847,7 @@ client.connect()
                   },
                   "request": {
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                   },
                   "response": {
                     "body": {
@@ -58025,6 +58181,7 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            save_data: true
           response:
             body:
               id: 91106968-1abd-4d64-85c1-4e73d96fb997
@@ -59135,7 +59292,9 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "year_from": "2018",
                     "year_to": "2019",
                   },
@@ -59708,6 +59867,8 @@ service:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             year_from: '2018'
             year_to: '2019'
+            attach_pdf: false
+            save_data: true
           response:
             body:
               - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
@@ -64060,9 +64221,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "date_from": "2018-01-01",
                     "date_to": "2019-01-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "type": "type",
                   },
                   "response": {
@@ -64423,9 +64586,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "date_from": "2018-01-01",
                     "date_to": "2019-01-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "type": "type",
                   },
                   "response": {
@@ -64652,9 +64817,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "date_from": "2018-01-01",
                     "date_to": "2019-01-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "type": "type",
                   },
                   "response": {
@@ -64889,9 +65056,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "date_from": "2018-01-01",
                     "date_to": "2019-01-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "type": "type",
                   },
                   "response": {
@@ -65501,9 +65670,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "attach_pdf": false,
                     "date_from": "2018-01-01",
                     "date_to": "2019-01-01",
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                     "type": "type",
                   },
                   "response": {
@@ -66920,6 +67091,8 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            attach_pdf: false
+            save_data: true
             type: type
             date_from: '2018-01-01'
             date_to: '2019-01-01'
@@ -67195,6 +67368,8 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            attach_pdf: false
+            save_data: true
             type: type
             date_from: '2018-01-01'
             date_to: '2019-01-01'
@@ -67396,6 +67571,8 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            attach_pdf: false
+            save_data: true
             type: type
             date_from: '2018-01-01'
             date_to: '2019-01-01'
@@ -67605,6 +67782,8 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            attach_pdf: false
+            save_data: true
             type: type
             date_from: '2018-01-01'
             date_to: '2019-01-01'
@@ -68086,6 +68265,8 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            attach_pdf: false
+            save_data: true
             type: type
             date_from: '2018-01-01'
             date_to: '2019-01-01'
@@ -70651,6 +70832,7 @@ client.connect()
                   },
                   "request": {
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                   },
                   "response": {
                     "body": {
@@ -70814,6 +70996,7 @@ client.connect()
                   },
                   "request": {
                     "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                    "save_data": true,
                   },
                   "response": {
                     "body": {
@@ -71416,6 +71599,7 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            save_data: true
           response:
             body:
               id: 6de34cb3-bf0d-445d-b832-7ec7781e2c6f
@@ -71553,6 +71737,7 @@ service:
             fields: link,balance,account
           request:
             link: d4617561-1c01-4b2f-83b6-a594f7b3bc57
+            save_data: true
           response:
             body:
               id: 6de34cb3-bf0d-445d-b832-7ec7781e2c6f
@@ -73954,7 +74139,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -74141,7 +74328,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -74327,7 +74516,9 @@ client.connect()
                   },
                   "request": {
                     "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                    "save_data": true,
                     "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -74552,9 +74743,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                     "date_from": "2020-08-05",
                     "date_to": "2020-10-05",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -74744,9 +74937,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                     "date_from": "2020-08-05",
                     "date_to": "2020-10-05",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -74935,9 +75130,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                     "date_from": "2020-08-05",
                     "date_to": "2020-10-05",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": [
@@ -75164,9 +75361,11 @@ client.connect()
                     "omit": "link,balance",
                   },
                   "request": {
+                    "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                     "date_from": "2020-08-05",
                     "date_to": "2020-10-05",
                     "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                    "token": "1234ab",
                   },
                   "response": {
                     "body": {
@@ -76133,8 +76332,10 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            account: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-08-05'
             date_to: '2020-10-05'
+            token: 1234ab
           response:
             body:
               - id: e5588958-48f2-427c-9300-945207532f5d
@@ -76295,8 +76496,10 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            account: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-08-05'
             date_to: '2020-10-05'
+            token: 1234ab
           response:
             body:
               - id: e5588958-48f2-427c-9300-945207532f5d
@@ -76456,8 +76659,10 @@ service:
             fields: link,balance,account
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            account: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-08-05'
             date_to: '2020-10-05'
+            token: 1234ab
           response:
             body:
               - id: 9e432f18-36ca-4bd6-a3f3-1971e58dc1e8
@@ -76669,8 +76874,10 @@ service:
             X-Belvo-Request-Mode: async
           request:
             link: 2ccd5e15-194a-4a19-a45a-e7223c7e6717
+            account: d4617561-1c01-4b2f-83b6-a594f7b3bc57
             date_from: '2020-08-05'
             date_to: '2020-10-05'
+            token: 1234ab
           response:
             body:
               request_id: b5d0106ac9cc43d5b36199fe831f6bbe
@@ -76802,7 +77009,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: e5588958-48f2-427c-9300-945207532f5d
@@ -76959,7 +77168,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: e5588958-48f2-427c-9300-945207532f5d
@@ -77115,7 +77326,9 @@ service:
             fields: link,balance,account
           request:
             session: 6e7b283c6efa449c9c028a16b5c249fa
+            token: 1234ab
             link: 683005d6-f45c-4adb-b289-f1a12f50f80c
+            save_data: true
           response:
             body:
               - id: 9e432f18-36ca-4bd6-a3f3-1971e58dc1e8
