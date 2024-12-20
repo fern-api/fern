@@ -1,0 +1,4 @@
+name: api
+error-discrimination:
+  strategy: status-code
+auth: bearer
