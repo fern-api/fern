@@ -296,7 +296,7 @@ export class Object_ {
     }
 
     /**
-     * @param {string} string
+     * @param {string} string_
      * @param {Fiddle.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -323,7 +323,7 @@ export class Object_ {
      *     })
      */
     public async getAndReturnNestedWithRequiredField(
-        string: string,
+        string_: string,
         request: Fiddle.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
     ): Promise<
@@ -335,7 +335,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`
             ),
             method: "POST",
             headers: {
