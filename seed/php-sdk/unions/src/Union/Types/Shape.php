@@ -15,7 +15,7 @@ class Shape extends DiscriminatedUnion
      * @var 'circle'|'square'|'_unknown' $type 
      */
     #[JsonProperty('type')]
-    #[Discriminant(['circle' => Circle::class, 'square' => Square::class,])]
+    #[Discriminant(['circle' => Circle::class, 'square' => Square::class])]
     public string $type;
 
     /**
