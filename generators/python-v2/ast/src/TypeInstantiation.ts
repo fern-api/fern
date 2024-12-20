@@ -247,7 +247,7 @@ export class TypeInstantiation extends AstNode {
         }
 
         if (startOnNewLine) {
-            writer.write("\\\n");
+            writer.writeNoIndent("\\\n");
         }
 
         lines.forEach((line, idx) => {
@@ -256,10 +256,10 @@ export class TypeInstantiation extends AstNode {
             // If this is the last line, add a newline escape
             if (idx === lines.length - 1) {
                 if (endWithNewLine) {
-                    writer.write("\\\n");
+                    writer.writeNoIndent("\\\n");
                 }
             } else {
-                writer.write("\n");
+                writer.writeNoIndent("\n");
             }
         });
 
