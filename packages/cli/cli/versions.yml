@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        SDK generation no longer hard-fails on single example generation errors.
+      type: fix
+  irVersion: 53
+  version: 0.46.8
+
+- changelogEntry:
+    - summary: |
         The generated Fern Definition now properly supports default values for query parameters.
       type: fix
   irVersion: 53

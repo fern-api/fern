@@ -292,15 +292,20 @@ export function generateEndpointExample({
         }
     }
 
-    return {
-        type: "success",
-        example: {
-            id: hashJSON(result),
-            url: getUrlForExample(endpoint, result),
-            ...result
-        },
-        jsonExample: undefined // dummmy
-    };
+    try {
+        const hashed = hashJSON(result);
+        return {
+            type: "success",
+            example: {
+                id: hashed,
+                url: getUrlForExample(endpoint, result),
+                ...result
+            },
+            jsonExample: undefined // dummy
+        };
+    } catch (e) {
+        return { type: "failure", message: `Parse failure with exceptions ${e}` };
+    }
 }
 
 function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointCall, "id" | "url">): string {
