@@ -408,9 +408,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     _other: () => undefined
                 });
             },
-            named: () => {},
-            unknown: () => {},
-            _other: () => {}
+            named: () => undefined,
+            unknown: () => undefined,
+            _other: () => undefined
         });
 
         return defaultValue != null ? defaultValue : "1";
