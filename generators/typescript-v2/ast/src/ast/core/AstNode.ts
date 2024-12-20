@@ -21,4 +21,10 @@ export abstract class AstNode extends AbstractAstNode {
     public toStringFormatted(): string {
         return prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 });
     }
+
+    public toStringFormattedAsync(): Promise<string> {
+        return Promise.resolve(
+            prettier.format(this.toString(), { parser: "typescript", tabWidth: 4, printWidth: 120 })
+        );
+    }
 }
