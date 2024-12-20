@@ -29,23 +29,16 @@ class UnionWithLiteral extends DiscriminatedUnion
     public mixed $value;
 
     /**
-     * @param ?array{
-     *   base?: 'base',
+     * @param array{
+     *   base: 'base',
      *   type?: 'fern'|'_unknown',
      *   value?: 'fern'|mixed,
      * } $options
      */
     public function __construct(
-        private readonly ?array $options = null,
+        private readonly array $options,
     ) {
-        if (is_null($this->options)) {
-            throw new \Exception("Missing all required properties");
-        }
-        if (array_key_exists('base', $this->options)) {
-            $this->base = $this->options['base'];
-        } else {
-            throw new \Exception("Missing required property 'base'");
-        }
+        $this->base = $this->options['base'];
         $this->type = $this->options['type'] ?? '_unknown';
         $this->value = $this->options['value'] ?? null;
     }
@@ -63,6 +56,7 @@ class UnionWithLiteral extends DiscriminatedUnion
         mixed $_unknown
     ): UnionWithLiteral {
         return new UnionWithLiteral([
+            'base' => 'base',
             '_unknown' => $_unknown
         ]);
     }
