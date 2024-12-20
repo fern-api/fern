@@ -1,0 +1,10 @@
+service:
+  auth: false
+  base-path: /service
+  endpoints:
+    ping:
+      method: GET
+      path: /ping
+      response:
+        type: string
+        status-code: 200

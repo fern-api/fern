@@ -233,6 +233,8 @@ fixtures:
         inlinePathParameters: true
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
+  request-options-with-fern-versions:
+    - outputFolder: default
 scripts:
   - docker: fernapi/ts-seed
     commands:
