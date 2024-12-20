@@ -5,6 +5,7 @@ package com.seed.version.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
@@ -18,11 +19,14 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private final String version;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
-            OkHttpClient httpClient) {
+            OkHttpClient httpClient,
+            Optional<String> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -33,6 +37,8 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.version = version.orElse("2.0.0");
+        this.headers.put("X-API-Version", this.version);
     }
 
     public Environment environment() {
@@ -48,6 +54,10 @@ public final class ClientOptions {
             values.putAll(requestOptions.getHeaders());
         }
         return values;
+    }
+
+    public String version() {
+        return this.version;
     }
 
     public OkHttpClient httpClient() {
@@ -78,6 +88,8 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+        private Optional<String> version;
+
         public Builder environment(Environment environment) {
             this.environment = environment;
             return this;
@@ -93,11 +105,16 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder version(String version) {
+            this.version = Optional.of(version);
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
                     .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, version);
         }
     }
 }
