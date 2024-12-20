@@ -17,6 +17,8 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.ir.model.ir.ApiVersionScheme;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.PlatformHeaders;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
@@ -67,6 +69,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     "headerSuppliers",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
+            .build();
+    private static final FieldSpec API_VERSIONS_FIELD = FieldSpec.builder(
+                    String.class, "version", Modifier.PRIVATE, Modifier.FINAL)
             .build();
     private static final FieldSpec OKHTTP_CLIENT_FIELD = FieldSpec.builder(
                     OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
@@ -208,6 +213,53 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addType(createBuilder(variableFields))
                 .build();
+
+        clientGeneratorContext
+                .getIr()
+                .getApiVersion()
+                .ifPresent(apiVersionScheme -> apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                    @Override
+                    public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                        contructorBuilder.addParameter(ParameterSpec.builder(
+                                        ParameterizedTypeName.get(
+                                                ClassName.get(Optional.class), ClassName.get(String.class)),
+                                        API_VERSIONS_FIELD.name)
+                                .build());
+
+                        if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
+                            contructorBuilder.addStatement(
+                                    "this.$L = $L.orElse($S)",
+                                    API_VERSIONS_FIELD.name,
+                                    API_VERSIONS_FIELD.name,
+                                    headerApiVersionScheme
+                                            .getValue()
+                                            .getDefault()
+                                            .get()
+                                            .getName()
+                                            .getWireValue());
+                        } else {
+                            contructorBuilder.addStatement(
+                                    "this.$L = $L", API_VERSIONS_FIELD.name, API_VERSIONS_FIELD.name);
+                        }
+
+                        contructorBuilder.addStatement(
+                                "this.$L.put($S, $L)",
+                                HEADERS_FIELD.name,
+                                headerApiVersionScheme.getHeader().getName().getWireValue(),
+                                CodeBlock.of("this.$L", API_VERSIONS_FIELD.name));
+
+                        clientOptionsBuilder.addField(API_VERSIONS_FIELD);
+                        clientOptionsBuilder.addMethod(createGetter(API_VERSIONS_FIELD));
+
+                        return null;
+                    }
+
+                    @Override
+                    public Void _visitUnknown(Object o) {
+                        throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                    }
+                }));
+
         JavaFile environmentsFile =
                 JavaFile.builder(className.packageName(), clientOptions).build();
 
