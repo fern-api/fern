@@ -35,7 +35,9 @@ jobs:
         with:
           filters: |
             seed: 
-              - '.github/workflows/seed.yml'
+              # TODO: Temporarily removing to verify behavior of other changes.
+              #
+              # - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
