@@ -11,7 +11,6 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { SchemaParserContext } from "../SchemaParserContext";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";

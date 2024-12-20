@@ -108,6 +108,7 @@ types:
       - commons.WithDescription
       - commons.WithSource
     properties:
+      audiences: list<string>
       path: string
       groupName: commons.SdkGroupName
       summary: optional<string>

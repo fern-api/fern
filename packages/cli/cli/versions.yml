@@ -1,5 +1,28 @@
 - changelogEntry:
     - summary: |
+        The CLI now auto generates SSE and JSON Streaming examples even if those are 
+        not provided in the OpenAPI Spec or Fern Definition.
+      type: fix
+  irVersion: 53
+  version: 0.46.8
+
+- changelogEntry:
+    - summary: |
+        The generated Fern Definition now properly supports default values for query parameters.
+      type: fix
+  irVersion: 53
+  version: 0.46.7
+
+- changelogEntry:
+    - summary: |
+        The audiences property on WebSocket channels is now respected when filtering 
+        the IR graph based on configured audiences.
+      type: fix
+  irVersion: 53
+  version: 0.46.6
+
+- changelogEntry:
+    - summary: |
         Previously, when the CLI failed to validate the fern definition yaml file against a JSON Schema, 
         we would log `Failed to parse` without a schema path. Now we grab a relevant schema path. 
       type: fix

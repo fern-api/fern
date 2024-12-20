@@ -22799,6 +22799,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -24805,6 +24806,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -28416,6 +28418,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -28958,6 +28961,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -32350,6 +32354,7 @@ At the moment, the employment records resource is available for:
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -32528,6 +32533,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -33640,6 +33646,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -34089,6 +34096,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -35292,6 +35300,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -35369,6 +35378,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -36212,6 +36222,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -36607,6 +36618,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -39702,6 +39714,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -41201,6 +41214,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -45075,6 +45089,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -45822,6 +45837,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -47595,6 +47611,7 @@ Cancun, COL 10447",
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -47959,6 +47976,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -50777,6 +50795,7 @@ types:
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 100. If you enter a value greater than 100, our API will default to the maximum value (1000).
@@ -50958,6 +50977,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page.
@@ -52330,6 +52350,7 @@ docs: >+
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -52537,6 +52558,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -53443,6 +53465,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -53930,6 +53953,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -55386,6 +55410,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -55876,6 +55901,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -57541,6 +57567,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -57761,6 +57788,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -58950,6 +58978,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -59349,6 +59378,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -60389,6 +60419,7 @@ client.tax_retentions.list(params: {
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -60579,6 +60610,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -63839,6 +63871,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -65796,6 +65829,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -70491,6 +70525,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -70966,6 +71001,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -73736,6 +73772,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -75200,6 +75237,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page.

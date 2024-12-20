@@ -5,6 +5,7 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface WebsocketChannel extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {
+    audiences: string[];
     path: string;
     groupName: FernOpenapiIr.SdkGroupName;
     summary: string | undefined;

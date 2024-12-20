@@ -5107,6 +5107,7 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of account holders to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -5240,6 +5241,7 @@ service:
             docs: Starting point for the set of account holders
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of account holders to be returned
             validation:
               min: 1
@@ -5727,6 +5729,7 @@ for bs in sdk.bank_statements.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of bank statements to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -5864,6 +5867,7 @@ service:
             docs: Starting point for the set of bank statements
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of bank statements to be returned
             validation:
               min: 1
@@ -6387,6 +6391,7 @@ for batch in sdk.batches.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of batches to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -6624,6 +6629,7 @@ service:
             docs: Starting point for the set of batches
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of batches to be returned
             validation:
               min: 1
@@ -8706,6 +8712,7 @@ reports = sdk.reports.list()
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of report to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -8871,6 +8878,7 @@ service:
             docs: Starting point for the set of report
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of report to be returned
             validation:
               min: 1
@@ -9357,6 +9365,7 @@ for tx in sdk.transactions.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 25,
                     "docs": "The limit of transactions to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -9826,6 +9835,7 @@ service:
             docs: Starting point for the set of transactions
           limit:
             type: optional<integer>
+            default: 25
             docs: The limit of transactions to be returned
             validation:
               min: 1
