@@ -556,13 +556,10 @@ jobs:
 
       - name: Check cache
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v4
         with:
-          # We don't actually need to store the content of the seed snapshots - we just need
-          # to verify that snapshots for the hash have been generated.
-          path: generators/go/sdk/versions.yml
+          path: seed/go-sdk
           key: seed-go-sdk-${{ steps.hash.outputs.hash }}
-          lookup-only: true  # Don't save to the cache until we know it's successful.
 
       - name: Install
         if: steps.cache.outputs.cache-hit != 'true'
@@ -591,7 +588,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         id: validate
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           # Run git diff check
           if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
@@ -603,13 +599,11 @@ jobs:
           fi
 
       - name: Save cache
-        if: steps.cache.outputs.cache-hit != 'true' && steps.validate.outputs.valid == 'true'
-        uses: actions/cache@v3
+        id: cache
+        uses: actions/cache/save@v4
         with:
-          # We don't actually need to store the content of the seed snapshots - we just need
-          # to verify that snapshots for the hash have been generated.
-          path: generators/go/sdk/versions.yml
-          key: go-sdk-${{ steps.hash.outputs.hash }}
+          path: seed/go-sdk
+          key: seed-go-sdk-${{ steps.hash.outputs.hash }}
 
   csharp-model:
     runs-on: ubuntu-latest
