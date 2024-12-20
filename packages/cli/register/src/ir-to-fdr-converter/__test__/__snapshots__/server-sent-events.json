@@ -95,7 +95,37 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/stream",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "query": "query"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "query": "query"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "sse",
+                "value": [
+                  {
+                    "event": "",
+                    "data": {
+                      "delta": "delta",
+                      "tokens": 1
+                    }
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
