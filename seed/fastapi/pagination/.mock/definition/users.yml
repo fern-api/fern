@@ -1,9 +1,9 @@
 imports:
   root: __package__.yml
 
-types: 
-  Order: 
-    enum: 
+types:
+  Order:
+    enum:
       - asc
       - desc
 
@@ -15,8 +15,8 @@ types:
     properties:
       cursor: optional<string>
 
-  UserListContainer: 
-    properties: 
+  UserListContainer:
+    properties:
       users: list<User>
 
   UserPage:
@@ -24,60 +24,59 @@ types:
       data: UserListContainer
       next: optional<uuid>
 
-  UserOptionalListContainer: 
-    properties: 
+  UserOptionalListContainer:
+    properties:
       users: optional<list<User>>
 
   UserOptionalListPage:
     properties:
       data: UserOptionalListContainer
       next: optional<uuid>
-
   UsernameContainer:
     properties:
       results: list<string>
 
-  ListUsersExtendedResponse: 
+  ListUsersExtendedResponse:
     extends:
       - UserPage
     properties:
-      total_count: 
+      total_count:
         type: integer
         docs: The totall number of /users
 
-  ListUsersExtendedOptionalListResponse: 
+  ListUsersExtendedOptionalListResponse:
     extends:
       - UserOptionalListPage
     properties:
-      total_count: 
+      total_count:
         type: integer
         docs: The totall number of /users
- 
-  ListUsersPaginationResponse: 
-    properties: 
+
+  ListUsersPaginationResponse:
+    properties:
       hasNextPage: optional<boolean>
       page: optional<Page>
-      total_count: 
+      total_count:
         type: integer
         docs: The totall number of /users
       data: list<User>
 
-  Page: 
-    properties: 
-      page: 
+  Page:
+    properties:
+      page:
         type: integer
         docs: The current page
       next: optional<NextPage>
       per_page: integer
       total_page: integer
 
-  NextPage: 
-    properties: 
+  NextPage:
+    properties:
       page: integer
       starting_after: string
 
-  User: 
-    properties: 
+  User:
+    properties:
       name: string
       id: integer
 
@@ -86,7 +85,7 @@ service:
   base-path: /users
   endpoints:
     listWithCursorPagination:
-      pagination: 
+      pagination:
         cursor: $request.starting_after
         next_cursor: $response.page.next.starting_after
         results: $response.data
@@ -95,41 +94,41 @@ service:
       request:
         name: ListUsersCursorPaginationRequest
         query-parameters:
-          page: 
+          page:
             type: optional<integer>
             docs: Defaults to first page
-          per_page: 
+          per_page:
             type: optional<integer>
             docs: Defaults to per page
-          order: 
-            type: optional<Order> 
-          starting_after: 
+          order:
+            type: optional<Order>
+          starting_after:
             type: optional<string>
-            docs: | 
-              The cursor used for pagination in order to fetch 
+            docs: |
+              The cursor used for pagination in order to fetch
               the next page of results.
       response: ListUsersPaginationResponse
 
     listWithBodyCursorPagination:
-      pagination: 
+      pagination:
         cursor: $request.pagination.cursor
         next_cursor: $response.page.next.starting_after
         results: $response.data
       method: POST
       path: ""
-      request: 
+      request:
         name: ListUsersBodyCursorPaginationRequest
-        body: 
+        body:
           properties:
-            pagination: 
+            pagination:
               type: optional<WithCursor>
-              docs: | 
+              docs: |
                 The object that contains the cursor used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
 
     listWithOffsetPagination:
-      pagination: 
+      pagination:
         offset: $request.page
         results: $response.data
       method: GET
@@ -137,38 +136,37 @@ service:
       request:
         name: ListUsersOffsetPaginationRequest
         query-parameters:
-          page: 
+          page:
             type: optional<integer>
             docs: Defaults to first page
-          per_page: 
+          per_page:
             type: optional<integer>
             docs: Defaults to per page
-          order: 
-            type: optional<Order> 
-          starting_after: 
+          order:
+            type: optional<Order>
+          starting_after:
             type: optional<string>
-            docs: | 
-              The cursor used for pagination in order to fetch 
+            docs: |
+              The cursor used for pagination in order to fetch
               the next page of results.
       response: ListUsersPaginationResponse
 
     listWithBodyOffsetPagination:
-      pagination: 
+      pagination:
         offset: $request.pagination.page
         results: $response.data
       method: POST
       path: ""
-      request: 
+      request:
         name: ListUsersBodyOffsetPaginationRequest
-        body: 
+        body:
           properties:
-            pagination: 
+            pagination:
               type: optional<WithPage>
-              docs: | 
+              docs: |
                 The object that contains the offset used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
-
     listWithOffsetStepPagination:
       pagination:
         offset: $request.page
@@ -191,8 +189,8 @@ service:
           order:
             type: optional<Order>
       response: ListUsersPaginationResponse
-    
-    listWithOffsetPaginationHasNextPage: 
+
+    listWithOffsetPaginationHasNextPage:
       pagination:
         offset: $request.page
         results: $response.data
@@ -217,7 +215,7 @@ service:
       response: ListUsersPaginationResponse
 
     listWithExtendedResults:
-      pagination: 
+      pagination:
         cursor: $request.cursor
         next_cursor: $response.next
         results: $response.data.users
@@ -230,7 +228,7 @@ service:
       response: ListUsersExtendedResponse
 
     listWithExtendedResultsAndOptionalData:
-      pagination: 
+      pagination:
         cursor: $request.cursor
         next_cursor: $response.next
         results: $response.data.users
@@ -243,7 +241,7 @@ service:
       response: ListUsersExtendedOptionalListResponse
 
     listUsernames:
-      pagination: 
+      pagination:
         cursor: $request.starting_after
         next_cursor: $response.cursor.after
         results: $response.cursor.data
@@ -252,10 +250,10 @@ service:
       request:
         name: ListUsernamesRequest
         query-parameters:
-          starting_after: 
+          starting_after:
             type: optional<string>
-            docs: | 
-              The cursor used for pagination in order to fetch 
+            docs: |
+              The cursor used for pagination in order to fetch
               the next page of results.
       response: root.UsernameCursor
 
@@ -266,6 +264,6 @@ service:
       request:
         name: ListWithGlobalConfigRequest
         query-parameters:
-          offset: 
+          offset:
             type: optional<integer>
       response: UsernameContainer
