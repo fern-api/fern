@@ -8,16 +8,13 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.Organizations.DeleteOrganization(
+    client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
-        "organization_id",
-        &fern.DeleteOrganizationRequest{
+        "user_id",
+        &fern.SearchUsersRequest{
             Limit: fern.Int(
                 1,
-            ),
-            Soft: fern.Bool(
-                true,
             ),
         },
     )

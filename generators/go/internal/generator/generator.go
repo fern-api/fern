@@ -32,8 +32,6 @@ const (
 )
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
-//
-// This is an edit that should trigger seed, but only for go-sdk.
 type Mode uint8
 
 const (

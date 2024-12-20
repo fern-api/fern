@@ -3,6 +3,17 @@
         {
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_organizations.deleteOrganization"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.DeleteOrganization(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n\t\u0026fern.DeleteOrganizationRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tSoft: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/organizations/{organization_id}",
                 "method": "GET",
                 "identifier_override": "endpoint_organizations.getOrganization"
             },

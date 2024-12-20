@@ -161,3 +161,53 @@ func (c *Client) SearchOrganizations(
 	}
 	return response, nil
 }
+
+func (c *Client) DeleteOrganization(
+	ctx context.Context,
+	tenantId string,
+	organizationId string,
+	request *pathparametersgo.DeleteOrganizationRequest,
+	opts ...option.RequestOption,
+) ([]*pathparametersgo.Organization, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/organizations/%v/",
+		tenantId,
+		organizationId,
+	)
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response []*pathparametersgo.Organization
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodDelete,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
