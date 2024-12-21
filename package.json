@@ -10,6 +10,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+    "bootstrap": "./scripts/bootstrap.sh",
     "clean": "pnpm -r clean",
     "compile": "pnpm -r --no-bail compile",
     "test": "pnpm -r --filter='!@fern-api/ete-tests' --no-bail test",
