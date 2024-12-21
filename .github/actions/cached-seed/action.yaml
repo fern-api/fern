@@ -63,7 +63,6 @@ runs:
     - name: Validate results
       id: validate
       shell: bash
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
           echo "Results are valid, saving to cache if not already."
