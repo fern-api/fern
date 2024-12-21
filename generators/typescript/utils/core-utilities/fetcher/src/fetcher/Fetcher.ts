@@ -1,6 +1,5 @@
 import { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
-import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
@@ -64,17 +63,16 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     const url = createRequestUrl(args.url, args.queryParameters);
-    let requestBody: BodyInit | undefined = await getRequestBody({
+    const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType === "json" ? "json" : "other"
     });
-    const fetchFn = await getFetchFn();
 
     try {
         const response = await requestWithRetries(
             async () =>
                 makeRequest(
-                    fetchFn,
+                    fetch,
                     url,
                     args.method,
                     headers,
@@ -86,7 +84,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ),
             args.maxRetries
         );
-        let responseBody = await getResponseBody(response, args.responseType);
+        const responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
             return {

@@ -4,7 +4,6 @@ import fs from "fs";
 import { Server } from "http";
 import multer from "multer";
 import { newFormData } from "../..";
-import { getFetchFn } from "../../fetcher/getFetchFn";
 import { RUNTIME } from "../../runtime";
 
 describe("Multipart Form Data Tests", () => {
