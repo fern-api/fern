@@ -29,7 +29,7 @@ if ! git rev-parse --git-dir > /dev/null 2>&1; then
     exit 1
 fi
 
-# Create exclude pattern string for grep
+# Create exclude pattern string for grep.
 exclude_pattern=""
 for pattern in "${exclude_paths[@]}"; do
     grep_pattern=$(echo "$pattern" | sed 's/\./\\./g' | sed 's/\*/.*/')
@@ -40,13 +40,13 @@ for pattern in "${exclude_paths[@]}"; do
     fi
 done
 
-# List files and compute hash
+# List files and compute hash.
 if [ ${#paths[@]} -eq 0 ]; then
     echo "Error: No paths specified" >&2
     exit 1
 fi
 
-# Use git ls-files to get tracked files, filter by paths and exclusions
+# Generate a hash based on the tracked files.
 if [ -n "$exclude_pattern" ]; then
     git ls-files -z "${paths[@]}" | tr '\0' '\n' | grep -vE "$exclude_pattern" | sort | xargs git hash-object | git hash-object --stdin
 else
