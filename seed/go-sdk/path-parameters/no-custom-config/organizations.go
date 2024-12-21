@@ -8,11 +8,6 @@ import (
 	internal "github.com/path-parameters/fern/internal"
 )
 
-type DeleteOrganizationRequest struct {
-	Limit *int  `json:"-" url:"limit,omitempty"`
-	Soft  *bool `json:"soft,omitempty" url:"-"`
-}
-
 type SearchOrganizationsRequest struct {
 	Limit *int `json:"-" url:"limit,omitempty"`
 }

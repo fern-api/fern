@@ -8,11 +8,6 @@ import (
 	internal "github.com/fern-api/path-parameters-go/internal"
 )
 
-type DeleteOrganizationRequest struct {
-	Limit *int  `json:"-" url:"limit,omitempty"`
-	Soft  *bool `json:"soft,omitempty" url:"-"`
-}
-
 type GetOrganizationUserRequest struct {
 	TenantId       string `json:"-" url:"-"`
 	OrganizationId string `json:"-" url:"-"`

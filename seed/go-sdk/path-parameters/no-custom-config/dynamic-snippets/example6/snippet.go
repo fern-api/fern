@@ -8,18 +8,14 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.UpdateUser(
+    client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &fern.UpdateUserRequest{
-            Body: &fern.User{
-                Name: "name",
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
-            },
+        &fern.SearchUsersRequest{
+            Limit: fern.Int(
+                1,
+            ),
         },
     )
 }

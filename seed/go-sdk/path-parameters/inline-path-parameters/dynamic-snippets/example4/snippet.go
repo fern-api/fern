@@ -8,11 +8,15 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.GetUser(
+    client.User.CreateUser(
         context.TODO(),
-        &path.GetUsersRequest{
-            TenantId: "tenant_id",
-            UserId: "user_id",
+        "tenant_id",
+        &path.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
         },
     )
 }

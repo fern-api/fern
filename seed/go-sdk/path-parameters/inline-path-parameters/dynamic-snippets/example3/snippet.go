@@ -8,17 +8,11 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.Organizations.DeleteOrganization(
+    client.User.GetUser(
         context.TODO(),
-        "tenant_id",
-        "organization_id",
-        &path.DeleteOrganizationRequest{
-            Limit: path.Int(
-                1,
-            ),
-            Soft: path.Bool(
-                true,
-            ),
+        &path.GetUsersRequest{
+            TenantId: "tenant_id",
+            UserId: "user_id",
         },
     )
 }

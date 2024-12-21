@@ -35,15 +35,3 @@ service:
         query-parameters:
           limit: optional<integer>
       response: list<Organization>
-
-    deleteOrganization:
-      path: "/"
-      method: DELETE
-      request:
-        name: DeleteOrganizationRequest
-        query-parameters:
-          limit: optional<integer>
-        body:
-          properties:
-            soft: optional<boolean>
-      response: list<Organization>
