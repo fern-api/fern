@@ -34,6 +34,7 @@ const (
 // Mode is an enum for different generator modes (i.e. types, client, etc).
 //
 // Some other edit that isn't cached.
+// Another edit to try it again.
 type Mode uint8
 
 const (
