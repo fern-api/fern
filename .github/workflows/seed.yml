@@ -35,9 +35,7 @@ jobs:
         with:
           filters: |
             seed: 
-              # TODO: Temporarily removing to verify behavior of other changes.
-              #
-              # - '.github/workflows/seed.yml'
+              - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
@@ -86,28 +84,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator ruby-model
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: ruby-model
+          generator-path: generators/ruby
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -117,28 +98,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator ruby-sdk
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: ruby-sdk
+          generator-path: generators/ruby
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -148,35 +112,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install Dependencies
-        working-directory: ./generators/python
-        run: poetry install
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator pydantic
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: pydantic-model
+          generator-path: generators/python
 
   python-sdk:
     runs-on: Seed
@@ -186,35 +126,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install Dependencies
-        working-directory: ./generators/python
-        run: poetry install
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator python-sdk --parallel 10
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: python-sdk
+          generator-path: generators/python
 
   fastapi:
     runs-on: ubuntu-latest
@@ -224,35 +140,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install Dependencies
-        working-directory: ./generators/python
-        run: poetry install
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator fastapi
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: fastapi
+          generator-path: generators/python
 
   openapi:
     runs-on: ubuntu-latest
@@ -262,28 +154,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator openapi
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: openapi
+          generator-path: generators/openapi
 
   postman:
     runs-on: ubuntu-latest
@@ -293,28 +168,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator postman
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: postman
+          generator-path: generators/postman
 
   java-sdk:
     runs-on: Seed
@@ -324,28 +182,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator java-sdk --parallel 10
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: java-sdk
+          generator-path: generators/java
 
   java-model:
     runs-on: Seed
@@ -355,28 +196,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator java-model --parallel 10
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: java-model
+          generator-path: generators/java
 
   java-spring:
     runs-on: ubuntu-latest
@@ -386,28 +210,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator java-spring
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: java-spring
+          generator-path: generators/java
 
   typescript-sdk:
     runs-on: Seed
@@ -417,28 +224,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator ts-sdk --parallel 10
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: ts-sdk
+          generator-path: generators/typescript
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -448,28 +238,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator ts-express --parallel 10
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: ts-express
+          generator-path: generators/typescript
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -479,28 +252,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator go-fiber --parallel 16
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: go-fiber
+          generator-path: generators/go
 
   go-model:
     runs-on: ubuntu-latest
@@ -510,28 +266,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator go-model --parallel 16
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: go-model
+          generator-path: generators/go
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -554,29 +293,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator csharp-model --parallel 16
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: csharp-model
+          generator-path: generators/csharp
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -586,28 +308,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator csharp-sdk --parallel 16
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: csharp-sdk
+          generator-path: generators/csharp
 
   php-model:
     runs-on: ubuntu-latest
@@ -617,28 +322,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator php-model --parallel 8
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: php-model
+          generator-path: generators/php
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -647,26 +335,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator php-sdk --parallel 8
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+          generator-name: php-sdk
+          generator-path: generators/php
