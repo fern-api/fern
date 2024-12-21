@@ -115,7 +115,7 @@ jobs:
       - name: Run seed
         uses: ./.github/actions/cached-seed
         with:
-          generator-name: pydantic-model
+          generator-name: pydantic
           generator-path: generators/python
 
   python-sdk:
