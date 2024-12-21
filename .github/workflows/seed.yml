@@ -541,69 +541,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Generate input hash
-        id: hash
-        run: |
-          HASH=$(./scripts/hash.sh \
-            packages/seed \
-            test-definitions \
-            packages/ir-sdk/fern/apis \
-            packages/cli/generation/ir-generator \
-            generators/go \
-            seed/go-sdk \
-            --exclude versions.yml)
-          echo "hash=${HASH}" >> $GITHUB_OUTPUT
-
-      - name: Check cache
-        id: cache
-        uses: actions/cache/restore@v4
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
         with:
-          path: seed/go-sdk
-          key: seed-go-sdk-${{ steps.hash.outputs.hash }}
-
-      - name: Install
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
-        if: steps.cache.outputs.cache-hit != 'true'
-        with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        if: steps.cache.outputs.cache-hit != 'true'
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Seed Test
-        if: steps.cache.outputs.cache-hit != 'true'
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local test --generator go-sdk --parallel 16
-
-      - name: Ensure no changes to git-tracked files
-        id: validate
-        run: |
-          # Run git diff check
-          if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
-            echo "Results are valid, saving to cache if not already."
-            echo "valid=true" >> $GITHUB_OUTPUT
-          else
-            echo "Changes detected in git-tracked files, not saving to cache."
-            exit 1  # Fail the workflow if changes detected
-          fi
-
-      - name: Save cache
-        if: steps.validate.outputs.valid == 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: seed/go-sdk
-          key: seed-go-sdk-${{ steps.hash.outputs.hash }}
+          generator-name: go-sdk
+          generator-path: generators/go
 
   csharp-model:
     runs-on: ubuntu-latest
