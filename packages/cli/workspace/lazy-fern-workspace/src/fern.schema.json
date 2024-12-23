@@ -2803,7 +2803,7 @@
             {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "$ref": "#/definitions/types.TypeReferenceSchema"
               }
             },
             {
