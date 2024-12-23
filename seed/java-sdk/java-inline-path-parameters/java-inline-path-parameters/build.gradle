@@ -1,0 +1,101 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.diffplug.spotless' version '6.11.0'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/releases/'
+    }
+}
+
+dependencies {
+    api 'com.squareup.okhttp3:okhttp:4.12.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+    }
+}
+
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+group = 'com.fern'
+
+version = '0.0.1'
+
+jar {
+    dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "java-inline-path-parameters"
+}
+
+sourcesJar {
+    archiveBaseName = "java-inline-path-parameters"
+}
+
+javadocJar {
+    archiveBaseName = "java-inline-path-parameters"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fern'
+            artifactId = 'java-inline-path-parameters'
+            version = '0.0.1'
+            from components.java
+            pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://mit-license.org/'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/java-inline-path-parameters/fern.git'
+                    developerConnection = 'scm:git:git://github.com/java-inline-path-parameters/fern.git'
+                    url = 'https://github.com/java-inline-path-parameters/fern'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "$System.env.MAVEN_PUBLISH_REGISTRY_URL"
+            credentials {
+                username "$System.env.MAVEN_USERNAME"
+                password "$System.env.MAVEN_PASSWORD"
+            }
+        }
+    }
+}
+

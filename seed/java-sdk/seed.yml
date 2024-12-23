@@ -93,6 +93,9 @@ fixtures:
     - customConfig:
         package-prefix: "com.customprefix"
       outputFolder: java-custom-package-prefix
+  java-inline-path-parameters:
+    - customConfig:
+      outputFolder: java-inline-path-parameters
 scripts:
   - docker: fernapi/java-seed
     commands:
