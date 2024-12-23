@@ -326,7 +326,6 @@ async function parseApiConfigurationV2Schema({
 
     for (const spec of apiConfiguration.specs ?? []) {
         if (generatorsYml.isOpenAPISchema(spec)) {
-            console.log(`convertGeneratorsConfiguration ${JSON.stringify(spec.settings?.["example-generation"])}`);
             const definitionLocation: generatorsYml.APIDefinitionLocation = {
                 schema: {
                     type: "oss",
