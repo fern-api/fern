@@ -20,14 +20,17 @@ public final class ClientOptions {
 
   private final OkHttpClient httpClient;
 
+  private final int timeout;
+
   private ClientOptions(Environment environment, Map<String, String> headers,
-      Map<String, Supplier<String>> headerSuppliers, OkHttpClient httpClient) {
+      Map<String, Supplier<String>> headerSuppliers, OkHttpClient httpClient, int timeout) {
     this.environment = environment;
     this.headers = new HashMap<>();
     this.headers.putAll(headers);
     this.headers.putAll(new HashMap<String,String>() {{put("X-Fern-Language", "JAVA");}});
     this.headerSuppliers = headerSuppliers;
     this.httpClient = httpClient;
+    this.timeout = timeout;
   }
 
   public Environment environment() {
@@ -67,6 +70,8 @@ public final class ClientOptions {
 
     private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+    private int timeout = 0;
+
     public Builder environment(Environment environment) {
       this.environment = environment;
       return this;
@@ -82,11 +87,17 @@ public final class ClientOptions {
       return this;
     }
 
+    public Builder timeout(int timeout) {
+      this.timeout = timeout;
+      return this;
+    }
+
     public ClientOptions build() {
       OkHttpClient okhttpClient = new OkHttpClient.Builder()
               .addInterceptor(new RetryInterceptor(3))
+              .callTimeout(this.timeout, TimeUnit.SECONDS)
               .build();
-      return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
+      return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout);
     }
   }
 }
