@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Implement global timeout configuration for generated clients.
+      type: feat
+  createdAt: '2024-12-23'
+  irVersion: 53
+  version: 2.8.1
+- changelogEntry:
+    - summary: |
         Generate inline request bodies with their path parameters in the object.
       type: feat
   createdAt: '2024-12-20'
