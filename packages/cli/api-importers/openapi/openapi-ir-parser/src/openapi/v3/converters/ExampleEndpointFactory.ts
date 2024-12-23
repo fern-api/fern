@@ -59,8 +59,9 @@ export class ExampleEndpointFactory {
                     example: undefined,
                     options: {
                         isParameter: false,
-                        ignoreOptionals: false,
-                        maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
+                        ignoreOptionals: true,
+                        // TODO(dsinghvi): Respect depth on request examples
+                        // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                     }
                 });
                 if (example != null) {
@@ -75,8 +76,9 @@ export class ExampleEndpointFactory {
                         example: rawExample,
                         options: {
                             isParameter: false,
-                            ignoreOptionals: false,
-                            maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
+                            ignoreOptionals: true,
+                            // TODO(dsinghvi): Respect depth on request examples
+                            // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                         }
                     });
                     if (example != null) {

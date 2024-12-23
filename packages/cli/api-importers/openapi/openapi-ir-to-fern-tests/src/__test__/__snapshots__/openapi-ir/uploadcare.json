@@ -862,27 +862,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "metadata[{key}]": {
-                "value": {
-                  "value": "#/components/examples/metadataValue/value",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "signature": {
-                "value": {
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "expire": {
-                "value": {
-                  "value": 1454902434,
-                  "type": "double"
-                },
-                "type": "primitive"
               }
             },
             "type": "object"
@@ -1900,27 +1879,6 @@
                 "value": {
                   "value": "content_type",
                   "type": "string"
-                },
-                "type": "primitive"
-              },
-              "metadata[{key}]": {
-                "value": {
-                  "value": "#/components/examples/metadataValue/value",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "signature": {
-                "value": {
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "expire": {
-                "value": {
-                  "value": 1454902434,
-                  "type": "double"
                 },
                 "type": "primitive"
               }
@@ -4178,27 +4136,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "metadata[{key}]": {
-                "value": {
-                  "value": "#/components/examples/metadataValue/value",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "signature": {
-                "value": {
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "expire": {
-                "value": {
-                  "value": 1454902434,
-                  "type": "double"
-                },
-                "type": "primitive"
               }
             },
             "type": "object"
@@ -4283,27 +4220,6 @@
                 "value": {
                   "value": "source_url",
                   "type": "string"
-                },
-                "type": "primitive"
-              },
-              "metadata[{key}]": {
-                "value": {
-                  "value": "#/components/examples/metadataValue/value",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "signature": {
-                "value": {
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "expire": {
-                "value": {
-                  "value": 1454902434,
-                  "type": "double"
                 },
                 "type": "primitive"
               }
@@ -7457,20 +7373,6 @@
                   }
                 ],
                 "type": "array"
-              },
-              "signature": {
-                "value": {
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "expire": {
-                "value": {
-                  "value": 1454902434,
-                  "type": "double"
-                },
-                "type": "primitive"
               }
             },
             "type": "object"

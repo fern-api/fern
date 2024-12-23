@@ -1028,7 +1028,6 @@ service:
                   "request": {
                     "fileHash": "3c7d87c9575702bc3b1e991f4d3c638e",
                     "fileName": "file.png",
-                    "parentFolder": "6436b1ce5281cace05b65aea",
                   },
                   "response": {
                     "body": {
@@ -1116,7 +1115,6 @@ service:
                   },
                   "request": {
                     "displayName": "my asset folder",
-                    "parentFolder": "6390c49774a71f99f21a08eb",
                   },
                   "response": {
                     "body": {
@@ -2540,7 +2538,6 @@ service:
           request:
             fileName: file.png
             fileHash: 3c7d87c9575702bc3b1e991f4d3c638e
-            parentFolder: 6436b1ce5281cace05b65aea
           response:
             body:
               uploadDetails:
@@ -2770,7 +2767,6 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           request:
             displayName: my asset folder
-            parentFolder: 6390c49774a71f99f21a08eb
           response:
             body:
               id: 6390c49774a71f0e3c1a08ee
@@ -4414,12 +4410,7 @@ service:
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                   },
-                  "request": {
-                    "fieldData": {
-                      "name": "My new item",
-                      "slug": "my-new-item",
-                    },
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "cmsLocaleIds": [
@@ -6961,10 +6952,7 @@ service:
       examples:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
-          request:
-            fieldData:
-              name: My new item
-              slug: my-new-item
+          request: {}
           response:
             body:
               id: 580e64008c9a982ac9b8b754
@@ -7855,11 +7843,7 @@ service:
                   "path-parameters": {
                     "form_submission_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "request": {
-                    "formSubmissionData": {
-                      "hidden-field-name": "new value",
-                    },
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "dateSubmitted": "2022-09-14T12:35:16Z",
@@ -9055,9 +9039,7 @@ service:
       examples:
         - path-parameters:
             form_submission_id: 580e63e98c9a982ac9b8b741
-          request:
-            formSubmissionData:
-              hidden-field-name: new value
+          request: {}
           response:
             body:
               id: 6321ca84df3949bfc6752327
@@ -9197,8 +9179,6 @@ Required scope | `ecommerce:write`
                   },
                   "request": {
                     "inventoryType": "infinite",
-                    "quantity": 100,
-                    "updateQuantity": 1,
                   },
                   "response": {
                     "body": {
@@ -9568,8 +9548,6 @@ service:
             item_id: 580e64008c9a982ac9b8b754
           request:
             inventoryType: infinite
-            updateQuantity: 1
-            quantity: 100
           response:
             body:
               id: 5bfedb42bab0ad90fa7dad39
@@ -11160,12 +11138,7 @@ Required scope | `ecommerce:write`
                     "order_id": "5e8518516e147040726cc415",
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "request": {
-                    "comment": "Example comment to myself",
-                    "shippingProvider": "Shipping Company, Co.",
-                    "shippingTracking": "tr00000000001",
-                    "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "acceptedOn": "2024-03-29T21:29:21Z",
@@ -26878,11 +26851,7 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
             order_id: 5e8518516e147040726cc415
-          request:
-            comment: Example comment to myself
-            shippingProvider: Shipping Company, Co.
-            shippingTracking: tr00000000001
-            shippingTrackingURL: https://www.shippingcompany.com/tracking/tr00000000001
+          request: {}
           response:
             body:
               orderId: fc7-128
@@ -30966,63 +30935,7 @@ Required scope | `ecommerce:write`",
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "request": {
-                    "product": {
-                      "fieldData": {
-                        "default-sku": "66072fb71b89448912e2681c",
-                        "description": "A plain t-shirt",
-                        "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
-                        "name": "T-Shirt",
-                        "shippable": true,
-                        "sku-properties": [
-                          {
-                            "enum": [
-                              {
-                                "id": "8d21a625d655ab260e9941c27180c75b",
-                                "name": "Small",
-                                "slug": "small",
-                              },
-                              {
-                                "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
-                                "name": "Medium",
-                                "slug": "medium",
-                              },
-                              {
-                                "id": "ec7877d6137ecf7ec86f726c135b1812",
-                                "name": "Large",
-                                "slug": "large",
-                              },
-                            ],
-                            "id": "31b77fa66fa376c2c0abb458d5be39fb",
-                            "name": "Size",
-                          },
-                          {
-                            "enum": [
-                              {
-                                "id": "e539b0d6c3a609cd06ddb2da804f68f0",
-                                "name": "Royal Blue",
-                                "slug": "royal-blue",
-                              },
-                              {
-                                "id": "68d98f2fbafc0fd45651cddc44798dd0",
-                                "name": "Crimson Red",
-                                "slug": "crimson-red",
-                              },
-                              {
-                                "id": "996cd95c97fd5620d0a374c835b37205",
-                                "name": "Forrest Green",
-                                "slug": "forrest-green",
-                              },
-                            ],
-                            "id": "74d3738e62c568d5634dd6989daec5ec",
-                            "name": "Color",
-                          },
-                        ],
-                        "slug": "t-shirt",
-                        "tax-category": "standard-taxable",
-                      },
-                    },
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "product": {
@@ -31182,20 +31095,7 @@ Required scope | `ecommerce:write`
                   },
                   "request": {
                     "skus": [
-                      {
-                        "fieldData": {
-                          "name": "Blue T-shirt",
-                          "price": {
-                            "unit": "USD",
-                            "value": 100,
-                          },
-                          "quantity": 10,
-                          "sku-values": {
-                            "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                          },
-                          "slug": "t-shirt-blue",
-                        },
-                      },
+                      {},
                     ],
                   },
                   "response": {
@@ -31572,70 +31472,7 @@ Required scope | `ecommerce:write`
                     "product_id": "580e63fc8c9a982ac9b8b745",
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "request": {
-                    "product": {
-                      "cmsLocaleId": "653ad57de882f528b32e810e",
-                      "createdOn": "2024-04-04T14:22:28Z",
-                      "fieldData": {
-                        "default-sku": "66072fb71b89448912e2681c",
-                        "description": "A plain t-shirt",
-                        "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
-                        "name": "T-Shirt",
-                        "shippable": true,
-                        "sku-properties": [
-                          {
-                            "enum": [
-                              {
-                                "id": "8d21a625d655ab260e9941c27180c75b",
-                                "name": "Small",
-                                "slug": "small",
-                              },
-                              {
-                                "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
-                                "name": "Medium",
-                                "slug": "medium",
-                              },
-                              {
-                                "id": "ec7877d6137ecf7ec86f726c135b1812",
-                                "name": "Large",
-                                "slug": "large",
-                              },
-                            ],
-                            "id": "31b77fa66fa376c2c0abb458d5be39fb",
-                            "name": "Size",
-                          },
-                          {
-                            "enum": [
-                              {
-                                "id": "e539b0d6c3a609cd06ddb2da804f68f0",
-                                "name": "Royal Blue",
-                                "slug": "royal-blue",
-                              },
-                              {
-                                "id": "68d98f2fbafc0fd45651cddc44798dd0",
-                                "name": "Crimson Red",
-                                "slug": "crimson-red",
-                              },
-                              {
-                                "id": "996cd95c97fd5620d0a374c835b37205",
-                                "name": "Forrest Green",
-                                "slug": "forrest-green",
-                              },
-                            ],
-                            "id": "74d3738e62c568d5634dd6989daec5ec",
-                            "name": "Color",
-                          },
-                        ],
-                        "slug": "t-shirt",
-                        "tax-category": "standard-taxable",
-                      },
-                      "id": "660eb7a486d1d6e0412292d7",
-                      "isArchived": false,
-                      "isDraft": false,
-                      "lastPublished": "2024-04-04T14:24:19Z",
-                      "lastUpdated": "2024-04-04T14:30:19Z",
-                    },
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
@@ -31774,25 +31611,7 @@ Required scope | `ecommerce:write`
                     "sku_id": "5e8518516e147040726cc415",
                   },
                   "request": {
-                    "sku": {
-                      "cmsLocaleId": "653ad57de882f528b32e810e",
-                      "createdOn": "2023-03-17T18:47:35Z",
-                      "fieldData": {
-                        "name": "Blue T-shirt",
-                        "price": {
-                          "unit": "USD",
-                          "value": 100,
-                        },
-                        "quantity": 10,
-                        "sku-values": {
-                          "ff42fee0113744f693a764e3431a9cc2": "64a74715c456e36762fc39a1",
-                        },
-                        "slug": "t-shirt-blue",
-                      },
-                      "id": "580e63fc8c9a982ac9b8b745",
-                      "lastPublished": "2023-03-17T18:47:35Z",
-                      "lastUpdated": "2023-03-17T18:47:35Z",
-                    },
+                    "sku": {},
                   },
                   "response": {
                     "body": {
@@ -37935,41 +37754,7 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          request:
-            product:
-              fieldData:
-                name: T-Shirt
-                slug: t-shirt
-                description: A plain t-shirt
-                shippable: true
-                sku-properties:
-                  - id: 31b77fa66fa376c2c0abb458d5be39fb
-                    name: Size
-                    enum:
-                      - id: 8d21a625d655ab260e9941c27180c75b
-                        name: Small
-                        slug: small
-                      - id: ecdca17106ad86c0dfe3b5f3ac8be6c9
-                        name: Medium
-                        slug: medium
-                      - id: ec7877d6137ecf7ec86f726c135b1812
-                        name: Large
-                        slug: large
-                  - id: 74d3738e62c568d5634dd6989daec5ec
-                    name: Color
-                    enum:
-                      - id: e539b0d6c3a609cd06ddb2da804f68f0
-                        name: Royal Blue
-                        slug: royal-blue
-                      - id: 68d98f2fbafc0fd45651cddc44798dd0
-                        name: Crimson Red
-                        slug: crimson-red
-                      - id: 996cd95c97fd5620d0a374c835b37205
-                        name: Forrest Green
-                        slug: forrest-green
-                tax-category: standard-taxable
-                default-sku: 66072fb71b89448912e2681c
-                ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
+          request: {}
           response:
             body:
               product:
@@ -38180,48 +37965,7 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
             product_id: 580e63fc8c9a982ac9b8b745
-          request:
-            product:
-              id: 660eb7a486d1d6e0412292d7
-              cmsLocaleId: 653ad57de882f528b32e810e
-              lastPublished: '2024-04-04T14:24:19Z'
-              lastUpdated: '2024-04-04T14:30:19Z'
-              createdOn: '2024-04-04T14:22:28Z'
-              isArchived: false
-              isDraft: false
-              fieldData:
-                name: T-Shirt
-                slug: t-shirt
-                description: A plain t-shirt
-                shippable: true
-                sku-properties:
-                  - id: 31b77fa66fa376c2c0abb458d5be39fb
-                    name: Size
-                    enum:
-                      - id: 8d21a625d655ab260e9941c27180c75b
-                        name: Small
-                        slug: small
-                      - id: ecdca17106ad86c0dfe3b5f3ac8be6c9
-                        name: Medium
-                        slug: medium
-                      - id: ec7877d6137ecf7ec86f726c135b1812
-                        name: Large
-                        slug: large
-                  - id: 74d3738e62c568d5634dd6989daec5ec
-                    name: Color
-                    enum:
-                      - id: e539b0d6c3a609cd06ddb2da804f68f0
-                        name: Royal Blue
-                        slug: royal-blue
-                      - id: 68d98f2fbafc0fd45651cddc44798dd0
-                        name: Crimson Red
-                        slug: crimson-red
-                      - id: 996cd95c97fd5620d0a374c835b37205
-                        name: Forrest Green
-                        slug: forrest-green
-                tax-category: standard-taxable
-                default-sku: 66072fb71b89448912e2681c
-                ec-product-type: b6ccc1830db4b1babeb06a9ac5f6dd76
+          request: {}
           response:
             body:
               id: 660eb7a486d1d6e0412292d7
@@ -38325,15 +38069,7 @@ service:
             product_id: 580e63fc8c9a982ac9b8b745
           request:
             skus:
-              - fieldData:
-                  sku-values:
-                    ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                  name: Blue T-shirt
-                  slug: t-shirt-blue
-                  price:
-                    value: 100
-                    unit: USD
-                  quantity: 10
+              - {}
           response:
             body:
               skus:
@@ -38409,21 +38145,7 @@ service:
             product_id: 580e63fc8c9a982ac9b8b745
             sku_id: 5e8518516e147040726cc415
           request:
-            sku:
-              id: 580e63fc8c9a982ac9b8b745
-              cmsLocaleId: 653ad57de882f528b32e810e
-              lastPublished: '2023-03-17T18:47:35Z'
-              lastUpdated: '2023-03-17T18:47:35Z'
-              createdOn: '2023-03-17T18:47:35Z'
-              fieldData:
-                sku-values:
-                  ff42fee0113744f693a764e3431a9cc2: 64a74715c456e36762fc39a1
-                name: Blue T-shirt
-                slug: t-shirt-blue
-                price:
-                  value: 100
-                  unit: USD
-                quantity: 10
+            sku: {}
           response:
             body:
               id: 580e63fc8c9a982ac9b8b745
@@ -39505,13 +39227,7 @@ service:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "request": {
-                    "customDomains": [
-                      "660c6449dd97ebc7346ac629",
-                      "660c6449dd97ebc7346ac62f",
-                    ],
-                    "publishToWebflowSubdomain": false,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "customDomains": [
@@ -40640,11 +40356,7 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          request:
-            customDomains:
-              - 660c6449dd97ebc7346ac629
-              - 660c6449dd97ebc7346ac62f
-            publishToWebflowSubdomain: false
+          request: {}
           response:
             body:
               customDomains:

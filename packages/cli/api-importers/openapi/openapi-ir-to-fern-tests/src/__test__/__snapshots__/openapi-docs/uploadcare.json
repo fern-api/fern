@@ -3436,12 +3436,10 @@ Log.d("TAG", group.toString())
                     },
                   ],
                   "request": {
-                    "expire": 1454902434,
                     "files[]": [
                       "files[]",
                     ],
                     "pub_key": "caa9d29da887ee88ffe6",
-                    "signature": "04b29480233f4def5c875875b6bdc3b1",
                   },
                   "response": {
                     "body": {
@@ -3801,8 +3799,6 @@ service:
             pub_key: caa9d29da887ee88ffe6
             files[]:
               - files[]
-            signature: 04b29480233f4def5c875875b6bdc3b1
-            expire: 1454902434
           response:
             body:
               id: 0d712319-b970-4602-850c-bae1ced521a6~1
@@ -4261,9 +4257,6 @@ Log.d("TAG", file.toString())
                   ],
                   "request": {
                     "UPLOADCARE_PUB_KEY": "caa9d29da887ee88ffe6",
-                    "expire": 1454902434,
-                    "metadata[{key}]": "#/components/examples/metadataValue/value",
-                    "signature": "04b29480233f4def5c875875b6bdc3b1",
                   },
                   "response": {
                     "body": {
@@ -4662,10 +4655,7 @@ Log.d("TAG", file.toString())
                   ],
                   "name": "type-token",
                   "request": {
-                    "expire": 1454902434,
-                    "metadata[{key}]": "#/components/examples/metadataValue/value",
                     "pub_key": "caa9d29da887ee88ffe6",
-                    "signature": "04b29480233f4def5c875875b6bdc3b1",
                     "source_url": "source_url",
                   },
                   "response": {
@@ -4780,10 +4770,7 @@ Log.d("TAG", file.toString())
                   ],
                   "name": "type-file-info",
                   "request": {
-                    "expire": 1454902434,
-                    "metadata[{key}]": "#/components/examples/metadataValue/value",
                     "pub_key": "caa9d29da887ee88ffe6",
-                    "signature": "04b29480233f4def5c875875b6bdc3b1",
                     "source_url": "source_url",
                   },
                   "response": {
@@ -6075,10 +6062,7 @@ Log.d("TAG", file.toString())
                   "request": {
                     "UPLOADCARE_PUB_KEY": "caa9d29da887ee88ffe6",
                     "content_type": "content_type",
-                    "expire": 1454902434,
                     "filename": "filename",
-                    "metadata[{key}]": "#/components/examples/metadataValue/value",
-                    "signature": "04b29480233f4def5c875875b6bdc3b1",
                     "size": 1,
                   },
                   "response": {
@@ -6407,9 +6391,6 @@ service:
       examples:
         - request:
             UPLOADCARE_PUB_KEY: caa9d29da887ee88ffe6
-            metadata[{key}]: '#/components/examples/metadataValue/value'
-            signature: 04b29480233f4def5c875875b6bdc3b1
-            expire: 1454902434
           response:
             body:
               filename: filename
@@ -6609,9 +6590,6 @@ service:
             filename: filename
             size: 1
             content_type: content_type
-            metadata[{key}]: '#/components/examples/metadataValue/value'
-            signature: 04b29480233f4def5c875875b6bdc3b1
-            expire: 1454902434
           response:
             body:
               uuid: 67947755-1584-4e3f-902b-d4e2bf76a841
@@ -7238,9 +7216,6 @@ service:
           request:
             pub_key: caa9d29da887ee88ffe6
             source_url: source_url
-            metadata[{key}]: '#/components/examples/metadataValue/value'
-            signature: 04b29480233f4def5c875875b6bdc3b1
-            expire: 1454902434
           response:
             body:
               type: token
@@ -7352,9 +7327,6 @@ service:
           request:
             pub_key: caa9d29da887ee88ffe6
             source_url: source_url
-            metadata[{key}]: '#/components/examples/metadataValue/value'
-            signature: 04b29480233f4def5c875875b6bdc3b1
-            expire: 1454902434
           response:
             body:
               uuid: be3b4d5e-179d-460e-8a5d-69112ac86cbb

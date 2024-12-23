@@ -330,18 +330,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "user": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": "id",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
               }
             },
             "type": "object"

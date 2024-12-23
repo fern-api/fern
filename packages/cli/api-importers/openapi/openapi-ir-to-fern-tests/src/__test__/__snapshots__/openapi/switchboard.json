@@ -2821,7 +2821,6 @@ service:
                     "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430",
                   },
                   "request": {
-                    "followPaginationLinks": false,
                     "prompt": "What is the main idea of this page?",
                   },
                   "response": {
@@ -3000,9 +2999,7 @@ service:
                     "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                     "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430",
                   },
-                  "request": {
-                    "prompt": "What is the main idea of this page?",
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "data": {
@@ -3194,7 +3191,6 @@ service:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
             windowId: 0334da2a-91b0-42c5-6156-76a5eba87430
           request:
-            followPaginationLinks: false
             prompt: What is the main idea of this page?
           response:
             body:
@@ -3304,8 +3300,7 @@ service:
         - path-parameters:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
             windowId: 0334da2a-91b0-42c5-6156-76a5eba87430
-          request:
-            prompt: What is the main idea of this page?
+          request: {}
           response:
             body:
               data:

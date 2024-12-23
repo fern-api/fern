@@ -881,65 +881,7 @@
       "authed": true,
       "method": "PATCH",
       "path": "/end-users/v1/{end_user_id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "end_user_id",
-              "value": {
-                "value": {
-                  "value": "end_user_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "value": {
-                    "value": "value",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              }
-            ],
-            "type": "map"
-          },
-          "response": {
-            "value": {
-              "value": [
-                {
-                  "key": {
-                    "value": "key",
-                    "type": "string"
-                  },
-                  "value": {
-                    "value": {
-                      "value": "value",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                }
-              ],
-              "type": "map"
-            },
-            "type": "withoutStreaming"
-          },
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"

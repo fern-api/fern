@@ -282,80 +282,8 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                   "name": "Successful",
                   "request": {
                     "company_id": "company_remote_id",
-                    "custom_attributes": {
-                      "monthly_spend": "custom_attributes",
-                      "paid_subscriber": "custom_attributes",
-                      "team_mates": "custom_attributes",
-                    },
-                    "industry": "Manufacturing",
-                    "monthly_spend": 1000,
                     "name": "my company",
-                    "plan": "Enterprise",
                     "remote_created_at": 1374138000,
-                    "website": "https://www.example.com",
-                  },
-                  "response": {
-                    "body": {
-                      "app_id": "this_is_an_id116_that_should_be_at_least_",
-                      "company_id": "company_remote_id",
-                      "created_at": 1719492732,
-                      "custom_attributes": {
-                        "creation_source": "api",
-                      },
-                      "id": "667d607c8a68186f43bafd1e",
-                      "industry": "Software",
-                      "last_request_at": 1663597223,
-                      "monthly_spend": 0,
-                      "name": "my company",
-                      "plan": {
-                        "id": "269315",
-                        "name": "Pro",
-                        "type": "plan",
-                      },
-                      "remote_created_at": 1374138000,
-                      "segments": {
-                        "segments": [
-                          {
-                            "created_at": 1394621988,
-                            "id": "56203d253cba154d39010062",
-                            "name": "Active",
-                            "updated_at": 1394622004,
-                          },
-                        ],
-                        "type": "segment.list",
-                      },
-                      "session_count": 0,
-                      "size": 100,
-                      "tags": {
-                        "tags": [
-                          {
-                            "key": "value",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "type": "company",
-                      "updated_at": 1719492732,
-                      "user_count": 0,
-                      "website": "https://www.intercom.com",
-                    },
-                  },
-                },
-                {
-                  "name": "Bad Request",
-                  "request": {
-                    "company_id": "625e90fc55ab113b6d92175f",
-                    "custom_attributes": {
-                      "monthly_spend": "custom_attributes",
-                      "paid_subscriber": "custom_attributes",
-                      "team_mates": "custom_attributes",
-                    },
-                    "industry": "Manufacturing",
-                    "monthly_spend": 1000,
-                    "name": "Intercom",
-                    "plan": "Enterprise",
-                    "remote_created_at": 1394531169,
-                    "website": "https://www.example.com",
                   },
                   "response": {
                     "body": {
@@ -608,62 +536,7 @@ service:
           request:
             name: my company
             company_id: company_remote_id
-            plan: Enterprise
-            website: https://www.example.com
-            industry: Manufacturing
-            custom_attributes:
-              paid_subscriber: custom_attributes
-              monthly_spend: custom_attributes
-              team_mates: custom_attributes
             remote_created_at: 1374138000
-            monthly_spend: 1000
-          response:
-            body:
-              type: company
-              id: 667d607c8a68186f43bafd1e
-              name: my company
-              app_id: this_is_an_id116_that_should_be_at_least_
-              plan:
-                type: plan
-                id: '269315'
-                name: Pro
-              company_id: company_remote_id
-              remote_created_at: 1374138000
-              created_at: 1719492732
-              updated_at: 1719492732
-              last_request_at: 1663597223
-              size: 100
-              website: https://www.intercom.com
-              industry: Software
-              monthly_spend: 0
-              session_count: 0
-              user_count: 0
-              custom_attributes:
-                creation_source: api
-              tags:
-                type: tag.list
-                tags:
-                  - key: value
-              segments:
-                type: segment.list
-                segments:
-                  - id: 56203d253cba154d39010062
-                    name: Active
-                    created_at: 1394621988
-                    updated_at: 1394622004
-        - name: Bad Request
-          request:
-            name: Intercom
-            company_id: 625e90fc55ab113b6d92175f
-            plan: Enterprise
-            website: https://www.example.com
-            industry: Manufacturing
-            custom_attributes:
-              paid_subscriber: custom_attributes
-              monthly_spend: custom_attributes
-              team_mates: custom_attributes
-            remote_created_at: 1394531169
-            monthly_spend: 1000
           response:
             body:
               type: company
