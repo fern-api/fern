@@ -1,3 +1,4 @@
+import { Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     generatorsYml,
@@ -5,16 +6,15 @@ import {
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    ConjureWorkspace,
+    LazyFernWorkspace,
+    OSSWorkspace,
+    WorkspaceLoader,
+    WorkspaceLoaderFailureType
+} from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
-import { Spec } from "@fern-api/api-workspace-commons";
-import {
-    OSSWorkspace,
-    LazyFernWorkspace,
-    WorkspaceLoader,
-    WorkspaceLoaderFailureType,
-    ConjureWorkspace
-} from "@fern-api/lazy-fern-workspace";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -135,7 +135,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 preserveSchemaIds: false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
-                exampleGeneration: undefined
+                exampleGeneration: definition.settings?.exampleGeneration,
             },
             source: {
                 type: "openapi",

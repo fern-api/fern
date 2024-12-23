@@ -2,12 +2,9 @@ import { Values } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { generatorsYml } from "..";
 import { Audiences } from "../commons";
-import { ApiDefinitionSettingsSchema } from "./schemas";
-import { GeneratorInvocationSchema } from "./schemas";
-import { GeneratorsConfigurationSchema } from "./schemas";
-import { ReadmeSchema } from "./schemas";
-import { OpenApiFilterSchema } from "./schemas";
+import { ApiDefinitionSettingsSchema, GeneratorInvocationSchema, GeneratorsConfigurationSchema, OpenApiFilterSchema, ReadmeSchema } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -58,6 +55,7 @@ export interface APIDefinitionSettings {
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 
 export interface APIDefinitionLocation {

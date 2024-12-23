@@ -105,6 +105,6 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        exampleGeneration: undefined,
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
     };
 }

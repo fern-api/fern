@@ -29,12 +29,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private loader: OpenAPILoader;
 
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
+        console.log(`example gen ${JSON.stringify(specs[0]?.settings?.exampleGeneration,)}`)
         super({
             ...superArgs,
             respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters)
+            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
+            exampleGeneration: specs[0]?.settings?.exampleGeneration,
         });
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
@@ -52,6 +54,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        console.log(`exmaple generation ${JSON.stringify(settings?.exampleGeneration ?? this.exampleGeneration)}`)
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -65,7 +68,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
                 objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
-                exampleGeneration: settings?.exampleGeneration 
+                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
             }
         });
     }

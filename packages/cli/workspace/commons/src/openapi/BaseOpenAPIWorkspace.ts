@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { OpenAPISettings } from "./OpenAPISettings";
 import { FernDefinitionConverter } from "./FernDefinitionConverter";
+import { generatorsYml } from "@fern-api/configuration";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -11,6 +12,7 @@ export declare namespace BaseOpenAPIWorkspace {
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
+        exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -21,6 +23,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public objectQueryParameters: boolean | undefined;
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
+    public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 
     private converter: FernDefinitionConverter;
 
@@ -30,6 +33,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.objectQueryParameters = args.objectQueryParameters;
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
+        this.exampleGeneration = args.exampleGeneration;
         this.converter = new FernDefinitionConverter(args);
     }
 
