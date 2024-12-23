@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { runMintlifyMigration } from "@fern-api/mintlify-importer";
-import { initializeWithMintlify } from "./initializeWithMintlify";
+import { initializeWithMintlify } from "../initializeWithMintlify";
 
 // We'll mock calling runMintlifyMigration instead of actually calling it
 vi.mock("@fern-api/mintlify-importer", () => ({
@@ -20,7 +20,8 @@ describe("initializeWithMintlify", () => {
         await expect(
             initializeWithMintlify({
                 pathToMintJson: "https://example.com/mint.json",
-                taskContext
+                taskContext,
+                versionOfCli: "0.0.0"
             })
         ).rejects.toThrow();
 
@@ -79,7 +80,8 @@ describe("initializeWithMintlify", () => {
 
         await initializeWithMintlify({
             pathToMintJson: absolutePathToMintJson,
-            taskContext
+            taskContext,
+            taskContext.version
         });
 
         expect(taskContext.failAndThrow).not.toHaveBeenCalled();

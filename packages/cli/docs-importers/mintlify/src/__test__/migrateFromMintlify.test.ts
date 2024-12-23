@@ -29,7 +29,8 @@ describe("add-generator-groups", () => {
             await runMintlifyMigration({
                 absolutePathToMintJson,
                 outputPath,
-                taskContext
+                taskContext,
+                versionOfCli: "0.0.0"
             });
         });
     }
