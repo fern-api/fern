@@ -62,7 +62,6 @@ export function parse({
     };
     for (const document of documents) {
         const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
-        context.logger.error(`document.settings ${JSON.stringify(document.settings)}`);
         switch (document.type) {
             case "openapi": {
                 const openapiIr = generateIrFromV3({
