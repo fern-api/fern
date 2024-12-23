@@ -90,7 +90,7 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
-        private int timeout = 0;
+        private int timeout = 60;
 
         private String rootVariable;
 
@@ -109,6 +109,9 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Override the timeout in seconds. Defaults to 60 seconds.
+         */
         public Builder timeout(int timeout) {
             this.timeout = timeout;
             return this;
