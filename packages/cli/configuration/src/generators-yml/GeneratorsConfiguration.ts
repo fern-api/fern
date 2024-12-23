@@ -4,7 +4,13 @@ import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { generatorsYml } from "..";
 import { Audiences } from "../commons";
-import { ApiDefinitionSettingsSchema, GeneratorInvocationSchema, GeneratorsConfigurationSchema, OpenApiFilterSchema, ReadmeSchema } from "./schemas";
+import {
+    ApiDefinitionSettingsSchema,
+    GeneratorInvocationSchema,
+    GeneratorsConfigurationSchema,
+    OpenApiFilterSchema,
+    ReadmeSchema
+} from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;

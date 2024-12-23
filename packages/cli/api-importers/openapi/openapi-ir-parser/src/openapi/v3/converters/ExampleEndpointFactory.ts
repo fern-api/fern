@@ -27,7 +27,10 @@ export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private logger: Logger;
 
-    constructor(private readonly schemas: Record<string, SchemaWithExample>, private readonly context: OpenAPIV3ParserContext) {
+    constructor(
+        private readonly schemas: Record<string, SchemaWithExample>,
+        private readonly context: OpenAPIV3ParserContext
+    ) {
         this.schemas = schemas;
         this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
         this.logger = context.logger;
@@ -59,7 +62,7 @@ export class ExampleEndpointFactory {
                     example: undefined,
                     options: {
                         isParameter: false,
-                        ignoreOptionals: true,
+                        ignoreOptionals: true
                         // TODO(dsinghvi): Respect depth on request examples
                         // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                     }
@@ -76,7 +79,7 @@ export class ExampleEndpointFactory {
                         example: rawExample,
                         options: {
                             isParameter: false,
-                            ignoreOptionals: true,
+                            ignoreOptionals: true
                             // TODO(dsinghvi): Respect depth on request examples
                             // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                         }

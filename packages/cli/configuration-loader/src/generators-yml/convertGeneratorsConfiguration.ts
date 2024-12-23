@@ -74,7 +74,7 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -99,7 +99,7 @@ async function parseAPIConfigurationToApiLocations(
                     onlyIncludeReferencedSchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -149,7 +149,7 @@ async function parseAPIConfigurationToApiLocations(
                             onlyIncludeReferencedSchemas: undefined,
                             inlinePathParameters: undefined,
                             filter: undefined,
-                            exampleGeneration: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 } else {
@@ -172,7 +172,7 @@ async function parseAPIConfigurationToApiLocations(
                             respectReadonlySchemas: undefined,
                             inlinePathParameters: undefined,
                             filter: undefined,
-                            exampleGeneration: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 }
@@ -197,7 +197,7 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -227,7 +227,7 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (openapi != null) {
@@ -250,7 +250,7 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -275,7 +275,7 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
                     filter: undefined,
-                    exampleGeneration: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -345,7 +345,7 @@ async function parseApiConfigurationV2Schema({
                     respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
                     inlinePathParameters: spec.settings?.["inline-path-parameters"],
                     filter: spec.settings?.filter,
-                    exampleGeneration: spec.settings?.["example-generation"],
+                    exampleGeneration: spec.settings?.["example-generation"]
                 }
             };
             if (spec.namespace == null) {

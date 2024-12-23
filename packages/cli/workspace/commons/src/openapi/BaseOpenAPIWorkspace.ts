@@ -12,7 +12,7 @@ export declare namespace BaseOpenAPIWorkspace {
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
-        exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
+        exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;

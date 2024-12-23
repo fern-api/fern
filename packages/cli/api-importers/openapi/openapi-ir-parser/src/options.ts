@@ -36,7 +36,7 @@ export interface ParseOpenAPIOptions {
     // handled with a discriminated union.
     asyncApiNaming: "v1" | "v2";
 
-    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -105,6 +105,6 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
     };
 }

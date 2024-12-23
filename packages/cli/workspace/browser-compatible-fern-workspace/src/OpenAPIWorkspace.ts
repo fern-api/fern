@@ -42,7 +42,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,
-            exampleGeneration: spec.settings?.exampleGeneration,
+            exampleGeneration: spec.settings?.exampleGeneration
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
