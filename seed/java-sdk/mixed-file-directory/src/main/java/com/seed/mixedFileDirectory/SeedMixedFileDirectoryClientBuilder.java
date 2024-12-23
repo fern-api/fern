@@ -16,6 +16,14 @@ public final class SeedMixedFileDirectoryClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedMixedFileDirectoryClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedMixedFileDirectoryClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedMixedFileDirectoryClient(clientOptionsBuilder.build());

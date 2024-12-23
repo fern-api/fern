@@ -16,6 +16,14 @@ public final class SeedUnknownAsAnyClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedUnknownAsAnyClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedUnknownAsAnyClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedUnknownAsAnyClient(clientOptionsBuilder.build());
