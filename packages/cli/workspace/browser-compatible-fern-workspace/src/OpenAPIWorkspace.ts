@@ -1,11 +1,11 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
-import { OpenAPI } from "openapi-types";
-import { AbsoluteFilePath } from "@fern-api/path-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { OpenAPI } from "openapi-types";
 import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
-import { generatorsYml } from "@fern-api/configuration";
 
 const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of("/<memory>");
 
@@ -41,7 +41,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectReadonlySchemas: spec.settings?.respectReadonlySchemas,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
-            objectQueryParameters: spec.settings?.objectQueryParameters
+            objectQueryParameters: spec.settings?.objectQueryParameters,
+            exampleGeneration: spec.settings?.exampleGeneration
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

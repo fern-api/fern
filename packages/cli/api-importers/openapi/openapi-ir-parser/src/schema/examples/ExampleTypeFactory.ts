@@ -449,6 +449,7 @@ export class ExampleTypeFactory {
                     }
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
+
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,

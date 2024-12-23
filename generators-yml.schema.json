@@ -1291,6 +1291,48 @@
       },
       "additionalProperties": false
     },
+    "generators.RequestOrResponseExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "max-depth": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.OpenAPIExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1368,6 +1410,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.OpenAPIFilterSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example-generation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
             },
             {
               "type": "null"
