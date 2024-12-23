@@ -388,12 +388,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .returns(className)
                     .addStatement(CodeBlock.builder()
                             .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
-                            .add("\n    .addInterceptor(new $T(3))", 
-                                    clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName())
+                            .add(
+                                    "\n    .addInterceptor(new $T(3))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getRetryInterceptorClassName())
                             .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .connectTimeout(0, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .writeTimeout(0, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .readTimeout(0, $T.SECONDS)", TimeUnit.class)
                             .add("\n    .build()")
                             .build())
                     .addStatement(
@@ -413,12 +413,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .returns(className)
                     .addStatement(CodeBlock.builder()
                             .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
-                            .add("\n    .addInterceptor(new $T(3))", 
-                                    clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName())
+                            .add(
+                                    "\n    .addInterceptor(new $T(3))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getRetryInterceptorClassName())
                             .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .connectTimeout(0, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .writeTimeout(0, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .readTimeout(0, $T.SECONDS)", TimeUnit.class)
                             .add("\n    .build()")
                             .build())
                     .addStatement(
