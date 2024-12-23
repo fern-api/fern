@@ -41,7 +41,8 @@ describe("initializeWithMintlify", () => {
         await expect(
             initializeWithMintlify({
                 pathToMintJson: "./mint.yml",
-                taskContext
+                taskContext,
+                versionOfCli: "0.0.0"
             })
         ).rejects.toThrow();
 
@@ -59,7 +60,8 @@ describe("initializeWithMintlify", () => {
         await expect(
             initializeWithMintlify({
                 pathToMintJson: "./mint.json",
-                taskContext
+                taskContext,
+                versionOfCli: "0.0.0"
             })
         ).rejects.toThrow();
 
@@ -81,7 +83,7 @@ describe("initializeWithMintlify", () => {
         await initializeWithMintlify({
             pathToMintJson: absolutePathToMintJson,
             taskContext,
-            taskContext.version
+            versionOfCli: "0.0.0"
         });
 
         expect(taskContext.failAndThrow).not.toHaveBeenCalled();

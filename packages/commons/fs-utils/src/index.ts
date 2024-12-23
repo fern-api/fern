@@ -29,3 +29,4 @@ export {
 export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
 export { getFilename } from "./getFilename";
 export { isURL } from "./isUrl";
+export { isCI } from "./isCI";

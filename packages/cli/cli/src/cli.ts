@@ -46,7 +46,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-} from "@fern-api/configuration";
 
 void runCli();
 
