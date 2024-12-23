@@ -1,6 +1,12 @@
 - changelogEntry:
     - summary: |
         Implement global timeout configuration for generated clients.
+          ```java
+          var client = Client.builder()
+            .apiKey("...")
+            .timeout(40)
+            .build();
+          ```
       type: feat
   createdAt: '2024-12-23'
   irVersion: 53
