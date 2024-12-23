@@ -2,7 +2,7 @@
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.organizations.getOrganization("tenantId", "organizationId");
+await client.organizations.getOrganization("tenant_id", "organization_id");
  
 ```                        
 
@@ -12,9 +12,9 @@ import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
 await client.organizations.getOrganizationUser(
-  "tenantId",
-  "organizationId",
-  "userId"
+  "tenant_id",
+  "organization_id",
+  "user_id"
 );
  
 ```                        
@@ -24,7 +24,7 @@ await client.organizations.getOrganizationUser(
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.organizations.searchOrganizations("tenantId", "organizationId", {
+await client.organizations.searchOrganizations("tenant_id", "organization_id", {
   limit: 1,
 });
  
@@ -35,7 +35,7 @@ await client.organizations.searchOrganizations("tenantId", "organizationId", {
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getUser("tenantId", "userId");
+await client.user.getUser("tenant_id", "user_id");
  
 ```                        
 
@@ -44,7 +44,31 @@ await client.user.getUser("tenantId", "userId");
 import { SeedPathParametersClient } from "@fern/path-parameters";
 
 const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.searchUsers("tenantId", "userId", {
+await client.user.createUser("tenant_id", {
+  name: "name",
+  tags: ["tags", "tags"],
+});
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.updateUser("tenant_id", "user_id", {
+  name: "name",
+  tags: ["tags", "tags"],
+});
+ 
+```                        
+
+
+```typescript
+import { SeedPathParametersClient } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.searchUsers("tenant_id", "user_id", {
   limit: 1,
 });
  

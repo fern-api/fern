@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         userId: "userId"
+ *         userId: "user_id"
  *     }
  */
 export interface GetUsersRequest {

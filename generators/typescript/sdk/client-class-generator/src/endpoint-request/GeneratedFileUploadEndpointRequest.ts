@@ -8,6 +8,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
+    getParameterNameForPositionalPathParameter,
     GetReferenceOpts,
     getTextOfTsNode,
     ImportsManager,
@@ -21,7 +22,6 @@ import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFor
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
@@ -188,7 +188,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             context
         })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
@@ -354,6 +354,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getReferenceToRequestBody(): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody();
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        if (this.requestParameter == null) {
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
+        }
+        return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

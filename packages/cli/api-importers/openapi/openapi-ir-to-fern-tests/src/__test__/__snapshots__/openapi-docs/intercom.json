@@ -26318,6 +26318,7 @@ You can optionally request the result page size and the cursor to start after to
                 "name": "ListConversationsRequest",
                 "query-parameters": {
                   "per_page": {
+                    "default": 20,
                     "docs": "How many results per page",
                     "type": "optional<integer>",
                     "validation": {
@@ -28782,6 +28783,7 @@ service:
         query-parameters:
           per_page:
             type: optional<integer>
+            default: 20
             docs: How many results per page
             validation:
               max: 150

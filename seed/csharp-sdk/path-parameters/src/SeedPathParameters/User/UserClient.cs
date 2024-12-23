@@ -18,7 +18,7 @@ public partial class UserClient
 
     /// <example>
     /// <code>
-    /// await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
+    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
     /// </code>
     /// </example>
     public async Task<User> GetUserAsync(
@@ -61,7 +61,112 @@ public partial class UserClient
 
     /// <example>
     /// <code>
-    /// await client.User.SearchUsersAsync("tenantId", "userId", new SearchUsersRequest { Limit = 1 });
+    /// await client.User.CreateUserAsync(
+    ///     "tenant_id",
+    ///     new User
+    ///     {
+    ///         Name = "name",
+    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<User> CreateUserAsync(
+        string tenantId,
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = $"/{tenantId}/user/",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPathParametersException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPathParametersApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.User.UpdateUserAsync(
+    ///     "tenant_id",
+    ///     "user_id",
+    ///     new UpdateUserRequest
+    ///     {
+    ///         Body = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<User> UpdateUserAsync(
+        string tenantId,
+        string userId,
+        UpdateUserRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
+                Path = $"/{tenantId}/user/{userId}",
+                Body = request.Body,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPathParametersException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPathParametersApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
     /// </code>
     /// </example>
     public async Task<IEnumerable<User>> SearchUsersAsync(

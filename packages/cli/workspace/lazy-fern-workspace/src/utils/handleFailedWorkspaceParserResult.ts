@@ -1,8 +1,8 @@
+import { formatLog } from "@fern-api/cli-logger";
 import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader";
 import { assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { formatLog } from "@fern-api/cli-logger";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
@@ -92,6 +92,19 @@ function handleWorkspaceParserFailureForFile({
                         ]
                     })
                 );
+            }
+            for (const error of failure.error.allErrors) {
+                if (error !== failure.error.error) {
+                    logger.debug(
+                        formatLog({
+                            title: error.message ?? "Unknown error",
+                            breadcrumbs: [
+                                relativeFilepath,
+                                ...error.instancePath.split("/").filter((part) => part !== "")
+                            ]
+                        })
+                    );
+                }
             }
             break;
         default:

@@ -11,7 +11,7 @@ export interface UserServiceMethods {
     getUser(
         req: express.Request<
             {
-                userId: string;
+                user_id: string;
             },
             SeedPathParameters.User,
             never,
@@ -24,10 +24,35 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
+    createUser(
+        req: express.Request<never, SeedPathParameters.User, SeedPathParameters.User, never>,
+        res: {
+            send: (responseBody: SeedPathParameters.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    updateUser(
+        req: express.Request<
+            {
+                user_id: string;
+            },
+            SeedPathParameters.User,
+            SeedPathParameters.User,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPathParameters.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
     searchUsers(
         req: express.Request<
             {
-                userId: string;
+                user_id: string;
             },
             SeedPathParameters.User[],
             never,
@@ -62,7 +87,7 @@ export class UserService {
     }
 
     public toRouter(): express.Router {
-        this.router.get("/:userId", async (req, res, next) => {
+        this.router.get("/:user_id", async (req, res, next) => {
             try {
                 await this.methods.getUser(
                     req as any,
@@ -90,7 +115,89 @@ export class UserService {
                 next(error);
             }
         });
-        this.router.get("/:userId/search", async (req, res, next) => {
+        this.router.post("/", async (req, res, next) => {
+            const request = serializers.User.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedPathParametersError) {
+                        console.warn(
+                            `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.patch("/:user_id", async (req, res, next) => {
+            const request = serializers.User.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedPathParametersError) {
+                        console.warn(
+                            `Endpoint 'updateUser' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.get("/:user_id/search", async (req, res, next) => {
             try {
                 await this.methods.searchUsers(
                     req as any,

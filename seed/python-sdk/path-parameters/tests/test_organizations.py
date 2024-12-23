@@ -9,11 +9,11 @@ from .utilities import validate_response
 async def test_get_organization(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
     expected_response: typing.Any = {"name": "name", "tags": ["tags", "tags"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None, 1: None})}
-    response = client.organizations.get_organization(tenant_id="tenantId", organization_id="organizationId")
+    response = client.organizations.get_organization(tenant_id="tenant_id", organization_id="organization_id")
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.organizations.get_organization(
-        tenant_id="tenantId", organization_id="organizationId"
+        tenant_id="tenant_id", organization_id="organization_id"
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -22,12 +22,12 @@ async def test_get_organization_user(client: SeedPathParameters, async_client: A
     expected_response: typing.Any = {"name": "name", "tags": ["tags", "tags"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None, 1: None})}
     response = client.organizations.get_organization_user(
-        tenant_id="tenantId", organization_id="organizationId", user_id="userId"
+        tenant_id="tenant_id", organization_id="organization_id", user_id="user_id"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.organizations.get_organization_user(
-        tenant_id="tenantId", organization_id="organizationId", user_id="userId"
+        tenant_id="tenant_id", organization_id="organization_id", user_id="user_id"
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -45,11 +45,11 @@ async def test_search_organizations(client: SeedPathParameters, async_client: As
         },
     )
     response = client.organizations.search_organizations(
-        tenant_id="tenantId", organization_id="organizationId", limit=1
+        tenant_id="tenant_id", organization_id="organization_id", limit=1
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.organizations.search_organizations(
-        tenant_id="tenantId", organization_id="organizationId", limit=1
+        tenant_id="tenant_id", organization_id="organization_id", limit=1
     )
     validate_response(async_response, expected_response, expected_types)

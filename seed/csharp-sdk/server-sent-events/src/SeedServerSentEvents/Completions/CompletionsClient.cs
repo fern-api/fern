@@ -16,6 +16,11 @@ public partial class CompletionsClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+    /// </code>
+    /// </example>
     public async Task StreamAsync(
         StreamCompletionRequest request,
         RequestOptions? options = null,

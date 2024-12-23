@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         organizationId: "organizationId",
- *         userId: "userId"
+ *         organizationId: "organization_id",
+ *         userId: "user_id"
  *     }
  */
 export interface GetOrganizationUserRequest {

@@ -12355,9 +12355,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Bearer <token>",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "orgId": "orgId",
                     "partner": "AWS",
@@ -12439,16 +12437,6 @@ service:
                   "docs": "Cloud Partner",
                   "type": "ListOffersByPartnerRequestPartner",
                 },
-              },
-              "request": {
-                "headers": {
-                  "Authorization": {
-                    "docs": "Bearer Access Token",
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
-                "name": "ListOffersByPartnerRequest",
               },
               "response": {
                 "docs": "OK",
@@ -13095,13 +13083,6 @@ service:
           type: ListOffersByPartnerRequestPartner
           docs: Cloud Partner
       display-name: list offers by partner
-      request:
-        name: ListOffersByPartnerRequest
-        headers:
-          Authorization:
-            type: string
-            name: authorization
-            docs: Bearer Access Token
       response:
         docs: OK
         type: list<root.SharedWorkloadOffer>
@@ -13111,8 +13092,7 @@ service:
         - path-parameters:
             orgId: orgId
             partner: AWS
-          headers:
-            Authorization: Bearer <token>
+          headers: {}
           response:
             body:
               - createdBy: createdBy

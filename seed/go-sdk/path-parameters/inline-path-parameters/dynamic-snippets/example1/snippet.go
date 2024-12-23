@@ -11,9 +11,9 @@ func do() () {
     client.Organizations.GetOrganizationUser(
         context.TODO(),
         &path.GetOrganizationUserRequest{
-            TenantId: "tenantId",
-            OrganizationId: "organizationId",
-            UserId: "userId",
+            TenantId: "tenant_id",
+            OrganizationId: "organization_id",
+            UserId: "user_id",
         },
     )
 }

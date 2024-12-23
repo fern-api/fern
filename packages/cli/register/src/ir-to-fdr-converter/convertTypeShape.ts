@@ -311,9 +311,9 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
-): FdrCjsSdk.api.v1.register.TypeReference {
+): FdrCjsSdk.api.v1.register.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return TypeReference.unknown();
+        return extraProperties ? TypeReference.unknown() : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",

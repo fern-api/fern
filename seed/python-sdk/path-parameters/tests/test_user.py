@@ -9,10 +9,32 @@ from .utilities import validate_response
 async def test_get_user(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
     expected_response: typing.Any = {"name": "name", "tags": ["tags", "tags"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None, 1: None})}
-    response = client.user.get_user(tenant_id="tenantId", user_id="userId")
+    response = client.user.get_user(tenant_id="tenant_id", user_id="user_id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.get_user(tenant_id="tenantId", user_id="userId")
+    async_response = await async_client.user.get_user(tenant_id="tenant_id", user_id="user_id")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create_user(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
+    expected_response: typing.Any = {"name": "name", "tags": ["tags", "tags"]}
+    expected_types: typing.Any = {"name": None, "tags": ("list", {0: None, 1: None})}
+    response = client.user.create_user(tenant_id="tenant_id", name="name", tags=["tags", "tags"])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.user.create_user(tenant_id="tenant_id", name="name", tags=["tags", "tags"])
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update_user(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
+    expected_response: typing.Any = {"name": "name", "tags": ["tags", "tags"]}
+    expected_types: typing.Any = {"name": None, "tags": ("list", {0: None, 1: None})}
+    response = client.user.update_user(tenant_id="tenant_id", user_id="user_id", name="name", tags=["tags", "tags"])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.user.update_user(
+        tenant_id="tenant_id", user_id="user_id", name="name", tags=["tags", "tags"]
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -28,8 +50,8 @@ async def test_search_users(client: SeedPathParameters, async_client: AsyncSeedP
             1: {"name": None, "tags": ("list", {0: None, 1: None})},
         },
     )
-    response = client.user.search_users(tenant_id="tenantId", user_id="userId", limit=1)
+    response = client.user.search_users(tenant_id="tenant_id", user_id="user_id", limit=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.search_users(tenant_id="tenantId", user_id="userId", limit=1)
+    async_response = await async_client.user.search_users(tenant_id="tenant_id", user_id="user_id", limit=1)
     validate_response(async_response, expected_response, expected_types)

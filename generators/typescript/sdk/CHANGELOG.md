@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
+## [0.44.3] - 2024-12-18
+
+- Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
+
+## [0.44.2] - 2024-12-17
+
+- Fix: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
+
 ## [0.44.1] - 2024-12-16
 
 - Fix: When there is an environment variable set, you do not need to pass in any parameters

@@ -8,10 +8,10 @@ types:
       tags: list<string>
 
 service:
-  base-path: "/organizations/{organizationId}"
+  base-path: "/organizations/{organization_id}"
   auth: false
   path-parameters:
-    organizationId: string
+    organization_id: string
   endpoints:
     getOrganization:
       path: "/"
@@ -19,12 +19,12 @@ service:
       response: Organization
 
     getOrganizationUser:
-      path: "/users/{userId}"
+      path: "/users/{user_id}"
       method: GET
       request:
         name: GetOrganizationUserRequest
         path-parameters:
-          userId: string
+          user_id: string
       response: user.User
 
     searchOrganizations:

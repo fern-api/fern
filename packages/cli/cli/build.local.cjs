@@ -21,7 +21,7 @@ async function main() {
             VENUS_AUDIENCE: "venus-dev",
             LOCAL_STORAGE_FOLDER: ".fern-local",
             POSTHOG_API_KEY: null,
-            DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
+            DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/',
             CLI_NAME: "fern-local",
             CLI_VERSION: process.argv[2] || packageJson.version,
