@@ -218,6 +218,8 @@ navigation:
             path: ./pages/sdks/introduction/overview.mdx
           - page: Language Support
             path: ./pages/sdks/introduction/language-support.mdx
+          - page: Customer Showcase
+            path: ./pages/sdks/introduction/customer-showcase.mdx
           - section: Changelogs
             slug: changelog
             contents:
