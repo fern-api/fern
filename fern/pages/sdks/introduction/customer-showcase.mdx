@@ -14,7 +14,27 @@ Square trusts Fern to generate and maintain **7 SDKs**, ensuring their APIs are 
 
 Check out Square's SDKs as they become generally available:
 <CardGroup cols={3}>
-  <Card title="Go SDK" icon="brands golang" href="https://github.com/square/square-go-sdk" />
+  <Card title="Go SDK" icon="brands golang" href="https://github.com/square/square-go-sdk">
+    View the Go source code in GitHub
+  </Card>
+  <Card title="TypeScript SDK" icon="brands node-js">
+    Coming soon
+  </Card>
+  <Card title="PHP SDK" icon="brands php">
+    Coming soon
+  </Card>
+  <Card title="Java SDK" icon="brands java">
+    Coming soon
+  </Card>
+  <Card title="Ruby SDK" icon="regular gem">
+    Coming soon
+  </Card>
+  <Card title="Python SDK" icon="brands python">
+    Coming soon
+  </Card>
+  <Card title="C# SDK" icon="brands windows">
+    Coming soon
+  </Card>
 </CardGroup>
 
 ---
@@ -28,8 +48,10 @@ Check out Square's SDKs as they become generally available:
 Pinecone leverages Fern to create an SDK that supports **both gRPC and REST**, bridging the gap between broad compatibility and peak performance. 
 
 Check out Pinecone's SDK here:
-<CardGroup cols={3}>
-  <Card title=".NET SDK" icon="brands windows" href="https://github.com/pinecone-io/pinecone-dotnet-client" />
+<CardGroup cols={1}>
+  <Card title=".NET SDK" icon="brands windows" iconPosition="left" href="https://github.com/pinecone-io/pinecone-dotnet-client">
+    View the .NET source code in GitHub
+  </Card>
 </CardGroup>
 
 You read more about how Fern developed the first auto-generated SDK with gRPC and REST [in our blog](https://buildwithfern.com/blog/pinecone).
@@ -44,27 +66,93 @@ You read more about how Fern developed the first auto-generated SDK with gRPC an
 
 ElevenLabs uses Fern to generate SDKs with advanced capabilities for **file uploads** and **websocket communication**, enabling smooth interactions with their AI-powered audio APIs.  
     
-Check out ElevenLabs' SDKs here:
-<CardGroup cols={3}>
-  <Card title="Python SDK" icon="brands python" href="https://github.com/elevenlabs/elevenlabs-python" />
-  <Card title="TypeScript SDK" icon="brands node-js" href="https://github.com/elevenlabs/elevenlabs-js" />
-</CardGroup>
+Check out these features in ElevenLabs' SDKs here:
+<Tabs>
+  <Tab title="Python">    
+    <CardGroup cols={2}>
+      <Card title="File Uploads" icon="regular file-arrow-up" iconPosition="left" href="https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/dubbing/client.py#L26">
+        View the Python source code in GitHub
+      </Card>
+      <Card title="Websockets" icon="regular server" iconPosition="left" href="https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/text_to_speech/client.py#L40">
+        View the Python source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="TypeScript">
+    <CardGroup cols={2}>
+      <Card title="File Uploads" icon="regular file-arrow-up" iconPosition="left" href="https://github.com/elevenlabs/elevenlabs-js/blob/main/src/api/resources/dubbing/client/Client.ts#L49">
+        View the TypeScript source code in GitHub
+      </Card>
+      <Card title="Websockets" icon="regular server" iconPosition="left" href="https://github.com/elevenlabs/elevenlabs-js/blob/main/src/api/resources/textToSpeech/client/Client.ts#L40">
+        View the TypeScript source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
 
 ---
 
-<h2 style="margin-bottom: 0.25em">Cohere</h2>
+<h2 style="margin-bottom: 0.25em">Candid</h2>
+<span class="fern-docs-badge large green subtle rounded">OAuth</span>
+
+Candid uses Fern to generate an SDK with built in **OAuth support**, enabling secure and seamless authentication for developers.
+
+Check out OAuth in Candid's SDK here:
+<Tabs>
+  <Tab title="Python">
+    <CardGroup cols={1}>
+      <Card title="OAuth" icon="regular lock" iconPosition="left" href="https://github.com/candidhealth/candid-python/blob/master/src/candid/core/oauth_token_provider.py">
+        View the Python source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Node.js">
+    <CardGroup cols={1}>
+      <Card title="OAuth" icon="regular lock" iconPosition="left" href="https://github.com/candidhealth/candid-node/blob/master/src/core/auth/OAuthTokenProvider.ts">
+        View the Node.js source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="C#">
+    <CardGroup cols={1}>
+      <Card title="OAuth" icon="regular lock" iconPosition="left" href="https://github.com/candidhealth/candid-csharp/blob/master/src/Candid.Net/Core/OAuthTokenProvider.cs">
+        View the C# source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Ruby">
+    <CardGroup cols={1}>
+      <Card title="OAuth" icon="regular lock" iconPosition="left" href="https://github.com/candidhealth/candid-ruby/blob/main/lib/core/oauth.rb">
+        View the Ruby source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
+
+
+---
+<h2 style="margin-bottom: 0.25em">Humanloop</h2>
 <span class="fern-docs-badge large green subtle rounded">SSE</span>
 
-Cohere utilizes Fern to support **server-sent events (SSE)** in their SDKs, providing developers with efficient streaming capabilities for real-time AI model outputs.  
+Humanloop uses Fern to support **server-sent events (SSE)** in their SDKs, allowing developers to build robust AI features with LLMs using best-in-class tooling. 
 
-Check out Cohere's SDKs here:
-<CardGroup cols={3}>
-  <Card title="Python SDK" icon="brands python" href="https://github.com/cohere-ai/cohere-python" />
-  <Card title="TypeScript SDK" icon="brands node-js" href="https://github.com/cohere-ai/cohere-typescript" />
-  <Card title="Java SDK" icon="brands java" href="https://github.com/cohere-ai/cohere-java" />
-  <Card title="Go SDK" icon="brands golang" href="https://github.com/cohere-ai/cohere-go" />
-</CardGroup>
-
+Check out SSE in Humanloop's SDK here:
+<Tabs>
+  <Tab title="Python">
+    <CardGroup cols={1}>
+      <Card title="Server-Sent Events" icon="regular server" iconPosition="left" href="https://github.com/humanloop/humanloop-python/blob/master/src/humanloop/prompts/client.py#L509">
+        View the Python source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Node.js">
+    <CardGroup cols={1}>
+      <Card title="Server-Sent Events" icon="regular server" iconPosition="left" href="https://github.com/humanloop/humanloop-node/blob/master/src/api/resources/prompts/client/Client.ts#L287">
+        View the Node.js source code in GitHub
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
 ---
 
 <h2 style="margin-bottom: 0.25em">Abound</h2>
@@ -73,8 +161,10 @@ Check out Cohere's SDKs here:
 Abound relies on Fern to manage a **full suite of integration tests**, ensuring their SDKs and APIs deliver a reliable experience for partners and developers. 
 
 Check out Abound's integration tests here:
-<CardGroup cols={3}>
-  <Card title="Node.js SDK" icon="brands node-js" href="https://github.com/withabound/abound-node/tree/main/tests" />
+<CardGroup cols={1}>
+  <Card title="Node.js SDK" icon="brands node-js" iconPosition="left" href="https://github.com/withabound/abound-node/tree/main/tests">
+    View the source code for integration tests
+  </Card>
 </CardGroup>
 
 ---
