@@ -15,7 +15,7 @@ types:
       auth: boolean
       url: optional<string>
       base-path: string
-      path-parameters: optional<map<string, string>>
+      path-parameters: optional<map<string, types.TypeReferenceSchema>>
       idempotent: optional<boolean>
       headers: optional<map<string, types.TypeReferenceSchema>>
       transport: optional<ServiceTransport>

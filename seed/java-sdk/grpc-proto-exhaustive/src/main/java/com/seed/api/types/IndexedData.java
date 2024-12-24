@@ -21,25 +21,25 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IndexedData.Builder.class)
 public final class IndexedData {
-    private final List<Integer> indices;
+    private final List<Long> indices;
 
-    private final List<Double> values;
+    private final List<Float> values;
 
     private final Map<String, Object> additionalProperties;
 
-    private IndexedData(List<Integer> indices, List<Double> values, Map<String, Object> additionalProperties) {
+    private IndexedData(List<Long> indices, List<Float> values, Map<String, Object> additionalProperties) {
         this.indices = indices;
         this.values = values;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("indices")
-    public List<Integer> getIndices() {
+    public List<Long> getIndices() {
         return indices;
     }
 
     @JsonProperty("values")
-    public List<Double> getValues() {
+    public List<Float> getValues() {
         return values;
     }
 
@@ -74,9 +74,9 @@ public final class IndexedData {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<Integer> indices = new ArrayList<>();
+        private List<Long> indices = new ArrayList<>();
 
-        private List<Double> values = new ArrayList<>();
+        private List<Float> values = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -90,35 +90,35 @@ public final class IndexedData {
         }
 
         @JsonSetter(value = "indices", nulls = Nulls.SKIP)
-        public Builder indices(List<Integer> indices) {
+        public Builder indices(List<Long> indices) {
             this.indices.clear();
             this.indices.addAll(indices);
             return this;
         }
 
-        public Builder addIndices(Integer indices) {
+        public Builder addIndices(Long indices) {
             this.indices.add(indices);
             return this;
         }
 
-        public Builder addAllIndices(List<Integer> indices) {
+        public Builder addAllIndices(List<Long> indices) {
             this.indices.addAll(indices);
             return this;
         }
 
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public Builder values(List<Double> values) {
+        public Builder values(List<Float> values) {
             this.values.clear();
             this.values.addAll(values);
             return this;
         }
 
-        public Builder addValues(Double values) {
+        public Builder addValues(Float values) {
             this.values.add(values);
             return this;
         }
 
-        public Builder addAllValues(List<Double> values) {
+        public Builder addAllValues(List<Float> values) {
             this.values.addAll(values);
             return this;
         }

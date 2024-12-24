@@ -16,6 +16,14 @@ public final class SeedFileDownloadClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedFileDownloadClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedFileDownloadClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedFileDownloadClient(clientOptionsBuilder.build());

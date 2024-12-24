@@ -35,6 +35,8 @@ export interface ParseOpenAPIOptions {
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
     asyncApiNaming: "v1" | "v2";
+
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -51,7 +53,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     filter: undefined,
-    asyncApiNaming: "v1"
+    asyncApiNaming: "v1",
+    exampleGeneration: undefined
 };
 
 export function getParseOptions({
@@ -101,6 +104,7 @@ export function getParseOptions({
             DEFAULT_PARSE_OPENAPI_SETTINGS.objectQueryParameters,
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
-            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming
+            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
     };
 }

@@ -16,6 +16,14 @@ public final class SeedPathParametersClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedPathParametersClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedPathParametersClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedPathParametersClient(clientOptionsBuilder.build());
