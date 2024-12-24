@@ -16,6 +16,7 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
     apis: {},
+    apisV2: {},
     files: {},
     filesV2: {},
     config: {
@@ -54,7 +55,8 @@ export async function runPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath
+    bundlePath,
+    v2
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -62,6 +64,7 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
+    v2?: boolean;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -128,7 +131,8 @@ export async function runPreviewServer({
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
-                context
+                context,
+                v2
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
