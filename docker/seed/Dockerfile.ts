@@ -4,15 +4,12 @@ RUN  yarn add \
   # jest
   jest@29.7.0 \
   @types/jest@29.5.5 \
-  # node fetch
-  node-fetch@2.7.0 \
-  @types/node-fetch@2.6.9 \
   # node
   @types/node@17.0.33 \
   # qs
   qs@6.11.2 \
   @types/qs@6.9.8 \
-  # url join 
+  # url join
   url-join@4.0.1 \
   @types/url-join@4.0.1 \
   # readable stream

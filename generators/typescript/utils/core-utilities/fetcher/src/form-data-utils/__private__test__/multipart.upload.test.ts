@@ -4,7 +4,6 @@ import fs from "fs";
 import { Server } from "http";
 import multer from "multer";
 import { newFormData } from "../..";
-import { getFetchFn } from "../../fetcher/getFetchFn";
 import { RUNTIME } from "../../runtime";
 
 describe("Multipart Form Data Tests", () => {
@@ -48,7 +47,6 @@ describe("Multipart Form Data Tests", () => {
 
         await fdw.appendFile("file", new Blob([new Uint8Array(y)]), "asda");
 
-        const fetch = await getFetchFn();
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
             ...(await fdw.getRequest()),
@@ -66,8 +64,6 @@ describe("Multipart Form Data Tests", () => {
             const y = fs.readFileSync("package.json");
             await fdw.appendFile("file", new File([y], "package.json"));
 
-            const fetch = await getFetchFn();
-
             const response = await fetch("http://localhost:4567/upload", {
                 method: "POST",
                 ...(await fdw.getRequest()),
@@ -84,8 +80,6 @@ describe("Multipart Form Data Tests", () => {
 
         const y = fs.createReadStream("package.json");
         await fdw.appendFile("file", y);
-
-        const fetch = await getFetchFn();
 
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
