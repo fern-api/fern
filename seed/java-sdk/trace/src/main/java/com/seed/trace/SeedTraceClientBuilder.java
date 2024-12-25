@@ -41,6 +41,14 @@ public final class SeedTraceClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedTraceClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedTraceClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         if (xRandomHeader != null) {

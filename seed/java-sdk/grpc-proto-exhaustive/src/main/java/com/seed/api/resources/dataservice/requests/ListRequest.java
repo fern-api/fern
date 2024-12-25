@@ -22,7 +22,7 @@ import java.util.Optional;
 public final class ListRequest {
     private final Optional<String> prefix;
 
-    private final Optional<Integer> limit;
+    private final Optional<Long> limit;
 
     private final Optional<String> paginationToken;
 
@@ -32,7 +32,7 @@ public final class ListRequest {
 
     private ListRequest(
             Optional<String> prefix,
-            Optional<Integer> limit,
+            Optional<Long> limit,
             Optional<String> paginationToken,
             Optional<String> namespace,
             Map<String, Object> additionalProperties) {
@@ -49,7 +49,7 @@ public final class ListRequest {
     }
 
     @JsonProperty("limit")
-    public Optional<Integer> getLimit() {
+    public Optional<Long> getLimit() {
         return limit;
     }
 
@@ -99,7 +99,7 @@ public final class ListRequest {
     public static final class Builder {
         private Optional<String> prefix = Optional.empty();
 
-        private Optional<Integer> limit = Optional.empty();
+        private Optional<Long> limit = Optional.empty();
 
         private Optional<String> paginationToken = Optional.empty();
 
@@ -130,12 +130,12 @@ public final class ListRequest {
         }
 
         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
-        public Builder limit(Optional<Integer> limit) {
+        public Builder limit(Optional<Long> limit) {
             this.limit = limit;
             return this;
         }
 
-        public Builder limit(Integer limit) {
+        public Builder limit(Long limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }

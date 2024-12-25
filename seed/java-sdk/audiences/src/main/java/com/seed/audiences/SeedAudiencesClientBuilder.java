@@ -21,6 +21,14 @@ public final class SeedAudiencesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedAudiencesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedAudiencesClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedAudiencesClient(clientOptionsBuilder.build());

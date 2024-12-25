@@ -16,6 +16,14 @@ public final class SeedVersionClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedVersionClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedVersionClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedVersionClient(clientOptionsBuilder.build());

@@ -16,6 +16,14 @@ public final class SeedStreamingClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedStreamingClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedStreamingClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedStreamingClient(clientOptionsBuilder.build());

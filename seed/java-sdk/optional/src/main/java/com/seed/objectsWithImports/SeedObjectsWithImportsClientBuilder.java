@@ -16,6 +16,14 @@ public final class SeedObjectsWithImportsClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedObjectsWithImportsClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedObjectsWithImportsClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedObjectsWithImportsClient(clientOptionsBuilder.build());

@@ -27,6 +27,14 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedBearerTokenEnvironmentVariableClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedBearerTokenEnvironmentVariableClient build() {
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey or set the COURIER_API_KEY environment variable.");

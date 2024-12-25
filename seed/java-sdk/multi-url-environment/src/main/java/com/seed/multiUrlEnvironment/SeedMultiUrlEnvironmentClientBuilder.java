@@ -26,6 +26,14 @@ public final class SeedMultiUrlEnvironmentClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedMultiUrlEnvironmentClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedMultiUrlEnvironmentClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");

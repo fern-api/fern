@@ -26,6 +26,14 @@ public final class SeedApiClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedApiClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedApiClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);

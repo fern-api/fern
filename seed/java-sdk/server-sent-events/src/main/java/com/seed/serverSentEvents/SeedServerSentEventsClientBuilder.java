@@ -16,6 +16,14 @@ public final class SeedServerSentEventsClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedServerSentEventsClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedServerSentEventsClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedServerSentEventsClient(clientOptionsBuilder.build());

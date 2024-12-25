@@ -16,6 +16,14 @@ public final class SeedPlainTextClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedPlainTextClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedPlainTextClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedPlainTextClient(clientOptionsBuilder.build());

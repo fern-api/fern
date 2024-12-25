@@ -16,6 +16,14 @@ public final class SeedMixedCaseClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedMixedCaseClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedMixedCaseClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedMixedCaseClient(clientOptionsBuilder.build());

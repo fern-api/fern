@@ -201,6 +201,15 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .build());
         }
 
+        clientBuilder.addMethod(MethodSpec.methodBuilder("timeout")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the timeout (in seconds) for the client")
+                .addParameter(int.class, "timeout")
+                .returns(builderName)
+                .addStatement("this.$L.timeout(timeout)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return this")
+                .build());
+
         generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
                     String variableName =

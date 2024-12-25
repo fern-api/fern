@@ -22,9 +22,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = QueryColumn.Builder.class)
 public final class QueryColumn {
-    private final List<Double> values;
+    private final List<Float> values;
 
-    private final Optional<Integer> topK;
+    private final Optional<Long> topK;
 
     private final Optional<String> namespace;
 
@@ -35,8 +35,8 @@ public final class QueryColumn {
     private final Map<String, Object> additionalProperties;
 
     private QueryColumn(
-            List<Double> values,
-            Optional<Integer> topK,
+            List<Float> values,
+            Optional<Long> topK,
             Optional<String> namespace,
             Optional<Metadata> filter,
             Optional<IndexedData> indexedData,
@@ -50,12 +50,12 @@ public final class QueryColumn {
     }
 
     @JsonProperty("values")
-    public List<Double> getValues() {
+    public List<Float> getValues() {
         return values;
     }
 
     @JsonProperty("topK")
-    public Optional<Integer> getTopK() {
+    public Optional<Long> getTopK() {
         return topK;
     }
 
@@ -109,9 +109,9 @@ public final class QueryColumn {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<Double> values = new ArrayList<>();
+        private List<Float> values = new ArrayList<>();
 
-        private Optional<Integer> topK = Optional.empty();
+        private Optional<Long> topK = Optional.empty();
 
         private Optional<String> namespace = Optional.empty();
 
@@ -134,29 +134,29 @@ public final class QueryColumn {
         }
 
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public Builder values(List<Double> values) {
+        public Builder values(List<Float> values) {
             this.values.clear();
             this.values.addAll(values);
             return this;
         }
 
-        public Builder addValues(Double values) {
+        public Builder addValues(Float values) {
             this.values.add(values);
             return this;
         }
 
-        public Builder addAllValues(List<Double> values) {
+        public Builder addAllValues(List<Float> values) {
             this.values.addAll(values);
             return this;
         }
 
         @JsonSetter(value = "topK", nulls = Nulls.SKIP)
-        public Builder topK(Optional<Integer> topK) {
+        public Builder topK(Optional<Long> topK) {
             this.topK = topK;
             return this;
         }
 
-        public Builder topK(Integer topK) {
+        public Builder topK(Long topK) {
             this.topK = Optional.ofNullable(topK);
             return this;
         }

@@ -31,6 +31,14 @@ public final class SeedSingleUrlEnvironmentDefaultClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedSingleUrlEnvironmentDefaultClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedSingleUrlEnvironmentDefaultClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");

@@ -16,6 +16,14 @@ public final class SeedLicenseClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedLicenseClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedLicenseClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedLicenseClient(clientOptionsBuilder.build());

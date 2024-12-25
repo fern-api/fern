@@ -26,6 +26,14 @@ public final class SeedIdempotencyHeadersClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedIdempotencyHeadersClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedIdempotencyHeadersClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");

@@ -27,6 +27,14 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedBasicAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedBasicAuthEnvironmentVariablesClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username or set the USERNAME environment variable.");

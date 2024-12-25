@@ -68,10 +68,10 @@ export class Stream<T> implements AsyncIterable<T> {
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
                 // Extract the line from the buffer
                 let line = buf.slice(0, terminatorIndex + 1);
-                buf = buf.slice(terminatorIndex + 1);
+                buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 // Skip empty lines
-                if (line.length === 0) {
+                if (!line.trim()) {
                     continue;
                 }
 
@@ -112,7 +112,7 @@ export class Stream<T> implements AsyncIterable<T> {
             decoded += decoder.decode(chunk);
         }
         // Buffer is present in Node.js environment
-        else if (RUNTIME.type === "node" && typeof chunk != "undefined") {
+        else if (RUNTIME.type === "node" && typeof chunk !== "undefined") {
             decoded += Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
         }
         return decoded;

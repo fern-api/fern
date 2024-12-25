@@ -16,6 +16,14 @@ public final class SeedNurseryApiClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedNurseryApiClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedNurseryApiClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedNurseryApiClient(clientOptionsBuilder.build());

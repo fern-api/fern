@@ -1,1 +1,3 @@
+rootProject.name = 'grpc-proto'
+
 include 'sample-app'

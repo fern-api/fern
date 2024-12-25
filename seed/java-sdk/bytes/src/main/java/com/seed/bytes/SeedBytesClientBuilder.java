@@ -16,6 +16,14 @@ public final class SeedBytesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedBytesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedBytesClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedBytesClient(clientOptionsBuilder.build());

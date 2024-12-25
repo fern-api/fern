@@ -16,6 +16,14 @@ public final class SeedPackageYmlClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedPackageYmlClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedPackageYmlClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedPackageYmlClient(clientOptionsBuilder.build());

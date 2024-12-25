@@ -24,9 +24,9 @@ public final class UserModel {
 
     private final Optional<String> email;
 
-    private final Optional<Integer> age;
+    private final Optional<Long> age;
 
-    private final Optional<Double> weight;
+    private final Optional<Float> weight;
 
     private final Optional<Metadata> metadata;
 
@@ -35,8 +35,8 @@ public final class UserModel {
     private UserModel(
             Optional<String> username,
             Optional<String> email,
-            Optional<Integer> age,
-            Optional<Double> weight,
+            Optional<Long> age,
+            Optional<Float> weight,
             Optional<Metadata> metadata,
             Map<String, Object> additionalProperties) {
         this.username = username;
@@ -58,12 +58,12 @@ public final class UserModel {
     }
 
     @JsonProperty("age")
-    public Optional<Integer> getAge() {
+    public Optional<Long> getAge() {
         return age;
     }
 
     @JsonProperty("weight")
-    public Optional<Double> getWeight() {
+    public Optional<Float> getWeight() {
         return weight;
     }
 
@@ -111,9 +111,9 @@ public final class UserModel {
 
         private Optional<String> email = Optional.empty();
 
-        private Optional<Integer> age = Optional.empty();
+        private Optional<Long> age = Optional.empty();
 
-        private Optional<Double> weight = Optional.empty();
+        private Optional<Float> weight = Optional.empty();
 
         private Optional<Metadata> metadata = Optional.empty();
 
@@ -154,23 +154,23 @@ public final class UserModel {
         }
 
         @JsonSetter(value = "age", nulls = Nulls.SKIP)
-        public Builder age(Optional<Integer> age) {
+        public Builder age(Optional<Long> age) {
             this.age = age;
             return this;
         }
 
-        public Builder age(Integer age) {
+        public Builder age(Long age) {
             this.age = Optional.ofNullable(age);
             return this;
         }
 
         @JsonSetter(value = "weight", nulls = Nulls.SKIP)
-        public Builder weight(Optional<Double> weight) {
+        public Builder weight(Optional<Float> weight) {
             this.weight = weight;
             return this;
         }
 
-        public Builder weight(Double weight) {
+        public Builder weight(Float weight) {
             this.weight = Optional.ofNullable(weight);
             return this;
         }

@@ -20,6 +20,14 @@ public final class SeedLiteralClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedLiteralClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedLiteralClient build() {
         this.clientOptionsBuilder.addHeader("X-API-Version", this.version);
         this.clientOptionsBuilder.addHeader("X-API-Enable-Audit-Logging", this.auditLogging);

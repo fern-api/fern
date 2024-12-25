@@ -22,19 +22,19 @@ import java.util.Optional;
 public final class DescribeResponse {
     private final Optional<Map<String, NamespaceSummary>> namespaces;
 
-    private final Optional<Integer> dimension;
+    private final Optional<Long> dimension;
 
-    private final Optional<Double> fullness;
+    private final Optional<Float> fullness;
 
-    private final Optional<Integer> totalCount;
+    private final Optional<Long> totalCount;
 
     private final Map<String, Object> additionalProperties;
 
     private DescribeResponse(
             Optional<Map<String, NamespaceSummary>> namespaces,
-            Optional<Integer> dimension,
-            Optional<Double> fullness,
-            Optional<Integer> totalCount,
+            Optional<Long> dimension,
+            Optional<Float> fullness,
+            Optional<Long> totalCount,
             Map<String, Object> additionalProperties) {
         this.namespaces = namespaces;
         this.dimension = dimension;
@@ -49,17 +49,17 @@ public final class DescribeResponse {
     }
 
     @JsonProperty("dimension")
-    public Optional<Integer> getDimension() {
+    public Optional<Long> getDimension() {
         return dimension;
     }
 
     @JsonProperty("fullness")
-    public Optional<Double> getFullness() {
+    public Optional<Float> getFullness() {
         return fullness;
     }
 
     @JsonProperty("totalCount")
-    public Optional<Integer> getTotalCount() {
+    public Optional<Long> getTotalCount() {
         return totalCount;
     }
 
@@ -99,11 +99,11 @@ public final class DescribeResponse {
     public static final class Builder {
         private Optional<Map<String, NamespaceSummary>> namespaces = Optional.empty();
 
-        private Optional<Integer> dimension = Optional.empty();
+        private Optional<Long> dimension = Optional.empty();
 
-        private Optional<Double> fullness = Optional.empty();
+        private Optional<Float> fullness = Optional.empty();
 
-        private Optional<Integer> totalCount = Optional.empty();
+        private Optional<Long> totalCount = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -130,34 +130,34 @@ public final class DescribeResponse {
         }
 
         @JsonSetter(value = "dimension", nulls = Nulls.SKIP)
-        public Builder dimension(Optional<Integer> dimension) {
+        public Builder dimension(Optional<Long> dimension) {
             this.dimension = dimension;
             return this;
         }
 
-        public Builder dimension(Integer dimension) {
+        public Builder dimension(Long dimension) {
             this.dimension = Optional.ofNullable(dimension);
             return this;
         }
 
         @JsonSetter(value = "fullness", nulls = Nulls.SKIP)
-        public Builder fullness(Optional<Double> fullness) {
+        public Builder fullness(Optional<Float> fullness) {
             this.fullness = fullness;
             return this;
         }
 
-        public Builder fullness(Double fullness) {
+        public Builder fullness(Float fullness) {
             this.fullness = Optional.ofNullable(fullness);
             return this;
         }
 
         @JsonSetter(value = "totalCount", nulls = Nulls.SKIP)
-        public Builder totalCount(Optional<Integer> totalCount) {
+        public Builder totalCount(Optional<Long> totalCount) {
             this.totalCount = totalCount;
             return this;
         }
 
-        public Builder totalCount(Integer totalCount) {
+        public Builder totalCount(Long totalCount) {
             this.totalCount = Optional.ofNullable(totalCount);
             return this;
         }
