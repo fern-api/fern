@@ -25,6 +25,14 @@ exports[`TypeInstantiation > dict > should correctly write a dict with reference
 "
 `;
 
+exports[`TypeInstantiation > dict > should support trailing comma 1`] = `
+"{
+    "one": 1,
+    "two": True,
+}
+"
+`;
+
 exports[`TypeInstantiation > float 1`] = `
 "3.14
 "
@@ -35,7 +43,7 @@ exports[`TypeInstantiation > int 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > list 1`] = `
+exports[`TypeInstantiation > list > basic 1`] = `
 "[1, "two", True]
 "
 `;
@@ -45,8 +53,17 @@ exports[`TypeInstantiation > none 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > set 1`] = `
+exports[`TypeInstantiation > set > basic 1`] = `
 "{1, "two", True}
+"
+`;
+
+exports[`TypeInstantiation > set > should support trailing comma 1`] = `
+"{
+    1,
+    "two",
+    True,
+}
 "
 `;
 
@@ -86,8 +103,17 @@ exports[`TypeInstantiation > str > should render a string containing quote 1`] =
 "
 `;
 
-exports[`TypeInstantiation > tuple 1`] = `
+exports[`TypeInstantiation > tuple > basic 1`] = `
 "(1, "two", True)
+"
+`;
+
+exports[`TypeInstantiation > tuple > should support trailing comma 1`] = `
+"(
+    1,
+    "two",
+    True,
+)
 "
 `;
 
