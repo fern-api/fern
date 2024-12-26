@@ -13187,16 +13187,12 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
@@ -13281,16 +13277,12 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
@@ -15190,11 +15182,7 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
@@ -15352,11 +15340,7 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
