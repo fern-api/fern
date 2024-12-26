@@ -42,12 +42,12 @@ export function getEnumNameFromEnumValue(
     name: string;
     wasExplicitlySet: boolean;
 } {
-    const maybeEnumDefintion = _enum.enum.find((value) =>
+    const maybeEnumDefinition = _enum.enum.find((value) =>
         typeof value === "string" ? false : value.value === enumValue
     );
 
     return {
-        name: typeof maybeEnumDefintion === "string" ? enumValue : maybeEnumDefintion?.name ?? enumValue,
+        name: typeof maybeEnumDefinition === "string" ? enumValue : maybeEnumDefinition?.name ?? enumValue,
         wasExplicitlySet: false
     };
 }
