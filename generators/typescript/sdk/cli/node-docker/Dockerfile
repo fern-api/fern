@@ -6,45 +6,44 @@ RUN apk --no-cache add git zip \
 
 RUN yarn init --yes
 
-RUN  yarn add \
+RUN yarn add \
   # jest
   jest@29.7.0 \
-  @types/jest@29.5.5 \
+  @types/jest@29.5.14 \
   # node fetch
   node-fetch@2.7.0 \
-  @types/node-fetch@2.6.9 \
+  @types/node-fetch@2.6.12 \
   # node
-  @types/node@17.0.33 \
+  @types/node@17.0.41 \
   # qs
-  qs@6.11.2 \
-  @types/qs@6.9.8 \
-  # url join 
-  url-join@4.0.1 \
-  @types/url-join@4.0.1 \
+  qs@6.13.1 \
+  @types/qs@6.9.17 \
+  # url join
+  url-join@5.0.0 \
   # readable stream
-  readable-stream@4.5.2 \
-  @types/readable-stream@4.0.15 \
+  readable-stream@4.6.0 \
+  @types/readable-stream@4.0.18 \
   # form data
-  form-data@4.0.0 \
+  form-data@4.0.1 \
   # formdata-node
   formdata-node@6.0.3 \
   # jest env jsdom
   jest-environment-jsdom@29.7.0 \
   # js base64
-  "js-base64@3.7.2" \
+  js-base64@3.7.7 \
   # prettier
-  prettier@2.7.1 \
+  prettier@3.4.2 \
   # ts jest
   ts-jest@29.1.1 \
   # typescript
-  "typescript@4.6.4" \
+  typescript@5.7.2 \
   # form data encoder
   form-data-encoder@4.0.2 \
   # webpack
-  ts-loader@9.3.1 \
-  webpack@5.94.0 \
+  ts-loader@9.5.1 \
+  webpack@5.97.1 \
   # fetch mock jest
-  fetch-mock-jest@1.5.1 
+  fetch-mock-jest@1.5.1
 
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue
