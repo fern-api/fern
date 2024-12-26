@@ -64,6 +64,11 @@ exports[`TypeInstantiation > str > should render a multiline string 1`] = `
 "
 `;
 
+exports[`TypeInstantiation > str > should render a multiline string containing an escaped quote 1`] = `
+""""{{ chat_history[-1][\\\\"text\\\\"] }}"""
+"
+`;
+
 exports[`TypeInstantiation > str > should render a multiline string containing escaped quotes 1`] = `
 """"She said \\"Hi\\"
 He said \\"bye\\"
