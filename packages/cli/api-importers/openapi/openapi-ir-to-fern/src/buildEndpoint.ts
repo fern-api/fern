@@ -17,6 +17,7 @@ import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getT
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { isWriteMethod } from "./utils/isWriteMethod";
 import { State } from "./State";
 
 export interface ConvertedEndpoint {
@@ -459,7 +460,7 @@ function getRequest({
                     if (property.readonly == null) {
                         return true;
                     }
-                    const writeEndpoint = endpoint.method === "POST" || endpoint.method === "PUT";
+                    const writeEndpoint = isWriteMethod(endpoint.method);
                     if (writeEndpoint && property.readonly) {
                         return false;
                     }

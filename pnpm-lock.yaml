@@ -4312,6 +4312,9 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
       zod:
         specifier: ^3.22.3
         version: 3.23.8
