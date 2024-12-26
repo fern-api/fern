@@ -32,14 +32,14 @@ export namespace Error {
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody
+        value: SeedTrace.PlaylistIdNotFoundErrorBody,
     ): SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
             errorName: "PlaylistIdNotFoundError",
             _visit: function <_Result>(
                 this: SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError,
-                visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.updatePlaylist.Error._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.playlist.updatePlaylist.Error._Unknown,
-                visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.updatePlaylist.Error._visit(this, visitor);
             },
@@ -61,7 +61,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.playlist.updatePlaylist.Error,
-        visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>
+        visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             case "PlaylistIdNotFoundError":

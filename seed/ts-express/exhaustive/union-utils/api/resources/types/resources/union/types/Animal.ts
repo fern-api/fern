@@ -40,7 +40,7 @@ export const Animal = {
             animal: "dog",
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal.Dog,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const Animal = {
             animal: "cat",
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal.Cat,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const Animal = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal._Unknown,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const Animal = {
 
     _visit: <_Result>(
         value: SeedExhaustive.types.Animal,
-        visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+        visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
     ): _Result => {
         switch (value.animal) {
             case "dog":

@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedOauthClientCredentials.auth.getToken.Error._Unknown,
-                visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>
+                visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>,
             ) {
                 return SeedOauthClientCredentials.auth.getToken.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedOauthClientCredentials.auth.getToken.Error,
-        visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>
+        visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

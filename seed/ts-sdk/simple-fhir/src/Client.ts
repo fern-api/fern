@@ -37,12 +37,12 @@ export class SeedApiClient {
      */
     public async getAccount(
         accountId: string,
-        requestOptions?: SeedApiClient.RequestOptions
+        requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<SeedApi.Account> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `account/${encodeURIComponent(accountId)}`
+                `account/${encodeURIComponent(accountId)}`,
             ),
             method: "GET",
             headers: {

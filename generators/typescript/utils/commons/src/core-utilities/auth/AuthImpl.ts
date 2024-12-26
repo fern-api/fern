@@ -21,7 +21,7 @@ export class AuthImpl extends CoreUtility implements Auth {
         },
         pathInCoreUtilities: [{ nameOnDisk: "auth", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("js-base64", "3.7.2");
+            dependencyManager.addDependency("js-base64", "3.7.7");
         }
     };
 

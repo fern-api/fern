@@ -47,7 +47,7 @@ export class Query {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: Query.RequestOptions
+        requestOptions?: Query.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const { prompt, query, stream } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

@@ -8,7 +8,7 @@ import { BaseRecordSchema, RecordSchema } from "./types";
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
-    valueSchema: Schema<RawValue, ParsedValue>
+    valueSchema: Schema<RawValue, ParsedValue>,
 ): RecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {
     const baseSchema: BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> = {
         parse: (raw, opts) => {
@@ -125,6 +125,6 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
                 errors,
             };
         },
-        { ok: true, value: {} as Record<TransformedKey, TransformedValue> }
+        { ok: true, value: {} as Record<TransformedKey, TransformedValue> },
     );
 }

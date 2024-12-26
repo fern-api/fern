@@ -36,14 +36,14 @@ export class SeedAnyAuthClient {
         const clientId = this._options.clientId ?? process.env["MY_CLIENT_ID"];
         if (clientId == null) {
             throw new Error(
-                "clientId is required; either pass it as an argument or set the MY_CLIENT_ID environment variable"
+                "clientId is required; either pass it as an argument or set the MY_CLIENT_ID environment variable",
             );
         }
 
         const clientSecret = this._options.clientSecret ?? process.env["MY_CLIENT_SECRET"];
         if (clientSecret == null) {
             throw new Error(
-                "clientSecret is required; either pass it as an argument or set the MY_CLIENT_SECRET environment variable"
+                "clientSecret is required; either pass it as an argument or set the MY_CLIENT_SECRET environment variable",
             );
         }
 

@@ -12,7 +12,7 @@ export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Ra
         bar: core.serialization.lazyObject(() => serializers.RootType1InlineType1),
         fooMap: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazyObject(() => serializers.RootType1FooMapValue)
+            core.serialization.lazyObject(() => serializers.RootType1FooMapValue),
         ),
         fooList: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooListItem)),
         fooSet: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooSetItem)),

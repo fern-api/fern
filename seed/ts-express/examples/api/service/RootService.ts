@@ -15,7 +15,7 @@ export interface RootServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     createType(
         req: express.Request<never, SeedExamples.Identifier, SeedExamples.Type, never>,
@@ -24,19 +24,22 @@ export interface RootServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class RootService {
     private router;
 
-    constructor(private readonly methods: RootServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: RootServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -58,13 +61,13 @@ export class RootService {
                                 res.json(
                                     serializers.echo.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -72,7 +75,7 @@ export class RootService {
                         console.warn(
                             `Endpoint 'echo' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -83,7 +86,7 @@ export class RootService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -101,13 +104,13 @@ export class RootService {
                                 res.json(
                                     serializers.Identifier.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -115,7 +118,7 @@ export class RootService {
                         console.warn(
                             `Endpoint 'createType' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -126,7 +129,7 @@ export class RootService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

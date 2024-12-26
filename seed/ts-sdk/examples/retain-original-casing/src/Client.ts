@@ -116,7 +116,7 @@ export class SeedExamplesClient {
      */
     public async createType(
         request: SeedExamples.Type,
-        requestOptions?: SeedExamplesClient.RequestOptions
+        requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<SeedExamples.Identifier> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

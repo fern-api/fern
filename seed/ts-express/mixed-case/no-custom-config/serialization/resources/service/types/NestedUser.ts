@@ -11,7 +11,7 @@ export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.
         name: core.serialization.property("Name", core.serialization.string()),
         nestedUser: core.serialization.property(
             "NestedUser",
-            core.serialization.lazyObject(() => serializers.User)
+            core.serialization.lazyObject(() => serializers.User),
         ),
     });
 

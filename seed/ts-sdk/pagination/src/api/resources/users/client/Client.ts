@@ -43,10 +43,10 @@ export class Users {
      */
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersCursorPaginationRequest
+            request: SeedPagination.ListUsersCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -133,10 +133,10 @@ export class Users {
      */
     public async listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersBodyCursorPaginationRequest
+            request: SeedPagination.ListUsersBodyCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
                 url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
@@ -212,10 +212,10 @@ export class Users {
      */
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersOffsetPaginationRequest
+            request: SeedPagination.ListUsersOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -304,10 +304,10 @@ export class Users {
      */
     public async listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersBodyOffsetPaginationRequest
+            request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
                 url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
@@ -384,10 +384,10 @@ export class Users {
      */
     public async listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersOffsetStepPaginationRequest
+            request: SeedPagination.ListUsersOffsetStepPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -473,10 +473,10 @@ export class Users {
      */
     public async listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest
+            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -560,10 +560,10 @@ export class Users {
      */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersExtendedRequest
+            request: SeedPagination.ListUsersExtendedRequest,
         ): Promise<SeedPagination.ListUsersExtendedResponse> => {
             const { cursor } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -639,10 +639,10 @@ export class Users {
      */
     public async listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersExtendedRequestForOptionalData
+            request: SeedPagination.ListUsersExtendedRequestForOptionalData,
         ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
             const { cursor } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -718,7 +718,7 @@ export class Users {
      */
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
         const list = async (request: SeedPagination.ListUsernamesRequest): Promise<SeedPagination.UsernameCursor> => {
             const { startingAfter } = request;
@@ -795,10 +795,10 @@ export class Users {
      */
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
         const list = async (
-            request: SeedPagination.ListWithGlobalConfigRequest
+            request: SeedPagination.ListWithGlobalConfigRequest,
         ): Promise<SeedPagination.UsernameContainer> => {
             const { offset } = request;
             const _queryParams: Record<string, string | string[] | object | object[]> = {};

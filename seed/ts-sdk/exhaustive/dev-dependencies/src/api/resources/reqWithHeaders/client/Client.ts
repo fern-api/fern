@@ -41,7 +41,7 @@ export class ReqWithHeaders {
      */
     public async getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
-        requestOptions?: ReqWithHeaders.RequestOptions
+        requestOptions?: ReqWithHeaders.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({

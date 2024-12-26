@@ -39,12 +39,12 @@ export class Params {
      */
     public async getWithPath(
         param: string,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -94,12 +94,12 @@ export class Params {
     public async getWithInlinePath(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePath = {},
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -150,7 +150,7 @@ export class Params {
      */
     public async getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -203,7 +203,7 @@ export class Params {
      */
     public async getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
         const { query, numer } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -267,7 +267,7 @@ export class Params {
     public async getWithPathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithPathAndQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -275,7 +275,7 @@ export class Params {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path-query/${encodeURIComponent(param)}`
+                `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -323,7 +323,7 @@ export class Params {
     public async getWithInlinePathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -331,7 +331,7 @@ export class Params {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path-query/${encodeURIComponent(param)}`
+                `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -377,12 +377,12 @@ export class Params {
     public async modifyWithPath(
         param: string,
         request: string,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",
             headers: {
@@ -437,12 +437,12 @@ export class Params {
     public async modifyWithInlinePath(
         param: string,
         request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",
             headers: {

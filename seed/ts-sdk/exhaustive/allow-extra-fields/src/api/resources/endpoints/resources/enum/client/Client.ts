@@ -38,7 +38,7 @@ export class Enum {
      */
     public async getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions
+        requestOptions?: Enum.RequestOptions,
     ): Promise<SeedExhaustive.types.WeatherReport> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/enum"),

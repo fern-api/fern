@@ -39,12 +39,12 @@ export class Homepage {
      *     await client.homepage.getHomepageProblems()
      */
     public async getHomepageProblems(
-        requestOptions?: Homepage.RequestOptions
+        requestOptions?: Homepage.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                "/homepage-problems",
             ),
             method: "GET",
             headers: {
@@ -89,12 +89,12 @@ export class Homepage {
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],
-        requestOptions?: Homepage.RequestOptions
+        requestOptions?: Homepage.RequestOptions,
     ): Promise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                "/homepage-problems",
             ),
             method: "POST",
             headers: {

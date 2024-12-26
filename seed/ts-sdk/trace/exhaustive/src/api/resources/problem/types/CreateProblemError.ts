@@ -32,7 +32,7 @@ export const CreateProblemError = {
             errorType: "generic",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemError.Generic,
-                visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemError._visit(this, visitor);
             },
@@ -44,7 +44,7 @@ export const CreateProblemError = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemError._Unknown,
-                visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemError._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const CreateProblemError = {
 
     _visit: <_Result>(
         value: SeedTrace.CreateProblemError,
-        visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+        visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
     ): _Result => {
         switch (value.errorType) {
             case "generic":

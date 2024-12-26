@@ -35,7 +35,7 @@ export class NoReqBody {
      *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
+        requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
@@ -81,7 +81,7 @@ export class NoReqBody {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     public async postWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
+        requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),

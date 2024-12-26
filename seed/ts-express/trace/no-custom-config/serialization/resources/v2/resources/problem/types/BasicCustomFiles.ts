@@ -14,7 +14,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
     signature: core.serialization.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
     additionalFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
     basicTestCaseTemplate: core.serialization.lazyObject(() => serializers.v2.BasicTestCaseTemplate),
 });

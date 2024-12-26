@@ -15,7 +15,7 @@ export namespace Error {
 
     interface _Utils {
         _visit: <_Result>(
-            visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>
+            visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>,
         ) => _Result;
     }
 
@@ -26,14 +26,14 @@ export namespace Error {
 
 export const Error = {
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Unknown,
-                visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>
+                visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>,
             ) {
                 return Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._visit(this, visitor);
             },
@@ -42,7 +42,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error,
-        visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>
+        visitor: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

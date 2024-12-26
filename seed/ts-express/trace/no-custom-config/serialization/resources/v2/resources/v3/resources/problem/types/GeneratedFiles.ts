@@ -12,15 +12,15 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
 > = core.serialization.object({
     generatedTestCaseFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
     ),
     generatedTemplateFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
     ),
     other: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
     ),
 });
 

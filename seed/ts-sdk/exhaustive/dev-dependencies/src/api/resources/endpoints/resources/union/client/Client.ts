@@ -40,7 +40,7 @@ export class Union {
      */
     public async getAndReturnUnion(
         request: Fiddle.types.Animal,
-        requestOptions?: Union.RequestOptions
+        requestOptions?: Union.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/union"),

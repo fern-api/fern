@@ -235,9 +235,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private getDevDependencies(): Record<string, string> {
         return {
-            "@types/node": "17.0.33",
-            prettier: "2.7.1",
-            typescript: "4.6.4"
+            "@types/node": "^17.0.41",
+            prettier: "^3.4.2",
+            typescript: "~5.7.2"
         };
     }
 }

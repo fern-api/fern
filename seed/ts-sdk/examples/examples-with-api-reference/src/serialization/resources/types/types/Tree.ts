@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedExamples.Tree> = core.serialization.object(
     {
         nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
-    }
+    },
 );
 
 export declare namespace Tree {

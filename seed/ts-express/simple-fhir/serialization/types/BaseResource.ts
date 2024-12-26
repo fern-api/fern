@@ -11,7 +11,7 @@ export const BaseResource: core.serialization.ObjectSchema<serializers.BaseResou
         id: core.serialization.string(),
         relatedResources: core.serialization.property(
             "related_resources",
-            core.serialization.list(core.serialization.lazy(() => serializers.ResourceList))
+            core.serialization.list(core.serialization.lazy(() => serializers.ResourceList)),
         ),
         memo: core.serialization.lazyObject(() => serializers.Memo),
     });

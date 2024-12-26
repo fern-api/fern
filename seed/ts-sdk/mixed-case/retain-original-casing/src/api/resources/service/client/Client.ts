@@ -37,12 +37,12 @@ export class Service {
      */
     public async getResource(
         ResourceID: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/resource/${encodeURIComponent(ResourceID)}`
+                `/resource/${encodeURIComponent(ResourceID)}`,
             ),
             method: "GET",
             headers: {
@@ -103,7 +103,7 @@ export class Service {
      */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource[]> {
         const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

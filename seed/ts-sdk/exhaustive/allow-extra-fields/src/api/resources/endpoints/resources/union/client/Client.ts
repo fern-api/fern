@@ -42,7 +42,7 @@ export class Union {
      */
     public async getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
-        requestOptions?: Union.RequestOptions
+        requestOptions?: Union.RequestOptions,
     ): Promise<SeedExhaustive.types.Animal> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/union"),
