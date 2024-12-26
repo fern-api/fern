@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.6] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator.
+
 ## [0.44.5] - 2024-12-23
 
 - Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
