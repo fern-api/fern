@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Correctly omits readOnly query parameters during openapi to fern definition generation.
+      type: fix
+  irVersion: 53
+  version: 0.46.13
+
+- changelogEntry:
+    - summary: |
         The CLI now handles parsing service level path parameters with descriptions. 
         This fixes a regression introduced in the CLI since versions 0.45.x. 
       type: fix

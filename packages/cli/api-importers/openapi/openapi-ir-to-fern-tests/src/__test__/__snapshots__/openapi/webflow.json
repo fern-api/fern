@@ -5070,16 +5070,12 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
@@ -5118,15 +5114,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5136,14 +5124,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5180,16 +5160,12 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
@@ -5228,15 +5204,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemLiveRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5246,14 +5214,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -7078,21 +7038,9 @@ service:
         name: ItemsUpdateItemRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -7117,11 +7065,7 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
@@ -7252,21 +7196,9 @@ service:
         name: ItemsUpdateItemLiveRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -7291,11 +7223,7 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
