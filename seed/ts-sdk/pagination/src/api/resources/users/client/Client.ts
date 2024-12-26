@@ -279,7 +279,7 @@ export class Users {
                     });
             }
         };
-        let _offset = request?.page != null ? request?.page : 1;
+        let _offset = request?.page != null ? request?.page : 0;
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: await list(request),
             hasNextPage: (response) => (response?.data ?? []).length > 0,

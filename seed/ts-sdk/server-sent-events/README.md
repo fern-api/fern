@@ -1,14 +1,14 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
-[![npm shield](https://img.shields.io/npm/v/@fern/streaming)](https://www.npmjs.com/package/@fern/streaming)
+[![npm shield](https://img.shields.io/npm/v/@fern/server-sent-events)](https://www.npmjs.com/package/@fern/server-sent-events)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 
 ## Installation
 
 ```sh
-npm i -s @fern/streaming
+npm i -s @fern/server-sent-events
 ```
 
 ## Reference
@@ -20,11 +20,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming";
+import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-const response = await client.dummy.generateStream({
-    numEvents: 1,
+const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+const response = await client.completions.stream({
+    query: "query",
 });
 for await (const item of response) {
     console.log(item);
@@ -37,9 +37,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedStreaming } from "@fern/streaming";
+import { SeedServerSentEvents } from "@fern/server-sent-events";
 
-const request: SeedStreaming.GenerateStreamRequest = {
+const request: SeedServerSentEvents.StreamCompletionRequest = {
     ...
 };
 ```
@@ -50,12 +50,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedStreamingError } from "@fern/streaming";
+import { SeedServerSentEventsError } from "@fern/server-sent-events";
 
 try {
-    await client.dummy.generateStream(...);
+    await client.completions.stream(...);
 } catch (err) {
-    if (err instanceof SeedStreamingError) {
+    if (err instanceof SeedServerSentEventsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -70,7 +70,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.completions.stream(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -92,7 +92,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.completions.stream(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -102,7 +102,7 @@ const response = await client.dummy.generateStream(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.dummy.generateStream(..., {
+const response = await client.completions.stream(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -113,7 +113,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.dummy.generateStream(..., {
+const response = await client.completions.stream(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -137,9 +137,9 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming";
+import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
-const client = new SeedStreamingClient({
+const client = new SeedServerSentEventsClient({
     ...
     fetcher: // provide your implementation here
 });
