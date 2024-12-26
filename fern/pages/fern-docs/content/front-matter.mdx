@@ -209,17 +209,17 @@ This field specifies the logo for this page. If no logo is set, the site-wide [l
 **Type**: `overview`, `guide`, `reference`, `page`, or `custom`<br />
 **Default**: `guide`
 
-Controls the layout of the page. 
+Sets the page layout.
 
-- `overview`: The page is displayed full-width.
-- `guide`: The page is displayed with the standard guide layout.
-- `reference`: The page is displayed with the API Reference layout. The table of contents is hidden in this layout.
-- `page`: The page is displayed full-screen. The table of contents and sidebar navigation are hidden in this layout.
-- `custom`: The page is displayed without layout styling. The table of contents and sidebar navigation are hidden in this layout.
+- `'overview'`: Full-width, no table of contents. Ideal for landing pages and section overviews.
+- `'guide'`: Standard layout with table of contents sidebar on the right. Suitable for guides, tutorials, and structured content.
+- `'reference'`: Full-width content, no table of contents. Designed for API documentation and reference material.
+- `'page'`: Full-screen, no table of contents or sidebar navigation. Use for standalone pages like contact forms or legal pages.
+- `'custom'`: No predefined styling, allows full layout customization using CSS. Table of contents and sidebar navigation are hidden.
 
 ## SEO metadata
 
-Fern also supports adding SEO-specific metadata in the frontmatter. 
+Fern supports adding SEO metadata in the frontmatter.
 
 | Property | Description | Type |
 | -------- | ----------- | ---- | 
