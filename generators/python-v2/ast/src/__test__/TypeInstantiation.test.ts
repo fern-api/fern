@@ -117,6 +117,11 @@ describe("TypeInstantiation", () => {
             ).write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("should handle single-element tuple", async () => {
+            TypeInstantiation.tuple([TypeInstantiation.int(1)]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
     describe("dict", () => {

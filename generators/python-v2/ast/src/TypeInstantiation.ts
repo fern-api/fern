@@ -220,7 +220,12 @@ export class TypeInstantiation extends AstNode {
                         writer.write(", ");
                     }
                     value.write(writer);
-                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                    if (
+                        // If the tuple is of length 1, then we must always add a trailing comma
+                        internalType.values.length === 1 ||
+                        // Otherwise, check the config that was specified
+                        (index === internalType.values.length - 1 && internalType.config?.endWithComma)
+                    ) {
                         writer.write(",");
                     }
                 });

@@ -108,6 +108,11 @@ exports[`TypeInstantiation > tuple > basic 1`] = `
 "
 `;
 
+exports[`TypeInstantiation > tuple > should handle single-element tuple 1`] = `
+"(1,)
+"
+`;
+
 exports[`TypeInstantiation > tuple > should support trailing comma 1`] = `
 "(
     1,
