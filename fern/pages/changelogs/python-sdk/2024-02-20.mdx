@@ -1,18 +1,7 @@
 ## 0.11.1
-**`(chore):`** Add a docstring for base clients to explain usage, example:
+**`(feat):`** Python now supports specifying files to auto-export from the root `__init__.py` file
 
-  ```python
-  class SeedTest:
-    """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
-    ---
-    from seed.client import SeedTest
-
-    client = SeedTest(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
-    """
-  ```
-
+### What's changed
+- Python now supports specifying files to auto-export from the root `__init__.py` file, this means you can export custom classes and functions from your package for users to access like so:
+- Add a docstring for base clients to explain usage, example:
 

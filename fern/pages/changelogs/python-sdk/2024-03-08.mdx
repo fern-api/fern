@@ -1,29 +1,6 @@
 ## 0.11.10
-**`(feat):`** Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK. This allows for easier forward compatibility should your SDK drift behind your spec.
+**`(feat):`** Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK.
 
-  Config:
-
-  ```yaml
-  generators:
-    - name: fernapi/fern-python-sdk
-      ...
-      config:
-        pydantic_config:
-          extra_fields: "allow"
-  ```
-
-  Example generated code:
-
-  ```python
-  # my_object.py
-  class MyObject(pydantic.BaseModel):
-      string: typing.Optional[str] = None
-      ...
-
-  # main.py
-  o = pydantic.parse_obj_as(MyObject, {"string": "string", "my_new_property": "custom_value"})
-
-  print(o.my_new_property) # <--- "custom_value"
-  ```
-
+### What's new
+- Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK. This allows for easier forward compatibility should your SDK drift behind your spec.
 

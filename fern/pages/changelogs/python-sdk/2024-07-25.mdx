@@ -1,35 +1,6 @@
 ## 3.2.0-rc0
-**`(fix):`** The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models. This allows for consumers of the SDK
-  to continue to have type hinting and autocomplete, but not need to import new object types when creating requests.
+**`(feat):`** The Python SDK can now be generated with TypedDicts as inputs.
 
-  With the following config:
-
-  ```yaml
-  generators:
-    - name: fernapi/fern-python-sdk
-      config:
-        pydantic_config:
-          use_typeddict_requests: true
-  ```
-
-  The usage will change from:
-
-  ```python
-  client\
-      .imdb\
-      .create_movie(
-        request=CreateMovieRequest(title="title", rating=4.3),
-      )
-  ```
-
-  to:
-
-  ```python
-    client\
-      .imdb\
-      .create_movie(
-        request={"title": "title", "rating": 4.3},
-      )
-  ```
-
+### What's new
+- The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models. This allows for consumers of the SDK to continue to have type hinting and autocomplete, but not need to import new object types when creating requests.
 

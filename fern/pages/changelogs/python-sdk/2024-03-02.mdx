@@ -1,15 +1,6 @@
 ## 0.11.8-rc1
-**`(fix):`** Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests. This parameter will retry requests automatically, with exponential backoff and a jitter. The client will automatically retry requests of a 5XX status code, or certain 4XX codes (429, 408, 409).
+**`(feat):`** Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests.
 
-  ```python
-    client\
-      .imdb\
-      .create_movie(
-        request=CreateMovieRequest(title="title", rating=4.3),
-        request_options={
-          "max_retries": 5,
-        }
-      )
-  ```
-
+### What's changed
+- Beta: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests. This parameter will retry requests automatically, with exponential backoff and a jitter. The client will automatically retry requests of a 5XX status code, or certain 4XX codes (429, 408, 409).
 
