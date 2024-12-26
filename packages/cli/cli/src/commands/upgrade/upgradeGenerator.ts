@@ -169,16 +169,12 @@ export async function upgradeGenerator({
                     cliVersion: cliContext.environment.packageVersion
                 });
 
-
                 const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath
                 });
 
                 if (absolutePathToGeneratorsConfiguration != null && updatedConfiguration != null) {
-                    await writeFile(
-                        absolutePathToGeneratorsConfiguration,
-                        updatedConfiguration
-                    );
+                    await writeFile(absolutePathToGeneratorsConfiguration, updatedConfiguration);
                 }
             });
         })
