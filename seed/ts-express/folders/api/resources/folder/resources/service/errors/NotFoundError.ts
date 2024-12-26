@@ -14,7 +14,7 @@ export class NotFoundError extends errors.SeedApiError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(404).json(
-            serializers.folder.NotFoundError.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.folder.NotFoundError.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

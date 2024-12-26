@@ -21,7 +21,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getWithInlinePath(
         req: express.Request<
@@ -37,7 +37,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getWithQuery(
         req: express.Request<
@@ -54,7 +54,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getWithAllowMultipleQuery(
         req: express.Request<
@@ -71,7 +71,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getWithPathAndQuery(
         req: express.Request<
@@ -89,7 +89,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getWithInlinePathAndQuery(
         req: express.Request<
@@ -107,7 +107,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     modifyWithPath(
         req: express.Request<
@@ -123,7 +123,7 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     modifyWithInlinePath(
         req: express.Request<
@@ -139,19 +139,22 @@ export interface ParamsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ParamsService {
     private router;
 
-    constructor(private readonly methods: ParamsServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ParamsServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -170,13 +173,13 @@ export class ParamsService {
                             res.json(
                                 serializers.endpoints.params.getWithPath.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -184,7 +187,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithPath' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -200,13 +203,13 @@ export class ParamsService {
                             res.json(
                                 serializers.endpoints.params.getWithInlinePath.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -214,7 +217,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithInlinePath' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -232,7 +235,7 @@ export class ParamsService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -240,7 +243,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithQuery' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -258,7 +261,7 @@ export class ParamsService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -266,7 +269,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithAllowMultipleQuery' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -284,7 +287,7 @@ export class ParamsService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -292,7 +295,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithPathAndQuery' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -310,7 +313,7 @@ export class ParamsService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -318,7 +321,7 @@ export class ParamsService {
                     console.warn(
                         `Endpoint 'getWithInlinePathAndQuery' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 }
@@ -337,13 +340,13 @@ export class ParamsService {
                                 res.json(
                                     serializers.endpoints.params.modifyWithPath.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -351,7 +354,7 @@ export class ParamsService {
                         console.warn(
                             `Endpoint 'modifyWithPath' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -360,7 +363,7 @@ export class ParamsService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -378,14 +381,14 @@ export class ParamsService {
                                 res.json(
                                     serializers.endpoints.params.modifyWithInlinePath.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -393,7 +396,7 @@ export class ParamsService {
                         console.warn(
                             `Endpoint 'modifyWithInlinePath' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -402,7 +405,7 @@ export class ParamsService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

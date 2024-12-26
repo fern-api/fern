@@ -15,7 +15,7 @@ export class BadRequestBody extends errors.SeedExhaustiveError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            serializers.BadObjectRequestInfo.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.BadObjectRequestInfo.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

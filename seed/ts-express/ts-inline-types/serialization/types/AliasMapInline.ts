@@ -9,7 +9,7 @@ import * as core from "../../core";
 export const AliasMapInline: core.serialization.Schema<serializers.AliasMapInline.Raw, SeedObject.AliasMapInline> =
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazyObject(() => serializers.AliasInlineValue)
+        core.serialization.lazyObject(() => serializers.AliasInlineValue),
     );
 
 export declare namespace AliasMapInline {

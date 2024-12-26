@@ -20,7 +20,7 @@ export const UndiscriminatedUnion1: core.serialization.Schema<
     core.serialization.list(core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineSetItem1)),
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineMapItem1)
+        core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineMapItem1),
     ),
     core.serialization.lazyObject(() => serializers.ReferenceType),
 ]);

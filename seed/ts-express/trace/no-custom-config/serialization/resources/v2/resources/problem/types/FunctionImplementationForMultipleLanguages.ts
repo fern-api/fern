@@ -12,7 +12,7 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
 > = core.serialization.object({
     codeByLanguage: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.FunctionImplementation).optional()
+        core.serialization.lazyObject(() => serializers.v2.FunctionImplementation).optional(),
     ),
 });
 

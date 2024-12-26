@@ -13,7 +13,7 @@ export const NestedObjectWithRequiredField: core.serialization.ObjectSchema<
     string: core.serialization.string(),
     nestedObject: core.serialization.property(
         "NestedObject",
-        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField)
+        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField),
     ),
 });
 
