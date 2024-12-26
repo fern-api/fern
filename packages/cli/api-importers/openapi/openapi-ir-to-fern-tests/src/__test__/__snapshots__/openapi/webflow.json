@@ -5118,15 +5118,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5136,14 +5128,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5228,15 +5212,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemLiveRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5246,14 +5222,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -7078,21 +7046,9 @@ service:
         name: ItemsUpdateItemRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -7252,21 +7208,9 @@ service:
         name: ItemsUpdateItemLiveRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived

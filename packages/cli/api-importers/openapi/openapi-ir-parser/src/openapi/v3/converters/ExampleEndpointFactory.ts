@@ -20,6 +20,7 @@ import {
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
+import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly";
 import { hasIncompleteExample } from "../hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 
@@ -56,7 +57,7 @@ export class ExampleEndpointFactory {
 
             if (requestSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
-                    skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
+                    skipReadonly: shouldSkipReadOnly(endpoint.method),
                     schema: requestSchemaIdResponse.schema,
                     exampleId: undefined,
                     example: undefined,
@@ -73,7 +74,7 @@ export class ExampleEndpointFactory {
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
                     const example = this.exampleTypeFactory.buildExample({
-                        skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
+                        skipReadonly: shouldSkipReadOnly(endpoint.method),
                         schema: requestSchemaIdResponse.schema,
                         exampleId,
                         example: rawExample,
