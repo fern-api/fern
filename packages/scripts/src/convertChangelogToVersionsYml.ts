@@ -74,7 +74,13 @@ export function parseChangelog(changelogContent: string): ChangelogEntry[] {
     return entries;
 }
 
-export function convertToNewFormat({ entries, generatorName }: { entries: ChangelogEntry[], generatorName: string }): FormattedEntry[] {
+export function convertToNewFormat({
+    entries,
+    generatorName
+}: {
+    entries: ChangelogEntry[];
+    generatorName: string;
+}): FormattedEntry[] {
     return entries.map((entry) => {
         const changes = entry.changes.map((change) => {
             let type: FormattedChange["type"] = "fix";
@@ -108,10 +114,14 @@ export function convertToNewFormat({ entries, generatorName }: { entries: Change
             return { summary: summary.trim(), type };
         });
 
-        const irVersion = INTERMEDIATE_REPRESENTATION_MIGRATOR.getIRVersionForGenerator({ targetGenerator: { name: generatorName , version: entry.version }});
+        const irVersion = INTERMEDIATE_REPRESENTATION_MIGRATOR.getIRVersionForGenerator({
+            targetGenerator: { name: generatorName, version: entry.version }
+        });
 
         if (irVersion == null) {
-            throw new Error(`Could not determine IR version for generator ${generatorName} at version ${entry.version}`);
+            throw new Error(
+                `Could not determine IR version for generator ${generatorName} at version ${entry.version}`
+            );
         }
 
         return {

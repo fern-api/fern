@@ -17,7 +17,7 @@ async function main() {
                     return yargs
                         .option("input", {
                             alias: "i",
-                            type: "string", 
+                            type: "string",
                             description: "Path to input changelog file",
                             demandOption: true
                         })
