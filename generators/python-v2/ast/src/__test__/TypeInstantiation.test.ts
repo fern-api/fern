@@ -63,6 +63,18 @@ describe("TypeInstantiation", () => {
             TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"').write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("should render a multiline string containing an escaped quote", async () => {
+            TypeInstantiation.str(
+                // prettier-ignore
+
+                "{{ chat_history[-1][\"text\"] }}",
+                {
+                    multiline: true
+                }
+            ).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
     it("bytes", async () => {
