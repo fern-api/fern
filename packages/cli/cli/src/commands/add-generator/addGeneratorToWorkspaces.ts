@@ -1,6 +1,5 @@
 import {
     addGenerator,
-    generatorsYml,
     getPathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
@@ -38,13 +37,17 @@ export async function addGeneratorToWorkspaces({
                     cliVersion: cliContext.environment.packageVersion
                 });
 
-                await writeFile(
+                const absolutePathToGeneratorsConfiguration =
                     workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                        getPathToGeneratorsConfiguration({
-                            absolutePathToWorkspace: workspace.absoluteFilePath
-                        }),
-                    yaml.dump(newConfiguration)
-                );
+                    (await getPathToGeneratorsConfiguration({
+                        absolutePathToWorkspace: workspace.absoluteFilePath
+                    }));
+
+                if (absolutePathToGeneratorsConfiguration == null) {
+                    return;
+                }
+
+                await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(newConfiguration));
                 context.logger.info(chalk.green(`Added ${generatorName} generator`));
             });
         })
