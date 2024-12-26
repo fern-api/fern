@@ -6,7 +6,11 @@ import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
-interface StrFormatConfig {
+interface IterableConfig {
+    endWithComma?: boolean;
+}
+
+interface StrConfig {
     multiline?: boolean;
     startOnNewLine?: boolean;
     endWithNewLine?: boolean;
@@ -30,7 +34,7 @@ interface Bool {
 interface Str {
     type: "str";
     value: string;
-    config?: StrFormatConfig;
+    config?: StrConfig;
 }
 
 interface Bytes {
@@ -41,21 +45,25 @@ interface Bytes {
 interface List {
     type: "list";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Set {
     type: "set";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Tuple {
     type: "tuple";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Dict {
     type: "dict";
     entries: DictEntry[];
+    config?: IterableConfig;
 }
 
 interface DictEntry {
@@ -91,7 +99,7 @@ export class TypeInstantiation extends AstNode {
 
     public static str(
         value: string,
-        config: StrFormatConfig = {
+        config: StrConfig = {
             multiline: false,
             startOnNewLine: false,
             endWithNewLine: false
@@ -104,26 +112,26 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bytes", value });
     }
 
-    public static list(values: AstNode[]): TypeInstantiation {
-        const list = new this({ type: "list", values });
+    public static list(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const list = new this({ type: "list", values, config });
         values.forEach((value) => list.inheritReferences(value));
         return list;
     }
 
-    public static set(values: AstNode[]): TypeInstantiation {
-        const set = new this({ type: "set", values });
+    public static set(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const set = new this({ type: "set", values, config });
         values.forEach((value) => set.inheritReferences(value));
         return set;
     }
 
-    public static tuple(values: AstNode[]): TypeInstantiation {
-        const tuple = new this({ type: "tuple", values });
+    public static tuple(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const tuple = new this({ type: "tuple", values, config });
         values.forEach((value) => tuple.inheritReferences(value));
         return tuple;
     }
 
-    public static dict(entries: DictEntry[]): TypeInstantiation {
-        const dict = new this({ type: "dict", entries });
+    public static dict(entries: DictEntry[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const dict = new this({ type: "dict", entries, config });
         entries.forEach((entry) => {
             dict.inheritReferences(entry.key);
             dict.inheritReferences(entry.value);
@@ -235,7 +243,7 @@ export class TypeInstantiation extends AstNode {
     }: {
         writer: Writer;
         value: string;
-    } & Pick<StrFormatConfig, "startOnNewLine" | "endWithNewLine">): void {
+    } & Pick<StrConfig, "startOnNewLine" | "endWithNewLine">): void {
         writer.write('"""');
         const lines = value.split("\n");
 
