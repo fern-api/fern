@@ -1,7 +1,5 @@
 ---
 title: Publish your Java SDK with Maven
-layout: overview
-hide-toc: true
 ---
 
 To make your Java SDK publicly accessible, publish to [Maven Central](https://central.sonatype.com/). Once you've followed the steps below to connect your Maven account to your SDK, Fern will automatically publish the latest version of your SDK.  
@@ -10,8 +8,7 @@ To make your Java SDK publicly accessible, publish to [Maven Central](https://ce
 For more information on the differences between the Central Portal and OSSRH, see the [Maven Central documentation](https://central.sonatype.org/faq/what-is-different-between-central-portal-and-legacy-ossrh/).
 </Info>
 
-<AccordionGroup>
-<Accordion title="Publish via the Central Portal (recommended)">
+## Publish via the Central Portal (recommended)
 <Steps>
 ### Log In (or create account) and navigate to your profile
 Log into [https://central.sonatype.com/account](https://central.sonatype.com/account).
@@ -85,8 +82,9 @@ for the GPG key id, secret key, and password.
 </Steps>
 
 Once you regenerate your SDK, a GitHub action will run to publish directly to Maven!
-</Accordion>
-<Accordion title="Publish via OSSRH (legacy)">
+
+## Publish via OSSRH (legacy)
+
 <Steps>
 ### Log In (or create account)
 Log into [s01.oss.sonatype.org](https://s01.oss.sonatype.org).
@@ -133,6 +131,4 @@ one for the username and one for the password.
 </Steps>
 
 Once you regenerate your SDK, a GitHub action will run to publish directly to Maven!
-</Accordion>
-</AccordionGroup>
 
