@@ -182,48 +182,68 @@ export class TypeInstantiation extends AstNode {
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;
-            case "list":
+            case "list": {
+                const internalType = this.internalType;
                 writer.write("[");
-                this.internalType.values.forEach((value, index) => {
+                internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("]");
                 break;
-            case "set":
+            }
+            case "set": {
+                const internalType = this.internalType;
                 writer.write("{");
-                this.internalType.values.forEach((value, index) => {
+                internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("}");
                 break;
-            case "tuple":
+            }
+            case "tuple": {
+                const internalType = this.internalType;
                 writer.write("(");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write(")");
                 break;
-            case "dict":
+            }
+            case "dict": {
+                const internalType = this.internalType;
                 writer.write("{");
-                this.internalType.entries.forEach((entry, index) => {
+                internalType.entries.forEach((entry, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     entry.key.write(writer);
                     writer.write(": ");
                     entry.value.write(writer);
+                    if (index === internalType.entries.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("}");
                 break;
+            }
             case "none":
                 writer.write("None");
                 break;
