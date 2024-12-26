@@ -459,7 +459,8 @@ function getRequest({
                     if (property.readonly == null) {
                         return true;
                     }
-                    const writeEndpoint = endpoint.method === "POST" || endpoint.method === "PUT";
+                    const writeEndpoint =
+                        endpoint.method === "POST" || endpoint.method === "PUT" || endpoint.method === "PATCH";
                     if (writeEndpoint && property.readonly) {
                         return false;
                     }
