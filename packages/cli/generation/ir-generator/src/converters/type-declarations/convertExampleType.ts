@@ -129,8 +129,7 @@ export function convertTypeExample({
                     .join(", ");
 
                 throw new Error(
-                    `Error converting to enum: example "${example}" is not a string. ` +
-                        `Valid values are: ${validValues}.`
+                    `Expected string for enum conversion. Received "${example}". ` + `Valid values are: ${validValues}.`
                 );
             }
             return ExampleTypeShape.enum({
@@ -170,10 +169,7 @@ export function convertTypeExample({
             const variantOptions = undiscriminatedUnion.union.map((variant) => {
                 return typeof variant === "string" ? variant : variant.type;
             });
-            throw new Error(
-                "Example doesn't match any of the undiscriminated unions. " +
-                    `Valid options are: ${variantOptions.join(", ")}`
-            );
+            throw new Error("Example doesn't match any option. " + `Valid options are: ${variantOptions.join(", ")}`);
         }
     });
 }
@@ -375,7 +371,7 @@ function convertPrimitiveExample({
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to string primitive: example ${example} is not a string`);
+                throw new Error(`Expected string. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -385,7 +381,7 @@ function convertPrimitiveExample({
         },
         dateTime: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to dateTime primitive: example ${example} is not a string`);
+                throw new Error(`Expected string for dateTime conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.datetime({
@@ -396,13 +392,13 @@ function convertPrimitiveExample({
         },
         date: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to date primitive: example ${example} is not a string`);
+                throw new Error(`Expected string for date conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
         },
         base64: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to base64 primitive: example ${example} is not a string`);
+                throw new Error(`Expected string for base64 conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -412,55 +408,55 @@ function convertPrimitiveExample({
         },
         uint: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to uint primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for uint conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
         },
         uint64: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to uint64 primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for uint64 conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to integer primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for integer conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },
         float: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to float primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for float conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to double primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for double conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
         },
         long: () => {
             if (typeof example !== "number") {
-                throw new Error(`Error converting to long primitive: example ${example} is not a number`);
+                throw new Error(`Expected number for long conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
         },
         boolean: () => {
             if (typeof example !== "boolean") {
-                throw new Error(`Error converting to boolean primitive: example ${example} is not a boolean`);
+                throw new Error(`Expected boolean. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
         },
         uuid: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to uuid primitive: example ${example} is not a string`);
+                throw new Error(`Expected string for uuid conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
         },
         bigInteger: () => {
             if (typeof example !== "string") {
-                throw new Error(`Error converting to bigInteger primitive: example ${example} is not a string`);
+                throw new Error(`Expected string for bigInteger conversion. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
