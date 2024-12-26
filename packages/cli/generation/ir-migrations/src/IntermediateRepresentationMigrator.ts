@@ -279,7 +279,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }: {
         targetGenerator: GeneratorNameAndVersion;
     }): string | undefined {
-        let lastIrVersion = this.migrations[0]!.laterVersion;
+        let lastIrVersion = this.migrations[0]?.laterVersion;
         for (const migration of this.migrations) {
             if (this.shouldRunMigration({ migration, targetGenerator })) {
                 lastIrVersion = migration.earlierVersion;

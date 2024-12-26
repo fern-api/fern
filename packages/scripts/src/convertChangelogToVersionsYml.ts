@@ -32,13 +32,13 @@ export function parseChangelog(changelogContent: string): ChangelogEntry[] {
     for (const line of lines) {
         const versionMatch = line.match(/## \[(\d+\.\d+\.\d+(?:-\w+)?)\] - (\d{4}-\d{2}-\d{2})/);
         if (versionMatch && versionMatch[1] && versionMatch[2]) {
-            if (currentVersion) {
+            if (currentVersion && currentDate) {
                 if (currentChange) {
                     currentChanges.push(currentChange);
                 }
                 entries.push({
                     version: currentVersion,
-                    date: currentDate!,
+                    date: currentDate,
                     changes: currentChanges
                 });
             }
@@ -60,13 +60,13 @@ export function parseChangelog(changelogContent: string): ChangelogEntry[] {
         }
     }
 
-    if (currentVersion) {
+    if (currentVersion && currentDate) {
         if (currentChange) {
             currentChanges.push(currentChange);
         }
         entries.push({
             version: currentVersion,
-            date: currentDate!,
+            date: currentDate,
             changes: currentChanges
         });
     }
@@ -165,6 +165,7 @@ export function formatOutput(newFormat: FormattedEntry[]): string {
 }
 
 export async function convertChangelogToVersions(inputPath: string, generatorName: string): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const absoluteInputPath = resolve(inputPath as any);
     const inputContent = await readFile(absoluteInputPath, "utf8");
     const entries = parseChangelog(inputContent);
