@@ -1,3 +1,41 @@
 ## 1.5.0-rc0
 **`(feat):`** The generator now supports inlining top-level request parameters instead of requiring users create a request object.
 
+  Config:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        inline_request_params: true
+  ```
+
+  Before:
+
+  ```python
+  def get_and_return_with_optional_field(
+    self,
+    *,
+    request: ObjectWithOptionalField,
+    request_options: typing.Optional[RequestOptions] = None
+  ) -> ObjectWithOptionalField:
+    ...
+  ```
+
+  After:
+
+  ```python
+  def get_and_return_with_optional_field(
+    self,
+    *,
+    string: typing.Optional[str] = OMIT,
+    integer: typing.Optional[int] = OMIT,
+    long: typing.Optional[int] = OMIT,
+    double: typing.Optional[float] = OMIT,
+    bool: typing.Optional[bool] = OMIT,
+    request_options: typing.Optional[RequestOptions] = None
+  ) -> ObjectWithOptionalField:
+    ...
+  ```
+
+

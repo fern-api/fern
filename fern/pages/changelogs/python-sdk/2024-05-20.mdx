@@ -1,6 +1,18 @@
 ## 2.2.2
-**`(fix):`** Inline request parameters now deconflict in naming with the unnamed path parameter arguments.
+**`(fix):`** Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "\_".
 
-### What's been fixed
-- Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "_".
+Before:
+
+```python
+def method_name(id: str, *, id: str) -> None:
+  ...
+```
+
+After:
+
+```python
+def method_name(id_: str, *, id: str) -> None:
+  ...
+```
+
 

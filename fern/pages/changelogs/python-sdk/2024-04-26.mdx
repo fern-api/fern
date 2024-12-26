@@ -1,3 +1,26 @@
 ## 1.5.1-rc0
-**`(fix):`** Discriminated union variants that are objects now have inlined properties instead of extending a base type.
+**`(fix):`** Discriminated union variants that are objects now have inlined properties instead of
+  extending a base type.
+
+  ```python
+
+  Circle_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    radius: integer
+
+  Square_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    side: integer
+  ```
+
+  instead of
+
+  ```python
+  Circle_Shape(Circle):
+    type: typing.Literal["circle"]
+
+  Square_Shape(Square):
+    type: typing.Literal["circle"]
+  ```
+
 

@@ -1,3 +1,37 @@
 ## 0.11.6
-**`(feat):`** You can now specify envvars to scan for headers, not just auth scheme headers.
+**`(fix):`** You can now specify envvars to scan for headers, not just auth scheme headers.
+
+  ```
+  # OpenAPI
+  x-fern-global-headers:
+   - header: x-api-key
+     name: api_key
+     optional: true
+     env: MY_API_KEY
+  ```
+
+  ... or ...
+
+  ```
+  # Fern Definition
+  getAllUsers:
+    method: GET
+    path: /all
+    request:
+      name: GetAllUsersRequest
+      headers:
+        X-API-KEY: string
+        env: MY_API_KEY
+  ```
+
+  the generated client will look like
+
+  ```python
+  import os
+
+  class Client:
+
+    def __init__(self, *, apiKey: str = os.getenv("MY_API_KEY"))
+  ```
+
 
