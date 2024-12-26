@@ -1,10 +1,10 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
-import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
@@ -13,10 +13,18 @@ export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
-    const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
-    if (!(await doesPathExist(filepath))) {
+    const filepathYml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yml" });
+    const filepathYaml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yaml" });
+
+    let filepath: AbsoluteFilePath;
+    if (await doesPathExist(filepathYml)) {
+        filepath = filepathYml;
+    } else if (await doesPathExist(filepathYaml)) {
+        filepath = filepathYaml;
+    } else {
         return undefined;
     }
+
     const contentsStr = await readFile(filepath);
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
@@ -54,16 +62,21 @@ export async function loadGeneratorsConfiguration({
     if (rawGeneratorsConfiguration == null) {
         return undefined;
     }
+    const filepathYml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yml" });
+    const filepathYaml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yaml" });
+    const filepath = (await doesPathExist(filepathYml)) ? filepathYml : filepathYaml;
     return convertGeneratorsConfiguration({
-        absolutePathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ absolutePathToWorkspace }),
+        absolutePathToGeneratorsConfiguration: filepath,
         rawGeneratorsConfiguration
     });
 }
 
 export function getPathToGeneratorsConfiguration({
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    extension
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
+    extension: "yml" | "yaml";
 }): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
+    return join(absolutePathToWorkspace, RelativeFilePath.of(`generators.${extension}`));
 }
