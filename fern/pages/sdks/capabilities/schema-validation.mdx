@@ -41,7 +41,7 @@ languages like Go, Java, and C# this is always on.
   // serialize 
   serializers.Movie.jsonOrThrow(movie);
   // deserialize
-  serializers.Movie.parseOrThrow("{ \"name\": \"Goodwill Hunting\" }");
+  serializers.Movie.parseOrThrow({ "name": "Goodwill Hunting" });
   ```
 
   Fern allows you to generate the SDK in three different modes: 
