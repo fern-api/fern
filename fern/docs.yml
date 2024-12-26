@@ -452,7 +452,7 @@ navigation:
                 slug: response-snippet
           - page: Frontmatter
             icon: fa-regular fa-sliders
-            path: ./pages/fern-docs/content/front-matter.mdx
+            path: ./pages/fern-docs/content/frontmatter.mdx
           - page: Reusable Snippets
             icon: fa-regular fa-recycle
             path: ./pages/fern-docs/content/reusable-snippets.mdx
@@ -567,7 +567,7 @@ navigation:
 navbar-links:
   - type: minimal
     text: Slack community
-    url: https://join.slack.com/t/fern-community/shared_invite/zt-2q7ev4mki-mhO5anKslwRowp4oExWf4A
+    url: https://buildwithfern.com/slack
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
