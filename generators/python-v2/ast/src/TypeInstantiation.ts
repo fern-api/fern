@@ -166,9 +166,7 @@ export class TypeInstantiation extends AstNode {
                         endWithNewLine
                     });
                 } else {
-                    writer.write(
-                        `"${this.escapeString(this.internalType.value, { doubleQuote: true, newline: true })}"`
-                    );
+                    writer.write(`"${this.escapeString(this.internalType.value)}"`);
                 }
                 break;
             case "bytes":
@@ -241,7 +239,7 @@ export class TypeInstantiation extends AstNode {
 
         // If there is only one line, we can just write it as a single line string
         if (lines.length <= 1) {
-            writer.write(this.escapeString(this.escapeString(lines[0] ?? "")));
+            writer.write(this.escapeString(lines[0] ?? ""));
             writer.write('"""');
             return;
         }
@@ -266,18 +264,37 @@ export class TypeInstantiation extends AstNode {
         writer.writeNoIndent('"""');
     }
 
-    private escapeString(
-        value: string,
-        config: { doubleQuote?: boolean; newline?: boolean } = { doubleQuote: true, newline: false }
-    ): string {
-        let escapedValue = value;
-        if (config.doubleQuote) {
-            escapedValue = escapedValue.replaceAll('"', '\\"');
-        }
-        if (config.newline) {
-            escapedValue = escapedValue.replaceAll("\n", "\\n");
-        }
-        return escapedValue;
+    /**
+     * Escapes certain special characters if they're NOT already preceded
+     * by a backslash. Specifically:
+     *
+     *   - "  -> \"
+     *   - '  -> \'
+     *   - \  -> \\
+     *   - literal \t -> \t
+     *   - literal \n -> \n
+     *   - literal \r -> \r
+     *
+     * Uses a negative lookbehind `(?<!\\)` to handle consecutive matches like
+     * \n\n correctly, since each \n is independently matched in the original string.
+     *
+     * @param input The input string to be escaped
+     */
+    private escapeString(input: string): string {
+        // Negative lookbehind ensures the character is NOT preceded by a backslash
+        // in the original string.
+        const pattern = /(?<!\\)(["'\\\t\n\r])/g;
+
+        const replacements: Record<string, string> = {
+            '"': '\\"',
+            "'": "\\'",
+            "\\": "\\\\",
+            "\t": "\\t",
+            "\n": "\\n",
+            "\r": "\\r"
+        };
+
+        return input.replace(pattern, (char) => replacements[char] ?? char);
     }
 }
 
