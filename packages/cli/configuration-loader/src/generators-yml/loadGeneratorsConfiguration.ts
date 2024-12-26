@@ -13,15 +13,8 @@ export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
-    const filepathYml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yml" });
-    const filepathYaml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yaml" });
-
-    let filepath: AbsoluteFilePath;
-    if (await doesPathExist(filepathYml)) {
-        filepath = filepathYml;
-    } else if (await doesPathExist(filepathYaml)) {
-        filepath = filepathYaml;
-    } else {
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    if (filepath == null) {
         return undefined;
     }
 
@@ -62,21 +55,29 @@ export async function loadGeneratorsConfiguration({
     if (rawGeneratorsConfiguration == null) {
         return undefined;
     }
-    const filepathYml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yml" });
-    const filepathYaml = getPathToGeneratorsConfiguration({ absolutePathToWorkspace, extension: "yaml" });
-    const filepath = (await doesPathExist(filepathYml)) ? filepathYml : filepathYaml;
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    if (filepath == null) {
+        return undefined;
+    }
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: filepath,
         rawGeneratorsConfiguration
     });
 }
 
-export function getPathToGeneratorsConfiguration({
-    absolutePathToWorkspace,
-    extension
+export async function getPathToGeneratorsConfiguration({
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-    extension: "yml" | "yaml";
-}): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(`generators.${extension}`));
+}): Promise<AbsoluteFilePath | undefined> {
+    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yml"));
+    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yaml"));
+
+    if (await doesPathExist(ymlPath)) {
+        return ymlPath;
+    }
+    if (await doesPathExist(yamlPath)) {
+        return yamlPath;
+    }
+    return undefined;
 }

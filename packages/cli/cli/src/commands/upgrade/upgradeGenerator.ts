@@ -1,5 +1,4 @@
 import {
-    generatorsYml,
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
@@ -8,12 +7,12 @@ import {
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
-import { FernRegistry } from "@fern-fern/generators-sdk";
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
@@ -32,8 +31,8 @@ export async function loadAndUpdateGenerators({
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
 }): Promise<string | undefined> {
-    const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
-    if (!(await doesPathExist(filepath))) {
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
         return undefined;
     }
@@ -170,12 +169,14 @@ export async function upgradeGenerator({
                     cliVersion: cliContext.environment.packageVersion
                 });
 
-                if (updatedConfiguration != null) {
+
+                const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({
+                    absolutePathToWorkspace: workspace.absoluteFilePath
+                });
+
+                if (absolutePathToGeneratorsConfiguration != null && updatedConfiguration != null) {
                     await writeFile(
-                        workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                            getPathToGeneratorsConfiguration({
-                                absolutePathToWorkspace: workspace.absoluteFilePath
-                            }),
+                        absolutePathToGeneratorsConfiguration,
                         updatedConfiguration
                     );
                 }
