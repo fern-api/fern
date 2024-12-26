@@ -7,40 +7,55 @@ At Fern, we're proud to enable businesses to build and distribute world-class SD
 ---
 <div class="showcase">
 
-## Square
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/square.svg" alt="Square" width="20px" height="20px" class="logo-icon" style={{ marginRight: '10px' }} /> Square</div>
 <span class="fern-docs-badge large green subtle rounded">public company</span>
 
 Square trusts Fern to generate and maintain **7 SDKs**, ensuring their APIs are easily accessible to developers building on any platform.  
 
 
 Check out Square's SDKs as they become generally available:
-<CardGroup cols={3}>
-  <Card title="Go SDK" icon="brands golang" href="https://github.com/square/square-go-sdk">
-    View the Go source code in GitHub
-  </Card>
-  <Card title="TypeScript SDK" icon="brands node-js">
-    _Coming soon_
-  </Card>
-  <Card title="PHP SDK" icon="brands php">
-    _Coming soon_
-  </Card>
-  <Card title="Java SDK" icon="brands java">
-    _Coming soon_
-  </Card>
-  <Card title="Ruby SDK" icon="regular gem">
-    _Coming soon_
-  </Card>
-  <Card title="Python SDK" icon="brands python">
-    _Coming soon_
-  </Card>
-  <Card title="C# SDK" icon="brands windows">
-    _Coming soon_
-  </Card>
-</CardGroup>
+
+<Tabs>
+  <Tab title="Go">
+    <Card title="Go SDK" icon="brands golang" iconPosition="left" href="https://github.com/square/square-go-sdk">
+      View the Go source code in GitHub
+    </Card>
+  </Tab>
+  <Tab title="TypeScript">
+    <Card title="TypeScript SDK" icon="brands node-js" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+  <Tab title="PHP">
+    <Card title="PHP SDK" icon="brands php" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+  <Tab title="Java">
+    <Card title="Java SDK" icon="brands java" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+  <Tab title="Ruby">
+    <Card title="Ruby SDK" icon="regular gem" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+  <Tab title="Python">
+    <Card title="Python SDK" icon="brands python" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+  <Tab title="C#">
+    <Card title="C# SDK" icon="brands windows" iconPosition="left">
+      _Coming soon_
+    </Card>
+  </Tab>
+</Tabs>
 
 ---
 
-## Pinecone
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/pinecone.svg" alt="Pinecone" width="20px" height="20px" class="logo-icon" style={{ marginRight: '10px' }} /> Pinecone</div>
 <div style={{ display: 'flex', alignItems: 'center' }}>
 <span class="fern-docs-badge large green subtle rounded" style="margin-right: 10px">gRPC</span>
 <span class="fern-docs-badge large green subtle rounded">REST</span>
@@ -48,18 +63,19 @@ Check out Square's SDKs as they become generally available:
 
 Pinecone leverages Fern to create an SDK that supports **both gRPC and REST**, bridging the gap between broad compatibility and peak performance. 
 
-Check out Pinecone's SDK here:
+Check out Pinecone's C# SDK here:
 <CardGroup cols={1}>
-  <Card title=".NET SDK" icon="brands windows" iconPosition="left" href="https://github.com/pinecone-io/pinecone-dotnet-client">
-    View the .NET source code in GitHub
+  <Card title="C# SDK" icon="brands windows" iconPosition="left" href="https://github.com/pinecone-io/pinecone-dotnet-client">
+    View the C# source code in GitHub
   </Card>
 </CardGroup>
 
+<Tip>
 Read about [the first auto-generated SDK](https://buildwithfern.com/blog/pinecone) with gRPC and REST.
-
+</Tip>
 ---
 
-## ElevenLabs
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/elevenlabs.svg" alt="ElevenLabs" width="16px" height="16px" class="logo-icon" style={{ marginRight: '10px' }} /> ElevenLabs</div>
 <div style={{ display: 'flex', alignItems: 'center' }}>
 <span class="fern-docs-badge large green subtle rounded" style="margin-right: 10px">file uploads</span>
 <span class="fern-docs-badge large green subtle rounded">websockets</span>
@@ -93,7 +109,7 @@ Check out these features in ElevenLabs' SDKs here:
 
 ---
 
-## Candid
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/candid.svg" alt="Candid" width="20px" height="20px" class="logo-icon" style={{ marginRight: '10px' }} /> Candid</div>  
 <span class="fern-docs-badge large green subtle rounded">OAuth</span>
 
 Candid uses Fern to generate an SDK with built in **OAuth support**, enabling secure and seamless authentication for developers.
@@ -107,10 +123,10 @@ Check out OAuth in Candid's SDK here:
       </Card>
     </CardGroup>
   </Tab>
-  <Tab title="Node.js">
+  <Tab title="TypeScript">
     <CardGroup cols={1}>
       <Card title="OAuth" icon="regular lock" iconPosition="left" href="https://github.com/candidhealth/candid-node/blob/master/src/core/auth/OAuthTokenProvider.ts">
-        View the Node.js source code in GitHub
+        View the TypeScript source code in GitHub
       </Card>
     </CardGroup>
   </Tab>
@@ -132,7 +148,7 @@ Check out OAuth in Candid's SDK here:
 
 
 ---
-## Humanloop
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/humanloop.svg" alt="Humanloop" width="24px" height="24px" class="logo-icon" style={{ marginRight: '10px' }} /> Humanloop</div> 
 <span class="fern-docs-badge large green subtle rounded">SSE</span>
 
 Humanloop uses Fern to support **server-sent events (SSE)** in their SDKs, allowing developers to build robust AI features with LLMs using best-in-class tooling. 
@@ -146,24 +162,24 @@ Check out SSE in Humanloop's SDK here:
       </Card>
     </CardGroup>
   </Tab>
-  <Tab title="Node.js">
+  <Tab title="TypeScript">
     <CardGroup cols={1}>
       <Card title="Server-Sent Events" icon="regular server" iconPosition="left" href="https://github.com/humanloop/humanloop-node/blob/master/src/api/resources/prompts/client/Client.ts#L287">
-        View the Node.js source code in GitHub
+        View the TypeScript source code in GitHub
       </Card>
     </CardGroup>
   </Tab>
 </Tabs>
 ---
 
-## Abound
+## <div style={{ display: 'flex', alignItems: 'center', height: '1.5em' }}><img src="logos/abound.svg" alt="Abound" width="24px" height="24px" class="logo-icon" style={{ marginRight: '10px' }} /> Abound</div> 
 <span class="fern-docs-badge large green subtle rounded">integration tests</span>
 
 Abound relies on Fern to manage a **full suite of integration tests**, ensuring their SDKs and APIs deliver a reliable experience for partners and developers. 
 
 Check out Abound's integration tests here:
 <CardGroup cols={1}>
-  <Card title="Node.js SDK" icon="brands node-js" iconPosition="left" href="https://github.com/withabound/abound-node/tree/main/tests">
+  <Card title="TypeScript SDK" icon="brands node-js" iconPosition="left" href="https://github.com/withabound/abound-node/tree/main/tests">
     View the source code for integration tests
   </Card>
 </CardGroup>
