@@ -81,6 +81,9 @@ export interface IntermediateRepresentationMigrator {
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
     }): MigratedIntermediateMigration<Migrated>;
+    getIRVersionForGenerator(args: {
+        targetGenerator: GeneratorNameAndVersion;
+    }): string | undefined;
 }
 
 export interface MigratedIntermediateMigration<Migrated> {
@@ -272,13 +275,29 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
 
         return isVersionAhead(minVersionToExclude, targetGenerator.version);
     }
+
+    public getIRVersionForGenerator({
+        targetGenerator
+    }: {
+        targetGenerator: GeneratorNameAndVersion;
+    }): string | undefined {
+        let lastIrVersion = this.migrations[0]!.laterVersion;
+        for (const migration of this.migrations) {
+            if (this.shouldRunMigration({ migration, targetGenerator })) {
+                lastIrVersion = migration.earlierVersion;
+            } else {
+                break;
+            }
+        }
+        return lastIrVersion;
+    }
 }
 
 const IntermediateRepresentationMigrator = {
     Builder: new IntermediateRepresentationMigratorBuilderImpl<IntermediateRepresentation>([])
 };
 
-const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
+export const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
     .withMigration(V54_TO_V53_MIGRATION)
     .withMigration(V53_TO_V52_MIGRATION)
