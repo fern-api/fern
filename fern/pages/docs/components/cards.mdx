@@ -24,6 +24,16 @@ description: Use cards to display content in a box
   Pass in an image tag to use a custom icon.
 </Card>
 
+### Icon position
+
+<Card 
+    title='Location' 
+    icon='regular globe' 
+    iconPosition='left'
+>
+  You can set the icon positon as `left` or `top`. Default is `top`.
+</Card>
+
 
 <Aside>
   <CodeBlocks>
@@ -46,6 +56,17 @@ description: Use cards to display content in a box
             href='https://github.com/fern-api/fern/tree/main/generators/python'
         >
         View Fern's Python SDK generator.
+        </Card>
+        ```
+      </CodeBlock>
+      <CodeBlock title="Custom Icon">
+        ```jsx
+        <Card 
+            title='Location' 
+            icon='regular globe' 
+            iconPosition='left'
+        >
+          You can set the icon positon as `left` or `top`. Default is `top`.
         </Card>
         ```
       </CodeBlock>
