@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.sysprop.setNumWarmInstances.Error._Unknown,
-                visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>
+                visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.sysprop.setNumWarmInstances.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.sysprop.setNumWarmInstances.Error,
-        visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>
+        visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

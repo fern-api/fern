@@ -12,7 +12,7 @@ export const UndiscriminatedUnion1DiscriminatedUnion1InlineType1: core.serializa
 > = core.serialization.object({
     foo: core.serialization.string(),
     bar: core.serialization.lazyObject(
-        () => serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
+        () => serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1,
     ),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
 });

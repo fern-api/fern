@@ -21,7 +21,7 @@ export const TestSubmissionStatus: core.serialization.Schema<
         testCaseIdToState: core.serialization.object({
             value: core.serialization.record(
                 core.serialization.string(),
-                core.serialization.lazy(() => serializers.SubmissionStatusForTestCase)
+                core.serialization.lazy(() => serializers.SubmissionStatusForTestCase),
             ),
         }),
     })

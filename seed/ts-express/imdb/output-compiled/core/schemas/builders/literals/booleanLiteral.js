@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.booleanLiteral = void 0;
+exports.booleanLiteral = booleanLiteral;
 const Schema_1 = require("../../Schema");
 const createIdentitySchemaCreator_1 = require("../../utils/createIdentitySchemaCreator");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
@@ -26,4 +26,3 @@ function booleanLiteral(literal) {
     });
     return schemaCreator();
 }
-exports.booleanLiteral = booleanLiteral;

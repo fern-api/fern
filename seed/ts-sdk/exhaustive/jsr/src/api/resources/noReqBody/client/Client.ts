@@ -36,7 +36,7 @@ export class NoReqBody {
      *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
+        requestOptions?: NoReqBody.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),

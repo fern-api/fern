@@ -44,7 +44,7 @@ export class Ec2 {
      */
     public async bootInstance(
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
+        requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin((await core.Supplier.get(this._options.environment)).ec2, "/ec2/boot"),
@@ -85,7 +85,7 @@ export class Ec2 {
                 });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
-                    "Timeout exceeded when calling POST /ec2/boot."
+                    "Timeout exceeded when calling POST /ec2/boot.",
                 );
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({

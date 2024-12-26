@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.problem.getProblems.Error._Unknown,
-                visitor: SeedTrace.v2.v3.problem.getProblems.Error._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.problem.getProblems.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.problem.getProblems.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.v3.problem.getProblems.Error,
-        visitor: SeedTrace.v2.v3.problem.getProblems.Error._Visitor<_Result>
+        visitor: SeedTrace.v2.v3.problem.getProblems.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

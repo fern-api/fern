@@ -32,7 +32,7 @@ describe("Test fetcherImpl", () => {
                 method: "POST",
                 headers: expect.objectContaining({ "X-Test": "x-test-header" }),
                 body: JSON.stringify({ data: "test" }),
-            })
+            }),
         );
     });
 
@@ -63,7 +63,7 @@ describe("Test fetcherImpl", () => {
                 method: "POST",
                 headers: expect.objectContaining({ "X-Test": "x-test-header" }),
                 body: expect.any(fs.ReadStream),
-            })
+            }),
         );
         expect(result.ok).toBe(true);
         if (result.ok) {

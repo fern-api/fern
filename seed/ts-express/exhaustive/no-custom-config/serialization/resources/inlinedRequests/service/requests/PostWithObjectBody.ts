@@ -14,7 +14,7 @@ export const PostWithObjectBody: core.serialization.Schema<
     integer: core.serialization.number(),
     nestedObject: core.serialization.property(
         "NestedObject",
-        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField)
+        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField),
     ),
 });
 

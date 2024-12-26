@@ -41,7 +41,7 @@ export class Foo {
      */
     public async find(
         request: SeedAudiences.FindRequest = {},
-        requestOptions?: Foo.RequestOptions
+        requestOptions?: Foo.RequestOptions,
     ): Promise<SeedAudiences.ImportingType> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

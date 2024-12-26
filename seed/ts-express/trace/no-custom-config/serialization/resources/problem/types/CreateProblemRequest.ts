@@ -14,7 +14,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
     problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
     files: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
+        core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),
     inputParams: core.serialization.list(core.serialization.lazyObject(() => serializers.VariableTypeAndName)),
     outputType: core.serialization.lazy(() => serializers.VariableType),

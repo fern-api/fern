@@ -18,7 +18,7 @@ export const ProblemInfoV2: core.serialization.ObjectSchema<
     customFiles: core.serialization.lazy(() => serializers.v2.CustomFiles),
     generatedFiles: core.serialization.lazyObject(() => serializers.v2.GeneratedFiles),
     customTestCaseTemplates: core.serialization.list(
-        core.serialization.lazyObject(() => serializers.v2.TestCaseTemplate)
+        core.serialization.lazyObject(() => serializers.v2.TestCaseTemplate),
     ),
     testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.TestCaseV2)),
     isPublic: core.serialization.boolean(),

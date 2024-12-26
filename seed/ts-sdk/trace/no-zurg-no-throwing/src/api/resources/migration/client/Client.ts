@@ -43,13 +43,13 @@ export class Migration {
      */
     public async getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: Migration.RequestOptions
+        requestOptions?: Migration.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all"
+                "/migration-info/all",
             ),
             method: "GET",
             headers: {

@@ -38,7 +38,7 @@ export class Container {
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<string[]> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
@@ -88,7 +88,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/list-of-primitives."
+                    "Timeout exceeded when calling POST /container/list-of-primitives.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -110,7 +110,7 @@ export class Container {
      */
     public async getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
@@ -160,7 +160,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/list-of-objects."
+                    "Timeout exceeded when calling POST /container/list-of-objects.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -178,7 +178,7 @@ export class Container {
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Set<string>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
@@ -228,7 +228,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/set-of-primitives."
+                    "Timeout exceeded when calling POST /container/set-of-primitives.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -248,7 +248,7 @@ export class Container {
      */
     public async getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
@@ -298,7 +298,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/set-of-objects."
+                    "Timeout exceeded when calling POST /container/set-of-objects.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -318,7 +318,7 @@ export class Container {
      */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Record<string, string>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
@@ -368,7 +368,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/map-prim-to-prim."
+                    "Timeout exceeded when calling POST /container/map-prim-to-prim.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -390,7 +390,7 @@ export class Container {
      */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
@@ -440,7 +440,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/map-prim-to-object."
+                    "Timeout exceeded when calling POST /container/map-prim-to-object.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -460,7 +460,7 @@ export class Container {
      */
     public async getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/container/opt-objects"),
@@ -513,7 +513,7 @@ export class Container {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /container/opt-objects."
+                    "Timeout exceeded when calling POST /container/opt-objects.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({

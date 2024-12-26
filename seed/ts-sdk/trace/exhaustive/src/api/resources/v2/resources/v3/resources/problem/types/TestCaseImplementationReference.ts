@@ -36,14 +36,14 @@ export namespace TestCaseImplementationReference {
 
 export const TestCaseImplementationReference = {
     templateId: (
-        value: SeedTrace.v2.v3.TestCaseTemplateId
+        value: SeedTrace.v2.v3.TestCaseTemplateId,
     ): SeedTrace.v2.v3.TestCaseImplementationReference.TemplateId => {
         return {
             value: value,
             type: "templateId",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationReference.TemplateId,
-                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseImplementationReference._visit(this, visitor);
             },
@@ -51,14 +51,14 @@ export const TestCaseImplementationReference = {
     },
 
     implementation: (
-        value: SeedTrace.v2.v3.TestCaseImplementation
+        value: SeedTrace.v2.v3.TestCaseImplementation,
     ): SeedTrace.v2.v3.TestCaseImplementationReference.Implementation => {
         return {
             ...value,
             type: "implementation",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationReference.Implementation,
-                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseImplementationReference._visit(this, visitor);
             },
@@ -70,7 +70,7 @@ export const TestCaseImplementationReference = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationReference._Unknown,
-                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseImplementationReference._visit(this, visitor);
             },
@@ -79,7 +79,7 @@ export const TestCaseImplementationReference = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.v3.TestCaseImplementationReference,
-        visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>
+        visitor: SeedTrace.v2.v3.TestCaseImplementationReference._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "templateId":

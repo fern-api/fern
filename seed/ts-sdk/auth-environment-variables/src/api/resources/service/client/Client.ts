@@ -111,7 +111,7 @@ export class Service {
      */
     public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<string> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
@@ -160,7 +160,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
-                    "Timeout exceeded when calling GET /apiKeyInHeader."
+                    "Timeout exceeded when calling GET /apiKeyInHeader.",
                 );
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({

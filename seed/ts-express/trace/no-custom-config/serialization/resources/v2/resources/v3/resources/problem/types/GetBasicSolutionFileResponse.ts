@@ -12,7 +12,7 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     solutionFileByLanguage: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.v3.FileInfoV2).optional()
+        core.serialization.lazyObject(() => serializers.v2.v3.FileInfoV2).optional(),
     ),
 });
 

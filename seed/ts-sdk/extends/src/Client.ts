@@ -39,7 +39,7 @@ export class SeedExtendsClient {
      */
     public async extendedInlineRequestBody(
         request: SeedExtends.Inlined,
-        requestOptions?: SeedExtendsClient.RequestOptions
+        requestOptions?: SeedExtendsClient.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/extends/extended-inline-request-body"),
@@ -79,7 +79,7 @@ export class SeedExtendsClient {
                 });
             case "timeout":
                 throw new errors.SeedExtendsTimeoutError(
-                    "Timeout exceeded when calling POST /extends/extended-inline-request-body."
+                    "Timeout exceeded when calling POST /extends/extended-inline-request-body.",
                 );
             case "unknown":
                 throw new errors.SeedExtendsError({

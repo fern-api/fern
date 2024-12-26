@@ -45,14 +45,14 @@ export namespace InvalidRequestCause {
 
 export const InvalidRequestCause = {
     submissionIdNotFound: (
-        value: SeedTrace.SubmissionIdNotFound
+        value: SeedTrace.SubmissionIdNotFound,
     ): SeedTrace.InvalidRequestCause.SubmissionIdNotFound => {
         return {
             ...value,
             type: "submissionIdNotFound",
             _visit: function <_Result>(
                 this: SeedTrace.InvalidRequestCause.SubmissionIdNotFound,
-                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
                 return SeedTrace.InvalidRequestCause._visit(this, visitor);
             },
@@ -60,14 +60,14 @@ export const InvalidRequestCause = {
     },
 
     customTestCasesUnsupported: (
-        value: SeedTrace.CustomTestCasesUnsupported
+        value: SeedTrace.CustomTestCasesUnsupported,
     ): SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported => {
         return {
             ...value,
             type: "customTestCasesUnsupported",
             _visit: function <_Result>(
                 this: SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported,
-                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
                 return SeedTrace.InvalidRequestCause._visit(this, visitor);
             },
@@ -75,14 +75,14 @@ export const InvalidRequestCause = {
     },
 
     unexpectedLanguage: (
-        value: SeedTrace.UnexpectedLanguageError
+        value: SeedTrace.UnexpectedLanguageError,
     ): SeedTrace.InvalidRequestCause.UnexpectedLanguage => {
         return {
             ...value,
             type: "unexpectedLanguage",
             _visit: function <_Result>(
                 this: SeedTrace.InvalidRequestCause.UnexpectedLanguage,
-                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
                 return SeedTrace.InvalidRequestCause._visit(this, visitor);
             },
@@ -94,7 +94,7 @@ export const InvalidRequestCause = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.InvalidRequestCause._Unknown,
-                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+                visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
                 return SeedTrace.InvalidRequestCause._visit(this, visitor);
             },
@@ -103,7 +103,7 @@ export const InvalidRequestCause = {
 
     _visit: <_Result>(
         value: SeedTrace.InvalidRequestCause,
-        visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>
+        visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "submissionIdNotFound":

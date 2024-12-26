@@ -39,7 +39,7 @@ export class QueryParam {
      */
     public async send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -114,7 +114,7 @@ export class QueryParam {
      */
     public async sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -134,7 +134,7 @@ export class QueryParam {
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                typeof item === "string" ? item : JSON.stringify(item)
+                typeof item === "string" ? item : JSON.stringify(item),
             );
         } else {
             _queryParams["operandOrColor"] =
@@ -144,7 +144,7 @@ export class QueryParam {
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : JSON.stringify(item)
+                    typeof item === "string" ? item : JSON.stringify(item),
                 );
             } else {
                 _queryParams["maybeOperandOrColor"] =

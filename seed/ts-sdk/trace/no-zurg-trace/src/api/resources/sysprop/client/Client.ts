@@ -44,12 +44,12 @@ export class Sysprop {
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
-        requestOptions?: Sysprop.RequestOptions
+        requestOptions?: Sysprop.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`,
             ),
             method: "PUT",
             headers: {
@@ -91,7 +91,7 @@ export class Sysprop {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling PUT /sysprop/num-warm-instances/{language}/{numWarmInstances}."
+                    "Timeout exceeded when calling PUT /sysprop/num-warm-instances/{language}/{numWarmInstances}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -107,12 +107,12 @@ export class Sysprop {
      *     await client.sysprop.getNumWarmInstances()
      */
     public async getNumWarmInstances(
-        requestOptions?: Sysprop.RequestOptions
+        requestOptions?: Sysprop.RequestOptions,
     ): Promise<Record<SeedTrace.Language, number | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances"
+                "/sysprop/num-warm-instances",
             ),
             method: "GET",
             headers: {
@@ -154,7 +154,7 @@ export class Sysprop {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /sysprop/num-warm-instances."
+                    "Timeout exceeded when calling GET /sysprop/num-warm-instances.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({

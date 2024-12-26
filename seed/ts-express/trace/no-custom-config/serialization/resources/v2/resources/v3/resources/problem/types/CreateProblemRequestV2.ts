@@ -14,7 +14,7 @@ export const CreateProblemRequestV2: core.serialization.ObjectSchema<
     problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
     customFiles: core.serialization.lazy(() => serializers.v2.v3.CustomFiles),
     customTestCaseTemplates: core.serialization.list(
-        core.serialization.lazyObject(() => serializers.v2.v3.TestCaseTemplate)
+        core.serialization.lazyObject(() => serializers.v2.v3.TestCaseTemplate),
     ),
     testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.v3.TestCaseV2)),
     supportedLanguages: core.serialization.set(core.serialization.lazy(() => serializers.Language)),

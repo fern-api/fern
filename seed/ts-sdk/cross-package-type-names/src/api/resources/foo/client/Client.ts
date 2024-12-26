@@ -40,7 +40,7 @@ export class Foo {
      */
     public async find(
         request: SeedCrossPackageTypeNames.FindRequest = {},
-        requestOptions?: Foo.RequestOptions
+        requestOptions?: Foo.RequestOptions,
     ): Promise<SeedCrossPackageTypeNames.ImportingType> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

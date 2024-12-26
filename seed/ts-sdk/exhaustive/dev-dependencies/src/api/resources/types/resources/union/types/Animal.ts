@@ -56,7 +56,7 @@ export const Animal = {
             ...(value as any),
             _visit: function <_Result>(
                 this: Fiddle.types.Animal._Unknown,
-                visitor: Fiddle.types.Animal._Visitor<_Result>
+                visitor: Fiddle.types.Animal._Visitor<_Result>,
             ) {
                 return Fiddle.types.Animal._visit(this, visitor);
             },

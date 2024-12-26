@@ -28,7 +28,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.sysprop.setNumWarmInstances.Error,
-        visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>
+        visitor: SeedTrace.sysprop.setNumWarmInstances.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

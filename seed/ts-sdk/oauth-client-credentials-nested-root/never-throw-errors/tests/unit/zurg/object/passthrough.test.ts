@@ -35,7 +35,7 @@ describe("passthrough", () => {
                     path: ["foo"],
                     message: "Expected string. Received 123.",
                 },
-            ]
+            ],
         );
     });
 
@@ -68,7 +68,7 @@ describe("passthrough", () => {
                     path: ["bar"],
                     message: 'Expected "bar". Received "wrong".',
                 },
-            ]
+            ],
         );
     });
 

@@ -31,7 +31,7 @@ export class Dummy {
 
     public async generateStream(
         request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
@@ -108,7 +108,7 @@ export class Dummy {
      */
     public async generate(
         request: SeedStreaming.Generateequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<SeedStreaming.StreamResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),

@@ -8,7 +8,7 @@ describe("extend", () => {
         }).extend(
             object({
                 bar: stringLiteral("bar"),
-            })
+            }),
         ),
         {
             foo: "",
@@ -16,7 +16,7 @@ describe("extend", () => {
         } as const,
         {
             title: "extended properties are included in schema",
-        }
+        },
     );
 
     itSchemaIdentity(
@@ -26,12 +26,12 @@ describe("extend", () => {
             .extend(
                 object({
                     bar: stringLiteral("bar"),
-                })
+                }),
             )
             .extend(
                 object({
                     baz: boolean(),
-                })
+                }),
             ),
         {
             foo: "",
@@ -40,7 +40,7 @@ describe("extend", () => {
         } as const,
         {
             title: "extensions can be extended",
-        }
+        },
     );
 
     itSchema(
@@ -52,12 +52,12 @@ describe("extend", () => {
         }).extend(
             object({
                 goodbye: property("goodbye_raw", string()),
-            })
+            }),
         ),
         {
             raw: { item: { hello_world: "yo" }, goodbye_raw: "peace" },
             parsed: { item: { helloWorld: "yo" }, goodbye: "peace" },
-        }
+        },
     );
 
     itSchema(
@@ -67,12 +67,12 @@ describe("extend", () => {
         }).extend(
             object({
                 goodbye: property("goodbye_raw", string()),
-            })
+            }),
         ),
         {
             raw: { item_raw: "hi", goodbye_raw: "peace" },
             parsed: { item: "hi", goodbye: "peace" },
-        }
+        },
     );
 
     describe("compile", () => {

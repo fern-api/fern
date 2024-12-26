@@ -48,7 +48,7 @@ export class User {
      */
     public async list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedMixedFileDirectory.User[]> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

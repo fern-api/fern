@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.noReqBody.postWithNoRequestBody.Error._Unknown,
-                visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>
+                visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>,
             ) {
                 return Fiddle.noReqBody.postWithNoRequestBody.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.noReqBody.postWithNoRequestBody.Error,
-        visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>
+        visitor: Fiddle.noReqBody.postWithNoRequestBody.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

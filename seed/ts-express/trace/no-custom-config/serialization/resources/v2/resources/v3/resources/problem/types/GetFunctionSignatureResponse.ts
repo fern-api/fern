@@ -12,7 +12,7 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     functionByLanguage: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.string().optional()
+        core.serialization.string().optional(),
     ),
 });
 
