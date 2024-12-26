@@ -128,9 +128,7 @@ export function convertTypeExample({
                     .map((enumEntry) => (typeof enumEntry === "string" ? enumEntry : enumEntry.value))
                     .join(", ");
 
-                throw new Error(
-                    `Expected string for enum conversion. Received "${example}". ` + `Valid values are: ${validValues}.`
-                );
+                throw new Error(`Expected one of ${validValues}. Received ${example}`);
             }
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -169,7 +167,8 @@ export function convertTypeExample({
             const variantOptions = undiscriminatedUnion.union.map((variant) => {
                 return typeof variant === "string" ? variant : variant.type;
             });
-            throw new Error("Example doesn't match any option. " + `Valid options are: ${variantOptions.join(", ")}`);
+            const validValues = variantOptions.join(", ");
+            throw new Error(`Expected one of ${validValues}. Received ${example}`);
         }
     });
 }
@@ -381,7 +380,7 @@ function convertPrimitiveExample({
         },
         dateTime: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string for dateTime conversion. Received ${example}`);
+                throw new Error(`Expected ISO datetime. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.datetime({
@@ -392,13 +391,13 @@ function convertPrimitiveExample({
         },
         date: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string for date conversion. Received ${example}`);
+                throw new Error(`Expected ISO date. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
         },
         base64: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string for base64 conversion. Received ${example}`);
+                throw new Error(`Expected base64 encoded string. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -408,37 +407,37 @@ function convertPrimitiveExample({
         },
         uint: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for uint conversion. Received ${example}`);
+                throw new Error(`Expected unsigned integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
         },
         uint64: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for uint64 conversion. Received ${example}`);
+                throw new Error(`Expected unsigned 64-bit integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for integer conversion. Received ${example}`);
+                throw new Error(`Expected integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },
         float: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for float conversion. Received ${example}`);
+                throw new Error(`Expected float. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for double conversion. Received ${example}`);
+                throw new Error(`Expected double. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
         },
         long: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected number for long conversion. Received ${example}`);
+                throw new Error(`Expected long. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
         },
@@ -450,13 +449,13 @@ function convertPrimitiveExample({
         },
         uuid: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string for uuid conversion. Received ${example}`);
+                throw new Error(`Expected uuid. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
         },
         bigInteger: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string for bigInteger conversion. Received ${example}`);
+                throw new Error(`Expected big integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
