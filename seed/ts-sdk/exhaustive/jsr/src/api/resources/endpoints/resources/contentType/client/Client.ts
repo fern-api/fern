@@ -54,7 +54,7 @@ export class ContentType {
      */
     public async postJsonPatchContentType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/bar"),
@@ -127,7 +127,7 @@ export class ContentType {
      */
     public async postJsonPatchContentWithCharsetType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/baz"),

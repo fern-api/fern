@@ -41,7 +41,7 @@ export class Auth {
      */
     public async getToken(
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentialsDefault.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
@@ -90,7 +90,7 @@ export class Auth {
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsDefaultTimeoutError(
-                    "Timeout exceeded when calling POST /token."
+                    "Timeout exceeded when calling POST /token.",
                 );
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsDefaultError({

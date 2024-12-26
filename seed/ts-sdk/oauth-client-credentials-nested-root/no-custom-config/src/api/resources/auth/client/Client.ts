@@ -42,7 +42,7 @@ export class Auth {
      */
     public async getToken(
         request: SeedOauthClientCredentials.auth.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentials.auth.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),

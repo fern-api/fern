@@ -98,7 +98,7 @@ export class HttpMethods {
      */
     public async testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/http-methods"),
@@ -168,7 +168,7 @@ export class HttpMethods {
     public async testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
@@ -252,7 +252,7 @@ export class HttpMethods {
     public async testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),

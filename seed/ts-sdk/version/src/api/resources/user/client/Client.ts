@@ -43,7 +43,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`
+                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`,
             ),
             method: "GET",
             headers: {

@@ -43,12 +43,12 @@ export class Problem {
      *     await client.v2.v3.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info"
+                "/problems-v2/lightweight-problem-info",
             ),
             method: "GET",
             headers: {
@@ -95,7 +95,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /problems-v2/lightweight-problem-info."
+                    "Timeout exceeded when calling GET /problems-v2/lightweight-problem-info.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -116,7 +116,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info"
+                "/problems-v2/problem-info",
             ),
             method: "GET",
             headers: {
@@ -181,12 +181,12 @@ export class Problem {
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`,
             ),
             method: "GET",
             headers: {
@@ -233,7 +233,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}."
+                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -255,14 +255,12 @@ export class Problem {
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(
-                    serializers.ProblemId.jsonOrThrow(problemId)
-                )}/version/${encodeURIComponent(problemVersion)}`
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}/version/${encodeURIComponent(problemVersion)}`,
             ),
             method: "GET",
             headers: {
@@ -309,7 +307,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}/version/{problemVersion}."
+                    "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}/version/{problemVersion}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({

@@ -59,7 +59,7 @@ export const WorkspaceSubmissionStatus = {
             type: "stopped",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus.Stopped,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -72,7 +72,7 @@ export const WorkspaceSubmissionStatus = {
             type: "errored",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus.Errored,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const WorkspaceSubmissionStatus = {
             type: "running",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus.Running,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -98,7 +98,7 @@ export const WorkspaceSubmissionStatus = {
             type: "ran",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus.Ran,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -111,7 +111,7 @@ export const WorkspaceSubmissionStatus = {
             type: "traced",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus.Traced,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -123,7 +123,7 @@ export const WorkspaceSubmissionStatus = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionStatus._Unknown,
-                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionStatus._visit(this, visitor);
             },
@@ -132,7 +132,7 @@ export const WorkspaceSubmissionStatus = {
 
     _visit: <_Result>(
         value: SeedTrace.WorkspaceSubmissionStatus,
-        visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>
+        visitor: SeedTrace.WorkspaceSubmissionStatus._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "stopped":

@@ -48,7 +48,7 @@ export const FunctionSignature = {
             type: "void",
             _visit: function <_Result>(
                 this: SeedTrace.v2.FunctionSignature.Void,
-                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.FunctionSignature._visit(this, visitor);
             },
@@ -61,7 +61,7 @@ export const FunctionSignature = {
             type: "nonVoid",
             _visit: function <_Result>(
                 this: SeedTrace.v2.FunctionSignature.NonVoid,
-                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.FunctionSignature._visit(this, visitor);
             },
@@ -69,14 +69,14 @@ export const FunctionSignature = {
     },
 
     voidThatTakesActualResult: (
-        value: SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult
+        value: SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult,
     ): SeedTrace.v2.FunctionSignature.VoidThatTakesActualResult => {
         return {
             ...value,
             type: "voidThatTakesActualResult",
             _visit: function <_Result>(
                 this: SeedTrace.v2.FunctionSignature.VoidThatTakesActualResult,
-                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.FunctionSignature._visit(this, visitor);
             },
@@ -88,7 +88,7 @@ export const FunctionSignature = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.FunctionSignature._Unknown,
-                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.FunctionSignature._visit(this, visitor);
             },
@@ -97,7 +97,7 @@ export const FunctionSignature = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.FunctionSignature,
-        visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>
+        visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "void":

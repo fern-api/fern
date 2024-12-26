@@ -43,12 +43,12 @@ export class Sysprop {
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
-        requestOptions?: Sysprop.RequestOptions
+        requestOptions?: Sysprop.RequestOptions,
     ): Promise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`,
             ),
             method: "PUT",
             headers: {
@@ -91,14 +91,14 @@ export class Sysprop {
      *     await client.sysprop.getNumWarmInstances()
      */
     public async getNumWarmInstances(
-        requestOptions?: Sysprop.RequestOptions
+        requestOptions?: Sysprop.RequestOptions,
     ): Promise<
         core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
     > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances"
+                "/sysprop/num-warm-instances",
             ),
             method: "GET",
             headers: {

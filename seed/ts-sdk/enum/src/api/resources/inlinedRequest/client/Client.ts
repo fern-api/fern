@@ -40,7 +40,7 @@ export class InlinedRequest {
      */
     public async send(
         request: SeedEnum.SendEnumInlinedRequest,
-        requestOptions?: InlinedRequest.RequestOptions
+        requestOptions?: InlinedRequest.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),

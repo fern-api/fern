@@ -28,9 +28,6 @@ export class Service {
 
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getText()
      */
     public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

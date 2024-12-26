@@ -62,7 +62,7 @@ export class InlinedRequests {
      */
     public async postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions
+        requestOptions?: InlinedRequests.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/req-bodies/object"),
@@ -106,7 +106,7 @@ export class InlinedRequests {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedExhaustiveError({

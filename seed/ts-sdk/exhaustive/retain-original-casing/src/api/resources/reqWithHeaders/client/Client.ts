@@ -42,7 +42,7 @@ export class ReqWithHeaders {
      */
     public async getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
-        requestOptions?: ReqWithHeaders.RequestOptions
+        requestOptions?: ReqWithHeaders.RequestOptions,
     ): Promise<void> {
         const {
             "X-TEST-SERVICE-HEADER": xTestServiceHeader,
@@ -92,7 +92,7 @@ export class ReqWithHeaders {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /test-headers/custom-header."
+                    "Timeout exceeded when calling POST /test-headers/custom-header.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({

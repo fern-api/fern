@@ -22,7 +22,7 @@ export namespace Error {
 
     interface _Utils {
         _visit: <_Result>(
-            visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>
+            visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
         ) => _Result;
     }
 
@@ -34,14 +34,14 @@ export namespace Error {
 
 export const Error = {
     badRequestBody: (
-        value: Fiddle.BadObjectRequestInfo
+        value: Fiddle.BadObjectRequestInfo,
     ): Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody => {
         return {
             content: value,
             statusCode: 400,
             _visit: function <_Result>(
                 this: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody,
-                visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>
+                visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
             ) {
                 return Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._visit(this, visitor);
             },
@@ -49,14 +49,14 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Unknown,
-                visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>
+                visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
             ) {
                 return Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error,
-        visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>
+        visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             case 400:

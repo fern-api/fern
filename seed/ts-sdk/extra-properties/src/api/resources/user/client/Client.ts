@@ -39,7 +39,7 @@ export class User {
      */
     public async createUser(
         request: SeedExtraProperties.CreateUserRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedExtraProperties.User> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/user"),

@@ -43,7 +43,7 @@ export class Ec2 {
      */
     public async bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
+        requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -51,7 +51,7 @@ export class Ec2 {
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedMultiUrlEnvironmentEnvironment.Production
                 ).ec2,
-                "/ec2/boot"
+                "/ec2/boot",
             ),
             method: "POST",
             headers: {

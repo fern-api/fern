@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.endpoints.httpMethods.testGet.Error._Unknown,
-                visitor: Fiddle.endpoints.httpMethods.testGet.Error._Visitor<_Result>
+                visitor: Fiddle.endpoints.httpMethods.testGet.Error._Visitor<_Result>,
             ) {
                 return Fiddle.endpoints.httpMethods.testGet.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.endpoints.httpMethods.testGet.Error,
-        visitor: Fiddle.endpoints.httpMethods.testGet.Error._Visitor<_Result>
+        visitor: Fiddle.endpoints.httpMethods.testGet.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

@@ -47,7 +47,7 @@ export const SubmissionStatusForTestCase = {
             type: "graded",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Graded,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -60,7 +60,7 @@ export const SubmissionStatusForTestCase = {
             type: "gradedV2",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.GradedV2,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -73,7 +73,7 @@ export const SubmissionStatusForTestCase = {
             type: "traced",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Traced,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const SubmissionStatusForTestCase = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase._Unknown,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -94,7 +94,7 @@ export const SubmissionStatusForTestCase = {
 
     _visit: <_Result>(
         value: SeedTrace.SubmissionStatusForTestCase,
-        visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+        visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "graded":

@@ -28,7 +28,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.submission.stopExecutionSession.Error,
-        visitor: SeedTrace.submission.stopExecutionSession.Error._Visitor<_Result>
+        visitor: SeedTrace.submission.stopExecutionSession.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

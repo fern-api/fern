@@ -40,7 +40,7 @@ export const SubmissionStatusV2 = {
             type: "test",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Test,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const SubmissionStatusV2 = {
             type: "workspace",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Workspace,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const SubmissionStatusV2 = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2._Unknown,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const SubmissionStatusV2 = {
 
     _visit: <_Result>(
         value: SeedTrace.SubmissionStatusV2,
-        visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+        visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "test":

@@ -56,7 +56,7 @@ export class Inlined {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInlinedRequest,
-        requestOptions?: Inlined.RequestOptions
+        requestOptions?: Inlined.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),

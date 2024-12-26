@@ -47,7 +47,7 @@ export class Headers {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInHeadersRequest,
-        requestOptions?: Headers.RequestOptions
+        requestOptions?: Headers.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "headers"),

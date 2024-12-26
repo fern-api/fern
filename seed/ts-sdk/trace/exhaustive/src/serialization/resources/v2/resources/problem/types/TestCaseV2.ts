@@ -16,7 +16,7 @@ export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.TestCase
         implementation: TestCaseImplementationReference,
         arguments: core.serialization.record(
             ParameterId,
-            core.serialization.lazy(() => serializers.VariableValue)
+            core.serialization.lazy(() => serializers.VariableValue),
         ),
         expects: TestCaseExpects.optional(),
     });

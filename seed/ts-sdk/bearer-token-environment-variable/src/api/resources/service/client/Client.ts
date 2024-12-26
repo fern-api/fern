@@ -80,7 +80,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedBearerTokenEnvironmentVariableTimeoutError(
-                    "Timeout exceeded when calling GET /apiKey."
+                    "Timeout exceeded when calling GET /apiKey.",
                 );
             case "unknown":
                 throw new errors.SeedBearerTokenEnvironmentVariableError({

@@ -28,7 +28,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.admin.storeTracedWorkspaceV2.Error,
-        visitor: SeedTrace.admin.storeTracedWorkspaceV2.Error._Visitor<_Result>
+        visitor: SeedTrace.admin.storeTracedWorkspaceV2.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:
