@@ -16,6 +16,7 @@ export class File {
     public async write(directoryPrefix: AbsoluteFilePath): Promise<void> {
         const filepath = `${join(directoryPrefix, this.directory)}/${this.filename}`;
         await mkdir(path.dirname(filepath), { recursive: true });
-        await writeFile(filepath, this.fileContents);
+        const content = typeof this.fileContents === "string" ? this.fileContents : new Uint8Array(this.fileContents);
+        await writeFile(filepath, content);
     }
 }

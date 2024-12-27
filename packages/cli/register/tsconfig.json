@@ -1,9 +1,9 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
+  "extends": "../../../shared/tsconfig.test.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
   },
   "include": [
     "./src/**/*"

@@ -92,7 +92,7 @@ export const ValidFileTypes: Rule = {
 };
 
 export const getViolationsForFile = async (absoluteFilepath: string): Promise<RuleViolation[]> => {
-    const file = await readFile(absoluteFilepath);
+    const file = new Uint8Array(await readFile(absoluteFilepath));
 
     // otherwise, check the file type
     const fileType = await fileTypeFromBuffer(file);
