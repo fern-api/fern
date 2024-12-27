@@ -5,6 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.45.0] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
+
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
+## [0.44.3] - 2024-12-18
+
+- Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
+
+## [0.44.2] - 2024-12-17
+
+- Fix: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
+
+## [0.44.1] - 2024-12-16
+
+- Fix: When there is an environment variable set, you do not need to pass in any parameters
+  to the client constructor.
+
+## [0.44.0] - 2024-12-13
+
+- Feature: Inline path parameters into request types by setting `inlinePathParameters` to `true` in the generator config.
+
+  Here's an example of how users would use the same endpoint method without and with `inlinePathParameters` set to `true`.
+
+  Without `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo("pathParamValue", { id: "SOME_ID" });
+  ```
+
+  With `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo({ pathParamName: "pathParamValue", id: "SOME_ID" });
+  ```
+
+## [0.43.1] - 2024-12-11
+
+- Fix: When `noSerdeLayer` is enabled, streaming endpoints were failing to compile because
+  they assumed that the serialization layer existed. This is now fixed.
+
 ## [0.43.0] - 2024-12-11
 
 - Feature: Generate inline types for inline schemas by setting `enableInlineTypes` to `true` in the generator config.

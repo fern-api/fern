@@ -8,364 +8,557 @@ import (
 	internal "github.com/inline-types/fern/internal"
 )
 
+type GetDiscriminatedUnionRequest struct {
+	Bar *DiscriminatedUnion1 `json:"bar,omitempty" url:"-"`
+	Foo string               `json:"foo" url:"-"`
+}
+
 type PostRootRequest struct {
-	Bar *InlineType1 `json:"bar,omitempty" url:"-"`
-	Foo string       `json:"foo" url:"-"`
+	Bar *RequestTypeInlineType1 `json:"bar,omitempty" url:"-"`
+	Foo string                  `json:"foo" url:"-"`
 }
 
-type InlineEnum string
-
-const (
-	InlineEnumSunny   InlineEnum = "SUNNY"
-	InlineEnumCloudy  InlineEnum = "CLOUDY"
-	InlineEnumRaining InlineEnum = "RAINING"
-	InlineEnumSnowing InlineEnum = "SNOWING"
-)
-
-func NewInlineEnumFromString(s string) (InlineEnum, error) {
-	switch s {
-	case "SUNNY":
-		return InlineEnumSunny, nil
-	case "CLOUDY":
-		return InlineEnumCloudy, nil
-	case "RAINING":
-		return InlineEnumRaining, nil
-	case "SNOWING":
-		return InlineEnumSnowing, nil
-	}
-	var t InlineEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+type GetUndiscriminatedUnionRequest struct {
+	Bar *UndiscriminatedUnion1 `json:"bar,omitempty" url:"-"`
+	Foo string                 `json:"foo" url:"-"`
 }
 
-func (i InlineEnum) Ptr() *InlineEnum {
-	return &i
-}
-
-type InlineType1 struct {
-	Foo string             `json:"foo" url:"foo"`
-	Bar *NestedInlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+type AliasInlineValue struct {
+	Foo string `json:"foo" url:"foo"`
+	Bar string `json:"bar" url:"bar"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (i *InlineType1) GetFoo() string {
-	if i == nil {
+func (a *AliasInlineValue) GetFoo() string {
+	if a == nil {
 		return ""
 	}
-	return i.Foo
+	return a.Foo
 }
 
-func (i *InlineType1) GetBar() *NestedInlineType1 {
-	if i == nil {
-		return nil
+func (a *AliasInlineValue) GetBar() string {
+	if a == nil {
+		return ""
 	}
-	return i.Bar
+	return a.Bar
 }
 
-func (i *InlineType1) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
+func (a *AliasInlineValue) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
-func (i *InlineType1) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlineType1
+func (a *AliasInlineValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler AliasInlineValue
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*i = InlineType1(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	*a = AliasInlineValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
-	i.extraProperties = extraProperties
-	i.rawJSON = json.RawMessage(data)
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
-func (i *InlineType1) String() string {
-	if len(i.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+func (a *AliasInlineValue) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := internal.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
-	return fmt.Sprintf("%#v", i)
+	return fmt.Sprintf("%#v", a)
 }
 
-type InlineType2 struct {
-	Baz string `json:"baz" url:"baz"`
+type AliasListInline = []*AliasInlineValue
 
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
+type AliasMapInline = map[string]*AliasInlineValue
+
+type AliasSetInline = []*AliasInlineValue
+
+// lorem ipsum
+type DiscriminatedUnion1 struct {
+	Type string
+	// lorem ipsum
+	Type1 *DiscriminatedUnion1InlineType1
+	// lorem ipsum
+	Type2 *DiscriminatedUnion1InlineType2
+	// lorem ipsum
+	Ref *ReferenceType
 }
 
-func (i *InlineType2) GetBaz() string {
-	if i == nil {
+func NewDiscriminatedUnion1FromType1(value *DiscriminatedUnion1InlineType1) *DiscriminatedUnion1 {
+	return &DiscriminatedUnion1{Type: "type1", Type1: value}
+}
+
+func NewDiscriminatedUnion1FromType2(value *DiscriminatedUnion1InlineType2) *DiscriminatedUnion1 {
+	return &DiscriminatedUnion1{Type: "type2", Type2: value}
+}
+
+func NewDiscriminatedUnion1FromRef(value *ReferenceType) *DiscriminatedUnion1 {
+	return &DiscriminatedUnion1{Type: "ref", Ref: value}
+}
+
+func (d *DiscriminatedUnion1) GetType() string {
+	if d == nil {
 		return ""
 	}
-	return i.Baz
+	return d.Type
 }
 
-func (i *InlineType2) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlineType2) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlineType2
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlineType2(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-	i.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (i *InlineType2) String() string {
-	if len(i.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type InlinedDiscriminatedUnion1 struct {
-	Type  string
-	Type1 *InlineType1
-	Type2 *InlineType2
-}
-
-func NewInlinedDiscriminatedUnion1FromType1(value *InlineType1) *InlinedDiscriminatedUnion1 {
-	return &InlinedDiscriminatedUnion1{Type: "type1", Type1: value}
-}
-
-func NewInlinedDiscriminatedUnion1FromType2(value *InlineType2) *InlinedDiscriminatedUnion1 {
-	return &InlinedDiscriminatedUnion1{Type: "type2", Type2: value}
-}
-
-func (i *InlinedDiscriminatedUnion1) GetType() string {
-	if i == nil {
-		return ""
-	}
-	return i.Type
-}
-
-func (i *InlinedDiscriminatedUnion1) GetType1() *InlineType1 {
-	if i == nil {
+func (d *DiscriminatedUnion1) GetType1() *DiscriminatedUnion1InlineType1 {
+	if d == nil {
 		return nil
 	}
-	return i.Type1
+	return d.Type1
 }
 
-func (i *InlinedDiscriminatedUnion1) GetType2() *InlineType2 {
-	if i == nil {
+func (d *DiscriminatedUnion1) GetType2() *DiscriminatedUnion1InlineType2 {
+	if d == nil {
 		return nil
 	}
-	return i.Type2
+	return d.Type2
 }
 
-func (i *InlinedDiscriminatedUnion1) UnmarshalJSON(data []byte) error {
+func (d *DiscriminatedUnion1) GetRef() *ReferenceType {
+	if d == nil {
+		return nil
+	}
+	return d.Ref
+}
+
+func (d *DiscriminatedUnion1) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	i.Type = unmarshaler.Type
+	d.Type = unmarshaler.Type
 	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", i)
+		return fmt.Errorf("%T did not include discriminant type", d)
 	}
 	switch unmarshaler.Type {
 	case "type1":
-		value := new(InlineType1)
+		value := new(DiscriminatedUnion1InlineType1)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		i.Type1 = value
+		d.Type1 = value
 	case "type2":
-		value := new(InlineType2)
+		value := new(DiscriminatedUnion1InlineType2)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		i.Type2 = value
+		d.Type2 = value
+	case "ref":
+		value := new(ReferenceType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		d.Ref = value
 	}
 	return nil
 }
 
-func (i InlinedDiscriminatedUnion1) MarshalJSON() ([]byte, error) {
-	switch i.Type {
+func (d DiscriminatedUnion1) MarshalJSON() ([]byte, error) {
+	if err := d.validate(); err != nil {
+		return nil, err
+	}
+	switch d.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", i.Type, i)
+		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
 	case "type1":
-		return internal.MarshalJSONWithExtraProperty(i.Type1, "type", "type1")
+		return internal.MarshalJSONWithExtraProperty(d.Type1, "type", "type1")
 	case "type2":
-		return internal.MarshalJSONWithExtraProperty(i.Type2, "type", "type2")
+		return internal.MarshalJSONWithExtraProperty(d.Type2, "type", "type2")
+	case "ref":
+		return internal.MarshalJSONWithExtraProperty(d.Ref, "type", "ref")
 	}
 }
 
-type InlinedDiscriminatedUnion1Visitor interface {
-	VisitType1(*InlineType1) error
-	VisitType2(*InlineType2) error
+type DiscriminatedUnion1Visitor interface {
+	VisitType1(*DiscriminatedUnion1InlineType1) error
+	VisitType2(*DiscriminatedUnion1InlineType2) error
+	VisitRef(*ReferenceType) error
 }
 
-func (i *InlinedDiscriminatedUnion1) Accept(visitor InlinedDiscriminatedUnion1Visitor) error {
-	switch i.Type {
+func (d *DiscriminatedUnion1) Accept(visitor DiscriminatedUnion1Visitor) error {
+	switch d.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", i.Type, i)
+		return fmt.Errorf("invalid type %s in %T", d.Type, d)
 	case "type1":
-		return visitor.VisitType1(i.Type1)
+		return visitor.VisitType1(d.Type1)
 	case "type2":
-		return visitor.VisitType2(i.Type2)
+		return visitor.VisitType2(d.Type2)
+	case "ref":
+		return visitor.VisitRef(d.Ref)
 	}
 }
 
-type InlinedUndiscriminatedUnion1 struct {
-	InlineType1 *InlineType1
-	InlineType2 *InlineType2
-
-	typ string
-}
-
-func NewInlinedUndiscriminatedUnion1FromInlineType1(value *InlineType1) *InlinedUndiscriminatedUnion1 {
-	return &InlinedUndiscriminatedUnion1{typ: "InlineType1", InlineType1: value}
-}
-
-func NewInlinedUndiscriminatedUnion1FromInlineType2(value *InlineType2) *InlinedUndiscriminatedUnion1 {
-	return &InlinedUndiscriminatedUnion1{typ: "InlineType2", InlineType2: value}
-}
-
-func (i *InlinedUndiscriminatedUnion1) GetInlineType1() *InlineType1 {
-	if i == nil {
-		return nil
+func (d *DiscriminatedUnion1) validate() error {
+	if d == nil {
+		return fmt.Errorf("type %T is nil", d)
 	}
-	return i.InlineType1
+	var fields []string
+	if d.Type1 != nil {
+		fields = append(fields, "type1")
+	}
+	if d.Type2 != nil {
+		fields = append(fields, "type2")
+	}
+	if d.Ref != nil {
+		fields = append(fields, "ref")
+	}
+	if len(fields) == 0 {
+		if d.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
+		}
+		return fmt.Errorf("type %T is empty", d)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", d, fields)
+	}
+	if d.Type != "" {
+		field := fields[0]
+		if d.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				d,
+				d.Type,
+				d,
+			)
+		}
+	}
+	return nil
 }
 
-func (i *InlinedUndiscriminatedUnion1) GetInlineType2() *InlineType2 {
-	if i == nil {
-		return nil
-	}
-	return i.InlineType2
-}
-
-func (i *InlinedUndiscriminatedUnion1) UnmarshalJSON(data []byte) error {
-	valueInlineType1 := new(InlineType1)
-	if err := json.Unmarshal(data, &valueInlineType1); err == nil {
-		i.typ = "InlineType1"
-		i.InlineType1 = valueInlineType1
-		return nil
-	}
-	valueInlineType2 := new(InlineType2)
-	if err := json.Unmarshal(data, &valueInlineType2); err == nil {
-		i.typ = "InlineType2"
-		i.InlineType2 = valueInlineType2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, i)
-}
-
-func (i InlinedUndiscriminatedUnion1) MarshalJSON() ([]byte, error) {
-	if i.typ == "InlineType1" || i.InlineType1 != nil {
-		return json.Marshal(i.InlineType1)
-	}
-	if i.typ == "InlineType2" || i.InlineType2 != nil {
-		return json.Marshal(i.InlineType2)
-	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", i)
-}
-
-type InlinedUndiscriminatedUnion1Visitor interface {
-	VisitInlineType1(*InlineType1) error
-	VisitInlineType2(*InlineType2) error
-}
-
-func (i *InlinedUndiscriminatedUnion1) Accept(visitor InlinedUndiscriminatedUnion1Visitor) error {
-	if i.typ == "InlineType1" || i.InlineType1 != nil {
-		return visitor.VisitInlineType1(i.InlineType1)
-	}
-	if i.typ == "InlineType2" || i.InlineType2 != nil {
-		return visitor.VisitInlineType2(i.InlineType2)
-	}
-	return fmt.Errorf("type %T does not include a non-empty union type", i)
-}
-
-type NestedInlineType1 struct {
-	Foo    string     `json:"foo" url:"foo"`
-	Bar    string     `json:"bar" url:"bar"`
-	MyEnum InlineEnum `json:"myEnum" url:"myEnum"`
+// lorem ipsum
+type DiscriminatedUnion1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar *DiscriminatedUnion1InlineType1InlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (n *NestedInlineType1) GetFoo() string {
-	if n == nil {
+func (d *DiscriminatedUnion1InlineType1) GetFoo() string {
+	if d == nil {
 		return ""
 	}
-	return n.Foo
+	return d.Foo
 }
 
-func (n *NestedInlineType1) GetBar() string {
-	if n == nil {
-		return ""
+func (d *DiscriminatedUnion1InlineType1) GetBar() *DiscriminatedUnion1InlineType1InlineType1 {
+	if d == nil {
+		return nil
 	}
-	return n.Bar
+	return d.Bar
 }
 
-func (n *NestedInlineType1) GetMyEnum() InlineEnum {
-	if n == nil {
-		return ""
+func (d *DiscriminatedUnion1InlineType1) GetRef() *ReferenceType {
+	if d == nil {
+		return nil
 	}
-	return n.MyEnum
+	return d.Ref
 }
 
-func (n *NestedInlineType1) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
+func (d *DiscriminatedUnion1InlineType1) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
 }
 
-func (n *NestedInlineType1) UnmarshalJSON(data []byte) error {
-	type unmarshaler NestedInlineType1
+func (d *DiscriminatedUnion1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler DiscriminatedUnion1InlineType1
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*n = NestedInlineType1(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	*d = DiscriminatedUnion1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
-	n.extraProperties = extraProperties
-	n.rawJSON = json.RawMessage(data)
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
-func (n *NestedInlineType1) String() string {
-	if len(n.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+func (d *DiscriminatedUnion1InlineType1) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := internal.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
-	return fmt.Sprintf("%#v", n)
+	return fmt.Sprintf("%#v", d)
 }
 
+// lorem ipsum
+type DiscriminatedUnion1InlineType1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DiscriminatedUnion1InlineType1InlineType1) GetFoo() string {
+	if d == nil {
+		return ""
+	}
+	return d.Foo
+}
+
+func (d *DiscriminatedUnion1InlineType1InlineType1) GetRef() *ReferenceType {
+	if d == nil {
+		return nil
+	}
+	return d.Ref
+}
+
+func (d *DiscriminatedUnion1InlineType1InlineType1) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *DiscriminatedUnion1InlineType1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler DiscriminatedUnion1InlineType1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DiscriminatedUnion1InlineType1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DiscriminatedUnion1InlineType1InlineType1) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// lorem ipsum
+type DiscriminatedUnion1InlineType2 struct {
+	// lorem ipsum
+	Baz string `json:"baz" url:"baz"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DiscriminatedUnion1InlineType2) GetBaz() string {
+	if d == nil {
+		return ""
+	}
+	return d.Baz
+}
+
+func (d *DiscriminatedUnion1InlineType2) GetRef() *ReferenceType {
+	if d == nil {
+		return nil
+	}
+	return d.Ref
+}
+
+func (d *DiscriminatedUnion1InlineType2) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *DiscriminatedUnion1InlineType2) UnmarshalJSON(data []byte) error {
+	type unmarshaler DiscriminatedUnion1InlineType2
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DiscriminatedUnion1InlineType2(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DiscriminatedUnion1InlineType2) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// lorem ipsum
+type InlineEnum1 string
+
+const (
+	InlineEnum1Sunny   InlineEnum1 = "SUNNY"
+	InlineEnum1Cloudy  InlineEnum1 = "CLOUDY"
+	InlineEnum1Raining InlineEnum1 = "RAINING"
+	InlineEnum1Snowing InlineEnum1 = "SNOWING"
+)
+
+func NewInlineEnum1FromString(s string) (InlineEnum1, error) {
+	switch s {
+	case "SUNNY":
+		return InlineEnum1Sunny, nil
+	case "CLOUDY":
+		return InlineEnum1Cloudy, nil
+	case "RAINING":
+		return InlineEnum1Raining, nil
+	case "SNOWING":
+		return InlineEnum1Snowing, nil
+	}
+	var t InlineEnum1
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i InlineEnum1) Ptr() *InlineEnum1 {
+	return &i
+}
+
+// lorem ipsum
+type ReferenceType struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ReferenceType) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *ReferenceType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *ReferenceType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ReferenceType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ReferenceType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ReferenceType) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type RequestTypeInlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RequestTypeInlineType1) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RequestTypeInlineType1) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RequestTypeInlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler RequestTypeInlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RequestTypeInlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RequestTypeInlineType1) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
 type RootType1 struct {
-	Foo string       `json:"foo" url:"foo"`
-	Bar *InlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar *RootType1InlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	FooMap map[string]*RootType1FooMapValue `json:"fooMap,omitempty" url:"fooMap,omitempty"`
+	// lorem ipsum
+	FooList []*RootType1FooListItem `json:"fooList,omitempty" url:"fooList,omitempty"`
+	// lorem ipsum
+	FooSet []*RootType1FooSetItem `json:"fooSet,omitempty" url:"fooSet,omitempty"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -378,11 +571,39 @@ func (r *RootType1) GetFoo() string {
 	return r.Foo
 }
 
-func (r *RootType1) GetBar() *InlineType1 {
+func (r *RootType1) GetBar() *RootType1InlineType1 {
 	if r == nil {
 		return nil
 	}
 	return r.Bar
+}
+
+func (r *RootType1) GetFooMap() map[string]*RootType1FooMapValue {
+	if r == nil {
+		return nil
+	}
+	return r.FooMap
+}
+
+func (r *RootType1) GetFooList() []*RootType1FooListItem {
+	if r == nil {
+		return nil
+	}
+	return r.FooList
+}
+
+func (r *RootType1) GetFooSet() []*RootType1FooSetItem {
+	if r == nil {
+		return nil
+	}
+	return r.FooSet
+}
+
+func (r *RootType1) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
 }
 
 func (r *RootType1) GetExtraProperties() map[string]interface{} {
@@ -416,3 +637,1316 @@ func (r *RootType1) String() string {
 	}
 	return fmt.Sprintf("%#v", r)
 }
+
+// lorem ipsum
+type RootType1FooListItem struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType1FooListItem) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RootType1FooListItem) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
+}
+
+func (r *RootType1FooListItem) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType1FooListItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType1FooListItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType1FooListItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RootType1FooListItem) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type RootType1FooMapValue struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType1FooMapValue) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RootType1FooMapValue) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
+}
+
+func (r *RootType1FooMapValue) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType1FooMapValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType1FooMapValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType1FooMapValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RootType1FooMapValue) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type RootType1FooSetItem struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType1FooSetItem) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RootType1FooSetItem) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
+}
+
+func (r *RootType1FooSetItem) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType1FooSetItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType1FooSetItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType1FooSetItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RootType1FooSetItem) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type RootType1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar *RootType1InlineType1NestedInlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType1InlineType1) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RootType1InlineType1) GetBar() *RootType1InlineType1NestedInlineType1 {
+	if r == nil {
+		return nil
+	}
+	return r.Bar
+}
+
+func (r *RootType1InlineType1) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
+}
+
+func (r *RootType1InlineType1) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RootType1InlineType1) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type RootType1InlineType1NestedInlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar string `json:"bar" url:"bar"`
+	// lorem ipsum
+	MyEnum InlineEnum1 `json:"myEnum" url:"myEnum"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType1InlineType1NestedInlineType1) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
+func (r *RootType1InlineType1NestedInlineType1) GetBar() string {
+	if r == nil {
+		return ""
+	}
+	return r.Bar
+}
+
+func (r *RootType1InlineType1NestedInlineType1) GetMyEnum() InlineEnum1 {
+	if r == nil {
+		return ""
+	}
+	return r.MyEnum
+}
+
+func (r *RootType1InlineType1NestedInlineType1) GetRef() *ReferenceType {
+	if r == nil {
+		return nil
+	}
+	return r.Ref
+}
+
+func (r *RootType1InlineType1NestedInlineType1) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType1InlineType1NestedInlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType1InlineType1NestedInlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType1InlineType1NestedInlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RootType1InlineType1NestedInlineType1) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1 struct {
+	// lorem ipsum
+	UndiscriminatedUnion1InlineType1 *UndiscriminatedUnion1InlineType1
+	// lorem ipsum
+	UndiscriminatedUnion1InlineType2 *UndiscriminatedUnion1InlineType2
+	// lorem ipsum
+	UndiscriminatedUnion1DiscriminatedUnion1 *UndiscriminatedUnion1DiscriminatedUnion1
+	// lorem ipsum
+	UndiscriminatedUnion1DiscriminatedUnion1 *UndiscriminatedUnion1DiscriminatedUnion1
+	// lorem ipsum
+	UndiscriminatedUnion1InlineEnum1 UndiscriminatedUnion1InlineEnum1
+	// lorem ipsum
+	UserId UserId
+	// lorem ipsum
+	UndiscriminatedUnion1InlineListItem1List []*UndiscriminatedUnion1InlineListItem1
+	// lorem ipsum
+	UndiscriminatedUnion1InlineSetItem1Set []*UndiscriminatedUnion1InlineSetItem1
+	// lorem ipsum
+	StringUndiscriminatedUnion1InlineMapItem1Map map[string]*UndiscriminatedUnion1InlineMapItem1
+	// lorem ipsum
+	ReferenceType *ReferenceType
+
+	typ string
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1InlineType1(value *UndiscriminatedUnion1InlineType1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1InlineType1", UndiscriminatedUnion1InlineType1: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1InlineType2(value *UndiscriminatedUnion1InlineType2) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1InlineType2", UndiscriminatedUnion1InlineType2: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1DiscriminatedUnion1(value *UndiscriminatedUnion1DiscriminatedUnion1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1DiscriminatedUnion1", UndiscriminatedUnion1DiscriminatedUnion1: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1DiscriminatedUnion1(value *UndiscriminatedUnion1DiscriminatedUnion1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1DiscriminatedUnion1", UndiscriminatedUnion1DiscriminatedUnion1: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1InlineEnum1(value UndiscriminatedUnion1InlineEnum1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1InlineEnum1", UndiscriminatedUnion1InlineEnum1: value}
+}
+
+func NewUndiscriminatedUnion1FromUserId(value UserId) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UserId", UserId: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1InlineListItem1List(value []*UndiscriminatedUnion1InlineListItem1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1InlineListItem1List", UndiscriminatedUnion1InlineListItem1List: value}
+}
+
+func NewUndiscriminatedUnion1FromUndiscriminatedUnion1InlineSetItem1Set(value []*UndiscriminatedUnion1InlineSetItem1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "UndiscriminatedUnion1InlineSetItem1Set", UndiscriminatedUnion1InlineSetItem1Set: value}
+}
+
+func NewUndiscriminatedUnion1FromStringUndiscriminatedUnion1InlineMapItem1Map(value map[string]*UndiscriminatedUnion1InlineMapItem1) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "StringUndiscriminatedUnion1InlineMapItem1Map", StringUndiscriminatedUnion1InlineMapItem1Map: value}
+}
+
+func NewUndiscriminatedUnion1FromReferenceType(value *ReferenceType) *UndiscriminatedUnion1 {
+	return &UndiscriminatedUnion1{typ: "ReferenceType", ReferenceType: value}
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1InlineType1() *UndiscriminatedUnion1InlineType1 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1InlineType1
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1InlineType2() *UndiscriminatedUnion1InlineType2 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1InlineType2
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1DiscriminatedUnion1() *UndiscriminatedUnion1DiscriminatedUnion1 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1DiscriminatedUnion1
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1DiscriminatedUnion1() *UndiscriminatedUnion1DiscriminatedUnion1 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1DiscriminatedUnion1
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1InlineEnum1() UndiscriminatedUnion1InlineEnum1 {
+	if u == nil {
+		return ""
+	}
+	return u.UndiscriminatedUnion1InlineEnum1
+}
+
+func (u *UndiscriminatedUnion1) GetUserId() UserId {
+	if u == nil {
+		return ""
+	}
+	return u.UserId
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1InlineListItem1List() []*UndiscriminatedUnion1InlineListItem1 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1InlineListItem1List
+}
+
+func (u *UndiscriminatedUnion1) GetUndiscriminatedUnion1InlineSetItem1Set() []*UndiscriminatedUnion1InlineSetItem1 {
+	if u == nil {
+		return nil
+	}
+	return u.UndiscriminatedUnion1InlineSetItem1Set
+}
+
+func (u *UndiscriminatedUnion1) GetStringUndiscriminatedUnion1InlineMapItem1Map() map[string]*UndiscriminatedUnion1InlineMapItem1 {
+	if u == nil {
+		return nil
+	}
+	return u.StringUndiscriminatedUnion1InlineMapItem1Map
+}
+
+func (u *UndiscriminatedUnion1) GetReferenceType() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.ReferenceType
+}
+
+func (u *UndiscriminatedUnion1) UnmarshalJSON(data []byte) error {
+	valueUndiscriminatedUnion1InlineType1 := new(UndiscriminatedUnion1InlineType1)
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1InlineType1); err == nil {
+		u.typ = "UndiscriminatedUnion1InlineType1"
+		u.UndiscriminatedUnion1InlineType1 = valueUndiscriminatedUnion1InlineType1
+		return nil
+	}
+	valueUndiscriminatedUnion1InlineType2 := new(UndiscriminatedUnion1InlineType2)
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1InlineType2); err == nil {
+		u.typ = "UndiscriminatedUnion1InlineType2"
+		u.UndiscriminatedUnion1InlineType2 = valueUndiscriminatedUnion1InlineType2
+		return nil
+	}
+	valueUndiscriminatedUnion1DiscriminatedUnion1 := new(UndiscriminatedUnion1DiscriminatedUnion1)
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1DiscriminatedUnion1); err == nil {
+		u.typ = "UndiscriminatedUnion1DiscriminatedUnion1"
+		u.UndiscriminatedUnion1DiscriminatedUnion1 = valueUndiscriminatedUnion1DiscriminatedUnion1
+		return nil
+	}
+	valueUndiscriminatedUnion1DiscriminatedUnion1 := new(UndiscriminatedUnion1DiscriminatedUnion1)
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1DiscriminatedUnion1); err == nil {
+		u.typ = "UndiscriminatedUnion1DiscriminatedUnion1"
+		u.UndiscriminatedUnion1DiscriminatedUnion1 = valueUndiscriminatedUnion1DiscriminatedUnion1
+		return nil
+	}
+	var valueUndiscriminatedUnion1InlineEnum1 UndiscriminatedUnion1InlineEnum1
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1InlineEnum1); err == nil {
+		u.typ = "UndiscriminatedUnion1InlineEnum1"
+		u.UndiscriminatedUnion1InlineEnum1 = valueUndiscriminatedUnion1InlineEnum1
+		return nil
+	}
+	var valueUserId UserId
+	if err := json.Unmarshal(data, &valueUserId); err == nil {
+		u.typ = "UserId"
+		u.UserId = valueUserId
+		return nil
+	}
+	var valueUndiscriminatedUnion1InlineListItem1List []*UndiscriminatedUnion1InlineListItem1
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1InlineListItem1List); err == nil {
+		u.typ = "UndiscriminatedUnion1InlineListItem1List"
+		u.UndiscriminatedUnion1InlineListItem1List = valueUndiscriminatedUnion1InlineListItem1List
+		return nil
+	}
+	var valueUndiscriminatedUnion1InlineSetItem1Set []*UndiscriminatedUnion1InlineSetItem1
+	if err := json.Unmarshal(data, &valueUndiscriminatedUnion1InlineSetItem1Set); err == nil {
+		u.typ = "UndiscriminatedUnion1InlineSetItem1Set"
+		u.UndiscriminatedUnion1InlineSetItem1Set = valueUndiscriminatedUnion1InlineSetItem1Set
+		return nil
+	}
+	var valueStringUndiscriminatedUnion1InlineMapItem1Map map[string]*UndiscriminatedUnion1InlineMapItem1
+	if err := json.Unmarshal(data, &valueStringUndiscriminatedUnion1InlineMapItem1Map); err == nil {
+		u.typ = "StringUndiscriminatedUnion1InlineMapItem1Map"
+		u.StringUndiscriminatedUnion1InlineMapItem1Map = valueStringUndiscriminatedUnion1InlineMapItem1Map
+		return nil
+	}
+	valueReferenceType := new(ReferenceType)
+	if err := json.Unmarshal(data, &valueReferenceType); err == nil {
+		u.typ = "ReferenceType"
+		u.ReferenceType = valueReferenceType
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UndiscriminatedUnion1) MarshalJSON() ([]byte, error) {
+	if u.typ == "UndiscriminatedUnion1InlineType1" || u.UndiscriminatedUnion1InlineType1 != nil {
+		return json.Marshal(u.UndiscriminatedUnion1InlineType1)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineType2" || u.UndiscriminatedUnion1InlineType2 != nil {
+		return json.Marshal(u.UndiscriminatedUnion1InlineType2)
+	}
+	if u.typ == "UndiscriminatedUnion1DiscriminatedUnion1" || u.UndiscriminatedUnion1DiscriminatedUnion1 != nil {
+		return json.Marshal(u.UndiscriminatedUnion1DiscriminatedUnion1)
+	}
+	if u.typ == "UndiscriminatedUnion1DiscriminatedUnion1" || u.UndiscriminatedUnion1DiscriminatedUnion1 != nil {
+		return json.Marshal(u.UndiscriminatedUnion1DiscriminatedUnion1)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineEnum1" || u.UndiscriminatedUnion1InlineEnum1 != "" {
+		return json.Marshal(u.UndiscriminatedUnion1InlineEnum1)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return json.Marshal(u.UserId)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineListItem1List" || u.UndiscriminatedUnion1InlineListItem1List != nil {
+		return json.Marshal(u.UndiscriminatedUnion1InlineListItem1List)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineSetItem1Set" || u.UndiscriminatedUnion1InlineSetItem1Set != nil {
+		return json.Marshal(u.UndiscriminatedUnion1InlineSetItem1Set)
+	}
+	if u.typ == "StringUndiscriminatedUnion1InlineMapItem1Map" || u.StringUndiscriminatedUnion1InlineMapItem1Map != nil {
+		return json.Marshal(u.StringUndiscriminatedUnion1InlineMapItem1Map)
+	}
+	if u.typ == "ReferenceType" || u.ReferenceType != nil {
+		return json.Marshal(u.ReferenceType)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UndiscriminatedUnion1Visitor interface {
+	VisitUndiscriminatedUnion1InlineType1(*UndiscriminatedUnion1InlineType1) error
+	VisitUndiscriminatedUnion1InlineType2(*UndiscriminatedUnion1InlineType2) error
+	VisitUndiscriminatedUnion1DiscriminatedUnion1(*UndiscriminatedUnion1DiscriminatedUnion1) error
+	VisitUndiscriminatedUnion1DiscriminatedUnion1(*UndiscriminatedUnion1DiscriminatedUnion1) error
+	VisitUndiscriminatedUnion1InlineEnum1(UndiscriminatedUnion1InlineEnum1) error
+	VisitUserId(UserId) error
+	VisitUndiscriminatedUnion1InlineListItem1List([]*UndiscriminatedUnion1InlineListItem1) error
+	VisitUndiscriminatedUnion1InlineSetItem1Set([]*UndiscriminatedUnion1InlineSetItem1) error
+	VisitStringUndiscriminatedUnion1InlineMapItem1Map(map[string]*UndiscriminatedUnion1InlineMapItem1) error
+	VisitReferenceType(*ReferenceType) error
+}
+
+func (u *UndiscriminatedUnion1) Accept(visitor UndiscriminatedUnion1Visitor) error {
+	if u.typ == "UndiscriminatedUnion1InlineType1" || u.UndiscriminatedUnion1InlineType1 != nil {
+		return visitor.VisitUndiscriminatedUnion1InlineType1(u.UndiscriminatedUnion1InlineType1)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineType2" || u.UndiscriminatedUnion1InlineType2 != nil {
+		return visitor.VisitUndiscriminatedUnion1InlineType2(u.UndiscriminatedUnion1InlineType2)
+	}
+	if u.typ == "UndiscriminatedUnion1DiscriminatedUnion1" || u.UndiscriminatedUnion1DiscriminatedUnion1 != nil {
+		return visitor.VisitUndiscriminatedUnion1DiscriminatedUnion1(u.UndiscriminatedUnion1DiscriminatedUnion1)
+	}
+	if u.typ == "UndiscriminatedUnion1DiscriminatedUnion1" || u.UndiscriminatedUnion1DiscriminatedUnion1 != nil {
+		return visitor.VisitUndiscriminatedUnion1DiscriminatedUnion1(u.UndiscriminatedUnion1DiscriminatedUnion1)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineEnum1" || u.UndiscriminatedUnion1InlineEnum1 != "" {
+		return visitor.VisitUndiscriminatedUnion1InlineEnum1(u.UndiscriminatedUnion1InlineEnum1)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return visitor.VisitUserId(u.UserId)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineListItem1List" || u.UndiscriminatedUnion1InlineListItem1List != nil {
+		return visitor.VisitUndiscriminatedUnion1InlineListItem1List(u.UndiscriminatedUnion1InlineListItem1List)
+	}
+	if u.typ == "UndiscriminatedUnion1InlineSetItem1Set" || u.UndiscriminatedUnion1InlineSetItem1Set != nil {
+		return visitor.VisitUndiscriminatedUnion1InlineSetItem1Set(u.UndiscriminatedUnion1InlineSetItem1Set)
+	}
+	if u.typ == "StringUndiscriminatedUnion1InlineMapItem1Map" || u.StringUndiscriminatedUnion1InlineMapItem1Map != nil {
+		return visitor.VisitStringUndiscriminatedUnion1InlineMapItem1Map(u.StringUndiscriminatedUnion1InlineMapItem1Map)
+	}
+	if u.typ == "ReferenceType" || u.ReferenceType != nil {
+		return visitor.VisitReferenceType(u.ReferenceType)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1DiscriminatedUnion1 struct {
+	Type string
+	// lorem ipsum
+	Type1 *UndiscriminatedUnion1DiscriminatedUnion1InlineType1
+	// lorem ipsum
+	Type2 *UndiscriminatedUnion1DiscriminatedUnion1InlineType2
+	// lorem ipsum
+	Ref *ReferenceType
+}
+
+func NewUndiscriminatedUnion1DiscriminatedUnion1FromType1(value *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) *UndiscriminatedUnion1DiscriminatedUnion1 {
+	return &UndiscriminatedUnion1DiscriminatedUnion1{Type: "type1", Type1: value}
+}
+
+func NewUndiscriminatedUnion1DiscriminatedUnion1FromType2(value *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) *UndiscriminatedUnion1DiscriminatedUnion1 {
+	return &UndiscriminatedUnion1DiscriminatedUnion1{Type: "type2", Type2: value}
+}
+
+func NewUndiscriminatedUnion1DiscriminatedUnion1FromRef(value *ReferenceType) *UndiscriminatedUnion1DiscriminatedUnion1 {
+	return &UndiscriminatedUnion1DiscriminatedUnion1{Type: "ref", Ref: value}
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) GetType1() *UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
+	if u == nil {
+		return nil
+	}
+	return u.Type1
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) GetType2() *UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
+	if u == nil {
+		return nil
+	}
+	return u.Type2
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "type1":
+		value := new(UndiscriminatedUnion1DiscriminatedUnion1InlineType1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Type1 = value
+	case "type2":
+		value := new(UndiscriminatedUnion1DiscriminatedUnion1InlineType2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Type2 = value
+	case "ref":
+		value := new(ReferenceType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Ref = value
+	}
+	return nil
+}
+
+func (u UndiscriminatedUnion1DiscriminatedUnion1) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "type1":
+		return internal.MarshalJSONWithExtraProperty(u.Type1, "type", "type1")
+	case "type2":
+		return internal.MarshalJSONWithExtraProperty(u.Type2, "type", "type2")
+	case "ref":
+		return internal.MarshalJSONWithExtraProperty(u.Ref, "type", "ref")
+	}
+}
+
+type UndiscriminatedUnion1DiscriminatedUnion1Visitor interface {
+	VisitType1(*UndiscriminatedUnion1DiscriminatedUnion1InlineType1) error
+	VisitType2(*UndiscriminatedUnion1DiscriminatedUnion1InlineType2) error
+	VisitRef(*ReferenceType) error
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) Accept(visitor UndiscriminatedUnion1DiscriminatedUnion1Visitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "type1":
+		return visitor.VisitType1(u.Type1)
+	case "type2":
+		return visitor.VisitType2(u.Type2)
+	case "ref":
+		return visitor.VisitRef(u.Ref)
+	}
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Type1 != nil {
+		fields = append(fields, "type1")
+	}
+	if u.Type2 != nil {
+		fields = append(fields, "type2")
+	}
+	if u.Ref != nil {
+		fields = append(fields, "ref")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1DiscriminatedUnion1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) GetBar() *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1 {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1DiscriminatedUnion1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1DiscriminatedUnion1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1DiscriminatedUnion1InlineType2 struct {
+	// lorem ipsum
+	Baz string `json:"baz" url:"baz"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) GetBaz() string {
+	if u == nil {
+		return ""
+	}
+	return u.Baz
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1DiscriminatedUnion1InlineType2
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1DiscriminatedUnion1InlineType2(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1DiscriminatedUnion1InlineType2) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineEnum1 string
+
+const (
+	UndiscriminatedUnion1InlineEnum1Sunny   UndiscriminatedUnion1InlineEnum1 = "SUNNY"
+	UndiscriminatedUnion1InlineEnum1Cloudy  UndiscriminatedUnion1InlineEnum1 = "CLOUDY"
+	UndiscriminatedUnion1InlineEnum1Raining UndiscriminatedUnion1InlineEnum1 = "RAINING"
+	UndiscriminatedUnion1InlineEnum1Snowing UndiscriminatedUnion1InlineEnum1 = "SNOWING"
+)
+
+func NewUndiscriminatedUnion1InlineEnum1FromString(s string) (UndiscriminatedUnion1InlineEnum1, error) {
+	switch s {
+	case "SUNNY":
+		return UndiscriminatedUnion1InlineEnum1Sunny, nil
+	case "CLOUDY":
+		return UndiscriminatedUnion1InlineEnum1Cloudy, nil
+	case "RAINING":
+		return UndiscriminatedUnion1InlineEnum1Raining, nil
+	case "SNOWING":
+		return UndiscriminatedUnion1InlineEnum1Snowing, nil
+	}
+	var t UndiscriminatedUnion1InlineEnum1
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UndiscriminatedUnion1InlineEnum1) Ptr() *UndiscriminatedUnion1InlineEnum1 {
+	return &u
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineListItem1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineListItem1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1InlineListItem1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineListItem1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineListItem1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineListItem1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineListItem1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineListItem1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineMapItem1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineMapItem1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1InlineMapItem1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineMapItem1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineMapItem1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineMapItem1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineMapItem1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineMapItem1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineSetItem1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineSetItem1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1InlineSetItem1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineSetItem1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineSetItem1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineSetItem1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineSetItem1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineSetItem1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Bar *UndiscriminatedUnion1InlineType1InlineType1 `json:"bar,omitempty" url:"bar,omitempty"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineType1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1InlineType1) GetBar() *UndiscriminatedUnion1InlineType1InlineType1 {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
+func (u *UndiscriminatedUnion1InlineType1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineType1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineType1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineType1InlineType1 struct {
+	// lorem ipsum
+	Foo string `json:"foo" url:"foo"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineType1InlineType1) GetFoo() string {
+	if u == nil {
+		return ""
+	}
+	return u.Foo
+}
+
+func (u *UndiscriminatedUnion1InlineType1InlineType1) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineType1InlineType1) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineType1InlineType1) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineType1InlineType1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineType1InlineType1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineType1InlineType1) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UndiscriminatedUnion1InlineType2 struct {
+	// lorem ipsum
+	Baz string `json:"baz" url:"baz"`
+	// lorem ipsum
+	Ref *ReferenceType `json:"ref,omitempty" url:"ref,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UndiscriminatedUnion1InlineType2) GetBaz() string {
+	if u == nil {
+		return ""
+	}
+	return u.Baz
+}
+
+func (u *UndiscriminatedUnion1InlineType2) GetRef() *ReferenceType {
+	if u == nil {
+		return nil
+	}
+	return u.Ref
+}
+
+func (u *UndiscriminatedUnion1InlineType2) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UndiscriminatedUnion1InlineType2) UnmarshalJSON(data []byte) error {
+	type unmarshaler UndiscriminatedUnion1InlineType2
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UndiscriminatedUnion1InlineType2(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UndiscriminatedUnion1InlineType2) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// lorem ipsum
+type UserId = string

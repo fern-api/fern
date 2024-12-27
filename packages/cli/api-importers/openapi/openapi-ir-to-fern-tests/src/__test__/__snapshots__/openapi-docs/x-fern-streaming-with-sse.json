@@ -51,6 +51,21 @@
             "create": {
               "auth": false,
               "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": "string",
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat",
@@ -103,6 +118,13 @@
         docs: Success!
         type: string
         format: sse
+      examples:
+        - request:
+            prompt: prompt
+          response:
+            stream:
+              - event: ''
+                data: string
   source:
     openapi: ../openapi.yml
 ",

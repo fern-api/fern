@@ -12,6 +12,8 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Requests\GetDiscriminatedUnionRequest;
+use Seed\Requests\GetUndiscriminatedUnionRequest;
 
 class SeedClient
 {
@@ -83,6 +85,72 @@ class SeedClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param GetDiscriminatedUnionRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getDiscriminatedUnion(GetDiscriminatedUnionRequest $request, ?array $options = null): void
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/root/discriminated-union",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param GetUndiscriminatedUnionRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getUndiscriminatedUnion(GetUndiscriminatedUnionRequest $request, ?array $options = null): void
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/root/undiscriminated-union",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

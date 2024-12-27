@@ -3,16 +3,16 @@
 namespace Seed\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
-use Seed\Types\InlineType1;
+use Seed\Types\RequestTypeInlineType1;
 use Seed\Core\Json\JsonProperty;
 
 class PostRootRequest extends JsonSerializableType
 {
     /**
-     * @var InlineType1 $bar
+     * @var RequestTypeInlineType1 $bar
      */
     #[JsonProperty('bar')]
-    public InlineType1 $bar;
+    public RequestTypeInlineType1 $bar;
 
     /**
      * @var string $foo
@@ -22,7 +22,7 @@ class PostRootRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   bar: InlineType1,
+     *   bar: RequestTypeInlineType1,
      *   foo: string,
      * } $values
      */

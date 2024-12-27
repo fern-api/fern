@@ -1703,7 +1703,7 @@ func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
 	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
 		return "time.Time{}"
 	case fernir.PrimitiveTypeV1Uuid:
-		return "uuid.UUID{}"
+		return "uuid.Nil"
 	case fernir.PrimitiveTypeV1Base64:
 		return "nil"
 	}

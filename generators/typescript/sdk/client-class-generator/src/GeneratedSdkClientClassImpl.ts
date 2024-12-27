@@ -16,6 +16,7 @@ import {
     VariableId
 } from "@fern-fern/ir-sdk/api";
 import {
+    getParameterNameForRootPathParameter,
     getTextOfTsNode,
     ImportsManager,
     JavaScriptRuntime,
@@ -31,7 +32,6 @@ import {
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
     OptionalKind,
-    PropertyDeclarationStructure,
     PropertySignatureStructure,
     Scope,
     StructureKind,
@@ -47,7 +47,6 @@ import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/Gene
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
-import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
@@ -535,7 +534,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createIdentifier(optionsInterface.name)
                             )
                         )
-                    )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
                 }
             ];
             const readClientId =
@@ -1187,7 +1189,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForRootPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
@@ -1274,7 +1276,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             const isOptional =
-                referenceToHeaderType.isOptional || !this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+                referenceToHeaderType.isOptional ||
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                header.headerEnvVar != null;
             properties.push({
                 name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
@@ -1890,7 +1894,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
         return this.getReferenceToOption(
-            getParameterNameForPathParameter({
+            getParameterNameForRootPathParameter({
                 pathParameter,
                 retainOriginalCasing: this.retainOriginalCasing
             })

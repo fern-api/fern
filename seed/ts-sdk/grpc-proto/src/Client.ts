@@ -23,9 +23,9 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
-    constructor(protected readonly _options: SeedApiClient.Options) {}
-
     protected _userservice: Userservice | undefined;
+
+    constructor(protected readonly _options: SeedApiClient.Options) {}
 
     public get userservice(): Userservice {
         return (this._userservice ??= new Userservice(this._options));

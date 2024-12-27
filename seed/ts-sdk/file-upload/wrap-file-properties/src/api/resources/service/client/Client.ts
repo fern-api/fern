@@ -72,7 +72,7 @@ export class Service {
                 for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
+                        typeof _item === "string" ? _item : JSON.stringify(_item),
                     );
                 }
         }
@@ -138,7 +138,7 @@ export class Service {
      */
     public async justFile(
         request: SeedFileUpload.JustFileRequet,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
@@ -195,7 +195,7 @@ export class Service {
      */
     public async justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (request.maybeString != null) {
@@ -264,7 +264,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError(
-                    "Timeout exceeded when calling POST /just-file-with-query-params."
+                    "Timeout exceeded when calling POST /just-file-with-query-params.",
                 );
             case "unknown":
                 throw new errors.SeedFileUploadError({
@@ -279,7 +279,7 @@ export class Service {
      */
     public async withContentType(
         request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);

@@ -35,12 +35,7 @@ export class SeedObjectClient {
      * @example
      *     await client.getRoot({
      *         bar: {
-     *             foo: "foo",
-     *             bar: {
-     *                 foo: "foo",
-     *                 bar: "bar",
-     *                 myEnum: "SUNNY"
-     *             }
+     *             foo: "foo"
      *         },
      *         foo: "foo"
      *     })
@@ -92,6 +87,151 @@ export class SeedObjectClient {
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError("Timeout exceeded when calling POST /root/root.");
+            case "unknown":
+                throw new errors.SeedObjectError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedObject.GetDiscriminatedUnionRequest} request
+     * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.getDiscriminatedUnion({
+     *         bar: {
+     *             type: "type1",
+     *             foo: "foo",
+     *             bar: {
+     *                 foo: "foo",
+     *                 ref: {
+     *                     foo: "foo"
+     *                 }
+     *             },
+     *             ref: {
+     *                 foo: "foo"
+     *             }
+     *         },
+     *         foo: "foo"
+     *     })
+     */
+    public async getDiscriminatedUnion(
+        request: SeedObject.GetDiscriminatedUnionRequest,
+        requestOptions?: SeedObjectClient.RequestOptions
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/root/discriminated-union"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/inline-types",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/inline-types/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.GetDiscriminatedUnionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedObjectError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedObjectError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedObjectTimeoutError(
+                    "Timeout exceeded when calling POST /root/discriminated-union."
+                );
+            case "unknown":
+                throw new errors.SeedObjectError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedObject.GetUndiscriminatedUnionRequest} request
+     * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.getUndiscriminatedUnion({
+     *         bar: {
+     *             foo: "foo",
+     *             bar: {
+     *                 foo: "foo",
+     *                 ref: {
+     *                     foo: "foo"
+     *                 }
+     *             },
+     *             ref: {
+     *                 foo: "foo"
+     *             }
+     *         },
+     *         foo: "foo"
+     *     })
+     */
+    public async getUndiscriminatedUnion(
+        request: SeedObject.GetUndiscriminatedUnionRequest,
+        requestOptions?: SeedObjectClient.RequestOptions
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/root/undiscriminated-union"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/inline-types",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/inline-types/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.GetUndiscriminatedUnionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedObjectError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedObjectError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedObjectTimeoutError(
+                    "Timeout exceeded when calling POST /root/undiscriminated-union."
+                );
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,

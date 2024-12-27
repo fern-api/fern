@@ -13,7 +13,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFile
             custom: core.serialization.object({
                 value: core.serialization.record(
                     core.serialization.lazy(() => serializers.Language),
-                    core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
+                    core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
                 ),
             }),
         })

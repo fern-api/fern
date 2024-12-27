@@ -84,6 +84,7 @@ public abstract class AbstractEndpointWriter {
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
+    private final boolean inlinePathParams;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -117,6 +118,25 @@ public abstract class AbstractEndpointWriter {
                         clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
                         clientGeneratorContext.getCustomConfig());
         this.generatedErrors = generatedErrors;
+        this.inlinePathParams = clientGeneratorContext.getCustomConfig().inlinePathParameters()
+                && httpEndpoint.getSdkRequest().isPresent()
+                && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
+                && (httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getIncludePathParameters()
+                                .orElse(false)
+                        || httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getOnlyPathParameters()
+                                .orElse(false));
     }
 
     public static CodeBlock stringify(String reference, TypeName typeName) {
@@ -140,15 +160,6 @@ public abstract class AbstractEndpointWriter {
     }
 
     public final HttpEndpointMethodSpecs generate() {
-        // populate all param names
-        this.endpointParameterNames.addAll(getPathParameters().stream()
-                .map(parameterSpec -> parameterSpec.name)
-                .collect(Collectors.toList()));
-        this.endpointParameterNames.addAll(additionalParameters().stream()
-                .map(parameterSpec -> parameterSpec.name)
-                .collect(Collectors.toList()));
-        this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
-
         // Step 0: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
@@ -156,7 +167,22 @@ public abstract class AbstractEndpointWriter {
         }
 
         // Step 1: Add Path Params as parameters
-        List<ParameterSpec> pathParameters = getPathParameters();
+        List<PathParamInfo> pathParamInfos = getPathParamInfos();
+        if (inlinePathParams) {
+            pathParamInfos = pathParamInfos.stream()
+                    .filter(param -> !param.irParam().getLocation().equals(PathParameterLocation.ENDPOINT))
+                    .collect(Collectors.toList());
+        }
+        List<ParameterSpec> pathParameters =
+                pathParamInfos.stream().map(PathParamInfo::poetParam).collect(Collectors.toList());
+
+        // populate all param names
+        this.endpointParameterNames.addAll(
+                pathParameters.stream().map(parameterSpec -> parameterSpec.name).collect(Collectors.toList()));
+        this.endpointParameterNames.addAll(additionalParameters().stream()
+                .map(parameterSpec -> parameterSpec.name)
+                .collect(Collectors.toList()));
+        this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
 
         // Step 2: Add additional parameters
         List<ParameterSpec> additionalParameters = additionalParameters();
@@ -192,7 +218,8 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint,
                 httpService,
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
-                convertPathParametersToSpecMap(httpEndpoint.getPathParameters()));
+                convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
+                clientGeneratorContext.getCustomConfig());
         HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
@@ -618,21 +645,25 @@ public abstract class AbstractEndpointWriter {
         return getVariableName("newPageNumber");
     }
 
-    private List<ParameterSpec> getPathParameters() {
-        List<ParameterSpec> pathParameterSpecs = new ArrayList<>();
+    private List<PathParamInfo> getPathParamInfos() {
+        List<PathParamInfo> pathParamInfos = new ArrayList<>();
         httpService.getPathParameters().forEach(pathParameter -> {
             if (pathParameter.getVariable().isPresent()) {
                 return;
             }
-            pathParameterSpecs.add(convertPathParameter(pathParameter).poetParam());
+            pathParamInfos.add(convertPathParameter(pathParameter));
         });
         httpEndpoint.getPathParameters().forEach(pathParameter -> {
             if (pathParameter.getVariable().isPresent()) {
                 return;
             }
-            pathParameterSpecs.add(convertPathParameter(pathParameter).poetParam());
+            pathParamInfos.add(convertPathParameter(pathParameter));
         });
-        return pathParameterSpecs;
+        return pathParamInfos;
+    }
+
+    private List<ParameterSpec> getPathParameters() {
+        return getPathParamInfos().stream().map(PathParamInfo::poetParam).collect(Collectors.toList());
     }
 
     private Map<String, PathParamInfo> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {
@@ -1389,6 +1420,11 @@ public abstract class AbstractEndpointWriter {
                 isOptional = httpEndpoint.getQueryParameters().stream()
                         .allMatch(queryParameter ->
                                 queryParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
+            }
+            if (!httpEndpoint.getPathParameters().isEmpty() && isOptional) {
+                isOptional = httpEndpoint.getPathParameters().stream()
+                        .allMatch(pathParameter ->
+                                pathParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
             }
             return isOptional;
         }

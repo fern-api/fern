@@ -40,7 +40,7 @@ export const ExceptionV2 = {
             type: "generic",
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2.Generic,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const ExceptionV2 = {
             type: "timeout",
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2.Timeout,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },
@@ -64,7 +64,7 @@ export const ExceptionV2 = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2._Unknown,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },

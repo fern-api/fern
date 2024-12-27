@@ -8,7 +8,9 @@ import {
     NameAndWireValue,
     OffsetPagination,
     ResponseError,
-    TypeReference
+    TypeReference,
+    ContainerType,
+    PrimitiveTypeV2
 } from "@fern-fern/ir-sdk/api";
 import { getFullPathForEndpoint, getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -211,6 +213,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // initializeOffset uses the offset property if set
         const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+        const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
         const pagePropertyPath = [
             "request",
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
@@ -241,7 +244,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             pagePropertyAccess,
                             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                            ts.factory.createNumericLiteral("1")
+                            ts.factory.createNumericLiteral(pagePropertyDefault)
                         )
                     )
                 ],
@@ -370,6 +373,49 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             : name.name.camelCase.safeName;
     }
 
+    private getDefaultPaginationValue({ type }: { type: TypeReference }): string {
+        let defaultValue: string | undefined;
+
+        TypeReference._visit(type, {
+            primitive: (primitiveType) => {
+                const maybeV2Scheme = primitiveType.v2;
+                if (maybeV2Scheme != null) {
+                    defaultValue = PrimitiveTypeV2._visit(maybeV2Scheme, {
+                        integer: (it) => (it.default != null ? String(it.default) : undefined),
+                        double: () => undefined,
+                        string: () => undefined,
+                        boolean: () => undefined,
+                        long: () => undefined,
+                        bigInteger: () => undefined,
+                        uint: () => undefined,
+                        uint64: () => undefined,
+                        date: () => undefined,
+                        dateTime: () => undefined,
+                        uuid: () => undefined,
+                        base64: () => undefined,
+                        float: () => undefined,
+                        _other: () => undefined
+                    });
+                }
+            },
+            container: (containerType) => {
+                defaultValue = ContainerType._visit(containerType, {
+                    literal: () => undefined,
+                    list: () => undefined,
+                    set: () => undefined,
+                    optional: (optType) => this.getDefaultPaginationValue({ type: optType }),
+                    map: () => undefined,
+                    _other: () => undefined
+                });
+            },
+            named: () => undefined,
+            unknown: () => undefined,
+            _other: () => undefined
+        });
+
+        return defaultValue != null ? defaultValue : "1";
+    }
+
     public getResponseVariableName(): string {
         return GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME;
     }
@@ -495,35 +541,56 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         signal: getAbortSignalExpression({
                             abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
                         }),
-                        parse: ts.factory.createArrowFunction(
-                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                            undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                )
-                            ],
-                            undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createReturnStatement(
-                                        context.sdkEndpointTypeSchemas
-                                            .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
-                                            .deserializeStreamData({
-                                                context,
-                                                referenceToRawStreamData: ts.factory.createIdentifier(
-                                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                )
-                                            })
-                                    )
-                                ],
-                                true
-                            )
-                        )
+                        parse: context.includeSerdeLayer
+                            ? ts.factory.createArrowFunction(
+                                  [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                  undefined,
+                                  [
+                                      ts.factory.createParameterDeclaration(
+                                          undefined,
+                                          undefined,
+                                          undefined,
+                                          GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                      )
+                                  ],
+                                  undefined,
+                                  ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                  ts.factory.createBlock(
+                                      [
+                                          ts.factory.createReturnStatement(
+                                              context.sdkEndpointTypeSchemas
+                                                  .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
+                                                  .deserializeStreamData({
+                                                      context,
+                                                      referenceToRawStreamData: ts.factory.createIdentifier(
+                                                          GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                      )
+                                                  })
+                                          )
+                                      ],
+                                      true
+                                  )
+                              )
+                            : ts.factory.createArrowFunction(
+                                  undefined,
+                                  undefined,
+                                  [
+                                      ts.factory.createParameterDeclaration(
+                                          undefined,
+                                          undefined,
+                                          undefined,
+                                          GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                      )
+                                  ],
+                                  undefined,
+                                  ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                  ts.factory.createAsExpression(
+                                      ts.factory.createIdentifier(
+                                          GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                      ),
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                  )
+                              )
                     })
                 )
             ];

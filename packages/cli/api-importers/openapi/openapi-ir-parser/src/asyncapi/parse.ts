@@ -13,6 +13,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { ParseOpenAPIOptions } from "../options";
 import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
@@ -225,6 +226,7 @@ export function parseAsyncAPI({
 
             const tags = document.tags?.[0]?.name != null ? [document.tags?.[0].name] : undefined;
             parsedChannel = {
+                audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
                     headers: headers.map((header) => {
                         return {

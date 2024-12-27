@@ -40,7 +40,7 @@ export class Dummy {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedSingleUrlEnvironmentDefaultEnvironment.Production,
-                "dummy"
+                "dummy",
             ),
             method: "GET",
             headers: {
@@ -83,7 +83,7 @@ export class Dummy {
                 });
             case "timeout":
                 throw new errors.SeedSingleUrlEnvironmentDefaultTimeoutError(
-                    "Timeout exceeded when calling GET /dummy."
+                    "Timeout exceeded when calling GET /dummy.",
                 );
             case "unknown":
                 throw new errors.SeedSingleUrlEnvironmentDefaultError({

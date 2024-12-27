@@ -1,7 +1,6 @@
 import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { AuthValues } from "@fern-fern/ir-sdk/api/resources/dynamic";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TestCase } from "./utils/TestCase";
 
@@ -14,9 +13,12 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: {
                     shallow: false,
@@ -35,9 +37,12 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: {
                     shallow: false,
@@ -56,9 +61,12 @@ describe("examples", () => {
                     method: "POST",
                     path: "/movie"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -89,9 +97,12 @@ describe("examples", () => {
                     method: "POST",
                     path: "/big-entity"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -125,9 +136,12 @@ describe("examples (errors)", () => {
                 method: "POST",
                 path: "/movie"
             },
-            auth: AuthValues.bearer({
+            auth: {
+                type: "bearer",
                 token: "<YOUR_API_KEY>"
-            }),
+            },
+            baseURL: undefined,
+            environment: undefined,
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,

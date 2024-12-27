@@ -5,17 +5,29 @@
 import * as serializers from "../index";
 import * as SeedObject from "../../api/index";
 import * as core from "../../core";
-import { InlineType1 } from "./InlineType1";
+import { RootType1InlineType1 } from "./RootType1InlineType1";
+import { RootType1FooMapValue } from "./RootType1FooMapValue";
+import { RootType1FooListItem } from "./RootType1FooListItem";
+import { RootType1FooSetItem } from "./RootType1FooSetItem";
+import { ReferenceType } from "./ReferenceType";
 
 export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Raw, SeedObject.RootType1> =
     core.serialization.object({
         foo: core.serialization.string(),
-        bar: InlineType1,
+        bar: RootType1InlineType1,
+        fooMap: core.serialization.record(core.serialization.string(), RootType1FooMapValue),
+        fooList: core.serialization.list(RootType1FooListItem),
+        fooSet: core.serialization.list(RootType1FooSetItem),
+        ref: ReferenceType,
     });
 
 export declare namespace RootType1 {
     interface Raw {
         foo: string;
-        bar: InlineType1.Raw;
+        bar: RootType1InlineType1.Raw;
+        fooMap: Record<string, RootType1FooMapValue.Raw>;
+        fooList: RootType1FooListItem.Raw[];
+        fooSet: RootType1FooSetItem.Raw[];
+        ref: ReferenceType.Raw;
     }
 }

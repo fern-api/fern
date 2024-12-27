@@ -8,7 +8,7 @@ namespace SeedObject;
 public record PostRootRequest
 {
     [JsonPropertyName("bar")]
-    public required InlineType1 Bar { get; set; }
+    public required RequestTypeInlineType1 Bar { get; set; }
 
     [JsonPropertyName("foo")]
     public required string Foo { get; set; }

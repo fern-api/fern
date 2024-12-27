@@ -28,13 +28,14 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/go-ast": "workspace:*",
     "@fern-api/go-formatter": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^53.23.0",
+    "@fern-api/dynamic-ir-sdk": "^53.24.0",
     "@types/jest": "^29.5.14",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
@@ -42,7 +43,7 @@
     "prettier": "^2.7.1",
     "string.prototype.replaceall": "^1.0.10",
     "tsup": "^8.3.5",
-    "typescript": "4.7.4",
+    "typescript": "5.7.2",
     "vitest": "^2.0.5"
   }
 }

@@ -19,7 +19,7 @@ export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveErr
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
-            })
+            }),
         );
     }
 }

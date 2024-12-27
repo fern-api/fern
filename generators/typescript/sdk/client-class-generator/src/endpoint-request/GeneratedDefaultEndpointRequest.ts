@@ -9,12 +9,17 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    Fetcher,
+    getParameterNameForPositionalPathParameter,
+    GetReferenceOpts,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
@@ -103,9 +108,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
@@ -130,7 +139,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             const exampleParameter = exampleParameters.find(
                 (param) => param.name.originalName === pathParameter.name.originalName
             );
@@ -327,6 +340,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        if (this.requestParameter == null) {
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
+        }
+        return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

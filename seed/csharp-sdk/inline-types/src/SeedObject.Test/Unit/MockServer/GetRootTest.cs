@@ -18,12 +18,7 @@ public class GetRootTest : BaseMockServerTest
         const string requestJson = """
             {
               "bar": {
-                "foo": "foo",
-                "bar": {
-                  "foo": "foo",
-                  "bar": "bar",
-                  "myEnum": "SUNNY"
-                }
+                "foo": "foo"
               },
               "foo": "foo"
             }
@@ -37,8 +32,47 @@ public class GetRootTest : BaseMockServerTest
                 "bar": {
                   "foo": "foo",
                   "bar": "bar",
-                  "myEnum": "SUNNY"
+                  "myEnum": "SUNNY",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                "ref": {
+                  "foo": "foo"
                 }
+              },
+              "fooMap": {
+                "fooMap": {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              },
+              "fooList": [
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                },
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              ],
+              "fooSet": [
+                {
+                  "foo": "foo",
+                  "ref": {
+                    "foo": "foo"
+                  }
+                }
+              ],
+              "ref": {
+                "foo": "foo"
               }
             }
             """;
@@ -62,16 +96,7 @@ public class GetRootTest : BaseMockServerTest
         var response = await Client.GetRootAsync(
             new PostRootRequest
             {
-                Bar = new InlineType1
-                {
-                    Foo = "foo",
-                    Bar = new NestedInlineType1
-                    {
-                        Foo = "foo",
-                        Bar = "bar",
-                        MyEnum = InlineEnum.Sunny,
-                    },
-                },
+                Bar = new RequestTypeInlineType1 { Foo = "foo" },
                 Foo = "foo",
             },
             RequestOptions

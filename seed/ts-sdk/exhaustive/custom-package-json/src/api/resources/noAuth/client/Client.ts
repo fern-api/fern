@@ -41,7 +41,7 @@ export class NoAuth {
      */
     public async postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoAuth.RequestOptions
+        requestOptions?: NoAuth.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-auth"),
@@ -86,7 +86,7 @@ export class NoAuth {
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,
                                 breadcrumbsPrefix: ["response"],
-                            })
+                            }),
                         ),
                     };
             }

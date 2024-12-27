@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.submission.getExecutionSession.Error._Unknown,
-                visitor: SeedTrace.submission.getExecutionSession.Error._Visitor<_Result>
+                visitor: SeedTrace.submission.getExecutionSession.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.submission.getExecutionSession.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.submission.getExecutionSession.Error,
-        visitor: SeedTrace.submission.getExecutionSession.Error._Visitor<_Result>
+        visitor: SeedTrace.submission.getExecutionSession.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

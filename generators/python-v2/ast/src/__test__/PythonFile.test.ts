@@ -303,7 +303,10 @@ describe("PythonFile", () => {
         const file = python.file({
             path: ["root"],
             comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
-            imports: [python.starImport({ modulePath: ["root", "my_module"] })],
+            imports: [
+                python.starImport({ modulePath: ["root", "my_module_a"] }),
+                python.starImport({ modulePath: ["root", "my_module_b"] })
+            ],
             statements: [
                 python.field({
                     name: "my_id",
@@ -314,7 +317,7 @@ describe("PythonFile", () => {
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
-        expect(file.getReferences()).toHaveLength(2);
+        expect(file.getReferences()).toHaveLength(3);
     });
 
     it("Write duplicative import names", async () => {

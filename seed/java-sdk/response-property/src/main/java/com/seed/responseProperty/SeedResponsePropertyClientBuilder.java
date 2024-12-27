@@ -16,6 +16,14 @@ public final class SeedResponsePropertyClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedResponsePropertyClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedResponsePropertyClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedResponsePropertyClient(clientOptionsBuilder.build());

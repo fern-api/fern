@@ -6,6 +6,7 @@ import (
 	core "github.com/path-parameters/fern/core"
 	internal "github.com/path-parameters/fern/internal"
 	option "github.com/path-parameters/fern/option"
+	organizations "github.com/path-parameters/fern/organizations"
 	user "github.com/path-parameters/fern/user"
 	http "net/http"
 )
@@ -15,7 +16,8 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	User *user.Client
+	Organizations *organizations.Client
+	User          *user.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,7 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		User:   user.NewClient(opts...),
+		header:        options.ToHeader(),
+		Organizations: organizations.NewClient(opts...),
+		User:          user.NewClient(opts...),
 	}
 }

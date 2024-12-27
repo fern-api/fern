@@ -1,1 +1,1 @@
-export declare function entries<T>(object: T): [keyof T, T[keyof T]][];
+export declare function entries<T extends {}>(object: T): [keyof T, T[keyof T]][];

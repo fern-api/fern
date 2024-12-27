@@ -42,7 +42,7 @@ export const TestCaseImplementationDescriptionBoard = {
             type: "html",
             _visit: function <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard.Html,
-                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.TestCaseImplementationDescriptionBoard._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const TestCaseImplementationDescriptionBoard = {
             type: "paramId",
             _visit: function <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard.ParamId,
-                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.TestCaseImplementationDescriptionBoard._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const TestCaseImplementationDescriptionBoard = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Unknown,
-                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.TestCaseImplementationDescriptionBoard._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const TestCaseImplementationDescriptionBoard = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.TestCaseImplementationDescriptionBoard,
-        visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>
+        visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "html":

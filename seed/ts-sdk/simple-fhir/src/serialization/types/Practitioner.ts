@@ -11,7 +11,7 @@ export const Practitioner: core.serialization.ObjectSchema<serializers.Practitio
         .object({
             resourceType: core.serialization.property(
                 "resource_type",
-                core.serialization.stringLiteral("Practitioner")
+                core.serialization.stringLiteral("Practitioner"),
             ),
             name: core.serialization.string(),
         })

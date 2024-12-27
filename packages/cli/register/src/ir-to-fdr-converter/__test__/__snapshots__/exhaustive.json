@@ -15,10 +15,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/enum:WeatherReport": {
@@ -219,10 +216,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:ObjectWithRequiredField": {
@@ -240,10 +234,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:ObjectWithMapOfMap": {
@@ -279,10 +270,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:NestedObjectWithOptionalField": {
@@ -313,10 +301,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:NestedObjectWithRequiredField": {
@@ -341,10 +326,7 @@
               "value": "type_types/object:ObjectWithOptionalField"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:DoubleOptional": {
@@ -363,10 +345,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/object:OptionalAlias": {
@@ -435,10 +414,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types/union:Cat": {
@@ -465,10 +441,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -2569,6 +2542,76 @@
         },
         {
           "auth": true,
+          "description": "GET with path param",
+          "method": "GET",
+          "id": "getWithInlinePath",
+          "originalEndpointId": "endpoint_endpoints/params.getWithInlinePath",
+          "name": "Get With Inline Path",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "param",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/params"
+              },
+              {
+                "type": "literal",
+                "value": "/path/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "param"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/params/path/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
           "description": "GET with query param",
           "method": "GET",
           "id": "getWithQuery",
@@ -2747,11 +2790,167 @@
         },
         {
           "auth": true,
+          "description": "GET with path and query params",
+          "method": "GET",
+          "id": "getWithInlinePathAndQuery",
+          "originalEndpointId": "endpoint_endpoints/params.getWithInlinePathAndQuery",
+          "name": "Get With Inline Path And Query",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "param",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/params"
+              },
+              {
+                "type": "literal",
+                "value": "/path-query/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "param"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "query",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/params/path-query/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {
+                "query": "query"
+              },
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
           "description": "PUT to update with path param",
           "method": "PUT",
           "id": "modifyWithPath",
           "originalEndpointId": "endpoint_endpoints/params.modifyWithPath",
           "name": "Modify With Path",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "param",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/params"
+              },
+              {
+                "type": "literal",
+                "value": "/path/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "param"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/params/path/param",
+              "pathParameters": {
+                "param": "param"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "description": "PUT to update with path param",
+          "method": "PUT",
+          "id": "modifyWithInlinePath",
+          "originalEndpointId": "endpoint_endpoints/params.modifyWithInlinePath",
+          "name": "Modify With Inline Path",
           "path": {
             "pathParameters": [
               {

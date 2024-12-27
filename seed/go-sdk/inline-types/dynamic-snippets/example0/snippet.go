@@ -11,13 +11,8 @@ func do() () {
     client.GetRoot(
         context.TODO(),
         &fern.PostRootRequest{
-            Bar: &fern.InlineType1{
+            Bar: &fern.RequestTypeInlineType1{
                 Foo: "foo",
-                Bar: &fern.NestedInlineType1{
-                    Foo: "foo",
-                    Bar: "bar",
-                    MyEnum: fern.InlineEnumSunny,
-                },
             },
             Foo: "foo",
         },

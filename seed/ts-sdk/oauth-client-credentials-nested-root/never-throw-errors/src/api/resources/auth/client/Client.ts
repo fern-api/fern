@@ -41,7 +41,7 @@ export class Auth {
      */
     public async getToken(
         request: SeedOauthClientCredentials.auth.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<
         core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
     > {

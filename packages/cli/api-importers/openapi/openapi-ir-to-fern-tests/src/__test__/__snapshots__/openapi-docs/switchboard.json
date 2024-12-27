@@ -2101,6 +2101,30 @@ service:
                 "root.SessionsEventsRequestUnprocessableEntityError",
                 "root.SessionsEventsRequestInternalServerError",
               ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "data": {
+                            "code": "code",
+                            "event": "event",
+                            "message": "message",
+                          },
+                          "event": "error",
+                          "id": 1,
+                          "retry": 1,
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
               "method": "GET",
               "pagination": undefined,
               "path": "/sessions/{id}/events",
@@ -2280,10 +2304,12 @@ service:
                 "name": "SessionsListRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 0,
                     "docs": "limit for pagination",
                     "type": "optional<long>",
                   },
                   "offset": {
+                    "default": -1,
                     "docs": "offset for pagination",
                     "type": "optional<long>",
                   },
@@ -2569,9 +2595,11 @@ service:
             docs: status of the session to get
           offset:
             type: optional<long>
+            default: -1
             docs: offset for pagination
           limit:
             type: optional<long>
+            default: 0
             docs: limit for pagination
       response:
         docs: OK
@@ -2771,6 +2799,20 @@ service:
         - root.SessionsEventsRequestNotFoundError
         - root.SessionsEventsRequestUnprocessableEntityError
         - root.SessionsEventsRequestInternalServerError
+      examples:
+        - path-parameters:
+            id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
+          response:
+            stream:
+              - event: ''
+                data:
+                  event: error
+                  data:
+                    code: code
+                    event: event
+                    message: message
+                  id: 1
+                  retry: 1
       audiences:
         - public
   source:

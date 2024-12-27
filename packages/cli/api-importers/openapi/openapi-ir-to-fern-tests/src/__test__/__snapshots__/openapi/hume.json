@@ -107,6 +107,7 @@
                     "type": "optional<Direction>",
                   },
                   "limit": {
+                    "default": 50,
                     "docs": "The maximum number of jobs to include in the response.",
                     "type": "optional<integer>",
                   },
@@ -1332,6 +1333,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         query-parameters:
           limit:
             type: optional<integer>
+            default: 50
             docs: The maximum number of jobs to include in the response.
           status:
             type: optional<Status>

@@ -12,7 +12,7 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     files: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
+        core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),
 });
 

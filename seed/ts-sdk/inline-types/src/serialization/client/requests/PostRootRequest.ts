@@ -5,17 +5,17 @@
 import * as serializers from "../../index";
 import * as SeedObject from "../../../api/index";
 import * as core from "../../../core";
-import { InlineType1 } from "../../types/InlineType1";
+import { RequestTypeInlineType1 } from "../../types/RequestTypeInlineType1";
 
 export const PostRootRequest: core.serialization.Schema<serializers.PostRootRequest.Raw, SeedObject.PostRootRequest> =
     core.serialization.object({
-        bar: InlineType1,
+        bar: RequestTypeInlineType1,
         foo: core.serialization.string(),
     });
 
 export declare namespace PostRootRequest {
     interface Raw {
-        bar: InlineType1.Raw;
+        bar: RequestTypeInlineType1.Raw;
         foo: string;
     }
 }

@@ -101,7 +101,7 @@ export class Unknown {
      */
     public async postObject(
         request: SeedUnknownAsAny.MyObject,
-        requestOptions?: Unknown.RequestOptions
+        requestOptions?: Unknown.RequestOptions,
     ): Promise<unknown[]> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/with-object"),

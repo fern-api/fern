@@ -31,7 +31,7 @@ describe("test env compatibility", () => {
                     } catch (error) {
                         reject(error);
                     }
-                }
+                },
             );
         });
     }, 60_000);

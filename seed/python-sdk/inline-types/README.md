@@ -20,19 +20,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import InlineType1, NestedInlineType1, SeedObject
+from seed import RequestTypeInlineType1, SeedObject
 
 client = SeedObject(
     base_url="https://yourhost.com/path/to/api",
 )
 client.get_root(
-    bar=InlineType1(
+    bar=RequestTypeInlineType1(
         foo="foo",
-        bar=NestedInlineType1(
-            foo="foo",
-            bar="bar",
-            my_enum="SUNNY",
-        ),
     ),
     foo="foo",
 )
@@ -45,7 +40,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedObject, InlineType1, NestedInlineType1
+from seed import AsyncSeedObject, RequestTypeInlineType1
 
 client = AsyncSeedObject(
     base_url="https://yourhost.com/path/to/api",
@@ -54,13 +49,8 @@ client = AsyncSeedObject(
 
 async def main() -> None:
     await client.get_root(
-        bar=InlineType1(
+        bar=RequestTypeInlineType1(
             foo="foo",
-            bar=NestedInlineType1(
-                foo="foo",
-                bar="bar",
-                my_enum="SUNNY",
-            ),
         ),
         foo="foo",
     )
@@ -78,7 +68,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.get_root()
+    client.get_root(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -101,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.get_root(request_options={
+client.get_root(..., request_options={
     "max_retries": 1
 })
 ```
@@ -121,7 +111,7 @@ client = SeedObject(
 
 
 # Override timeout for a specific method
-client.get_root(request_options={
+client.get_root(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

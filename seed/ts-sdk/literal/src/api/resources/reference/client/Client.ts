@@ -57,7 +57,7 @@ export class Reference {
      */
     public async send(
         request: SeedLiteral.SendRequest,
-        requestOptions?: Reference.RequestOptions
+        requestOptions?: Reference.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "reference"),

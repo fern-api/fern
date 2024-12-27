@@ -9,7 +9,7 @@ export function register(
     expressApp: express.Express | express.Router,
     services: {
         customAuth: CustomAuthService;
-    }
+    },
 ): void {
     (expressApp as any).use("", services.customAuth.toRouter());
 }

@@ -27,6 +27,14 @@ public final class SeedBasicAuthClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedBasicAuthClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedBasicAuthClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username");

@@ -39,7 +39,7 @@ export class SeedAliasClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`
+                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`,
             ),
             method: "GET",
             headers: {

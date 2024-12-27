@@ -3,7 +3,9 @@ import {
     FileProperty,
     HttpHeader,
     InlinedRequestBodyProperty,
+    Name,
     NameAndWireValue,
+    PathParameter,
     QueryParameter
 } from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
@@ -20,10 +22,13 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
     getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => string;
+    shouldInlinePathParameters: () => boolean;
     getPropertyNameOfFileParameter: (fileProperty: FileProperty) => RequestWrapperNonBodyProperty;
     getPropertyNameOfFileParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameter: (pathParameter: PathParameter) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameterFromName: (name: Name) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeaderFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {

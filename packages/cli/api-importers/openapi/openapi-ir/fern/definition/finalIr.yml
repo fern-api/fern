@@ -108,6 +108,7 @@ types:
       - commons.WithDescription
       - commons.WithSource
     properties:
+      audiences: list<string>
       path: string
       groupName: commons.SdkGroupName
       summary: optional<string>
@@ -295,8 +296,13 @@ types:
   EndpointResponseExample:
     docs: An example that has either a list of streaming examples or a single non-streaming example.
     union:
-      withStreaming: list<example.FullExample>
+      withStreaming: StreamingResponseExample
       withoutStreaming: example.FullExample
+  
+  StreamingResponseExample: 
+    properties: 
+      sse: boolean
+      events: list<example.FullExample>
 
   PathParameterExample:
     properties:

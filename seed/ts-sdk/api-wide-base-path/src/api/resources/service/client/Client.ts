@@ -40,14 +40,12 @@ export class Service {
         serviceParam: string,
         resourceParam: string,
         endpointParam: number,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
-                    serviceParam
-                )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
+                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(serviceParam)}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`,
             ),
             method: "POST",
             headers: {
@@ -84,7 +82,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedApiWideBasePathTimeoutError(
-                    "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}."
+                    "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}.",
                 );
             case "unknown":
                 throw new errors.SeedApiWideBasePathError({

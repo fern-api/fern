@@ -3,7 +3,20 @@ import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConf
 import { ClassReference } from "../ClassReference";
 import { GLOBAL_NAMESPACE } from "./Constant";
 
-type Namespace = string;
+/* A fully qualified type name _without_ the initial backslash */
+type FullyQualifiedName = string;
+
+interface ParsedFullyQualifiedName {
+    namespace: string;
+    name: string;
+}
+
+function parseFullyQualifiedName(rawFullyQualifiedName: string): ParsedFullyQualifiedName {
+    return {
+        namespace: rawFullyQualifiedName.substring(0, rawFullyQualifiedName.lastIndexOf("\\")),
+        name: rawFullyQualifiedName.substring(rawFullyQualifiedName.lastIndexOf("\\") + 1)
+    };
+}
 
 export declare namespace Writer {
     interface Args {
@@ -25,7 +38,7 @@ export class Writer extends AbstractWriter {
     public customConfig: BasePhpCustomConfigSchema;
 
     /* Import statements */
-    private references: Record<Namespace, ClassReference[]> = {};
+    private references: Record<FullyQualifiedName, ClassReference[]> = {};
 
     constructor({ namespace, rootNamespace, customConfig }: Writer.Args) {
         super();
@@ -38,9 +51,24 @@ export class Writer extends AbstractWriter {
         if (reference.namespace == null) {
             return;
         }
-        const namespace =
+
+        // If there's a naming conflict, tell the reference to use its qualified name
+        const conflictingReferences = Object.keys(this.references)
+            // Filter out the current namespace.
+            .filter((seenRef) => {
+                const parsed = parseFullyQualifiedName(seenRef);
+                return parsed.namespace !== reference.namespace && parsed.name === reference.name;
+            });
+
+        if (conflictingReferences.length > 0) {
+            reference.requireFullyQualified();
+            return;
+        }
+
+        const fullyQualifiedName =
             reference.namespace === GLOBAL_NAMESPACE ? reference.name : `${reference.namespace}\\${reference.name}`;
-        const references = (this.references[namespace] ??= []);
+        const references = (this.references[fullyQualifiedName] ??= []);
+
         references.push(reference);
     }
 
@@ -64,11 +92,7 @@ ${this.buffer}`;
         }
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((reference) => {
-                // Remove the type name to get just the namespace
-                const referenceNamespace = reference.substring(0, reference.lastIndexOf("\\"));
-                return referenceNamespace !== this.namespace;
-            })
+            .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
             .map((ref) => `use ${ref};`)
             .join("\n");
 

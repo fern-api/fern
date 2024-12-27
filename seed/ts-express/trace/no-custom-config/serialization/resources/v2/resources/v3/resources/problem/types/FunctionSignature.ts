@@ -14,7 +14,7 @@ export const FunctionSignature: core.serialization.Schema<
         void: core.serialization.lazyObject(() => serializers.v2.v3.VoidFunctionSignature),
         nonVoid: core.serialization.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
         voidThatTakesActualResult: core.serialization.lazyObject(
-            () => serializers.v2.v3.VoidFunctionSignatureThatTakesActualResult
+            () => serializers.v2.v3.VoidFunctionSignatureThatTakesActualResult,
         ),
     })
     .transform<SeedTrace.v2.v3.FunctionSignature>({

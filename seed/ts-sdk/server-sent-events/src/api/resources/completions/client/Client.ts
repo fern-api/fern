@@ -31,7 +31,7 @@ export class Completions {
 
     public async stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
-        requestOptions?: Completions.RequestOptions
+        requestOptions?: Completions.RequestOptions,
     ): Promise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "stream"),

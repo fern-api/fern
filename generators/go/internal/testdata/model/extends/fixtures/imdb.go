@@ -262,6 +262,9 @@ func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 }
 
 func (n NestedUnion) MarshalJSON() ([]byte, error) {
+	if err := n.validate(); err != nil {
+		return nil, err
+	}
 	switch n.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
@@ -281,6 +284,37 @@ func (n *NestedUnion) Accept(visitor NestedUnionVisitor) error {
 	case "one":
 		return visitor.VisitOne(n.One)
 	}
+}
+
+func (n *NestedUnion) validate() error {
+	if n == nil {
+		return fmt.Errorf("type %T is nil", n)
+	}
+	var fields []string
+	if n.One != nil {
+		fields = append(fields, "one")
+	}
+	if len(fields) == 0 {
+		if n.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", n, n.Type)
+		}
+		return fmt.Errorf("type %T is empty", n)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", n, fields)
+	}
+	if n.Type != "" {
+		field := fields[0]
+		if n.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				n,
+				n.Type,
+				n,
+			)
+		}
+	}
+	return nil
 }
 
 type Union struct {
@@ -339,6 +373,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 }
 
 func (u Union) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -358,4 +395,35 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 	case "one":
 		return visitor.VisitOne(u.One)
 	}
+}
+
+func (u *Union) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.One != nil {
+		fields = append(fields, "one")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }

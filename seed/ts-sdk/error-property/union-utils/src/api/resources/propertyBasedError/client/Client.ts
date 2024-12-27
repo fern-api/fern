@@ -75,7 +75,7 @@ export class PropertyBasedError {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedErrorPropertyError({
@@ -93,7 +93,7 @@ export class PropertyBasedError {
                 });
             case "timeout":
                 throw new errors.SeedErrorPropertyTimeoutError(
-                    "Timeout exceeded when calling GET /property-based-error."
+                    "Timeout exceeded when calling GET /property-based-error.",
                 );
             case "unknown":
                 throw new errors.SeedErrorPropertyError({

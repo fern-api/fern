@@ -38,7 +38,7 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`,
             ),
             method: "GET",
             headers: {

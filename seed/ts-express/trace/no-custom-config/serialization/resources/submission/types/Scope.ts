@@ -10,9 +10,9 @@ export const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, SeedT
     {
         variables: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(() => serializers.DebugVariableValue)
+            core.serialization.lazy(() => serializers.DebugVariableValue),
         ),
-    }
+    },
 );
 
 export declare namespace Scope {

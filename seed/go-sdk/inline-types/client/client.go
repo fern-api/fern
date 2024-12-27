@@ -68,3 +68,75 @@ func (c *Client) GetRoot(
 	}
 	return response, nil
 }
+
+func (c *Client) GetDiscriminatedUnion(
+	ctx context.Context,
+	request *fern.GetDiscriminatedUnionRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/root/discriminated-union"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	headers.Set("Content-Type", "application/json")
+
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) GetUndiscriminatedUnion(
+	ctx context.Context,
+	request *fern.GetUndiscriminatedUnionRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/root/undiscriminated-union"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	headers.Set("Content-Type", "application/json")
+
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}

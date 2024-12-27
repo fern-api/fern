@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedObject.Core;
 
 #nullable enable
@@ -38,16 +39,7 @@ public partial class SeedObjectClient
     /// await client.GetRootAsync(
     ///     new PostRootRequest
     ///     {
-    ///         Bar = new InlineType1
-    ///         {
-    ///             Foo = "foo",
-    ///             Bar = new NestedInlineType1
-    ///             {
-    ///                 Foo = "foo",
-    ///                 Bar = "bar",
-    ///                 MyEnum = InlineEnum.Sunny,
-    ///             },
-    ///         },
+    ///         Bar = new RequestTypeInlineType1 { Foo = "foo" },
     ///         Foo = "foo",
     ///     }
     /// );
@@ -84,6 +76,106 @@ public partial class SeedObjectClient
             }
         }
 
+        throw new SeedObjectApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.GetDiscriminatedUnionAsync(
+    ///     new GetDiscriminatedUnionRequest
+    ///     {
+    ///         Bar = new DiscriminatedUnion1InlineType1
+    ///         {
+    ///             Foo = "foo",
+    ///             Bar = new DiscriminatedUnion1InlineType1InlineType1
+    ///             {
+    ///                 Foo = "foo",
+    ///                 Ref = new ReferenceType { Foo = "foo" },
+    ///             },
+    ///             Ref = new ReferenceType { Foo = "foo" },
+    ///         },
+    ///         Foo = "foo",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task GetDiscriminatedUnionAsync(
+        GetDiscriminatedUnionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/root/discriminated-union",
+                Body = request,
+                ContentType = "application/json",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedObjectApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.GetUndiscriminatedUnionAsync(
+    ///     new GetUndiscriminatedUnionRequest
+    ///     {
+    ///         Bar = new UndiscriminatedUnion1InlineType1
+    ///         {
+    ///             Foo = "foo",
+    ///             Bar = new UndiscriminatedUnion1InlineType1InlineType1
+    ///             {
+    ///                 Foo = "foo",
+    ///                 Ref = new ReferenceType { Foo = "foo" },
+    ///             },
+    ///             Ref = new ReferenceType { Foo = "foo" },
+    ///         },
+    ///         Foo = "foo",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task GetUndiscriminatedUnionAsync(
+        GetUndiscriminatedUnionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/root/undiscriminated-union",
+                Body = request,
+                ContentType = "application/json",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedObjectApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,

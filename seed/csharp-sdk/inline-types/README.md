@@ -22,16 +22,7 @@ var client = new SeedObjectClient();
 await client.GetRootAsync(
     new PostRootRequest
     {
-        Bar = new InlineType1
-        {
-            Foo = "foo",
-            Bar = new NestedInlineType1
-            {
-                Foo = "foo",
-                Bar = "bar",
-                MyEnum = InlineEnum.Sunny,
-            },
-        },
+        Bar = new RequestTypeInlineType1 { Foo = "foo" },
         Foo = "foo",
     }
 );

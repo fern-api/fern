@@ -117,12 +117,12 @@ export class Problem {
      */
     public async createProblem(
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.CreateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/create"
+                "/problem-crud/create",
             ),
             method: "POST",
             headers: {
@@ -262,12 +262,12 @@ export class Problem {
     public async updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.UpdateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problem-crud/update/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`,
             ),
             method: "POST",
             headers: {
@@ -315,7 +315,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling POST /problem-crud/update/{problemId}."
+                    "Timeout exceeded when calling POST /problem-crud/update/{problemId}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -337,7 +337,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problem-crud/delete/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`,
             ),
             method: "DELETE",
             headers: {
@@ -379,7 +379,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling DELETE /problem-crud/delete/{problemId}."
+                    "Timeout exceeded when calling DELETE /problem-crud/delete/{problemId}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -415,12 +415,12 @@ export class Problem {
      */
     public async getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.GetDefaultStarterFilesResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/default-starter-files"
+                "/problem-crud/default-starter-files",
             ),
             method: "POST",
             headers: {
@@ -468,7 +468,7 @@ export class Problem {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling POST /problem-crud/default-starter-files."
+                    "Timeout exceeded when calling POST /problem-crud/default-starter-files.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({

@@ -1,5 +1,155 @@
 - changelogEntry:
     - summary: |
+        The CLI now supports both `generators.yml` and `generators.yaml` file extensions for generator configuration.
+      type: fix
+  irVersion: 53
+  version: 0.46.13
+
+
+- changelogEntry:
+    - summary: |
+        Correctly omits readOnly query parameters during openapi to fern definition generation.
+      type: fix
+  irVersion: 53
+  version: 0.46.13
+
+- changelogEntry:
+    - summary: |
+        The CLI now handles parsing service level path parameters with descriptions. 
+        This fixes a regression introduced in the CLI since versions 0.45.x. 
+      type: fix
+  irVersion: 53
+  version: 0.46.12
+
+- changelogEntry:
+    - summary: |
+        Allow for configuring the depth of example generation in API Docs. For example, 
+        if you want to generate optional properties that are 5 levels deep, you can add 
+        the following configuration in your `generators.yml`
+
+        ```yml generators.yml
+        api:
+          specs: 
+            - openapi: ./openapi.json
+              settings: 
+                example-generation: 
+                  response: 
+                    max-depth: 10
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.46.11
+
+- changelogEntry:
+    - summary: |
+        Correctly support AdditionalProperties on object schemas.
+      type: fix
+  irVersion: 53
+  version: 0.46.10
+
+- changelogEntry:
+    - summary: |
+        SDK generation no longer hard-fails on single example generation errors.
+      type: fix
+  irVersion: 53
+  version: 0.46.9
+
+- changelogEntry:
+    - summary: |
+        The CLI now auto generates SSE and JSON Streaming examples even if those are 
+        not provided in the OpenAPI Spec or Fern Definition.
+      type: fix
+  irVersion: 53
+  version: 0.46.8
+
+- changelogEntry:
+    - summary: |
+        The generated Fern Definition now properly supports default values for query parameters.
+      type: fix
+  irVersion: 53
+  version: 0.46.7
+
+- changelogEntry:
+    - summary: |
+        The audiences property on WebSocket channels is now respected when filtering 
+        the IR graph based on configured audiences.
+      type: fix
+  irVersion: 53
+  version: 0.46.6
+
+- changelogEntry:
+    - summary: |
+        Previously, when the CLI failed to validate the fern definition yaml file against a JSON Schema, 
+        we would log `Failed to parse` without a schema path. Now we grab a relevant schema path. 
+      type: fix
+  irVersion: 53
+  version: 0.46.5
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now deduplicates headers that appear in both security schemes and 
+        operation-level headers to avoid duplicate header declarations.
+      type: fix
+  irVersion: 53
+  version: 0.46.5
+
+- changelogEntry:
+    - summary: |
+        The generated SSE examples always have `data` and `event` keys so that they are correct.
+      type: fix
+  irVersion: 53
+  version: 0.46.4
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports generating examples for streaming SSE (server-sent-event)
+        endpoints. 
+      type: fix
+  irVersion: 53
+  version: 0.46.3
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports parsing a `logo` option from your frontmatter. If 
+        you would like to override logo on a specific page you can do so by adding 
+        the following: 
+
+        ```markdown intro.mdx
+        ---
+        logo: /path/to/my/logo
+        ---
+        ```
+
+        or 
+
+        ```markdown intro.mdx
+        ---
+        logo: 
+          light: /path/to/my/light/logo 
+          dark: /path/to/my/dark/logo
+        ---
+        ```
+
+      type: feat
+  irVersion: 53
+  version: 0.46.2
+
+- changelogEntry:
+    - summary: |
+        Add support for setting the `User-Agent` header value for Go generators.
+      type: fix
+  irVersion: 53
+  version: 0.46.1
+
+- changelogEntry:
+    - summary: |
+        No changes; promote `0.46.0-rc1` release candidate to minor version.
+      type: internal
+  irVersion: 53
+  version: 0.46.0
+
+- changelogEntry:
+    - summary: |
         * Set `inline: true` for inline enums imported from OpenAPI.
         * Set `inline: true` for maps generated from OpenAPI additionalProperties.
       type: fix

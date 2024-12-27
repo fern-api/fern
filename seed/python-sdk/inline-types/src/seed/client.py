@@ -3,13 +3,15 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
-from .types.inline_type_1 import InlineType1
+from .types.request_type_inline_type_1 import RequestTypeInlineType1
 from .core.request_options import RequestOptions
 from .types.root_type_1 import RootType1
 from .core.serialization import convert_and_respect_annotation_metadata
 from .core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
+from .types.discriminated_union_1 import DiscriminatedUnion1
+from .types.undiscriminated_union_1 import UndiscriminatedUnion1
 from .core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -63,12 +65,12 @@ class SeedObject:
         )
 
     def get_root(
-        self, *, bar: InlineType1, foo: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, bar: RequestTypeInlineType1, foo: str, request_options: typing.Optional[RequestOptions] = None
     ) -> RootType1:
         """
         Parameters
         ----------
-        bar : InlineType1
+        bar : RequestTypeInlineType1
 
         foo : str
 
@@ -81,19 +83,14 @@ class SeedObject:
 
         Examples
         --------
-        from seed import InlineType1, NestedInlineType1, SeedObject
+        from seed import RequestTypeInlineType1, SeedObject
 
         client = SeedObject(
             base_url="https://yourhost.com/path/to/api",
         )
         client.get_root(
-            bar=InlineType1(
+            bar=RequestTypeInlineType1(
                 foo="foo",
-                bar=NestedInlineType1(
-                    foo="foo",
-                    bar="bar",
-                    my_enum="SUNNY",
-                ),
             ),
             foo="foo",
         )
@@ -102,7 +99,9 @@ class SeedObject:
             "root/root",
             method="POST",
             json={
-                "bar": convert_and_respect_annotation_metadata(object_=bar, annotation=InlineType1, direction="write"),
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=RequestTypeInlineType1, direction="write"
+                ),
                 "foo": foo,
             },
             headers={
@@ -120,6 +119,142 @@ class SeedObject:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_discriminated_union(
+        self, *, bar: DiscriminatedUnion1, foo: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        bar : DiscriminatedUnion1
+
+        foo : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import (
+            DiscriminatedUnion1_Type1,
+            DiscriminatedUnion1InlineType1InlineType1,
+            ReferenceType,
+            SeedObject,
+        )
+
+        client = SeedObject(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get_discriminated_union(
+            bar=DiscriminatedUnion1_Type1(
+                foo="foo",
+                bar=DiscriminatedUnion1InlineType1InlineType1(
+                    foo="foo",
+                    ref=ReferenceType(
+                        foo="foo",
+                    ),
+                ),
+                ref=ReferenceType(
+                    foo="foo",
+                ),
+            ),
+            foo="foo",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "root/discriminated-union",
+            method="POST",
+            json={
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=DiscriminatedUnion1, direction="write"
+                ),
+                "foo": foo,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_undiscriminated_union(
+        self, *, bar: UndiscriminatedUnion1, foo: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        bar : UndiscriminatedUnion1
+
+        foo : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import (
+            ReferenceType,
+            SeedObject,
+            UndiscriminatedUnion1InlineType1,
+            UndiscriminatedUnion1InlineType1InlineType1,
+        )
+
+        client = SeedObject(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get_undiscriminated_union(
+            bar=UndiscriminatedUnion1InlineType1(
+                foo="foo",
+                bar=UndiscriminatedUnion1InlineType1InlineType1(
+                    foo="foo",
+                    ref=ReferenceType(
+                        foo="foo",
+                    ),
+                ),
+                ref=ReferenceType(
+                    foo="foo",
+                ),
+            ),
+            foo="foo",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "root/undiscriminated-union",
+            method="POST",
+            json={
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=UndiscriminatedUnion1, direction="write"
+                ),
+                "foo": foo,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -173,12 +308,12 @@ class AsyncSeedObject:
         )
 
     async def get_root(
-        self, *, bar: InlineType1, foo: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, bar: RequestTypeInlineType1, foo: str, request_options: typing.Optional[RequestOptions] = None
     ) -> RootType1:
         """
         Parameters
         ----------
-        bar : InlineType1
+        bar : RequestTypeInlineType1
 
         foo : str
 
@@ -193,7 +328,7 @@ class AsyncSeedObject:
         --------
         import asyncio
 
-        from seed import AsyncSeedObject, InlineType1, NestedInlineType1
+        from seed import AsyncSeedObject, RequestTypeInlineType1
 
         client = AsyncSeedObject(
             base_url="https://yourhost.com/path/to/api",
@@ -202,13 +337,8 @@ class AsyncSeedObject:
 
         async def main() -> None:
             await client.get_root(
-                bar=InlineType1(
+                bar=RequestTypeInlineType1(
                     foo="foo",
-                    bar=NestedInlineType1(
-                        foo="foo",
-                        bar="bar",
-                        my_enum="SUNNY",
-                    ),
                 ),
                 foo="foo",
             )
@@ -220,7 +350,9 @@ class AsyncSeedObject:
             "root/root",
             method="POST",
             json={
-                "bar": convert_and_respect_annotation_metadata(object_=bar, annotation=InlineType1, direction="write"),
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=RequestTypeInlineType1, direction="write"
+                ),
                 "foo": foo,
             },
             headers={
@@ -238,6 +370,158 @@ class AsyncSeedObject:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_discriminated_union(
+        self, *, bar: DiscriminatedUnion1, foo: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        bar : DiscriminatedUnion1
+
+        foo : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import (
+            AsyncSeedObject,
+            DiscriminatedUnion1_Type1,
+            DiscriminatedUnion1InlineType1InlineType1,
+            ReferenceType,
+        )
+
+        client = AsyncSeedObject(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.get_discriminated_union(
+                bar=DiscriminatedUnion1_Type1(
+                    foo="foo",
+                    bar=DiscriminatedUnion1InlineType1InlineType1(
+                        foo="foo",
+                        ref=ReferenceType(
+                            foo="foo",
+                        ),
+                    ),
+                    ref=ReferenceType(
+                        foo="foo",
+                    ),
+                ),
+                foo="foo",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "root/discriminated-union",
+            method="POST",
+            json={
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=DiscriminatedUnion1, direction="write"
+                ),
+                "foo": foo,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_undiscriminated_union(
+        self, *, bar: UndiscriminatedUnion1, foo: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        bar : UndiscriminatedUnion1
+
+        foo : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import (
+            AsyncSeedObject,
+            ReferenceType,
+            UndiscriminatedUnion1InlineType1,
+            UndiscriminatedUnion1InlineType1InlineType1,
+        )
+
+        client = AsyncSeedObject(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.get_undiscriminated_union(
+                bar=UndiscriminatedUnion1InlineType1(
+                    foo="foo",
+                    bar=UndiscriminatedUnion1InlineType1InlineType1(
+                        foo="foo",
+                        ref=ReferenceType(
+                            foo="foo",
+                        ),
+                    ),
+                    ref=ReferenceType(
+                        foo="foo",
+                    ),
+                ),
+                foo="foo",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "root/undiscriminated-union",
+            method="POST",
+            json={
+                "bar": convert_and_respect_annotation_metadata(
+                    object_=bar, annotation=UndiscriminatedUnion1, direction="write"
+                ),
+                "foo": foo,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

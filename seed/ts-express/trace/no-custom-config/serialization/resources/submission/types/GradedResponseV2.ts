@@ -13,7 +13,7 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     testCases: core.serialization.record(
         core.serialization.lazy(() => serializers.v2.TestCaseId),
-        core.serialization.lazy(() => serializers.TestCaseGrade)
+        core.serialization.lazy(() => serializers.TestCaseGrade),
     ),
 });
 

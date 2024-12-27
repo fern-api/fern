@@ -77,7 +77,7 @@ export class CustomAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedCustomAuthError({
@@ -155,7 +155,7 @@ export class CustomAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 400:
                     throw new SeedCustomAuth.BadRequest();

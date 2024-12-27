@@ -30,20 +30,20 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^53.23.0",
+    "@fern-fern/ir-sdk": "^53.24.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^53.23.0",
+    "@fern-fern/ir-sdk": "^53.24.0",
     "@types/jest": "^29.5.14",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "typescript": "4.7.4",
+    "typescript": "5.7.2",
     "vitest": "^2.1.8",
     "zod": "^3.22.3"
   }

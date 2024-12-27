@@ -37,7 +37,7 @@ export class Enum {
      */
     public async getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions
+        requestOptions?: Enum.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/enum"),

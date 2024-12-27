@@ -59,7 +59,7 @@ export class InlinedRequests {
      */
     public async postWithObjectBodyandResponse(
         request: Fiddle.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions
+        requestOptions?: InlinedRequests.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
@@ -109,7 +109,7 @@ export class InlinedRequests {
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,
                                 breadcrumbsPrefix: ["response"],
-                            })
+                            }),
                         ),
                     };
             }

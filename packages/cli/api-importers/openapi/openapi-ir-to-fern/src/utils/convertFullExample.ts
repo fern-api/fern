@@ -36,10 +36,17 @@ export function convertEndpointResponseExample(
     endpointResponseExample: EndpointResponseExample
 ): RawSchemas.ExampleStreamResponseSchema | RawSchemas.ExampleBodyResponseSchema {
     switch (endpointResponseExample.type) {
-        case "withStreaming":
-            return {
-                stream: convertArrayExample(endpointResponseExample.value)
-            };
+        case "withStreaming": {
+            if (endpointResponseExample.sse) {
+                return {
+                    stream: convertSseExample(endpointResponseExample.events)
+                };
+            } else {
+                return {
+                    stream: convertArrayExample(endpointResponseExample.events)
+                };
+            }
+        }
         case "withoutStreaming":
             return {
                 body: convertFullExample(endpointResponseExample.value)
@@ -95,6 +102,12 @@ function convertObject(object: Record<PropertyKey, FullExample>): RawSchemas.Exa
             return [propertyKey, convertFullExample(fullExample)];
         })
     );
+}
+
+function convertSseExample(fullExamples: FullExample[]): RawSchemas.ExampleSseEventSchema[] {
+    return fullExamples.map((fullExample) => {
+        return { event: "", data: convertFullExample(fullExample) };
+    });
 }
 
 function convertArrayExample(fullExamples: FullExample[]): RawSchemas.ExampleTypeReferenceSchema[] {

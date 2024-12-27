@@ -48,12 +48,12 @@ export class SeedPackageYmlClient {
      */
     public async echo(
         request: SeedPackageYml.EchoRequest,
-        requestOptions?: SeedPackageYmlClient.RequestOptions
+        requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}/`
+                `/${encodeURIComponent(this._options.id)}/`,
             ),
             method: "POST",
             headers: {

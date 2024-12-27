@@ -12,7 +12,7 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
 > = core.serialization.object({
     filesByLanguage: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
 });
 

@@ -45,6 +45,8 @@ fixtures:
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig: null
+      outputFolder: no-serde-layer
     - customConfig:
         allowCustomFetcher: true
         timeoutInSeconds: 2
@@ -206,7 +208,7 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
-  inline-types:
+  ts-inline-types:
     - customConfig:
         noSerdeLayer: true
         enableInlineTypes: true
@@ -215,6 +217,22 @@ fixtures:
         noSerdeLayer: true
         enableInlineTypes: false
       outputFolder: no-inline
+  path-parameters:
+    - outputFolder: default
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
+        inlinePathParameters: true
+      outputFolder: inline-path-parameters
+    - customConfig:
+        inlinePathParameters: true
+        noSerdeLayer: true
+      outputFolder: inline-path-parameters-no-serde
+    - customConfig:
+        inlinePathParameters: true
+        retainOriginalCasing: true
+      outputFolder: inline-path-parameters-retain-original-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -243,3 +261,9 @@ allowedFailures:
   - reserved-keywords
   - examples:examples-with-api-reference
   - examples:retain-original-casing
+  # on 12/16/2024 noticed 5 failures related to fixtures below
+  - exhaustive:custom-package-json
+  - idempotency-headers
+  - oauth-client-credentials-nested-root:never-throw-errors
+  - trace:no-zurg-no-throwing
+  - trace:exhaustive

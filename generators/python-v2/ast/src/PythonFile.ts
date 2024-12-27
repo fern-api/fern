@@ -90,6 +90,11 @@ export class PythonFile extends AstNode {
         const usedNames = this.getInitialUsedNames();
 
         references.forEach((reference) => {
+            // Skip star imports since we should never override their import alias
+            if (reference instanceof StarImport) {
+                return;
+            }
+
             const name = reference.alias ?? reference.name;
             const fullyQualifiedModulePath = reference.getFullyQualifiedModulePath();
 

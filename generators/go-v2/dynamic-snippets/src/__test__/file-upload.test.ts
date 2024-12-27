@@ -13,6 +13,8 @@ describe("file-upload (success)", () => {
                     method: "POST",
                     path: "/"
                 },
+                baseURL: undefined,
+                environment: undefined,
                 auth: undefined,
                 pathParameters: undefined,
                 queryParameters: undefined,
@@ -30,6 +32,8 @@ describe("file-upload (success)", () => {
                     method: "POST",
                     path: "/just-file"
                 },
+                baseURL: undefined,
+                environment: undefined,
                 auth: undefined,
                 pathParameters: undefined,
                 queryParameters: undefined,
@@ -46,6 +50,8 @@ describe("file-upload (success)", () => {
                     method: "POST",
                     path: "/just-file-with-query-params"
                 },
+                baseURL: undefined,
+                environment: undefined,
                 auth: undefined,
                 pathParameters: undefined,
                 queryParameters: {

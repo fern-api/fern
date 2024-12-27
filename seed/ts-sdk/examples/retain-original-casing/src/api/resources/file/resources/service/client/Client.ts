@@ -47,7 +47,7 @@ export class Service {
     public async getFile(
         filename: string,
         request: SeedExamples.file.GetFileRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.File_> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _response = await core.fetcher({
@@ -88,7 +88,7 @@ export class Service {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedExamplesError({

@@ -8,17 +8,12 @@ import * as SeedObject from "../../index";
  * @example
  *     {
  *         bar: {
- *             foo: "foo",
- *             bar: {
- *                 foo: "foo",
- *                 bar: "bar",
- *                 myEnum: "SUNNY"
- *             }
+ *             foo: "foo"
  *         },
  *         foo: "foo"
  *     }
  */
 export interface PostRootRequest {
-    bar: SeedObject.InlineType1;
+    bar: SeedObject.RequestTypeInlineType1;
     foo: string;
 }

@@ -121,6 +121,7 @@ export declare namespace SdkGenerator {
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
+        inlinePathParameters: boolean;
         enableInlineTypes: boolean;
         omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
@@ -1297,6 +1298,7 @@ export class SdkGenerator {
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
+            inlinePathParameters: this.config.inlinePathParameters,
             enableInlineTypes: this.config.enableInlineTypes,
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,

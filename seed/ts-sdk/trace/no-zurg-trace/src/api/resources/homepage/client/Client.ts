@@ -43,7 +43,7 @@ export class Homepage {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                "/homepage-problems",
             ),
             method: "GET",
             headers: {
@@ -101,12 +101,12 @@ export class Homepage {
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],
-        requestOptions?: Homepage.RequestOptions
+        requestOptions?: Homepage.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                "/homepage-problems",
             ),
             method: "POST",
             headers: {

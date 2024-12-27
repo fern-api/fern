@@ -28,7 +28,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "54.0.0",
     "@fern-fern/generator-exec-sdk": "^0.0.898"
   },
   "devDependencies": {
@@ -37,6 +40,6 @@
     "vitest": "^2.1.8",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "typescript": "4.7.4"
+    "typescript": "5.7.2"
   }
 }

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
-import com.seed.object.types.InlineType1;
+import com.seed.object.types.RequestTypeInlineType1;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,20 +20,20 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PostRootRequest.Builder.class)
 public final class PostRootRequest {
-    private final InlineType1 bar;
+    private final RequestTypeInlineType1 bar;
 
     private final String foo;
 
     private final Map<String, Object> additionalProperties;
 
-    private PostRootRequest(InlineType1 bar, String foo, Map<String, Object> additionalProperties) {
+    private PostRootRequest(RequestTypeInlineType1 bar, String foo, Map<String, Object> additionalProperties) {
         this.bar = bar;
         this.foo = foo;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("bar")
-    public InlineType1 getBar() {
+    public RequestTypeInlineType1 getBar() {
         return bar;
     }
 
@@ -72,7 +72,7 @@ public final class PostRootRequest {
     }
 
     public interface BarStage {
-        FooStage bar(@NotNull InlineType1 bar);
+        FooStage bar(@NotNull RequestTypeInlineType1 bar);
 
         Builder from(PostRootRequest other);
     }
@@ -87,7 +87,7 @@ public final class PostRootRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements BarStage, FooStage, _FinalStage {
-        private InlineType1 bar;
+        private RequestTypeInlineType1 bar;
 
         private String foo;
 
@@ -105,7 +105,7 @@ public final class PostRootRequest {
 
         @java.lang.Override
         @JsonSetter("bar")
-        public FooStage bar(@NotNull InlineType1 bar) {
+        public FooStage bar(@NotNull RequestTypeInlineType1 bar) {
             this.bar = Objects.requireNonNull(bar, "bar must not be null");
             return this;
         }

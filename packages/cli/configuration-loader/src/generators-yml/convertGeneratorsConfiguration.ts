@@ -1,11 +1,11 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
+import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
-import { generatorsYml } from "@fern-api/configuration";
-import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -73,7 +73,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -97,7 +98,8 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     onlyIncludeReferencedSchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -121,7 +123,8 @@ async function parseAPIConfigurationToApiLocations(
                             respectReadonlySchemas: undefined,
                             onlyIncludeReferencedSchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
@@ -145,7 +148,8 @@ async function parseAPIConfigurationToApiLocations(
                             respectReadonlySchemas: undefined,
                             onlyIncludeReferencedSchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 } else {
@@ -167,7 +171,8 @@ async function parseAPIConfigurationToApiLocations(
                             objectQueryParameters: undefined,
                             respectReadonlySchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 }
@@ -191,7 +196,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -220,7 +226,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (openapi != null) {
@@ -242,7 +249,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -266,7 +274,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -335,7 +344,8 @@ async function parseApiConfigurationV2Schema({
                     objectQueryParameters: spec.settings?.["object-query-parameters"],
                     respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
                     inlinePathParameters: spec.settings?.["inline-path-parameters"],
-                    filter: spec.settings?.filter
+                    filter: spec.settings?.filter,
+                    exampleGeneration: spec.settings?.["example-generation"]
                 }
             };
             if (spec.namespace == null) {
@@ -752,6 +762,7 @@ async function getGithubLicense({
     });
 }
 
+// TODO: This is where we should add support for Go and PHP.
 function getGithubPublishInfo(
     output: generatorsYml.GeneratorOutputSchema,
     maybeGroupLevelMetadata: OutputMetadata | undefined,

@@ -1,6 +1,6 @@
 # Reference
 
-<details><summary><code>client.<a href="/src/Client.ts">getRoot</a>({ ...params }) -> SeedObject.RootType1</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,17 @@
 <dd>
 
 ```typescript
-await client.getRoot({
+await client.getUndiscriminatedUnion({
     bar: {
         foo: "foo",
         bar: {
             foo: "foo",
-            bar: "bar",
-            myEnum: "SUNNY",
+            ref: {
+                foo: "foo",
+            },
+        },
+        ref: {
+            foo: "foo",
         },
     },
     foo: "foo",
@@ -39,7 +43,7 @@ await client.getRoot({
 <dl>
 <dd>
 
-**request:** `SeedObject.PostRootRequest`
+**request:** `SeedObject.GetUndiscriminatedUnionRequest`
 
 </dd>
 </dl>

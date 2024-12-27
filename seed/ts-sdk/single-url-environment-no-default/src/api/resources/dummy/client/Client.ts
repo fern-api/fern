@@ -79,7 +79,7 @@ export class Dummy {
                 });
             case "timeout":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultTimeoutError(
-                    "Timeout exceeded when calling GET /dummy."
+                    "Timeout exceeded when calling GET /dummy.",
                 );
             case "unknown":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultError({

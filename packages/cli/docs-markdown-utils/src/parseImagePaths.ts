@@ -7,6 +7,7 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
+import { z } from "zod";
 
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
@@ -48,6 +49,7 @@ export function parseImagePaths(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     const tree = parseMarkdownToTree(content);
 
@@ -206,6 +208,7 @@ export function replaceImagePathsAndUrls(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -399,6 +402,53 @@ function visitFrontmatterImages(
                       };
             }
             // else do nothing
+        }
+    }
+}
+
+const LogoOverrideFrontmatterSchema = z.union([
+    z.string(),
+    z.object({
+        light: z.string().optional(),
+        dark: z.string().optional()
+    })
+]);
+
+export function convertImageToFileIdOrUrl(
+    value: string,
+    mapImage: (image: string | undefined) => string | undefined
+): CjsFdrSdk.docs.latest.FileIdOrUrl {
+    const mappedImage = mapImage(value);
+    return mappedImage
+        ? {
+              type: "fileId",
+              value: CjsFdrSdk.FileId(mappedImage)
+          }
+        : {
+              type: "url",
+              value: CjsFdrSdk.Url(value)
+          };
+}
+
+function replaceFrontmatterImagesforLogo(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>,
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    if (!parsedValue.success) {
+        return;
+    }
+    const parsedFrontmatterLogo = parsedValue.data;
+
+    if (typeof parsedFrontmatterLogo === "string") {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    } else {
+        if (parsedFrontmatterLogo.light != null) {
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+        }
+        if (parsedFrontmatterLogo.dark != null) {
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
         }
     }
 }

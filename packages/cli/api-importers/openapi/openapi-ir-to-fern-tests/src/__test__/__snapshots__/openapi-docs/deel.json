@@ -21501,6 +21501,7 @@ service:
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Return a page of results with given number of records.",
                     "type": "optional<long>",
                   },
@@ -21538,6 +21539,7 @@ service:
         query-parameters:
           offset:
             type: optional<long>
+            default: 0
             docs: Return a page of results with given number of records.
           limit:
             type: optional<double>
@@ -26162,6 +26164,7 @@ docs: API end-points related to HRIS data.
                     "type": "optional<long>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
                     "validation": {
@@ -26173,6 +26176,7 @@ docs: API end-points related to HRIS data.
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
@@ -26307,6 +26311,7 @@ docs: API end-points related to HRIS data.
                     "type": "optional<long>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
                     "validation": {
@@ -26318,6 +26323,7 @@ docs: API end-points related to HRIS data.
                     },
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
@@ -26470,6 +26476,7 @@ service:
               (excludes records submitted on this date)
           limit:
             type: optional<double>
+            default: 10
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -26478,6 +26485,7 @@ service:
               max: 99
           offset:
             type: optional<long>
+            default: 0
             docs: >-
               Return a page of results after given index of row; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -26589,6 +26597,7 @@ service:
               (excludes records submitted on this date)
           limit:
             type: optional<double>
+            default: 10
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -26597,6 +26606,7 @@ service:
               max: 99
           offset:
             type: optional<long>
+            default: 0
             docs: >-
               Return a page of results after given index of row; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -27015,6 +27025,7 @@ docs: >-
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
@@ -27066,6 +27077,7 @@ docs: >-
                 "name": "GetSeniorityListRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 50,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
@@ -27204,6 +27216,7 @@ service:
         query-parameters:
           limit:
             type: optional<long>
+            default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -27246,6 +27259,7 @@ service:
         query-parameters:
           limit:
             type: optional<long>
+            default: 50
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
@@ -30893,10 +30907,12 @@ docs: Manage time off requests.
                     "type": "optional<root.DateString>",
                   },
                   "limit": {
+                    "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Return a page of results after given index of row",
                     "type": "optional<long>",
                   },
@@ -31016,10 +31032,12 @@ docs: Manage time off requests.
                     "type": "optional<root.DateString>",
                   },
                   "limit": {
+                    "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<long>",
                   },
                   "offset": {
+                    "default": 0,
                     "docs": "Return a page of results after given index of row",
                     "type": "optional<long>",
                   },
@@ -31159,11 +31177,13 @@ service:
               date.
           limit:
             type: optional<long>
+            default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
           offset:
             type: optional<long>
+            default: 0
             docs: Return a page of results after given index of row
       response:
         docs: Successful operation.
@@ -31260,11 +31280,13 @@ service:
               date.
           limit:
             type: optional<long>
+            default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
           offset:
             type: optional<long>
+            default: 0
             docs: Return a page of results after given index of row
       response:
         docs: Successful operation.
