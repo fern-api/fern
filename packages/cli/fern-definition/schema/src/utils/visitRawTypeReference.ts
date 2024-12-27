@@ -99,12 +99,16 @@ export function visitRawTypeReference<R>({
         case RawPrimitiveType.long:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
-                v2: undefined
+                v2: PrimitiveTypeV2.long({
+                    default: _default != null ? (_default as number) : undefined
+                })
             });
         case RawPrimitiveType.boolean:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Boolean,
-                v2: undefined
+                v2: PrimitiveTypeV2.boolean({
+                    default: _default != null ? (_default as boolean) : undefined
+                })
             });
         case RawPrimitiveType.datetime:
             return visitor.primitive({
@@ -129,7 +133,9 @@ export function visitRawTypeReference<R>({
         case RawPrimitiveType.bigint:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.BigInteger,
-                v2: undefined
+                v2: PrimitiveTypeV2.bigInteger({
+                    default: _default != null ? (_default as string) : undefined
+                })
             });
         case RawPrimitiveType.uint:
             return visitor.primitive({
