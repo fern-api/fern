@@ -155,21 +155,20 @@ func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
 }
 
 func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
-	var start int
+	var startIndex int
 	if s.options != nil && s.options.prefix != "" {
 		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
-			start = i + len(s.options.prefix)
+			startIndex = i + len(s.options.prefix)
 		}
 	}
-	data := bytes[start:]
+	data := bytes[startIndex:]
 	delimIndex := strings.Index(string(data), s.options.delimiter)
 	if delimIndex < 0 {
-		return len(bytes), data, nil
+		return start + len(data), data, nil
 	}
-	endIdx := delimIndex + len(s.options.delimiter)
-	parsedData := data[:endIdx]
-	n := start + endIdx
-
+	endIndex := delimIndex + len(s.options.delimiter)
+	parsedData := data[:endIndex]
+	n := startIndex + endIndex
 	return n, parsedData, nil
 }
 
