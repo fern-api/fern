@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.0] - 2024-12-27
+
+- Feat: Remove `node-fetch` from generated SDK dependencies and always use the global fetch function instead, this lets you bundle the SDK for the browser with tools like Vite and Rollup without marking node-fetch as external.
+
 ## [0.45.0] - 2024-12-26
 
 - Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
