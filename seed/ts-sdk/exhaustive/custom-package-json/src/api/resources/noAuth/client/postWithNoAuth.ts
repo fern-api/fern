@@ -18,11 +18,11 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         badRequestBody: (value: Fiddle.BadObjectRequestInfo) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -33,7 +33,7 @@ export const Error = {
         return {
             content: value,
             statusCode: 400,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody,
                 visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>,
             ) {
@@ -46,7 +46,7 @@ export const Error = {
         return {
             statusCode: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.noAuth.postWithNoAuth.Error._Unknown,
                 visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>,
             ) {

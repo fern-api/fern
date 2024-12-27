@@ -10,5 +10,5 @@ export const ObjectType: core.serialization.Schema<serializers.ObjectType.Raw, S
     core.serialization.enum_(["FOO", "BAR"]);
 
 export declare namespace ObjectType {
-    type Raw = "FOO" | "BAR";
+    export type Raw = "FOO" | "BAR";
 }

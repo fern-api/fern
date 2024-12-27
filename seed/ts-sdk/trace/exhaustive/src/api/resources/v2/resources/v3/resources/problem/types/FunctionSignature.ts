@@ -31,11 +31,11 @@ export namespace FunctionSignature {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         void: (value: SeedTrace.v2.v3.VoidFunctionSignature) => _Result;
         nonVoid: (value: SeedTrace.v2.v3.NonVoidFunctionSignature) => _Result;
         voidThatTakesActualResult: (value: SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult) => _Result;
@@ -48,7 +48,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "void",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.Void,
                 visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
@@ -61,7 +61,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "nonVoid",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.NonVoid,
                 visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
@@ -76,7 +76,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "voidThatTakesActualResult",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.VoidThatTakesActualResult,
                 visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
@@ -88,7 +88,7 @@ export const FunctionSignature = {
     _unknown: (value: { type: string }): SeedTrace.v2.v3.FunctionSignature._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature._Unknown,
                 visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {

@@ -10,5 +10,5 @@ export const BasicType: core.serialization.Schema<serializers.BasicType.Raw, See
     core.serialization.enum_(["primitive", "literal"]);
 
 export declare namespace BasicType {
-    type Raw = "primitive" | "literal";
+    export type Raw = "primitive" | "literal";
 }

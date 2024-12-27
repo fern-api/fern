@@ -13,13 +13,13 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(
             visitor: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._Visitor<_Result>,
         ) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -31,7 +31,7 @@ export const Error = {
         return {
             statusCode: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._Unknown,
                 visitor: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._Visitor<_Result>,
             ) {

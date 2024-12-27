@@ -78,6 +78,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     protected generateRawTypeDeclaration(context: ExpressContext, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
+            isExported: true,
             properties: this.inlinedRequestBody.properties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {

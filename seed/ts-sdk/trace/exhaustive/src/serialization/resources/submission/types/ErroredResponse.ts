@@ -17,7 +17,7 @@ export const ErroredResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ErroredResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         errorInfo: ErrorInfo.Raw;
     }

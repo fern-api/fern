@@ -14,7 +14,7 @@ export const LangServerRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace LangServerRequest {
-    interface Raw {
+    export interface Raw {
         request?: unknown;
     }
 }

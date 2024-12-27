@@ -23,11 +23,11 @@ export namespace TestCaseImplementationReference {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.TestCaseImplementationReference._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         templateId: (value: SeedTrace.v2.TestCaseTemplateId) => _Result;
         implementation: (value: SeedTrace.v2.TestCaseImplementation) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -37,9 +37,9 @@ export namespace TestCaseImplementationReference {
 export const TestCaseImplementationReference = {
     templateId: (value: SeedTrace.v2.TestCaseTemplateId): SeedTrace.v2.TestCaseImplementationReference.TemplateId => {
         return {
-            value: value,
+            value,
             type: "templateId",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationReference.TemplateId,
                 visitor: SeedTrace.v2.TestCaseImplementationReference._Visitor<_Result>,
             ) {
@@ -54,7 +54,7 @@ export const TestCaseImplementationReference = {
         return {
             ...value,
             type: "implementation",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationReference.Implementation,
                 visitor: SeedTrace.v2.TestCaseImplementationReference._Visitor<_Result>,
             ) {
@@ -66,7 +66,7 @@ export const TestCaseImplementationReference = {
     _unknown: (value: { type: string }): SeedTrace.v2.TestCaseImplementationReference._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationReference._Unknown,
                 visitor: SeedTrace.v2.TestCaseImplementationReference._Visitor<_Result>,
             ) {

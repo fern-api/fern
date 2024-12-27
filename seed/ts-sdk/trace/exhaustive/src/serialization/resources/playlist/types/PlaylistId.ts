@@ -13,5 +13,5 @@ export const PlaylistId: core.serialization.Schema<serializers.PlaylistId.Raw, S
     });
 
 export declare namespace PlaylistId {
-    type Raw = string;
+    export type Raw = string;
 }

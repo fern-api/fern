@@ -15,7 +15,7 @@ export const AliasInlineValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace AliasInlineValue {
-    interface Raw {
+    export interface Raw {
         foo: string;
         bar: string;
     }

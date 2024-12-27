@@ -10,5 +10,5 @@ export const PrimitiveValue: core.serialization.Schema<serializers.PrimitiveValu
     core.serialization.enum_(["STRING", "NUMBER"]);
 
 export declare namespace PrimitiveValue {
-    type Raw = "STRING" | "NUMBER";
+    export type Raw = "STRING" | "NUMBER";
 }

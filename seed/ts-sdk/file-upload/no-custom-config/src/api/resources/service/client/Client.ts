@@ -10,11 +10,11 @@ import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -82,12 +82,12 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
                         typeof _item === "string" ? _item : JSON.stringify(_item),
                     );
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {

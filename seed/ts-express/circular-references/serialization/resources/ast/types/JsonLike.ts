@@ -19,5 +19,5 @@ export const JsonLike: core.serialization.Schema<serializers.JsonLike.Raw, SeedA
     ]);
 
 export declare namespace JsonLike {
-    type Raw = serializers.JsonLike.Raw[] | Record<string, serializers.JsonLike.Raw> | string | number | boolean;
+    export type Raw = serializers.JsonLike.Raw[] | Record<string, serializers.JsonLike.Raw> | string | number | boolean;
 }

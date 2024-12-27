@@ -16,7 +16,7 @@ export const RecordedResponseNotification: core.serialization.ObjectSchema<
 });
 
 export declare namespace RecordedResponseNotification {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         traceResponsesSize: number;
         testCaseId?: string | null;

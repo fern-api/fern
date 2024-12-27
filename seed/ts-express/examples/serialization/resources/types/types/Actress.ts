@@ -13,7 +13,7 @@ export const Actress: core.serialization.ObjectSchema<serializers.Actress.Raw, S
     });
 
 export declare namespace Actress {
-    interface Raw {
+    export interface Raw {
         name: string;
         id: string;
     }

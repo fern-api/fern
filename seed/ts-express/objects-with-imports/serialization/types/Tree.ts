@@ -12,7 +12,7 @@ export const Tree: core.serialization.ObjectSchema<serializers.Tree.Raw, SeedObj
     });
 
 export declare namespace Tree {
-    interface Raw {
+    export interface Raw {
         nodes?: serializers.Node.Raw[] | null;
     }
 }

@@ -22,11 +22,11 @@ export namespace Animal {
         animal: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedExhaustive.types.Animal._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         dog: (value: SeedExhaustive.types.Dog) => _Result;
         cat: (value: SeedExhaustive.types.Cat) => _Result;
         _other: (value: { animal: string }) => _Result;
@@ -38,7 +38,7 @@ export const Animal = {
         return {
             ...value,
             animal: "dog",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal.Dog,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
@@ -51,7 +51,7 @@ export const Animal = {
         return {
             ...value,
             animal: "cat",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal.Cat,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
@@ -63,7 +63,7 @@ export const Animal = {
     _unknown: (value: { animal: string }): SeedExhaustive.types.Animal._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal._Unknown,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {

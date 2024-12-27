@@ -15,7 +15,7 @@ export const WorkspaceRanResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceRanResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         runDetails: serializers.WorkspaceRunDetails.Raw;
     }

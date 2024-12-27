@@ -19,13 +19,13 @@ export const Exception: core.serialization.Schema<serializers.Exception.Raw, See
         });
 
 export declare namespace Exception {
-    type Raw = Exception.Generic | Exception.Timeout;
+    export type Raw = Exception.Generic | Exception.Timeout;
 
-    interface Generic extends ExceptionInfo.Raw {
+    export interface Generic extends ExceptionInfo.Raw {
         type: "generic";
     }
 
-    interface Timeout {
+    export interface Timeout {
         type: "timeout";
     }
 }

@@ -10,5 +10,5 @@ export const Language: core.serialization.Schema<serializers.Language.Raw, SeedT
     core.serialization.enum_(["JAVA", "JAVASCRIPT", "PYTHON"]);
 
 export declare namespace Language {
-    type Raw = "JAVA" | "JAVASCRIPT" | "PYTHON";
+    export type Raw = "JAVA" | "JAVASCRIPT" | "PYTHON";
 }

@@ -31,11 +31,11 @@ export namespace InvalidRequestCause {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         submissionIdNotFound: (value: SeedTrace.SubmissionIdNotFound) => _Result;
         customTestCasesUnsupported: (value: SeedTrace.CustomTestCasesUnsupported) => _Result;
         unexpectedLanguage: (value: SeedTrace.UnexpectedLanguageError) => _Result;
@@ -50,7 +50,7 @@ export const InvalidRequestCause = {
         return {
             ...value,
             type: "submissionIdNotFound",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.InvalidRequestCause.SubmissionIdNotFound,
                 visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const InvalidRequestCause = {
         return {
             ...value,
             type: "customTestCasesUnsupported",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported,
                 visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
@@ -80,7 +80,7 @@ export const InvalidRequestCause = {
         return {
             ...value,
             type: "unexpectedLanguage",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.InvalidRequestCause.UnexpectedLanguage,
                 visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {
@@ -92,7 +92,7 @@ export const InvalidRequestCause = {
     _unknown: (value: { type: string }): SeedTrace.InvalidRequestCause._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.InvalidRequestCause._Unknown,
                 visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>,
             ) {

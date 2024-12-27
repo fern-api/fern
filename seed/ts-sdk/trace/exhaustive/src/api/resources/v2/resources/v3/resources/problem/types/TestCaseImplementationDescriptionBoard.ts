@@ -24,11 +24,11 @@ export namespace TestCaseImplementationDescriptionBoard {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         html: (value: string) => _Result;
         paramId: (value: SeedTrace.v2.v3.ParameterId) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -38,9 +38,9 @@ export namespace TestCaseImplementationDescriptionBoard {
 export const TestCaseImplementationDescriptionBoard = {
     html: (value: string): SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.Html => {
         return {
-            value: value,
+            value,
             type: "html",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.Html,
                 visitor: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
@@ -51,9 +51,9 @@ export const TestCaseImplementationDescriptionBoard = {
 
     paramId: (value: SeedTrace.v2.v3.ParameterId): SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.ParamId => {
         return {
-            value: value,
+            value,
             type: "paramId",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.ParamId,
                 visitor: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const TestCaseImplementationDescriptionBoard = {
     _unknown: (value: { type: string }): SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Unknown,
                 visitor: SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {

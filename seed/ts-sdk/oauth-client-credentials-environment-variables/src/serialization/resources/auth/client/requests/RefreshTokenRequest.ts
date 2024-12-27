@@ -17,7 +17,7 @@ export const RefreshTokenRequest: core.serialization.Schema<
 });
 
 export declare namespace RefreshTokenRequest {
-    interface Raw {
+    export interface Raw {
         client_id: string;
         client_secret: string;
         refresh_token: string;

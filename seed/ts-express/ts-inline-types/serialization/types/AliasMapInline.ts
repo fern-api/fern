@@ -13,5 +13,5 @@ export const AliasMapInline: core.serialization.Schema<serializers.AliasMapInlin
     );
 
 export declare namespace AliasMapInline {
-    type Raw = Record<string, serializers.AliasInlineValue.Raw>;
+    export type Raw = Record<string, serializers.AliasInlineValue.Raw>;
 }

@@ -27,7 +27,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
     });
 
 export declare namespace ProblemInfo {
-    interface Raw {
+    export interface Raw {
         problemId: ProblemId.Raw;
         problemDescription: ProblemDescription.Raw;
         problemName: string;

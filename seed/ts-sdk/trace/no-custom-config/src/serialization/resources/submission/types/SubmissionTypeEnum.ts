@@ -12,5 +12,5 @@ export const SubmissionTypeEnum: core.serialization.Schema<
 > = core.serialization.enum_(["TEST"]);
 
 export declare namespace SubmissionTypeEnum {
-    type Raw = "TEST";
+    export type Raw = "TEST";
 }

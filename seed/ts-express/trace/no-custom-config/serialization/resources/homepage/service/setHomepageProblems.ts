@@ -12,5 +12,5 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(core.serialization.lazy(() => serializers.ProblemId));
 
 export declare namespace Request {
-    type Raw = serializers.ProblemId.Raw[];
+    export type Raw = serializers.ProblemId.Raw[];
 }

@@ -22,11 +22,11 @@ export namespace AssertCorrectnessCheck {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.AssertCorrectnessCheck._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         deepEquality: (value: SeedTrace.v2.DeepEqualityCorrectnessCheck) => _Result;
         custom: (value: SeedTrace.v2.VoidFunctionDefinitionThatTakesActualResult) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -40,7 +40,7 @@ export const AssertCorrectnessCheck = {
         return {
             ...value,
             type: "deepEquality",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.AssertCorrectnessCheck.DeepEquality,
                 visitor: SeedTrace.v2.AssertCorrectnessCheck._Visitor<_Result>,
             ) {
@@ -55,7 +55,7 @@ export const AssertCorrectnessCheck = {
         return {
             ...value,
             type: "custom",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.AssertCorrectnessCheck.Custom,
                 visitor: SeedTrace.v2.AssertCorrectnessCheck._Visitor<_Result>,
             ) {
@@ -67,7 +67,7 @@ export const AssertCorrectnessCheck = {
     _unknown: (value: { type: string }): SeedTrace.v2.AssertCorrectnessCheck._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.AssertCorrectnessCheck._Unknown,
                 visitor: SeedTrace.v2.AssertCorrectnessCheck._Visitor<_Result>,
             ) {

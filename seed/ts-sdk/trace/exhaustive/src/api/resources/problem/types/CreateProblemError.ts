@@ -15,11 +15,11 @@ export namespace CreateProblemError {
         errorType: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CreateProblemError._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generic: (value: SeedTrace.GenericCreateProblemError) => _Result;
         _other: (value: { errorType: string }) => _Result;
     }
@@ -30,7 +30,7 @@ export const CreateProblemError = {
         return {
             ...value,
             errorType: "generic",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemError.Generic,
                 visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
@@ -42,7 +42,7 @@ export const CreateProblemError = {
     _unknown: (value: { errorType: string }): SeedTrace.CreateProblemError._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemError._Unknown,
                 visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {

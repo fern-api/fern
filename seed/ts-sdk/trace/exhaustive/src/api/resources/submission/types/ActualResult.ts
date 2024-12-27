@@ -29,11 +29,11 @@ export namespace ActualResult {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ActualResult._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         value: (value: SeedTrace.VariableValue) => _Result;
         exception: (value: SeedTrace.ExceptionInfo) => _Result;
         exceptionV2: (value: SeedTrace.ExceptionV2) => _Result;
@@ -44,9 +44,9 @@ export namespace ActualResult {
 export const ActualResult = {
     value: (value: SeedTrace.VariableValue): SeedTrace.ActualResult.Value => {
         return {
-            value: value,
+            value,
             type: "value",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ActualResult.Value,
                 visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
@@ -59,7 +59,7 @@ export const ActualResult = {
         return {
             ...value,
             type: "exception",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ActualResult.Exception,
                 visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
@@ -70,9 +70,9 @@ export const ActualResult = {
 
     exceptionV2: (value: SeedTrace.ExceptionV2): SeedTrace.ActualResult.ExceptionV2 => {
         return {
-            value: value,
+            value,
             type: "exceptionV2",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ActualResult.ExceptionV2,
                 visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
@@ -84,7 +84,7 @@ export const ActualResult = {
     _unknown: (value: { type: string }): SeedTrace.ActualResult._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ActualResult._Unknown,
                 visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {

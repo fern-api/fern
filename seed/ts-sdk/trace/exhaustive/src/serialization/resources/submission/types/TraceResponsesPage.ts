@@ -16,7 +16,7 @@ export const TraceResponsesPage: core.serialization.ObjectSchema<
 });
 
 export declare namespace TraceResponsesPage {
-    interface Raw {
+    export interface Raw {
         offset?: number | null;
         traceResponses: TraceResponse.Raw[];
     }

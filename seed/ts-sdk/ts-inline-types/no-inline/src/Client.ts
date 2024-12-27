@@ -8,11 +8,11 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedObjectClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
