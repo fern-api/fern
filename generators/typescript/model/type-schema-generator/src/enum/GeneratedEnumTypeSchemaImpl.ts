@@ -24,7 +24,8 @@ export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
                         ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
                     )
                 )
-            )
+            ),
+            isExported: true
         });
     }
 }

@@ -67,7 +67,8 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                           }
                       ]
                     : [])
-            ]
+            ],
+            isExported: true
         });
     }
 

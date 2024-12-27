@@ -22,7 +22,8 @@ export class GeneratedEndpointTypeSchemaImpl extends AbstractGeneratedEndpointTy
     protected generateRawTypeDeclaration(context: ExpressContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode)
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
+            isExported: true
         });
     }
 
