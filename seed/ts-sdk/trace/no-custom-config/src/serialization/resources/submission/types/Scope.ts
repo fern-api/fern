@@ -16,7 +16,7 @@ export const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, SeedT
 );
 
 export declare namespace Scope {
-    interface Raw {
+    export interface Raw {
         variables: Record<string, serializers.DebugVariableValue.Raw>;
     }
 }

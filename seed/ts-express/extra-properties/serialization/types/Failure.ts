@@ -14,7 +14,7 @@ export const Failure: core.serialization.ObjectSchema<serializers.Failure.Raw, S
         .passthrough();
 
 export declare namespace Failure {
-    interface Raw {
+    export interface Raw {
         status: "failure";
         [key: string]: any;
     }

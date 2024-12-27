@@ -15,7 +15,7 @@ export namespace Shape {
         type: "square";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

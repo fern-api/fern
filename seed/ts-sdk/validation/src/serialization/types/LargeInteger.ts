@@ -10,5 +10,5 @@ export const LargeInteger: core.serialization.Schema<serializers.LargeInteger.Ra
     core.serialization.number();
 
 export declare namespace LargeInteger {
-    type Raw = number;
+    export type Raw = number;
 }

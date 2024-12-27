@@ -22,13 +22,13 @@ export const TestCaseFunction: core.serialization.Schema<
     });
 
 export declare namespace TestCaseFunction {
-    type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;
+    export type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;
 
-    interface WithActualResult extends TestCaseWithActualResultImplementation.Raw {
+    export interface WithActualResult extends TestCaseWithActualResultImplementation.Raw {
         type: "withActualResult";
     }
 
-    interface Custom extends VoidFunctionDefinition.Raw {
+    export interface Custom extends VoidFunctionDefinition.Raw {
         type: "custom";
     }
 }

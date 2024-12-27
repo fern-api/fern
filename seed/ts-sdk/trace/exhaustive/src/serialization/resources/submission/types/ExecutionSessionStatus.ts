@@ -19,7 +19,7 @@ export const ExecutionSessionStatus: core.serialization.Schema<
 ]);
 
 export declare namespace ExecutionSessionStatus {
-    type Raw =
+    export type Raw =
         | "CREATING_CONTAINER"
         | "PROVISIONING_CONTAINER"
         | "PENDING_CONTAINER"

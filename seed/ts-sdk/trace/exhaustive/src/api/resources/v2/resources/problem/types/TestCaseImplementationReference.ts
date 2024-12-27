@@ -23,11 +23,11 @@ export namespace TestCaseImplementationReference {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.TestCaseImplementationReference._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         templateId: (value: SeedTrace.v2.TestCaseTemplateId) => _Result;
         implementation: (value: SeedTrace.v2.TestCaseImplementation) => _Result;
         _other: (value: { type: string }) => _Result;

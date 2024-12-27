@@ -15,7 +15,7 @@ export const FunctionImplementation: core.serialization.ObjectSchema<
 });
 
 export declare namespace FunctionImplementation {
-    interface Raw {
+    export interface Raw {
         impl: string;
         imports?: string | null;
     }

@@ -14,7 +14,7 @@ export const ANestedLiteral: core.serialization.ObjectSchema<
 });
 
 export declare namespace ANestedLiteral {
-    interface Raw {
+    export interface Raw {
         myLiteral: "How super cool";
     }
 }

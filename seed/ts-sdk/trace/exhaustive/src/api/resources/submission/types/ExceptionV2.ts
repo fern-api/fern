@@ -22,11 +22,11 @@ export namespace ExceptionV2 {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ExceptionV2._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generic: (value: SeedTrace.ExceptionInfo) => _Result;
         timeout: () => _Result;
         _other: (value: { type: string }) => _Result;

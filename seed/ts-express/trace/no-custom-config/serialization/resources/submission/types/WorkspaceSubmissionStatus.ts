@@ -27,32 +27,32 @@ export const WorkspaceSubmissionStatus: core.serialization.Schema<
     });
 
 export declare namespace WorkspaceSubmissionStatus {
-    type Raw =
+    export type Raw =
         | WorkspaceSubmissionStatus.Stopped
         | WorkspaceSubmissionStatus.Errored
         | WorkspaceSubmissionStatus.Running
         | WorkspaceSubmissionStatus.Ran
         | WorkspaceSubmissionStatus.Traced;
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: serializers.ErrorInfo.Raw;
     }
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: serializers.RunningSubmissionState.Raw;
     }
 
-    interface Ran extends serializers.WorkspaceRunDetails.Raw {
+    export interface Ran extends serializers.WorkspaceRunDetails.Raw {
         type: "ran";
     }
 
-    interface Traced extends serializers.WorkspaceRunDetails.Raw {
+    export interface Traced extends serializers.WorkspaceRunDetails.Raw {
         type: "traced";
     }
 }

@@ -14,7 +14,7 @@ export const Directory: core.serialization.ObjectSchema<serializers.Directory.Ra
     });
 
 export declare namespace Directory {
-    interface Raw {
+    export interface Raw {
         name: string;
         files?: serializers.File_.Raw[] | null;
         directories?: serializers.Directory.Raw[] | null;

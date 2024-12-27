@@ -22,11 +22,11 @@ export namespace AssertCorrectnessCheck {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.AssertCorrectnessCheck._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         deepEquality: (value: SeedTrace.v2.DeepEqualityCorrectnessCheck) => _Result;
         custom: (value: SeedTrace.v2.VoidFunctionDefinitionThatTakesActualResult) => _Result;
         _other: (value: { type: string }) => _Result;

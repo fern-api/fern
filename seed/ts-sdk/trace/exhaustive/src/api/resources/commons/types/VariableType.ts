@@ -62,11 +62,11 @@ export namespace VariableType {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.VariableType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         integerType: () => _Result;
         doubleType: () => _Result;
         booleanType: () => _Result;

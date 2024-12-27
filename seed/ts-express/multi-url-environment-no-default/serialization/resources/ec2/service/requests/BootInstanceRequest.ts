@@ -14,7 +14,7 @@ export const BootInstanceRequest: core.serialization.Schema<
 });
 
 export declare namespace BootInstanceRequest {
-    interface Raw {
+    export interface Raw {
         size: string;
     }
 }

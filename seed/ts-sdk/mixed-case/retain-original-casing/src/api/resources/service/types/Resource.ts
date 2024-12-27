@@ -27,7 +27,7 @@ export namespace Resource {
         resourceType: "Organization";
     }
 
-    interface _Base {
+    export interface _Base {
         status: SeedMixedCase.ResourceStatus;
     }
 }

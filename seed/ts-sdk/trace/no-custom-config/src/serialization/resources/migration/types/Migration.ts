@@ -14,7 +14,7 @@ export const Migration: core.serialization.ObjectSchema<serializers.Migration.Ra
     });
 
 export declare namespace Migration {
-    interface Raw {
+    export interface Raw {
         name: string;
         status: MigrationStatus.Raw;
     }

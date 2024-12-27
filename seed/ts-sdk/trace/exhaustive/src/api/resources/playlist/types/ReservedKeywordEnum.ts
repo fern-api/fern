@@ -19,7 +19,7 @@ export const ReservedKeywordEnum = {
 } as const;
 
 export namespace ReservedKeywordEnum {
-    interface Visitor<R> {
+    export interface Visitor<R> {
         is: () => R;
         as: () => R;
         _other: () => R;

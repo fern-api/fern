@@ -15,7 +15,7 @@ export const ResourceList: core.serialization.Schema<serializers.ResourceList.Ra
     ]);
 
 export declare namespace ResourceList {
-    type Raw =
+    export type Raw =
         | serializers.Account.Raw
         | serializers.Patient.Raw
         | serializers.Practitioner.Raw

@@ -17,7 +17,7 @@ export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetSubmissionStateResponse {
-    interface Raw {
+    export interface Raw {
         timeSubmitted?: string | null;
         submission: string;
         language: serializers.Language.Raw;

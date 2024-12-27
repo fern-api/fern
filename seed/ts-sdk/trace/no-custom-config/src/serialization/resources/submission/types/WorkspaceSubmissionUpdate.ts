@@ -16,7 +16,7 @@ export const WorkspaceSubmissionUpdate: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceSubmissionUpdate {
-    interface Raw {
+    export interface Raw {
         updateTime: string;
         updateInfo: WorkspaceSubmissionUpdateInfo.Raw;
     }

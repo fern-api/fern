@@ -14,7 +14,7 @@ export const Script: core.serialization.ObjectSchema<serializers.Script.Raw, See
     .extend(core.serialization.lazyObject(() => serializers.BaseResource));
 
 export declare namespace Script {
-    interface Raw extends serializers.BaseResource.Raw {
+    export interface Raw extends serializers.BaseResource.Raw {
         resource_type: "Script";
         name: string;
     }

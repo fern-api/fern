@@ -17,7 +17,7 @@ export const RootType1InlineType1NestedInlineType1: core.serialization.ObjectSch
 });
 
 export declare namespace RootType1InlineType1NestedInlineType1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
         bar: string;
         myEnum: serializers.InlineEnum1.Raw;

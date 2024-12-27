@@ -13,5 +13,5 @@ export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscrimin
     ]);
 
 export declare namespace Key {
-    type Raw = serializers.KeyType.Raw | "default";
+    export type Raw = serializers.KeyType.Raw | "default";
 }

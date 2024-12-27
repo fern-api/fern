@@ -15,7 +15,7 @@ export const StreamResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace StreamResponse {
-    interface Raw {
+    export interface Raw {
         id: string;
         name?: string | null;
     }

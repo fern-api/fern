@@ -36,7 +36,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
 });
 
 export declare namespace Type {
-    interface Raw {
+    export interface Raw {
         one: number;
         two: number;
         three: string;

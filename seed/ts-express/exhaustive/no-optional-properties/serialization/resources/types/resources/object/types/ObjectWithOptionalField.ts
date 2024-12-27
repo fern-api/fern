@@ -26,7 +26,7 @@ export const ObjectWithOptionalField: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectWithOptionalField {
-    interface Raw {
+    export interface Raw {
         string?: string | null;
         integer?: number | null;
         long?: number | null;
