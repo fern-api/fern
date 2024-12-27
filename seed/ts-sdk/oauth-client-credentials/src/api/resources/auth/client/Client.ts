@@ -42,7 +42,7 @@ export class Auth {
      */
     public async getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentials.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
@@ -113,7 +113,7 @@ export class Auth {
      */
     public async refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentials.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),

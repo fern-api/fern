@@ -15,7 +15,7 @@ export namespace Error {
 
     interface _Utils {
         _visit: <_Result>(
-            visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>
+            visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>,
         ) => _Result;
     }
 
@@ -31,7 +31,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Unknown,
-                visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>
+                visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>,
             ) {
                 return Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._visit(this, visitor);
             },
@@ -40,7 +40,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error,
-        visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>
+        visitor: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

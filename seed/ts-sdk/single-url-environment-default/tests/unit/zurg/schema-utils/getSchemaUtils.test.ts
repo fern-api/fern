@@ -24,7 +24,7 @@ describe("getSchemaUtils", () => {
             {
                 raw: "hello",
                 parsed: "helloX",
-            }
+            },
         );
     });
 
@@ -75,7 +75,7 @@ describe("getSchemaUtils", () => {
                 },
                 {
                     omitUndefined: true,
-                }
+                },
             );
             expect(value).toEqual({ a: "hello" });
         });

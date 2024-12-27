@@ -59,7 +59,7 @@ await client.v2.test();
 ```typescript
 await client.admin.updateTestSubmissionStatus(
     SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.TestSubmissionStatus.stopped()
+    SeedTrace.TestSubmissionStatus.stopped(),
 );
 ```
 
@@ -177,7 +177,7 @@ await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b
 ```typescript
 await client.admin.updateWorkspaceSubmissionStatus(
     SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.WorkspaceSubmissionStatus.stopped()
+    SeedTrace.WorkspaceSubmissionStatus.stopped(),
 );
 ```
 
@@ -496,7 +496,7 @@ await client.admin.storeTracedTestCaseV2(
             },
             stdout: "stdout",
         },
-    ]
+    ],
 );
 ```
 

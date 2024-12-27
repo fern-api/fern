@@ -171,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -2229,7 +2229,7 @@ await client.endpoints.union.getAndReturnUnion(
     Fiddle.Animal.dog({
         name: "name",
         likesToWoof: true,
-    })
+    }),
 );
 ```
 

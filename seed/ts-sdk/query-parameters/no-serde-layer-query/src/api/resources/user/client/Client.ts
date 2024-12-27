@@ -33,7 +33,7 @@ export class User {
      */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedQueryParameters.User> {
         const {
             limit,

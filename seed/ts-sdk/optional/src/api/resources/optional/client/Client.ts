@@ -40,7 +40,7 @@ export class Optional {
      */
     public async sendOptionalBody(
         request?: Record<string, unknown>,
-        requestOptions?: Optional.RequestOptions
+        requestOptions?: Optional.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "send-optional-body"),
@@ -90,7 +90,7 @@ export class Optional {
                 });
             case "timeout":
                 throw new errors.SeedObjectsWithImportsTimeoutError(
-                    "Timeout exceeded when calling POST /send-optional-body."
+                    "Timeout exceeded when calling POST /send-optional-body.",
                 );
             case "unknown":
                 throw new errors.SeedObjectsWithImportsError({

@@ -13,7 +13,7 @@ export const DoublyLinkedListValue: core.serialization.ObjectSchema<
     head: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
         core.serialization.lazy(() => serializers.NodeId),
-        core.serialization.lazyObject(() => serializers.DoublyLinkedListNodeValue)
+        core.serialization.lazyObject(() => serializers.DoublyLinkedListNodeValue),
     ),
 });
 

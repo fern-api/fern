@@ -4226,6 +4226,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/cli/dist/local: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -4310,6 +4312,9 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -6808,6 +6813,51 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/scripts:
+    devDependencies:
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../commons/fs-utils
+      '@fern-api/ir-migrations':
+        specifier: workspace:*
+        version: link:../cli/generation/ir-migrations
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@types/yargs':
+        specifier: ^17.0.32
+        version: 17.0.33
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
+
   packages/seed:
     devDependencies:
       '@fern-api/api-workspace-commons':
@@ -8972,6 +9022,9 @@ packages:
 
   '@types/yargs@17.0.28':
     resolution: {integrity: sha512-N3e3fkS86hNhtk6BEnc0rj3zcehaxx8QWhCROJkqpl5Zaoi7nAic3jH8q94jVD3zu5LGk+PUB6KAiDmimYOEQw==}
+
+  '@types/yargs@17.0.33':
+    resolution: {integrity: sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==}
 
   '@typescript-eslint/eslint-plugin@5.30.5':
     resolution: {integrity: sha512-lftkqRoBvc28VFXEoRgyZuztyVUQ04JvUnATSPtIRFAccbXTWL6DEtXGYMcbg998kXw1NLUJm7rTQ9eUt+q6Ig==}
@@ -15812,7 +15865,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
       '@types/node': 18.7.18
-      '@types/yargs': 17.0.28
+      '@types/yargs': 17.0.33
       chalk: 4.1.2
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -16323,6 +16376,10 @@ snapshots:
   '@types/yargs-parser@21.0.0': {}
 
   '@types/yargs@17.0.28':
+    dependencies:
+      '@types/yargs-parser': 21.0.0
+
+  '@types/yargs@17.0.33':
     dependencies:
       '@types/yargs-parser': 21.0.0
 

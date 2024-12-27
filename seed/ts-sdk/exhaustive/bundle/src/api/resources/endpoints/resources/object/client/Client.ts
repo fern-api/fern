@@ -53,7 +53,7 @@ export class Object_ {
      */
     public async getAndReturnWithOptionalField(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
@@ -63,7 +63,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-optional-field"
+                "/object/get-and-return-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -112,7 +112,7 @@ export class Object_ {
      */
     public async getAndReturnWithRequiredField(
         request: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField,
@@ -122,7 +122,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-required-field"
+                "/object/get-and-return-with-required-field",
             ),
             method: "POST",
             headers: {
@@ -175,7 +175,7 @@ export class Object_ {
      */
     public async getAndReturnWithMapOfMap(
         request: Fiddle.types.ObjectWithMapOfMap,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
     > {
@@ -245,7 +245,7 @@ export class Object_ {
      */
     public async getAndReturnNestedWithOptionalField(
         request: Fiddle.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithOptionalField,
@@ -255,7 +255,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-optional-field"
+                "/object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -325,7 +325,7 @@ export class Object_ {
     public async getAndReturnNestedWithRequiredField(
         string_: string,
         request: Fiddle.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
@@ -335,7 +335,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
             ),
             method: "POST",
             headers: {
@@ -422,7 +422,7 @@ export class Object_ {
      */
     public async getAndReturnNestedWithRequiredFieldAsList(
         request: Fiddle.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
@@ -432,7 +432,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field-list"
+                "/object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
             headers: {

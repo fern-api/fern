@@ -34,7 +34,7 @@ export class Service {
      *     await client.folderD.service.getDirectThread()
      */
     public async getDirectThread(
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedCrossPackageTypeNames.folderD.Response> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

@@ -9,7 +9,7 @@ export function register(
     expressApp: express.Express | express.Router,
     services: {
         unknown: UnknownService;
-    }
+    },
 ): void {
     (expressApp as any).use("/", services.unknown.toRouter());
 }

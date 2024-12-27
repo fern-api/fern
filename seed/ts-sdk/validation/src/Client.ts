@@ -42,7 +42,7 @@ export class SeedValidationClient {
      */
     public async create(
         request: SeedValidation.CreateRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
@@ -107,7 +107,7 @@ export class SeedValidationClient {
      */
     public async get(
         request: SeedValidation.GetRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const { decimal, even, name } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

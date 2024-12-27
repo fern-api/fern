@@ -99,7 +99,7 @@ export class User {
      */
     public async createUser(
         request: SeedMultiLineDocs.CreateUserRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedMultiLineDocs.User> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "users"),

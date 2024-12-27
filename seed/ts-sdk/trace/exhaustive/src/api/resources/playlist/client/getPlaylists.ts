@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.playlist.getPlaylists.Error._Unknown,
-                visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.getPlaylists.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.playlist.getPlaylists.Error,
-        visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>
+        visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

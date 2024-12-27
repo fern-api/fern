@@ -4,7 +4,7 @@ import { itSchemaIdentity } from "../utils/itSchema";
 describe("lazy", () => {
     itSchemaIdentity(
         lazyObject(() => object({ foo: string() })),
-        { foo: "hello" }
+        { foo: "hello" },
     );
 
     itSchemaIdentity(
@@ -13,6 +13,6 @@ describe("lazy", () => {
             foo: "hello",
             bar: 42,
         },
-        { title: "returned schema has object utils" }
+        { title: "returned schema has object utils" },
     );
 });

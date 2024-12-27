@@ -41,7 +41,7 @@ export class Payment {
      */
     public async create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
-        requestOptions?: Payment.IdempotentRequestOptions
+        requestOptions?: Payment.IdempotentRequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/payment"),
@@ -107,7 +107,7 @@ export class Payment {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/payment/${encodeURIComponent(paymentId)}`
+                `/payment/${encodeURIComponent(paymentId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -145,7 +145,7 @@ export class Payment {
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError(
-                    "Timeout exceeded when calling DELETE /payment/{paymentId}."
+                    "Timeout exceeded when calling DELETE /payment/{paymentId}.",
                 );
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({

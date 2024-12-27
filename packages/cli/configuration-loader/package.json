@@ -41,7 +41,8 @@
     "lodash-es": "^4.17.21",
     "semver": "^7.6.2",
     "tinycolor2": "^1.6.0",
-    "zod": "^3.22.3"
+    "zod": "^3.22.3",
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

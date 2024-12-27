@@ -42,7 +42,7 @@ export const CreateProblemResponse = {
             type: "success",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse.Success,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const CreateProblemResponse = {
             type: "error",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse.Error_,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const CreateProblemResponse = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse._Unknown,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const CreateProblemResponse = {
 
     _visit: <_Result>(
         value: SeedTrace.CreateProblemResponse,
-        visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+        visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "success":

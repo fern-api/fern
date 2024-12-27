@@ -11,7 +11,7 @@ export const TestCaseImplementationDescription: core.serialization.ObjectSchema<
     SeedTrace.v2.TestCaseImplementationDescription
 > = core.serialization.object({
     boards: core.serialization.list(
-        core.serialization.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard)
+        core.serialization.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard),
     ),
 });
 

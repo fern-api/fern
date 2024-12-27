@@ -53,7 +53,7 @@ export class ContentType {
      */
     public async postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/bar"),
@@ -113,7 +113,7 @@ export class ContentType {
      */
     public async postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/baz"),

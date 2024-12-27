@@ -37,7 +37,7 @@ export class Union {
      */
     public async get(
         request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: Union.RequestOptions
+        requestOptions?: Union.RequestOptions,
     ): Promise<SeedUndiscriminatedUnions.MyUnion> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

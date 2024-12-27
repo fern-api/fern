@@ -34,7 +34,7 @@ export class User {
      */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedQueryParameters.User> {
         const {
             limit,
@@ -97,8 +97,8 @@ export class User {
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["request", "excludeUser"],
-                    })
-                )
+                    }),
+                ),
             );
         } else {
             _queryParams["excludeUser"] = serializers.User.jsonOrThrow(excludeUser, {
