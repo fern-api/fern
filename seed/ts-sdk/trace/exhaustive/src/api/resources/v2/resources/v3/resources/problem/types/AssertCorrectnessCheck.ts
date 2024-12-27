@@ -40,7 +40,7 @@ export const AssertCorrectnessCheck = {
         return {
             ...value,
             type: "deepEquality",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.AssertCorrectnessCheck.DeepEquality,
                 visitor: SeedTrace.v2.v3.AssertCorrectnessCheck._Visitor<_Result>,
             ) {
@@ -55,7 +55,7 @@ export const AssertCorrectnessCheck = {
         return {
             ...value,
             type: "custom",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.AssertCorrectnessCheck.Custom,
                 visitor: SeedTrace.v2.v3.AssertCorrectnessCheck._Visitor<_Result>,
             ) {
@@ -67,7 +67,7 @@ export const AssertCorrectnessCheck = {
     _unknown: (value: { type: string }): SeedTrace.v2.v3.AssertCorrectnessCheck._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.AssertCorrectnessCheck._Unknown,
                 visitor: SeedTrace.v2.v3.AssertCorrectnessCheck._Visitor<_Result>,
             ) {

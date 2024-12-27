@@ -19,7 +19,7 @@ export interface CrossPlatformFormData {
 
     appendFile(key: string, value: unknown, fileName?: string): Promise<void>;
 
-    getRequest(): MaybePromise<FormDataRequest<unknown>>;
+    getRequest(): MaybePromise<FormDataRequest<any>>;
 }
 
 export async function newFormData(): Promise<CrossPlatformFormData> {

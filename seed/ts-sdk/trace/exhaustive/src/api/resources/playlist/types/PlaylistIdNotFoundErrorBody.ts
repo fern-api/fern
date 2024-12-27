@@ -31,9 +31,9 @@ export namespace PlaylistIdNotFoundErrorBody {
 export const PlaylistIdNotFoundErrorBody = {
     playlistId: (value: SeedTrace.PlaylistId): SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId => {
         return {
-            value: value,
+            value,
             type: "playlistId",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId,
                 visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>,
             ) {
@@ -45,7 +45,7 @@ export const PlaylistIdNotFoundErrorBody = {
     _unknown: (value: { type: string }): SeedTrace.PlaylistIdNotFoundErrorBody._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.PlaylistIdNotFoundErrorBody._Unknown,
                 visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>,
             ) {

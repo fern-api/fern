@@ -43,7 +43,7 @@ export const Error = {
         return {
             content: value,
             errorName: "PlaylistIdNotFoundError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError,
                 visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {
@@ -55,7 +55,7 @@ export const Error = {
     unauthorizedError: (): SeedTrace.playlist.getPlaylist.Error.UnauthorizedError => {
         return {
             errorName: "UnauthorizedError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error.UnauthorizedError,
                 visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {
@@ -68,7 +68,7 @@ export const Error = {
         return {
             errorName: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error._Unknown,
                 visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {

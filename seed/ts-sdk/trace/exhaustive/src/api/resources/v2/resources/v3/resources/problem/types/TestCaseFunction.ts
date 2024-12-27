@@ -40,7 +40,7 @@ export const TestCaseFunction = {
         return {
             ...value,
             type: "withActualResult",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction.WithActualResult,
                 visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {
@@ -53,7 +53,7 @@ export const TestCaseFunction = {
         return {
             ...value,
             type: "custom",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction.Custom,
                 visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const TestCaseFunction = {
     _unknown: (value: { type: string }): SeedTrace.v2.v3.TestCaseFunction._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction._Unknown,
                 visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {

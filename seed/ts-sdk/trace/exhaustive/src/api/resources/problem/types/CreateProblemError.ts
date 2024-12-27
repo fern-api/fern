@@ -30,7 +30,7 @@ export const CreateProblemError = {
         return {
             ...value,
             errorType: "generic",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemError.Generic,
                 visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
@@ -42,7 +42,7 @@ export const CreateProblemError = {
     _unknown: (value: { errorType: string }): SeedTrace.CreateProblemError._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemError._Unknown,
                 visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {

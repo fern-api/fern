@@ -39,7 +39,7 @@ export const Error = {
         return {
             content: value,
             statusCode: 400,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.BadRequestBody,
                 visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
             ) {
@@ -54,7 +54,7 @@ export const Error = {
         return {
             statusCode: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Unknown,
                 visitor: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._Visitor<_Result>,
             ) {

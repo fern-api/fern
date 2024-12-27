@@ -35,7 +35,7 @@ export const Animal = {
         return {
             ...value,
             animal: "dog",
-            _visit: function <_Result>(this: Fiddle.types.Animal.Dog, visitor: Fiddle.types.Animal._Visitor<_Result>) {
+            _visit <_Result>(this: Fiddle.types.Animal.Dog, visitor: Fiddle.types.Animal._Visitor<_Result>) {
                 return Fiddle.types.Animal._visit(this, visitor);
             },
         };
@@ -45,7 +45,7 @@ export const Animal = {
         return {
             ...value,
             animal: "cat",
-            _visit: function <_Result>(this: Fiddle.types.Animal.Cat, visitor: Fiddle.types.Animal._Visitor<_Result>) {
+            _visit <_Result>(this: Fiddle.types.Animal.Cat, visitor: Fiddle.types.Animal._Visitor<_Result>) {
                 return Fiddle.types.Animal._visit(this, visitor);
             },
         };
@@ -54,7 +54,7 @@ export const Animal = {
     _unknown: (value: { animal: string }): Fiddle.types.Animal._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.types.Animal._Unknown,
                 visitor: Fiddle.types.Animal._Visitor<_Result>,
             ) {

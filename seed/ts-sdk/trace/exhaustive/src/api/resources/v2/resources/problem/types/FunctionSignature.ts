@@ -46,7 +46,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "void",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.FunctionSignature.Void,
                 visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
@@ -59,7 +59,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "nonVoid",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.FunctionSignature.NonVoid,
                 visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
@@ -74,7 +74,7 @@ export const FunctionSignature = {
         return {
             ...value,
             type: "voidThatTakesActualResult",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.FunctionSignature.VoidThatTakesActualResult,
                 visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {
@@ -86,7 +86,7 @@ export const FunctionSignature = {
     _unknown: (value: { type: string }): SeedTrace.v2.FunctionSignature._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.FunctionSignature._Unknown,
                 visitor: SeedTrace.v2.FunctionSignature._Visitor<_Result>,
             ) {

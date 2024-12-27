@@ -45,9 +45,9 @@ export namespace ProblemDescriptionBoard {
 export const ProblemDescriptionBoard = {
     html: (value: string): SeedTrace.ProblemDescriptionBoard.Html => {
         return {
-            value: value,
+            value,
             type: "html",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.Html,
                 visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
@@ -58,9 +58,9 @@ export const ProblemDescriptionBoard = {
 
     variable: (value: SeedTrace.VariableValue): SeedTrace.ProblemDescriptionBoard.Variable => {
         return {
-            value: value,
+            value,
             type: "variable",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.Variable,
                 visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
@@ -71,9 +71,9 @@ export const ProblemDescriptionBoard = {
 
     testCaseId: (value: string): SeedTrace.ProblemDescriptionBoard.TestCaseId => {
         return {
-            value: value,
+            value,
             type: "testCaseId",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.TestCaseId,
                 visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
@@ -85,7 +85,7 @@ export const ProblemDescriptionBoard = {
     _unknown: (value: { type: string }): SeedTrace.ProblemDescriptionBoard._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard._Unknown,
                 visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {

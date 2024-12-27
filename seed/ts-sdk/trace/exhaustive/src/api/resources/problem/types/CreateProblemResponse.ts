@@ -38,9 +38,9 @@ export namespace CreateProblemResponse {
 export const CreateProblemResponse = {
     success: (value: SeedTrace.ProblemId): SeedTrace.CreateProblemResponse.Success => {
         return {
-            value: value,
+            value,
             type: "success",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemResponse.Success,
                 visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
@@ -51,9 +51,9 @@ export const CreateProblemResponse = {
 
     error: (value: SeedTrace.CreateProblemError): SeedTrace.CreateProblemResponse.Error_ => {
         return {
-            value: value,
+            value,
             type: "error",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemResponse.Error_,
                 visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const CreateProblemResponse = {
     _unknown: (value: { type: string }): SeedTrace.CreateProblemResponse._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.CreateProblemResponse._Unknown,
                 visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {

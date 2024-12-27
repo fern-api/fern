@@ -39,7 +39,7 @@ export const CustomFiles = {
         return {
             ...value,
             type: "basic",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles.Basic,
                 visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {
@@ -52,9 +52,9 @@ export const CustomFiles = {
         value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>,
     ): SeedTrace.v2.v3.CustomFiles.Custom => {
         return {
-            value: value,
+            value,
             type: "custom",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles.Custom,
                 visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {
@@ -66,7 +66,7 @@ export const CustomFiles = {
     _unknown: (value: { type: string }): SeedTrace.v2.v3.CustomFiles._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles._Unknown,
                 visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {

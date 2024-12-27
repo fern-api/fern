@@ -96,9 +96,9 @@ export namespace VariableValue {
 export const VariableValue = {
     integerValue: (value: number): SeedTrace.VariableValue.IntegerValue => {
         return {
-            value: value,
+            value,
             type: "integerValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.IntegerValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -109,9 +109,9 @@ export const VariableValue = {
 
     booleanValue: (value: boolean): SeedTrace.VariableValue.BooleanValue => {
         return {
-            value: value,
+            value,
             type: "booleanValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.BooleanValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -122,9 +122,9 @@ export const VariableValue = {
 
     doubleValue: (value: number): SeedTrace.VariableValue.DoubleValue => {
         return {
-            value: value,
+            value,
             type: "doubleValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.DoubleValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -135,9 +135,9 @@ export const VariableValue = {
 
     stringValue: (value: string): SeedTrace.VariableValue.StringValue => {
         return {
-            value: value,
+            value,
             type: "stringValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.StringValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -148,9 +148,9 @@ export const VariableValue = {
 
     charValue: (value: string): SeedTrace.VariableValue.CharValue => {
         return {
-            value: value,
+            value,
             type: "charValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.CharValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -163,7 +163,7 @@ export const VariableValue = {
         return {
             ...value,
             type: "mapValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.MapValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -174,9 +174,9 @@ export const VariableValue = {
 
     listValue: (value: SeedTrace.VariableValue[]): SeedTrace.VariableValue.ListValue => {
         return {
-            value: value,
+            value,
             type: "listValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.ListValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -189,7 +189,7 @@ export const VariableValue = {
         return {
             ...value,
             type: "binaryTreeValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.BinaryTreeValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -202,7 +202,7 @@ export const VariableValue = {
         return {
             ...value,
             type: "singlyLinkedListValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.SinglyLinkedListValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -215,7 +215,7 @@ export const VariableValue = {
         return {
             ...value,
             type: "doublyLinkedListValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.DoublyLinkedListValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -227,7 +227,7 @@ export const VariableValue = {
     nullValue: (): SeedTrace.VariableValue.NullValue => {
         return {
             type: "nullValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue.NullValue,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {
@@ -239,7 +239,7 @@ export const VariableValue = {
     _unknown: (value: { type: string }): SeedTrace.VariableValue._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.VariableValue._Unknown,
                 visitor: SeedTrace.VariableValue._Visitor<_Result>,
             ) {

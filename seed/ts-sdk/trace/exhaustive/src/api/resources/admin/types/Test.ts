@@ -35,9 +35,9 @@ export namespace Test {
 export const Test = {
     and: (value: boolean): SeedTrace.Test.And => {
         return {
-            value: value,
+            value,
             type: "and",
-            _visit: function <_Result>(this: SeedTrace.Test.And, visitor: SeedTrace.Test._Visitor<_Result>) {
+            _visit <_Result>(this: SeedTrace.Test.And, visitor: SeedTrace.Test._Visitor<_Result>) {
                 return SeedTrace.Test._visit(this, visitor);
             },
         };
@@ -45,9 +45,9 @@ export const Test = {
 
     or: (value: boolean): SeedTrace.Test.Or => {
         return {
-            value: value,
+            value,
             type: "or",
-            _visit: function <_Result>(this: SeedTrace.Test.Or, visitor: SeedTrace.Test._Visitor<_Result>) {
+            _visit <_Result>(this: SeedTrace.Test.Or, visitor: SeedTrace.Test._Visitor<_Result>) {
                 return SeedTrace.Test._visit(this, visitor);
             },
         };
@@ -56,7 +56,7 @@ export const Test = {
     _unknown: (value: { type: string }): SeedTrace.Test._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(this: SeedTrace.Test._Unknown, visitor: SeedTrace.Test._Visitor<_Result>) {
+            _visit <_Result>(this: SeedTrace.Test._Unknown, visitor: SeedTrace.Test._Visitor<_Result>) {
                 return SeedTrace.Test._visit(this, visitor);
             },
         };

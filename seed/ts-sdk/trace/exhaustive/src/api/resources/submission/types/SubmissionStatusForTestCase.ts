@@ -45,7 +45,7 @@ export const SubmissionStatusForTestCase = {
         return {
             ...value,
             type: "graded",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Graded,
                 visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
@@ -56,9 +56,9 @@ export const SubmissionStatusForTestCase = {
 
     gradedV2: (value: SeedTrace.TestCaseGrade): SeedTrace.SubmissionStatusForTestCase.GradedV2 => {
         return {
-            value: value,
+            value,
             type: "gradedV2",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.GradedV2,
                 visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
@@ -71,7 +71,7 @@ export const SubmissionStatusForTestCase = {
         return {
             ...value,
             type: "traced",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Traced,
                 visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
@@ -83,7 +83,7 @@ export const SubmissionStatusForTestCase = {
     _unknown: (value: { type: string }): SeedTrace.SubmissionStatusForTestCase._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase._Unknown,
                 visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {

@@ -38,7 +38,7 @@ export const TestCaseGrade = {
         return {
             ...value,
             type: "hidden",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestCaseGrade.Hidden,
                 visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {
@@ -51,7 +51,7 @@ export const TestCaseGrade = {
         return {
             ...value,
             type: "nonHidden",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestCaseGrade.NonHidden,
                 visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {
@@ -63,7 +63,7 @@ export const TestCaseGrade = {
     _unknown: (value: { type: string }): SeedTrace.TestCaseGrade._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestCaseGrade._Unknown,
                 visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {

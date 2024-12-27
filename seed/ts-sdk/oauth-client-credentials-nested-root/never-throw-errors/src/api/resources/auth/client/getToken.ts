@@ -27,7 +27,7 @@ export const Error = {
         return {
             statusCode: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedOauthClientCredentials.auth.getToken.Error._Unknown,
                 visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>,
             ) {

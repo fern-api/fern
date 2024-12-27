@@ -27,7 +27,7 @@ export const Error = {
         return {
             errorName: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.admin.storeTracedTestCaseV2.Error._Unknown,
                 visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>,
             ) {

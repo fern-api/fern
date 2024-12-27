@@ -38,7 +38,7 @@ export const Animal = {
         return {
             ...value,
             animal: "dog",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal.Dog,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
@@ -51,7 +51,7 @@ export const Animal = {
         return {
             ...value,
             animal: "cat",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal.Cat,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
@@ -63,7 +63,7 @@ export const Animal = {
     _unknown: (value: { animal: string }): SeedExhaustive.types.Animal._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedExhaustive.types.Animal._Unknown,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {

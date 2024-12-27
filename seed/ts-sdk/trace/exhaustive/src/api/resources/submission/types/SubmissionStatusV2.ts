@@ -38,7 +38,7 @@ export const SubmissionStatusV2 = {
         return {
             ...value,
             type: "test",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Test,
                 visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
@@ -51,7 +51,7 @@ export const SubmissionStatusV2 = {
         return {
             ...value,
             type: "workspace",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Workspace,
                 visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
@@ -63,7 +63,7 @@ export const SubmissionStatusV2 = {
     _unknown: (value: { type: string }): SeedTrace.SubmissionStatusV2._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionStatusV2._Unknown,
                 visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {

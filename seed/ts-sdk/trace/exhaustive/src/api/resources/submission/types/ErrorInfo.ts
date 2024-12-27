@@ -50,7 +50,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "compileError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.CompileError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -63,7 +63,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "runtimeError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.RuntimeError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -76,7 +76,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "internalError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.InternalError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -88,7 +88,7 @@ export const ErrorInfo = {
     _unknown: (value: { type: string }): SeedTrace.ErrorInfo._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo._Unknown,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {

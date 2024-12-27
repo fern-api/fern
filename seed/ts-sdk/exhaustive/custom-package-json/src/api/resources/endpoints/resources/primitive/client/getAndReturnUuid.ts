@@ -27,7 +27,7 @@ export const Error = {
         return {
             statusCode: undefined,
             content: fetcherError,
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: Fiddle.endpoints.primitive.getAndReturnUuid.Error._Unknown,
                 visitor: Fiddle.endpoints.primitive.getAndReturnUuid.Error._Visitor<_Result>,
             ) {

@@ -63,7 +63,7 @@ export const SubmissionResponse = {
     serverInitialized: (): SeedTrace.SubmissionResponse.ServerInitialized => {
         return {
             type: "serverInitialized",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.ServerInitialized,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -74,9 +74,9 @@ export const SubmissionResponse = {
 
     problemInitialized: (value: SeedTrace.ProblemId): SeedTrace.SubmissionResponse.ProblemInitialized => {
         return {
-            value: value,
+            value,
             type: "problemInitialized",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.ProblemInitialized,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -88,7 +88,7 @@ export const SubmissionResponse = {
     workspaceInitialized: (): SeedTrace.SubmissionResponse.WorkspaceInitialized => {
         return {
             type: "workspaceInitialized",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.WorkspaceInitialized,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -101,7 +101,7 @@ export const SubmissionResponse = {
         return {
             ...value,
             type: "serverErrored",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.ServerErrored,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -112,9 +112,9 @@ export const SubmissionResponse = {
 
     codeExecutionUpdate: (value: SeedTrace.CodeExecutionUpdate): SeedTrace.SubmissionResponse.CodeExecutionUpdate => {
         return {
-            value: value,
+            value,
             type: "codeExecutionUpdate",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.CodeExecutionUpdate,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -127,7 +127,7 @@ export const SubmissionResponse = {
         return {
             ...value,
             type: "terminated",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse.Terminated,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {
@@ -139,7 +139,7 @@ export const SubmissionResponse = {
     _unknown: (value: { type: string }): SeedTrace.SubmissionResponse._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionResponse._Unknown,
                 visitor: SeedTrace.SubmissionResponse._Visitor<_Result>,
             ) {

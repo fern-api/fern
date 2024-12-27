@@ -68,9 +68,9 @@ export namespace WorkspaceSubmissionUpdateInfo {
 export const WorkspaceSubmissionUpdateInfo = {
     running: (value: SeedTrace.RunningSubmissionState): SeedTrace.WorkspaceSubmissionUpdateInfo.Running => {
         return {
-            value: value,
+            value,
             type: "running",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Running,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -83,7 +83,7 @@ export const WorkspaceSubmissionUpdateInfo = {
         return {
             ...value,
             type: "ran",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Ran,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -95,7 +95,7 @@ export const WorkspaceSubmissionUpdateInfo = {
     stopped: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped => {
         return {
             type: "stopped",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -107,7 +107,7 @@ export const WorkspaceSubmissionUpdateInfo = {
     traced: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Traced => {
         return {
             type: "traced",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Traced,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -120,7 +120,7 @@ export const WorkspaceSubmissionUpdateInfo = {
         return {
             ...value,
             type: "tracedV2",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -131,9 +131,9 @@ export const WorkspaceSubmissionUpdateInfo = {
 
     errored: (value: SeedTrace.ErrorInfo): SeedTrace.WorkspaceSubmissionUpdateInfo.Errored => {
         return {
-            value: value,
+            value,
             type: "errored",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Errored,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -145,7 +145,7 @@ export const WorkspaceSubmissionUpdateInfo = {
     finished: (): SeedTrace.WorkspaceSubmissionUpdateInfo.Finished => {
         return {
             type: "finished",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Finished,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
@@ -157,7 +157,7 @@ export const WorkspaceSubmissionUpdateInfo = {
     _unknown: (value: { type: string }): SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown,
                 visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {

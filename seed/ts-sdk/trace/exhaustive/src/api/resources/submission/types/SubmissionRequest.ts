@@ -58,7 +58,7 @@ export const SubmissionRequest = {
         return {
             ...value,
             type: "initializeProblemRequest",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest.InitializeProblemRequest,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
@@ -70,7 +70,7 @@ export const SubmissionRequest = {
     initializeWorkspaceRequest: (): SeedTrace.SubmissionRequest.InitializeWorkspaceRequest => {
         return {
             type: "initializeWorkspaceRequest",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest.InitializeWorkspaceRequest,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
@@ -83,7 +83,7 @@ export const SubmissionRequest = {
         return {
             ...value,
             type: "submitV2",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest.SubmitV2,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
@@ -96,7 +96,7 @@ export const SubmissionRequest = {
         return {
             ...value,
             type: "workspaceSubmit",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest.WorkspaceSubmit,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
@@ -109,7 +109,7 @@ export const SubmissionRequest = {
         return {
             ...value,
             type: "stop",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest.Stop,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
@@ -121,7 +121,7 @@ export const SubmissionRequest = {
     _unknown: (value: { type: string }): SeedTrace.SubmissionRequest._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.SubmissionRequest._Unknown,
                 visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {

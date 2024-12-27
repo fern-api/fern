@@ -38,9 +38,9 @@ export namespace TestCaseImplementationDescriptionBoard {
 export const TestCaseImplementationDescriptionBoard = {
     html: (value: string): SeedTrace.v2.TestCaseImplementationDescriptionBoard.Html => {
         return {
-            value: value,
+            value,
             type: "html",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard.Html,
                 visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
@@ -51,9 +51,9 @@ export const TestCaseImplementationDescriptionBoard = {
 
     paramId: (value: SeedTrace.v2.ParameterId): SeedTrace.v2.TestCaseImplementationDescriptionBoard.ParamId => {
         return {
-            value: value,
+            value,
             type: "paramId",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard.ParamId,
                 visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const TestCaseImplementationDescriptionBoard = {
     _unknown: (value: { type: string }): SeedTrace.v2.TestCaseImplementationDescriptionBoard._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Unknown,
                 visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>,
             ) {

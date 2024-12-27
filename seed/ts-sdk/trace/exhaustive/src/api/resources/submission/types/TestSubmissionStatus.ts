@@ -52,7 +52,7 @@ export const TestSubmissionStatus = {
     stopped: (): SeedTrace.TestSubmissionStatus.Stopped => {
         return {
             type: "stopped",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestSubmissionStatus.Stopped,
                 visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>,
             ) {
@@ -63,9 +63,9 @@ export const TestSubmissionStatus = {
 
     errored: (value: SeedTrace.ErrorInfo): SeedTrace.TestSubmissionStatus.Errored => {
         return {
-            value: value,
+            value,
             type: "errored",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestSubmissionStatus.Errored,
                 visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>,
             ) {
@@ -76,9 +76,9 @@ export const TestSubmissionStatus = {
 
     running: (value: SeedTrace.RunningSubmissionState): SeedTrace.TestSubmissionStatus.Running => {
         return {
-            value: value,
+            value,
             type: "running",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestSubmissionStatus.Running,
                 visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>,
             ) {
@@ -91,9 +91,9 @@ export const TestSubmissionStatus = {
         value: Record<string, SeedTrace.SubmissionStatusForTestCase>,
     ): SeedTrace.TestSubmissionStatus.TestCaseIdToState => {
         return {
-            value: value,
+            value,
             type: "testCaseIdToState",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestSubmissionStatus.TestCaseIdToState,
                 visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>,
             ) {
@@ -105,7 +105,7 @@ export const TestSubmissionStatus = {
     _unknown: (value: { type: string }): SeedTrace.TestSubmissionStatus._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.TestSubmissionStatus._Unknown,
                 visitor: SeedTrace.TestSubmissionStatus._Visitor<_Result>,
             ) {

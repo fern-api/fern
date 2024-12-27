@@ -108,9 +108,9 @@ export namespace DebugVariableValue {
 export const DebugVariableValue = {
     integerValue: (value: number): SeedTrace.DebugVariableValue.IntegerValue => {
         return {
-            value: value,
+            value,
             type: "integerValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.IntegerValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -121,9 +121,9 @@ export const DebugVariableValue = {
 
     booleanValue: (value: boolean): SeedTrace.DebugVariableValue.BooleanValue => {
         return {
-            value: value,
+            value,
             type: "booleanValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.BooleanValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -134,9 +134,9 @@ export const DebugVariableValue = {
 
     doubleValue: (value: number): SeedTrace.DebugVariableValue.DoubleValue => {
         return {
-            value: value,
+            value,
             type: "doubleValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.DoubleValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -147,9 +147,9 @@ export const DebugVariableValue = {
 
     stringValue: (value: string): SeedTrace.DebugVariableValue.StringValue => {
         return {
-            value: value,
+            value,
             type: "stringValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.StringValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -160,9 +160,9 @@ export const DebugVariableValue = {
 
     charValue: (value: string): SeedTrace.DebugVariableValue.CharValue => {
         return {
-            value: value,
+            value,
             type: "charValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.CharValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -175,7 +175,7 @@ export const DebugVariableValue = {
         return {
             ...value,
             type: "mapValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.MapValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -186,9 +186,9 @@ export const DebugVariableValue = {
 
     listValue: (value: SeedTrace.DebugVariableValue[]): SeedTrace.DebugVariableValue.ListValue => {
         return {
-            value: value,
+            value,
             type: "listValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.ListValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -203,7 +203,7 @@ export const DebugVariableValue = {
         return {
             ...value,
             type: "binaryTreeNodeValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.BinaryTreeNodeValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -218,7 +218,7 @@ export const DebugVariableValue = {
         return {
             ...value,
             type: "singlyLinkedListNodeValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -233,7 +233,7 @@ export const DebugVariableValue = {
         return {
             ...value,
             type: "doublyLinkedListNodeValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -245,7 +245,7 @@ export const DebugVariableValue = {
     undefinedValue: (): SeedTrace.DebugVariableValue.UndefinedValue => {
         return {
             type: "undefinedValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.UndefinedValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -257,7 +257,7 @@ export const DebugVariableValue = {
     nullValue: (): SeedTrace.DebugVariableValue.NullValue => {
         return {
             type: "nullValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.NullValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -270,7 +270,7 @@ export const DebugVariableValue = {
         return {
             ...value,
             type: "genericValue",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue.GenericValue,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
@@ -282,7 +282,7 @@ export const DebugVariableValue = {
     _unknown: (value: { type: string }): SeedTrace.DebugVariableValue._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.DebugVariableValue._Unknown,
                 visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
