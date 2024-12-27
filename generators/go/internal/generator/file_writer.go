@@ -186,7 +186,25 @@ func removeUnusedImports(filename string, buf []byte) ([]byte, error) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, buf, parser.ParseComments)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse Go code: %v", err)
+		badMetadata := strings.Split(err.Error(), ":")
+		badLine, _ := strconv.Atoi(badMetadata[1])
+		badLineCharIdx, _ := strconv.Atoi(badMetadata[2])
+
+		badSrcLines := strings.Split(string(bytes.ToValidUTF8(buf, []byte{'?'})), "\n")
+		badSrc := ""
+		maxLineDigitCount := len(fmt.Sprint(len(badSrcLines)))
+		for i, line := range badSrcLines {
+			if i >= badLine-5 && i <= badLine+3 {
+				if i == badLine-1 {
+					badSrc += "\n"
+				}
+				badSrc += fmt.Sprintf("%"+fmt.Sprint(maxLineDigitCount)+"d: %s\n", i+1, line)
+				if i == badLine-1 {
+					badSrc += strings.Repeat(" ", badLineCharIdx+maxLineDigitCount+1) + "^\n"
+				}
+			}
+		}
+		return nil, fmt.Errorf("failed to parse Go code: %w; source:\n=-=\n%s", err, badSrc)
 	}
 
 	imports := make(map[string]string)
