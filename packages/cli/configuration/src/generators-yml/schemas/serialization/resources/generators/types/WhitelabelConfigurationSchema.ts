@@ -15,7 +15,7 @@ export const WhitelabelConfigurationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WhitelabelConfigurationSchema {
-    interface Raw {
+    export interface Raw {
         github?: WhitelabelGithubConfigurationSchema.Raw | null;
     }
 }

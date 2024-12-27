@@ -17,7 +17,6 @@ export type ProgrammingLanguage =
     | "jvm"
     | "ts"
     | "js";
-
 export const ProgrammingLanguage = {
     Typescript: "typescript",
     Javascript: "javascript",

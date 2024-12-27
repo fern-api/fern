@@ -14,7 +14,7 @@ export const ConjureSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureSchema {
-    interface Raw {
+    export interface Raw {
         conjure: string;
     }
 }

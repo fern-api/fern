@@ -15,7 +15,7 @@ export const FullOneOfExample: core.serialization.Schema<
         discriminated: core.serialization.object({
             value: core.serialization.record(
                 PropertyKey,
-                core.serialization.lazy(() => serializers.FullExample)
+                core.serialization.lazy(() => serializers.FullExample),
             ),
         }),
         undisciminated: core.serialization.object({
@@ -37,14 +37,14 @@ export const FullOneOfExample: core.serialization.Schema<
     });
 
 export declare namespace FullOneOfExample {
-    type Raw = FullOneOfExample.Discriminated | FullOneOfExample.Undisciminated;
+    export type Raw = FullOneOfExample.Discriminated | FullOneOfExample.Undisciminated;
 
-    interface Discriminated {
+    export interface Discriminated {
         type: "discriminated";
         value: Record<PropertyKey.Raw, serializers.FullExample.Raw>;
     }
 
-    interface Undisciminated {
+    export interface Undisciminated {
         type: "undisciminated";
         value: serializers.FullExample.Raw;
     }

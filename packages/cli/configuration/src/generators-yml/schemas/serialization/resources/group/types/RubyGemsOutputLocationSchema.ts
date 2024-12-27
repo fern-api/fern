@@ -16,7 +16,7 @@ export const RubyGemsOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace RubyGemsOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         url?: string | null;
         "package-name": string;
         "api-key"?: string | null;

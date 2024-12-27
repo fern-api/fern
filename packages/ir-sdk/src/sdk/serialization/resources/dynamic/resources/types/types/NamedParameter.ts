@@ -16,7 +16,7 @@ export const NamedParameter: core.serialization.ObjectSchema<
 });
 
 export declare namespace NamedParameter {
-    interface Raw {
+    export interface Raw {
         name: NameAndWireValue.Raw;
         typeReference: serializers.dynamic.TypeReference.Raw;
     }

@@ -14,7 +14,7 @@ export const CustomLicense: core.serialization.ObjectSchema<
 });
 
 export declare namespace CustomLicense {
-    interface Raw {
+    export interface Raw {
         filename: string;
     }
 }

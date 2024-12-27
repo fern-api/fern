@@ -33,17 +33,17 @@ export const AuthValues: core.serialization.Schema<serializers.dynamic.AuthValue
         });
 
 export declare namespace AuthValues {
-    type Raw = AuthValues.Basic | AuthValues.Bearer | AuthValues.Header;
+    export type Raw = AuthValues.Basic | AuthValues.Bearer | AuthValues.Header;
 
-    interface Basic extends BasicAuthValues.Raw {
+    export interface Basic extends BasicAuthValues.Raw {
         type: "basic";
     }
 
-    interface Bearer extends BearerAuthValues.Raw {
+    export interface Bearer extends BearerAuthValues.Raw {
         type: "bearer";
     }
 
-    interface Header extends HeaderAuthValues.Raw {
+    export interface Header extends HeaderAuthValues.Raw {
         type: "header";
     }
 }

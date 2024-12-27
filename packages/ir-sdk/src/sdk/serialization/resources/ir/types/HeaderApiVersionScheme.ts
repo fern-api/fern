@@ -17,7 +17,7 @@ export const HeaderApiVersionScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace HeaderApiVersionScheme {
-    interface Raw {
+    export interface Raw {
         header: HttpHeader.Raw;
         value: EnumTypeDeclaration.Raw;
     }

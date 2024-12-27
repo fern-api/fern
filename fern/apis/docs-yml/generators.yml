@@ -5,7 +5,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
+        version: 0.45.1
         output:
           location: local-file-system
           path: ../../../packages/cli/configuration/src/docs-yml/schemas/sdk
@@ -13,7 +13,7 @@ groups:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: false
           noOptionalProperties: false
-  publish: 
+  publish:
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13

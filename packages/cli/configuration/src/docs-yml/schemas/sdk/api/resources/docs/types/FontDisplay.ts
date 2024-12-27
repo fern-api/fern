@@ -3,7 +3,6 @@
  */
 
 export type FontDisplay = "auto" | "block" | "swap" | "fallback" | "optional";
-
 export const FontDisplay = {
     Auto: "auto",
     Block: "block",

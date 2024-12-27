@@ -21,7 +21,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace UnionTypeDeclaration {
-    interface Raw {
+    export interface Raw {
         discriminant: NameAndWireValue.Raw;
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];

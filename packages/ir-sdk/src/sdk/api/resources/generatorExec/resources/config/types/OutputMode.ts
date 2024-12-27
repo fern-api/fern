@@ -9,24 +9,24 @@ export type OutputMode =
     | FernIr.generatorExec.OutputMode.DownloadFiles
     | FernIr.generatorExec.OutputMode.Github;
 
-export declare namespace OutputMode {
-    interface Publish extends FernIr.generatorExec.GeneratorPublishConfig, _Utils {
+export namespace OutputMode {
+    export interface Publish extends FernIr.generatorExec.GeneratorPublishConfig, _Utils {
         type: "publish";
     }
 
-    interface DownloadFiles extends _Utils {
+    export interface DownloadFiles extends _Utils {
         type: "downloadFiles";
     }
 
-    interface Github extends FernIr.generatorExec.GithubOutputMode, _Utils {
+    export interface Github extends FernIr.generatorExec.GithubOutputMode, _Utils {
         type: "github";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         publish: (value: FernIr.generatorExec.GeneratorPublishConfig) => _Result;
         downloadFiles: () => _Result;
         github: (value: FernIr.generatorExec.GithubOutputMode) => _Result;
@@ -41,7 +41,7 @@ export const OutputMode = {
             type: "publish",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.OutputMode.Publish,
-                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>
+                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.OutputMode._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const OutputMode = {
             type: "downloadFiles",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.OutputMode.DownloadFiles,
-                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>
+                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.OutputMode._visit(this, visitor);
             },
@@ -66,7 +66,7 @@ export const OutputMode = {
             type: "github",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.OutputMode.Github,
-                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>
+                visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.OutputMode._visit(this, visitor);
             },
@@ -75,7 +75,7 @@ export const OutputMode = {
 
     _visit: <_Result>(
         value: FernIr.generatorExec.OutputMode,
-        visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>
+        visitor: FernIr.generatorExec.OutputMode._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "publish":

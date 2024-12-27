@@ -15,7 +15,7 @@ export const ConjureUnionDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureUnionDeclaration {
-    interface Raw {
+    export interface Raw {
         union: Record<string, ConjureTypeReference.Raw>;
     }
 }

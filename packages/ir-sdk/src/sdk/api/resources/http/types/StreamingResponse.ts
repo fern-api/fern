@@ -9,24 +9,24 @@ export type StreamingResponse =
     | FernIr.StreamingResponse.Text
     | FernIr.StreamingResponse.Sse;
 
-export declare namespace StreamingResponse {
-    interface Json extends FernIr.JsonStreamChunk, _Utils {
+export namespace StreamingResponse {
+    export interface Json extends FernIr.JsonStreamChunk, _Utils {
         type: "json";
     }
 
-    interface Text extends FernIr.TextStreamChunk, _Utils {
+    export interface Text extends FernIr.TextStreamChunk, _Utils {
         type: "text";
     }
 
-    interface Sse extends FernIr.SseStreamChunk, _Utils {
+    export interface Sse extends FernIr.SseStreamChunk, _Utils {
         type: "sse";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.StreamingResponse._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         json: (value: FernIr.JsonStreamChunk) => _Result;
         text: (value: FernIr.TextStreamChunk) => _Result;
         sse: (value: FernIr.SseStreamChunk) => _Result;
@@ -41,7 +41,7 @@ export const StreamingResponse = {
             type: "json",
             _visit: function <_Result>(
                 this: FernIr.StreamingResponse.Json,
-                visitor: FernIr.StreamingResponse._Visitor<_Result>
+                visitor: FernIr.StreamingResponse._Visitor<_Result>,
             ) {
                 return FernIr.StreamingResponse._visit(this, visitor);
             },
@@ -54,7 +54,7 @@ export const StreamingResponse = {
             type: "text",
             _visit: function <_Result>(
                 this: FernIr.StreamingResponse.Text,
-                visitor: FernIr.StreamingResponse._Visitor<_Result>
+                visitor: FernIr.StreamingResponse._Visitor<_Result>,
             ) {
                 return FernIr.StreamingResponse._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const StreamingResponse = {
             type: "sse",
             _visit: function <_Result>(
                 this: FernIr.StreamingResponse.Sse,
-                visitor: FernIr.StreamingResponse._Visitor<_Result>
+                visitor: FernIr.StreamingResponse._Visitor<_Result>,
             ) {
                 return FernIr.StreamingResponse._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const StreamingResponse = {
 
     _visit: <_Result>(
         value: FernIr.StreamingResponse,
-        visitor: FernIr.StreamingResponse._Visitor<_Result>
+        visitor: FernIr.StreamingResponse._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "json":

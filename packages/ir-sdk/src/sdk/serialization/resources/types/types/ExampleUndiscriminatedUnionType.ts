@@ -15,7 +15,7 @@ export const ExampleUndiscriminatedUnionType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleUndiscriminatedUnionType {
-    interface Raw {
+    export interface Raw {
         index: number;
         singleUnionType: serializers.ExampleTypeReference.Raw;
     }

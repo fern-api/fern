@@ -41,7 +41,7 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
     });
 
 export declare namespace Response {
-    type Raw =
+    export type Raw =
         | Response.File
         | Response.Json
         | Response.Text
@@ -49,27 +49,27 @@ export declare namespace Response {
         | Response.StreamingText
         | Response.StreamingJson;
 
-    interface File extends FileResponse.Raw {
+    export interface File extends FileResponse.Raw {
         type: "file";
     }
 
-    interface Json extends JsonResponse.Raw {
+    export interface Json extends JsonResponse.Raw {
         type: "json";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
     }
 
-    interface StreamingSse extends JsonResponse.Raw {
+    export interface StreamingSse extends JsonResponse.Raw {
         type: "streamingSse";
     }
 
-    interface StreamingText extends TextResponse.Raw {
+    export interface StreamingText extends TextResponse.Raw {
         type: "streamingText";
     }
 
-    interface StreamingJson extends JsonResponse.Raw {
+    export interface StreamingJson extends JsonResponse.Raw {
         type: "streamingJson";
     }
 }

@@ -3,7 +3,6 @@
  */
 
 export type WebSocketOrigin = "client" | "server";
-
 export const WebSocketOrigin = {
     Client: "client",
     Server: "server",

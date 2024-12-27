@@ -11,5 +11,5 @@ export const SdkGroup: core.serialization.Schema<serializers.SdkGroup.Raw, FernO
     core.serialization.undiscriminatedUnion([core.serialization.string(), Namespace]);
 
 export declare namespace SdkGroup {
-    type Raw = string | Namespace.Raw;
+    export type Raw = string | Namespace.Raw;
 }

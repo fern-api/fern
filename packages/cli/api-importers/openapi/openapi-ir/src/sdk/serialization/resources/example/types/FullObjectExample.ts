@@ -13,12 +13,12 @@ export const FullObjectExample: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     properties: core.serialization.record(
         PropertyKey,
-        core.serialization.lazy(() => serializers.FullExample)
+        core.serialization.lazy(() => serializers.FullExample),
     ),
 });
 
 export declare namespace FullObjectExample {
-    interface Raw {
+    export interface Raw {
         properties: Record<PropertyKey.Raw, serializers.FullExample.Raw>;
     }
 }

@@ -37,18 +37,18 @@ export const InlinedRequestBody: core.serialization.Schema<
     });
 
 export declare namespace InlinedRequestBody {
-    type Raw = InlinedRequestBody.Properties | InlinedRequestBody.Referenced | InlinedRequestBody.FileUpload;
+    export type Raw = InlinedRequestBody.Properties | InlinedRequestBody.Referenced | InlinedRequestBody.FileUpload;
 
-    interface Properties {
+    export interface Properties {
         type: "properties";
         value: NamedParameter.Raw[];
     }
 
-    interface Referenced extends ReferencedRequestBody.Raw {
+    export interface Referenced extends ReferencedRequestBody.Raw {
         type: "referenced";
     }
 
-    interface FileUpload extends FileUploadRequestBody.Raw {
+    export interface FileUpload extends FileUploadRequestBody.Raw {
         type: "fileUpload";
     }
 }

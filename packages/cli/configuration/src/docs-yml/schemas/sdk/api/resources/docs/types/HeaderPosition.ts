@@ -3,7 +3,6 @@
  */
 
 export type HeaderPosition = "fixed" | "static";
-
 export const HeaderPosition = {
     Fixed: "fixed",
     Static: "static",

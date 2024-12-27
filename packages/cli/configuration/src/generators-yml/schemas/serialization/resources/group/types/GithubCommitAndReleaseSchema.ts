@@ -18,7 +18,7 @@ export const GithubCommitAndReleaseSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GithubCommitAndReleaseSchema {
-    interface Raw {
+    export interface Raw {
         repository: string;
         license?: GithubLicenseSchema.Raw | null;
         mode?: GithubCommitAndReleaseMode.Raw | null;

@@ -37,30 +37,30 @@ export const ExampleTypeShape: core.serialization.Schema<serializers.ExampleType
         });
 
 export declare namespace ExampleTypeShape {
-    type Raw =
+    export type Raw =
         | ExampleTypeShape.Alias
         | ExampleTypeShape.Enum
         | ExampleTypeShape.Object
         | ExampleTypeShape.Union
         | ExampleTypeShape.UndiscriminatedUnion;
 
-    interface Alias extends serializers.ExampleAliasType.Raw {
+    export interface Alias extends serializers.ExampleAliasType.Raw {
         type: "alias";
     }
 
-    interface Enum extends ExampleEnumType.Raw {
+    export interface Enum extends ExampleEnumType.Raw {
         type: "enum";
     }
 
-    interface Object extends serializers.ExampleObjectType.Raw {
+    export interface Object extends serializers.ExampleObjectType.Raw {
         type: "object";
     }
 
-    interface Union extends serializers.ExampleUnionType.Raw {
+    export interface Union extends serializers.ExampleUnionType.Raw {
         type: "union";
     }
 
-    interface UndiscriminatedUnion extends serializers.ExampleUndiscriminatedUnionType.Raw {
+    export interface UndiscriminatedUnion extends serializers.ExampleUndiscriminatedUnionType.Raw {
         type: "undiscriminatedUnion";
     }
 }

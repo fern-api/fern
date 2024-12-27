@@ -13,7 +13,7 @@ export const WithName: core.serialization.ObjectSchema<serializers.WithName.Raw,
     });
 
 export declare namespace WithName {
-    interface Raw {
+    export interface Raw {
         nameOverride?: string | null;
         generatedName: string;
     }

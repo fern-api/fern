@@ -15,7 +15,7 @@ export const ProtobufFile: core.serialization.ObjectSchema<serializers.ProtobufF
     });
 
 export declare namespace ProtobufFile {
-    interface Raw {
+    export interface Raw {
         filepath: string;
         packageName?: string | null;
         options?: ProtobufFileOptions.Raw | null;

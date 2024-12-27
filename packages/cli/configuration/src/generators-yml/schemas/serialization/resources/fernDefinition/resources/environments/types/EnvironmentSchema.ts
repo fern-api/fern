@@ -18,5 +18,5 @@ export const EnvironmentSchema: core.serialization.Schema<
 ]);
 
 export declare namespace EnvironmentSchema {
-    type Raw = string | SingleBaseUrlEnvironmentSchema.Raw | MultipleBaseUrlsEnvironmentSchema.Raw;
+    export type Raw = string | SingleBaseUrlEnvironmentSchema.Raw | MultipleBaseUrlsEnvironmentSchema.Raw;
 }

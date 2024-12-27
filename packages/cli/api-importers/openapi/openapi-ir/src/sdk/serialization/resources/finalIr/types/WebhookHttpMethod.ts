@@ -12,5 +12,5 @@ export const WebhookHttpMethod: core.serialization.Schema<
 > = core.serialization.enum_(["GET", "POST"]);
 
 export declare namespace WebhookHttpMethod {
-    type Raw = "GET" | "POST";
+    export type Raw = "GET" | "POST";
 }

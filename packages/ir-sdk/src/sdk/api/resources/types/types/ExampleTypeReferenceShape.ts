@@ -10,31 +10,31 @@ export type ExampleTypeReferenceShape =
     | FernIr.ExampleTypeReferenceShape.Unknown
     | FernIr.ExampleTypeReferenceShape.Named;
 
-export declare namespace ExampleTypeReferenceShape {
-    interface Primitive extends _Utils {
+export namespace ExampleTypeReferenceShape {
+    export interface Primitive extends _Utils {
         type: "primitive";
         primitive: FernIr.ExamplePrimitive;
     }
 
-    interface Container extends _Utils {
+    export interface Container extends _Utils {
         type: "container";
         container: FernIr.ExampleContainer;
     }
 
-    interface Unknown extends _Utils {
+    export interface Unknown extends _Utils {
         type: "unknown";
         unknown: unknown;
     }
 
-    interface Named extends FernIr.ExampleNamedType, _Utils {
+    export interface Named extends FernIr.ExampleNamedType, _Utils {
         type: "named";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         primitive: (value: FernIr.ExamplePrimitive) => _Result;
         container: (value: FernIr.ExampleContainer) => _Result;
         unknown: (value: unknown) => _Result;
@@ -50,7 +50,7 @@ export const ExampleTypeReferenceShape = {
             type: "primitive",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeReferenceShape.Primitive,
-                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeReferenceShape._visit(this, visitor);
             },
@@ -63,7 +63,7 @@ export const ExampleTypeReferenceShape = {
             type: "container",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeReferenceShape.Container,
-                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeReferenceShape._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const ExampleTypeReferenceShape = {
             type: "unknown",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeReferenceShape.Unknown,
-                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeReferenceShape._visit(this, visitor);
             },
@@ -89,7 +89,7 @@ export const ExampleTypeReferenceShape = {
             type: "named",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeReferenceShape.Named,
-                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeReferenceShape._visit(this, visitor);
             },
@@ -98,7 +98,7 @@ export const ExampleTypeReferenceShape = {
 
     _visit: <_Result>(
         value: FernIr.ExampleTypeReferenceShape,
-        visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>
+        visitor: FernIr.ExampleTypeReferenceShape._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "primitive":

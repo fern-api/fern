@@ -16,7 +16,7 @@ export const Declaration: core.serialization.ObjectSchema<serializers.Declaratio
         .extend(WithDocs);
 
 export declare namespace Declaration {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         availability?: Availability.Raw | null;
     }
 }

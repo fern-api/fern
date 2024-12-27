@@ -12,5 +12,5 @@ export const EnvironmentVariable: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace EnvironmentVariable {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -14,7 +14,7 @@ export const LocalFileSystemOutputLocationSchema: core.serialization.ObjectSchem
 });
 
 export declare namespace LocalFileSystemOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         path: string;
     }
 }

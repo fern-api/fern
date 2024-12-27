@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type ExampleRequestBody = FernIr.ExampleRequestBody.InlinedRequestBody | FernIr.ExampleRequestBody.Reference;
 
-export declare namespace ExampleRequestBody {
-    interface InlinedRequestBody extends FernIr.ExampleInlinedRequestBody, _Utils {
+export namespace ExampleRequestBody {
+    export interface InlinedRequestBody extends FernIr.ExampleInlinedRequestBody, _Utils {
         type: "inlinedRequestBody";
     }
 
-    interface Reference extends FernIr.ExampleTypeReference, _Utils {
+    export interface Reference extends FernIr.ExampleTypeReference, _Utils {
         type: "reference";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleRequestBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         inlinedRequestBody: (value: FernIr.ExampleInlinedRequestBody) => _Result;
         reference: (value: FernIr.ExampleTypeReference) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const ExampleRequestBody = {
             type: "inlinedRequestBody",
             _visit: function <_Result>(
                 this: FernIr.ExampleRequestBody.InlinedRequestBody,
-                visitor: FernIr.ExampleRequestBody._Visitor<_Result>
+                visitor: FernIr.ExampleRequestBody._Visitor<_Result>,
             ) {
                 return FernIr.ExampleRequestBody._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const ExampleRequestBody = {
             type: "reference",
             _visit: function <_Result>(
                 this: FernIr.ExampleRequestBody.Reference,
-                visitor: FernIr.ExampleRequestBody._Visitor<_Result>
+                visitor: FernIr.ExampleRequestBody._Visitor<_Result>,
             ) {
                 return FernIr.ExampleRequestBody._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const ExampleRequestBody = {
 
     _visit: <_Result>(
         value: FernIr.ExampleRequestBody,
-        visitor: FernIr.ExampleRequestBody._Visitor<_Result>
+        visitor: FernIr.ExampleRequestBody._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "inlinedRequestBody":

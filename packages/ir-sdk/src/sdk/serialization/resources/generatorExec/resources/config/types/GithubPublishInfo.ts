@@ -47,7 +47,7 @@ export const GithubPublishInfo: core.serialization.Schema<
     });
 
 export declare namespace GithubPublishInfo {
-    type Raw =
+    export type Raw =
         | GithubPublishInfo.Npm
         | GithubPublishInfo.Maven
         | GithubPublishInfo.Postman
@@ -55,27 +55,27 @@ export declare namespace GithubPublishInfo {
         | GithubPublishInfo.Rubygems
         | GithubPublishInfo.Nuget;
 
-    interface Npm extends NpmGithubPublishInfo.Raw {
+    export interface Npm extends NpmGithubPublishInfo.Raw {
         type: "npm";
     }
 
-    interface Maven extends MavenGithubPublishInfo.Raw {
+    export interface Maven extends MavenGithubPublishInfo.Raw {
         type: "maven";
     }
 
-    interface Postman extends PostmanGithubPublishInfo.Raw {
+    export interface Postman extends PostmanGithubPublishInfo.Raw {
         type: "postman";
     }
 
-    interface Pypi extends PypiGithubPublishInfo.Raw {
+    export interface Pypi extends PypiGithubPublishInfo.Raw {
         type: "pypi";
     }
 
-    interface Rubygems extends RubyGemsGithubPublishInfo.Raw {
+    export interface Rubygems extends RubyGemsGithubPublishInfo.Raw {
         type: "rubygems";
     }
 
-    interface Nuget extends NugetGithubPublishInfo.Raw {
+    export interface Nuget extends NugetGithubPublishInfo.Raw {
         type: "nuget";
     }
 }

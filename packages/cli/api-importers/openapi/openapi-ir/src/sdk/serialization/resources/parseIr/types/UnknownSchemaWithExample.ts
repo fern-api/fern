@@ -25,7 +25,12 @@ export const UnknownSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithTitle);
 
 export declare namespace UnknownSchemaWithExample {
-    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw, WithTitle.Raw {
+    export interface Raw
+        extends WithSdkGroupName.Raw,
+            WithName.Raw,
+            WithDescription.Raw,
+            WithAvailability.Raw,
+            WithTitle.Raw {
         example?: unknown;
     }
 }

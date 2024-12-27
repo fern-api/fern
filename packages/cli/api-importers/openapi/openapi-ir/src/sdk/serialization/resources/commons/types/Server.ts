@@ -16,7 +16,7 @@ export const Server: core.serialization.ObjectSchema<serializers.Server.Raw, Fer
     .extend(WithDescription);
 
 export declare namespace Server {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         url: string;
         audiences?: string[] | null;

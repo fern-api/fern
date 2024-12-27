@@ -10,5 +10,5 @@ export const EndpointId: core.serialization.Schema<serializers.EndpointId.Raw, F
     core.serialization.string();
 
 export declare namespace EndpointId {
-    type Raw = string;
+    export type Raw = string;
 }

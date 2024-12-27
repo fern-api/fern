@@ -20,7 +20,7 @@ export const CustomCodeSampleLanguage: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace CustomCodeSampleLanguage {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         language: string;
         code: string;

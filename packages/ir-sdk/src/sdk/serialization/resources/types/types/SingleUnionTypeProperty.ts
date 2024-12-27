@@ -16,7 +16,7 @@ export const SingleUnionTypeProperty: core.serialization.ObjectSchema<
 });
 
 export declare namespace SingleUnionTypeProperty {
-    interface Raw {
+    export interface Raw {
         name: NameAndWireValue.Raw;
         type: serializers.TypeReference.Raw;
     }

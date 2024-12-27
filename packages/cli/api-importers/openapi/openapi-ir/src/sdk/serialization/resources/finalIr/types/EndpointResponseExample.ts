@@ -32,13 +32,13 @@ export const EndpointResponseExample: core.serialization.Schema<
     });
 
 export declare namespace EndpointResponseExample {
-    type Raw = EndpointResponseExample.WithStreaming | EndpointResponseExample.WithoutStreaming;
+    export type Raw = EndpointResponseExample.WithStreaming | EndpointResponseExample.WithoutStreaming;
 
-    interface WithStreaming extends StreamingResponseExample.Raw {
+    export interface WithStreaming extends StreamingResponseExample.Raw {
         type: "withStreaming";
     }
 
-    interface WithoutStreaming {
+    export interface WithoutStreaming {
         type: "withoutStreaming";
         value: serializers.FullExample.Raw;
     }

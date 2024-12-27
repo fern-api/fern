@@ -12,5 +12,5 @@ export const PathParameterLocation: core.serialization.Schema<
 > = core.serialization.enum_(["ROOT", "SERVICE", "ENDPOINT"]);
 
 export declare namespace PathParameterLocation {
-    type Raw = "ROOT" | "SERVICE" | "ENDPOINT";
+    export type Raw = "ROOT" | "SERVICE" | "ENDPOINT";
 }

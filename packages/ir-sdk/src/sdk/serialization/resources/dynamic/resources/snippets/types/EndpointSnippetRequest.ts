@@ -25,7 +25,7 @@ export const EndpointSnippetRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointSnippetRequest {
-    interface Raw {
+    export interface Raw {
         endpoint: EndpointLocation.Raw;
         baseURL?: string | null;
         environment?: EnvironmentValues.Raw | null;

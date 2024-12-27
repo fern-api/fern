@@ -16,7 +16,7 @@ export const ExampleSingleUnionType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleSingleUnionType {
-    interface Raw {
+    export interface Raw {
         wireDiscriminantValue: NameAndWireValue.Raw;
         shape: serializers.ExampleSingleUnionTypeProperties.Raw;
     }

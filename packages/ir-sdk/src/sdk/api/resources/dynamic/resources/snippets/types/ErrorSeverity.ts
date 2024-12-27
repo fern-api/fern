@@ -3,7 +3,6 @@
  */
 
 export type ErrorSeverity = "CRITICAL" | "WARNING";
-
 export const ErrorSeverity = {
     Critical: "CRITICAL",
     Warning: "WARNING",
@@ -19,8 +18,8 @@ export const ErrorSeverity = {
     },
 } as const;
 
-export declare namespace ErrorSeverity {
-    interface Visitor<R> {
+export namespace ErrorSeverity {
+    export interface Visitor<R> {
         critical: () => R;
         warning: () => R;
         _other: () => R;

@@ -25,9 +25,9 @@ export const NamedTypeDefault: core.serialization.Schema<serializers.NamedTypeDe
         });
 
 export declare namespace NamedTypeDefault {
-    type Raw = NamedTypeDefault.Enum;
+    export type Raw = NamedTypeDefault.Enum;
 
-    interface Enum extends EnumValue.Raw {
+    export interface Enum extends EnumValue.Raw {
         type: "enum";
     }
 }

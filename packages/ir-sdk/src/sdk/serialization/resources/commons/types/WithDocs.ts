@@ -12,7 +12,7 @@ export const WithDocs: core.serialization.ObjectSchema<serializers.WithDocs.Raw,
     });
 
 export declare namespace WithDocs {
-    interface Raw {
+    export interface Raw {
         docs?: string | null;
     }
 }

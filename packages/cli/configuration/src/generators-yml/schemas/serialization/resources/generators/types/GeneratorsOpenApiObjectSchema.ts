@@ -19,7 +19,7 @@ export const GeneratorsOpenApiObjectSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorsOpenApiObjectSchema {
-    interface Raw {
+    export interface Raw {
         path: string;
         origin?: string | null;
         overrides?: string | null;

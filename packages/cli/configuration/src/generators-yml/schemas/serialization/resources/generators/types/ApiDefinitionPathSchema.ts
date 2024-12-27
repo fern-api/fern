@@ -12,5 +12,5 @@ export const ApiDefinitionPathSchema: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace ApiDefinitionPathSchema {
-    type Raw = string;
+    export type Raw = string;
 }

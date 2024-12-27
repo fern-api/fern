@@ -19,5 +19,8 @@ export const ApiConfigurationSchema: core.serialization.Schema<
 ]);
 
 export declare namespace ApiConfigurationSchema {
-    type Raw = ApiConfigurationSchemaInternal.Raw | NamespacedApiConfigurationSchema.Raw | ApiConfigurationV2Schema.Raw;
+    export type Raw =
+        | ApiConfigurationSchemaInternal.Raw
+        | NamespacedApiConfigurationSchema.Raw
+        | ApiConfigurationV2Schema.Raw;
 }

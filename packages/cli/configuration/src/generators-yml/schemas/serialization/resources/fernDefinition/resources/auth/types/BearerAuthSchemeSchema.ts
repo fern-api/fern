@@ -19,7 +19,7 @@ export const BearerAuthSchemeSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace BearerAuthSchemeSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
         token?: AuthVariable.Raw | null;
     }
