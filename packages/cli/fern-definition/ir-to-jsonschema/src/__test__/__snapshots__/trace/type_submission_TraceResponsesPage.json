@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "If present, use this to load subseqent pages.\nThe offset is the id of the next trace response to load."
     },
     "traceResponses": {
       "type": "array",

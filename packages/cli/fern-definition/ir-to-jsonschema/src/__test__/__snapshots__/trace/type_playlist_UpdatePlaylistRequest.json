@@ -8,7 +8,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.ProblemId"
-      }
+      },
+      "description": "The problems that make up the playlist."
     }
   },
   "required": [
