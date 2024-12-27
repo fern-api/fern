@@ -164,7 +164,7 @@ func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 	data := bytes[startIndex:]
 	delimIndex := strings.Index(string(data), s.options.delimiter)
 	if delimIndex < 0 {
-		return start + len(data), data, nil
+		return startIndex + len(data), data, nil
 	}
 	endIndex := delimIndex + len(s.options.delimiter)
 	parsedData := data[:endIndex]
