@@ -10,7 +10,7 @@ export const Request: core.serialization.Schema<serializers.service.getOptionalM
     core.serialization.string();
 
 export declare namespace Request {
-    type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<
@@ -19,5 +19,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.Response).optional();
 
 export declare namespace Response {
-    type Raw = serializers.Response.Raw | null | undefined;
+    export type Raw = serializers.Response.Raw | null | undefined;
 }

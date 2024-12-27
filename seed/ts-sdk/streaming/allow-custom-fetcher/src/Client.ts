@@ -6,12 +6,12 @@ import * as core from "./core";
 import { Dummy } from "./api/resources/dummy/client/Client";
 
 export declare namespace SeedStreamingClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

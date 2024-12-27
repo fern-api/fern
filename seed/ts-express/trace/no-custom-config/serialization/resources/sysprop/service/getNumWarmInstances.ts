@@ -15,5 +15,5 @@ export const Response: core.serialization.Schema<
 );
 
 export declare namespace Response {
-    type Raw = Record<serializers.Language.Raw, number | null | undefined>;
+    export type Raw = Record<serializers.Language.Raw, number | null | undefined>;
 }

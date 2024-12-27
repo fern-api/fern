@@ -15,7 +15,7 @@ export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
-    interface Raw {
+    export interface Raw {
         template?: serializers.v2.v3.TestCaseTemplate.Raw | null;
         testCase: serializers.v2.v3.TestCaseV2.Raw;
     }

@@ -15,7 +15,7 @@ export const TestCaseImplementation: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseImplementation {
-    interface Raw {
+    export interface Raw {
         description: serializers.v2.TestCaseImplementationDescription.Raw;
         function: serializers.v2.TestCaseFunction.Raw;
     }

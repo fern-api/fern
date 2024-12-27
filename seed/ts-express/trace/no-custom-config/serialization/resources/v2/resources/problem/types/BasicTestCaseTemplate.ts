@@ -17,7 +17,7 @@ export const BasicTestCaseTemplate: core.serialization.ObjectSchema<
 });
 
 export declare namespace BasicTestCaseTemplate {
-    interface Raw {
+    export interface Raw {
         templateId: serializers.v2.TestCaseTemplateId.Raw;
         name: string;
         description: serializers.v2.TestCaseImplementationDescription.Raw;

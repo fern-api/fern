@@ -15,7 +15,7 @@ export const Request: core.serialization.Schema<
 );
 
 export declare namespace Request {
-    type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
 }
 
 export const Response: core.serialization.Schema<
@@ -27,5 +27,5 @@ export const Response: core.serialization.Schema<
 );
 
 export declare namespace Response {
-    type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
 }

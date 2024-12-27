@@ -23,11 +23,11 @@ export namespace CustomFiles {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: SeedTrace.v2.v3.BasicCustomFiles) => _Result;
         custom: (value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>) => _Result;
         _other: (value: { type: string }) => _Result;

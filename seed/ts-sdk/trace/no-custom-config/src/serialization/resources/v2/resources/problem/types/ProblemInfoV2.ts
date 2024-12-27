@@ -30,7 +30,7 @@ export const ProblemInfoV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProblemInfoV2 {
-    interface Raw {
+    export interface Raw {
         problemId: ProblemId.Raw;
         problemDescription: ProblemDescription.Raw;
         problemName: string;

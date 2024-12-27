@@ -30,11 +30,11 @@ export namespace ProblemDescriptionBoard {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         html: (value: string) => _Result;
         variable: (value: SeedTrace.VariableValue) => _Result;
         testCaseId: (value: string) => _Result;

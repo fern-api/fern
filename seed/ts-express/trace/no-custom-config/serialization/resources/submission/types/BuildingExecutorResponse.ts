@@ -15,7 +15,7 @@ export const BuildingExecutorResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace BuildingExecutorResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         status: serializers.ExecutionSessionStatus.Raw;
     }

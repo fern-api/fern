@@ -13,7 +13,7 @@ export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseT
     });
 
 export declare namespace ResponseType {
-    interface Raw {
+    export interface Raw {
         type: Type.Raw;
     }
 }

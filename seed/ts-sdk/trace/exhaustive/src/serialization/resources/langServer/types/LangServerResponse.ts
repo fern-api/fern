@@ -14,7 +14,7 @@ export const LangServerResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace LangServerResponse {
-    interface Raw {
+    export interface Raw {
         response?: unknown;
     }
 }

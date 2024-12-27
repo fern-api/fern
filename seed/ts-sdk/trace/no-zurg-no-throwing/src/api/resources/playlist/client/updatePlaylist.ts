@@ -20,7 +20,7 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }

@@ -89,11 +89,11 @@ export namespace CodeExecutionUpdate {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         buildingExecutor: (value: SeedTrace.BuildingExecutorResponse) => _Result;
         running: (value: SeedTrace.RunningResponse) => _Result;
         errored: (value: SeedTrace.ErroredResponse) => _Result;

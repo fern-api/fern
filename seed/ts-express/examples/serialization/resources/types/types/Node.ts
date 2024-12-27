@@ -15,7 +15,7 @@ export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedExa
 );
 
 export declare namespace Node {
-    interface Raw {
+    export interface Raw {
         name: string;
         nodes?: serializers.Node.Raw[] | null;
         trees?: serializers.Tree.Raw[] | null;

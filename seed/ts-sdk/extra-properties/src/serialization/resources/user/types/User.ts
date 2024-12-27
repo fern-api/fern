@@ -13,7 +13,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedExt
     .passthrough();
 
 export declare namespace User {
-    interface Raw {
+    export interface Raw {
         name: string;
         [key: string]: any;
     }

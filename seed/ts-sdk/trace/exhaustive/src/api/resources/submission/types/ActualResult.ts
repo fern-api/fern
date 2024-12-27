@@ -29,11 +29,11 @@ export namespace ActualResult {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ActualResult._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         value: (value: SeedTrace.VariableValue) => _Result;
         exception: (value: SeedTrace.ExceptionInfo) => _Result;
         exceptionV2: (value: SeedTrace.ExceptionV2) => _Result;

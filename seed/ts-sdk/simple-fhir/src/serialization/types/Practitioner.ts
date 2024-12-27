@@ -18,7 +18,7 @@ export const Practitioner: core.serialization.ObjectSchema<serializers.Practitio
         .extend(core.serialization.lazyObject(() => serializers.BaseResource));
 
 export declare namespace Practitioner {
-    interface Raw extends serializers.BaseResource.Raw {
+    export interface Raw extends serializers.BaseResource.Raw {
         resource_type: "Practitioner";
         name: string;
     }

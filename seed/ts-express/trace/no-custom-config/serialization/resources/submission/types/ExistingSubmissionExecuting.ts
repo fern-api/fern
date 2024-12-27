@@ -14,7 +14,7 @@ export const ExistingSubmissionExecuting: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExistingSubmissionExecuting {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
     }
 }
