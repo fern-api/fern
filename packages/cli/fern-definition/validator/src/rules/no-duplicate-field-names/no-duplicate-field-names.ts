@@ -174,8 +174,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
 function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[] {
     const nameToCount: Record<string, number> = {};
     for (const item of items) {
-        const count = nameToCount[getName(item)];
-        nameToCount[getName(item)] = count == null ? 0 : count + 1;
+        const count = nameToCount[getName(item)] ?? 0;
+        nameToCount[getName(item)] = count + 1;
     }
 
     return Object.entries(nameToCount).reduce<string[]>((duplicates, [name, count]) => {
