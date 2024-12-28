@@ -1,15 +1,15 @@
 ## 0.46.11
-**`(fix):`** Allow for configuring the depth of example generation in API Docs. For example, 
-if you want to generate optional properties that are 5 levels deep, you can add 
+**`(fix):`** Allow for configuring the depth of example generation in API Docs. For example,
+if you want to generate optional properties that are 5 levels deep, you can add
 the following configuration in your `generators.yml`
 
 ```yml generators.yml
 api:
-  specs: 
+  specs:
     - openapi: ./openapi.json
-      settings: 
-        example-generation: 
-          response: 
+      settings:
+        example-generation:
+          response:
             max-depth: 10
 ```
 
