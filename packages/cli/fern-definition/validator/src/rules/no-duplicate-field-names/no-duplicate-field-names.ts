@@ -171,7 +171,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
     }
 };
 
-function getDuplicateNames<T extends {}>(items: T[], getName: (item: T) => string): string[] {
+function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[] {
     const nameToCount: Record<string, number> = {};
     for (const item of items) {
         const count = nameToCount[getName(item)];
