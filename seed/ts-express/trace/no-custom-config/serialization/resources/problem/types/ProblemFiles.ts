@@ -13,7 +13,7 @@ export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFi
     });
 
 export declare namespace ProblemFiles {
-    interface Raw {
+    export interface Raw {
         solutionFile: serializers.FileInfo.Raw;
         readOnlyFiles: serializers.FileInfo.Raw[];
     }

@@ -24,7 +24,7 @@ export namespace UnionWithBaseProperties {
         type: "foo";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

@@ -33,7 +33,8 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
                     type: `"${this.discriminantValue}"`
                 },
                 ...this.getNonDiscriminantPropertiesForInterface(context)
-            ]
+            ],
+            isExported: true
         };
     }
 

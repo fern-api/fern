@@ -18,7 +18,7 @@ export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.v3.TestC
     });
 
 export declare namespace TestCaseV2 {
-    interface Raw {
+    export interface Raw {
         metadata: serializers.v2.v3.TestCaseMetadata.Raw;
         implementation: serializers.v2.v3.TestCaseImplementationReference.Raw;
         arguments: Record<serializers.v2.v3.ParameterId.Raw, serializers.VariableValue.Raw>;

@@ -10,5 +10,5 @@ export const ObjectValue: core.serialization.ObjectSchema<serializers.ObjectValu
     core.serialization.object({});
 
 export declare namespace ObjectValue {
-    interface Raw {}
+    export interface Raw {}
 }

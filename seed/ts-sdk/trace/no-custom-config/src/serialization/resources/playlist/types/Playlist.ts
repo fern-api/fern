@@ -18,7 +18,7 @@ export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw,
         .extend(PlaylistCreateRequest);
 
 export declare namespace Playlist {
-    interface Raw extends PlaylistCreateRequest.Raw {
+    export interface Raw extends PlaylistCreateRequest.Raw {
         playlist_id: PlaylistId.Raw;
         "owner-id": UserId.Raw;
     }

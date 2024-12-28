@@ -12,5 +12,5 @@ export const TerminatedResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({});
 
 export declare namespace TerminatedResponse {
-    interface Raw {}
+    export interface Raw {}
 }

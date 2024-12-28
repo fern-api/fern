@@ -26,7 +26,7 @@ export const UndiscriminatedUnion1: core.serialization.Schema<
 ]);
 
 export declare namespace UndiscriminatedUnion1 {
-    type Raw =
+    export type Raw =
         | serializers.UndiscriminatedUnion1InlineType1.Raw
         | serializers.UndiscriminatedUnion1InlineType2.Raw
         | serializers.UndiscriminatedUnion1DiscriminatedUnion1.Raw

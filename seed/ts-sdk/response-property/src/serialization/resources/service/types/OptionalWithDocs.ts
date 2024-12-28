@@ -13,5 +13,5 @@ export const OptionalWithDocs: core.serialization.Schema<
 > = WithDocs.optional();
 
 export declare namespace OptionalWithDocs {
-    type Raw = WithDocs.Raw | null | undefined;
+    export type Raw = WithDocs.Raw | null | undefined;
 }

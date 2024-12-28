@@ -14,7 +14,7 @@ export const BadObjectRequestInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace BadObjectRequestInfo {
-    interface Raw {
+    export interface Raw {
         message: string;
     }
 }

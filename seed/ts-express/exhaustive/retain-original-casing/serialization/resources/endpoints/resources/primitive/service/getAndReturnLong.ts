@@ -9,7 +9,7 @@ export const Request: core.serialization.Schema<serializers.endpoints.primitive.
     core.serialization.number();
 
 export declare namespace Request {
-    type Raw = number;
+    export type Raw = number;
 }
 
 export const Response: core.serialization.Schema<
@@ -18,5 +18,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.number();
 
 export declare namespace Response {
-    type Raw = number;
+    export type Raw = number;
 }

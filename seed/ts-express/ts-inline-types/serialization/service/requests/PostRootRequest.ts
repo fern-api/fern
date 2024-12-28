@@ -13,7 +13,7 @@ export const PostRootRequest: core.serialization.Schema<serializers.PostRootRequ
     });
 
 export declare namespace PostRootRequest {
-    interface Raw {
+    export interface Raw {
         bar: serializers.RequestTypeInlineType1.Raw;
         foo: string;
     }

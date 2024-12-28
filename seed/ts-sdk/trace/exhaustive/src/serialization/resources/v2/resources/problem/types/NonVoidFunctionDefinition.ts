@@ -17,7 +17,7 @@ export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
 });
 
 export declare namespace NonVoidFunctionDefinition {
-    interface Raw {
+    export interface Raw {
         signature: NonVoidFunctionSignature.Raw;
         code: FunctionImplementationForMultipleLanguages.Raw;
     }

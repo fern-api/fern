@@ -44,11 +44,11 @@ export namespace TestSubmissionUpdateInfo {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         running: (value: SeedTrace.RunningSubmissionState) => _Result;
         stopped: () => _Result;
         errored: (value: SeedTrace.ErrorInfo) => _Result;

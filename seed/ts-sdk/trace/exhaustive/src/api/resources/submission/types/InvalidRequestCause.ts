@@ -31,11 +31,11 @@ export namespace InvalidRequestCause {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.InvalidRequestCause._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         submissionIdNotFound: (value: SeedTrace.SubmissionIdNotFound) => _Result;
         customTestCasesUnsupported: (value: SeedTrace.CustomTestCasesUnsupported) => _Result;
         unexpectedLanguage: (value: SeedTrace.UnexpectedLanguageError) => _Result;

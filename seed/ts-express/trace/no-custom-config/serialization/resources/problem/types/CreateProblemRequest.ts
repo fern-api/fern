@@ -23,7 +23,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateProblemRequest {
-    interface Raw {
+    export interface Raw {
         problemName: string;
         problemDescription: serializers.ProblemDescription.Raw;
         files: Record<serializers.Language.Raw, serializers.ProblemFiles.Raw | null | undefined>;

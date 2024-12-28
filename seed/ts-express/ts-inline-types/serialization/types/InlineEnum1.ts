@@ -10,5 +10,5 @@ export const InlineEnum1: core.serialization.Schema<serializers.InlineEnum1.Raw,
     core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
 export declare namespace InlineEnum1 {
-    type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
+    export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 }

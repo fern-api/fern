@@ -24,14 +24,14 @@ export const UnionWithOptionalTime: core.serialization.Schema<
     });
 
 export declare namespace UnionWithOptionalTime {
-    type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Dateimte;
+    export type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Dateimte;
 
-    interface Date {
+    export interface Date {
         type: "date";
         value?: string | null;
     }
 
-    interface Dateimte {
+    export interface Dateimte {
         type: "dateimte";
         value?: string | null;
     }

@@ -17,7 +17,7 @@ export const ObjectWithMapOfMap: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectWithMapOfMap {
-    interface Raw {
+    export interface Raw {
         map: Record<string, Record<string, string>>;
     }
 }

@@ -15,7 +15,7 @@ export const UndiscriminatedUnion1InlineMapItem1: core.serialization.ObjectSchem
 });
 
 export declare namespace UndiscriminatedUnion1InlineMapItem1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
         ref: serializers.ReferenceType.Raw;
     }

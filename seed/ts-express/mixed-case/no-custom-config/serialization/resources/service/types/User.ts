@@ -20,7 +20,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMix
     });
 
 export declare namespace User {
-    interface Raw {
+    export interface Raw {
         userName: string;
         metadata_tags: string[];
         EXTRA_PROPERTIES: Record<string, string>;

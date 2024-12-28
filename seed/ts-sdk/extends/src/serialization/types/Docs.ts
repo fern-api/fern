@@ -11,7 +11,7 @@ export const Docs: core.serialization.ObjectSchema<serializers.Docs.Raw, SeedExt
 });
 
 export declare namespace Docs {
-    interface Raw {
+    export interface Raw {
         docs: string;
     }
 }

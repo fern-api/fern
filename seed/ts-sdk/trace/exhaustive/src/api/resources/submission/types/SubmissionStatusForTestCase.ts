@@ -28,11 +28,11 @@ export namespace SubmissionStatusForTestCase {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         graded: (value: SeedTrace.TestCaseResultWithStdout) => _Result;
         gradedV2: (value: SeedTrace.TestCaseGrade) => _Result;
         traced: (value: SeedTrace.TracedTestCase) => _Result;

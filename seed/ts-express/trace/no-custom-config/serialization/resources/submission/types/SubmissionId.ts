@@ -10,5 +10,5 @@ export const SubmissionId: core.serialization.Schema<serializers.SubmissionId.Ra
     core.serialization.string();
 
 export declare namespace SubmissionId {
-    type Raw = string;
+    export type Raw = string;
 }

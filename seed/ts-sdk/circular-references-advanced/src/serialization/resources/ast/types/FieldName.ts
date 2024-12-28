@@ -10,5 +10,5 @@ export const FieldName: core.serialization.Schema<serializers.FieldName.Raw, See
     core.serialization.string();
 
 export declare namespace FieldName {
-    type Raw = string;
+    export type Raw = string;
 }

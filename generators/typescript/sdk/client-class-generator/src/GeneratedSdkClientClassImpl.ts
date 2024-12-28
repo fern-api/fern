@@ -997,7 +997,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
                 }
-            ]
+            ],
+            isExported: true
         };
 
         const generatedVersion = context.versionContext.getGeneratedVersion();
@@ -1033,7 +1034,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
             extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
-            properties
+            properties,
+            isExported: true
         };
     }
 
@@ -1336,7 +1338,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties
+            properties,
+            isExported: true
         };
     }
 

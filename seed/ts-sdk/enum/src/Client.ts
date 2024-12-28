@@ -8,11 +8,11 @@ import { PathParam } from "./api/resources/pathParam/client/Client";
 import { QueryParam } from "./api/resources/queryParam/client/Client";
 
 export declare namespace SeedEnumClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

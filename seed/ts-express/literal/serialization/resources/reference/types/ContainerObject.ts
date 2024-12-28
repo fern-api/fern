@@ -14,7 +14,7 @@ export const ContainerObject: core.serialization.ObjectSchema<
 });
 
 export declare namespace ContainerObject {
-    interface Raw {
+    export interface Raw {
         nestedObjects: serializers.NestedObjectWithLiterals.Raw[];
     }
 }
