@@ -335,6 +335,10 @@ navigation:
     layout:
       - section: Getting Started
         contents:
+          - page: Overview
+            slug: overview
+            path: ./pages/docs/getting-started/docs-overview.mdx
+            icon: fa-regular fa-book
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/getting-started/quickstart.mdx
