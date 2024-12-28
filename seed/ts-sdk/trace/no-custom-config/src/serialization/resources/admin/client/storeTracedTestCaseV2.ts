@@ -13,5 +13,5 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(TraceResponseV2);
 
 export declare namespace Request {
-    type Raw = TraceResponseV2.Raw[];
+    export type Raw = TraceResponseV2.Raw[];
 }

@@ -9,11 +9,11 @@ import { FolderD } from "./api/resources/folderD/client/Client";
 import { Foo } from "./api/resources/foo/client/Client";
 
 export declare namespace SeedAudiencesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

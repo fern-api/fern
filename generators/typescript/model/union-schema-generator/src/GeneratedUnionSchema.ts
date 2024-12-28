@@ -65,7 +65,8 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         )
                     )
                 )
-            )
+            ),
+            isExported: true
         });
 
         for (const interfaceStructure of interfaces) {
@@ -85,7 +86,8 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };
-                })
+                }),
+                isExported: true
             });
         }
     }

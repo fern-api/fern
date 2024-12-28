@@ -37,11 +37,11 @@ export namespace SubmissionRequest {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         initializeProblemRequest: (value: SeedTrace.InitializeProblemRequest) => _Result;
         initializeWorkspaceRequest: () => _Result;
         submitV2: (value: SeedTrace.SubmitRequestV2) => _Result;

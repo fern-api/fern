@@ -12,5 +12,5 @@ export const OptionalWithDocs: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.WithDocs).optional();
 
 export declare namespace OptionalWithDocs {
-    type Raw = serializers.WithDocs.Raw | null | undefined;
+    export type Raw = serializers.WithDocs.Raw | null | undefined;
 }

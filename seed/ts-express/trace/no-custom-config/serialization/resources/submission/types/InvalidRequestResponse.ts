@@ -15,7 +15,7 @@ export const InvalidRequestResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace InvalidRequestResponse {
-    interface Raw {
+    export interface Raw {
         request: serializers.SubmissionRequest.Raw;
         cause: serializers.InvalidRequestCause.Raw;
     }

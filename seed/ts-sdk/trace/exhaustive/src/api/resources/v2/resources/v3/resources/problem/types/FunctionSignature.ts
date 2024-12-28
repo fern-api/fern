@@ -31,11 +31,11 @@ export namespace FunctionSignature {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         void: (value: SeedTrace.v2.v3.VoidFunctionSignature) => _Result;
         nonVoid: (value: SeedTrace.v2.v3.NonVoidFunctionSignature) => _Result;
         voidThatTakesActualResult: (value: SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult) => _Result;

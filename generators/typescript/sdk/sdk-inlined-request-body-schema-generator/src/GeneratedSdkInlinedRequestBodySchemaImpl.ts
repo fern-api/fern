@@ -81,7 +81,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             }),
             extends: this.inlinedRequestBody.extends.map((extension) =>
                 getTextOfTsNode(context.typeSchema.getReferenceToRawNamedType(extension).getTypeNode())
-            )
+            ),
+            isExported: true
         });
     }
 

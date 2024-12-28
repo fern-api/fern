@@ -7,7 +7,7 @@ import { Auth } from "./api/resources/auth/client/Client";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedAnyAuthClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         clientId?: core.Supplier<string>;
         clientSecret?: core.Supplier<string>;
@@ -15,7 +15,7 @@ export declare namespace SeedAnyAuthClient {
         apiKey?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

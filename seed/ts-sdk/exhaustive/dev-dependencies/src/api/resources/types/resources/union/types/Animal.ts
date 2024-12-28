@@ -19,11 +19,11 @@ export namespace Animal {
         animal: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.types.Animal._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         dog: (value: Fiddle.types.Dog) => _Result;
         cat: (value: Fiddle.types.Cat) => _Result;
         _other: (value: { animal: string }) => _Result;

@@ -15,7 +15,7 @@ export const UserOptionalListContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace UserOptionalListContainer {
-    interface Raw {
+    export interface Raw {
         users?: User.Raw[] | null;
     }
 }

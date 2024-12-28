@@ -21,11 +21,11 @@ export namespace Test {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.Test._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         and: (value: boolean) => _Result;
         or: (value: boolean) => _Result;
         _other: (value: { type: string }) => _Result;

@@ -19,7 +19,7 @@ export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetExecutionSessionStateResponse {
-    interface Raw {
+    export interface Raw {
         states: Record<string, serializers.ExecutionSessionState.Raw>;
         numWarmingInstances?: number | null;
         warmingSessionIds: string[];

@@ -17,7 +17,7 @@ export const BaseResource: core.serialization.ObjectSchema<serializers.BaseResou
     });
 
 export declare namespace BaseResource {
-    interface Raw {
+    export interface Raw {
         id: string;
         related_resources: serializers.ResourceList.Raw[];
         memo: serializers.Memo.Raw;

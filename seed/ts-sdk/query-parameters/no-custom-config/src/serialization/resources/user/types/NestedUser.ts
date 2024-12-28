@@ -14,7 +14,7 @@ export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.
     });
 
 export declare namespace NestedUser {
-    interface Raw {
+    export interface Raw {
         name: string;
         user: User.Raw;
     }

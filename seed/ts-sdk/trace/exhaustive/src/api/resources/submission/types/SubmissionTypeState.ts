@@ -22,11 +22,11 @@ export namespace SubmissionTypeState {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionTypeState._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         test: (value: SeedTrace.TestSubmissionState) => _Result;
         workspace: (value: SeedTrace.WorkspaceSubmissionState) => _Result;
         _other: (value: { type: string }) => _Result;

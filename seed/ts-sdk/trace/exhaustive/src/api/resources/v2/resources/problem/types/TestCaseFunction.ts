@@ -22,11 +22,11 @@ export namespace TestCaseFunction {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.TestCaseFunction._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         withActualResult: (value: SeedTrace.v2.TestCaseWithActualResultImplementation) => _Result;
         custom: (value: SeedTrace.v2.VoidFunctionDefinition) => _Result;
         _other: (value: { type: string }) => _Result;

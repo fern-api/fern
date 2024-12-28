@@ -15,11 +15,11 @@ export namespace CreateProblemError {
         errorType: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CreateProblemError._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generic: (value: SeedTrace.GenericCreateProblemError) => _Result;
         _other: (value: { errorType: string }) => _Result;
     }

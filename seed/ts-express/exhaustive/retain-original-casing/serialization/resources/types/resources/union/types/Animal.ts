@@ -18,13 +18,13 @@ export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, See
         });
 
 export declare namespace Animal {
-    type Raw = Animal.Dog | Animal.Cat;
+    export type Raw = Animal.Dog | Animal.Cat;
 
-    interface Dog extends serializers.types.Dog.Raw {
+    export interface Dog extends serializers.types.Dog.Raw {
         animal: "dog";
     }
 
-    interface Cat extends serializers.types.Cat.Raw {
+    export interface Cat extends serializers.types.Cat.Raw {
         animal: "cat";
     }
 }

@@ -9,13 +9,13 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

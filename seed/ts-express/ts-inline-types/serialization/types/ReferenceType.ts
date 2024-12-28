@@ -12,7 +12,7 @@ export const ReferenceType: core.serialization.ObjectSchema<serializers.Referenc
     });
 
 export declare namespace ReferenceType {
-    interface Raw {
+    export interface Raw {
         foo: string;
     }
 }

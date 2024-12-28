@@ -22,7 +22,7 @@ export const CreateProblemRequestV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateProblemRequestV2 {
-    interface Raw {
+    export interface Raw {
         problemName: string;
         problemDescription: serializers.ProblemDescription.Raw;
         customFiles: serializers.v2.CustomFiles.Raw;

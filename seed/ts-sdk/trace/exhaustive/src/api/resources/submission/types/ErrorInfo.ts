@@ -33,11 +33,11 @@ export namespace ErrorInfo {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ErrorInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         compileError: (value: SeedTrace.CompileError) => _Result;
         runtimeError: (value: SeedTrace.RuntimeError) => _Result;
         internalError: (value: SeedTrace.InternalError) => _Result;

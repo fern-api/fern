@@ -3,7 +3,6 @@ import {
     GetReferenceOpts,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
@@ -251,7 +250,8 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                 )
                             )
                         }
-                    ]
+                    ],
+                    isExported: true
                 }
             ]
         };

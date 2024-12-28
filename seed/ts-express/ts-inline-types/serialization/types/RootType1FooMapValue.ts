@@ -15,7 +15,7 @@ export const RootType1FooMapValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace RootType1FooMapValue {
-    interface Raw {
+    export interface Raw {
         foo: string;
         ref: serializers.ReferenceType.Raw;
     }
