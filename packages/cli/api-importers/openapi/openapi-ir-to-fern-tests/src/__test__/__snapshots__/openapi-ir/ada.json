@@ -367,22 +367,205 @@
           "headers": [],
           "response": {
             "value": {
-              "value": [
-                {
-                  "key": {
-                    "value": "key",
+              "properties": {
+                "end_user_id": {
+                  "value": {
+                    "value": "5f7e0e2c1e7c7e000f0f9c3a",
                     "type": "string"
                   },
-                  "value": {
-                    "value": {
-                      "value": "value",
-                      "type": "string"
+                  "type": "primitive"
+                },
+                "profile": {
+                  "properties": {
+                    "first_name": {
+                      "value": {
+                        "value": "Ada",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     },
-                    "type": "primitive"
-                  }
+                    "last_name": {
+                      "value": {
+                        "value": "Lovelace",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "email": {
+                      "value": {
+                        "value": "ada.lovelace@ada.cx",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "language": {
+                      "value": {
+                        "value": "en-US",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "metadata": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "example_key1",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": "example_string_value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        },
+                        {
+                          "key": {
+                            "value": "example_key2",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        },
+                        {
+                          "key": {
+                            "value": "example_key3",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": 123,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        }
+                      ],
+                      "type": "map"
+                    },
+                    "system_properties": {
+                      "properties": {
+                        "user_agent": {
+                          "value": {
+                            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "device": {
+                          "value": {
+                            "value": "macos",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "browser": {
+                          "value": {
+                            "value": "Chrome",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "browser_version": {
+                          "value": {
+                            "value": "119.0.0.0",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "introshown": {
+                          "value": {
+                            "value": false,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_answer_id": {
+                          "value": {
+                            "value": "650071321ef45533437f6f29",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_question_asked": {
+                          "value": {
+                            "value": "What is my account balance?",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_first_message_id": {
+                          "value": {
+                            "value": "65736922f17d0bf841d8eeb4",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_conversation_id": {
+                          "value": {
+                            "value": "12345abc",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_end_user_channel": {
+                          "value": {
+                            "value": "whatsapp",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_signed_up_at": {
+                          "value": {
+                            "value": "2023-12-08T19:06:04.890000",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_user_id": {
+                          "value": {
+                            "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "created_at": {
+                  "value": {
+                    "value": "2023-12-08T19:06:04.890000",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": "2023-12-08T19:06:04.890000",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 }
-              ],
-              "type": "map"
+              },
+              "type": "object"
             },
             "type": "withoutStreaming"
           },
@@ -881,7 +1064,321 @@
       "authed": true,
       "method": "PATCH",
       "path": "/end-users/v1/{end_user_id}",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "end_user_id",
+              "value": {
+                "value": {
+                  "value": "end_user_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "profile": {
+                "properties": {
+                  "first_name": {
+                    "value": {
+                      "value": "Ada",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "last_name": {
+                    "value": {
+                      "value": "Lovelace",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "email": {
+                    "value": {
+                      "value": "ada.lovelace@ada.cx",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "language": {
+                    "value": {
+                      "value": "en-US",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "metadata": {
+                    "value": [
+                      {
+                        "key": {
+                          "value": "example_key1",
+                          "type": "string"
+                        },
+                        "value": {
+                          "value": {
+                            "value": {
+                              "value": "example_string_value",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "unknown"
+                        }
+                      },
+                      {
+                        "key": {
+                          "value": "example_key2",
+                          "type": "string"
+                        },
+                        "value": {
+                          "value": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "unknown"
+                        }
+                      },
+                      {
+                        "key": {
+                          "value": "example_key3",
+                          "type": "string"
+                        },
+                        "value": {
+                          "value": {
+                            "value": {
+                              "value": 123,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "unknown"
+                        }
+                      }
+                    ],
+                    "type": "map"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "end_user_id": {
+                  "value": {
+                    "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "profile": {
+                  "properties": {
+                    "first_name": {
+                      "value": {
+                        "value": "Ada",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "last_name": {
+                      "value": {
+                        "value": "Lovelace",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "email": {
+                      "value": {
+                        "value": "ada.lovelace@ada.cx",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "language": {
+                      "value": {
+                        "value": "en-US",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "metadata": {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "example_key1",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": "example_string_value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        },
+                        {
+                          "key": {
+                            "value": "example_key2",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        },
+                        {
+                          "key": {
+                            "value": "example_key3",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": 123,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        }
+                      ],
+                      "type": "map"
+                    },
+                    "system_properties": {
+                      "properties": {
+                        "user_agent": {
+                          "value": {
+                            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "device": {
+                          "value": {
+                            "value": "macos",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "browser": {
+                          "value": {
+                            "value": "Chrome",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "browser_version": {
+                          "value": {
+                            "value": "119.0.0.0",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "introshown": {
+                          "value": {
+                            "value": false,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_answer_id": {
+                          "value": {
+                            "value": "650071321ef45533437f6f29",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_question_asked": {
+                          "value": {
+                            "value": "What is my account balance?",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_first_message_id": {
+                          "value": {
+                            "value": "65736922f17d0bf841d8eeb4",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_conversation_id": {
+                          "value": {
+                            "value": "12345abc",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_end_user_channel": {
+                          "value": {
+                            "value": "whatsapp",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_signed_up_at": {
+                          "value": {
+                            "value": "2023-12-08T19:06:04.890000",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "sunshine_user_id": {
+                          "value": {
+                            "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "created_at": {
+                  "value": {
+                    "value": "2023-12-08T19:06:04.890000",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": "2023-12-08T19:06:04.890000",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"
@@ -1274,22 +1771,227 @@
           "headers": [],
           "response": {
             "value": {
-              "value": [
-                {
-                  "key": {
-                    "value": "key",
-                    "type": "string"
+              "properties": {
+                "end_users": {
+                  "value": [
+                    {
+                      "properties": {
+                        "end_user_id": {
+                          "value": {
+                            "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "profile": {
+                          "properties": {
+                            "first_name": {
+                              "value": {
+                                "value": "Ada",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "last_name": {
+                              "value": {
+                                "value": "Lovelace",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "email": {
+                              "value": {
+                                "value": "ada.lovelace@ada.cx",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "language": {
+                              "value": {
+                                "value": "en-US",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "metadata": {
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "example_key1",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": {
+                                        "value": "example_string_value",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "example_key2",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": {
+                                        "value": true,
+                                        "type": "boolean"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "example_key3",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": {
+                                        "value": 123,
+                                        "type": "int"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                }
+                              ],
+                              "type": "map"
+                            },
+                            "system_properties": {
+                              "properties": {
+                                "user_agent": {
+                                  "value": {
+                                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "device": {
+                                  "value": {
+                                    "value": "macos",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "browser": {
+                                  "value": {
+                                    "value": "Chrome",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "browser_version": {
+                                  "value": {
+                                    "value": "119.0.0.0",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "introshown": {
+                                  "value": {
+                                    "value": false,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "last_answer_id": {
+                                  "value": {
+                                    "value": "650071321ef45533437f6f29",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "last_question_asked": {
+                                  "value": {
+                                    "value": "What is my account balance?",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "sunshine_first_message_id": {
+                                  "value": {
+                                    "value": "65736922f17d0bf841d8eeb4",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "sunshine_conversation_id": {
+                                  "value": {
+                                    "value": "12345abc",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "sunshine_end_user_channel": {
+                                  "value": {
+                                    "value": "whatsapp",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "sunshine_signed_up_at": {
+                                  "value": {
+                                    "value": "2023-12-08T19:06:04.890000",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "sunshine_user_id": {
+                                  "value": {
+                                    "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "created_at": {
+                          "value": {
+                            "value": "2023-12-08T19:06:04.890000",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2023-12-08T19:06:04.890000",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "meta": {
+                  "properties": {
+                    "next_page_url": {
+                      "value": {
+                        "value": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
                   },
-                  "value": {
-                    "value": {
-                      "value": "value",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                  "type": "object"
                 }
-              ],
-              "type": "map"
+              },
+              "type": "object"
             },
             "type": "withoutStreaming"
           },
@@ -1308,24 +2010,956 @@
   "groupedSchemas": {
     "rootSchemas": {
       "EndUser": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "endUserEndUserId",
+            "key": "end_user_id",
+            "schema": {
+              "generatedName": "endUserEndUserId",
+              "value": {
+                "description": "The unique Ada-generated ID for the end user",
+                "schema": {
+                  "example": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "type": "string"
+                },
+                "generatedName": "EndUserEndUserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "endUserProfile",
+            "key": "profile",
+            "schema": {
+              "generatedName": "endUserProfile",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileFirstName",
+                    "key": "first_name",
+                    "schema": {
+                      "generatedName": "endUserProfileFirstName",
+                      "value": {
+                        "generatedName": "EndUserProfileFirstName",
+                        "description": "The end user's first name",
+                        "value": {
+                          "description": "The end user's first name",
+                          "schema": {
+                            "example": "Ada",
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserProfileFirstName",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "nullable"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileLastName",
+                    "key": "last_name",
+                    "schema": {
+                      "generatedName": "endUserProfileLastName",
+                      "value": {
+                        "generatedName": "EndUserProfileLastName",
+                        "description": "The end user's last name",
+                        "value": {
+                          "description": "The end user's last name",
+                          "schema": {
+                            "example": "Lovelace",
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserProfileLastName",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "nullable"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileEmail",
+                    "key": "email",
+                    "schema": {
+                      "generatedName": "endUserProfileEmail",
+                      "value": {
+                        "generatedName": "EndUserProfileEmail",
+                        "description": "The end user's email address",
+                        "value": {
+                          "description": "The end user's email address",
+                          "schema": {
+                            "example": "ada.lovelace@ada.cx",
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserProfileEmail",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "nullable"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileLanguage",
+                    "key": "language",
+                    "schema": {
+                      "generatedName": "endUserProfileLanguage",
+                      "value": {
+                        "generatedName": "EndUserProfileLanguage",
+                        "description": "The end user's language in BCP 47 format",
+                        "value": {
+                          "description": "The end user's language in BCP 47 format",
+                          "schema": {
+                            "example": "en-US",
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserProfileLanguage",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "nullable"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileMetadata",
+                    "key": "metadata",
+                    "schema": {
+                      "generatedName": "endUserProfileMetadata",
+                      "value": {
+                        "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                        "key": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserProfileMetadataKey",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "generatedName": "EndUserProfileMetadataValue",
+                          "type": "unknown"
+                        },
+                        "generatedName": "EndUserProfileMetadata",
+                        "groupName": [],
+                        "type": "map"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "endUserProfileSystemProperties",
+                    "key": "system_properties",
+                    "schema": {
+                      "generatedName": "endUserProfileSystemProperties",
+                      "value": {
+                        "allOf": [],
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesUserAgent",
+                            "key": "user_agent",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesUserAgent",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesUserAgent",
+                                "description": "The end user's browser user-agent information captured by Ada",
+                                "value": {
+                                  "description": "The end user's browser user-agent information captured by Ada",
+                                  "schema": {
+                                    "example": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesUserAgent",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesDevice",
+                            "key": "device",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesDevice",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesDevice",
+                                "description": "The end user's device information captured by Ada",
+                                "value": {
+                                  "description": "The end user's device information captured by Ada",
+                                  "schema": {
+                                    "example": "macos",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesDevice",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesBrowser",
+                            "key": "browser",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesBrowser",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesBrowser",
+                                "description": "The end user's browser information captured by Ada",
+                                "value": {
+                                  "description": "The end user's browser information captured by Ada",
+                                  "schema": {
+                                    "example": "Chrome",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesBrowser",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesBrowserVersion",
+                            "key": "browser_version",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesBrowserVersion",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesBrowserVersion",
+                                "description": "The end user's browser version captured by Ada",
+                                "value": {
+                                  "description": "The end user's browser version captured by Ada",
+                                  "schema": {
+                                    "example": "119.0.0.0",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesBrowserVersion",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesIntroshown",
+                            "key": "introshown",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesIntroshown",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesIntroshown",
+                                "description": "Whether the introductory message of a campaign has been displayed to the end user",
+                                "value": {
+                                  "description": "Whether the introductory message of a campaign has been displayed to the end user",
+                                  "schema": {
+                                    "example": false,
+                                    "type": "boolean"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesIntroshown",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesLastAnswerId",
+                            "key": "last_answer_id",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesLastAnswerId",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesLastAnswerId",
+                                "description": "The ID for the last answer displayed to the end user during a conversation",
+                                "value": {
+                                  "description": "The ID for the last answer displayed to the end user during a conversation",
+                                  "schema": {
+                                    "example": "650071321ef45533437f6f29",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesLastAnswerId",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesLastQuestionAsked",
+                            "key": "last_question_asked",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesLastQuestionAsked",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesLastQuestionAsked",
+                                "description": "The last question asked by the end user",
+                                "value": {
+                                  "description": "The last question asked by the end user",
+                                  "schema": {
+                                    "example": "What is my account balance?",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesLastQuestionAsked",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesSunshineFirstMessageId",
+                            "key": "sunshine_first_message_id",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesSunshineFirstMessageId",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesSunshineFirstMessageId",
+                                "description": "The ID for the first message sent to the end user via Sunshine Conversations",
+                                "value": {
+                                  "description": "The ID for the first message sent to the end user via Sunshine Conversations",
+                                  "schema": {
+                                    "example": "65736922f17d0bf841d8eeb4",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesSunshineFirstMessageId",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesSunshineConversationId",
+                            "key": "sunshine_conversation_id",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesSunshineConversationId",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesSunshineConversationId",
+                                "description": "The ID for the Sunshine Conversation for this end user",
+                                "value": {
+                                  "description": "The ID for the Sunshine Conversation for this end user",
+                                  "schema": {
+                                    "example": "12345abc",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesSunshineConversationId",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesSunshineEndUserChannel",
+                            "key": "sunshine_end_user_channel",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesSunshineEndUserChannel",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesSunshineEndUserChannel",
+                                "description": "The channel used to communicate with the end user via Sunshine Conversations",
+                                "value": {
+                                  "description": "The channel used to communicate with the end user via Sunshine Conversations",
+                                  "schema": {
+                                    "example": "whatsapp",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesSunshineEndUserChannel",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesSunshineSignedUpAt",
+                            "key": "sunshine_signed_up_at",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesSunshineSignedUpAt",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesSunshineSignedUpAt",
+                                "description": "The date the end user signed up for Sunshine Conversations",
+                                "value": {
+                                  "description": "The date the end user signed up for Sunshine Conversations",
+                                  "schema": {
+                                    "example": "2023-12-08T19:06:04.890000",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesSunshineSignedUpAt",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "endUserProfileSystemPropertiesSunshineUserId",
+                            "key": "sunshine_user_id",
+                            "schema": {
+                              "generatedName": "endUserProfileSystemPropertiesSunshineUserId",
+                              "value": {
+                                "generatedName": "EndUserProfileSystemPropertiesSunshineUserId",
+                                "description": "The Sunshine Conversations user ID for the end user",
+                                "value": {
+                                  "description": "The Sunshine Conversations user ID for the end user",
+                                  "schema": {
+                                    "example": "5f7e0e2c1e7c7e000f0f9c3a",
+                                    "type": "string"
+                                  },
+                                  "generatedName": "EndUserProfileSystemPropertiesSunshineUserId",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          }
+                        ],
+                        "allOfPropertyConflicts": [],
+                        "description": "Read-only profile information set by Ada",
+                        "generatedName": "EndUserProfileSystemProperties",
+                        "groupName": [],
+                        "additionalProperties": false,
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
+                        },
+                        "type": "object"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "description": "The end user's profile information",
+                "generatedName": "EndUserProfile",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "endUserCreatedAt",
+            "key": "created_at",
+            "schema": {
+              "generatedName": "endUserCreatedAt",
+              "value": {
+                "description": "The date and time the end user was created",
+                "schema": {
+                  "example": "2023-12-08T19:06:04.890000",
+                  "type": "string"
+                },
+                "generatedName": "EndUserCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "endUserUpdatedAt",
+            "key": "updated_at",
+            "schema": {
+              "generatedName": "endUserUpdatedAt",
+              "value": {
+                "description": "The date and time the end user was updated",
+                "schema": {
+                  "example": "2023-12-08T19:06:04.890000",
+                  "type": "string"
+                },
+                "generatedName": "EndUserUpdatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          }
+        ],
+        "allOfPropertyConflicts": [],
         "generatedName": "EndUser",
-        "type": "unknown"
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "EndUserRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "endUserRequestProfile",
+            "key": "profile",
+            "schema": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "endUserRequestProfileFirstName",
+                  "key": "first_name",
+                  "schema": {
+                    "generatedName": "endUserRequestProfileFirstName",
+                    "value": {
+                      "generatedName": "EndUserRequestProfileFirstName",
+                      "description": "The end user's first name",
+                      "value": {
+                        "description": "The end user's first name",
+                        "schema": {
+                          "example": "Ada",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserRequestProfileFirstName",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "endUserRequestProfileLastName",
+                  "key": "last_name",
+                  "schema": {
+                    "generatedName": "endUserRequestProfileLastName",
+                    "value": {
+                      "generatedName": "EndUserRequestProfileLastName",
+                      "description": "The end user's last name",
+                      "value": {
+                        "description": "The end user's last name",
+                        "schema": {
+                          "example": "Lovelace",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserRequestProfileLastName",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "endUserRequestProfileEmail",
+                  "key": "email",
+                  "schema": {
+                    "generatedName": "endUserRequestProfileEmail",
+                    "value": {
+                      "generatedName": "EndUserRequestProfileEmail",
+                      "description": "The end user's email address",
+                      "value": {
+                        "description": "The end user's email address",
+                        "schema": {
+                          "example": "ada.lovelace@ada.cx",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserRequestProfileEmail",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "endUserRequestProfileLanguage",
+                  "key": "language",
+                  "schema": {
+                    "generatedName": "endUserRequestProfileLanguage",
+                    "value": {
+                      "generatedName": "EndUserRequestProfileLanguage",
+                      "description": "The end user's language in BCP 47 format",
+                      "value": {
+                        "description": "The end user's language in BCP 47 format",
+                        "schema": {
+                          "example": "en-US",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserRequestProfileLanguage",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "endUserRequestProfileMetadata",
+                  "key": "metadata",
+                  "schema": {
+                    "generatedName": "endUserRequestProfileMetadata",
+                    "value": {
+                      "generatedName": "EndUserRequestProfileMetadata",
+                      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                      "value": {
+                        "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                        "key": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "EndUserRequestProfileMetadataKey",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "generatedName": "EndUserRequestProfileMetadataValue",
+                          "type": "unknown"
+                        },
+                        "generatedName": "EndUserRequestProfileMetadata",
+                        "groupName": [],
+                        "type": "map"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "description": "The end user's profile information",
+              "generatedName": "EndUserRequestProfile",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
         "generatedName": "EndUserRequest",
-        "type": "unknown"
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "Error": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "errorMsg",
+            "key": "msg",
+            "schema": {
+              "description": "The error message",
+              "schema": {
+                "example": "resource_not_found",
+                "type": "string"
+              },
+              "generatedName": "ErrorMsg",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "errorDetails",
+            "key": "details",
+            "schema": {
+              "description": "Extra information about the error",
+              "schema": {
+                "example": "The requested resource with ID <id> was not found",
+                "type": "string"
+              },
+              "generatedName": "ErrorDetails",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
         "generatedName": "Error",
-        "type": "unknown"
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "Errors": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "errorsErrors",
+            "key": "errors",
+            "schema": {
+              "description": "A list of errors",
+              "value": {
+                "generatedName": "ErrorsErrorsItem",
+                "schema": "Error",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "ErrorsErrors",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
         "generatedName": "Errors",
-        "type": "unknown"
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "EndUsers": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "endUsersEndUsers",
+            "key": "end_users",
+            "schema": {
+              "generatedName": "endUsersEndUsers",
+              "value": {
+                "description": "List of end user profiles",
+                "value": {
+                  "generatedName": "EndUsersEndUsersItem",
+                  "schema": "EndUser",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "EndUsersEndUsers",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "endUsersMeta",
+            "key": "meta",
+            "schema": {
+              "generatedName": "endUsersMeta",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "endUsersMetaNextPageUrl",
+                    "key": "next_page_url",
+                    "schema": {
+                      "generatedName": "endUsersMetaNextPageUrl",
+                      "value": {
+                        "description": "Link to the next page of data using a cursor value",
+                        "schema": {
+                          "format": "url",
+                          "example": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUsersMetaNextPageUrl",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "description": "Metadata returned with the results including but not limited to a link to the next page of data",
+                "generatedName": "EndUsersMeta",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
         "generatedName": "EndUsers",
-        "type": "unknown"
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "EndUserCreatedWebhookPayload": {
         "allOf": [],
@@ -1337,7 +2971,9 @@
             "schema": {
               "generatedName": "endUserCreatedWebhookPayloadType",
               "value": {
+                "description": "The webhook event type description",
                 "schema": {
+                  "example": "v1.end_user.created",
                   "type": "string"
                 },
                 "generatedName": "EndUserCreatedWebhookPayloadType",
@@ -1357,7 +2993,9 @@
             "schema": {
               "generatedName": "endUserCreatedWebhookPayloadTimestamp",
               "value": {
+                "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
                 "schema": {
+                  "example": "2024-01-17T22:23:35.835",
                   "type": "string"
                 },
                 "generatedName": "EndUserCreatedWebhookPayloadTimestamp",
@@ -1377,8 +3015,107 @@
             "schema": {
               "generatedName": "endUserCreatedWebhookPayloadData",
               "value": {
+                "allOf": [
+                  {
+                    "generatedName": "EndUser",
+                    "schema": "EndUser",
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  }
+                ],
+                "properties": [
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserCreatedWebhookPayloadDataEndUserId",
+                    "key": "end_user_id",
+                    "schema": {
+                      "generatedName": "endUserCreatedWebhookPayloadDataEndUserId",
+                      "value": {
+                        "description": "The unique Ada-generated ID for the end user",
+                        "schema": {
+                          "example": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserCreatedWebhookPayloadDataEndUserId",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  },
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserCreatedWebhookPayloadDataCreatedAt",
+                    "key": "created_at",
+                    "schema": {
+                      "generatedName": "endUserCreatedWebhookPayloadDataCreatedAt",
+                      "value": {
+                        "description": "The date and time the end user was created",
+                        "schema": {
+                          "example": "2023-12-08T19:06:02.000000",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserCreatedWebhookPayloadDataCreatedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  },
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserCreatedWebhookPayloadDataUpdatedAt",
+                    "key": "updated_at",
+                    "schema": {
+                      "generatedName": "endUserCreatedWebhookPayloadDataUpdatedAt",
+                      "value": {
+                        "description": "The date and time the end user was updated",
+                        "schema": {
+                          "example": "2023-12-08T19:06:04.890000",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserCreatedWebhookPayloadDataUpdatedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "description": "The webhook event data",
                 "generatedName": "EndUserCreatedWebhookPayloadData",
-                "type": "unknown"
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "object"
               },
               "groupName": [],
               "type": "optional"
@@ -1406,7 +3143,9 @@
             "schema": {
               "generatedName": "endUserUpdatedWebhookPayloadType",
               "value": {
+                "description": "The webhook event type description",
                 "schema": {
+                  "example": "v1.end_user.updated",
                   "type": "string"
                 },
                 "generatedName": "EndUserUpdatedWebhookPayloadType",
@@ -1426,7 +3165,9 @@
             "schema": {
               "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
               "value": {
+                "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
                 "schema": {
+                  "example": "2024-01-17T22:23:35.835",
                   "type": "string"
                 },
                 "generatedName": "EndUserUpdatedWebhookPayloadTimestamp",
@@ -1446,8 +3187,107 @@
             "schema": {
               "generatedName": "endUserUpdatedWebhookPayloadData",
               "value": {
+                "allOf": [
+                  {
+                    "generatedName": "EndUser",
+                    "schema": "EndUser",
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  }
+                ],
+                "properties": [
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserUpdatedWebhookPayloadDataEndUserId",
+                    "key": "end_user_id",
+                    "schema": {
+                      "generatedName": "endUserUpdatedWebhookPayloadDataEndUserId",
+                      "value": {
+                        "description": "The unique Ada-generated ID for the end user",
+                        "schema": {
+                          "example": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserUpdatedWebhookPayloadDataEndUserId",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  },
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserUpdatedWebhookPayloadDataCreatedAt",
+                    "key": "created_at",
+                    "schema": {
+                      "generatedName": "endUserUpdatedWebhookPayloadDataCreatedAt",
+                      "value": {
+                        "description": "The date and time the end user was created",
+                        "schema": {
+                          "example": "2023-12-08T19:06:02.000000",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserUpdatedWebhookPayloadDataCreatedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  },
+                  {
+                    "conflict": {
+                      "EndUser": {
+                        "differentSchema": true
+                      }
+                    },
+                    "generatedName": "endUserUpdatedWebhookPayloadDataUpdatedAt",
+                    "key": "updated_at",
+                    "schema": {
+                      "generatedName": "endUserUpdatedWebhookPayloadDataUpdatedAt",
+                      "value": {
+                        "description": "The date and time the end user was updated",
+                        "schema": {
+                          "example": "2023-12-08T19:06:04.890000",
+                          "type": "string"
+                        },
+                        "generatedName": "EndUserUpdatedWebhookPayloadDataUpdatedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": false
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "description": "The webhook event data",
                 "generatedName": "EndUserUpdatedWebhookPayloadData",
-                "type": "unknown"
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "object"
               },
               "groupName": [],
               "type": "optional"
