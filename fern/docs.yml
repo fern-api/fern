@@ -354,6 +354,9 @@ navigation:
           - page: Publish your Docs
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-upload
+          - page: Customer Showcase
+            path: ./pages/docs/getting-started/customer-showcase.mdx
+            icon: fa-regular fa-stars
 
       - section: Building Your Docs
         contents:
