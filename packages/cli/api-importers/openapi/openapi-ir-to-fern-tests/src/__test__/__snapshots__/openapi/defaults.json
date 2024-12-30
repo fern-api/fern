@@ -1,0 +1,151 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getTest": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "boolField1": true,
+                      "boolField2": true,
+                      "numberField": 1.1,
+                      "stringField": "stringField",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/test",
+              "request": {
+                "name": "GetTestRequest",
+                "query-parameters": {
+                  "boolParam1": "optional<boolean>",
+                  "boolParam2": "optional<boolean>",
+                  "boolParam3": "optional<boolean>",
+                  "boolParam4": "optional<boolean>",
+                  "integerParam": "optional<integer>",
+                  "numberParam": "optional<double>",
+                  "stringParam": "optional<string>",
+                },
+              },
+              "response": {
+                "docs": "Successful response",
+                "type": "GetTestResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetTestResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "boolField1": {
+                "default": true,
+                "type": "optional<boolean>",
+              },
+              "boolField2": {
+                "default": true,
+                "type": "optional<boolean>",
+              },
+              "numberField": {
+                "default": 3.14,
+                "type": "optional<double>",
+              },
+              "stringField": {
+                "default": "defaultValue",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  GetTestResponse:
+    properties:
+      boolField1:
+        type: optional<boolean>
+        default: true
+      boolField2:
+        type: optional<boolean>
+        default: true
+      stringField:
+        type: optional<string>
+        default: defaultValue
+      numberField:
+        type: optional<double>
+        default: 3.14
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getTest:
+      path: /test
+      method: GET
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetTestRequest
+        query-parameters:
+          boolParam1: optional<boolean>
+          boolParam2: optional<boolean>
+          boolParam3: optional<boolean>
+          boolParam4: optional<boolean>
+          stringParam: optional<string>
+          numberParam: optional<double>
+          integerParam: optional<integer>
+      response:
+        docs: Successful response
+        type: GetTestResponse
+      examples:
+        - response:
+            body:
+              boolField1: true
+              boolField2: true
+              stringField: stringField
+              numberField: 1.1
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "API with Default Values",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: API with Default Values
+",
+  },
+}
