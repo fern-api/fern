@@ -912,7 +912,6 @@ function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
     return undefined;
 }
 
-
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
         return undefined;
