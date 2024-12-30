@@ -11,6 +11,7 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
+import { size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
@@ -40,7 +41,6 @@ import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { size } from "lodash-es";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
@@ -351,7 +351,7 @@ export function convertSchemaObject(
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.boolean({
-                default: schema.default,
+                default: getBooleanFromDefault(schema.default),
                 example: getExampleAsBoolean({ schema, logger: context.logger, fallback })
             }),
             wrapAsNullable,
@@ -892,6 +892,26 @@ export function convertSchemaObject(
         `Failed to convert schema breadcrumbs=${JSON.stringify(breadcrumbs)} value=${JSON.stringify(schema)}`
     );
 }
+
+function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
+    if (defaultValue == null) {
+        return undefined;
+    }
+    if (typeof defaultValue === "boolean") {
+        return defaultValue;
+    }
+    if (typeof defaultValue === "string") {
+        const lowercased = defaultValue.toLowerCase();
+        if (lowercased === "true") {
+            return true;
+        }
+        if (lowercased === "false") {
+            return false;
+        }
+    }
+    return undefined;
+}
+
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
