@@ -218,7 +218,8 @@ navigation:
             path: ./pages/sdks/introduction/overview.mdx
           - page: Language Support
             path: ./pages/sdks/introduction/language-support.mdx
-          - page: Customer Showcase
+          - page: SDK Customer Showcase
+            slug: customer-showcase
             path: ./pages/sdks/introduction/customer-showcase.mdx
           - section: Changelogs
             slug: changelog
@@ -354,7 +355,8 @@ navigation:
           - page: Publish your Docs
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-upload
-          - page: Customer Showcase
+          - page: Docs Customer Showcase
+            slug: customer-showcase
             path: ./pages/docs/getting-started/customer-showcase.mdx
             icon: fa-regular fa-stars
 
