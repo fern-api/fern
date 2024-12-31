@@ -340,6 +340,10 @@ navigation:
             slug: overview
             path: ./pages/docs/getting-started/docs-overview.mdx
             icon: fa-regular fa-book
+          - page: Docs Customer Showcase
+            slug: customer-showcase
+            path: ./pages/docs/getting-started/customer-showcase.mdx
+            icon: fa-regular fa-stars            
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/getting-started/quickstart.mdx
@@ -359,10 +363,6 @@ navigation:
           - page: Publish your Docs
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-upload
-          - page: Docs Customer Showcase
-            slug: customer-showcase
-            path: ./pages/docs/getting-started/customer-showcase.mdx
-            icon: fa-regular fa-stars
 
       - section: Building Your Docs
         contents:
