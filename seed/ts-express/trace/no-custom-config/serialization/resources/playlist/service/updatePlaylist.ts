@@ -12,7 +12,7 @@ export const Request: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.UpdatePlaylistRequest).optional();
 
 export declare namespace Request {
-    type Raw = serializers.UpdatePlaylistRequest.Raw | null | undefined;
+    export type Raw = serializers.UpdatePlaylistRequest.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
@@ -21,5 +21,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.Playlist).optional();
 
 export declare namespace Response {
-    type Raw = serializers.Playlist.Raw | null | undefined;
+    export type Raw = serializers.Playlist.Raw | null | undefined;
 }

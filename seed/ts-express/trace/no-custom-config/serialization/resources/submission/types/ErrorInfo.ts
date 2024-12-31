@@ -18,17 +18,17 @@ export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, See
     });
 
 export declare namespace ErrorInfo {
-    type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
+    export type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
 
-    interface CompileError extends serializers.CompileError.Raw {
+    export interface CompileError extends serializers.CompileError.Raw {
         type: "compileError";
     }
 
-    interface RuntimeError extends serializers.RuntimeError.Raw {
+    export interface RuntimeError extends serializers.RuntimeError.Raw {
         type: "runtimeError";
     }
 
-    interface InternalError extends serializers.InternalError.Raw {
+    export interface InternalError extends serializers.InternalError.Raw {
         type: "internalError";
     }
 }

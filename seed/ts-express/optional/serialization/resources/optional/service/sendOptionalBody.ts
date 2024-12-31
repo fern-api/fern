@@ -11,12 +11,12 @@ export const Request: core.serialization.Schema<
 > = core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional();
 
 export declare namespace Request {
-    type Raw = Record<string, unknown> | null | undefined;
+    export type Raw = Record<string, unknown> | null | undefined;
 }
 
 export const Response: core.serialization.Schema<serializers.optional.sendOptionalBody.Response.Raw, string> =
     core.serialization.string();
 
 export declare namespace Response {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -11,7 +11,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedLic
 });
 
 export declare namespace Type {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

@@ -9,5 +9,5 @@ export const Response: core.serialization.Schema<serializers.unknown.post.Respon
     core.serialization.list(core.serialization.any());
 
 export declare namespace Response {
-    type Raw = any[];
+    export type Raw = any[];
 }

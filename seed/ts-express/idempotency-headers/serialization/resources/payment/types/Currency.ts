@@ -10,5 +10,5 @@ export const Currency: core.serialization.Schema<serializers.Currency.Raw, SeedI
     core.serialization.enum_(["USD", "YEN"]);
 
 export declare namespace Currency {
-    type Raw = "USD" | "YEN";
+    export type Raw = "USD" | "YEN";
 }

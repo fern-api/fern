@@ -15,7 +15,7 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.serialization.Obj
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
-    interface Raw {
+    export interface Raw {
         additionalParameters: serializers.v2.Parameter.Raw[];
         code: serializers.v2.FunctionImplementationForMultipleLanguages.Raw;
     }

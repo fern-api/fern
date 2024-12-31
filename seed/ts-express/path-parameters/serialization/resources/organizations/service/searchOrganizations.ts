@@ -12,5 +12,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.list(core.serialization.lazyObject(() => serializers.Organization));
 
 export declare namespace Response {
-    type Raw = serializers.Organization.Raw[];
+    export type Raw = serializers.Organization.Raw[];
 }

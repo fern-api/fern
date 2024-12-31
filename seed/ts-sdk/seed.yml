@@ -220,8 +220,19 @@ fixtures:
   path-parameters:
     - outputFolder: default
     - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
         inlinePathParameters: true
       outputFolder: inline-path-parameters
+    - customConfig:
+        inlinePathParameters: true
+        noSerdeLayer: true
+      outputFolder: inline-path-parameters-no-serde
+    - customConfig:
+        inlinePathParameters: true
+        retainOriginalCasing: true
+      outputFolder: inline-path-parameters-retain-original-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:

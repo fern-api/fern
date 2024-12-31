@@ -29,11 +29,11 @@ export namespace ActualResult {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ActualResult._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         value: (value: SeedTrace.VariableValue) => _Result;
         exception: (value: SeedTrace.ExceptionInfo) => _Result;
         exceptionV2: (value: SeedTrace.ExceptionV2) => _Result;
@@ -48,7 +48,7 @@ export const ActualResult = {
             type: "value",
             _visit: function <_Result>(
                 this: SeedTrace.ActualResult.Value,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
+                visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
                 return SeedTrace.ActualResult._visit(this, visitor);
             },
@@ -61,7 +61,7 @@ export const ActualResult = {
             type: "exception",
             _visit: function <_Result>(
                 this: SeedTrace.ActualResult.Exception,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
+                visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
                 return SeedTrace.ActualResult._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const ActualResult = {
             type: "exceptionV2",
             _visit: function <_Result>(
                 this: SeedTrace.ActualResult.ExceptionV2,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
+                visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
                 return SeedTrace.ActualResult._visit(this, visitor);
             },
@@ -86,7 +86,7 @@ export const ActualResult = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.ActualResult._Unknown,
-                visitor: SeedTrace.ActualResult._Visitor<_Result>
+                visitor: SeedTrace.ActualResult._Visitor<_Result>,
             ) {
                 return SeedTrace.ActualResult._visit(this, visitor);
             },

@@ -20,13 +20,13 @@ export const SubmissionTypeState: core.serialization.Schema<
     });
 
 export declare namespace SubmissionTypeState {
-    type Raw = SubmissionTypeState.Test | SubmissionTypeState.Workspace;
+    export type Raw = SubmissionTypeState.Test | SubmissionTypeState.Workspace;
 
-    interface Test extends serializers.TestSubmissionState.Raw {
+    export interface Test extends serializers.TestSubmissionState.Raw {
         type: "test";
     }
 
-    interface Workspace extends serializers.WorkspaceSubmissionState.Raw {
+    export interface Workspace extends serializers.WorkspaceSubmissionState.Raw {
         type: "workspace";
     }
 }

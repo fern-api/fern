@@ -12,5 +12,5 @@ export const UndiscriminatedUnion1InlineEnum1: core.serialization.Schema<
 > = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
 export declare namespace UndiscriminatedUnion1InlineEnum1 {
-    type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
+    export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 }

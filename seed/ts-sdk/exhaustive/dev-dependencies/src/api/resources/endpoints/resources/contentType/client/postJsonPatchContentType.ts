@@ -13,27 +13,27 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(
-            visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>
+            visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>,
         ) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Unknown,
-                visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>
+                visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>,
             ) {
                 return Fiddle.endpoints.contentType.postJsonPatchContentType.Error._visit(this, visitor);
             },
@@ -42,7 +42,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.endpoints.contentType.postJsonPatchContentType.Error,
-        visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>
+        visitor: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

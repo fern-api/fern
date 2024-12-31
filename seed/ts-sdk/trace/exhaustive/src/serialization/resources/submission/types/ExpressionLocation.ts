@@ -15,7 +15,7 @@ export const ExpressionLocation: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExpressionLocation {
-    interface Raw {
+    export interface Raw {
         start: number;
         offset: number;
     }

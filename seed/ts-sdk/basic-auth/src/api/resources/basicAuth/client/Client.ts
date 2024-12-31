@@ -9,13 +9,13 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         username: core.Supplier<string>;
         password: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -78,7 +78,7 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedBasicAuthError({
@@ -156,7 +156,7 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 400:
                     throw new SeedBasicAuth.BadRequest();

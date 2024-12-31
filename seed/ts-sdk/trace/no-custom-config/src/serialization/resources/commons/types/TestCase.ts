@@ -13,7 +13,7 @@ export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw,
     });
 
 export declare namespace TestCase {
-    interface Raw {
+    export interface Raw {
         id: string;
         params: serializers.VariableValue.Raw[];
     }

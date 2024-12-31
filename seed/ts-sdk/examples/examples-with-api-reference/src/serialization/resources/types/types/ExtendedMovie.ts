@@ -15,7 +15,7 @@ export const ExtendedMovie: core.serialization.ObjectSchema<serializers.Extended
         .extend(Movie);
 
 export declare namespace ExtendedMovie {
-    interface Raw extends Movie.Raw {
+    export interface Raw extends Movie.Raw {
         cast: string[];
     }
 }

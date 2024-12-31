@@ -38,19 +38,22 @@ export const ProblemDescriptionBoard: core.serialization.Schema<
     });
 
 export declare namespace ProblemDescriptionBoard {
-    type Raw = ProblemDescriptionBoard.Html | ProblemDescriptionBoard.Variable | ProblemDescriptionBoard.TestCaseId;
+    export type Raw =
+        | ProblemDescriptionBoard.Html
+        | ProblemDescriptionBoard.Variable
+        | ProblemDescriptionBoard.TestCaseId;
 
-    interface Html {
+    export interface Html {
         type: "html";
         value: string;
     }
 
-    interface Variable {
+    export interface Variable {
         type: "variable";
         value: serializers.VariableValue.Raw;
     }
 
-    interface TestCaseId {
+    export interface TestCaseId {
         type: "testCaseId";
         value: string;
     }

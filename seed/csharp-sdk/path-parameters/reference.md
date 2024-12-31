@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
+await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 ```
 </dd>
 </dl>
@@ -62,9 +62,9 @@ await client.Organizations.GetOrganizationAsync("tenantId", "organizationId");
 
 ```csharp
 await client.Organizations.GetOrganizationUserAsync(
-    "tenantId",
-    "organizationId",
-    "userId",
+    "tenant_id",
+    "organization_id",
+    "user_id",
     new GetOrganizationUserRequest()
 );
 ```
@@ -131,8 +131,8 @@ await client.Organizations.GetOrganizationUserAsync(
 
 ```csharp
 await client.Organizations.SearchOrganizationsAsync(
-    "tenantId",
-    "organizationId",
+    "tenant_id",
+    "organization_id",
     new SearchOrganizationsRequest { Limit = 1 }
 );
 ```
@@ -191,7 +191,7 @@ await client.Organizations.SearchOrganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
+await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 ```
 </dd>
 </dl>
@@ -234,6 +234,128 @@ await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
 </dl>
 </details>
 
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUserAsync(
+    "tenant_id",
+    new User
+    {
+        Name = "name",
+        Tags = new List<string>() { "tags", "tags" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.UpdateUserAsync(
+    "tenant_id",
+    "user_id",
+    new UpdateUserRequest
+    {
+        Body = new User
+        {
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
 <dl>
 <dd>
@@ -247,7 +369,7 @@ await client.User.GetUserAsync("tenantId", "userId", new GetUsersRequest());
 <dd>
 
 ```csharp
-await client.User.SearchUsersAsync("tenantId", "userId", new SearchUsersRequest { Limit = 1 });
+await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>

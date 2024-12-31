@@ -24,6 +24,10 @@ export function buildChannel({
         auth: false
     };
 
+    if (channel.audiences != null && channel.audiences.length > 0) {
+        convertedChannel.audiences = channel.audiences;
+    }
+
     if (channel.summary != null) {
         convertedChannel["display-name"] = channel.summary;
     }

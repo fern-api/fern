@@ -10,5 +10,5 @@ export const FileInfo: core.serialization.Schema<serializers.FileInfo.Raw, SeedO
     core.serialization.enum_(["REGULAR", "DIRECTORY"]);
 
 export declare namespace FileInfo {
-    type Raw = "REGULAR" | "DIRECTORY";
+    export type Raw = "REGULAR" | "DIRECTORY";
 }

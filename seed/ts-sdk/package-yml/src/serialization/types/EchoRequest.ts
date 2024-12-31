@@ -13,7 +13,7 @@ export const EchoRequest: core.serialization.ObjectSchema<serializers.EchoReques
     });
 
 export declare namespace EchoRequest {
-    interface Raw {
+    export interface Raw {
         name: string;
         size: number;
     }

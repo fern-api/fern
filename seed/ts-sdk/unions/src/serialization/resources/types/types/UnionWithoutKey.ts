@@ -20,13 +20,13 @@ export const UnionWithoutKey: core.serialization.Schema<serializers.UnionWithout
         });
 
 export declare namespace UnionWithoutKey {
-    type Raw = UnionWithoutKey.Foo | UnionWithoutKey.Bar;
+    export type Raw = UnionWithoutKey.Foo | UnionWithoutKey.Bar;
 
-    interface Foo extends Foo.Raw {
+    export interface Foo extends Foo.Raw {
         type: "foo";
     }
 
-    interface Bar extends Bar.Raw {
+    export interface Bar extends Bar.Raw {
         type: "bar";
     }
 }

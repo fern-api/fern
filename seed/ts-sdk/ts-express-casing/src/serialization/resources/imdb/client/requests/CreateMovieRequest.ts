@@ -17,7 +17,7 @@ export const CreateMovieRequest: core.serialization.Schema<
 });
 
 export declare namespace CreateMovieRequest {
-    interface Raw {
+    export interface Raw {
         id: MovieId.Raw;
         movie_title: string;
         movie_rating: number;

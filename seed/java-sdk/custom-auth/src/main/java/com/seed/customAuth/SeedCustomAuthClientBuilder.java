@@ -26,6 +26,14 @@ public final class SeedCustomAuthClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedCustomAuthClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedCustomAuthClient build() {
         if (customAuthScheme == null) {
             throw new RuntimeException("Please provide customAuthScheme");

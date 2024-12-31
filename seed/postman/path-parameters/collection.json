@@ -24,26 +24,26 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId",
+              "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
+                ":tenant_id",
                 "organizations",
-                ":organizationId"
+                ":organization_id"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "tenant_id",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "tenant_id"
                 },
                 {
-                  "key": "organizationId",
+                  "key": "organization_id",
                   "description": null,
-                  "value": "organizationId"
+                  "value": "organization_id"
                 }
               ]
             },
@@ -66,26 +66,26 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId",
+                  "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
+                    ":tenant_id",
                     "organizations",
-                    ":organizationId"
+                    ":organization_id"
                   ],
                   "query": [],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "tenant_id",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "tenant_id"
                     },
                     {
-                      "key": "organizationId",
+                      "key": "organization_id",
                       "description": null,
-                      "value": "organizationId"
+                      "value": "organization_id"
                     }
                   ]
                 },
@@ -112,33 +112,33 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId/users/:userId",
+              "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id/users/:user_id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
+                ":tenant_id",
                 "organizations",
-                ":organizationId",
+                ":organization_id",
                 "users",
-                ":userId"
+                ":user_id"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "tenant_id",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "tenant_id"
                 },
                 {
-                  "key": "organizationId",
+                  "key": "organization_id",
                   "description": null,
-                  "value": "organizationId"
+                  "value": "organization_id"
                 },
                 {
-                  "key": "userId",
+                  "key": "user_id",
                   "description": null,
-                  "value": "userId"
+                  "value": "user_id"
                 }
               ]
             },
@@ -161,33 +161,33 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId/users/:userId",
+                  "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id/users/:user_id",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
+                    ":tenant_id",
                     "organizations",
-                    ":organizationId",
+                    ":organization_id",
                     "users",
-                    ":userId"
+                    ":user_id"
                   ],
                   "query": [],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "tenant_id",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "tenant_id"
                     },
                     {
-                      "key": "organizationId",
+                      "key": "organization_id",
                       "description": null,
-                      "value": "organizationId"
+                      "value": "organization_id"
                     },
                     {
-                      "key": "userId",
+                      "key": "user_id",
                       "description": null,
-                      "value": "userId"
+                      "value": "user_id"
                     }
                   ]
                 },
@@ -214,14 +214,14 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId/search?limit=1",
+              "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id/search?limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
+                ":tenant_id",
                 "organizations",
-                ":organizationId",
+                ":organization_id",
                 "search"
               ],
               "query": [
@@ -233,14 +233,14 @@
               ],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "tenant_id",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "tenant_id"
                 },
                 {
-                  "key": "organizationId",
+                  "key": "organization_id",
                   "description": null,
-                  "value": "organizationId"
+                  "value": "organization_id"
                 }
               ]
             },
@@ -263,14 +263,14 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/organizations/:organizationId/search?limit=1",
+                  "raw": "{{baseUrl}}/:tenant_id/organizations/:organization_id/search?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
+                    ":tenant_id",
                     "organizations",
-                    ":organizationId",
+                    ":organization_id",
                     "search"
                   ],
                   "query": [
@@ -282,14 +282,14 @@
                   ],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "tenant_id",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "tenant_id"
                     },
                     {
-                      "key": "organizationId",
+                      "key": "organization_id",
                       "description": null,
-                      "value": "organizationId"
+                      "value": "organization_id"
                     }
                   ]
                 },
@@ -323,26 +323,26 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/:userId",
+              "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
+                ":tenant_id",
                 "user",
-                ":userId"
+                ":user_id"
               ],
               "query": [],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "tenant_id",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "tenant_id"
                 },
                 {
-                  "key": "userId",
+                  "key": "user_id",
                   "description": null,
-                  "value": "userId"
+                  "value": "user_id"
                 }
               ]
             },
@@ -365,26 +365,26 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/:userId",
+                  "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
+                    ":tenant_id",
                     "user",
-                    ":userId"
+                    ":user_id"
                   ],
                   "query": [],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "tenant_id",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "tenant_id"
                     },
                     {
-                      "key": "userId",
+                      "key": "user_id",
                       "description": null,
-                      "value": "userId"
+                      "value": "user_id"
                     }
                   ]
                 },
@@ -407,18 +407,214 @@
         },
         {
           "_type": "endpoint",
-          "name": "Search Users",
+          "name": "Create User",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:tenantId/user/:userId/search?limit=1",
+              "raw": "{{baseUrl}}/:tenant_id/user",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                ":tenantId",
+                ":tenant_id",
+                "user"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tenant_id",
+                  "description": null,
+                  "value": "tenant_id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:tenant_id/user",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":tenant_id",
+                    "user"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "tenant_id",
+                      "description": null,
+                      "value": "tenant_id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Update User",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":tenant_id",
                 "user",
-                ":userId",
+                ":user_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tenant_id",
+                  "description": null,
+                  "value": "tenant_id"
+                },
+                {
+                  "key": "user_id",
+                  "description": null,
+                  "value": "user_id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:tenant_id/user/:user_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":tenant_id",
+                    "user",
+                    ":user_id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "tenant_id",
+                      "description": null,
+                      "value": "tenant_id"
+                    },
+                    {
+                      "key": "user_id",
+                      "description": null,
+                      "value": "user_id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Users",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:tenant_id/user/:user_id/search?limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":tenant_id",
+                "user",
+                ":user_id",
                 "search"
               ],
               "query": [
@@ -430,14 +626,14 @@
               ],
               "variable": [
                 {
-                  "key": "tenantId",
+                  "key": "tenant_id",
                   "description": null,
-                  "value": "tenantId"
+                  "value": "tenant_id"
                 },
                 {
-                  "key": "userId",
+                  "key": "user_id",
                   "description": null,
-                  "value": "userId"
+                  "value": "user_id"
                 }
               ]
             },
@@ -460,14 +656,14 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:tenantId/user/:userId/search?limit=1",
+                  "raw": "{{baseUrl}}/:tenant_id/user/:user_id/search?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    ":tenantId",
+                    ":tenant_id",
                     "user",
-                    ":userId",
+                    ":user_id",
                     "search"
                   ],
                   "query": [
@@ -479,14 +675,14 @@
                   ],
                   "variable": [
                     {
-                      "key": "tenantId",
+                      "key": "tenant_id",
                       "description": null,
-                      "value": "tenantId"
+                      "value": "tenant_id"
                     },
                     {
-                      "key": "userId",
+                      "key": "user_id",
                       "description": null,
-                      "value": "userId"
+                      "value": "user_id"
                     }
                   ]
                 },

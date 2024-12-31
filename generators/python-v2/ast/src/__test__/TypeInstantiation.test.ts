@@ -63,6 +63,18 @@ describe("TypeInstantiation", () => {
             TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"').write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
+
+        it("should render a multiline string containing an escaped quote", async () => {
+            TypeInstantiation.str(
+                // prettier-ignore
+
+                "{{ chat_history[-1][\"text\"] }}",
+                {
+                    multiline: true
+                }
+            ).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
     it("bytes", async () => {
@@ -70,31 +82,58 @@ describe("TypeInstantiation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
-    it("list", async () => {
-        TypeInstantiation.list([
-            TypeInstantiation.int(1),
-            TypeInstantiation.str("two"),
-            TypeInstantiation.bool(true)
-        ]).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    describe("list", () => {
+        it("basic", async () => {
+            TypeInstantiation.list([
+                TypeInstantiation.int(1),
+                TypeInstantiation.str("two"),
+                TypeInstantiation.bool(true)
+            ]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
-    it("set", async () => {
-        TypeInstantiation.set([
-            TypeInstantiation.int(1),
-            TypeInstantiation.str("two"),
-            TypeInstantiation.bool(true)
-        ]).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    describe("set", () => {
+        it("basic", async () => {
+            TypeInstantiation.set([
+                TypeInstantiation.int(1),
+                TypeInstantiation.str("two"),
+                TypeInstantiation.bool(true)
+            ]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should support trailing comma", async () => {
+            TypeInstantiation.set(
+                [TypeInstantiation.int(1), TypeInstantiation.str("two"), TypeInstantiation.bool(true)],
+                { endWithComma: true }
+            ).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
-    it("tuple", async () => {
-        TypeInstantiation.tuple([
-            TypeInstantiation.int(1),
-            TypeInstantiation.str("two"),
-            TypeInstantiation.bool(true)
-        ]).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    describe("tuple", () => {
+        it("basic", async () => {
+            TypeInstantiation.tuple([
+                TypeInstantiation.int(1),
+                TypeInstantiation.str("two"),
+                TypeInstantiation.bool(true)
+            ]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should support trailing comma", async () => {
+            TypeInstantiation.tuple(
+                [TypeInstantiation.int(1), TypeInstantiation.str("two"), TypeInstantiation.bool(true)],
+                { endWithComma: true }
+            ).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should handle single-element tuple", async () => {
+            TypeInstantiation.tuple([TypeInstantiation.int(1)]).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
     describe("dict", () => {
@@ -114,6 +153,17 @@ describe("TypeInstantiation", () => {
             dict.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
             expect(dict.getReferences().length).toBe(2);
+        });
+
+        it("should support trailing comma", async () => {
+            TypeInstantiation.dict(
+                [
+                    { key: TypeInstantiation.str("one"), value: TypeInstantiation.int(1) },
+                    { key: TypeInstantiation.str("two"), value: TypeInstantiation.bool(true) }
+                ],
+                { endWithComma: true }
+            ).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
     });
 

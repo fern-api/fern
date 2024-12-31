@@ -14,7 +14,7 @@ export const NamespaceSummary: core.serialization.ObjectSchema<
 });
 
 export declare namespace NamespaceSummary {
-    interface Raw {
+    export interface Raw {
         count?: number | null;
     }
 }

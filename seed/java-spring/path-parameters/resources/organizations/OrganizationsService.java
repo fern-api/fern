@@ -16,7 +16,7 @@ import resources.organizations.types.Organization;
 import resources.user.types.User;
 
 @RequestMapping(
-    path = "/organizations/{organizationId}"
+    path = "/organizations/{organization_id}"
 )
 public interface OrganizationsService {
   @GetMapping(
@@ -26,10 +26,10 @@ public interface OrganizationsService {
   Organization getOrganization();
 
   @GetMapping(
-      value = "/users/{userId}",
+      value = "/users/{user_id}",
       produces = "application/json"
   )
-  User getOrganizationUser(@PathVariable("userId") String userId);
+  User getOrganizationUser(@PathVariable("user_id") String userId);
 
   @GetMapping(
       value = "/search",

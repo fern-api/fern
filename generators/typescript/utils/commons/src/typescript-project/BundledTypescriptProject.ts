@@ -359,10 +359,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private getDevDependencies(): Record<string, string> {
         return {
-            "@types/node": "17.0.33",
-            esbuild: "0.16.15",
-            prettier: "2.7.1",
-            typescript: "4.6.4"
+            "@types/node": "^17.0.41",
+            esbuild: "~0.24.2",
+            prettier: "^3.4.2",
+            typescript: "~5.7.2"
         };
     }
 }

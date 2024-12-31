@@ -10,14 +10,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Ec2 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<
             environments.SeedMultiUrlEnvironmentEnvironment | environments.SeedMultiUrlEnvironmentEnvironmentUrls
         >;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,7 +43,7 @@ export class Ec2 {
      */
     public async bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
+        requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -51,7 +51,7 @@ export class Ec2 {
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedMultiUrlEnvironmentEnvironment.Production
                 ).ec2,
-                "/ec2/boot"
+                "/ec2/boot",
             ),
             method: "POST",
             headers: {

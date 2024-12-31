@@ -13,7 +13,7 @@ export const StuntDouble: core.serialization.ObjectSchema<serializers.StuntDoubl
     });
 
 export declare namespace StuntDouble {
-    interface Raw {
+    export interface Raw {
         name: string;
         actorOrActressId: string;
     }

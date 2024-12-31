@@ -10,11 +10,11 @@ import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,7 +43,7 @@ export class Service {
         maybeFile: File | fs.ReadStream | Blob | undefined,
         maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined,
         request: SeedFileUpload.MyRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
@@ -85,7 +85,7 @@ export class Service {
                 for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
+                        typeof _item === "string" ? _item : JSON.stringify(_item),
                     );
                 }
         }
@@ -207,7 +207,7 @@ export class Service {
     public async justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (request.maybeString != null) {
@@ -276,7 +276,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError(
-                    "Timeout exceeded when calling POST /just-file-with-query-params."
+                    "Timeout exceeded when calling POST /just-file-with-query-params.",
                 );
             case "unknown":
                 throw new errors.SeedFileUploadError({
@@ -293,7 +293,7 @@ export class Service {
     public async withContentType(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);

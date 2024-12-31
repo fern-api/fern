@@ -14680,6 +14680,7 @@ service:
                 "name": "BackupsGetBackupContentV2Request",
                 "query-parameters": {
                   "app": {
+                    "default": "",
                     "docs": "The name of the app.",
                     "type": "optional<string>",
                   },
@@ -14944,6 +14945,7 @@ service:
             docs: The ID of the app.
           app:
             type: optional<string>
+            default: ''
             docs: The name of the app.
       response:
         docs: Backup found and content returned.
@@ -15169,6 +15171,7 @@ service:
                 "name": "CommentsGetCommentsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -15381,6 +15384,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: Comments returned.
@@ -16167,6 +16171,7 @@ service:
                 "name": "ContentsGetContentRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The optional version.",
                     "type": "optional<long>",
                   },
@@ -17911,6 +17916,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The optional version.
       response:
         docs: Content returned.
@@ -19866,6 +19872,7 @@ service:
                 "name": "NewsGetNewsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": 0,
                     "docs": "The latest received version.",
                     "type": "optional<integer>",
                   },
@@ -19903,6 +19910,7 @@ service:
         query-parameters:
           version:
             type: optional<integer>
+            default: 0
             docs: The latest received version.
       response:
         docs: Latest features returned.
@@ -20017,6 +20025,7 @@ service:
                 "name": "NotificationsGetNotificationsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -20059,6 +20068,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: All comments returned.
@@ -21116,10 +21126,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of events to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 20,
                     "docs": "The number of events to take.",
                     "type": "optional<integer>",
                   },
@@ -21468,6 +21480,7 @@ service:
                 "name": "RulesPutRuleRunRequest",
                 "query-parameters": {
                   "fromSnapshots": {
+                    "default": false,
                     "docs": "Runs the rule from snapeshots if possible.",
                     "type": "optional<boolean>",
                   },
@@ -22086,6 +22099,7 @@ service:
         query-parameters:
           fromSnapshots:
             type: optional<boolean>
+            default: false
             docs: Runs the rule from snapeshots if possible.
       errors:
         - root.BadRequestError
@@ -22236,9 +22250,11 @@ service:
             docs: The optional rule id to filter to events.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of events to skip.
           take:
             type: optional<integer>
+            default: 20
             docs: The number of events to take.
       response:
         docs: Rule events returned.
@@ -32315,10 +32331,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of users to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 10,
                     "docs": "The number of users to return.",
                     "type": "optional<integer>",
                   },
@@ -32654,9 +32672,11 @@ service:
             docs: Optional query to search by email address or username.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of users to skip.
           take:
             type: optional<integer>
+            default: 10
             docs: The number of users to return.
       response:
         docs: Users returned.

@@ -18,11 +18,11 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         badRequestBody: (value: Fiddle.BadObjectRequestInfo) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -35,7 +35,7 @@ export const Error = {
             statusCode: 400,
             _visit: function <_Result>(
                 this: Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody,
-                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
+                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>,
             ) {
                 return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
             },
@@ -48,7 +48,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.noAuth.postWithNoAuth.Error._Unknown,
-                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
+                visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>,
             ) {
                 return Fiddle.noAuth.postWithNoAuth.Error._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.noAuth.postWithNoAuth.Error,
-        visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>
+        visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             case 400:

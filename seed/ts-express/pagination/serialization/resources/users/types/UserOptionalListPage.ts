@@ -15,7 +15,7 @@ export const UserOptionalListPage: core.serialization.ObjectSchema<
 });
 
 export declare namespace UserOptionalListPage {
-    interface Raw {
+    export interface Raw {
         data: serializers.UserOptionalListContainer.Raw;
         next?: string | null;
     }

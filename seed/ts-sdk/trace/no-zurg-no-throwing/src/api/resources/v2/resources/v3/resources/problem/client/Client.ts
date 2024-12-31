@@ -8,14 +8,14 @@ import * as SeedTrace from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Problem {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,7 +41,7 @@ export class Problem {
      *     await client.v2.v3.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<
         core.APIResponse<
             SeedTrace.v2.v3.LightweightProblemInfoV2[],
@@ -51,7 +51,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info"
+                "/problems-v2/lightweight-problem-info",
             ),
             method: "GET",
             headers: {
@@ -96,12 +96,12 @@ export class Problem {
      *     await client.v2.v3.problem.getProblems()
      */
     public async getProblems(
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info"
+                "/problems-v2/problem-info",
             ),
             method: "GET",
             headers: {
@@ -148,12 +148,12 @@ export class Problem {
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`,
             ),
             method: "GET",
             headers: {
@@ -202,14 +202,12 @@ export class Problem {
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
-                    problemVersion
-                )}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(problemVersion)}`,
             ),
             method: "GET",
             headers: {

@@ -9,12 +9,12 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         tenantId: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -35,17 +35,18 @@ export class User {
      *
      * @example
      *     await client.user.getUser({
-     *         userId: "userId"
+     *         userId: "user_id"
      *     })
      */
     public async getUser(
         request: SeedPathParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User> {
+        const { userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(request.userId)}`
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
             headers: {
@@ -87,7 +88,149 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/{userId}."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}.",
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedPathParameters.User} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUser({
+     *         name: "name",
+     *         tags: ["tags", "tags"]
+     *     })
+     */
+    public async createUser(
+        request: SeedPathParameters.User,
+        requestOptions?: User.RequestOptions,
+    ): Promise<SeedPathParameters.User> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.tenantId)}/user/`,
+            ),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.User.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling POST /{tenant_id}/user/.",
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedPathParameters.UpdateUserRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.updateUser({
+     *         userId: "user_id",
+     *         body: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         }
+     *     })
+     */
+    public async updateUser(
+        request: SeedPathParameters.UpdateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<SeedPathParameters.User> {
+        const { userId, body: _body } = request;
+        const _response = await core.fetcher({
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
+            ),
+            method: "PATCH",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/path-parameters",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/path-parameters/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.User.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.User.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -102,15 +245,15 @@ export class User {
      *
      * @example
      *     await client.user.searchUsers({
-     *         userId: "userId",
+     *         userId: "user_id",
      *         limit: 1
      *     })
      */
     public async searchUsers(
         request: SeedPathParameters.SearchUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User[]> {
-        const { limit } = request;
+        const { userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -119,7 +262,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(request.userId)}/search`
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}/search`,
             ),
             method: "GET",
             headers: {
@@ -162,7 +305,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenantId}/user/{userId}/search."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

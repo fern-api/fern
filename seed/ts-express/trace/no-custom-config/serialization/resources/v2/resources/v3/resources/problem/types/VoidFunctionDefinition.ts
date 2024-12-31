@@ -15,7 +15,7 @@ export const VoidFunctionDefinition: core.serialization.ObjectSchema<
 });
 
 export declare namespace VoidFunctionDefinition {
-    interface Raw {
+    export interface Raw {
         parameters: serializers.v2.v3.Parameter.Raw[];
         code: serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw;
     }

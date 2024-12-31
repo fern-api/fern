@@ -16,7 +16,7 @@ export const PlaylistCreateRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace PlaylistCreateRequest {
-    interface Raw {
+    export interface Raw {
         name: string;
         problems: ProblemId.Raw[];
     }

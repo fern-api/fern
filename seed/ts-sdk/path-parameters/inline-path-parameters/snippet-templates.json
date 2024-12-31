@@ -6,7 +6,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}/",
+            "path": "/{tenant_id}/organizations/{organization_id}/",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.getOrganization"
         },
@@ -64,7 +64,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "tenantId",
+                                                "path": "tenant_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -80,7 +80,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "organizationId",
+                                                "path": "organization_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -106,7 +106,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}/users/{userId}",
+            "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.getOrganizationUser"
         },
@@ -164,7 +164,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "tenantId",
+                                                "path": "tenant_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -180,7 +180,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "organizationId",
+                                                "path": "organization_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -196,7 +196,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "userId",
+                                                "path": "user_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -222,7 +222,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/{tenantId}/organizations/{organizationId}/search",
+            "path": "/{tenant_id}/organizations/{organization_id}/search",
             "method": "GET",
             "identifierOverride": "endpoint_organizations.searchOrganizations"
         },
@@ -280,7 +280,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "tenantId",
+                                                "path": "tenant_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -296,7 +296,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "organizationId",
+                                                "path": "organization_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -350,7 +350,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/{tenantId}/user/{userId}",
+            "path": "/{tenant_id}/user/{user_id}",
             "method": "GET",
             "identifierOverride": "endpoint_user.getUser"
         },
@@ -408,7 +408,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "tenantId",
+                                                "path": "tenant_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -424,7 +424,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "userId",
+                                                "path": "user_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -450,7 +450,325 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/{tenantId}/user/{userId}/search",
+            "path": "/{tenant_id}/user/",
+            "method": "POST",
+            "identifierOverride": "endpoint_user.createUser"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
+                ],
+                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.user.createUser(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "tenant_id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/path-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/{tenant_id}/user/{user_id}",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_user.updateUser"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPathParametersClient } from \"@fern/path-parameters\";"
+                ],
+                "templateString": "const client = new SeedPathParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.user.updateUser(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "tenant_id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "user_id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/path-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/{tenant_id}/user/{user_id}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -508,7 +826,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "tenantId",
+                                                "path": "tenant_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -524,7 +842,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "PATH",
-                                                "path": "userId",
+                                                "path": "user_id",
                                                 "type": "payload"
                                             }
                                         ],

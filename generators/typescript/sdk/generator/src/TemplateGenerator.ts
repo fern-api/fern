@@ -40,6 +40,7 @@ export class TemplateGenerator {
     private endpoint: HttpEndpoint;
     private packageId: PackageId;
     private rootPackageId: PackageId;
+    private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
     private requireDefaultEnvironment: boolean;
@@ -53,6 +54,7 @@ export class TemplateGenerator {
         endpoint,
         packageId,
         rootPackageId,
+        includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
         requireDefaultEnvironment
@@ -65,6 +67,7 @@ export class TemplateGenerator {
         endpoint: HttpEndpoint;
         packageId: PackageId;
         rootPackageId: PackageId;
+        includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         requireDefaultEnvironment: boolean;
@@ -77,6 +80,7 @@ export class TemplateGenerator {
         this.endpoint = endpoint;
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
@@ -85,7 +89,7 @@ export class TemplateGenerator {
     }
 
     private getPropertyKey(name: Name): string {
-        return this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
+        return !this.includeSerdeLayer || this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
     }
 
     // Get the dot access path to the object within the broader json object

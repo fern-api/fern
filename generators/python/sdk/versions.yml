@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.10
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Pagination correctly uses specified defaults to support custom schemes.
+
 - version: 4.3.9
   irVersion: 53
   changelogEntry:

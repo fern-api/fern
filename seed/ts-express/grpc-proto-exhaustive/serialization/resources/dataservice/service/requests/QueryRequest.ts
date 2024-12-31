@@ -20,7 +20,7 @@ export const QueryRequest: core.serialization.Schema<serializers.QueryRequest.Ra
     });
 
 export declare namespace QueryRequest {
-    interface Raw {
+    export interface Raw {
         namespace?: string | null;
         topK: number;
         filter?: serializers.Metadata.Raw | null;

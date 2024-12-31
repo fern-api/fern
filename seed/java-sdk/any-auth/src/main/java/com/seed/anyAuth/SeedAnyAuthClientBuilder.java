@@ -62,6 +62,14 @@ public final class SeedAnyAuthClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedAnyAuthClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedAnyAuthClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         if (apiKey == null) {

@@ -9,7 +9,7 @@ func do() () {
     client := client.NewClient()
     client.User.GetUser(
         context.TODO(),
-        "tenantId",
-        "userId",
+        "tenant_id",
+        "user_id",
     )
 }

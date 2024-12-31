@@ -29,7 +29,7 @@ public class GetUserTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/tenantId/user/userId")
+                    .WithPath("/tenant_id/user/user_id")
                     .UsingGet()
             )
             .RespondWith(
@@ -40,8 +40,8 @@ public class GetUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetUserAsync(
-            "tenantId",
-            "userId",
+            "tenant_id",
+            "user_id",
             new GetUsersRequest(),
             RequestOptions
         );

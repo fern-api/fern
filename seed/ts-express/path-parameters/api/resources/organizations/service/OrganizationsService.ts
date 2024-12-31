@@ -11,7 +11,7 @@ export interface OrganizationsServiceMethods {
     getOrganization(
         req: express.Request<
             {
-                organizationId: string;
+                organization_id: string;
             },
             SeedPathParameters.Organization,
             never,
@@ -22,13 +22,13 @@ export interface OrganizationsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getOrganizationUser(
         req: express.Request<
             {
-                organizationId: string;
-                userId: string;
+                organization_id: string;
+                user_id: string;
             },
             SeedPathParameters.User,
             never,
@@ -39,12 +39,12 @@ export interface OrganizationsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     searchOrganizations(
         req: express.Request<
             {
-                organizationId: string;
+                organization_id: string;
             },
             SeedPathParameters.Organization[],
             never,
@@ -57,19 +57,22 @@ export interface OrganizationsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class OrganizationsService {
     private router;
 
-    constructor(private readonly methods: OrganizationsServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: OrganizationsServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -86,13 +89,13 @@ export class OrganizationsService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                serializers.Organization.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                serializers.Organization.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -100,7 +103,7 @@ export class OrganizationsService {
                     console.warn(
                         `Endpoint 'getOrganization' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -109,7 +112,7 @@ export class OrganizationsService {
                 next(error);
             }
         });
-        this.router.get("/users/:userId", async (req, res, next) => {
+        this.router.get("/users/:user_id", async (req, res, next) => {
             try {
                 await this.methods.getOrganizationUser(
                     req as any,
@@ -120,7 +123,7 @@ export class OrganizationsService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -128,7 +131,7 @@ export class OrganizationsService {
                     console.warn(
                         `Endpoint 'getOrganizationUser' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -146,13 +149,13 @@ export class OrganizationsService {
                             res.json(
                                 serializers.organizations.searchOrganizations.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -160,7 +163,7 @@ export class OrganizationsService {
                     console.warn(
                         `Endpoint 'searchOrganizations' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

@@ -10762,6 +10762,7 @@ errors:
                 "name": "BookingsIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
                     "type": "optional<BookingsIndexRequestDirection>",
                   },
@@ -10828,6 +10829,7 @@ errors:
                     "type": "optional<BookingsIndexRequestFStatus>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -10839,6 +10841,7 @@ errors:
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
                     "validation": {
@@ -11775,11 +11778,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -11791,6 +11796,7 @@ service:
             docs: Sort results by the specified field.
           direction:
             type: optional<BookingsIndexRequestDirection>
+            default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending).
           f.status:
             type: optional<BookingsIndexRequestFStatus>
@@ -13350,6 +13356,7 @@ docs: >-
                 "name": "BookingLineItemIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "desc",
                     "docs": "Set sort order. Allows "asc" (ascending) or "desc"  (descending)",
                     "type": "optional<BookingLineItemIndexRequestDirection>",
                   },
@@ -13366,6 +13373,7 @@ docs: >-
                     "type": "optional<integer>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -13377,6 +13385,7 @@ docs: >-
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -13584,11 +13593,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -13597,6 +13608,7 @@ service:
               max: 100
           direction:
             type: optional<BookingLineItemIndexRequestDirection>
+            default: desc
             docs: Set sort order. Allows "asc" (ascending) or "desc"  (descending)
           f.purchase_order.id:
             type: optional<integer>
@@ -14496,6 +14508,7 @@ docs: Endpoints relating to Carbon Calculations
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -14507,6 +14520,7 @@ docs: Endpoints relating to Carbon Calculations
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -14978,11 +14992,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -15712,6 +15728,7 @@ docs: Endpoints relating to Commercial Invoice objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -15723,6 +15740,7 @@ docs: Endpoints relating to Commercial Invoice objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -16179,11 +16197,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -16624,6 +16644,7 @@ docs: Endpoints relating to Company objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -16635,6 +16656,7 @@ docs: Endpoints relating to Company objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -17041,11 +17063,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -17454,6 +17478,7 @@ docs: Endpoints relating to CompanyEntity objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -17465,6 +17490,7 @@ docs: Endpoints relating to CompanyEntity objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -17759,11 +17785,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -18103,6 +18131,7 @@ docs: Endpoints relating to Contact objects
                     "type": "optional<integer>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -18114,6 +18143,7 @@ docs: Endpoints relating to Contact objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18332,11 +18362,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -18602,6 +18634,7 @@ docs: Endpoints relating to Container objects
                     "type": "optional<integer>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -18613,6 +18646,7 @@ docs: Endpoints relating to Container objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18783,11 +18817,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -18952,6 +18988,7 @@ docs: Endpoints relating to ContainerLeg objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -18963,6 +19000,7 @@ docs: Endpoints relating to ContainerLeg objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -19127,11 +19165,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -19382,6 +19422,7 @@ docs: Endpoints relating to Customs Entry objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -19393,6 +19434,7 @@ docs: Endpoints relating to Customs Entry objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -19585,11 +19627,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -20535,6 +20579,7 @@ Other details about this invoice",
                 "name": "InvoiceIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
                     "type": "optional<InvoiceIndexRequestDirection>",
                   },
@@ -20591,6 +20636,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional<InvoiceIndexRequestFStatus>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -21019,6 +21065,7 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
@@ -21035,6 +21082,7 @@ service:
             docs: Sort results by the specified field.
           direction:
             type: optional<InvoiceIndexRequestDirection>
+            default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending).
           f.status:
             type: optional<InvoiceIndexRequestFStatus>
@@ -21602,6 +21650,7 @@ docs: Endpoints relating to Invoice objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -21613,6 +21662,7 @@ docs: Endpoints relating to Invoice objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -22047,11 +22097,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -22463,6 +22515,7 @@ docs: Endpoints relating to Location objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -22474,6 +22527,7 @@ docs: Endpoints relating to Location objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -22586,11 +22640,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -24045,6 +24101,7 @@ docs: Endpoints relating to Product objects
                 "name": "PurchaseOrderIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "asc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
                     "type": "optional<PurchaseOrderIndexRequestDirection>",
                   },
@@ -24094,6 +24151,7 @@ docs: Endpoints relating to Product objects
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -24105,6 +24163,7 @@ docs: Endpoints relating to Product objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -24673,11 +24732,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page Should be between 1 and 100
               (inclusive)
@@ -24691,6 +24752,7 @@ service:
               this time)
           direction:
             type: optional<PurchaseOrderIndexRequestDirection>
+            default: asc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
           f.archived_at.exists:
             type: optional<boolean>
@@ -25572,6 +25634,7 @@ docs: >-
                 "name": "PurchaseOrderLineItemIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
                     "type": "optional<PurchaseOrderLineItemIndexRequestDirection>",
                   },
@@ -25592,6 +25655,7 @@ docs: >-
                     "type": "optional<integer>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -25603,6 +25667,7 @@ docs: >-
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
                     "validation": {
@@ -25873,11 +25938,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
@@ -25886,6 +25953,7 @@ service:
               max: 100
           direction:
             type: optional<PurchaseOrderLineItemIndexRequestDirection>
+            default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
           f.purchase_order.id:
             type: optional<integer>
@@ -26432,6 +26500,7 @@ docs: >-
                 "name": "ShipmentIndexRequest",
                 "query-parameters": {
                   "direction": {
+                    "default": "desc",
                     "docs": "Set sort order. Allows "asc" (ascending) or "desc" (descending).",
                     "type": "optional<ShipmentIndexRequestDirection>",
                   },
@@ -26567,6 +26636,7 @@ docs: >-
                     },
                   },
                   "sort": {
+                    "default": "id",
                     "docs": "Sort results by the specified field.",
                     "type": "optional<ShipmentIndexRequestSort>",
                   },
@@ -27518,9 +27588,11 @@ service:
               max: 100
           sort:
             type: optional<ShipmentIndexRequestSort>
+            default: id
             docs: Sort results by the specified field.
           direction:
             type: optional<ShipmentIndexRequestDirection>
+            default: desc
             docs: Set sort order. Allows "asc" (ascending) or "desc" (descending).
           f.transportation_mode:
             type: optional<root.TransportationMode>
@@ -28611,6 +28683,7 @@ docs: Endpoints relating to Shipment objects
                 "name": "ShipmentLegIndexRequest",
                 "query-parameters": {
                   "f.include_deleted": {
+                    "default": false,
                     "docs": "Returns legs including deleted legs",
                     "type": "optional<boolean>",
                   },
@@ -28623,6 +28696,7 @@ docs: Endpoints relating to Shipment objects
                     "type": "optional<integer>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
                     "validation": {
@@ -28634,6 +28708,7 @@ docs: Endpoints relating to Shipment objects
                     },
                   },
                   "per": {
+                    "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
                     "validation": {
@@ -28817,6 +28892,7 @@ docs: Endpoints relating to Shipment objects
                 "name": "ShipmentLegShowRequest",
                 "query-parameters": {
                   "f.include_deleted": {
+                    "default": false,
                     "docs": "Retrieves the leg even if it was deleted",
                     "type": "optional<boolean>",
                   },
@@ -28924,11 +29000,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
             type: optional<integer>
+            default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -28943,6 +29021,7 @@ service:
             docs: Only return legs that match the given transportation mode
           f.include_deleted:
             type: optional<boolean>
+            default: false
             docs: Returns legs including deleted legs
       response:
         docs: Success
@@ -29081,6 +29160,7 @@ service:
         query-parameters:
           f.include_deleted:
             type: optional<boolean>
+            default: false
             docs: Retrieves the leg even if it was deleted
       response:
         docs: Success

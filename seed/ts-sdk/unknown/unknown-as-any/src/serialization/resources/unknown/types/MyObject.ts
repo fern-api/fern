@@ -12,7 +12,7 @@ export const MyObject: core.serialization.ObjectSchema<serializers.MyObject.Raw,
     });
 
 export declare namespace MyObject {
-    interface Raw {
+    export interface Raw {
         unknown?: any;
     }
 }
