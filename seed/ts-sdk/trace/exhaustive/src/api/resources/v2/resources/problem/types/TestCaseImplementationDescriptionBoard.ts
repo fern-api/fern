@@ -24,11 +24,11 @@ export namespace TestCaseImplementationDescriptionBoard {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.TestCaseImplementationDescriptionBoard._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         html: (value: string) => _Result;
         paramId: (value: SeedTrace.v2.ParameterId) => _Result;
         _other: (value: { type: string }) => _Result;

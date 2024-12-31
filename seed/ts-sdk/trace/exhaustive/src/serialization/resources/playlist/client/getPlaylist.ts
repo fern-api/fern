@@ -30,14 +30,14 @@ export const Error: core.serialization.Schema<
     });
 
 export declare namespace Error {
-    type Raw = Error.PlaylistIdNotFoundError | Error.UnauthorizedError;
+    export type Raw = Error.PlaylistIdNotFoundError | Error.UnauthorizedError;
 
-    interface PlaylistIdNotFoundError {
+    export interface PlaylistIdNotFoundError {
         errorName: "PlaylistIdNotFoundError";
         content: PlaylistIdNotFoundErrorBody.Raw;
     }
 
-    interface UnauthorizedError {
+    export interface UnauthorizedError {
         errorName: "UnauthorizedError";
     }
 }

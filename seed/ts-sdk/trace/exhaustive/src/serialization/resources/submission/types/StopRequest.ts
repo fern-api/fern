@@ -13,7 +13,7 @@ export const StopRequest: core.serialization.ObjectSchema<serializers.StopReques
     });
 
 export declare namespace StopRequest {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
     }
 }

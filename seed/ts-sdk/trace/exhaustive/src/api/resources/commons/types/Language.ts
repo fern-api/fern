@@ -22,7 +22,7 @@ export const Language = {
 } as const;
 
 export namespace Language {
-    interface Visitor<R> {
+    export interface Visitor<R> {
         java: () => R;
         javascript: () => R;
         python: () => R;

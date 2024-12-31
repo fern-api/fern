@@ -14,5 +14,5 @@ export const CastMember: core.serialization.Schema<serializers.CastMember.Raw, S
     ]);
 
 export declare namespace CastMember {
-    type Raw = serializers.Actor.Raw | serializers.Actress.Raw | serializers.StuntDouble.Raw;
+    export type Raw = serializers.Actor.Raw | serializers.Actress.Raw | serializers.StuntDouble.Raw;
 }

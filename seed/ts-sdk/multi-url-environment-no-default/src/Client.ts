@@ -8,7 +8,7 @@ import { Ec2 } from "./api/resources/ec2/client/Client";
 import { S3 } from "./api/resources/s3/client/Client";
 
 export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
@@ -16,7 +16,7 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

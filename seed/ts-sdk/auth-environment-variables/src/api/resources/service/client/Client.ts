@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index";
 import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
@@ -18,7 +18,7 @@ export declare namespace Service {
         xApiVersion?: "01-01-2000";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

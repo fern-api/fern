@@ -11,5 +11,5 @@ export const A: core.serialization.ObjectSchema<serializers.A.Raw, SeedApi.A> = 
     .extend(core.serialization.lazyObject(() => serializers.RootType));
 
 export declare namespace A {
-    interface Raw extends serializers.RootType.Raw {}
+    export interface Raw extends serializers.RootType.Raw {}
 }

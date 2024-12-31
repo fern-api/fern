@@ -367,7 +367,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME,
                     type: getTextOfTsNode(this.getVisitSignature(context))
                 }
-            ]
+            ],
+            isExported: true
         };
     }
 
@@ -383,7 +384,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                     hasQuestionToken: !this.noOptionalProperties && type.isOptional
                 };
-            })
+            }),
+            isExported: true
         };
     }
 
@@ -428,7 +430,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: singleUnionType.getVisitorKey(),
                     type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
                 })
-            )
+            ),
+            isExported: true
         };
     }
 

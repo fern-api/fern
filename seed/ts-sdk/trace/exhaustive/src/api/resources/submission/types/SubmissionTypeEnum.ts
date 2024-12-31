@@ -19,7 +19,7 @@ export const SubmissionTypeEnum = {
 } as const;
 
 export namespace SubmissionTypeEnum {
-    interface Visitor<R> {
+    export interface Visitor<R> {
         test: () => R;
         _other: () => R;
     }

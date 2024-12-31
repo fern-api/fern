@@ -10,7 +10,7 @@ import { Query } from "./api/resources/query/client/Client";
 import { Reference } from "./api/resources/reference/client/Client";
 
 export declare namespace SeedLiteralClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
@@ -18,7 +18,7 @@ export declare namespace SeedLiteralClient {
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

@@ -48,7 +48,8 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode)
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode),
+            isExported: true
         });
     }
 

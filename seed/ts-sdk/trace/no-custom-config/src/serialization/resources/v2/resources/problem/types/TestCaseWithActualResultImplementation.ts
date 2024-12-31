@@ -17,7 +17,7 @@ export const TestCaseWithActualResultImplementation: core.serialization.ObjectSc
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
-    interface Raw {
+    export interface Raw {
         getActualResult: NonVoidFunctionDefinition.Raw;
         assertCorrectnessCheck: AssertCorrectnessCheck.Raw;
     }

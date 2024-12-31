@@ -18,11 +18,11 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.noAuth.postWithNoAuth.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         badRequestBody: (value: Fiddle.BadObjectRequestInfo) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }

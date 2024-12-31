@@ -15,7 +15,7 @@ export const FileInfoV2: core.serialization.ObjectSchema<serializers.v2.v3.FileI
     });
 
 export declare namespace FileInfoV2 {
-    interface Raw {
+    export interface Raw {
         filename: string;
         directory: string;
         contents: string;

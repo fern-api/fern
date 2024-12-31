@@ -29,7 +29,7 @@ export const MigrationStatus = {
 } as const;
 
 export namespace MigrationStatus {
-    interface Visitor<R> {
+    export interface Visitor<R> {
         running: () => R;
         failed: () => R;
         finished: () => R;

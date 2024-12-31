@@ -37,21 +37,21 @@ export const SubmissionStatusForTestCase: core.serialization.Schema<
     });
 
 export declare namespace SubmissionStatusForTestCase {
-    type Raw =
+    export type Raw =
         | SubmissionStatusForTestCase.Graded
         | SubmissionStatusForTestCase.GradedV2
         | SubmissionStatusForTestCase.Traced;
 
-    interface Graded extends TestCaseResultWithStdout.Raw {
+    export interface Graded extends TestCaseResultWithStdout.Raw {
         type: "graded";
     }
 
-    interface GradedV2 {
+    export interface GradedV2 {
         type: "gradedV2";
         value: TestCaseGrade.Raw;
     }
 
-    interface Traced extends TracedTestCase.Raw {
+    export interface Traced extends TracedTestCase.Raw {
         type: "traced";
     }
 }

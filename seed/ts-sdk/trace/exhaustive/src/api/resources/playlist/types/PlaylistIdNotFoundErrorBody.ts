@@ -18,11 +18,11 @@ export namespace PlaylistIdNotFoundErrorBody {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistId: (value: SeedTrace.PlaylistId) => _Result;
         _other: (value: { type: string }) => _Result;
     }

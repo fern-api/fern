@@ -14,7 +14,7 @@ export const WorkspaceTracedUpdate: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceTracedUpdate {
-    interface Raw {
+    export interface Raw {
         traceResponsesSize: number;
     }
 }

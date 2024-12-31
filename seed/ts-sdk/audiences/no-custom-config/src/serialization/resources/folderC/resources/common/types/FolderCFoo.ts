@@ -14,7 +14,7 @@ export const FolderCFoo: core.serialization.ObjectSchema<
 });
 
 export declare namespace FolderCFoo {
-    interface Raw {
+    export interface Raw {
         bar_property: string;
     }
 }

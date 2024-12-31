@@ -15,7 +15,7 @@ export const RootType1FooSetItem: core.serialization.ObjectSchema<
 });
 
 export declare namespace RootType1FooSetItem {
-    interface Raw {
+    export interface Raw {
         foo: string;
         ref: serializers.ReferenceType.Raw;
     }

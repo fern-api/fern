@@ -17,7 +17,7 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceStarterFilesResponseV2 {
-    interface Raw {
+    export interface Raw {
         filesByLanguage: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;
     }
 }

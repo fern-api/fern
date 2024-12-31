@@ -12,5 +12,5 @@ export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperan
     core.serialization.undiscriminatedUnion([Color, Operand]);
 
 export declare namespace ColorOrOperand {
-    type Raw = Color.Raw | Operand.Raw;
+    export type Raw = Color.Raw | Operand.Raw;
 }

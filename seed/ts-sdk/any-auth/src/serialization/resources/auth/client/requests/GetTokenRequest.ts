@@ -14,7 +14,7 @@ export const GetTokenRequest: core.serialization.Schema<serializers.GetTokenRequ
     });
 
 export declare namespace GetTokenRequest {
-    interface Raw {
+    export interface Raw {
         client_id: string;
         client_secret: string;
         scope?: string | null;

@@ -15,7 +15,7 @@ export const LightweightStackframeInformation: core.serialization.ObjectSchema<
 });
 
 export declare namespace LightweightStackframeInformation {
-    interface Raw {
+    export interface Raw {
         numStackFrames: number;
         topStackFrameMethodName: string;
     }

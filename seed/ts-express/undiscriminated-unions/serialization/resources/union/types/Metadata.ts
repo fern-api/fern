@@ -13,5 +13,5 @@ export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedU
     );
 
 export declare namespace Metadata {
-    type Raw = Record<serializers.Key.Raw, string>;
+    export type Raw = Record<serializers.Key.Raw, string>;
 }

@@ -15,7 +15,7 @@ export const GetDiscriminatedUnionRequest: core.serialization.Schema<
 });
 
 export declare namespace GetDiscriminatedUnionRequest {
-    interface Raw {
+    export interface Raw {
         bar: serializers.DiscriminatedUnion1.Raw;
         foo: string;
     }

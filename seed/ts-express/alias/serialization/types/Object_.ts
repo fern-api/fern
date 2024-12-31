@@ -10,5 +10,5 @@ export const Object_: core.serialization.ObjectSchema<serializers.Object_.Raw, S
     core.serialization.lazyObject(() => serializers.Type);
 
 export declare namespace Object_ {
-    type Raw = serializers.Type.Raw;
+    export type Raw = serializers.Type.Raw;
 }

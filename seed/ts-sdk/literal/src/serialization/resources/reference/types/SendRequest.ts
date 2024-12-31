@@ -19,7 +19,7 @@ export const SendRequest: core.serialization.ObjectSchema<serializers.SendReques
     });
 
 export declare namespace SendRequest {
-    interface Raw {
+    export interface Raw {
         prompt: "You are a helpful assistant";
         query: string;
         stream: false;

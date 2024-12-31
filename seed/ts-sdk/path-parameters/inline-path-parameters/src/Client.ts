@@ -7,12 +7,12 @@ import { Organizations } from "./api/resources/organizations/client/Client";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedPathParametersClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         tenantId: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

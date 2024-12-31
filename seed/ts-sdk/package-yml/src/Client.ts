@@ -10,12 +10,12 @@ import * as errors from "./errors/index";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedPackageYmlClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         id: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
