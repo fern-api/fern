@@ -13,7 +13,7 @@ export const IndexedData: core.serialization.ObjectSchema<serializers.IndexedDat
     });
 
 export declare namespace IndexedData {
-    interface Raw {
+    export interface Raw {
         indices: number[];
         values: number[];
     }

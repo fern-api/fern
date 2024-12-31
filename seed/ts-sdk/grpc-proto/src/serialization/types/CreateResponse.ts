@@ -13,7 +13,7 @@ export const CreateResponse: core.serialization.ObjectSchema<serializers.CreateR
     });
 
 export declare namespace CreateResponse {
-    interface Raw {
+    export interface Raw {
         user?: UserModel.Raw | null;
     }
 }
