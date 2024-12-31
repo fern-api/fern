@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.6.1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Create a new release to incorporate pydantic v1 on v2.
+
 - version: 1.6.0
   irVersion: 53
   changelogEntry:
