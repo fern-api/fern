@@ -17,7 +17,7 @@ export const Column: core.serialization.ObjectSchema<serializers.Column.Raw, See
     });
 
 export declare namespace Column {
-    interface Raw {
+    export interface Raw {
         id: string;
         values: number[];
         metadata?: Metadata.Raw | null;

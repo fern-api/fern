@@ -16,7 +16,7 @@ export const UpdateRequest: core.serialization.Schema<serializers.UpdateRequest.
     });
 
 export declare namespace UpdateRequest {
-    interface Raw {
+    export interface Raw {
         id: string;
         values?: number[] | null;
         setMetadata?: serializers.Metadata.Raw | null;

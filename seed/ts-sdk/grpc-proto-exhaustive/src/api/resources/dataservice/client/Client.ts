@@ -9,11 +9,11 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dataservice {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,7 +42,7 @@ export class Dataservice {
      */
     public async upload(
         request: SeedApi.UploadRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.UploadResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "data"),
@@ -103,7 +103,7 @@ export class Dataservice {
      */
     public async delete(
         request: SeedApi.DeleteRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.DeleteResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "data/delete"),
@@ -164,7 +164,7 @@ export class Dataservice {
      */
     public async describe(
         request: SeedApi.DescribeRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.DescribeResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "data/describe"),
@@ -225,7 +225,7 @@ export class Dataservice {
      */
     public async fetch(
         request: SeedApi.FetchRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.FetchResponse> {
         const { ids, namespace } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -300,7 +300,7 @@ export class Dataservice {
      */
     public async list(
         request: SeedApi.ListRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.ListResponse> {
         const { prefix, limit, paginationToken, namespace } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -381,7 +381,7 @@ export class Dataservice {
      */
     public async query(
         request: SeedApi.QueryRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.QueryResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "data/query"),
@@ -444,7 +444,7 @@ export class Dataservice {
      */
     public async update(
         request: SeedApi.UpdateRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.UpdateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "data/update"),

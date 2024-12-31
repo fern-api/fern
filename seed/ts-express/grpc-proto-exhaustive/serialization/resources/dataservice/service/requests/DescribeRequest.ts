@@ -12,7 +12,7 @@ export const DescribeRequest: core.serialization.Schema<serializers.DescribeRequ
     });
 
 export declare namespace DescribeRequest {
-    interface Raw {
+    export interface Raw {
         filter?: serializers.Metadata.Raw | null;
     }
 }

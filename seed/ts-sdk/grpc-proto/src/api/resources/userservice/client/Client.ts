@@ -9,11 +9,11 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Userservice {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,7 +37,7 @@ export class Userservice {
      */
     public async create(
         request: SeedApi.CreateRequest = {},
-        requestOptions?: Userservice.RequestOptions
+        requestOptions?: Userservice.RequestOptions,
     ): Promise<SeedApi.CreateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "users"),

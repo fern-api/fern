@@ -16,7 +16,7 @@ export const FetchResponse: core.serialization.ObjectSchema<serializers.FetchRes
     });
 
 export declare namespace FetchResponse {
-    interface Raw {
+    export interface Raw {
         columns?: Record<string, Column.Raw> | null;
         namespace?: string | null;
         usage?: Usage.Raw | null;
