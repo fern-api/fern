@@ -472,7 +472,7 @@ navigation:
       - section: API References
         contents:
           - page: Generate API Reference
-            icon: fa-regular fa-gear
+            icon: fa-solid fa-wand-magic-sparkles
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK Snippets
@@ -532,6 +532,7 @@ navigation:
           - page: Postman
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
+            icon: fa-solid fa-user-astronaut
 
       - section: Developer Tools
         contents:
