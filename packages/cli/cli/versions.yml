@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Support parsing string values for boolean defaults in OpenAPI schemas.
+        * String values like "true" and "false" are now correctly parsed as boolean defaults.
+      type: fix
+  irVersion: 53
+  version: 0.46.17
+
+- changelogEntry:
+    - summary: |
         Improve parsing of OpenAPI schemas with an array in the `type` property.
         * If the array contains `"null"`, it is interpreted as nullable, and removed from the array.
         * If there is only a single item in the array (after removing "null"), it previously defaulted to `unknown`, but now the specified type is used.
