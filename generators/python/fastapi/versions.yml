@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.6.2
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support Pydantic v1_on_v2 for all variants of use_pydantic_field_aliases.
+
 - version: 1.6.1
   irVersion: 53
   changelogEntry:

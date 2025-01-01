@@ -10,3 +10,15 @@ client.dummy.generate(
 ```                        
 
 
+```python
+
+
+client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )        
+client.dummy.generate(
+	stream=true,
+	num_events=1
+)
+ 
+```                        
+
+
