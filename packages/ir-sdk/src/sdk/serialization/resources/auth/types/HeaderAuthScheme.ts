@@ -22,7 +22,7 @@ export const HeaderAuthScheme: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace HeaderAuthScheme {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         prefix?: string | null;

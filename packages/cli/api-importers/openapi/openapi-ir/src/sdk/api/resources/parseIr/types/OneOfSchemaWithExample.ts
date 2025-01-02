@@ -8,20 +8,20 @@ export type OneOfSchemaWithExample =
     | FernOpenapiIr.OneOfSchemaWithExample.Discriminated
     | FernOpenapiIr.OneOfSchemaWithExample.Undisciminated;
 
-export declare namespace OneOfSchemaWithExample {
-    interface Discriminated extends FernOpenapiIr.DiscriminatedOneOfSchemaWithExample, _Utils {
+export namespace OneOfSchemaWithExample {
+    export interface Discriminated extends FernOpenapiIr.DiscriminatedOneOfSchemaWithExample, _Utils {
         type: "discriminated";
     }
 
-    interface Undisciminated extends FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample, _Utils {
+    export interface Undisciminated extends FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample, _Utils {
         type: "undisciminated";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         discriminated: (value: FernOpenapiIr.DiscriminatedOneOfSchemaWithExample) => _Result;
         undisciminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -30,14 +30,14 @@ export declare namespace OneOfSchemaWithExample {
 
 export const OneOfSchemaWithExample = {
     discriminated: (
-        value: FernOpenapiIr.DiscriminatedOneOfSchemaWithExample
+        value: FernOpenapiIr.DiscriminatedOneOfSchemaWithExample,
     ): FernOpenapiIr.OneOfSchemaWithExample.Discriminated => {
         return {
             ...value,
             type: "discriminated",
             _visit: function <_Result>(
                 this: FernOpenapiIr.OneOfSchemaWithExample.Discriminated,
-                visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.OneOfSchemaWithExample._visit(this, visitor);
             },
@@ -45,14 +45,14 @@ export const OneOfSchemaWithExample = {
     },
 
     undisciminated: (
-        value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample
+        value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample,
     ): FernOpenapiIr.OneOfSchemaWithExample.Undisciminated => {
         return {
             ...value,
             type: "undisciminated",
             _visit: function <_Result>(
                 this: FernOpenapiIr.OneOfSchemaWithExample.Undisciminated,
-                visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.OneOfSchemaWithExample._visit(this, visitor);
             },
@@ -61,7 +61,7 @@ export const OneOfSchemaWithExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.OneOfSchemaWithExample,
-        visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>
+        visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "discriminated":

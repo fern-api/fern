@@ -121,7 +121,7 @@ export abstract class TypescriptProject {
             } else {
                 const contents = await this.volume.promises.readFile(fullPathInVolume);
                 await mkdir(path.dirname(fullPathOnDisk), { recursive: true });
-                await writeFile(fullPathOnDisk, contents);
+                await writeFile(fullPathOnDisk, typeof contents === "string" ? contents : new Uint8Array(contents));
             }
         }
     }

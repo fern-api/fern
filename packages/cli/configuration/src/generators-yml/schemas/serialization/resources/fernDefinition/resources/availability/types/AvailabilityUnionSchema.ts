@@ -14,5 +14,5 @@ export const AvailabilityUnionSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([AvailabilityStatusSchema, AvailabilitySchema]);
 
 export declare namespace AvailabilityUnionSchema {
-    type Raw = AvailabilityStatusSchema.Raw | AvailabilitySchema.Raw;
+    export type Raw = AvailabilityStatusSchema.Raw | AvailabilitySchema.Raw;
 }

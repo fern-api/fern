@@ -15,7 +15,7 @@ export const ConjureDefinitions: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureDefinitions {
-    interface Raw {
+    export interface Raw {
         objects?: Record<string, ConjureTypeDeclaration.Raw> | null;
     }
 }

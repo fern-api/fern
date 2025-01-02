@@ -8,20 +8,20 @@ export type GeneratorEnvironment =
     | FernIr.generatorExec.GeneratorEnvironment.Local
     | FernIr.generatorExec.GeneratorEnvironment.Remote;
 
-export declare namespace GeneratorEnvironment {
-    interface Local extends _Utils {
+export namespace GeneratorEnvironment {
+    export interface Local extends _Utils {
         type: "local";
     }
 
-    interface Remote extends FernIr.generatorExec.RemoteGeneratorEnvironment, _Utils {
+    export interface Remote extends FernIr.generatorExec.RemoteGeneratorEnvironment, _Utils {
         type: "remote";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         local: () => _Result;
         remote: (value: FernIr.generatorExec.RemoteGeneratorEnvironment) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -34,7 +34,7 @@ export const GeneratorEnvironment = {
             type: "local",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorEnvironment.Local,
-                visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorEnvironment._visit(this, visitor);
             },
@@ -42,14 +42,14 @@ export const GeneratorEnvironment = {
     },
 
     remote: (
-        value: FernIr.generatorExec.RemoteGeneratorEnvironment
+        value: FernIr.generatorExec.RemoteGeneratorEnvironment,
     ): FernIr.generatorExec.GeneratorEnvironment.Remote => {
         return {
             ...value,
             type: "remote",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorEnvironment.Remote,
-                visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorEnvironment._visit(this, visitor);
             },
@@ -58,7 +58,7 @@ export const GeneratorEnvironment = {
 
     _visit: <_Result>(
         value: FernIr.generatorExec.GeneratorEnvironment,
-        visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>
+        visitor: FernIr.generatorExec.GeneratorEnvironment._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "local":

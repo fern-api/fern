@@ -21,7 +21,7 @@ export const MavenGithubPublishInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace MavenGithubPublishInfo {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         coordinate: string;
         usernameEnvironmentVariable: EnvironmentVariable.Raw;

@@ -14,7 +14,7 @@ export const RequestOrResponseExampleGenerationSchema: core.serialization.Object
 });
 
 export declare namespace RequestOrResponseExampleGenerationSchema {
-    interface Raw {
+    export interface Raw {
         "max-depth"?: number | null;
     }
 }

@@ -15,7 +15,7 @@ export const OauthSecurityScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace OauthSecurityScheme {
-    interface Raw {
+    export interface Raw {
         scopesEnum?: EnumSchema.Raw | null;
     }
 }

@@ -14,7 +14,7 @@ export const ReviewerSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ReviewerSchema {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

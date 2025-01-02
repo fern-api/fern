@@ -15,7 +15,7 @@ export const NamespacedApiConfigurationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace NamespacedApiConfigurationSchema {
-    interface Raw {
+    export interface Raw {
         namespaces: Record<string, ApiConfigurationSchemaInternal.Raw>;
     }
 }

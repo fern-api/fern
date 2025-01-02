@@ -15,7 +15,7 @@ export const UintWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace UintWithExample {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         example?: number | null;
     }

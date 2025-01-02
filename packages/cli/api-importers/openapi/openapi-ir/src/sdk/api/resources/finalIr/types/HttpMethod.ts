@@ -3,7 +3,6 @@
  */
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS" | "TRACE";
-
 export const HttpMethod = {
     Get: "GET",
     Post: "POST",
@@ -37,8 +36,8 @@ export const HttpMethod = {
     },
 } as const;
 
-export declare namespace HttpMethod {
-    interface Visitor<R> {
+export namespace HttpMethod {
+    export interface Visitor<R> {
         get: () => R;
         post: () => R;
         put: () => R;

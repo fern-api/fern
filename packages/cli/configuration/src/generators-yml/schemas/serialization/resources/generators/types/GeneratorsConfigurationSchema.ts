@@ -35,7 +35,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorsConfigurationSchema {
-    interface Raw {
+    export interface Raw {
         "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
         api?: ApiConfigurationSchema.Raw | null;
         whitelabel?: WhitelabelConfigurationSchema.Raw | null;

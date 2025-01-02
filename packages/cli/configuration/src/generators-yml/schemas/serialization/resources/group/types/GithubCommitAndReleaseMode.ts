@@ -12,5 +12,5 @@ export const GithubCommitAndReleaseMode: core.serialization.Schema<
 > = core.serialization.enum_(["commit", "release"]);
 
 export declare namespace GithubCommitAndReleaseMode {
-    type Raw = "commit" | "release";
+    export type Raw = "commit" | "release";
 }

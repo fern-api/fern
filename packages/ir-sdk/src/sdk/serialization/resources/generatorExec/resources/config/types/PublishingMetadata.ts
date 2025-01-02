@@ -17,7 +17,7 @@ export const PublishingMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace PublishingMetadata {
-    interface Raw {
+    export interface Raw {
         package_description?: string | null;
         publisher_email?: string | null;
         reference_url?: string | null;

@@ -14,7 +14,7 @@ export const WithName: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithName {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
     }
 }

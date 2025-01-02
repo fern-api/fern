@@ -17,7 +17,7 @@ export const BasicSecurityScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace BasicSecurityScheme {
-    interface Raw {
+    export interface Raw {
         usernameVariableName?: string | null;
         usernameEnvVar?: string | null;
         passwordVariableName?: string | null;

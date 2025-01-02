@@ -29,13 +29,13 @@ export const OneOfSchemaWithExample: core.serialization.Schema<
     });
 
 export declare namespace OneOfSchemaWithExample {
-    type Raw = OneOfSchemaWithExample.Discriminated | OneOfSchemaWithExample.Undisciminated;
+    export type Raw = OneOfSchemaWithExample.Discriminated | OneOfSchemaWithExample.Undisciminated;
 
-    interface Discriminated extends serializers.DiscriminatedOneOfSchemaWithExample.Raw {
+    export interface Discriminated extends serializers.DiscriminatedOneOfSchemaWithExample.Raw {
         type: "discriminated";
     }
 
-    interface Undisciminated extends serializers.UnDiscriminatedOneOfSchemaWithExample.Raw {
+    export interface Undisciminated extends serializers.UnDiscriminatedOneOfSchemaWithExample.Raw {
         type: "undisciminated";
     }
 }

@@ -78,7 +78,7 @@ export const PrimitiveExample: core.serialization.Schema<
     });
 
 export declare namespace PrimitiveExample {
-    type Raw =
+    export type Raw =
         | PrimitiveExample.Int
         | PrimitiveExample.Int64
         | PrimitiveExample.Uint
@@ -91,57 +91,57 @@ export declare namespace PrimitiveExample {
         | PrimitiveExample.Base64
         | PrimitiveExample.Boolean;
 
-    interface Int {
+    export interface Int {
         type: "int";
         value: number;
     }
 
-    interface Int64 {
+    export interface Int64 {
         type: "int64";
         value: number;
     }
 
-    interface Uint {
+    export interface Uint {
         type: "uint";
         value: number;
     }
 
-    interface Uint64 {
+    export interface Uint64 {
         type: "uint64";
         value: number;
     }
 
-    interface Float {
+    export interface Float {
         type: "float";
         value: number;
     }
 
-    interface Double {
+    export interface Double {
         type: "double";
         value: number;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }
 
-    interface Datetime {
+    export interface Datetime {
         type: "datetime";
         value: string;
     }
 
-    interface Date {
+    export interface Date {
         type: "date";
         value: string;
     }
 
-    interface Base64 {
+    export interface Base64 {
         type: "base64";
         value: string;
     }
 
-    interface Boolean {
+    export interface Boolean {
         type: "boolean";
         value: boolean;
     }

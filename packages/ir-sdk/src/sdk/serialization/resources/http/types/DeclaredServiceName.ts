@@ -15,7 +15,7 @@ export const DeclaredServiceName: core.serialization.ObjectSchema<
 });
 
 export declare namespace DeclaredServiceName {
-    interface Raw {
+    export interface Raw {
         fernFilepath: FernFilepath.Raw;
     }
 }

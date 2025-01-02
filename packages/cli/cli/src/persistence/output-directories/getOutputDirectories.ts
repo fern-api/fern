@@ -9,8 +9,8 @@ export async function getOutputDirectories(): Promise<AbsoluteFilePath[]> {
         return [];
     }
 
-    const outputDirectoriesFileContents = await readFile(pathToOutputDirectoriesFile);
-    const outputDirectories: AbsoluteFilePath[] = JSON.parse(outputDirectoriesFileContents.toString());
+    const outputDirectoriesFileContents = await readFile(pathToOutputDirectoriesFile, { encoding: "utf-8" });
+    const outputDirectories: AbsoluteFilePath[] = JSON.parse(outputDirectoriesFileContents);
 
     return outputDirectories;
 }

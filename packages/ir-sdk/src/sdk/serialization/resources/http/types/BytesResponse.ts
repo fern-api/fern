@@ -11,5 +11,5 @@ export const BytesResponse: core.serialization.ObjectSchema<serializers.BytesRes
     core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs);
 
 export declare namespace BytesResponse {
-    interface Raw extends WithDocs.Raw {}
+    export interface Raw extends WithDocs.Raw {}
 }

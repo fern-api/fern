@@ -113,7 +113,7 @@ export const WellKnownProtobufType: core.serialization.Schema<
     });
 
 export declare namespace WellKnownProtobufType {
-    type Raw =
+    export type Raw =
         | WellKnownProtobufType.Any
         | WellKnownProtobufType.Api
         | WellKnownProtobufType.BoolValue
@@ -145,123 +145,123 @@ export declare namespace WellKnownProtobufType {
         | WellKnownProtobufType.Uint64Value
         | WellKnownProtobufType.Value;
 
-    interface Any {
+    export interface Any {
         type: "any";
     }
 
-    interface Api {
+    export interface Api {
         type: "api";
     }
 
-    interface BoolValue {
+    export interface BoolValue {
         type: "boolValue";
     }
 
-    interface BytesValue {
+    export interface BytesValue {
         type: "bytesValue";
     }
 
-    interface DoubleValue {
+    export interface DoubleValue {
         type: "doubleValue";
     }
 
-    interface Duration {
+    export interface Duration {
         type: "duration";
     }
 
-    interface Empty {
+    export interface Empty {
         type: "empty";
     }
 
-    interface Enum {
+    export interface Enum {
         type: "enum";
     }
 
-    interface EnumValue {
+    export interface EnumValue {
         type: "enumValue";
     }
 
-    interface Field {
+    export interface Field {
         type: "field";
     }
 
-    interface FieldCardinality {
+    export interface FieldCardinality {
         type: "fieldCardinality";
     }
 
-    interface FieldKind {
+    export interface FieldKind {
         type: "fieldKind";
     }
 
-    interface FieldMask {
+    export interface FieldMask {
         type: "fieldMask";
     }
 
-    interface FloatValue {
+    export interface FloatValue {
         type: "floatValue";
     }
 
-    interface Int32Value {
+    export interface Int32Value {
         type: "int32Value";
     }
 
-    interface Int64Value {
+    export interface Int64Value {
         type: "int64Value";
     }
 
-    interface ListValue {
+    export interface ListValue {
         type: "listValue";
     }
 
-    interface Method {
+    export interface Method {
         type: "method";
     }
 
-    interface Mixin {
+    export interface Mixin {
         type: "mixin";
     }
 
-    interface NullValue {
+    export interface NullValue {
         type: "nullValue";
     }
 
-    interface Option {
+    export interface Option {
         type: "option";
     }
 
-    interface SourceContext {
+    export interface SourceContext {
         type: "sourceContext";
     }
 
-    interface StringValue {
+    export interface StringValue {
         type: "stringValue";
     }
 
-    interface Struct {
+    export interface Struct {
         type: "struct";
     }
 
-    interface Syntax {
+    export interface Syntax {
         type: "syntax";
     }
 
-    interface Timestamp {
+    export interface Timestamp {
         type: "timestamp";
     }
 
-    interface Type {
+    export interface Type {
         type: "type";
     }
 
-    interface Uint32Value {
+    export interface Uint32Value {
         type: "uint32Value";
     }
 
-    interface Uint64Value {
+    export interface Uint64Value {
         type: "uint64Value";
     }
 
-    interface Value {
+    export interface Value {
         type: "value";
     }
 }

@@ -17,7 +17,7 @@ export const ConjureEnumWithDocs: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ConjureEnumWithDocs {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         value: string;
     }
 }

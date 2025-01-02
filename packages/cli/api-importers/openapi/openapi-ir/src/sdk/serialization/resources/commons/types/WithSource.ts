@@ -13,7 +13,7 @@ export const WithSource: core.serialization.ObjectSchema<serializers.WithSource.
     });
 
 export declare namespace WithSource {
-    interface Raw {
+    export interface Raw {
         source?: Source.Raw | null;
     }
 }

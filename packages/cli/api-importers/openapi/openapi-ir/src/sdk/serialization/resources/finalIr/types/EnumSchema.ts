@@ -29,7 +29,7 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .extend(WithInline);
 
 export declare namespace EnumSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

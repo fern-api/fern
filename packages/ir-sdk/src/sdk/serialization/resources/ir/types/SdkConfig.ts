@@ -17,7 +17,7 @@ export const SdkConfig: core.serialization.ObjectSchema<serializers.SdkConfig.Ra
     });
 
 export declare namespace SdkConfig {
-    interface Raw {
+    export interface Raw {
         isAuthMandatory: boolean;
         hasStreamingEndpoints: boolean;
         hasPaginatedEndpoints: boolean;

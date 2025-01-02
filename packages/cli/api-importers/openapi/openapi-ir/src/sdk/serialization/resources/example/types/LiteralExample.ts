@@ -31,14 +31,14 @@ export const LiteralExample: core.serialization.Schema<serializers.LiteralExampl
         });
 
 export declare namespace LiteralExample {
-    type Raw = LiteralExample.Boolean | LiteralExample.String;
+    export type Raw = LiteralExample.Boolean | LiteralExample.String;
 
-    interface Boolean {
+    export interface Boolean {
         type: "boolean";
         value: boolean;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }

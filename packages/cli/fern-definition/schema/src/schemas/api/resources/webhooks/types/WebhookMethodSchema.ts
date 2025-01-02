@@ -3,7 +3,6 @@
  */
 
 export type WebhookMethodSchema = "POST" | "GET";
-
 export const WebhookMethodSchema = {
     Post: "POST",
     Get: "GET",

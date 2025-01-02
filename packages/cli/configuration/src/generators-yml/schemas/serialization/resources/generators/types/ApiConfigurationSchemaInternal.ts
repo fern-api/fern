@@ -22,7 +22,7 @@ export const ApiConfigurationSchemaInternal: core.serialization.Schema<
 ]);
 
 export declare namespace ApiConfigurationSchemaInternal {
-    type Raw =
+    export type Raw =
         | ApiDefinitionPathSchema.Raw
         | ApiDefinitionWithOverridesSchema.Raw
         | ApiDefinitionList.Raw

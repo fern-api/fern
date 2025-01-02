@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type JsonResponse = FernIr.JsonResponse.Response | FernIr.JsonResponse.NestedPropertyAsResponse;
 
-export declare namespace JsonResponse {
-    interface Response extends FernIr.JsonResponseBody, _Utils {
+export namespace JsonResponse {
+    export interface Response extends FernIr.JsonResponseBody, _Utils {
         type: "response";
     }
 
-    interface NestedPropertyAsResponse extends FernIr.JsonResponseBodyWithProperty, _Utils {
+    export interface NestedPropertyAsResponse extends FernIr.JsonResponseBodyWithProperty, _Utils {
         type: "nestedPropertyAsResponse";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.JsonResponse._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         response: (value: FernIr.JsonResponseBody) => _Result;
         nestedPropertyAsResponse: (value: FernIr.JsonResponseBodyWithProperty) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const JsonResponse = {
             type: "response",
             _visit: function <_Result>(
                 this: FernIr.JsonResponse.Response,
-                visitor: FernIr.JsonResponse._Visitor<_Result>
+                visitor: FernIr.JsonResponse._Visitor<_Result>,
             ) {
                 return FernIr.JsonResponse._visit(this, visitor);
             },
@@ -41,14 +41,14 @@ export const JsonResponse = {
     },
 
     nestedPropertyAsResponse: (
-        value: FernIr.JsonResponseBodyWithProperty
+        value: FernIr.JsonResponseBodyWithProperty,
     ): FernIr.JsonResponse.NestedPropertyAsResponse => {
         return {
             ...value,
             type: "nestedPropertyAsResponse",
             _visit: function <_Result>(
                 this: FernIr.JsonResponse.NestedPropertyAsResponse,
-                visitor: FernIr.JsonResponse._Visitor<_Result>
+                visitor: FernIr.JsonResponse._Visitor<_Result>,
             ) {
                 return FernIr.JsonResponse._visit(this, visitor);
             },

@@ -24,9 +24,9 @@ export const Response: core.serialization.Schema<serializers.dynamic.Response.Ra
         });
 
 export declare namespace Response {
-    type Raw = Response.Json;
+    export type Raw = Response.Json;
 
-    interface Json {
+    export interface Json {
         type: "json";
     }
 }

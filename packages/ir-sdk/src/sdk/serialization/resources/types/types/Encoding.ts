@@ -15,7 +15,7 @@ export const Encoding: core.serialization.ObjectSchema<serializers.Encoding.Raw,
     });
 
 export declare namespace Encoding {
-    interface Raw {
+    export interface Raw {
         json?: JsonEncoding.Raw | null;
         proto?: ProtoEncoding.Raw | null;
     }

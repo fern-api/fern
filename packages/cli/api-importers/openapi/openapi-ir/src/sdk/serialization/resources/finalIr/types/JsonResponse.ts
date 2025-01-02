@@ -18,7 +18,7 @@ export const JsonResponse: core.serialization.ObjectSchema<serializers.JsonRespo
         .extend(WithSource);
 
 export declare namespace JsonResponse {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
         schema: serializers.Schema.Raw;
         responseProperty?: string | null;
     }

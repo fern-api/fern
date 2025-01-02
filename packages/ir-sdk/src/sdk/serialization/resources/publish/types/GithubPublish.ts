@@ -15,7 +15,7 @@ export const GithubPublish: core.serialization.ObjectSchema<serializers.GithubPu
     });
 
 export declare namespace GithubPublish {
-    interface Raw {
+    export interface Raw {
         owner: string;
         repo: string;
         target: PublishTarget.Raw;

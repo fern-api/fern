@@ -17,7 +17,7 @@ export const SingleDiscriminatedUnionTypeNoProperties: core.serialization.Object
 });
 
 export declare namespace SingleDiscriminatedUnionTypeNoProperties {
-    interface Raw {
+    export interface Raw {
         discriminantValue: NameAndWireValue.Raw;
         properties?: NamedParameter.Raw[] | null;
     }

@@ -12,5 +12,5 @@ export const AvailabilityStatus: core.serialization.Schema<
 > = core.serialization.enum_(["IN_DEVELOPMENT", "PRE_RELEASE", "GENERAL_AVAILABILITY", "DEPRECATED"]);
 
 export declare namespace AvailabilityStatus {
-    type Raw = "IN_DEVELOPMENT" | "PRE_RELEASE" | "GENERAL_AVAILABILITY" | "DEPRECATED";
+    export type Raw = "IN_DEVELOPMENT" | "PRE_RELEASE" | "GENERAL_AVAILABILITY" | "DEPRECATED";
 }

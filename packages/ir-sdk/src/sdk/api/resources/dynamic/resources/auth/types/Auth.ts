@@ -6,24 +6,24 @@ import * as FernIr from "../../../../../index";
 
 export type Auth = FernIr.dynamic.Auth.Basic | FernIr.dynamic.Auth.Bearer | FernIr.dynamic.Auth.Header;
 
-export declare namespace Auth {
-    interface Basic extends FernIr.dynamic.BasicAuth, _Utils {
+export namespace Auth {
+    export interface Basic extends FernIr.dynamic.BasicAuth, _Utils {
         type: "basic";
     }
 
-    interface Bearer extends FernIr.dynamic.BearerAuth, _Utils {
+    export interface Bearer extends FernIr.dynamic.BearerAuth, _Utils {
         type: "bearer";
     }
 
-    interface Header extends FernIr.dynamic.HeaderAuth, _Utils {
+    export interface Header extends FernIr.dynamic.HeaderAuth, _Utils {
         type: "header";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.Auth._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: FernIr.dynamic.BasicAuth) => _Result;
         bearer: (value: FernIr.dynamic.BearerAuth) => _Result;
         header: (value: FernIr.dynamic.HeaderAuth) => _Result;
@@ -38,7 +38,7 @@ export const Auth = {
             type: "basic",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Auth.Basic,
-                visitor: FernIr.dynamic.Auth._Visitor<_Result>
+                visitor: FernIr.dynamic.Auth._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Auth._visit(this, visitor);
             },
@@ -51,7 +51,7 @@ export const Auth = {
             type: "bearer",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Auth.Bearer,
-                visitor: FernIr.dynamic.Auth._Visitor<_Result>
+                visitor: FernIr.dynamic.Auth._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Auth._visit(this, visitor);
             },
@@ -64,7 +64,7 @@ export const Auth = {
             type: "header",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Auth.Header,
-                visitor: FernIr.dynamic.Auth._Visitor<_Result>
+                visitor: FernIr.dynamic.Auth._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Auth._visit(this, visitor);
             },

@@ -9,17 +9,17 @@ import * as FernIr from "../../../index";
  */
 export type Source = FernIr.Source.Proto;
 
-export declare namespace Source {
-    interface Proto extends _Utils {
+export namespace Source {
+    export interface Proto extends _Utils {
         type: "proto";
         value: FernIr.ProtobufType;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Source._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         proto: (value: FernIr.ProtobufType) => _Result;
         _other: (value: { type: string }) => _Result;
     }

@@ -16,7 +16,7 @@ export const StringSchema: core.serialization.ObjectSchema<serializers.StringSch
     });
 
 export declare namespace StringSchema {
-    interface Raw {
+    export interface Raw {
         default?: string | null;
         pattern?: string | null;
         format?: string | null;

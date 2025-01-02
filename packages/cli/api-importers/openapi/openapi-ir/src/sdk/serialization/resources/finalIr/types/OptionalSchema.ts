@@ -27,7 +27,7 @@ export const OptionalSchema: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace OptionalSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

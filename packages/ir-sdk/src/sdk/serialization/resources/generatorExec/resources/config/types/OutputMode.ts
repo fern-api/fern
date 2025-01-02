@@ -34,17 +34,17 @@ export const OutputMode: core.serialization.Schema<
     });
 
 export declare namespace OutputMode {
-    type Raw = OutputMode.Publish | OutputMode.DownloadFiles | OutputMode.Github;
+    export type Raw = OutputMode.Publish | OutputMode.DownloadFiles | OutputMode.Github;
 
-    interface Publish extends GeneratorPublishConfig.Raw {
+    export interface Publish extends GeneratorPublishConfig.Raw {
         type: "publish";
     }
 
-    interface DownloadFiles {
+    export interface DownloadFiles {
         type: "downloadFiles";
     }
 
-    interface Github extends GithubOutputMode.Raw {
+    export interface Github extends GithubOutputMode.Raw {
         type: "github";
     }
 }
