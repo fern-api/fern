@@ -11,12 +11,6 @@
     "depcheck": {
       "outputs": []
     },
-    "format": {
-      "outputs": []
-    },
-    "format:check": {
-      "outputs": []
-    },
     "lint:eslint": {
       "outputs": []
     },
