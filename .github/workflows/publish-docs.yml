@@ -1,6 +1,7 @@
 name: publish-docs
 
 on:
+  workflow_dispatch:  # Added manual trigger
   push:
     paths:
       - "fern/**"
