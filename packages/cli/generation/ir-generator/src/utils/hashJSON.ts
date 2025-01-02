@@ -1,14 +1,14 @@
+const MAX_DEPTH = 64;
+
 export function hashJSON(obj: unknown): string {
     let hash = 0x811c9dc5;
-    const seen = new WeakSet();
 
-    function traverse(value: any) {
+    function traverse(value: any, currentDepth: number) {
         if (typeof value === "object" && value != null) {
-            if (seen.has(value)) {
-                updateHash("[Circular]");
+            if (currentDepth > MAX_DEPTH) {
+                updateHash("[MaxDepthExceeded]");
                 return;
             }
-            seen.add(value);
 
             if (Array.isArray(value)) {
                 updateHash("[");
@@ -16,7 +16,7 @@ export function hashJSON(obj: unknown): string {
                     if (i > 0) {
                         updateHash(",");
                     }
-                    traverse(value[i]);
+                    traverse(value[i], currentDepth + 1);
                 }
                 updateHash("]");
             } else {
@@ -28,7 +28,7 @@ export function hashJSON(obj: unknown): string {
                     }
                     updateHash(key);
                     updateHash(":");
-                    traverse(value[key]);
+                    traverse(value[key], currentDepth + 1);
                 });
                 updateHash("}");
             }
@@ -46,6 +46,6 @@ export function hashJSON(obj: unknown): string {
         }
     }
 
-    traverse(obj);
+    traverse(obj, 0);
     return hash.toString(16);
 }
