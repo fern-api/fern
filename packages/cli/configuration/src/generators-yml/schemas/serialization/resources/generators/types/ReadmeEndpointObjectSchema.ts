@@ -16,7 +16,7 @@ export const ReadmeEndpointObjectSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ReadmeEndpointObjectSchema {
-    interface Raw {
+    export interface Raw {
         method: string;
         path: string;
         stream?: boolean | null;

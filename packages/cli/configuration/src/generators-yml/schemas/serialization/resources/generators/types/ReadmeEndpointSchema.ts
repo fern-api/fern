@@ -13,5 +13,5 @@ export const ReadmeEndpointSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), ReadmeEndpointObjectSchema]);
 
 export declare namespace ReadmeEndpointSchema {
-    type Raw = string | ReadmeEndpointObjectSchema.Raw;
+    export type Raw = string | ReadmeEndpointObjectSchema.Raw;
 }

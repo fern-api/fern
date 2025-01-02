@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type FileProperty = FernIr.FileProperty.File_ | FernIr.FileProperty.FileArray;
 
-export declare namespace FileProperty {
-    interface File_ extends FernIr.FilePropertySingle, _Utils {
+export namespace FileProperty {
+    export interface File_ extends FernIr.FilePropertySingle, _Utils {
         type: "file";
     }
 
-    interface FileArray extends FernIr.FilePropertyArray, _Utils {
+    export interface FileArray extends FernIr.FilePropertyArray, _Utils {
         type: "fileArray";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.FileProperty._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         file: (value: FernIr.FilePropertySingle) => _Result;
         fileArray: (value: FernIr.FilePropertyArray) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const FileProperty = {
             type: "file",
             _visit: function <_Result>(
                 this: FernIr.FileProperty.File_,
-                visitor: FernIr.FileProperty._Visitor<_Result>
+                visitor: FernIr.FileProperty._Visitor<_Result>,
             ) {
                 return FernIr.FileProperty._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const FileProperty = {
             type: "fileArray",
             _visit: function <_Result>(
                 this: FernIr.FileProperty.FileArray,
-                visitor: FernIr.FileProperty._Visitor<_Result>
+                visitor: FernIr.FileProperty._Visitor<_Result>,
             ) {
                 return FernIr.FileProperty._visit(this, visitor);
             },

@@ -15,7 +15,7 @@ export const Tag: core.serialization.ObjectSchema<serializers.Tag.Raw, FernOpena
     .extend(WithDescription);
 
 export declare namespace Tag {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         id: TagId.Raw;
     }
 }

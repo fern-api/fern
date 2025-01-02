@@ -12,36 +12,36 @@ export type GeneratorPublishTarget =
     | FernIr.generatorExec.GeneratorPublishTarget.Rubygems
     | FernIr.generatorExec.GeneratorPublishTarget.Nuget;
 
-export declare namespace GeneratorPublishTarget {
-    interface Maven extends FernIr.generatorExec.MavenRegistryConfigV2, _Utils {
+export namespace GeneratorPublishTarget {
+    export interface Maven extends FernIr.generatorExec.MavenRegistryConfigV2, _Utils {
         type: "maven";
     }
 
-    interface Npm extends FernIr.generatorExec.NpmRegistryConfigV2, _Utils {
+    export interface Npm extends FernIr.generatorExec.NpmRegistryConfigV2, _Utils {
         type: "npm";
     }
 
-    interface Pypi extends FernIr.generatorExec.PypiRegistryConfig, _Utils {
+    export interface Pypi extends FernIr.generatorExec.PypiRegistryConfig, _Utils {
         type: "pypi";
     }
 
-    interface Postman extends FernIr.generatorExec.PostmanConfig, _Utils {
+    export interface Postman extends FernIr.generatorExec.PostmanConfig, _Utils {
         type: "postman";
     }
 
-    interface Rubygems extends FernIr.generatorExec.RubyGemsRegistryConfig, _Utils {
+    export interface Rubygems extends FernIr.generatorExec.RubyGemsRegistryConfig, _Utils {
         type: "rubygems";
     }
 
-    interface Nuget extends FernIr.generatorExec.NugetRegistryConfig, _Utils {
+    export interface Nuget extends FernIr.generatorExec.NugetRegistryConfig, _Utils {
         type: "nuget";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         maven: (value: FernIr.generatorExec.MavenRegistryConfigV2) => _Result;
         npm: (value: FernIr.generatorExec.NpmRegistryConfigV2) => _Result;
         pypi: (value: FernIr.generatorExec.PypiRegistryConfig) => _Result;
@@ -59,7 +59,7 @@ export const GeneratorPublishTarget = {
             type: "maven",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Maven,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -72,7 +72,7 @@ export const GeneratorPublishTarget = {
             type: "npm",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Npm,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const GeneratorPublishTarget = {
             type: "pypi",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Pypi,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -98,7 +98,7 @@ export const GeneratorPublishTarget = {
             type: "postman",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Postman,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -106,14 +106,14 @@ export const GeneratorPublishTarget = {
     },
 
     rubygems: (
-        value: FernIr.generatorExec.RubyGemsRegistryConfig
+        value: FernIr.generatorExec.RubyGemsRegistryConfig,
     ): FernIr.generatorExec.GeneratorPublishTarget.Rubygems => {
         return {
             ...value,
             type: "rubygems",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Rubygems,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -126,7 +126,7 @@ export const GeneratorPublishTarget = {
             type: "nuget",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GeneratorPublishTarget.Nuget,
-                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
             },
@@ -135,7 +135,7 @@ export const GeneratorPublishTarget = {
 
     _visit: <_Result>(
         value: FernIr.generatorExec.GeneratorPublishTarget,
-        visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>
+        visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "maven":

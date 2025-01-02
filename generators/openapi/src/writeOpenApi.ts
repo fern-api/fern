@@ -39,11 +39,16 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 ir,
                 mode
             });
+
+            if (openapi == null) {
+                throw new Error("Failed to convert IR to OpenAPI");
+            }
+
             // eslint-disable-next-line no-console
             console.log(`openapi before override ${JSON.stringify(openapi)}`);
 
             if (customConfig.customOverrides != null) {
-                openapi = await mergeWithOverrides({
+                openapi = mergeWithOverrides({
                     data: openapi,
                     overrides: customConfig.customOverrides
                 });

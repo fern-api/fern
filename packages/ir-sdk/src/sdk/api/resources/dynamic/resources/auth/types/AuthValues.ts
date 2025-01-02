@@ -9,24 +9,24 @@ export type AuthValues =
     | FernIr.dynamic.AuthValues.Bearer
     | FernIr.dynamic.AuthValues.Header;
 
-export declare namespace AuthValues {
-    interface Basic extends FernIr.dynamic.BasicAuthValues, _Utils {
+export namespace AuthValues {
+    export interface Basic extends FernIr.dynamic.BasicAuthValues, _Utils {
         type: "basic";
     }
 
-    interface Bearer extends FernIr.dynamic.BearerAuthValues, _Utils {
+    export interface Bearer extends FernIr.dynamic.BearerAuthValues, _Utils {
         type: "bearer";
     }
 
-    interface Header extends FernIr.dynamic.HeaderAuthValues, _Utils {
+    export interface Header extends FernIr.dynamic.HeaderAuthValues, _Utils {
         type: "header";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.AuthValues._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: FernIr.dynamic.BasicAuthValues) => _Result;
         bearer: (value: FernIr.dynamic.BearerAuthValues) => _Result;
         header: (value: FernIr.dynamic.HeaderAuthValues) => _Result;
@@ -41,7 +41,7 @@ export const AuthValues = {
             type: "basic",
             _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Basic,
-                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
+                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.AuthValues._visit(this, visitor);
             },
@@ -54,7 +54,7 @@ export const AuthValues = {
             type: "bearer",
             _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Bearer,
-                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
+                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.AuthValues._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const AuthValues = {
             type: "header",
             _visit: function <_Result>(
                 this: FernIr.dynamic.AuthValues.Header,
-                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
+                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.AuthValues._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const AuthValues = {
 
     _visit: <_Result>(
         value: FernIr.dynamic.AuthValues,
-        visitor: FernIr.dynamic.AuthValues._Visitor<_Result>
+        visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "basic":

@@ -332,7 +332,7 @@ export function convertSchemaObject(
     }
 
     // primitive types
-    if (schema === "boolean" || schema.type === "boolean") {
+    if (schema.type === "boolean") {
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
@@ -360,7 +360,8 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "number" || schema.type === "number") {
+
+    if (schema.type === "number") {
         return convertNumber({
             nameOverride,
             generatedName,
@@ -379,7 +380,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "integer" || schema.type === "integer") {
+    if (schema.type === "integer") {
         return convertInteger({
             nameOverride,
             generatedName,
@@ -398,7 +399,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "float") {
+    if ((schema.type as string) === "float") {
         return convertNumber({
             nameOverride,
             generatedName,
@@ -417,7 +418,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "string" || schema.type === "string") {
+    if (schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
                 nameOverride,

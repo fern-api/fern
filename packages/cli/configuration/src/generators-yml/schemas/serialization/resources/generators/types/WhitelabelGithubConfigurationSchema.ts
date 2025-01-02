@@ -16,7 +16,7 @@ export const WhitelabelGithubConfigurationSchema: core.serialization.ObjectSchem
 });
 
 export declare namespace WhitelabelGithubConfigurationSchema {
-    interface Raw {
+    export interface Raw {
         username: string;
         email: string;
         token: string;

@@ -10,5 +10,5 @@ export const PropertyKey: core.serialization.Schema<serializers.PropertyKey.Raw,
     core.serialization.string();
 
 export declare namespace PropertyKey {
-    type Raw = string;
+    export type Raw = string;
 }

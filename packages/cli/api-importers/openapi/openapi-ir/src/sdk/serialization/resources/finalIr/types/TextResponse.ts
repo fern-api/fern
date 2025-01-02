@@ -12,5 +12,5 @@ export const TextResponse: core.serialization.ObjectSchema<serializers.TextRespo
     core.serialization.objectWithoutOptionalProperties({}).extend(WithDescription).extend(WithSource);
 
 export declare namespace TextResponse {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {}
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {}
 }

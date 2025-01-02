@@ -62,7 +62,7 @@ export const TypeReference: core.serialization.Schema<
     });
 
 export declare namespace TypeReference {
-    type Raw =
+    export type Raw =
         | TypeReference.List
         | TypeReference.Literal
         | TypeReference.Map
@@ -72,41 +72,41 @@ export declare namespace TypeReference {
         | TypeReference.Set
         | TypeReference.Unknown;
 
-    interface List {
+    export interface List {
         type: "list";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Literal {
+    export interface Literal {
         type: "literal";
         value: LiteralType.Raw;
     }
 
-    interface Map extends serializers.dynamic.MapType.Raw {
+    export interface Map extends serializers.dynamic.MapType.Raw {
         type: "map";
     }
 
-    interface Named {
+    export interface Named {
         type: "named";
         value: TypeId.Raw;
     }
 
-    interface Optional {
+    export interface Optional {
         type: "optional";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Primitive {
+    export interface Primitive {
         type: "primitive";
         value: PrimitiveTypeV1.Raw;
     }
 
-    interface Set {
+    export interface Set {
         type: "set";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
     }
 }

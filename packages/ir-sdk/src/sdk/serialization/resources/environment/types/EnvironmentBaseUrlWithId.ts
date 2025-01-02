@@ -17,7 +17,7 @@ export const EnvironmentBaseUrlWithId: core.serialization.ObjectSchema<
 });
 
 export declare namespace EnvironmentBaseUrlWithId {
-    interface Raw {
+    export interface Raw {
         id: EnvironmentBaseUrlId.Raw;
         name: Name.Raw;
     }

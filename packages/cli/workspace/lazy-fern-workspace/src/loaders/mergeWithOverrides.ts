@@ -4,7 +4,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 
-export async function mergeWithOverrides<T>({
+export async function mergeWithOverrides<T extends object>({
     absoluteFilePathToOverrides,
     data,
     context

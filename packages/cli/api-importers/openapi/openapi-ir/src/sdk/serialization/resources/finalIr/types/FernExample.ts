@@ -10,5 +10,5 @@ export const FernExample: core.serialization.Schema<serializers.FernExample.Raw,
     core.serialization.unknown();
 
 export declare namespace FernExample {
-    type Raw = unknown;
+    export type Raw = unknown;
 }

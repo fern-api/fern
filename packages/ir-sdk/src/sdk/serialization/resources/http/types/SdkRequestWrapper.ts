@@ -18,7 +18,7 @@ export const SdkRequestWrapper: core.serialization.ObjectSchema<
 });
 
 export declare namespace SdkRequestWrapper {
-    interface Raw {
+    export interface Raw {
         wrapperName: Name.Raw;
         bodyKey: Name.Raw;
         includePathParameters?: boolean | null;

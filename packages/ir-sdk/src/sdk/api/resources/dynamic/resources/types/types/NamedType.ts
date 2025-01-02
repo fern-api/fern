@@ -14,32 +14,32 @@ export type NamedType =
     | FernIr.dynamic.NamedType.DiscriminatedUnion
     | FernIr.dynamic.NamedType.UndiscriminatedUnion;
 
-export declare namespace NamedType {
-    interface Alias extends FernIr.dynamic.AliasType, _Utils {
+export namespace NamedType {
+    export interface Alias extends FernIr.dynamic.AliasType, _Utils {
         type: "alias";
     }
 
-    interface Enum extends FernIr.dynamic.EnumType, _Utils {
+    export interface Enum extends FernIr.dynamic.EnumType, _Utils {
         type: "enum";
     }
 
-    interface Object_ extends FernIr.dynamic.ObjectType, _Utils {
+    export interface Object_ extends FernIr.dynamic.ObjectType, _Utils {
         type: "object";
     }
 
-    interface DiscriminatedUnion extends FernIr.dynamic.DiscriminatedUnionType, _Utils {
+    export interface DiscriminatedUnion extends FernIr.dynamic.DiscriminatedUnionType, _Utils {
         type: "discriminatedUnion";
     }
 
-    interface UndiscriminatedUnion extends FernIr.dynamic.UndiscriminatedUnionType, _Utils {
+    export interface UndiscriminatedUnion extends FernIr.dynamic.UndiscriminatedUnionType, _Utils {
         type: "undiscriminatedUnion";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.NamedType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         alias: (value: FernIr.dynamic.AliasType) => _Result;
         enum: (value: FernIr.dynamic.EnumType) => _Result;
         object: (value: FernIr.dynamic.ObjectType) => _Result;
@@ -56,7 +56,7 @@ export const NamedType = {
             type: "alias",
             _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Alias,
-                visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+                visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);
             },
@@ -69,7 +69,7 @@ export const NamedType = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Enum,
-                visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+                visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);
             },
@@ -82,7 +82,7 @@ export const NamedType = {
             type: "object",
             _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.Object_,
-                visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+                visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);
             },
@@ -95,7 +95,7 @@ export const NamedType = {
             type: "discriminatedUnion",
             _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.DiscriminatedUnion,
-                visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+                visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);
             },
@@ -103,14 +103,14 @@ export const NamedType = {
     },
 
     undiscriminatedUnion: (
-        value: FernIr.dynamic.UndiscriminatedUnionType
+        value: FernIr.dynamic.UndiscriminatedUnionType,
     ): FernIr.dynamic.NamedType.UndiscriminatedUnion => {
         return {
             ...value,
             type: "undiscriminatedUnion",
             _visit: function <_Result>(
                 this: FernIr.dynamic.NamedType.UndiscriminatedUnion,
-                visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+                visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);
             },
@@ -119,7 +119,7 @@ export const NamedType = {
 
     _visit: <_Result>(
         value: FernIr.dynamic.NamedType,
-        visitor: FernIr.dynamic.NamedType._Visitor<_Result>
+        visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "alias":

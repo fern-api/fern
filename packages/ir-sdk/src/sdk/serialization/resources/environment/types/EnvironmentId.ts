@@ -10,5 +10,5 @@ export const EnvironmentId: core.serialization.Schema<serializers.EnvironmentId.
     core.serialization.string();
 
 export declare namespace EnvironmentId {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -15,7 +15,7 @@ export const Int64WithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace Int64WithExample {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         example?: number | null;
     }

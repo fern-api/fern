@@ -17,7 +17,7 @@ export const IdempotencyHeader: core.serialization.ObjectSchema<
 });
 
 export declare namespace IdempotencyHeader {
-    interface Raw {
+    export interface Raw {
         header: string;
         name?: string | null;
         env?: string | null;

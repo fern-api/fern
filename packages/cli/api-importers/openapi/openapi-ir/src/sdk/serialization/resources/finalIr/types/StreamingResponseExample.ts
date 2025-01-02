@@ -15,7 +15,7 @@ export const StreamingResponseExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace StreamingResponseExample {
-    interface Raw {
+    export interface Raw {
         sse: boolean;
         events: serializers.FullExample.Raw[];
     }

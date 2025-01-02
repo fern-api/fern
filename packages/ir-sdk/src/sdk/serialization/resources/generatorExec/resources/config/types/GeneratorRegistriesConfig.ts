@@ -17,7 +17,7 @@ export const GeneratorRegistriesConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorRegistriesConfig {
-    interface Raw {
+    export interface Raw {
         maven: MavenRegistryConfig.Raw;
         npm: NpmRegistryConfig.Raw;
     }

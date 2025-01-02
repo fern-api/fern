@@ -9,7 +9,6 @@ export type SearchbarPlacement =
      * This is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links. */
     | "header-tabs"
     | "sidebar";
-
 export const SearchbarPlacement = {
     Header: "header",
     HeaderTabs: "header-tabs",

@@ -2,7 +2,11 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -21,7 +25,5 @@
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "types": ["node", "vitest/globals"],
-		"typeRoots": ["node_modules/@types"],
   }
 }

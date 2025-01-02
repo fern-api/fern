@@ -10,5 +10,5 @@ export const WebhookGroupId: core.serialization.Schema<serializers.WebhookGroupI
     core.serialization.string();
 
 export declare namespace WebhookGroupId {
-    type Raw = string;
+    export type Raw = string;
 }

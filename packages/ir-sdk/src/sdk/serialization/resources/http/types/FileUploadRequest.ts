@@ -20,7 +20,7 @@ export const FileUploadRequest: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace FileUploadRequest {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name: Name.Raw;
         properties: FileUploadRequestProperty.Raw[];
     }

@@ -41,26 +41,26 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
     });
 
 export declare namespace NonStreamHttpResponseBody {
-    type Raw =
+    export type Raw =
         | NonStreamHttpResponseBody.Json
         | NonStreamHttpResponseBody.FileDownload
         | NonStreamHttpResponseBody.Text
         | NonStreamHttpResponseBody.Bytes;
 
-    interface Json {
+    export interface Json {
         type: "json";
         value: JsonResponse.Raw;
     }
 
-    interface FileDownload extends FileDownloadResponse.Raw {
+    export interface FileDownload extends FileDownloadResponse.Raw {
         type: "fileDownload";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
     }
 
-    interface Bytes extends BytesResponse.Raw {
+    export interface Bytes extends BytesResponse.Raw {
         type: "bytes";
     }
 }

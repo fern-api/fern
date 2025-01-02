@@ -15,7 +15,7 @@ export const BooleanWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace BooleanWithExample {
-    interface Raw {
+    export interface Raw {
         default?: boolean | null;
         example?: boolean | null;
     }

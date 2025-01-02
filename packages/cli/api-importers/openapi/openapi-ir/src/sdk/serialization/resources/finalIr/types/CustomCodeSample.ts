@@ -31,13 +31,13 @@ export const CustomCodeSample: core.serialization.Schema<
     });
 
 export declare namespace CustomCodeSample {
-    type Raw = CustomCodeSample.Language | CustomCodeSample.Sdk;
+    export type Raw = CustomCodeSample.Language | CustomCodeSample.Sdk;
 
-    interface Language extends CustomCodeSampleLanguage.Raw {
+    export interface Language extends CustomCodeSampleLanguage.Raw {
         type: "language";
     }
 
-    interface Sdk extends CustomCodeSampleSdk.Raw {
+    export interface Sdk extends CustomCodeSampleSdk.Raw {
         type: "sdk";
     }
 }

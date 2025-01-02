@@ -12,7 +12,7 @@ export const WithJsonExample: core.serialization.ObjectSchema<serializers.WithJs
     });
 
 export declare namespace WithJsonExample {
-    interface Raw {
+    export interface Raw {
         jsonExample?: unknown;
     }
 }

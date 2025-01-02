@@ -16,6 +16,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
+import { createReadStream } from "fs";
 
 export async function createFernWorkspace({
     directoryOfWorkspace,
@@ -65,7 +66,7 @@ export async function createOpenAPIWorkspace({
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
-    const openAPIContents = await readFile(openAPIFilePath);
+    const openAPIContents = createReadStream(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 

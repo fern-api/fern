@@ -16,7 +16,7 @@ export const EndpointLocation: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointLocation {
-    interface Raw {
+    export interface Raw {
         method: HttpMethod.Raw;
         path: string;
     }

@@ -33,14 +33,14 @@ export const LiteralSchemaValue: core.serialization.Schema<
     });
 
 export declare namespace LiteralSchemaValue {
-    type Raw = LiteralSchemaValue.Boolean | LiteralSchemaValue.String;
+    export type Raw = LiteralSchemaValue.Boolean | LiteralSchemaValue.String;
 
-    interface Boolean {
+    export interface Boolean {
         type: "boolean";
         value: boolean;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }

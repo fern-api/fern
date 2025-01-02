@@ -8,7 +8,7 @@ import { InlineConsts } from "@fern-typescript/commons/src/codegen-utils/inlineC
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
         getReferenceToNamedType: (typeName: DeclaredTypeName, params: ConvertTypeReferenceParams) => ts.EntityName;
-        generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode;
+        generateForInlineUnion: (typeName: DeclaredTypeName) => ts.TypeNode;
     }
 }
 

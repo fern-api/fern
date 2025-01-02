@@ -33,14 +33,14 @@ export const EndpointExample: core.serialization.Schema<
     });
 
 export declare namespace EndpointExample {
-    type Raw = EndpointExample.Unknown | EndpointExample.Full;
+    export type Raw = EndpointExample.Unknown | EndpointExample.Full;
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
         value?: FernExample.Raw;
     }
 
-    interface Full extends FullEndpointExample.Raw {
+    export interface Full extends FullEndpointExample.Raw {
         type: "full";
     }
 }

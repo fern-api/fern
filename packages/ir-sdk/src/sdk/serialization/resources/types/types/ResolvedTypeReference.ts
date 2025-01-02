@@ -41,27 +41,27 @@ export const ResolvedTypeReference: core.serialization.Schema<
     });
 
 export declare namespace ResolvedTypeReference {
-    type Raw =
+    export type Raw =
         | ResolvedTypeReference.Container
         | ResolvedTypeReference.Named
         | ResolvedTypeReference.Primitive
         | ResolvedTypeReference.Unknown;
 
-    interface Container {
+    export interface Container {
         _type: "container";
         container: serializers.ContainerType.Raw;
     }
 
-    interface Named extends ResolvedNamedType.Raw {
+    export interface Named extends ResolvedNamedType.Raw {
         _type: "named";
     }
 
-    interface Primitive {
+    export interface Primitive {
         _type: "primitive";
         primitive: PrimitiveType.Raw;
     }
 
-    interface Unknown {
+    export interface Unknown {
         _type: "unknown";
     }
 }

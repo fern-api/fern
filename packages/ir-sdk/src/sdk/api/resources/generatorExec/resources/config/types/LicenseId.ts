@@ -3,7 +3,6 @@
  */
 
 export type LicenseId = "MIT" | "Apache-2.0";
-
 export const LicenseId = {
     Mit: "MIT",
     Apache2: "Apache-2.0",
@@ -19,8 +18,8 @@ export const LicenseId = {
     },
 } as const;
 
-export declare namespace LicenseId {
-    interface Visitor<R> {
+export namespace LicenseId {
+    export interface Visitor<R> {
         mit: () => R;
         apache2: () => R;
         _other: () => R;

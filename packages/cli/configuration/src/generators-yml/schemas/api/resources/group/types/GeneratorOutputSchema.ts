@@ -13,32 +13,32 @@ export type GeneratorOutputSchema =
     | FernDefinition.GeneratorOutputSchema.Nuget
     | FernDefinition.GeneratorOutputSchema.Rubygems;
 
-export declare namespace GeneratorOutputSchema {
-    interface Npm extends FernDefinition.NpmOutputLocationSchema {
+export namespace GeneratorOutputSchema {
+    export interface Npm extends FernDefinition.NpmOutputLocationSchema {
         location: "npm";
     }
 
-    interface Maven extends FernDefinition.MavenOutputLocationSchema {
+    export interface Maven extends FernDefinition.MavenOutputLocationSchema {
         location: "maven";
     }
 
-    interface Pypi extends FernDefinition.PypiOutputLocationSchema {
+    export interface Pypi extends FernDefinition.PypiOutputLocationSchema {
         location: "pypi";
     }
 
-    interface Postman extends FernDefinition.PostmanOutputLocationSchema {
+    export interface Postman extends FernDefinition.PostmanOutputLocationSchema {
         location: "postman";
     }
 
-    interface LocalFileSystem extends FernDefinition.LocalFileSystemOutputLocationSchema {
+    export interface LocalFileSystem extends FernDefinition.LocalFileSystemOutputLocationSchema {
         location: "local-file-system";
     }
 
-    interface Nuget extends FernDefinition.NugetOutputLocationSchema {
+    export interface Nuget extends FernDefinition.NugetOutputLocationSchema {
         location: "nuget";
     }
 
-    interface Rubygems extends FernDefinition.RubyGemsOutputLocationSchema {
+    export interface Rubygems extends FernDefinition.RubyGemsOutputLocationSchema {
         location: "rubygems";
     }
 }

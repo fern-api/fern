@@ -16,7 +16,7 @@ export const EndpointSnippetResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointSnippetResponse {
-    interface Raw {
+    export interface Raw {
         snippet: string;
         errors?: Error_.Raw[] | null;
     }

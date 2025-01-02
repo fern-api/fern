@@ -3,7 +3,6 @@
  */
 
 export type GeneratorType = "SDK" | "Model" | "Server" | "Documentation";
-
 export const GeneratorType = {
     Sdk: "SDK",
     Model: "Model",

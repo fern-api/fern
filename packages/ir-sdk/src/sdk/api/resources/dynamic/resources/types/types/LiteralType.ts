@@ -6,22 +6,22 @@ import * as FernIr from "../../../../../index";
 
 export type LiteralType = FernIr.dynamic.LiteralType.Boolean | FernIr.dynamic.LiteralType.String;
 
-export declare namespace LiteralType {
-    interface Boolean extends _Utils {
+export namespace LiteralType {
+    export interface Boolean extends _Utils {
         type: "boolean";
         value: boolean;
     }
 
-    interface String extends _Utils {
+    export interface String extends _Utils {
         type: "string";
         value: string;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.LiteralType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         boolean: (value: boolean) => _Result;
         string: (value: string) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,7 +35,7 @@ export const LiteralType = {
             type: "boolean",
             _visit: function <_Result>(
                 this: FernIr.dynamic.LiteralType.Boolean,
-                visitor: FernIr.dynamic.LiteralType._Visitor<_Result>
+                visitor: FernIr.dynamic.LiteralType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.LiteralType._visit(this, visitor);
             },
@@ -48,7 +48,7 @@ export const LiteralType = {
             type: "string",
             _visit: function <_Result>(
                 this: FernIr.dynamic.LiteralType.String,
-                visitor: FernIr.dynamic.LiteralType._Visitor<_Result>
+                visitor: FernIr.dynamic.LiteralType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.LiteralType._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const LiteralType = {
 
     _visit: <_Result>(
         value: FernIr.dynamic.LiteralType,
-        visitor: FernIr.dynamic.LiteralType._Visitor<_Result>
+        visitor: FernIr.dynamic.LiteralType._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "boolean":

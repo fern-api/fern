@@ -19,7 +19,7 @@ export const MavenRegistryConfigV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace MavenRegistryConfigV2 {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         username: string;
         password: string;

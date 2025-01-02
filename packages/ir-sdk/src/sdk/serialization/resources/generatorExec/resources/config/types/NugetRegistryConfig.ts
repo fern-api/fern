@@ -16,7 +16,7 @@ export const NugetRegistryConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace NugetRegistryConfig {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         apiKey: string;
         packageName: string;

@@ -13,7 +13,7 @@ export const ExampleEnumType: core.serialization.ObjectSchema<serializers.Exampl
     });
 
 export declare namespace ExampleEnumType {
-    interface Raw {
+    export interface Raw {
         value: NameAndWireValue.Raw;
     }
 }

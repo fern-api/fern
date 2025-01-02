@@ -9,24 +9,24 @@ export type RequestWithExample =
     | FernOpenapiIr.RequestWithExample.Multipart
     | FernOpenapiIr.RequestWithExample.Json;
 
-export declare namespace RequestWithExample {
-    interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
+export namespace RequestWithExample {
+    export interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
         type: "octetStream";
     }
 
-    interface Multipart extends FernOpenapiIr.MultipartRequest, _Utils {
+    export interface Multipart extends FernOpenapiIr.MultipartRequest, _Utils {
         type: "multipart";
     }
 
-    interface Json extends FernOpenapiIr.JsonRequestWithExample, _Utils {
+    export interface Json extends FernOpenapiIr.JsonRequestWithExample, _Utils {
         type: "json";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
         multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequestWithExample) => _Result;
@@ -41,7 +41,7 @@ export const RequestWithExample = {
             type: "octetStream",
             _visit: function <_Result>(
                 this: FernOpenapiIr.RequestWithExample.OctetStream,
-                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
             },
@@ -54,7 +54,7 @@ export const RequestWithExample = {
             type: "multipart",
             _visit: function <_Result>(
                 this: FernOpenapiIr.RequestWithExample.Multipart,
-                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const RequestWithExample = {
             type: "json",
             _visit: function <_Result>(
                 this: FernOpenapiIr.RequestWithExample.Json,
-                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const RequestWithExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.RequestWithExample,
-        visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
+        visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "octetStream":

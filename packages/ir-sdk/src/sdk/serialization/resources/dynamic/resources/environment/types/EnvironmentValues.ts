@@ -14,5 +14,5 @@ export const EnvironmentValues: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([EnvironmentId, MultipleEnvironmentUrlValues]);
 
 export declare namespace EnvironmentValues {
-    type Raw = EnvironmentId.Raw | MultipleEnvironmentUrlValues.Raw;
+    export type Raw = EnvironmentId.Raw | MultipleEnvironmentUrlValues.Raw;
 }

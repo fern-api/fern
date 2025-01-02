@@ -19,5 +19,8 @@ export const ApiDefinitionSchema: core.serialization.Schema<
 ]);
 
 export declare namespace ApiDefinitionSchema {
-    type Raw = ApiDefinitionPathSchema.Raw | ApiDefinitionWithOverridesSchema.Raw | ProtobufApiDefinitionSchema.Raw;
+    export type Raw =
+        | ApiDefinitionPathSchema.Raw
+        | ApiDefinitionWithOverridesSchema.Raw
+        | ProtobufApiDefinitionSchema.Raw;
 }
