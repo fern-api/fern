@@ -35,6 +35,7 @@ export {
     type ObjectPropertyWithPath
 } from "./utils/getAllPropertiesForObject";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
+export { hashJSON } from "./utils/hashJSON";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
