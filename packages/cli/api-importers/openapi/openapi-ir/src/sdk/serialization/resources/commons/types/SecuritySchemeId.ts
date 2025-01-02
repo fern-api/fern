@@ -12,5 +12,5 @@ export const SecuritySchemeId: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace SecuritySchemeId {
-    type Raw = string;
+    export type Raw = string;
 }

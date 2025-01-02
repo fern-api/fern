@@ -24,9 +24,9 @@ export const Encoding: core.serialization.Schema<serializers.Encoding.Raw, FernO
     });
 
 export declare namespace Encoding {
-    type Raw = Encoding.Protobuf;
+    export type Raw = Encoding.Protobuf;
 
-    interface Protobuf extends ProtobufEncoding.Raw {
+    export interface Protobuf extends ProtobufEncoding.Raw {
         type: "protobuf";
     }
 }

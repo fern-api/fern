@@ -15,5 +15,5 @@ export const GithubConfigurationSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([GithubCommitAndReleaseSchema, GithubPullRequestSchema, GithubPushSchema]);
 
 export declare namespace GithubConfigurationSchema {
-    type Raw = GithubCommitAndReleaseSchema.Raw | GithubPullRequestSchema.Raw | GithubPushSchema.Raw;
+    export type Raw = GithubCommitAndReleaseSchema.Raw | GithubPullRequestSchema.Raw | GithubPushSchema.Raw;
 }

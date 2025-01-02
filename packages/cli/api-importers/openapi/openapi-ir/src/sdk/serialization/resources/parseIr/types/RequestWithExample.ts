@@ -35,17 +35,17 @@ export const RequestWithExample: core.serialization.Schema<
     });
 
 export declare namespace RequestWithExample {
-    type Raw = RequestWithExample.OctetStream | RequestWithExample.Multipart | RequestWithExample.Json;
+    export type Raw = RequestWithExample.OctetStream | RequestWithExample.Multipart | RequestWithExample.Json;
 
-    interface OctetStream extends OctetStreamRequest.Raw {
+    export interface OctetStream extends OctetStreamRequest.Raw {
         type: "octetStream";
     }
 
-    interface Multipart extends MultipartRequest.Raw {
+    export interface Multipart extends MultipartRequest.Raw {
         type: "multipart";
     }
 
-    interface Json extends JsonRequestWithExample.Raw {
+    export interface Json extends JsonRequestWithExample.Raw {
         type: "json";
     }
 }

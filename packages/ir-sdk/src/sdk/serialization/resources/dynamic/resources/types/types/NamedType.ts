@@ -41,30 +41,30 @@ export const NamedType: core.serialization.Schema<serializers.dynamic.NamedType.
         });
 
 export declare namespace NamedType {
-    type Raw =
+    export type Raw =
         | NamedType.Alias
         | NamedType.Enum
         | NamedType.Object
         | NamedType.DiscriminatedUnion
         | NamedType.UndiscriminatedUnion;
 
-    interface Alias extends AliasType.Raw {
+    export interface Alias extends AliasType.Raw {
         type: "alias";
     }
 
-    interface Enum extends EnumType.Raw {
+    export interface Enum extends EnumType.Raw {
         type: "enum";
     }
 
-    interface Object extends ObjectType.Raw {
+    export interface Object extends ObjectType.Raw {
         type: "object";
     }
 
-    interface DiscriminatedUnion extends DiscriminatedUnionType.Raw {
+    export interface DiscriminatedUnion extends DiscriminatedUnionType.Raw {
         type: "discriminatedUnion";
     }
 
-    interface UndiscriminatedUnion extends UndiscriminatedUnionType.Raw {
+    export interface UndiscriminatedUnion extends UndiscriminatedUnionType.Raw {
         type: "undiscriminatedUnion";
     }
 }

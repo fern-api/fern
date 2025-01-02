@@ -3,7 +3,6 @@
  */
 
 export type JsScriptStrategy = "beforeInteractive" | "afterInteractive" | "lazyOnload";
-
 export const JsScriptStrategy = {
     BeforeInteractive: "beforeInteractive",
     AfterInteractive: "afterInteractive",

@@ -5,7 +5,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.39.3
+        version: 0.45.1
         output:
           location: local-file-system
           path: ../../../packages/cli/fern-definition/schema/src/schemas
@@ -13,7 +13,7 @@ groups:
           outputSourceFiles: true
           namespaceExport: FernDefinition
           retainOriginalCasing: true
-  
+
   docs-parsers:
     audiences:
       - docs-parsers
@@ -28,4 +28,3 @@ groups:
           outputSourceFiles: true
           namespaceExport: FernDefinition
           retainOriginalCasing: true
-        

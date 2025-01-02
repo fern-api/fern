@@ -13,7 +13,7 @@ export const Namespace: core.serialization.ObjectSchema<serializers.Namespace.Ra
     });
 
 export declare namespace Namespace {
-    interface Raw {
+    export interface Raw {
         type: "namespace";
         name: string;
     }

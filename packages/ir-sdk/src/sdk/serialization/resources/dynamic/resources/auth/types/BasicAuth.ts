@@ -14,7 +14,7 @@ export const BasicAuth: core.serialization.ObjectSchema<serializers.dynamic.Basi
     });
 
 export declare namespace BasicAuth {
-    interface Raw {
+    export interface Raw {
         username: Name.Raw;
         password: Name.Raw;
     }

@@ -30,14 +30,14 @@ export const Literal: core.serialization.Schema<serializers.Literal.Raw, FernIr.
     });
 
 export declare namespace Literal {
-    type Raw = Literal.String | Literal.Boolean;
+    export type Raw = Literal.String | Literal.Boolean;
 
-    interface String {
+    export interface String {
         type: "string";
         string: string;
     }
 
-    interface Boolean {
+    export interface Boolean {
         type: "boolean";
         boolean: boolean;
     }

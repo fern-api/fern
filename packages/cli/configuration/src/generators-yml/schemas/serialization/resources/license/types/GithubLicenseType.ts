@@ -12,5 +12,5 @@ export const GithubLicenseType: core.serialization.Schema<
 > = core.serialization.enum_(["MIT", "Apache-2.0"]);
 
 export declare namespace GithubLicenseType {
-    type Raw = "MIT" | "Apache-2.0";
+    export type Raw = "MIT" | "Apache-2.0";
 }

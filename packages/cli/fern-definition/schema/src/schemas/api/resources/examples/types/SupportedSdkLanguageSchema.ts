@@ -19,7 +19,6 @@ export type SupportedSdkLanguageSchema =
     | "dotnet"
     | "jvm"
     | "c#";
-
 export const SupportedSdkLanguageSchema = {
     Curl: "curl",
     Python: "python",

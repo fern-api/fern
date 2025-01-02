@@ -9,5 +9,5 @@ import * as core from "../../../../core";
 export const TagId: core.serialization.Schema<serializers.TagId.Raw, FernOpenapiIr.TagId> = core.serialization.string();
 
 export declare namespace TagId {
-    type Raw = string;
+    export type Raw = string;
 }

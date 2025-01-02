@@ -16,7 +16,7 @@ export const OpenApiExampleGenerationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace OpenApiExampleGenerationSchema {
-    interface Raw {
+    export interface Raw {
         request?: RequestOrResponseExampleGenerationSchema.Raw | null;
         response?: RequestOrResponseExampleGenerationSchema.Raw | null;
     }

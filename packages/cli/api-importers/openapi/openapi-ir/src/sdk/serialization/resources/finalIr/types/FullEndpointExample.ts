@@ -28,7 +28,7 @@ export const FullEndpointExample: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace FullEndpointExample {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         pathParameters?: PathParameterExample.Raw[] | null;
         queryParameters?: QueryParameterExample.Raw[] | null;

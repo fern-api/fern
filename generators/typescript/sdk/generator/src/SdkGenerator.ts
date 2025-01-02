@@ -911,6 +911,7 @@ export class SdkGenerator {
                         endpoint,
                         packageId,
                         rootPackageId: rootPackage,
+                        includeSerdeLayer: this.config.includeSerdeLayer,
                         retainOriginalCasing: this.config.retainOriginalCasing,
                         inlineFileProperties: this.config.inlineFileProperties,
                         requireDefaultEnvironment: this.config.requireDefaultEnvironment

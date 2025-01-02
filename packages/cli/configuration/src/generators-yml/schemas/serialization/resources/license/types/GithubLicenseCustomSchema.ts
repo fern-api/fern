@@ -14,7 +14,7 @@ export const GithubLicenseCustomSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GithubLicenseCustomSchema {
-    interface Raw {
+    export interface Raw {
         custom: string;
     }
 }

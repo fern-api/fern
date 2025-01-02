@@ -49,7 +49,7 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
         });
 
 export declare namespace HttpResponseBody {
-    type Raw =
+    export type Raw =
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Text
@@ -57,29 +57,29 @@ export declare namespace HttpResponseBody {
         | HttpResponseBody.Streaming
         | HttpResponseBody.StreamParameter;
 
-    interface Json {
+    export interface Json {
         type: "json";
         value: JsonResponse.Raw;
     }
 
-    interface FileDownload extends FileDownloadResponse.Raw {
+    export interface FileDownload extends FileDownloadResponse.Raw {
         type: "fileDownload";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
     }
 
-    interface Bytes extends BytesResponse.Raw {
+    export interface Bytes extends BytesResponse.Raw {
         type: "bytes";
     }
 
-    interface Streaming {
+    export interface Streaming {
         type: "streaming";
         value: StreamingResponse.Raw;
     }
 
-    interface StreamParameter extends StreamParameterResponse.Raw {
+    export interface StreamParameter extends StreamParameterResponse.Raw {
         type: "streamParameter";
     }
 }

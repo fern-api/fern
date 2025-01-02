@@ -163,10 +163,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         if (propertyComponents.length === 1) {
             // Query parameters can only be defined on the root level of the request.
             const queryParameterKey = propertyComponents[0] ?? "";
-            const queryParameter =
-                typeof requestType["query-parameters"] != null
-                    ? requestType["query-parameters"]?.[queryParameterKey]
-                    : undefined;
+            const queryParameter = requestType["query-parameters"]?.[queryParameterKey] ?? undefined;
             if (queryParameter != null) {
                 return {
                     property: RequestPropertyValue.query(

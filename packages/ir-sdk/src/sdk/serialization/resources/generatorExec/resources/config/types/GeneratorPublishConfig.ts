@@ -20,7 +20,7 @@ export const GeneratorPublishConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorPublishConfig {
-    interface Raw {
+    export interface Raw {
         registries: GeneratorRegistriesConfig.Raw;
         registriesV2: GeneratorRegistriesConfigV2.Raw;
         publishTarget?: GeneratorPublishTarget.Raw | null;

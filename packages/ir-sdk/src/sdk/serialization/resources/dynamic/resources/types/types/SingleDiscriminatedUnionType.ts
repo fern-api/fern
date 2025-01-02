@@ -35,20 +35,20 @@ export const SingleDiscriminatedUnionType: core.serialization.Schema<
     });
 
 export declare namespace SingleDiscriminatedUnionType {
-    type Raw =
+    export type Raw =
         | SingleDiscriminatedUnionType.SamePropertiesAsObject
         | SingleDiscriminatedUnionType.SingleProperty
         | SingleDiscriminatedUnionType.NoProperties;
 
-    interface SamePropertiesAsObject extends SingleDiscriminatedUnionTypeObject.Raw {
+    export interface SamePropertiesAsObject extends SingleDiscriminatedUnionTypeObject.Raw {
         type: "samePropertiesAsObject";
     }
 
-    interface SingleProperty extends SingleDiscriminatedUnionTypeSingleProperty.Raw {
+    export interface SingleProperty extends SingleDiscriminatedUnionTypeSingleProperty.Raw {
         type: "singleProperty";
     }
 
-    interface NoProperties extends SingleDiscriminatedUnionTypeNoProperties.Raw {
+    export interface NoProperties extends SingleDiscriminatedUnionTypeNoProperties.Raw {
         type: "noProperties";
     }
 }

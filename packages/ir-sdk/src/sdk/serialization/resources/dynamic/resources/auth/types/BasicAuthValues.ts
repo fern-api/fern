@@ -15,7 +15,7 @@ export const BasicAuthValues: core.serialization.ObjectSchema<
 });
 
 export declare namespace BasicAuthValues {
-    interface Raw {
+    export interface Raw {
         username: string;
         password: string;
     }

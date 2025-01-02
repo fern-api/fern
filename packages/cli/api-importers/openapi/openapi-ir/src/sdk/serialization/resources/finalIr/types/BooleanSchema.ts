@@ -14,7 +14,7 @@ export const BooleanSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace BooleanSchema {
-    interface Raw {
+    export interface Raw {
         default?: boolean | null;
     }
 }

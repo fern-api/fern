@@ -13,7 +13,7 @@ export const FileSchema: core.serialization.ObjectSchema<serializers.FileSchema.
     });
 
 export declare namespace FileSchema {
-    interface Raw {
+    export interface Raw {
         isOptional: boolean;
         isArray: boolean;
     }

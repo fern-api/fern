@@ -14,7 +14,7 @@ export const WithDocsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithDocsSchema {
-    interface Raw {
+    export interface Raw {
         docs?: string | null;
     }
 }

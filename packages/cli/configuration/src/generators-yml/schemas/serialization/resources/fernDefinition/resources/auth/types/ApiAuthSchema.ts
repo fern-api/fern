@@ -18,5 +18,5 @@ export const ApiAuthSchema: core.serialization.Schema<
 ]);
 
 export declare namespace ApiAuthSchema {
-    type Raw = string | AuthSchemeReferenceSchema.Raw | AnyAuthSchemesSchema.Raw;
+    export type Raw = string | AuthSchemeReferenceSchema.Raw | AnyAuthSchemesSchema.Raw;
 }

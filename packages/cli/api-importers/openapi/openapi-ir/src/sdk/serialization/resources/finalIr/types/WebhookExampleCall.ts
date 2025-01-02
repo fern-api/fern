@@ -18,7 +18,7 @@ export const WebhookExampleCall: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace WebhookExampleCall {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         payload: serializers.FullExample.Raw;
     }

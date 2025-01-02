@@ -28,7 +28,7 @@ export const HttpService: core.serialization.ObjectSchema<serializers.HttpServic
     });
 
 export declare namespace HttpService {
-    interface Raw {
+    export interface Raw {
         availability?: Availability.Raw | null;
         name: DeclaredServiceName.Raw;
         displayName?: string | null;

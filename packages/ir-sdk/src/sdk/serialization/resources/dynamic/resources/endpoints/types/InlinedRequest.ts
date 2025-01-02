@@ -23,7 +23,7 @@ export const InlinedRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace InlinedRequest {
-    interface Raw {
+    export interface Raw {
         declaration: Declaration.Raw;
         pathParameters?: NamedParameter.Raw[] | null;
         queryParameters?: NamedParameter.Raw[] | null;

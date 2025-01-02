@@ -567,6 +567,9 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
     for (const [typeId, serviceIds] of Object.entries(typesReferencedByService)) {
         if (serviceIds.size === 1) {
             const serviceId = serviceIds.values().next().value;
+            if (serviceId == null) {
+                break;
+            }
             if (typesReferencedOnlyByService[serviceId] === undefined) {
                 typesReferencedOnlyByService[serviceId] = [];
             }

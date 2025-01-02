@@ -16,7 +16,7 @@ export const NpmRegistryConfigV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace NpmRegistryConfigV2 {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         token: string;
         packageName: string;

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.45.2] - 2024-12-31
+
+- Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
+
 ## [0.45.1] - 2024-12-27
 
 - Fix: Export everything inside of TypeScript namespaces that used to be ambient.

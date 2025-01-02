@@ -12,5 +12,5 @@ export const ConjureParamType: core.serialization.Schema<
 > = core.serialization.enum_(["path", "query", "body"]);
 
 export declare namespace ConjureParamType {
-    type Raw = "path" | "query" | "body";
+    export type Raw = "path" | "query" | "body";
 }

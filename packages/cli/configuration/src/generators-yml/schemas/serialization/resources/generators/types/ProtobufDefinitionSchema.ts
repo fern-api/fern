@@ -17,7 +17,7 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProtobufDefinitionSchema {
-    interface Raw {
+    export interface Raw {
         root: string;
         target: string;
         overrides?: string | null;

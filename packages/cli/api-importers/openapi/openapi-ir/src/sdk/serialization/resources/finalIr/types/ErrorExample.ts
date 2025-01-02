@@ -14,7 +14,7 @@ export const ErrorExample: core.serialization.ObjectSchema<serializers.ErrorExam
     });
 
 export declare namespace ErrorExample {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         description?: string | null;
         example: serializers.FullExample.Raw;

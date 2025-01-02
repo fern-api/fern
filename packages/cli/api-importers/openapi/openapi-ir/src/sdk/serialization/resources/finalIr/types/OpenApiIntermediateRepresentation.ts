@@ -43,7 +43,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
 });
 
 export declare namespace OpenApiIntermediateRepresentation {
-    interface Raw {
+    export interface Raw {
         apiVersion?: unknown | null;
         title?: string | null;
         description?: string | null;

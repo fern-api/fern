@@ -19,7 +19,7 @@ export const SingleDiscriminatedUnionTypeObject: core.serialization.ObjectSchema
 });
 
 export declare namespace SingleDiscriminatedUnionTypeObject {
-    interface Raw {
+    export interface Raw {
         typeId: TypeId.Raw;
         discriminantValue: NameAndWireValue.Raw;
         properties: NamedParameter.Raw[];

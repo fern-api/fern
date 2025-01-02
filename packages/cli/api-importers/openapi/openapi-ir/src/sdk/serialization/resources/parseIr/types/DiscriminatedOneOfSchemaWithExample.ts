@@ -21,11 +21,11 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .objectWithoutOptionalProperties({
         discriminantProperty: core.serialization.string(),
         commonProperties: core.serialization.list(
-            core.serialization.lazyObject(() => serializers.CommonPropertyWithExample)
+            core.serialization.lazyObject(() => serializers.CommonPropertyWithExample),
         ),
         schemas: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(() => serializers.SchemaWithExample)
+            core.serialization.lazy(() => serializers.SchemaWithExample),
         ),
     })
     .extend(WithDescription)
@@ -38,7 +38,7 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .extend(WithInline);
 
 export declare namespace DiscriminatedOneOfSchemaWithExample {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

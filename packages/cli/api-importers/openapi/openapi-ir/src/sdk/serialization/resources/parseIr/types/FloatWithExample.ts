@@ -14,7 +14,7 @@ export const FloatWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace FloatWithExample {
-    interface Raw {
+    export interface Raw {
         example?: number | null;
     }
 }

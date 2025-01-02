@@ -30,13 +30,13 @@ export const GeneratorEnvironment: core.serialization.Schema<
     });
 
 export declare namespace GeneratorEnvironment {
-    type Raw = GeneratorEnvironment.Local | GeneratorEnvironment.Remote;
+    export type Raw = GeneratorEnvironment.Local | GeneratorEnvironment.Remote;
 
-    interface Local {
+    export interface Local {
         _type: "local";
     }
 
-    interface Remote extends RemoteGeneratorEnvironment.Raw {
+    export interface Remote extends RemoteGeneratorEnvironment.Raw {
         _type: "remote";
     }
 }

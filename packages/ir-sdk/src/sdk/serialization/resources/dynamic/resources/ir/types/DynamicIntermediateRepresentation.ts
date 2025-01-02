@@ -24,7 +24,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
 });
 
 export declare namespace DynamicIntermediateRepresentation {
-    interface Raw {
+    export interface Raw {
         version: "1.0.0";
         types: Record<TypeId.Raw, NamedType.Raw>;
         endpoints: Record<EndpointId.Raw, Endpoint.Raw>;
