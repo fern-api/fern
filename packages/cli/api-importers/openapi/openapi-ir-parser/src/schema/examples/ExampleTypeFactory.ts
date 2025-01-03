@@ -483,7 +483,7 @@ export class ExampleTypeFactory {
                                     description: undefined,
                                     generatedName: "",
                                     nameOverride: undefined,
-                                    groupName: undefined,
+                                    groupName: undefined
                                 }),
                                 exampleId,
                                 example: value,
@@ -501,7 +501,7 @@ export class ExampleTypeFactory {
                         }
                     }
                 }
-                
+
                 return FullExample.object({
                     properties: result
                 });
