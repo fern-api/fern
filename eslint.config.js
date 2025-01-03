@@ -3,7 +3,6 @@ const tseslint = require('@typescript-eslint/eslint-plugin');
 const tsparser = require('@typescript-eslint/parser');
 const jestPlugin = require('eslint-plugin-jest');
 const blueprintPlugin = require('@blueprintjs/eslint-plugin');
-const deprecationPlugin = require('eslint-plugin-deprecation');
 const importPlugin = require('eslint-plugin-import');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooksPlugin = require('eslint-plugin-react-hooks');
@@ -34,7 +33,6 @@ module.exports = [
             '@typescript-eslint': tseslint,
             'jest': jestPlugin,
             '@blueprintjs': blueprintPlugin,
-            'deprecation': deprecationPlugin,
             'import': importPlugin,
             'react': reactPlugin,
             'react-hooks': reactHooksPlugin,
@@ -78,7 +76,6 @@ module.exports = [
             '@typescript-eslint/no-invalid-void-type': 'off',
             'no-unused-vars': 'off',
             '@typescript-eslint/prefer-optional-chain': 'off',
-            'deprecation/deprecation': 'error',
             'import/no-internal-modules': ['error', { forbid: ['@fern-api/*/**'] }],
             '@typescript-eslint/no-base-to-string': 'error',
             'eqeqeq': ['error', 'always', { null: 'never' }],
