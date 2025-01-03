@@ -82,8 +82,7 @@ export function validateObjectExample({
         const propertyWithPath = allPropertiesByWireKey[exampleKey];
         if (rawObject["extra-properties"]) {
             continue;
-        }
-        else if (propertyWithPath == null) {
+        } else if (propertyWithPath == null) {
             violations.push({
                 message: `Unexpected property "${exampleKey}"`
             });
