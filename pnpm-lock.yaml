@@ -1457,8 +1457,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       eslint:
-        specifier: ^9.16.0
-        version: 9.16.0(jiti@1.18.2)
+        specifier: ^8.56.0
+        version: 8.56.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3607,8 +3607,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       eslint:
-        specifier: ^9.16.0
-        version: 9.16.0(jiti@1.18.2)
+        specifier: ^8.56.0
+        version: 8.56.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -6796,8 +6796,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       eslint:
-        specifier: ^9.16.0
-        version: 9.16.0(jiti@1.18.2)
+        specifier: ^8.56.0
+        version: 8.56.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -6832,8 +6832,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       eslint:
-        specifier: ^9.16.0
-        version: 9.16.0(jiti@1.18.2)
+        specifier: ^8.56.0
+        version: 8.56.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
