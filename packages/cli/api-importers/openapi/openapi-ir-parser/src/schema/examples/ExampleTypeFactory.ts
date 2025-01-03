@@ -472,6 +472,36 @@ export class ExampleTypeFactory {
                         result[property] = propertyExample;
                     }
                 }
+                if (schema.additionalProperties) {
+                    for (const [property, value] of Object.entries(fullExample)) {
+                        if (!(property in result)) {
+                            const propertyExample = this.buildExampleHelper({
+                                schema: SchemaWithExample.unknown({
+                                    example: value,
+                                    title: undefined,
+                                    availability: undefined,
+                                    description: undefined,
+                                    generatedName: "",
+                                    nameOverride: undefined,
+                                    groupName: undefined,
+                                }),
+                                exampleId,
+                                example: value,
+                                visitedSchemaIds,
+                                depth: depth + 1,
+                                options: {
+                                    ...options,
+                                    name: property
+                                },
+                                skipReadonly
+                            });
+                            if (propertyExample != null) {
+                                result[property] = propertyExample;
+                            }
+                        }
+                    }
+                }
+                
                 return FullExample.object({
                     properties: result
                 });
