@@ -155,18 +155,21 @@ func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
 }
 
 func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
-	var start int
+	var startIndex int
 	if s.options != nil && s.options.prefix != "" {
 		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
-			start = i + len(s.options.prefix)
+			startIndex = i + len(s.options.prefix)
 		}
 	}
-	data := bytes[start:]
-	if i := strings.Index(string(data), s.options.delimiter); i >= 0 {
-		data = data[:i+len(s.options.delimiter)]
+	data := bytes[startIndex:]
+	delimIndex := strings.Index(string(data), s.options.delimiter)
+	if delimIndex < 0 {
+		return startIndex + len(data), data, nil
 	}
-	n := start + len(data) + len(s.options.delimiter)
-	return n, data, nil
+	endIndex := delimIndex + len(s.options.delimiter)
+	parsedData := data[:endIndex]
+	n := startIndex + endIndex
+	return n, parsedData, nil
 }
 
 func (s *scannerStreamReader) isTerminated(bytes []byte) bool {
