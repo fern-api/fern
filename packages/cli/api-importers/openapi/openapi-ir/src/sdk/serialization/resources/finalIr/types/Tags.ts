@@ -15,7 +15,7 @@ export const Tags: core.serialization.ObjectSchema<serializers.Tags.Raw, FernOpe
     });
 
 export declare namespace Tags {
-    interface Raw {
+    export interface Raw {
         tagsById: Record<TagId.Raw, Tag.Raw>;
         orderedTagIds?: TagId.Raw[] | null;
     }

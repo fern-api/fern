@@ -150,7 +150,7 @@ async function createJob({
                     // Make sure the directory exists
                     await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
 
-                    await writeFile(absolutePathToSourceFile, sourceContents);
+                    await writeFile(absolutePathToSourceFile, new Uint8Array(sourceContents));
                 }
             } catch (error) {
                 context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);

@@ -15,7 +15,7 @@ export const FileUploadRequestBody: core.serialization.ObjectSchema<
 });
 
 export declare namespace FileUploadRequestBody {
-    interface Raw {
+    export interface Raw {
         properties: FileUploadRequestBodyProperty.Raw[];
     }
 }

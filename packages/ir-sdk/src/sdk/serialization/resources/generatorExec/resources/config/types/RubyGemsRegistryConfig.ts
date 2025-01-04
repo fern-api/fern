@@ -16,7 +16,7 @@ export const RubyGemsRegistryConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace RubyGemsRegistryConfig {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         apiKey: string;
         packageName: string;

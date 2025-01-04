@@ -13,7 +13,7 @@ export const UploadRequest: core.serialization.Schema<serializers.UploadRequest.
     });
 
 export declare namespace UploadRequest {
-    interface Raw {
+    export interface Raw {
         columns: serializers.Column.Raw[];
         namespace?: string | null;
     }

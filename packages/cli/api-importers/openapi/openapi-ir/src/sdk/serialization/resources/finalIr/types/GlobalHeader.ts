@@ -16,7 +16,7 @@ export const GlobalHeader: core.serialization.ObjectSchema<serializers.GlobalHea
     });
 
 export declare namespace GlobalHeader {
-    interface Raw {
+    export interface Raw {
         header: string;
         name?: string | null;
         optional?: boolean | null;

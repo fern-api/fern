@@ -23,7 +23,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace MultipleBaseUrlsEnvironment {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;

@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type WebSocketMessageBody = FernIr.WebSocketMessageBody.InlinedBody | FernIr.WebSocketMessageBody.Reference;
 
-export declare namespace WebSocketMessageBody {
-    interface InlinedBody extends FernIr.InlinedWebSocketMessageBody, _Utils {
+export namespace WebSocketMessageBody {
+    export interface InlinedBody extends FernIr.InlinedWebSocketMessageBody, _Utils {
         type: "inlinedBody";
     }
 
-    interface Reference extends FernIr.WebSocketMessageBodyReference, _Utils {
+    export interface Reference extends FernIr.WebSocketMessageBodyReference, _Utils {
         type: "reference";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.WebSocketMessageBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         inlinedBody: (value: FernIr.InlinedWebSocketMessageBody) => _Result;
         reference: (value: FernIr.WebSocketMessageBodyReference) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const WebSocketMessageBody = {
             type: "inlinedBody",
             _visit: function <_Result>(
                 this: FernIr.WebSocketMessageBody.InlinedBody,
-                visitor: FernIr.WebSocketMessageBody._Visitor<_Result>
+                visitor: FernIr.WebSocketMessageBody._Visitor<_Result>,
             ) {
                 return FernIr.WebSocketMessageBody._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const WebSocketMessageBody = {
             type: "reference",
             _visit: function <_Result>(
                 this: FernIr.WebSocketMessageBody.Reference,
-                visitor: FernIr.WebSocketMessageBody._Visitor<_Result>
+                visitor: FernIr.WebSocketMessageBody._Visitor<_Result>,
             ) {
                 return FernIr.WebSocketMessageBody._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const WebSocketMessageBody = {
 
     _visit: <_Result>(
         value: FernIr.WebSocketMessageBody,
-        visitor: FernIr.WebSocketMessageBody._Visitor<_Result>
+        visitor: FernIr.WebSocketMessageBody._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "inlinedBody":

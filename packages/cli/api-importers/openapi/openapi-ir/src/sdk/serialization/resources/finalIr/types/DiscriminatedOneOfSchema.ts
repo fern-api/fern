@@ -23,7 +23,7 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
         commonProperties: core.serialization.list(core.serialization.lazyObject(() => serializers.CommonProperty)),
         schemas: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(() => serializers.Schema)
+            core.serialization.lazy(() => serializers.Schema),
         ),
     })
     .extend(WithDescription)
@@ -36,7 +36,7 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace DiscriminatedOneOfSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

@@ -3,7 +3,6 @@
  */
 
 export type ShapeType = "ENUM" | "OBJECT" | "UNION" | "UNDISCRIMINATED_UNION";
-
 export const ShapeType = {
     Enum: "ENUM",
     Object: "OBJECT",
@@ -25,8 +24,8 @@ export const ShapeType = {
     },
 } as const;
 
-export declare namespace ShapeType {
-    interface Visitor<R> {
+export namespace ShapeType {
+    export interface Visitor<R> {
         enum: () => R;
         object: () => R;
         union: () => R;

@@ -14,7 +14,7 @@ export const DoubleType: core.serialization.ObjectSchema<serializers.DoubleType.
     });
 
 export declare namespace DoubleType {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         validation?: DoubleValidationRules.Raw | null;
     }

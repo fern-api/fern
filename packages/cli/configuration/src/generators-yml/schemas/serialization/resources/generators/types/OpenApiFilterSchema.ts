@@ -14,7 +14,7 @@ export const OpenApiFilterSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace OpenApiFilterSchema {
-    interface Raw {
+    export interface Raw {
         endpoints?: string[] | null;
     }
 }

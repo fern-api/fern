@@ -29,13 +29,13 @@ export const ExampleCodeSample: core.serialization.Schema<serializers.ExampleCod
         });
 
 export declare namespace ExampleCodeSample {
-    type Raw = ExampleCodeSample.Language | ExampleCodeSample.Sdk;
+    export type Raw = ExampleCodeSample.Language | ExampleCodeSample.Sdk;
 
-    interface Language extends ExampleCodeSampleLanguage.Raw {
+    export interface Language extends ExampleCodeSampleLanguage.Raw {
         type: "language";
     }
 
-    interface Sdk extends ExampleCodeSampleSdk.Raw {
+    export interface Sdk extends ExampleCodeSampleSdk.Raw {
         type: "sdk";
     }
 }

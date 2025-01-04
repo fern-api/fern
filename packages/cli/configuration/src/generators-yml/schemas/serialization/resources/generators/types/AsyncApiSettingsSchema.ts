@@ -16,7 +16,7 @@ export const AsyncApiSettingsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace AsyncApiSettingsSchema {
-    interface Raw {
+    export interface Raw {
         "title-as-schema-name"?: boolean | null;
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;

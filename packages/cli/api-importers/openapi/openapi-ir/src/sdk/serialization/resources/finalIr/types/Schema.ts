@@ -60,7 +60,7 @@ export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpena
     });
 
 export declare namespace Schema {
-    type Raw =
+    export type Raw =
         | Schema.Primitive
         | Schema.Object
         | Schema.Array
@@ -73,48 +73,48 @@ export declare namespace Schema {
         | Schema.Nullable
         | Schema.Unknown;
 
-    interface Primitive extends PrimitiveSchema.Raw {
+    export interface Primitive extends PrimitiveSchema.Raw {
         type: "primitive";
     }
 
-    interface Object extends serializers.ObjectSchema.Raw {
+    export interface Object extends serializers.ObjectSchema.Raw {
         type: "object";
     }
 
-    interface Array extends serializers.ArraySchema.Raw {
+    export interface Array extends serializers.ArraySchema.Raw {
         type: "array";
     }
 
-    interface Map extends serializers.MapSchema.Raw {
+    export interface Map extends serializers.MapSchema.Raw {
         type: "map";
     }
 
-    interface Optional extends serializers.OptionalSchema.Raw {
+    export interface Optional extends serializers.OptionalSchema.Raw {
         type: "optional";
     }
 
-    interface Enum extends EnumSchema.Raw {
+    export interface Enum extends EnumSchema.Raw {
         type: "enum";
     }
 
-    interface Reference extends ReferencedSchema.Raw {
+    export interface Reference extends ReferencedSchema.Raw {
         type: "reference";
     }
 
-    interface Literal extends LiteralSchema.Raw {
+    export interface Literal extends LiteralSchema.Raw {
         type: "literal";
     }
 
-    interface OneOf {
+    export interface OneOf {
         type: "oneOf";
         value: serializers.OneOfSchema.Raw;
     }
 
-    interface Nullable extends serializers.NullableSchema.Raw {
+    export interface Nullable extends serializers.NullableSchema.Raw {
         type: "nullable";
     }
 
-    interface Unknown extends WithName.Raw {
+    export interface Unknown extends WithName.Raw {
         type: "unknown";
     }
 }

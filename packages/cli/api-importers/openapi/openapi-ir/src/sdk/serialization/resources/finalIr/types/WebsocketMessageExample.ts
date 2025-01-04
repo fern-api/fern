@@ -18,7 +18,7 @@ export const WebsocketMessageExample: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace WebsocketMessageExample {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         messageType: string;
         payload: serializers.FullExample.Raw;
     }

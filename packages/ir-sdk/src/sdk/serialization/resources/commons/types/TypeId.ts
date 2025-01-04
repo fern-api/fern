@@ -9,5 +9,5 @@ import * as core from "../../../../core";
 export const TypeId: core.serialization.Schema<serializers.TypeId.Raw, FernIr.TypeId> = core.serialization.string();
 
 export declare namespace TypeId {
-    type Raw = string;
+    export type Raw = string;
 }

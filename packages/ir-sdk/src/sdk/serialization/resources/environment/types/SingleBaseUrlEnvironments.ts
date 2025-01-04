@@ -15,7 +15,7 @@ export const SingleBaseUrlEnvironments: core.serialization.ObjectSchema<
 });
 
 export declare namespace SingleBaseUrlEnvironments {
-    interface Raw {
+    export interface Raw {
         environments: SingleBaseUrlEnvironment.Raw[];
     }
 }

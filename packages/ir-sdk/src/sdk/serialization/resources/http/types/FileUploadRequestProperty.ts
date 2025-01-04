@@ -33,14 +33,14 @@ export const FileUploadRequestProperty: core.serialization.Schema<
     });
 
 export declare namespace FileUploadRequestProperty {
-    type Raw = FileUploadRequestProperty.File | FileUploadRequestProperty.BodyProperty;
+    export type Raw = FileUploadRequestProperty.File | FileUploadRequestProperty.BodyProperty;
 
-    interface File {
+    export interface File {
         type: "file";
         value: FileProperty.Raw;
     }
 
-    interface BodyProperty extends FileUploadBodyProperty.Raw {
+    export interface BodyProperty extends FileUploadBodyProperty.Raw {
         type: "bodyProperty";
     }
 }

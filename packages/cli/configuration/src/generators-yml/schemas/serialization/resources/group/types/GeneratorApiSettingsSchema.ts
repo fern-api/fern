@@ -15,7 +15,7 @@ export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorApiSettingsSchema {
-    interface Raw {
+    export interface Raw {
         settings?: ApiDefinitionSettingsSchema.Raw | null;
     }
 }

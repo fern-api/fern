@@ -16,7 +16,7 @@ export const OAuthAccessTokenRequestPropertiesSchema: core.serialization.ObjectS
 });
 
 export declare namespace OAuthAccessTokenRequestPropertiesSchema {
-    interface Raw {
+    export interface Raw {
         "client-id"?: string | null;
         "client-secret"?: string | null;
         scopes?: string | null;

@@ -62370,6 +62370,7 @@ client.connect()
                         },
                         "tipo_declaracion": "Normal",
                       },
+                      "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                       "pdf": "=PDF-STRING=",
                       "receipt_pdf": "=PDF-STRING=",
                     },
@@ -62740,6 +62741,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -62857,6 +62861,7 @@ client.connect()
                             "pagos_provisionales": 0,
                             "titular_clabe_permite_verificacion": "SÍ",
                           },
+                          "dividendos": {},
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "informacion_general": {
                             "ejercicio": 2018,
@@ -62936,6 +62941,7 @@ client.connect()
                             ],
                             "subsidio_empleo": 0,
                           },
+                          "type": "yearly",
                         },
                       ],
                     },
@@ -63045,11 +63051,15 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "informacion_general": {},
                           "isr": {
                             "detalle_del_pago": {
                               "a_cargo": 0,
@@ -63204,11 +63214,15 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "informacion_general": {},
                           "isr": {
                             "detalle_del_pago": {
                               "a_cargo": 0,
@@ -63371,6 +63385,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "cifras_cierre_ejercicio": {
@@ -63452,6 +63469,7 @@ client.connect()
                               "utilidad_o_perdida_fiscal_antes_de_ptu": 416134,
                             },
                           },
+                          "dividendos_o_utilidades_distribuidos": {},
                           "estado_posicion_financiera_balance": {
                             "activo": {
                               "cargos_y_gastos_diferidos": 9319,
@@ -63532,8 +63550,10 @@ client.connect()
                             "rfc": "ABC1111111A1",
                             "tipo_declaracion": "Normal",
                           },
+                          "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                           "pdf": "=PDF-STRING=",
                           "receipt_pdf": "=PDF-STRING=",
+                          "type": "yearly",
                         },
                       ],
                     },
@@ -63643,6 +63663,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -65349,6 +65372,7 @@ client.connect()
                           },
                           "tipo_declaracion": "Normal",
                         },
+                        "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                         "pdf": "=PDF-STRING=",
                         "receipt_pdf": "=PDF-STRING=",
                       },
@@ -66084,6 +66108,10 @@ service:
                     saldo_credito_fiscal_anteriores_produccion_distribucion_cinematografica: 0
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
+                  dividendos: {}
+                  type: yearly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66221,6 +66249,9 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+                  informacion_general: {}
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66366,6 +66397,9 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+                  informacion_general: {}
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66603,6 +66637,11 @@ service:
                     cantidad_a_pagar: 113002
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
+                  link: 19697249-01b8-443e-a451-76bfc5fbeebf
+                  dividendos_o_utilidades_distribuidos: {}
+                  type: yearly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66813,6 +66852,8 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -67947,6 +67988,7 @@ service:
                   cantidad_a_pagar: 113002
                 pdf: '=PDF-STRING='
                 receipt_pdf: '=PDF-STRING='
+                link: 19697249-01b8-443e-a451-76bfc5fbeebf
           code-samples:
             - language: cURL
               code: |-
@@ -69185,6 +69227,7 @@ service:
                 cantidad_a_pagar: 113002
               pdf: '=PDF-STRING='
               receipt_pdf: '=PDF-STRING='
+              link: 19697249-01b8-443e-a451-76bfc5fbeebf
           code-samples:
             - language: cURL
               code: |

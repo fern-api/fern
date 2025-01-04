@@ -3,7 +3,6 @@
  */
 
 export type Language = "python" | "java" | "typescript" | "go" | "ruby" | "csharp" | "swift" | "php";
-
 export const Language = {
     Python: "python",
     Java: "java",

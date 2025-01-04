@@ -17,7 +17,7 @@ export const WebsocketHandshakeWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace WebsocketHandshakeWithExample {
-    interface Raw {
+    export interface Raw {
         queryParameters: QueryParameterWithExample.Raw[];
         headers: HeaderWithExample.Raw[];
     }

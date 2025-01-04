@@ -11,5 +11,5 @@ export const TextStreamChunk: core.serialization.ObjectSchema<serializers.TextSt
     core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs);
 
 export declare namespace TextStreamChunk {
-    interface Raw extends WithDocs.Raw {}
+    export interface Raw extends WithDocs.Raw {}
 }

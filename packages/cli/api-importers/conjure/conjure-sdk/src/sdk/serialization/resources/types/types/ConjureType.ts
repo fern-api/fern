@@ -11,5 +11,5 @@ export const ConjureType: core.serialization.Schema<serializers.ConjureType.Raw,
     core.serialization.undiscriminatedUnion([ConjurePrimitive, core.serialization.string()]);
 
 export declare namespace ConjureType {
-    type Raw = ConjurePrimitive.Raw | string;
+    export type Raw = ConjurePrimitive.Raw | string;
 }

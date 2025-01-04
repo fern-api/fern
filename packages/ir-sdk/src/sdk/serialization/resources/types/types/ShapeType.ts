@@ -10,5 +10,5 @@ export const ShapeType: core.serialization.Schema<serializers.ShapeType.Raw, Fer
     core.serialization.enum_(["ENUM", "OBJECT", "UNION", "UNDISCRIMINATED_UNION"]);
 
 export declare namespace ShapeType {
-    type Raw = "ENUM" | "OBJECT" | "UNION" | "UNDISCRIMINATED_UNION";
+    export type Raw = "ENUM" | "OBJECT" | "UNION" | "UNDISCRIMINATED_UNION";
 }

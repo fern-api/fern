@@ -13,7 +13,7 @@ export const DirectPublish: core.serialization.ObjectSchema<serializers.DirectPu
     });
 
 export declare namespace DirectPublish {
-    interface Raw {
+    export interface Raw {
         target: PublishTarget.Raw;
     }
 }

@@ -1,0 +1,32 @@
+types:
+  Item: 
+    extra-properties: true
+    properties:
+      id: string
+
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      method: POST
+      path: /item
+      request:
+        name: CreateItemRequest
+        body:
+          extra-properties: true
+          properties:
+            id: string
+      response:
+        type: Item
+      examples:
+        - name: "Item"
+          request:
+            id: "123"
+            foo: "bar"
+          response:
+            body:
+              id: "123"
+              foo: "bar"
+

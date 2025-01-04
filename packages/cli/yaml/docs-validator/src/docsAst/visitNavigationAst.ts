@@ -118,17 +118,19 @@ async function visitNavigationItem({
             if (items == null) {
                 return;
             }
-            items.map(async (item, idx) => {
-                await visitNavigationItem({
-                    absolutePathToFernFolder,
-                    navigationItem: item,
-                    visitor,
-                    nodePath: [...nodePath, "contents", `${idx}`],
-                    absoluteFilepathToConfiguration,
-                    loadAPIWorkspace,
-                    context
-                });
-            });
+            await Promise.all(
+                items.map(async (item, idx) => {
+                    await visitNavigationItem({
+                        absolutePathToFernFolder,
+                        navigationItem: item,
+                        visitor,
+                        nodePath: [...nodePath, "contents", `${idx}`],
+                        absoluteFilepathToConfiguration,
+                        loadAPIWorkspace,
+                        context
+                    });
+                })
+            );
         },
         viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
             if (viewers != null && viewers.length > 0) {

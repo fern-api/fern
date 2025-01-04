@@ -21,7 +21,7 @@ export const ConjureEndpoint: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ConjureEndpoint {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         http: string;
         args?: Record<string, ConjureArgument.Raw> | null;
         returns?: ConjureTypeReference.Raw | null;

@@ -12,5 +12,5 @@ export const WebSocketMessageId: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace WebSocketMessageId {
-    type Raw = string;
+    export type Raw = string;
 }

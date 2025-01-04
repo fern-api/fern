@@ -39,22 +39,22 @@ export const ExampleEndpointSuccessResponse: core.serialization.Schema<
     });
 
 export declare namespace ExampleEndpointSuccessResponse {
-    type Raw =
+    export type Raw =
         | ExampleEndpointSuccessResponse.Body
         | ExampleEndpointSuccessResponse.Stream
         | ExampleEndpointSuccessResponse.Sse;
 
-    interface Body {
+    export interface Body {
         type: "body";
         value?: serializers.ExampleTypeReference.Raw | null;
     }
 
-    interface Stream {
+    export interface Stream {
         type: "stream";
         value: serializers.ExampleTypeReference.Raw[];
     }
 
-    interface Sse {
+    export interface Sse {
         type: "sse";
         value: ExampleServerSideEvent.Raw[];
     }

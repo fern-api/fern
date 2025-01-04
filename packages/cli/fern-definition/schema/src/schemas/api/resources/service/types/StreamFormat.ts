@@ -3,7 +3,6 @@
  */
 
 export type StreamFormat = "sse" | "json";
-
 export const StreamFormat = {
     Sse: "sse",
     Json: "json",

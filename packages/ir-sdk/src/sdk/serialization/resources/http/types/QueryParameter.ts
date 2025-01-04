@@ -18,7 +18,7 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
         .extend(Declaration);
 
 export declare namespace QueryParameter {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;

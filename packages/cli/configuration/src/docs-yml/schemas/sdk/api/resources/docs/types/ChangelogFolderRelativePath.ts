@@ -6,13 +6,11 @@
  * The relative path to a folder containing markdown files broken down by date.
  *
  * Example:
- *
  * ```
  * changelog: "changelog"
  * ```
  *
  * This will look for markdown files in the `/fern/changelog` directory, which should contain files named like
- *
  * - `/fern/changelog/2024-04-29.mdx`.
  * - `/fern/changelog/2023-01-02.mdx`.
  */

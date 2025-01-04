@@ -12,7 +12,7 @@ export const EscapedString: core.serialization.ObjectSchema<serializers.EscapedS
     });
 
 export declare namespace EscapedString {
-    interface Raw {
+    export interface Raw {
         original: string;
     }
 }

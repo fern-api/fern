@@ -23,7 +23,7 @@ export const QueryParameterWithExample: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace QueryParameterWithExample {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         parameterNameOverride?: string | null;

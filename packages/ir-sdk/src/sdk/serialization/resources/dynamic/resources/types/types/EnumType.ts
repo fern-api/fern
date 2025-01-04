@@ -15,7 +15,7 @@ export const EnumType: core.serialization.ObjectSchema<serializers.dynamic.EnumT
     });
 
 export declare namespace EnumType {
-    interface Raw {
+    export interface Raw {
         declaration: Declaration.Raw;
         values: NameAndWireValue.Raw[];
     }

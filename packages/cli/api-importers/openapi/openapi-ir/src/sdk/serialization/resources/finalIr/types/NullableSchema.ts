@@ -27,7 +27,7 @@ export const NullableSchema: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace NullableSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

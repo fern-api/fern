@@ -18,7 +18,7 @@ export const QueryColumn: core.serialization.ObjectSchema<serializers.QueryColum
     });
 
 export declare namespace QueryColumn {
-    interface Raw {
+    export interface Raw {
         values: number[];
         topK?: number | null;
         namespace?: string | null;

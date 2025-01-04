@@ -31,7 +31,7 @@ export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace UnDiscriminatedOneOfSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

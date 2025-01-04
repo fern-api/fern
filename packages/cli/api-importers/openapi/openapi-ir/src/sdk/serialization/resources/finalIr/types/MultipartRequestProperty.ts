@@ -20,7 +20,7 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace MultipartRequestProperty {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         key: string;
         schema: MultipartSchema.Raw;
         contentType?: string | null;

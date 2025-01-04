@@ -16,7 +16,7 @@ export const DeleteRequest: core.serialization.Schema<serializers.DeleteRequest.
     });
 
 export declare namespace DeleteRequest {
-    interface Raw {
+    export interface Raw {
         ids?: string[] | null;
         deleteAll?: boolean | null;
         namespace?: string | null;
