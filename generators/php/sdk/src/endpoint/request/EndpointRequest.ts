@@ -1,6 +1,8 @@
 import { UnnamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
+
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export interface QueryParameterCodeBlock {

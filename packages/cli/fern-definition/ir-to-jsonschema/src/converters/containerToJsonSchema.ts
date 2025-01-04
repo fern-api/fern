@@ -1,6 +1,8 @@
+import { JSONSchema4 } from "json-schema";
+
 import { assertNever } from "@fern-api/core-utils";
 import { ContainerType } from "@fern-api/ir-sdk";
-import { JSONSchema4 } from "json-schema";
+
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
 

@@ -1,9 +1,11 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { CliContext } from "../cli-context/CliContext";
+import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
 import { isCI } from "../utils/isCI";
 
 vi.mock("../utils/isCI", () => ({

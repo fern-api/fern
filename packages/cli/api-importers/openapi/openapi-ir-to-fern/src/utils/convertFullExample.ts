@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     EndpointResponseExample,
     FullExample,
@@ -7,7 +8,6 @@ import {
     LiteralExample,
     PrimitiveExample
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {

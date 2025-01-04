@@ -1,19 +1,20 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { Logger } from "@fern-api/logger";
 import {
-    OpenApiIntermediateRepresentation,
-    Schema,
-    SchemaId,
     HttpMethod,
     ObjectSchema,
-    OneOfSchema
+    OneOfSchema,
+    OpenApiIntermediateRepresentation,
+    Schema,
+    SchemaId
 } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
-import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { isSchemaEqual } from "@fern-api/openapi-ir";
-import { State } from "./State";
+import { TaskContext } from "@fern-api/task-context";
+
 import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";
+import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;

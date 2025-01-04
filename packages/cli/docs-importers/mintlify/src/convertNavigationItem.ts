@@ -1,8 +1,9 @@
 import { docsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+
 import { convertMarkdown } from "./convertMarkdown";
 import { MintNavigationItem } from "./mintlify";
 

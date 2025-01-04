@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Rule, RuleViolation } from "../../Rule";
-import { NodePath, visitRawTypeDeclaration, isGeneric, parseGeneric } from "@fern-api/fern-definition-schema";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
+import { Rule, RuleViolation } from "../../Rule";
 import { visitDefinitionFileYamlAst } from "../../ast";
 
 type GenericDeclaration = string;
@@ -123,8 +124,8 @@ export const ValidGenericRule: Rule = {
                                     typeof value === "string"
                                         ? value
                                         : typeof value.type === "string"
-                                        ? value.type
-                                        : undefined;
+                                          ? value.type
+                                          : undefined;
 
                                 if (discriminatedUnionValue && isGeneric(discriminatedUnionValue)) {
                                     if (nodePath) {

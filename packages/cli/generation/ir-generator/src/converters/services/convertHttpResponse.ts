@@ -1,18 +1,19 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    RawSchemas,
+    isRawTextType,
+    parseRawBytesType,
+    parseRawFileType,
+    parseRawTextType
+} from "@fern-api/fern-definition-schema";
+import {
     HttpResponse,
     HttpResponseBody,
     JsonResponse,
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
-import {
-    isRawTextType,
-    parseRawFileType,
-    parseRawTextType,
-    parseRawBytesType,
-    RawSchemas
-} from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
@@ -144,7 +145,7 @@ export function convertStreamHttpResponseBody({
     if (responseStream != null) {
         const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-        const streamFormat = typeof responseStream === "string" ? "json" : responseStream.format ?? "json";
+        const streamFormat = typeof responseStream === "string" ? "json" : (responseStream.format ?? "json");
         if (isRawTextType(typeReference)) {
             return StreamingResponse.text({
                 docs

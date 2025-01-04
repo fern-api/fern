@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api//core-utils";
 import {
     ConjureAliasDeclaration,
     ConjureEnumDeclaration,
@@ -5,7 +6,6 @@ import {
     ConjureTypeDeclaration,
     ConjureUnionDeclaration
 } from "@fern-api/conjure-sdk";
-import { assertNever } from "@fern-api//core-utils";
 
 export interface ConjureTypeDeclarationVisitor<R> {
     alias: (value: ConjureAliasDeclaration) => R;

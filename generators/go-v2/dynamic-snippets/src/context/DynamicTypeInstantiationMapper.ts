@@ -1,8 +1,9 @@
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {

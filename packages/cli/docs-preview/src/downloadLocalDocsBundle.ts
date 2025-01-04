@@ -1,14 +1,15 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
+import { fetcher } from "@fern-typescript/fetcher";
 import decompress from "decompress";
-import { Readable } from "readable-stream";
+import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
+import { Readable } from "readable-stream";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
-import { fetcher } from "@fern-typescript/fetcher";
-import fs from "fs";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";

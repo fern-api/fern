@@ -1,4 +1,5 @@
 import { Directory } from "ts-morph";
+
 import { Writer, ts } from "@fern-api/typescript-ast";
 
 export declare namespace VersionFileGenerator {

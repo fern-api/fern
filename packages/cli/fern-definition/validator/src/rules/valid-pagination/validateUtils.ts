@@ -1,14 +1,16 @@
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import {
+    RequestPropertyValidator,
+    ResponsePropertyValidator,
     getRequestPropertyComponents,
     getResponsePropertyComponents,
-    RequestPropertyValidator,
     requestTypeHasProperty,
-    resolvedTypeHasProperty,
-    ResponsePropertyValidator
+    resolvedTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 
 export function validateResultsProperty({

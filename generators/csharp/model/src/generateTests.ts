@@ -1,4 +1,5 @@
 import { CSharpFile } from "@fern-api/csharp-codegen";
+
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTestGenerator";

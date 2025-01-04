@@ -1,11 +1,13 @@
-import { AbstractCsharpGeneratorCli, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorCli, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
-import { generateVersion } from "./generateVersion";
+
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels";
+import { generateVersion } from "./generateVersion";
+import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
 
 export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({

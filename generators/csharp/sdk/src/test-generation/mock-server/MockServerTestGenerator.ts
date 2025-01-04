@@ -1,8 +1,10 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 

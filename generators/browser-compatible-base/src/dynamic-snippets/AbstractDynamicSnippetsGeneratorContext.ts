@@ -1,10 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "../GeneratorNotificationService";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
-import { TypeInstance } from "./TypeInstance";
+
+import { FernGeneratorExec } from "../GeneratorNotificationService";
 import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance";
 import { ErrorReporter, Severity } from "./ErrorReporter";
+import { TypeInstance } from "./TypeInstance";
 
 export abstract class AbstractDynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.GeneratorConfig;

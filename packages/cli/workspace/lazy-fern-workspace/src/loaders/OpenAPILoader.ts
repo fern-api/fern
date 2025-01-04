@@ -1,14 +1,16 @@
-import { TaskContext } from "@fern-api/task-context";
-import { mergeWithOverrides } from "./mergeWithOverrides";
-import { AbsoluteFilePath, dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { AsyncAPIV2, Document, FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
+import { Source, bundle } from "@redocly/openapi-core";
 import { readFile } from "fs/promises";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { bundle, Source } from "@redocly/openapi-core";
 import yaml from "js-yaml";
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec, isOpenAPIV3, isOpenAPIV2 } from "@fern-api/api-workspace-commons";
+import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { convertObj } from "swagger2openapi";
+
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, relative } from "@fern-api/fs-utils";
+import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
+import { AsyncAPIV2, Document, FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { TaskContext } from "@fern-api/task-context";
+
+import { mergeWithOverrides } from "./mergeWithOverrides";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}

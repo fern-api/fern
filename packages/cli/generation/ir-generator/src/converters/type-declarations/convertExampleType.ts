@@ -1,4 +1,12 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import {
+    RawSchemas,
+    isRawAliasDefinition,
+    isRawObjectDefinition,
+    visitRawTypeDeclaration,
+    visitRawTypeReference
+} from "@fern-api/fern-definition-schema";
 import {
     DeclaredTypeName,
     ExampleContainer,
@@ -11,17 +19,10 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
-    isRawAliasDefinition,
-    isRawObjectDefinition,
-    RawSchemas,
-    visitRawTypeDeclaration,
-    visitRawTypeReference
-} from "@fern-api/fern-definition-schema";
-import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
+
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import {
@@ -100,8 +101,8 @@ export function convertTypeExample({
                 typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
                     : typeof rawSingleUnionType.type === "string"
-                    ? rawSingleUnionType.type
-                    : undefined;
+                      ? rawSingleUnionType.type
+                      : undefined;
 
             return ExampleTypeShape.union({
                 discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({

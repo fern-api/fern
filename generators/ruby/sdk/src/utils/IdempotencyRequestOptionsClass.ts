@@ -7,7 +7,9 @@ import {
     Property,
     Variable
 } from "@fern-api/ruby-codegen";
+
 import { HttpHeader } from "@fern-fern/ir-sdk/api";
+
 import { RequestOptions } from "./RequestOptionsClass";
 
 export declare namespace IdempotencyRequestOptions {

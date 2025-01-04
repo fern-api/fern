@@ -1,6 +1,6 @@
+import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Reference } from "./Reference";
 
 export declare namespace FunctionInvocation {
     interface Args {

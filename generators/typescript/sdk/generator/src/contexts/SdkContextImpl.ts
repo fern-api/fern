@@ -1,15 +1,11 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { Logger } from "@fern-api/logger";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
-    createExternalDependencies,
     DependencyManager,
     ExternalDependencies,
     ImportsManager,
     JavaScriptRuntime,
-    NpmPackage
+    NpmPackage,
+    createExternalDependencies
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
@@ -34,6 +30,13 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
+
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { Logger } from "@fern-api/logger";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";

@@ -1,8 +1,9 @@
-import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
-import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { TestCase } from "./utils/TestCase";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
+
+import { TestCase } from "./utils/TestCase";
+import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
+import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
+import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 
 describe("imdb (success)", () => {
     const testCases: TestCase[] = [

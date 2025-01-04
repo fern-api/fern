@@ -1,8 +1,9 @@
-import { python } from "..";
-import { Writer } from "../core/Writer";
-import { Method } from "../Method";
-import { CodeBlock } from "../CodeBlock";
 import { expect } from "vitest";
+
+import { python } from "..";
+import { CodeBlock } from "../CodeBlock";
+import { Method } from "../Method";
+import { Writer } from "../core/Writer";
 
 describe("PythonFile", () => {
     let writer: Writer;

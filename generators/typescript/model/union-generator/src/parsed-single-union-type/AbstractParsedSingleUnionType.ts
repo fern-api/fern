@@ -1,6 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";

@@ -1,6 +1,6 @@
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { SingleUrlEnvironmentGenerator } from "./SingleUrlEnvironmentGenerator";
 import { MultiUrlEnvironmentGenerator } from "./MultiUrlEnvironmentGenerator";
+import { SingleUrlEnvironmentGenerator } from "./SingleUrlEnvironmentGenerator";
 
 export class EnvironmentGenerator {
     private context: SdkGeneratorContext;

@@ -1,5 +1,7 @@
-import { constructFernFileContext, ExampleResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import chalk from "chalk";
+
+import { ExampleResolverImpl, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

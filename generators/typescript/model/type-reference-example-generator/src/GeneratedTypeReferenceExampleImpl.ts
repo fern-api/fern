@@ -1,13 +1,15 @@
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ExampleContainer,
     ExamplePrimitive,
     ExampleTypeReference,
     ExampleTypeReferenceShape
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedTypeReferenceExample, BaseContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {

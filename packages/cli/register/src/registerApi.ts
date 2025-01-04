@@ -1,14 +1,16 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
+
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
+
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({
     organization,

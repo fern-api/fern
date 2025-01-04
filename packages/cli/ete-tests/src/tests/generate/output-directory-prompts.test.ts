@@ -1,10 +1,12 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, mkdir } from "fs/promises";
-import tmp from "tmp-promise";
-import { runFernCli } from "../../utils/runFernCli";
-import stripAnsi from "strip-ansi";
-import { init } from "../init/init";
 import { Options } from "execa";
+import { cp, mkdir } from "fs/promises";
+import stripAnsi from "strip-ansi";
+import tmp from "tmp-promise";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { runFernCli } from "../../utils/runFernCli";
+import { init } from "../init/init";
 
 const envWithCI = {
     CI: "true"

@@ -1,13 +1,15 @@
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
+import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph";
+
 import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedUnion, GeneratedUnionType, BaseContext } from "@fern-typescript/contexts";
-import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";

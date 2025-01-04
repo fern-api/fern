@@ -1,4 +1,5 @@
 import { noop } from "@fern-api/core-utils";
+
 import { IrVersions } from "../../ir-versions";
 
 type StringifiedTypeId = string;

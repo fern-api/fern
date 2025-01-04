@@ -1,11 +1,12 @@
+import { writeFile } from "fs/promises";
+
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, stringifyLargeObject } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { writeFile } from "fs/promises";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function generateAndSnapshotIRFromPath({
     absolutePathToWorkspace,

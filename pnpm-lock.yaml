@@ -47,6 +47,9 @@ importers:
       '@blueprintjs/stylelint-plugin':
         specifier: ^4.1.14
         version: 4.1.14(stylelint@14.14.0)
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -113,12 +116,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -177,6 +177,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -192,12 +195,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -223,18 +223,18 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -266,6 +266,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -281,12 +284,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -308,6 +308,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
         version: 53.18.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -326,12 +329,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -374,6 +374,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
         version: 53.18.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -398,12 +401,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -438,6 +438,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -447,12 +450,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -471,6 +471,9 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -486,12 +489,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.0.2
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -528,6 +528,9 @@ importers:
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -537,12 +540,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       string.prototype.replaceall:
         specifier: ^1.0.10
         version: 1.0.10
@@ -565,6 +565,9 @@ importers:
         specifier: ^0.4.9
         version: 0.4.9
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -577,12 +580,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -592,6 +592,9 @@ importers:
 
   generators/go-v2/model:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -607,12 +610,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.0.2
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -625,6 +625,9 @@ importers:
 
   generators/go-v2/sdk:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -640,12 +643,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.0.2
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -670,6 +670,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.9.0
         version: 53.9.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -703,12 +706,9 @@ importers:
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -746,6 +746,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -761,12 +764,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -788,6 +788,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -806,12 +809,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -848,6 +848,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -872,12 +875,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -908,6 +908,9 @@ importers:
       '@fern-fern/postman-sdk':
         specifier: 0.1.1
         version: 0.1.1
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -935,12 +938,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -966,6 +966,9 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -975,12 +978,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1015,6 +1015,9 @@ importers:
         specifier: ^3.22.4
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1027,12 +1030,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1042,6 +1042,9 @@ importers:
 
   generators/python-v2/fastapi:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1057,12 +1060,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -1096,6 +1096,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.7.0
         version: 53.7.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1111,12 +1114,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -1151,6 +1151,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1163,12 +1166,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1197,6 +1197,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1212,12 +1215,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1248,6 +1248,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1266,12 +1269,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-loader:
         specifier: ^9.3.1
         version: 9.5.1(typescript@5.7.2)(webpack@5.94.0(esbuild@0.24.0))
@@ -1314,6 +1314,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1332,12 +1335,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
@@ -1363,6 +1363,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1381,12 +1384,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1395,6 +1395,10 @@ importers:
         version: 2.0.5(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript-v2/ast:
+    dependencies:
+      '@prettier/sync':
+        specifier: ^0.5.2
+        version: 0.5.2(prettier@3.4.2)
     devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
@@ -1405,6 +1409,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1417,12 +1424,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1447,6 +1451,9 @@ importers:
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../ast
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -1456,12 +1463,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       string.prototype.replaceall:
         specifier: ^1.0.10
         version: 1.0.10
@@ -1495,6 +1499,9 @@ importers:
       '@fern-typescript/express-generator':
         specifier: workspace:*
         version: link:../generator
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@ts-morph/common':
         specifier: ^0.25.0
         version: 0.25.0
@@ -1519,12 +1526,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-loader:
         specifier: ^9.3.1
         version: 9.5.1(typescript@5.7.2)(webpack@5.94.0)
@@ -1562,6 +1566,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1574,12 +1581,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1605,6 +1609,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1617,12 +1624,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1651,6 +1655,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1663,12 +1670,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1688,6 +1692,9 @@ importers:
         specifier: workspace:*
         version: link:../../utils/contexts
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1700,12 +1707,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1731,6 +1735,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1743,12 +1750,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1777,6 +1781,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1792,12 +1799,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1823,6 +1827,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1835,12 +1842,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1911,6 +1915,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1923,12 +1930,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1951,6 +1955,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1963,12 +1970,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1994,6 +1998,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2006,12 +2013,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2037,6 +2041,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2049,12 +2056,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2080,6 +2084,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2092,12 +2099,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2126,6 +2130,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2138,12 +2145,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2169,6 +2173,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2181,12 +2188,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2212,6 +2216,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2224,12 +2231,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2261,6 +2265,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2288,12 +2295,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       sass:
         specifier: ^1.72.0
         version: 1.72.0
@@ -2336,6 +2340,9 @@ importers:
       '@fern-typescript/sdk-generator':
         specifier: workspace:*
         version: link:../generator
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@ts-morph/common':
         specifier: ^0.25.0
         version: 0.25.0
@@ -2360,12 +2367,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-loader:
         specifier: ^9.3.1
         version: 9.5.1(typescript@5.7.2)(webpack@5.94.0)
@@ -2406,6 +2410,9 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2418,12 +2425,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2452,6 +2456,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2464,12 +2471,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2492,6 +2496,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2504,12 +2511,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2610,6 +2614,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2631,12 +2638,9 @@ importers:
       jest-specific-snapshot:
         specifier: ^8.0.0
         version: 8.0.0(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2659,6 +2663,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2671,12 +2678,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2702,6 +2706,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2714,12 +2721,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2754,6 +2758,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2766,12 +2773,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2797,6 +2801,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2809,12 +2816,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2843,6 +2847,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2855,12 +2862,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2886,6 +2890,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2898,12 +2905,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2923,6 +2927,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2935,12 +2942,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2972,6 +2976,9 @@ importers:
         specifier: workspace:*
         version: link:../contexts
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2984,12 +2991,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3009,6 +3013,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3021,12 +3028,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3088,6 +3092,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/decompress':
         specifier: ^4.2.7
         version: 4.2.7
@@ -3118,15 +3125,12 @@ importers:
       memfs:
         specifier: ^3.4.1
         version: 3.5.3
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       package-json-type:
         specifier: ^1.0.3
         version: 1.0.3
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3152,6 +3156,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3164,12 +3171,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3186,6 +3190,9 @@ importers:
         specifier: ^3.7.6
         version: 3.7.7
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3201,12 +3208,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))(typescript@5.7.2)
@@ -3216,6 +3220,9 @@ importers:
 
   generators/typescript/utils/core-utilities/base:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3231,12 +3238,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))(typescript@5.7.2)
@@ -3246,6 +3250,9 @@ importers:
 
   generators/typescript/utils/core-utilities/callback-queue:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3261,12 +3268,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3289,6 +3293,9 @@ importers:
         specifier: ^4.5.2
         version: 4.5.2
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -3331,12 +3338,9 @@ importers:
       multer:
         specifier: ^1.4.5-lts.1
         version: 1.4.5-lts.1
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))(typescript@5.7.2)
@@ -3352,6 +3356,9 @@ importers:
 
   generators/typescript/utils/core-utilities/utils:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3367,12 +3374,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))(typescript@5.7.2)
@@ -3388,6 +3392,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.0)
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3403,12 +3410,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)))(typescript@5.7.2)
@@ -3425,6 +3429,9 @@ importers:
         specifier: workspace:*
         version: link:../commons
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3437,12 +3444,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3468,18 +3472,18 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3489,6 +3493,9 @@ importers:
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3501,12 +3508,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3532,6 +3536,9 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -3541,12 +3548,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3566,6 +3570,9 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -3575,12 +3582,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3594,6 +3598,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -3606,12 +3613,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -3652,6 +3656,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3661,12 +3668,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3704,6 +3708,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3713,12 +3720,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3750,6 +3754,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -3762,12 +3769,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3799,6 +3803,9 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3814,12 +3821,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3958,6 +3962,9 @@ importers:
       '@inquirer/prompts':
         specifier: ^7.1.0
         version: 7.1.0(@types/node@18.15.3)
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0
@@ -4039,12 +4046,9 @@ importers:
       ora:
         specifier: ^7.0.1
         version: 7.0.1
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -4079,6 +4083,9 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4091,12 +4098,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4149,6 +4153,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/inquirer':
         specifier: ^9.0.7
         version: 9.0.7
@@ -4167,12 +4174,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4201,6 +4205,9 @@ importers:
         specifier: workspace:*
         version: link:../task-context
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4210,18 +4217,17 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/local: {}
 
   packages/cli/configuration:
     dependencies:
@@ -4244,6 +4250,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4253,12 +4262,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4314,6 +4320,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4338,12 +4347,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4369,6 +4375,9 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -4381,12 +4390,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4421,6 +4427,9 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -4430,12 +4439,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4470,6 +4476,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/diff':
         specifier: ^5.2.1
         version: 5.2.1
@@ -4485,12 +4494,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4561,6 +4567,9 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/cors':
         specifier: ^2.8.13
         version: 2.8.17
@@ -4591,12 +4600,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4655,6 +4661,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -4667,12 +4676,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4719,6 +4725,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -4746,12 +4755,9 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4780,6 +4786,9 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4795,12 +4804,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4844,6 +4850,9 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/json-schema':
         specifier: ^7.0.15
         version: 7.0.15
@@ -4856,12 +4865,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4878,6 +4884,9 @@ importers:
         specifier: workspace:*
         version: link:../../../ir-sdk
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4890,12 +4899,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4951,6 +4957,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4966,12 +4975,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5005,6 +5011,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -5020,12 +5029,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       string.prototype.replaceall:
         specifier: ^1.0.10
         version: 1.0.10
@@ -5069,9 +5075,12 @@ importers:
         specifier: workspace:*
         version: link:../../workspace/loader
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -5081,9 +5090,6 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5286,6 +5292,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5301,12 +5310,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5329,6 +5335,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -5338,12 +5347,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5401,6 +5407,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      '@prettier/sync':
+        specifier: ^0.5.2
+        version: 0.5.2(prettier@3.4.2)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -5414,6 +5423,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/decompress':
         specifier: ^4.2.7
         version: 4.2.7
@@ -5435,12 +5447,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5538,6 +5547,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/decompress':
         specifier: ^4.2.7
         version: 4.2.7
@@ -5565,12 +5577,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5587,6 +5596,9 @@ importers:
         specifier: workspace:*
         version: link:../../../commons/path-utils
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5596,12 +5608,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5654,6 +5663,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/fs-extra':
         specifier: ^11.0.1
         version: 11.0.1
@@ -5675,12 +5687,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5694,6 +5703,9 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5703,12 +5715,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5749,6 +5758,9 @@ importers:
         specifier: 6.12.1
         version: 6.12.1
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/boxen':
         specifier: ^3.0.1
         version: 3.0.1
@@ -5770,12 +5782,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5810,6 +5819,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -5825,12 +5837,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5856,6 +5865,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5871,12 +5883,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5905,6 +5914,9 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5917,12 +5929,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -5972,6 +5981,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -5984,12 +5996,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6003,6 +6012,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6015,12 +6027,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6034,6 +6043,9 @@ importers:
         specifier: workspace:*
         version: link:../logger
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6046,12 +6058,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6086,6 +6095,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6098,12 +6110,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6150,6 +6159,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6165,12 +6177,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6265,6 +6274,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6292,12 +6304,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6350,6 +6359,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6365,12 +6377,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6441,6 +6450,9 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6456,12 +6468,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6508,6 +6517,9 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6520,12 +6532,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6557,6 +6566,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/ajv':
         specifier: ^1.0.0
         version: 1.0.4
@@ -6587,12 +6599,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6621,6 +6630,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6636,12 +6648,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6655,6 +6664,9 @@ importers:
         specifier: workspace:*
         version: link:../core-utils
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6667,12 +6679,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6692,6 +6701,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -6701,12 +6713,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6716,6 +6725,9 @@ importers:
 
   packages/commons/path-utils:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6725,12 +6737,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6756,6 +6765,9 @@ importers:
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -6768,12 +6780,9 @@ importers:
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.18.2)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6783,6 +6792,9 @@ importers:
 
   packages/ir-sdk:
     devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -6795,12 +6807,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -6816,6 +6825,9 @@ importers:
       '@fern-api/ir-migrations':
         specifier: workspace:*
         version: link:../cli/generation/ir-migrations
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -6831,12 +6843,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       tsup:
         specifier: ^8.0.2
         version: 8.3.5(postcss@8.4.49)(typescript@4.6.4)(yaml@2.3.3)
@@ -6897,6 +6906,9 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/find-up':
         specifier: ^4.0.0
         version: 4.0.0
@@ -6948,12 +6960,9 @@ importers:
       moment:
         specifier: ^2.30.1
         version: 2.30.1
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       pretty-ms:
         specifier: ^9.0.0
         version: 9.0.0
@@ -7005,6 +7014,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../cli/task-context
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -7017,12 +7029,9 @@ importers:
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       string.prototype.replaceall:
         specifier: ^1.0.10
         version: 1.0.10
@@ -8669,6 +8678,11 @@ packages:
     resolution: {integrity: sha512-c83qWb22rNRuB0UaVCI0uRPNRr8Z0FWnEIvT47jiHAmOIUHbBOg5XvV7pM5x+rKn9HRpjxquDbXYSXr3fAKFcw==}
     engines: {node: '>=12'}
 
+  '@prettier/sync@0.5.2':
+    resolution: {integrity: sha512-Yb569su456XNx5BsH/Vyem7xD6g/y9iLmLUzRKM1a/dhU/D7HqqvkAG72znulXlMXztbV0iiu9O5AL8K98TzZQ==}
+    peerDependencies:
+      prettier: '*'
+
   '@redocly/ajv@8.11.0':
     resolution: {integrity: sha512-9GWx27t7xWhDIR02PA18nzBdLcKQRgc46xNQvjFkrYk4UOmvKhJ/dawwiX0cCOeetN5LcaaiqQbVOWYK62SGHw==}
 
@@ -8775,6 +8789,22 @@ packages:
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
+
+  '@trivago/prettier-plugin-sort-imports@5.2.1':
+    resolution: {integrity: sha512-NDZndt0fmVThIx/8cExuJHLZagUVzfGCoVrwH9x6aZvwfBdkrDFTYujecek6X2WpG4uUFsVaPg5+aNQPSyjcmw==}
+    engines: {node: '>18.12'}
+    peerDependencies:
+      '@vue/compiler-sfc': 3.x
+      prettier: 2.x - 3.x
+      prettier-plugin-svelte: 3.x
+      svelte: 4.x || 5.x
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+      svelte:
+        optional: true
 
   '@ts-morph/common@0.16.0':
     resolution: {integrity: sha512-SgJpzkTgZKLKqQniCjLaE3c2L2sdL7UShvmTmPBejAKd2OKV/yfMpQ2IWpAuA+VY5wy7PkSUaEObIqEK6afFuw==}
@@ -9019,12 +9049,6 @@ packages:
 
   '@types/stream-json@1.7.7':
     resolution: {integrity: sha512-hHG7cLQ09H/m9i0jzL6UJAeLLxIWej90ECn0svO4T8J0nGcl89xZDQ2ujT4WKlvg0GWkcxJbjIDzW/v7BYUM6Q==}
-
-  '@types/strip-bom@3.0.0':
-    resolution: {integrity: sha512-xevGOReSYGM7g/kUBZzPqCrR/KYAo+F0yiPc85WFTJa0MSLtyFTVTU6cJu/aV4mid7IffDIWqo69THF2o4JiEQ==}
-
-  '@types/strip-json-comments@0.0.30':
-    resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
 
   '@types/swagger2openapi@7.0.4':
     resolution: {integrity: sha512-ffMqzciTDihOKH4Q//9Ond1yb5JP1P5FC/aFPsLK4blea1Fwk2aYctiNCkAh5etDYFswFXS+5LV/vuGkf+PU6A==}
@@ -10261,10 +10285,6 @@ packages:
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
 
-  editorconfig@0.15.3:
-    resolution: {integrity: sha512-M9wIMFx96vq0R4F+gRpY3o2exzb8hEj/n9S8unZtHSvYjibBp/iMufSzvmOcV/laG0ZtuTVGtiJggPOSW2r93g==}
-    hasBin: true
-
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
@@ -11396,6 +11416,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  javascript-natural-sort@0.7.1:
+    resolution: {integrity: sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==}
+
   jest-changed-files@29.7.0:
     resolution: {integrity: sha512-fEArFiwf1BpQ+4bXSprcDc3/x4HSzL4al2tozwVpDFpsxALjLYdyiIK4e5Vz66GQJIbXJ82+35PtysofptNX2w==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -11811,9 +11834,6 @@ packages:
     resolution: {integrity: sha512-CgeuL5uom6j/ZVrg7G/+1IXqRY8JXX4Hghfy5YE0EhoYQWvndP1kufu58cmZLNIDKnRhZrXfdS9urVWx98AipQ==}
     engines: {node: 20 || >=22}
 
-  lru-cache@4.1.5:
-    resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
-
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -11843,6 +11863,9 @@ packages:
 
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
+
+  make-synchronized@0.2.9:
+    resolution: {integrity: sha512-4wczOs8SLuEdpEvp3vGo83wh8rjJ78UsIk7DIX5fxdfmfMJGog4bQzxfvOwq7Q3yCHLC4jp1urPHIxRS/A93gA==}
 
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
@@ -12340,10 +12363,6 @@ packages:
     resolution: {integrity: sha512-0TUxTiFJWv+JnjWm4o9yvuskpEJLXTcng8MJuKd+SzAzp2o+OP3HWqNhB4OdJRt1Vsd9/mR0oyaEYlOnL7XIRw==}
     engines: {node: '>=16'}
 
-  organize-imports-cli@0.10.0:
-    resolution: {integrity: sha512-cVyNEeiDxX/zA6gdK1QS2rr3TK1VymIkT0LagnAk4f6eE0IC0bo3BeUkMzm3q3GnCJzYC+6lfuMpBE0Cequ7Vg==}
-    hasBin: true
-
   os-tmpdir@1.0.2:
     resolution: {integrity: sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==}
     engines: {node: '>=0.10.0'}
@@ -12635,13 +12654,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-
-  prettier@3.3.3:
-    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -12682,9 +12696,6 @@ packages:
 
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-
-  pseudomap@1.0.2:
-    resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==}
 
   psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
@@ -13091,9 +13102,6 @@ packages:
 
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
-
-  sigmund@1.0.1:
-    resolution: {integrity: sha512-fCvEXfh6NWpm+YSuY2bpXb/VIihqWA6hLsgboC+0nl71Q7N7o2eaCW8mJa/NLvQhs6jpd3VZV4UiUQlV6+lc8g==}
 
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
@@ -13649,9 +13657,6 @@ packages:
 
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
-
-  tsconfig@7.0.0:
-    resolution: {integrity: sha512-vZXmzPrL+EmC4T/4rVlT2jNVMWCi/O4DIiSj3UHg1OE5kCKbk4mfrXc6dZksLgRM/TZlKnousKH9bbTazUWRRw==}
 
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
@@ -14260,9 +14265,6 @@ packages:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
 
-  yallist@2.1.2:
-    resolution: {integrity: sha512-ncTzHV7NvsQZkYe1DW7cbDLm0YpzHmZF5r/iyP3ZnQtMiJ+pjzisCiMNI+Sj+xQF5pXhSHxSB3uDbsBTzY/c2A==}
-
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
@@ -14413,7 +14415,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.25.7':
     dependencies:
-      '@babel/types': 7.25.8
+      '@babel/types': 7.26.3
 
   '@babel/helper-annotate-as-pure@7.25.9':
     dependencies:
@@ -15219,8 +15221,8 @@ snapshots:
   '@babel/template@7.25.7':
     dependencies:
       '@babel/code-frame': 7.25.7
-      '@babel/parser': 7.25.8
-      '@babel/types': 7.25.8
+      '@babel/parser': 7.26.3
+      '@babel/types': 7.26.3
 
   '@babel/template@7.25.9':
     dependencies:
@@ -15603,7 +15605,7 @@ snapshots:
 
   '@fern-api/template-resolver@0.7.5':
     dependencies:
-      prettier: 3.3.3
+      prettier: 3.4.2
 
   '@fern-api/ui-core-utils@0.0.0':
     dependencies:
@@ -16240,6 +16242,11 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
+  '@prettier/sync@0.5.2(prettier@3.4.2)':
+    dependencies:
+      make-synchronized: 0.2.9
+      prettier: 3.4.2
+
   '@redocly/ajv@8.11.0':
     dependencies:
       fast-deep-equal: 3.1.3
@@ -16325,6 +16332,20 @@ snapshots:
   '@tokenizer/token@0.3.0': {}
 
   '@tootallnate/once@2.0.0': {}
+
+  '@trivago/prettier-plugin-sort-imports@5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)':
+    dependencies:
+      '@babel/generator': 7.26.3
+      '@babel/parser': 7.26.3
+      '@babel/traverse': 7.23.2
+      '@babel/types': 7.26.3
+      javascript-natural-sort: 0.7.1
+      lodash: 4.17.21
+      prettier: 3.4.2
+    optionalDependencies:
+      '@vue/compiler-sfc': 3.5.13
+    transitivePeerDependencies:
+      - supports-color
 
   '@ts-morph/common@0.16.0':
     dependencies:
@@ -16604,10 +16625,6 @@ snapshots:
     dependencies:
       '@types/node': 18.15.3
       '@types/stream-chain': 2.1.0
-
-  '@types/strip-bom@3.0.0': {}
-
-  '@types/strip-json-comments@0.0.30': {}
 
   '@types/swagger2openapi@7.0.4':
     dependencies:
@@ -17323,7 +17340,7 @@ snapshots:
   babel-plugin-jest-hoist@29.6.3:
     dependencies:
       '@babel/template': 7.25.7
-      '@babel/types': 7.25.8
+      '@babel/types': 7.26.3
       '@types/babel__core': 7.20.5
       '@types/babel__traverse': 7.17.1
 
@@ -18020,13 +18037,6 @@ snapshots:
   ecdsa-sig-formatter@1.0.11:
     dependencies:
       safe-buffer: 5.2.1
-
-  editorconfig@0.15.3:
-    dependencies:
-      commander: 2.20.3
-      lru-cache: 4.1.5
-      semver: 5.7.2
-      sigmund: 1.0.1
 
   ee-first@1.1.1: {}
 
@@ -19458,7 +19468,7 @@ snapshots:
   istanbul-lib-instrument@5.2.0:
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/parser': 7.25.8
+      '@babel/parser': 7.26.3
       '@istanbuljs/schema': 0.1.3
       istanbul-lib-coverage: 3.2.0
       semver: 6.3.1
@@ -19468,7 +19478,7 @@ snapshots:
   istanbul-lib-instrument@6.0.1:
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/parser': 7.25.8
+      '@babel/parser': 7.26.3
       '@istanbuljs/schema': 0.1.3
       istanbul-lib-coverage: 3.2.0
       semver: 7.6.3
@@ -19518,6 +19528,8 @@ snapshots:
       chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
+
+  javascript-natural-sort@0.7.1: {}
 
   jest-changed-files@29.7.0:
     dependencies:
@@ -20124,11 +20136,6 @@ snapshots:
 
   lru-cache@11.0.1: {}
 
-  lru-cache@4.1.5:
-    dependencies:
-      pseudomap: 1.0.2
-      yallist: 2.1.2
-
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -20163,6 +20170,8 @@ snapshots:
       semver: 6.3.1
 
   make-error@1.3.6: {}
+
+  make-synchronized@0.2.9: {}
 
   makeerror@1.0.12:
     dependencies:
@@ -20977,13 +20986,6 @@ snapshots:
       string-width: 6.1.0
       strip-ansi: 7.1.0
 
-  organize-imports-cli@0.10.0:
-    dependencies:
-      chalk: 4.1.2
-      editorconfig: 0.15.3
-      ts-morph: 15.1.0
-      tsconfig: 7.0.0
-
   os-tmpdir@1.0.2: {}
 
   p-finally@1.0.0: {}
@@ -21222,9 +21224,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@2.7.1: {}
-
-  prettier@3.3.3: {}
+  prettier@3.4.2: {}
 
   pretty-format@29.7.0:
     dependencies:
@@ -21263,8 +21263,6 @@ snapshots:
       ipaddr.js: 1.9.1
 
   proxy-from-env@1.1.0: {}
-
-  pseudomap@1.0.2: {}
 
   psl@1.9.0: {}
 
@@ -21782,8 +21780,6 @@ snapshots:
       object-inspect: 1.13.1
 
   siginfo@2.0.0: {}
-
-  sigmund@1.0.1: {}
 
   signal-exit@3.0.7: {}
 
@@ -22483,13 +22479,6 @@ snapshots:
       json5: 2.2.2
       minimist: 1.2.6
       strip-bom: 3.0.0
-
-  tsconfig@7.0.0:
-    dependencies:
-      '@types/strip-bom': 3.0.0
-      '@types/strip-json-comments': 0.0.30
-      strip-bom: 3.0.0
-      strip-json-comments: 2.0.1
 
   tslib@1.14.1: {}
 
@@ -23363,8 +23352,6 @@ snapshots:
   xtend@4.0.2: {}
 
   y18n@5.0.8: {}
-
-  yallist@2.1.2: {}
 
   yallist@3.1.1: {}
 

@@ -1,6 +1,6 @@
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 
 export type Workspace = DocsWorkspace | AbstractAPIWorkspace<unknown>;
 

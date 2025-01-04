@@ -1,9 +1,11 @@
-import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
+
+import { Name } from "@fern-fern/ir-sdk/api";
+
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 
 export declare namespace EndpointErrorUnionContextImpl {

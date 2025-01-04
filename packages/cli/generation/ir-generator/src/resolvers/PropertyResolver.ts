@@ -1,12 +1,13 @@
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { Name, ObjectProperty, RequestProperty, RequestPropertyValue, ResponseProperty } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
+
+import { FernFileContext } from "../FernFileContext";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
     maybeFileFromResolvedType
 } from "../converters/services/convertProperty";
 import { convertQueryParameter } from "../converters/services/convertQueryParameter";
-import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "./EndpointResolver";
 import { TypeResolver } from "./TypeResolver";
 
@@ -34,7 +35,10 @@ export interface PropertyResolver {
 }
 
 export class PropertyResolverImpl implements PropertyResolver {
-    constructor(private readonly typeResolver: TypeResolver, private readonly endpointResolver: EndpointResolver) {
+    constructor(
+        private readonly typeResolver: TypeResolver,
+        private readonly endpointResolver: EndpointResolver
+    ) {
         this.typeResolver = typeResolver;
         this.endpointResolver = endpointResolver;
     }

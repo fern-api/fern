@@ -1,6 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 function getMaybeBadVersionMessage(

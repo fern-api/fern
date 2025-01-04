@@ -1,4 +1,6 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
@@ -13,13 +15,13 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { VariableResolver } from "../resolvers/VariableResolver";
+import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
 import { constructHttpPath } from "./services/constructHttpPath";
@@ -30,7 +32,6 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
-import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 
 export function convertChannel({
     channel,

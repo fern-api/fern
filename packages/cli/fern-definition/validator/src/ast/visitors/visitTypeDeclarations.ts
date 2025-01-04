@@ -1,5 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { NodePath, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
@@ -205,7 +206,7 @@ export function visitTypeDeclaration({
                     for (const enumType of enumTypes) {
                         const nodePathForEnumType = [
                             ...nodePathForType,
-                            typeof enumType === "string" ? enumType : enumType.name ?? enumType.value
+                            typeof enumType === "string" ? enumType : (enumType.name ?? enumType.value)
                         ];
 
                         if (typeof enumType !== "string") {

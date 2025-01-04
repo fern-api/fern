@@ -1,15 +1,17 @@
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
+import { merge } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 import path from "path";
-import { CliContext } from "../../cli-context/CliContext";
-import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace, OpenAPILoader } from "@fern-api/lazy-fern-workspace";
+
 // TODO: clean up imports
 import { OpenApiDocumentConverterNode } from "@fern-api/docs-parsers";
 import { ErrorCollector } from "@fern-api/docs-parsers";
 import { BaseOpenApiV3_1ConverterNodeContext } from "@fern-api/docs-parsers";
-import { OpenAPIV3_1 } from "openapi-types";
-import { merge } from "lodash-es";
+import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+
+import { CliContext } from "../../cli-context/CliContext";
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,

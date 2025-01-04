@@ -1,4 +1,5 @@
 import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { validateEnumNames } from "./validateEnumNames";
 import { validateUnionNames } from "./validateUnionNames";

@@ -1,4 +1,6 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     ExampleWebhookCall,
@@ -7,8 +9,7 @@ import {
     WebhookGroup,
     WebhookPayload
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
@@ -149,8 +150,8 @@ function convertWebhookExamples({
         typeof webhook.payload === "string"
             ? webhook.payload
             : isReferencedWebhookPayloadSchema(webhook.payload)
-            ? webhook.payload.type
-            : undefined;
+              ? webhook.payload.type
+              : undefined;
     if (typeName != null) {
         return examples.map((example) => ({
             docs: webhook.docs,

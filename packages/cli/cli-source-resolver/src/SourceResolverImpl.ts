@@ -1,9 +1,10 @@
-import { AbsoluteFilePath, doesPathExistSync, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
-import { ProtobufParser } from "./parsers/ProtobufParser";
+import { RawSchemas, isRawProtobufSourceSchema } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExistSync, join } from "@fern-api/fs-utils";
 import { ResolvedSource, SourceResolver } from "@fern-api/source-resolver";
+import { TaskContext } from "@fern-api/task-context";
+
+import { ProtobufParser } from "./parsers/ProtobufParser";
 
 export class SourceResolverImpl implements SourceResolver {
     private readonly context: TaskContext;

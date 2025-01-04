@@ -1,7 +1,9 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export async function writeGitHubWorkflows({
     config,

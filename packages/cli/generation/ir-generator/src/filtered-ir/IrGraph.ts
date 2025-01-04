@@ -1,6 +1,6 @@
 import { Audiences as ConfigAudiences } from "@fern-api/configuration";
 import { assertNever, noop } from "@fern-api/core-utils";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
     DeclaredServiceName,
@@ -15,15 +15,16 @@ import {
     MultipleBaseUrlsEnvironment,
     SingleBaseUrlEnvironment,
     TypeReference,
-    Webhook,
-    WebhookPayload,
     WebSocketChannel,
     WebSocketChannelId,
-    WebSocketMessageBody
+    WebSocketMessageBody,
+    Webhook,
+    WebhookPayload
 } from "@fern-api/ir-sdk";
-import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
+
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
+import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
 import { getPropertiesByAudience } from "../utils/getPropertiesByAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {

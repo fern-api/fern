@@ -1,11 +1,13 @@
+import path from "path";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile, stringifyLargeObject } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import path from "path";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
 

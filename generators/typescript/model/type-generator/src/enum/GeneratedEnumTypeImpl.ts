@@ -1,4 +1,3 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getTextOfTsNode,
@@ -12,13 +11,16 @@ import {
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
-    ts,
     TypeAliasDeclarationStructure,
     VariableDeclarationKind,
     VariableStatementStructure,
     WriterFunction,
-    WriterFunctionOrValue
+    WriterFunctionOrValue,
+    ts
 } from "ts-morph";
+
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export declare namespace GeneratedEnumTypeImpl {

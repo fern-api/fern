@@ -1,7 +1,9 @@
-import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { docsYml } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, join, moveFolder } from "@fern-api/fs-utils";
+
 import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import {

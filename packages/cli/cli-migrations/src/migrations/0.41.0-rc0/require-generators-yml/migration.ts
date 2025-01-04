@@ -1,19 +1,21 @@
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import YAML from "yaml";
+
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import {
     AbsoluteFilePath,
     Directory,
     File,
+    RelativeFilePath,
     getDirectoryContents,
     join,
-    RelativeFilePath,
     relativize
 } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import yaml from "js-yaml";
-import YAML from "yaml";
+
 import { Migration } from "../../../types/Migration";
-import { writeFile } from "fs/promises";
-import chalk from "chalk";
 
 export const migration: Migration = {
     name: "require-generators-yml",

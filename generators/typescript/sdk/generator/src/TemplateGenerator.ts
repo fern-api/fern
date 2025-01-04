@@ -1,3 +1,8 @@
+import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { Project } from "ts-morph";
+
 import {
     ApiAuth,
     AuthScheme,
@@ -21,10 +26,6 @@ import {
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
 import { TemplateInput } from "@fern-fern/snippet-sdk/api";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
-import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
-import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
-import { Project } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";

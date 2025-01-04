@@ -1,5 +1,7 @@
-import { DEFAULT_REQUEST_PARAMETER_NAME } from "@fern-api/ir-generator";
 import chalk from "chalk";
+
+import { DEFAULT_REQUEST_PARAMETER_NAME } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 
 export const NoConflictingEndpointParametersRule: Rule = {

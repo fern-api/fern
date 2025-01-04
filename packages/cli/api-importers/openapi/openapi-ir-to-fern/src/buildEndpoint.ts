@@ -1,24 +1,25 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
-import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
+import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { isWriteMethod } from "./utils/isWriteMethod";
-import { State } from "./State";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -125,7 +126,7 @@ export function buildEndpoint({
             namespace: maybeEndpointNamespace
         });
         headers[header.name] = headerSchema;
-        names.add(typeof headerSchema === "string" ? header.name : headerSchema.name ?? header.name);
+        names.add(typeof headerSchema === "string" ? header.name : (headerSchema.name ?? header.name));
     }
 
     if (endpoint.request != null) {

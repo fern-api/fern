@@ -17,12 +17,13 @@ import {
     SchemaWithExample,
     SupportedSdkLanguage
 } from "@fern-api/openapi-ir";
+
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
 import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly";
-import { hasIncompleteExample } from "../hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { hasIncompleteExample } from "../hasIncompleteExample";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;

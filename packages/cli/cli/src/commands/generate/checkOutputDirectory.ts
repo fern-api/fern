@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
+
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { getOutputDirectories } from "../../persistence/output-directories/getOutputDirectories";
 import { storeOutputDirectories } from "../../persistence/output-directories/storeOutputDirectories";

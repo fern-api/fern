@@ -1,6 +1,7 @@
 import { rm } from "fs/promises";
 import path from "path";
 import stripAnsi from "strip-ansi";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");

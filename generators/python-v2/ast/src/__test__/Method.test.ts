@@ -1,5 +1,5 @@
-import { ClassMethodType } from "../Method";
 import { python } from "..";
+import { ClassMethodType } from "../Method";
 import { Writer } from "../core/Writer";
 
 describe("Method", () => {

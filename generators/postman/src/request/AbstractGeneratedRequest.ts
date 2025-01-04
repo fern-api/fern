@@ -15,7 +15,8 @@ import {
     PostmanRequestBodyMode,
     PostmanUrlVariable
 } from "@fern-fern/postman-sdk/api";
-import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
+
+import { ORIGIN_VARIABLE_NAME, getReferenceToVariable } from "../utils";
 import { GeneratedRequest } from "./GeneratedRequest";
 
 export declare namespace AbstractGeneratedRequest {

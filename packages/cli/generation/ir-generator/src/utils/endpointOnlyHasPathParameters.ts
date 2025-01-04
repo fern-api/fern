@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { getEndpointPathParameters } from "./getEndpointPathParameters";
 
 export function endpointOnlyHasPathParameters(

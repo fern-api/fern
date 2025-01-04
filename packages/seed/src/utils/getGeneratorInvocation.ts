@@ -1,9 +1,11 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
+import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
+
 import { OutputMode } from "../config/api";
 import { ParsedDockerName } from "../utils/parseDockerOrThrow";
 

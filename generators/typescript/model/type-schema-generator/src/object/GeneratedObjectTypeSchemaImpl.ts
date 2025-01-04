@@ -1,8 +1,10 @@
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>

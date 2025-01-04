@@ -1,11 +1,12 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import {
-    RawSchemas,
     NodePath,
+    RawSchemas,
     isInlineRequestBody,
     isVariablePathParameter,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { RootApiFileAstVisitor } from "../../RootApiFileAstVisitor";
 import { createDocsVisitor } from "../utils/createDocsVisitor";

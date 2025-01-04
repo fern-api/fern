@@ -1,12 +1,14 @@
-import { TypeDeclaration } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
-import { convertObjectToJsonSchema } from "./objectToJsonSchema";
-import { convertEnumToJsonSchema } from "./enumToJsonSchema";
-import { convertUnionToJsonSchema } from "./unionToJsonSchema";
-import { convertUndiscriminatedUnionToJsonSchema } from "./undiscriminatedUnionToJsonSchema";
-import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
+
 import { assertNever } from "@fern-api/core-utils";
+import { TypeDeclaration } from "@fern-api/ir-sdk";
+
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
+import { convertEnumToJsonSchema } from "./enumToJsonSchema";
+import { convertObjectToJsonSchema } from "./objectToJsonSchema";
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
+import { convertUndiscriminatedUnionToJsonSchema } from "./undiscriminatedUnionToJsonSchema";
+import { convertUnionToJsonSchema } from "./unionToJsonSchema";
 
 export declare namespace convertTypeDeclarationToJsonSchema {
     interface Args {

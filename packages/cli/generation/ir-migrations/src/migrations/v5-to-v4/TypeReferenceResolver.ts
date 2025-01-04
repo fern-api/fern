@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import { IrVersions } from "../../ir-versions";
 import { convertContainerType } from "./convertContainerType";
 import { convertDeclaredTypeName } from "./convertDeclaredTypeName";

@@ -1,5 +1,7 @@
-import { Logger } from "@fern-api/logger";
 import { ExecaReturnValue } from "execa";
+
+import { Logger } from "@fern-api/logger";
+
 import { loggingExeca } from "./loggingExeca";
 
 export type LoggingExecutable = (args?: string[], options?: loggingExeca.Options) => Promise<ExecaReturnValue>;

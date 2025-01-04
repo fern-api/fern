@@ -1,5 +1,7 @@
-import { MediaType } from "@fern-api/core-utils";
 import { OpenAPIV3 } from "openapi-types";
+
+import { MediaType } from "@fern-api/core-utils";
+
 import { isReferenceObject } from "./isReferenceObject";
 
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {

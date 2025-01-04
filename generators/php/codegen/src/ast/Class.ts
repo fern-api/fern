@@ -1,14 +1,14 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
 import { Access } from "./Access";
+import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Comment } from "./Comment";
-import { orderByAccess } from "./utils/orderByAccess";
-import { ClassReference } from "./ClassReference";
+import { Parameter } from "./Parameter";
 import { Trait } from "./Trait";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { orderByAccess } from "./utils/orderByAccess";
 
 export declare namespace Class {
     interface Args {

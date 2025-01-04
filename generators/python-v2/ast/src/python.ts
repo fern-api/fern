@@ -7,9 +7,9 @@ import { Field } from "./Field";
 import { Method } from "./Method";
 import { MethodArgument } from "./MethodArgument";
 import { MethodInvocation } from "./MethodInvocation";
+import { Operator } from "./Operator";
 import { Parameter } from "./Parameter";
 import { PythonFile } from "./PythonFile";
-import { Operator } from "./Operator";
 import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
 

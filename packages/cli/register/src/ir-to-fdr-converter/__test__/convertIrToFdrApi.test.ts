@@ -1,15 +1,16 @@
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable jest/valid-title */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { readdir } from "fs/promises";
+import path from "path";
 
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import path from "path";
+
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
-import { readdir } from "fs/promises";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 describe("fdr", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
@@ -25,9 +26,7 @@ describe("fdr", async () => {
         })),
         ...(
             await Promise.all(
-                (
-                    await readdir(FIXTURES_DIR, { withFileTypes: true })
-                )
+                (await readdir(FIXTURES_DIR, { withFileTypes: true }))
                     .filter((fixture) => fixture.isDirectory())
                     .flatMap(async (fixture) => {
                         return await loadApis({

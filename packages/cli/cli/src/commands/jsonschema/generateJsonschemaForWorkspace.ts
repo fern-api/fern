@@ -1,17 +1,19 @@
+import chalk from "chalk";
+import { mkdir, writeFile } from "fs/promises";
+
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, RelativeFilePath, dirname } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { CliContext } from "../../cli-context/CliContext";
-import { convertIRtoJsonSchema } from "@fern-api/ir-to-jsonschema";
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import {
     IdGenerator,
-    generateIntermediateRepresentation,
     constructCasingsGenerator,
-    convertToFernFilepath
+    convertToFernFilepath,
+    generateIntermediateRepresentation
 } from "@fern-api/ir-generator";
-import { mkdir, writeFile } from "fs/promises";
-import chalk from "chalk";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { convertIRtoJsonSchema } from "@fern-api/ir-to-jsonschema";
+import { Project } from "@fern-api/project-loader";
+
+import { CliContext } from "../../cli-context/CliContext";
 
 export async function generateJsonschemaForWorkspaces({
     typeLocator,

@@ -1,13 +1,15 @@
+import { PackageId } from "@fern-typescript/commons";
+import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
+
 import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody
 } from "@fern-fern/ir-sdk/api";
-import { PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
+
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import { getSuccessReturnType } from "./getSuccessReturnType";
 

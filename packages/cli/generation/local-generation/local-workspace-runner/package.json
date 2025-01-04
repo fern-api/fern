@@ -24,7 +24,6 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
@@ -47,7 +46,8 @@
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0"
+    "url-join": "^5.0.0",
+    "@prettier/sync": "^0.5.2"
   },
   "devDependencies": {
     "@types/decompress": "^4.2.7",
@@ -58,8 +58,8 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
     "vitest": "^2.1.8",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "prettier": "^3.4.2",
     "typescript": "5.7.2"
   }
 }

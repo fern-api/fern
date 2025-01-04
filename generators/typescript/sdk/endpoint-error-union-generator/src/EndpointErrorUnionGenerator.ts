@@ -1,7 +1,9 @@
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
+
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
 
 export declare namespace EndpointErrorUnionGenerator {

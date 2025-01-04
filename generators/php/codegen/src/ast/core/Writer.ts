@@ -1,4 +1,5 @@
 import { AbstractWriter } from "@fern-api/base-generator";
+
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "../ClassReference";
 import { GLOBAL_NAMESPACE } from "./Constant";

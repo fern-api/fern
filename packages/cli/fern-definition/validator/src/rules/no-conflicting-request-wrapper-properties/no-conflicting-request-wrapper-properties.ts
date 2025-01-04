@@ -1,19 +1,21 @@
+import chalk from "chalk";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
+import { DefinitionFileSchema, RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+    ObjectPropertyWithPath,
+    TypeResolverImpl,
     constructFernFileContext,
     convertObjectPropertyWithPathToString,
-    DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     doesRequestHaveNonBodyProperties,
     getAllPropertiesForObject,
     getHeaderName,
-    getQueryParameterName,
-    ObjectPropertyWithPath,
-    TypeResolverImpl
+    getQueryParameterName
 } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
-import chalk from "chalk";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

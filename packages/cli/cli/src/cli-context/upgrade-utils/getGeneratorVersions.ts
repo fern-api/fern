@@ -1,7 +1,7 @@
 import {
     generatorsYml,
-    getLatestGeneratorVersion,
     getGeneratorNameOrThrow,
+    getLatestGeneratorVersion,
     loadGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
@@ -9,7 +9,9 @@ import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
+
 import { CliContext } from "../CliContext";
 
 export interface FernGeneratorUpgradeInfo {

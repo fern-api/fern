@@ -1,11 +1,13 @@
+import { readFile } from "fs/promises";
+import path from "path";
+
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
-import { readFile } from "fs/promises";
-import path from "path";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -697,7 +699,7 @@ async function convertOutputMode({
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
+                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                     downloadSnippets,

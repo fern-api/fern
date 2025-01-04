@@ -1,5 +1,6 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";

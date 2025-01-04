@@ -1,12 +1,14 @@
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import yaml from "js-yaml";
+
 import {
     addGenerator,
     getPathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
-import chalk from "chalk";
-import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function addGeneratorToWorkspaces({

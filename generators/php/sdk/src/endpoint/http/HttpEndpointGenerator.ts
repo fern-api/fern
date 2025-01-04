@@ -1,4 +1,8 @@
+import { upperFirst } from "lodash-es";
+
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
+
 import {
     BytesRequest,
     FileUploadRequest,
@@ -8,11 +12,10 @@ import {
     InlinedRequestBody,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
-import { upperFirst } from "lodash-es";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 
 export declare namespace EndpointGenerator {
     export interface Args {

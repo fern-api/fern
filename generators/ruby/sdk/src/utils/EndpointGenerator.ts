@@ -28,6 +28,7 @@ import {
     VariableType,
     VoidClassReference
 } from "@fern-api/ruby-codegen";
+
 import {
     BytesRequest,
     ExampleEndpointCall,
@@ -42,6 +43,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { FileUploadUtility } from "./FileUploadUtility";
 import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./RequestOptionsClass";

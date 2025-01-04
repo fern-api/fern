@@ -1,6 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import fetch from "node-fetch";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));

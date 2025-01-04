@@ -1,6 +1,6 @@
+import { python } from "..";
 import { TypeInstantiation } from "../TypeInstantiation";
 import { Writer } from "../core/Writer";
-import { python } from "..";
 
 describe("TypeInstantiation", () => {
     let writer: Writer;

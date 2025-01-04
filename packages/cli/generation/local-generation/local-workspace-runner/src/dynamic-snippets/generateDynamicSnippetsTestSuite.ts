@@ -1,7 +1,10 @@
-import { ApiAuth, HttpEndpoint, dynamic as DynamicSnippets, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { assertNever } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import urlJoin from "url-join";
+
+import { assertNever } from "@fern-api/core-utils";
+import { ApiAuth, dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 
 export async function generateDynamicSnippetsTestSuite({

@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile";
 
 export interface ReferenceToEndpointName {
