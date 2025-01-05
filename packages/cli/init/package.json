@@ -37,7 +37,6 @@
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/mintlify-importer": "workspace:*",
-
     "axios": "^1.7.7",
     "chalk": "^5.3.0",
     "fs-extra": "^11.1.1",
@@ -47,7 +46,6 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
-    "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
