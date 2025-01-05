@@ -1,4 +1,4 @@
-import * as prettier from "prettier";
+import * as prettier from "prettier2";
 
 import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";

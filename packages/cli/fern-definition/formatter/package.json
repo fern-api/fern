@@ -32,12 +32,13 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "prettier2": "npm:prettier@^2.7.1",
     "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",
-    "@types/prettier": "^2.7.1",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
