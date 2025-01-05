@@ -1,4 +1,4 @@
-import * as prettier from "@prettier/sync";
+import * as prettier from "prettier2";
 
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 

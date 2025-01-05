@@ -1,7 +1,7 @@
-import * as prettier from "@prettier/sync";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { writeFile } from "fs/promises";
+import * as prettier from "prettier2";
 
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {

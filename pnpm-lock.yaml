@@ -1396,9 +1396,9 @@ importers:
 
   generators/typescript-v2/ast:
     dependencies:
-      '@prettier/sync':
-        specifier: ^0.5.2
-        version: 0.5.2(prettier@3.4.2)
+      prettier2:
+        specifier: npm:prettier@^2.7.1
+        version: prettier@2.8.8
     devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
@@ -1418,6 +1418,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/prettier2':
+        specifier: npm:@types/prettier@^2.7.3
+        version: '@types/prettier@2.7.3'
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5407,15 +5410,15 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
-      '@prettier/sync':
-        specifier: ^0.5.2
-        version: 0.5.2(prettier@3.4.2)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
       decompress:
         specifier: ^4.2.1
         version: 4.2.1
+      prettier2:
+        specifier: npm:prettier@^2.7.1
+        version: prettier@2.8.8
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5435,6 +5438,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/prettier2':
+        specifier: npm:@types/prettier@^2.7.3
+        version: '@types/prettier@2.7.3'
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
@@ -8678,11 +8684,6 @@ packages:
     resolution: {integrity: sha512-c83qWb22rNRuB0UaVCI0uRPNRr8Z0FWnEIvT47jiHAmOIUHbBOg5XvV7pM5x+rKn9HRpjxquDbXYSXr3fAKFcw==}
     engines: {node: '>=12'}
 
-  '@prettier/sync@0.5.2':
-    resolution: {integrity: sha512-Yb569su456XNx5BsH/Vyem7xD6g/y9iLmLUzRKM1a/dhU/D7HqqvkAG72znulXlMXztbV0iiu9O5AL8K98TzZQ==}
-    peerDependencies:
-      prettier: '*'
-
   '@redocly/ajv@8.11.0':
     resolution: {integrity: sha512-9GWx27t7xWhDIR02PA18nzBdLcKQRgc46xNQvjFkrYk4UOmvKhJ/dawwiX0cCOeetN5LcaaiqQbVOWYK62SGHw==}
 
@@ -11864,9 +11865,6 @@ packages:
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
 
-  make-synchronized@0.2.9:
-    resolution: {integrity: sha512-4wczOs8SLuEdpEvp3vGo83wh8rjJ78UsIk7DIX5fxdfmfMJGog4bQzxfvOwq7Q3yCHLC4jp1urPHIxRS/A93gA==}
-
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
@@ -12653,6 +12651,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
 
   prettier@3.4.2:
     resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
@@ -16241,11 +16244,6 @@ snapshots:
       '@pnpm/config.env-replace': 1.1.0
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
-
-  '@prettier/sync@0.5.2(prettier@3.4.2)':
-    dependencies:
-      make-synchronized: 0.2.9
-      prettier: 3.4.2
 
   '@redocly/ajv@8.11.0':
     dependencies:
@@ -20171,8 +20169,6 @@ snapshots:
 
   make-error@1.3.6: {}
 
-  make-synchronized@0.2.9: {}
-
   makeerror@1.0.12:
     dependencies:
       tmpl: 1.0.5
@@ -21223,6 +21219,8 @@ snapshots:
       - debug
 
   prelude-ls@1.2.1: {}
+
+  prettier@2.8.8: {}
 
   prettier@3.4.2: {}
 

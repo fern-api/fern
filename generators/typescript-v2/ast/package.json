@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@prettier/sync": "^0.5.2"
+    "prettier2": "npm:prettier@^2.7.1"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
@@ -33,6 +33,7 @@
     "@fern-fern/ir-sdk": "53.23.0",
     "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

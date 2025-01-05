@@ -47,7 +47,7 @@
     "decompress": "^4.2.1",
     "tmp-promise": "^3.0.3",
     "url-join": "^5.0.0",
-    "@prettier/sync": "^0.5.2"
+    "prettier2": "npm:prettier@^2.7.1"
   },
   "devDependencies": {
     "@types/decompress": "^4.2.7",
@@ -55,6 +55,7 @@
     "@types/node": "18.15.3",
     "@types/tmp": "^0.2.4",
     "@types/url-join": "4.0.1",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
     "vitest": "^2.1.8",
