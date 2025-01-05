@@ -5632,6 +5632,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../login
+      '@fern-api/mintlify-importer':
+        specifier: workspace:*
+        version: link:../docs-importers/mintlify
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -5657,9 +5660,6 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.1
         version: 11.0.1
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
