@@ -24,7 +24,7 @@ RUN yarn add \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
   # form data
-  form-data@^4.0.1 \
+  form-data@^4.0.0 \
   # formdata-node
   formdata-node@^6.0.3 \
   # jest env jsdom

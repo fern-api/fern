@@ -1474,10 +1474,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.3.5(postcss@8.4.49)(typescript@4.6.4)(yaml@2.3.3)
+        version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.7.2
+        version: 5.7.2
       vitest:
         specifier: ^2.0.5
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -3620,8 +3620,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.7.2
+        version: 5.7.2
       vitest:
         specifier: ^2.1.4
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -6820,8 +6820,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.7.2
+        version: 5.7.2
       vitest:
         specifier: ^2.1.4
         version: 2.1.8(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -6857,10 +6857,10 @@ importers:
         version: 3.4.2
       tsup:
         specifier: ^8.0.2
-        version: 8.3.5(postcss@8.4.49)(typescript@4.6.4)(yaml@2.3.3)
+        version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.7.2
+        version: 5.7.2
       vitest:
         specifier: ^2.1.4
         version: 2.1.8(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -13787,11 +13787,6 @@ packages:
 
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
-
-  typescript@4.6.4:
-    resolution: {integrity: sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
 
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
@@ -22485,33 +22480,6 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.3.5(postcss@8.4.49)(typescript@4.6.4)(yaml@2.3.3):
-    dependencies:
-      bundle-require: 5.0.0(esbuild@0.24.0)
-      cac: 6.7.14
-      chokidar: 4.0.1
-      consola: 3.2.3
-      debug: 4.3.7
-      esbuild: 0.24.0
-      joycon: 3.1.1
-      picocolors: 1.1.1
-      postcss-load-config: 6.0.1(postcss@8.4.49)(yaml@2.3.3)
-      resolve-from: 5.0.0
-      rollup: 4.24.0
-      source-map: 0.8.0-beta.0
-      sucrase: 3.35.0
-      tinyexec: 0.3.1
-      tinyglobby: 0.2.9
-      tree-kill: 1.2.2
-    optionalDependencies:
-      postcss: 8.4.49
-      typescript: 4.6.4
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-      - tsx
-      - yaml
-
   tsup@8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.24.0)
@@ -22629,8 +22597,6 @@ snapshots:
       possible-typed-array-names: 1.0.0
 
   typedarray@0.0.6: {}
-
-  typescript@4.6.4: {}
 
   typescript@5.7.2: {}
 
