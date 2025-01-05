@@ -79,7 +79,7 @@ describe("initializeWithMintlify", () => {
             })
         } as any;
 
-        const absolutePathToMintJson = resolve(cwd(), "./src/tests/init/fixtures/mintlify/mint.json");
+        const absolutePathToMintJson = resolve(cwd(), "./src/__test__/fixtures/mintlify/mint.json");
         const outputPath = AbsoluteFilePath.of(cwd());
 
         await initializeWithMintlify({
@@ -93,7 +93,8 @@ describe("initializeWithMintlify", () => {
         expect(runMintlifyMigration).toHaveBeenCalledWith({
             absolutePathToMintJson,
             outputPath,
-            taskContext
+            taskContext,
+            versionOfCli: "0.0.0"
         });
     });
 });
