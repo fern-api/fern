@@ -1,6 +1,8 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { PhpFile, FileGenerator } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile } from "@fern-api/php-codegen";
+
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

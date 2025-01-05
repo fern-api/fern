@@ -1,5 +1,6 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
 
 export function migrateIntermediateRepresentationThroughVersion({

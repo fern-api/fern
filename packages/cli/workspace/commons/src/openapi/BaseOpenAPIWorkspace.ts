@@ -1,10 +1,11 @@
-import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "..";
+import { generatorsYml } from "@fern-api/configuration";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { OpenAPISettings } from "./OpenAPISettings";
+
+import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "..";
 import { FernDefinitionConverter } from "./FernDefinitionConverter";
-import { generatorsYml } from "@fern-api/configuration";
+import { OpenAPISettings } from "./OpenAPISettings";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {

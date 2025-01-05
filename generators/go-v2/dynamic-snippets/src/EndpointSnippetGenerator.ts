@@ -1,8 +1,9 @@
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";

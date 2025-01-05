@@ -1,13 +1,15 @@
-import { DEFINITION_DIRECTORY, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
-import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import chalk from "chalk";
 import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeDefinitionForWorkspaces({

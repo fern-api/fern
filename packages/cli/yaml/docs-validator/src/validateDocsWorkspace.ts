@@ -1,13 +1,14 @@
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+
+import { Rule } from "./Rule";
+import { ValidationViolation } from "./ValidationViolation";
 import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules";
 import { APIWorkspaceLoader } from "./docsAst/APIWorkspaceLoader";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst";
 import { getAllRules } from "./getAllRules";
-import { Rule } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,

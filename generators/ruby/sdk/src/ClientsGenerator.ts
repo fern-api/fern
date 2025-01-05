@@ -10,6 +10,7 @@ import {
     Module_,
     Property
 } from "@fern-api/ruby-codegen";
+
 import {
     HttpService,
     IntermediateRepresentation,
@@ -21,6 +22,7 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+
 import {
     ClientClassPair,
     generateDummyRootClient,
@@ -39,10 +41,10 @@ import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { AccessToken } from "./utils/oauth/AccessToken";
-import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 import { RootImportsFile } from "./utils/RootImportsFile";
+import { AccessToken } from "./utils/oauth/AccessToken";
+import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {

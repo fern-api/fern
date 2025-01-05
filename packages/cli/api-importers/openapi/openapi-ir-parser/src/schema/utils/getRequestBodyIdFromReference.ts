@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
+
 import { REQUEST_BODY_REFERENCE_PREFIX } from "../../openapi/v3/AbstractOpenAPIV3ParserContext";
 
 export function getRequestBodyIdFromReference(ref: OpenAPIV3.ReferenceObject): string {

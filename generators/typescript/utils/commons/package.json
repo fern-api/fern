@@ -23,7 +23,6 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
@@ -57,8 +56,8 @@
     "eslint": "^9.16.0",
     "vitest": "^2.1.8",
     "memfs": "^3.4.1",
-    "organize-imports-cli": "^0.10.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "package-json-type": "^1.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^3.4.2"
   }
 }

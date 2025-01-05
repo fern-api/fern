@@ -1,5 +1,5 @@
-import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
 import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from "lodash";
+import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
 
 export function mergeWithOverrides<T extends object>({ data, overrides }: { data: T; overrides: object }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>

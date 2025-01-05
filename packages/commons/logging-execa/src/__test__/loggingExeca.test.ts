@@ -1,7 +1,9 @@
-import { createLogger } from "@fern-api/logger";
 import { readdir } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+
+import { createLogger } from "@fern-api/logger";
+
 import { loggingExeca } from "../loggingExeca";
 
 describe("loggingExeca", () => {

@@ -1,8 +1,10 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, rmdir } from "fs/promises";
 import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
+
 import { runMintlifyMigration } from "../runMintlifyMigration";
 
 const FIXTURES_PATH = AbsoluteFilePath.of(path.join(__dirname, "fixtures"));

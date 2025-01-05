@@ -1,9 +1,11 @@
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { Header } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
-import { buildTypeReference } from "./buildTypeReference";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Header } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 

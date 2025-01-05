@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import yaml from "yaml";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+
 import { convertChangelogToVersions } from "./convertChangelogToVersionsYml";
 
 async function main() {

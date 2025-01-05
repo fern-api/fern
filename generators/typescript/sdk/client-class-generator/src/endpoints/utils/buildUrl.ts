@@ -1,8 +1,11 @@
-import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
 import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;

@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { isVersionAhead } from "@fern-api/semver-utils";
 import { readdir } from "fs/promises";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { isVersionAhead } from "@fern-api/semver-utils";
+
 import { ALL_MIGRATIONS } from "../migrations";
 import { Migration } from "../types/Migration";
 import { VersionMigrations } from "../types/VersionMigrations";

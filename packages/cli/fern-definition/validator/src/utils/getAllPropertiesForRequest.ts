@@ -1,12 +1,12 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
-    getAllPropertiesForObject,
-    getAllPropertiesForType,
     ObjectPropertyWithPath,
-    TypeResolverImpl
+    TypeResolverImpl,
+    getAllPropertiesForObject,
+    getAllPropertiesForType
 } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function getAllPropertiesForRequest({
     endpoint,

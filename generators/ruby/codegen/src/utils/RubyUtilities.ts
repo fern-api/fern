@@ -1,12 +1,15 @@
+import { camelCase, snakeCase, upperFirst } from "lodash-es";
+
 import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
-import { camelCase, snakeCase, upperFirst } from "lodash-es";
-import { Expression } from "../ast/expressions/Expression";
+
 import { ExternalDependency } from "../ast/ExternalDependency";
-import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
+import { Expression } from "../ast/expressions/Expression";
+import { Gemspec } from "../ast/gem/Gemspec";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 

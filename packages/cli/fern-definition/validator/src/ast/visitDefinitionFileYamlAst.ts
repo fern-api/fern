@@ -1,5 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor } from "./DefinitionFileAstVisitor";
 import { visitHttpService } from "./visitors/services/visitHttpService";
 import { createDocsVisitor } from "./visitors/utils/createDocsVisitor";

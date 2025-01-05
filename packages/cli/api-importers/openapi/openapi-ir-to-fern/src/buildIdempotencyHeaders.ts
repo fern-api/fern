@@ -1,8 +1,9 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir";
-import { buildHeader } from "./buildHeader";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildHeader } from "./buildHeader";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";

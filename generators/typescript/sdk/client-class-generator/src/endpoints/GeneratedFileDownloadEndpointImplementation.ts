@@ -1,9 +1,11 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {

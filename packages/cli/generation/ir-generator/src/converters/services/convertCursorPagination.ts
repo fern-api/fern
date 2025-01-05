@@ -1,5 +1,6 @@
-import { Pagination } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Pagination } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { CursorPaginationPropertyComponents } from "./convertPaginationUtils";

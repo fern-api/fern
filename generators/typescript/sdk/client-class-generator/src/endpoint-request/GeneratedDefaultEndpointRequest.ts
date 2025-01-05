@@ -1,4 +1,15 @@
+import {
+    Fetcher,
+    GetReferenceOpts,
+    PackageId,
+    getParameterNameForPositionalPathParameter,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -9,19 +20,11 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-import {
-    Fetcher,
-    getParameterNameForPositionalPathParameter,
-    GetReferenceOpts,
-    getTextOfTsNode,
-    PackageId
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
@@ -286,8 +289,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                         typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue
-                            ? ts.factory.createTrue()
-                            : ts.factory.createFalse()
+                              ? ts.factory.createTrue()
+                              : ts.factory.createFalse()
                     );
                 })
             ]);

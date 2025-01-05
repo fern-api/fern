@@ -1,4 +1,5 @@
 import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";

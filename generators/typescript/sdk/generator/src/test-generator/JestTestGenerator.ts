@@ -1,5 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
-import * as IR from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
     DependencyType,
@@ -11,7 +9,11 @@ import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
-import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
+import { Code, arrayOf, code, conditionalOutput, literalOf } from "ts-poet";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import * as IR from "@fern-fern/ir-sdk/api";
 
 export declare namespace JestTestGenerator {
     interface Args {

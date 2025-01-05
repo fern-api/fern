@@ -1,4 +1,5 @@
 import { AbstractAstNode } from "@fern-api/base-generator";
+
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { Writer } from "./Writer";
 

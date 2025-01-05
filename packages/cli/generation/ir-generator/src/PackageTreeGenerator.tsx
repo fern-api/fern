@@ -1,3 +1,5 @@
+import { mapValues } from "lodash-es";
+
 import {
     ErrorDeclaration,
     ErrorId,
@@ -10,12 +12,12 @@ import {
     SubpackageId,
     TypeDeclaration,
     TypeId,
-    WebhookGroupId,
-    WebSocketChannelId
+    WebSocketChannelId,
+    WebhookGroupId
 } from "@fern-api/ir-sdk";
-import { mapValues } from "lodash-es";
-import { FilteredIr } from "./filtered-ir/FilteredIr";
+
 import { IdGenerator } from "./IdGenerator";
+import { FilteredIr } from "./filtered-ir/FilteredIr";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
 type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;

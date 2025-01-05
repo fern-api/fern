@@ -1,3 +1,14 @@
+import { Reference } from "@fern-typescript/commons";
+import {
+    BaseContext,
+    GeneratedAliasType,
+    GeneratedEnumType,
+    GeneratedObjectType,
+    GeneratedType,
+    GeneratedUndiscriminatedUnionType,
+    GeneratedUnionType
+} from "@fern-typescript/contexts";
+
 import {
     EnumTypeDeclaration,
     ExampleType,
@@ -9,16 +20,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { Reference } from "@fern-typescript/commons";
-import {
-    GeneratedAliasType,
-    GeneratedEnumType,
-    GeneratedObjectType,
-    GeneratedType,
-    GeneratedUndiscriminatedUnionType,
-    GeneratedUnionType,
-    BaseContext
-} from "@fern-typescript/contexts";
+
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
 import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
 import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";

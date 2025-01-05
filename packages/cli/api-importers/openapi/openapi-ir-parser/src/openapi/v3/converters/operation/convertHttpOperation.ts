@@ -1,5 +1,7 @@
-import { EndpointWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { EndpointWithExample, Source } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";

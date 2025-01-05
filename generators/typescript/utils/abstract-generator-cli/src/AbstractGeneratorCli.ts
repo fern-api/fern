@@ -1,18 +1,21 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { GeneratorContext } from "@fern-typescript/contexts";
+
 import {
     FernGeneratorExec,
     GeneratorNotificationService,
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
-import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
+import * as serializers from "@fern-fern/ir-sdk/serialization";
+
 import { constructNpmPackage } from "./constructNpmPackage";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
-import * as serializers from "@fern-fern/ir-sdk/serialization";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -180,7 +183,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 class GeneratorContextImpl implements GeneratorContext {
     private isSuccess = true;
 
-    constructor(public readonly logger: Logger, public readonly version: string | undefined) {}
+    constructor(
+        public readonly logger: Logger,
+        public readonly version: string | undefined
+    ) {}
 
     public fail(): void {
         this.isSuccess = false;

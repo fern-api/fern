@@ -1,12 +1,13 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readdir } from "fs/promises";
+import fs from "fs/promises";
+import yaml from "js-yaml";
+import { OpenAPI } from "openapi-types";
+
+import { InMemoryOpenAPILoader } from "@fern-api/browser-compatible-fern-workspace";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { readdir } from "fs/promises";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { InMemoryOpenAPILoader } from "@fern-api/browser-compatible-fern-workspace";
-import fs from "fs/promises";
-import { OpenAPI } from "openapi-types";
-import yaml from "js-yaml";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -87,10 +88,10 @@ async function getTestFixturePath(fixtureFilePath: AbsoluteFilePath): Promise<Ab
     return (await doesPathExist(yamlFixturePath))
         ? yamlFixturePath
         : (await doesPathExist(ymlFixturePath))
-        ? ymlFixturePath
-        : (await doesPathExist(jsonFixturePath))
-        ? jsonFixturePath
-        : swaggerFixturePath;
+          ? ymlFixturePath
+          : (await doesPathExist(jsonFixturePath))
+            ? jsonFixturePath
+            : swaggerFixturePath;
 }
 
 const SWAGGER_OPENAPI_FIXTURES = new Set(["suger"]);

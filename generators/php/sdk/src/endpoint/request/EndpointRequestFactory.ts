@@ -1,4 +1,5 @@
 import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "./EndpointRequest";
 import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";

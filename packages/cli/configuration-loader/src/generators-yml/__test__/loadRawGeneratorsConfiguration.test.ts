@@ -1,10 +1,12 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { promises as fs } from "fs";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
 import { beforeEach, describe, expect, it } from "vitest";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+
 import { loadRawGeneratorsConfiguration } from "../loadGeneratorsConfiguration";
 
 describe("loadRawGeneratorsConfiguration", () => {

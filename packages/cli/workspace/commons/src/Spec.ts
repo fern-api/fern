@@ -1,5 +1,6 @@
 import { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
+
 import { Source } from "./Source";
 
 export type Spec = OpenAPISpec | ProtobufSpec;

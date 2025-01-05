@@ -1,8 +1,9 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { OpenAPIWorkspace } from "@fern-api/browser-compatible-fern-workspace";
-import { Spec } from "../Spec";
 import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
+
+import { Spec } from "../Spec";
 
 export function convertSpecToWorkspace({
     context,

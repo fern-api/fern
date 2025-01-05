@@ -1,9 +1,10 @@
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { constructFernFileContext } from "../FernFileContext";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";
-import { constructFernFileContext } from "../FernFileContext";
 import { ResolvedType } from "../resolvers/ResolvedType";
 import { TypeResolver } from "../resolvers/TypeResolver";
 

@@ -1,4 +1,29 @@
-import { assertNever, SetRequired } from "@fern-api/core-utils";
+import {
+    ImportsManager,
+    JavaScriptRuntime,
+    NpmPackage,
+    PackageId,
+    getParameterNameForRootPathParameter,
+    getTextOfTsNode,
+    maybeAddDocsStructure
+} from "@fern-typescript/commons";
+import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
+import {
+    ClassDeclarationStructure,
+    InterfaceDeclarationStructure,
+    MethodDeclarationStructure,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    Scope,
+    StructureKind,
+    ts
+} from "ts-morph";
+import { code } from "ts-poet";
+
+import { SetRequired, assertNever } from "@fern-api/core-utils";
+
 import {
     AuthScheme,
     BasicAuthScheme,
@@ -15,42 +40,20 @@ import {
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
-import {
-    getParameterNameForRootPathParameter,
-    getTextOfTsNode,
-    ImportsManager,
-    JavaScriptRuntime,
-    maybeAddDocsStructure,
-    NpmPackage,
-    PackageId
-} from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-import {
-    ClassDeclarationStructure,
-    InterfaceDeclarationStructure,
-    MethodDeclarationStructure,
-    ModuleDeclarationStructure,
-    OptionalKind,
-    PropertySignatureStructure,
-    Scope,
-    StructureKind,
-    ts
-} from "ts-morph";
-import { code } from "ts-poet";
+
+import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
-import { GeneratedHeader } from "./GeneratedHeader";
-import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedSdkClientClassImpl {

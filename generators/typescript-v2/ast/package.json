@@ -22,8 +22,10 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
+  },
+  "dependencies": {
+    "prettier2": "npm:prettier@^2.7.1"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
@@ -31,10 +33,11 @@
     "@fern-fern/ir-sdk": "53.23.0",
     "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "eslint": "^9.16.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "prettier": "^3.4.2",
     "typescript": "5.7.2",
     "vitest": "^2.0.5"
   }

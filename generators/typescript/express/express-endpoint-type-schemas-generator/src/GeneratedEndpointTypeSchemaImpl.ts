@@ -1,8 +1,10 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema";
 
 export declare namespace GeneratedEndpointTypeSchemaImpl {

@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+
 import { getPathToOutputDirectoriesFile } from "./getPathToOutputDirectoriesFile";
 
 export async function getOutputDirectories(): Promise<AbsoluteFilePath[]> {

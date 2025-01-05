@@ -1,4 +1,5 @@
 import { Argument } from "../Argument";
+import { Parameter } from "../Parameter";
 import {
     ClassReference,
     GenericClassReference,
@@ -10,7 +11,6 @@ import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Parameter } from "../Parameter";
 import { ConditionalStatement } from "./ConditionalStatement";
 import { RescueStatement } from "./RescueStatement";
 

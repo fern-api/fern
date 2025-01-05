@@ -1,4 +1,5 @@
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {

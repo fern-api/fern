@@ -1,5 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import tmp from "tmp-promise";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 interface InitOptions {

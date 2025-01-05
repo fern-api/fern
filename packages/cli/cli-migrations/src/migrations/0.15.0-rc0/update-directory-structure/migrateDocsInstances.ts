@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
+
 import { DocsURL } from "./docs-config";
 
 export function migrateDocsInstances(docsURLs: docsYml.RawSchemas.DocsInstance[]): DocsURL[] {

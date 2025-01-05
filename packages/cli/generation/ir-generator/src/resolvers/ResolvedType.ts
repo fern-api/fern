@@ -1,6 +1,7 @@
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-api/ir-sdk";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { FernFileContext } from "../FernFileContext";
 
 export declare type ResolvedType =

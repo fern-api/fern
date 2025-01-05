@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import {
     AbstractAPIWorkspace,
     BaseOpenAPIWorkspace,
@@ -10,7 +12,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
-import { v4 as uuidv4 } from "uuid";
+
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 

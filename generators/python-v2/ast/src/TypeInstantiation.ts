@@ -1,8 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
+
+import { Reference } from "./Reference";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 

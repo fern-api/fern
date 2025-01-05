@@ -1,8 +1,10 @@
-import { WriteablePythonFile, pydantic, core, dt } from "@fern-api/base-python-generator";
-import { python } from "@fern-api/python-ast";
-import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/base-python-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { python } from "@fern-api/python-ast";
+
+import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class ObjectGenerator {
     constructor(

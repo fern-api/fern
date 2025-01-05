@@ -1,9 +1,11 @@
-import { TaskContext } from "@fern-api/task-context";
-import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import validatePackageName from "validate-npm-package-name";
-import { logViolations } from "./logViolations";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
 import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
+import { TaskContext } from "@fern-api/task-context";
+
+import { logViolations } from "./logViolations";
 
 export async function validateAPIWorkspaceWithoutExiting({
     workspace,

@@ -1,6 +1,8 @@
-import { keys } from "@fern-api/core-utils";
 import path from "path";
-import { convertExportedDirectoryPathToFilePath, ExportedDirectory } from "../exports-manager/ExportedFilePath";
+
+import { keys } from "@fern-api/core-utils";
+
+import { ExportedDirectory, convertExportedDirectoryPathToFilePath } from "../exports-manager/ExportedFilePath";
 
 export declare namespace getQualifiedNameOfDirectory {
     export interface Args<QualifiedName> {

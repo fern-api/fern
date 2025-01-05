@@ -1,4 +1,5 @@
 import path from "path";
+
 import { convertToOsPath } from "./osPathConverter";
 
 export type RelativeFilePath = string & {

@@ -1,11 +1,13 @@
+import { writeFile } from "fs/promises";
+import path from "path";
+
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
 import { serialization } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
-import { getAllOpenAPISpecs, LazyFernWorkspace, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { writeFile } from "fs/promises";
-import path from "path";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function generateOpenAPIIrForWorkspaces({

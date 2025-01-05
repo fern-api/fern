@@ -1,6 +1,8 @@
+import { camelCase } from "lodash-es";
+
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ArraySchema,
     DoubleSchema,
@@ -18,14 +20,16 @@ import {
     SdkGroupName,
     StringSchema
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { camelCase } from "lodash-es";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
@@ -34,8 +38,6 @@ import {
     getTypeFromTypeReference,
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
-import { convertAvailability } from "./utils/convertAvailability";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;

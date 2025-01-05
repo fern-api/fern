@@ -1,4 +1,5 @@
-import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
+
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
 import { getSdkVersion } from "./utils";
 

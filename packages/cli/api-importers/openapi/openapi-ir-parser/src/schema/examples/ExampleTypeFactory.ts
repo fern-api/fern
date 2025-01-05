@@ -1,4 +1,4 @@
-import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -11,6 +11,7 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
+
 import { SchemaParserContext } from "../SchemaParserContext";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";

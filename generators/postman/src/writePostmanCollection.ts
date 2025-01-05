@@ -1,23 +1,26 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { FernPostmanClient } from "@fern-fern/postman-sdk";
-import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
+import { startCase } from "lodash";
 import path from "path";
-import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
-import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
-import { convertToPostmanCollection } from "./convertToPostmanCollection";
+
 import {
-    GeneratorNotificationService,
     ExitStatusUpdate,
+    GeneratorNotificationService,
     GeneratorUpdate,
     LogLevel,
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
-import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
-import { startCase } from "lodash";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { FernPostmanClient } from "@fern-fern/postman-sdk";
+import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
+
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
+import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
+import { convertToPostmanCollection } from "./convertToPostmanCollection";
+import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
 

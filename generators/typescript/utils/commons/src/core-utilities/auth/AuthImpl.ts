@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { Auth } from "./Auth";

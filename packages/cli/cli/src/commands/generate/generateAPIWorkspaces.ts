@@ -1,8 +1,9 @@
-import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { FernToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { Values } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { PREVIEW_DIRECTORY } from "../../constants";
 import { checkOutputDirectory } from "./checkOutputDirectory";

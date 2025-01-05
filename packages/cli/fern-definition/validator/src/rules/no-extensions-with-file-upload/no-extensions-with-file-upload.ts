@@ -1,4 +1,5 @@
 import { parseFileUploadRequest } from "@fern-api/fern-definition-schema";
+
 import { Rule } from "../../Rule";
 
 export const NoExtensionsWithFileUploadRule: Rule = {

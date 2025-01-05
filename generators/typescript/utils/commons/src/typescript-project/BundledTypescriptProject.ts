@@ -1,13 +1,15 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
-import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { NpmPackage } from "../NpmPackage";
+import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
+import { mergeExtraConfigs } from "./mergeExtraConfigs";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {

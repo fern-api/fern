@@ -1,6 +1,8 @@
-import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
 import { getParameterNameForFile } from "./getParameterNameForFile";
 

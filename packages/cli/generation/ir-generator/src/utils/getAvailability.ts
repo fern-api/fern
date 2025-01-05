@@ -1,4 +1,5 @@
 import { Availability, AvailabilityStatus } from "@fern-api/ir-sdk";
+
 import { convertAvailability } from "../converters/convertDeclaration";
 
 type RawAvailabilityStatus = "in-development" | "pre-release" | "generally-available" | "deprecated";

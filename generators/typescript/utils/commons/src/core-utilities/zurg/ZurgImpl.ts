@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Reference } from "../../referencing";
 import { CoreUtility } from "../CoreUtility";
 import { Zurg } from "./Zurg";
@@ -186,15 +188,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                               value
                                           )
                                         : ts.isCallExpression(value)
-                                        ? ts.factory.createArrowFunction(
-                                              undefined,
-                                              undefined,
-                                              [],
-                                              undefined,
-                                              undefined,
-                                              value
-                                          )
-                                        : value
+                                          ? ts.factory.createArrowFunction(
+                                                undefined,
+                                                undefined,
+                                                [],
+                                                undefined,
+                                                undefined,
+                                                value
+                                            )
+                                          : value
                                 );
                             }),
                             true

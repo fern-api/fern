@@ -1,6 +1,7 @@
+import { readFile } from "fs/promises";
+
 import { resolve } from "@fern-api/fs-utils";
 import { INTERMEDIATE_REPRESENTATION_MIGRATOR } from "@fern-api/ir-migrations";
-import { readFile } from "fs/promises";
 
 interface ChangelogEntry {
     version: string;

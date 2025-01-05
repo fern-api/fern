@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { AstNode } from "../ast/core/AstNode";
 import { GeneratedFile } from "./GeneratedFile";
 import { FROZEN_STRING_PREFIX } from "./RubyConstants";

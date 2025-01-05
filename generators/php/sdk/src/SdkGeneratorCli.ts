@@ -1,16 +1,18 @@
-import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
+import { generateModels, generateTraits } from "@fern-api/php-model";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { generateModels, generateTraits } from "@fern-api/php-model";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

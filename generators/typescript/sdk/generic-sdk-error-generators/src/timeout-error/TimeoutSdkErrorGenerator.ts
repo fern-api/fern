@@ -1,4 +1,5 @@
 import { GeneratedTimeoutSdkError } from "@fern-typescript/contexts";
+
 import { GeneratedTimeoutSdkErrorImpl } from "./GeneratedTimeoutSdkErrorImpl";
 
 export declare namespace TimeoutSdkErrorGenerator {

@@ -1,23 +1,24 @@
 #!/usr/bin/env node
+import { RUNTIME } from "@fern-typescript/fetcher";
+import getPort from "get-port";
+import { Argv } from "yargs";
+import { hideBin } from "yargs/helpers";
+import yargs from "yargs/yargs";
 
 import {
     GENERATORS_CONFIGURATION_FILENAME,
+    PROJECT_CONFIG_FILENAME,
     generatorsYml,
     getFernDirectory,
-    loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
+    loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
-import { RUNTIME } from "@fern-typescript/fetcher";
-import getPort from "get-port";
-import { Argv } from "yargs";
-import { hideBin } from "yargs/helpers";
-import yargs from "yargs/yargs";
-import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
+
+import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
@@ -31,7 +32,7 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";

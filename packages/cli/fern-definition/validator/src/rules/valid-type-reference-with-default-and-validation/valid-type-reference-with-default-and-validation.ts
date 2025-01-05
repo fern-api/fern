@@ -1,5 +1,6 @@
-import { constructFernFileContext, ResolvedType, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawEnumDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawEnumDefinition } from "@fern-api/fern-definition-schema";
+import { ResolvedType, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

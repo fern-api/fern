@@ -1,4 +1,5 @@
 import { Argument, Arguments, isNamedArgument } from "@fern-api/base-generator";
+
 import { Writer } from "../core/Writer";
 
 export function writeArguments({

@@ -1,9 +1,9 @@
 import { Ternary } from "@fern-api/base-generator";
+
 import {
     Array as Array_,
     Attribute,
     Class,
-    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
@@ -12,7 +12,8 @@ import {
     Map,
     Method,
     MethodInvocation,
-    Parameter
+    Parameter,
+    Trait
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
 

@@ -1,5 +1,6 @@
-import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 
@@ -47,7 +48,7 @@ export function getEnumNameFromEnumValue(
     );
 
     return {
-        name: typeof maybeEnumDefinition === "string" ? enumValue : maybeEnumDefinition?.name ?? enumValue,
+        name: typeof maybeEnumDefinition === "string" ? enumValue : (maybeEnumDefinition?.name ?? enumValue),
         wasExplicitlySet: false
     };
 }

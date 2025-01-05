@@ -1,3 +1,10 @@
+import axios from "axios";
+import chalk from "chalk";
+import { readFile } from "fs/promises";
+import { chunk } from "lodash-es";
+import * as mime from "mime-types";
+import terminalLink from "terminal-link";
+
 import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
@@ -8,13 +15,9 @@ import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-import axios from "axios";
-import chalk from "chalk";
-import { readFile } from "fs/promises";
-import { chunk } from "lodash-es";
-import * as mime from "mime-types";
-import terminalLink from "terminal-link";
+
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;

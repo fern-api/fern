@@ -7,6 +7,7 @@ import {
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { LoggableFernCliError } from "@fern-api/task-context";
+
 import { getTypeDeclaration } from "../utils/getTypeDeclaration";
 
 type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;

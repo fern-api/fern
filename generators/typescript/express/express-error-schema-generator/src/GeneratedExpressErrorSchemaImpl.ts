@@ -1,9 +1,11 @@
-import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getSchemaOptions, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressErrorSchemaImpl {
     export interface Init {

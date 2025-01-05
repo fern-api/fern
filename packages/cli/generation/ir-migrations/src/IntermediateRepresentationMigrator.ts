@@ -2,7 +2,16 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
+
 import { GeneratorNameAndVersion } from "./IrMigrationContext";
+import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
+import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
+import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
+import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
+import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
+import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
+import { V8_TO_V7_MIGRATION } from "./migrations/v8-to-v7/migrateFromV8ToV7";
+import { V9_TO_V8_MIGRATION } from "./migrations/v9-to-v8/migrateFromV9ToV8";
 import { V10_TO_V9_MIGRATION } from "./migrations/v10-to-v9/migrateFromV10ToV9";
 import { V11_TO_V10_MIGRATION } from "./migrations/v11-to-v10/migrateFromV11ToV10";
 import { V12_TO_V11_MIGRATION } from "./migrations/v12-to-v11/migrateFromV12ToV11";
@@ -13,7 +22,6 @@ import { V16_TO_V15_MIGRATION } from "./migrations/v16-to-v15/migrateFromV16ToV1
 import { V17_TO_V16_MIGRATION } from "./migrations/v17-to-v16/migrateFromV17ToV16";
 import { V18_TO_V17_MIGRATION } from "./migrations/v18-to-v17/migrateFromV18ToV17";
 import { V19_TO_V18_MIGRATION } from "./migrations/v19-to-v18/migrateFromV19ToV18";
-import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { V20_TO_V19_MIGRATION } from "./migrations/v20-to-v19/migrateFromV20ToV19";
 import { V21_TO_V20_MIGRATION } from "./migrations/v21-to-v20/migrateFromV21ToV20";
 import { V22_TO_V21_MIGRATION } from "./migrations/v22-to-v21/migrateFromV22ToV21";
@@ -24,7 +32,6 @@ import { V26_TO_V25_MIGRATION } from "./migrations/v26-to-v25/migrateFromV26ToV2
 import { V27_TO_V26_MIGRATION } from "./migrations/v27-to-v26/migrateFromV27-to-v26";
 import { V28_TO_V27_MIGRATION } from "./migrations/v28-to-v27/migrateFromV28ToV27";
 import { V29_TO_V28_MIGRATION } from "./migrations/v29-to-v28/migrateFromV29ToV28";
-import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V30_TO_V29_MIGRATION } from "./migrations/v30-to-v29/migrateFromV30ToV29";
 import { V31_TO_V30_MIGRATION } from "./migrations/v31-to-v30/migrateFromV31ToV30";
 import { V32_TO_V31_MIGRATION } from "./migrations/v32-to-v31/migrateFromV32ToV31";
@@ -35,7 +42,6 @@ import { V36_TO_V35_MIGRATION } from "./migrations/v36-to-v35/migrateFromV36ToV3
 import { V37_TO_V36_MIGRATION } from "./migrations/v37-to-v36/migrateFromV37ToV36";
 import { V38_TO_V37_MIGRATION } from "./migrations/v38-to-v37/migrateFromV38ToV37";
 import { V39_TO_V38_MIGRATION } from "./migrations/v39-to-v38/migrateFromV39ToV38";
-import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
 import { V40_TO_V39_MIGRATION } from "./migrations/v40-to-v39/migrateFromV40ToV39";
 import { V41_TO_V40_MIGRATION } from "./migrations/v41-to-v40/migrateFromV41ToV40";
 import { V42_TO_V41_MIGRATION } from "./migrations/v42-to-v41/migrateFromV42ToV41";
@@ -46,16 +52,11 @@ import { V46_TO_V45_MIGRATION } from "./migrations/v46-to-v45/migrateFromV46ToV4
 import { V47_TO_V46_MIGRATION } from "./migrations/v47-to-v46/migrateFromV47ToV46";
 import { V48_TO_V47_MIGRATION } from "./migrations/v48-to-v47/migrateFromV48ToV47";
 import { V49_TO_V48_MIGRATION } from "./migrations/v49-to-v48/migrateFromV49ToV48";
-import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V50_TO_V49_MIGRATION } from "./migrations/v50-to-v49/migrateFromV50ToV49";
 import { V51_TO_V50_MIGRATION } from "./migrations/v51-to-v50/migrateFromV51ToV50";
 import { V52_TO_V51_MIGRATION } from "./migrations/v52-to-v51/migrateFromV52ToV51";
 import { V53_TO_V52_MIGRATION } from "./migrations/v53-to-v52/migrateFromV53ToV52";
 import { V54_TO_V53_MIGRATION } from "./migrations/v54-to-v53/migrateFromV54ToV53";
-import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
-import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
-import { V8_TO_V7_MIGRATION } from "./migrations/v8-to-v7/migrateFromV8ToV7";
-import { V9_TO_V8_MIGRATION } from "./migrations/v9-to-v8/migrateFromV9ToV8";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {

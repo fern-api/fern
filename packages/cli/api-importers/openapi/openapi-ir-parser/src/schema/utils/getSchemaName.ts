@@ -1,4 +1,5 @@
 import { camelCase, upperFirst } from "lodash-es";
+
 import { replaceStartingNumber } from "@fern-api/openapi-ir";
 
 export function getGeneratedTypeName(breadcrumbs: string[], useOriginalSchemaIds: boolean): string {

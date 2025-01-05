@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 const LINK_PATTERN = /\[([^\]]+)\]\(((?!http:\/\/|https:\/\/).*?)\)/gi;

@@ -1,7 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+
 import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));

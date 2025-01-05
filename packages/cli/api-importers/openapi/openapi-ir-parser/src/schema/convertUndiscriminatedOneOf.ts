@@ -1,19 +1,21 @@
+import { difference } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     Availability,
-    convertNumberToSnakeCase,
     Encoding,
-    isSchemaEqual,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
-    Source
+    Source,
+    convertNumberToSnakeCase,
+    isSchemaEqual
 } from "@fern-api/openapi-ir";
-import { difference } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+
+import { SchemaParserContext } from "./SchemaParserContext";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 

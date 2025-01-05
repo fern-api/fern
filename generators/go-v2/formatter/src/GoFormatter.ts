@@ -1,5 +1,6 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
 import init, { format } from "@wasm-fmt/gofmt";
+
+import { AbstractFormatter } from "@fern-api/base-generator";
 
 export class GoFormatter extends AbstractFormatter {
     public async format(content: string): Promise<string> {

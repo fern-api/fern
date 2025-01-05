@@ -1,6 +1,9 @@
+import { camelCase, upperFirst } from "lodash-es";
+
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
@@ -19,24 +22,24 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
-import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
+
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
-import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
-import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
-import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
+import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
+import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
+import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
 import {
     IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
     IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
 } from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
 import {
     REQUEST_OPTIONS_INTERFACE_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "./options/RequestOptionsInterfaceGenerator";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
@@ -409,7 +412,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getNamespaceForPublicCoreClasses(): string {
-        return this.customConfig["root-namespace-for-core-classes"] ?? true
+        return (this.customConfig["root-namespace-for-core-classes"] ?? true)
             ? this.getNamespace()
             : this.getCoreNamespace();
     }

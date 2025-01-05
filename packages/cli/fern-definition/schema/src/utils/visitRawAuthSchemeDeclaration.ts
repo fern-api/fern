@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     AuthSchemeDeclarationSchema,
     BasicAuthSchemeSchema,

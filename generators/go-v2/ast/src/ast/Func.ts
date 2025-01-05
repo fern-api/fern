@@ -1,9 +1,9 @@
 import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Func {
     type Args = Omit<Method.Args, "typeReference">;

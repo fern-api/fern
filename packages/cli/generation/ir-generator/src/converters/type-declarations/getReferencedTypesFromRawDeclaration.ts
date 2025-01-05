@@ -1,12 +1,13 @@
-import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import {
     RawSchemas,
-    recursivelyVisitRawTypeReference,
-    visitRawTypeDeclaration,
+    isGeneric,
     isRawObjectDefinition,
     parseGeneric,
-    isGeneric
+    recursivelyVisitRawTypeReference,
+    visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";
+import { DeclaredTypeName } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";

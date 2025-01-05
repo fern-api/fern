@@ -1,14 +1,16 @@
-import { generatorsYml, getFernDirectory, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
+
+import { generatorsYml, getFernDirectory, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 async function fetchAndWriteFile(url: string, path: string, logger: Logger): Promise<void> {

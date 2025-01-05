@@ -1,5 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
-import { TypeReference, TypeDeclaration, MapType, NamedType, DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import {
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
@@ -8,6 +6,11 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction
 } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { InlineConsts } from "./inlineConsts";
 
 export function generateInlinePropertiesModule({

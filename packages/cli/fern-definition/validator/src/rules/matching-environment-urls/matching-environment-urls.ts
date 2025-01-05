@@ -1,5 +1,7 @@
-import { visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
 

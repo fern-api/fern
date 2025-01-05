@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+
 import { replaceReferencedCode } from "../replaceReferencedCode";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");

@@ -1,4 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
+
 import {
     AvailabilityUnionSchema,
     HttpInlineRequestBodySchema,
