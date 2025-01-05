@@ -8,13 +8,12 @@ import yargs from "yargs/yargs";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     PROJECT_CONFIG_FILENAME,
-    fernConfigJson,
     generatorsYml,
     getFernDirectory,
     loadProjectConfig
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs } from "@fern-api/init";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
+import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -48,7 +47,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { isURL } from "./utils/isUrl";
 
 void runCli();
 
@@ -229,6 +227,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
+                })
+                .option("mintlify", {
+                    type: "string",
+                    description: "Migrate docs from Mintlify"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -239,6 +241,14 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         taskContext: context
+                    });
+                });
+            } else if (argv.mintlify != null) {
+                await cliContext.runTask(async (taskContext) => {
+                    await initializeWithMintlify({
+                        pathToMintJson: argv.mintlify,
+                        taskContext,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
                 });
             } else {

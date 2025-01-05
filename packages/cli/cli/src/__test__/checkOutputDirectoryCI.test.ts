@@ -6,7 +6,6 @@ import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { CliContext } from "../cli-context/CliContext";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
-import { isCI } from "../utils/isCI";
 
 vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(true)
