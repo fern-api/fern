@@ -32,7 +32,7 @@ describe("add-generator-groups", () => {
                 absolutePathToMintJson,
                 outputPath,
                 taskContext,
-                versionOfCli: "0.0.0"
+                versionOfCli: "*"
             });
         });
     }
