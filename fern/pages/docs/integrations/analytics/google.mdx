@@ -5,6 +5,34 @@ subtitle: Add Google Analytics to your Docs with Fern.
 
 Fern supports integrating with both [Google Analytics 4](https://developers.google.com/analytics) and [Google Tag Manager](https://tagmanager.google.com/). 
 
-<Tip>
-This feature is available on the Fern Basic plan and above. Reach out to [support@buildwithfern.com](mailto:support@buildwithfern.com) to set up your Google Analytics. 
-</Tip>
+## Google Analytics 4
+
+To integrate Google Analytics 4, you'll need a Google Analytics 4 property ID. It should look like: “UA-XXXXXX-X” or "G-XXXXXXX."
+
+### Integrate Google Analytics 4 with your Docs
+
+In your `docs.yml` file, add your Google Analytics 4 property ID under the `measurement-id` key:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  ga4:
+    measurement-id: ${GA4_MEASUREMENT_ID} # scans environment variable
+```
+</CodeBlock>
+
+## Google Tag Manager
+
+To integrate Google Tag Manager, you'll need a Google Tag Manager container ID. It should look like: "GTM-XXXXXX."
+
+### Integrate Google Tag Manager with your Docs
+
+In your `docs.yml` file, add your Google Tag Manager container ID:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  gtm:
+    container-id: ${GTM_CONTAINER_ID} # scans environment variable
+```
+</CodeBlock>
