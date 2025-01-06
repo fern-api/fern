@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_variables"
+
 [tool.poetry]
 name = "fern_variables"
 version = "0.0.1"

@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_plain-text"
+
 [tool.poetry]
 name = "fern_plain-text"
 version = "0.0.1"

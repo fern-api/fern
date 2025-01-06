@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_oauth-client-credentials"
+
 [tool.poetry]
 name = "fern_oauth-client-credentials"
 version = "0.0.1"

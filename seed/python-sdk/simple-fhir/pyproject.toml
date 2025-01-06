@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_simple-fhir"
+
 [tool.poetry]
 name = "fern_simple-fhir"
 version = "0.0.1"

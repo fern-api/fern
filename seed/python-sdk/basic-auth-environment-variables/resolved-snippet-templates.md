@@ -5,8 +5,8 @@ client = SeedBasicAuthEnvironmentVariables(base_url="https://yourhost.com/path/t
 client.basic_auth.get_with_basic_auth(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -16,7 +16,7 @@ client = SeedBasicAuthEnvironmentVariables(base_url="https://yourhost.com/path/t
 client.basic_auth.post_with_basic_auth(
 	request={"key":"value"}
 )
- 
-```                        
+
+```
 
 

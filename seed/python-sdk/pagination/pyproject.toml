@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_pagination"
+
 [tool.poetry]
 name = "fern_pagination"
 version = "0.0.1"

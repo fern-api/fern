@@ -6,7 +6,7 @@ client.service.post(
 	resource_param="resourceParam",
 	endpoint_param=1
 )
- 
-```                        
+
+```
 
 

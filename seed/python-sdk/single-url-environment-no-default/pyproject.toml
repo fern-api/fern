@@ -1,3 +1,8 @@
+
+        
+[project]
+name = "fern_single-url-environment-no-default"
+
 [tool.poetry]
 name = "fern_single-url-environment-no-default"
 version = "0.0.1"

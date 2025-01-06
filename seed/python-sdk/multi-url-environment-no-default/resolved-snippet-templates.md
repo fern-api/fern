@@ -6,8 +6,8 @@ client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoD
 client.ec_2.boot_instance(
 	size="size"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -18,7 +18,7 @@ client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoD
 client.s_3.get_presigned_url(
 	s_3_key="s3Key"
 )
- 
-```                        
+
+```
 
 

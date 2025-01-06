@@ -6,8 +6,8 @@ client.dummy.generate(
 	stream=false,
 	num_events=5
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -18,7 +18,7 @@ client.dummy.generate(
 	stream=true,
 	num_events=1
 )
- 
-```                        
+
+```
 
 
