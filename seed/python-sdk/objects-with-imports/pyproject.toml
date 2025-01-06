@@ -1,3 +1,6 @@
+[project]
+name = "fern_objects-with-imports"
+
 [tool.poetry]
 name = "fern_objects-with-imports"
 version = "0.0.1"
