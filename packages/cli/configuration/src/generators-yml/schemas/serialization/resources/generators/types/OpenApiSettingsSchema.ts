@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
 
@@ -15,6 +16,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     "title-as-schema-name": core.serialization.boolean().optional(),
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
+    unions: UnionSettingsSchema.optional(),
     "object-query-parameters": core.serialization.boolean().optional(),
     "respect-readonly-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
@@ -28,6 +30,7 @@ export declare namespace OpenApiSettingsSchema {
         "title-as-schema-name"?: boolean | null;
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
+        unions?: UnionSettingsSchema.Raw | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
