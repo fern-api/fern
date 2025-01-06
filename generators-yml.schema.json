@@ -1366,6 +1366,16 @@
             }
           ]
         },
+        "prefer-undiscriminated-unions-with-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "object-query-parameters": {
           "oneOf": [
             {
