@@ -9,4 +9,6 @@ export interface AnalyticsConfig {
     fullstory?: FernDocsConfig.FullStoryAnalyticsConfig;
     intercom?: FernDocsConfig.IntercomConfig;
     posthog?: FernDocsConfig.PostHogConfig;
+    gtm?: FernDocsConfig.GtmConfig;
+    ga4?: FernDocsConfig.GoogleAnalytics4Config;
 }
