@@ -46,13 +46,7 @@
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
     "tmp-promise": "^3.0.3",
-    "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "@fern-api/dev-dependencies": "workspace:*"
   }
 }

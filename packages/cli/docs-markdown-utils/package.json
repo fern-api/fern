@@ -37,15 +37,9 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@fern-api/dev-dependencies": "workspace:*",
     "@types/diff": "^5.2.1",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "diff": "^5.2.0",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
-    "typescript": "5.7.2",
-    "vitest": "^2.0.5",
     "zod": "^3.22.3"
   }
 }

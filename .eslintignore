@@ -3,6 +3,7 @@ build
 dist
 .yarn
 .husky
+.turbo
 generated
 bundle.c?js
 .pnp*

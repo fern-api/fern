@@ -27,21 +27,15 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/api-workspace-commons": "workspace:*",
     "chalk": "^5.3.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "vitest": "^2.1.8",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
-    "typescript": "5.7.2"
+    "@fern-api/dev-dependencies": "workspace:*",
+    "@types/jest": "^29.5.14"
   }
 }

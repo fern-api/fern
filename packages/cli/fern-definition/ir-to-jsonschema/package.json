@@ -40,13 +40,7 @@
     "json-schema": "^0.4.0"
   },
   "devDependencies": {
-    "@types/json-schema": "^7.0.15",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
-    "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "@fern-api/dev-dependencies": "workspace:*",
+    "@types/json-schema": "^7.0.15"
   }
 }

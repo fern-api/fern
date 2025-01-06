@@ -37,15 +37,9 @@
     "@fern-fern/ir-sdk": "53.7.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
-    "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
-    "depcheck": "^1.4.7",
     "esbuild": "^0.24.0",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
     "tsup": "^8.3.5",
-    "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "@fern-api/dev-dependencies": "workspace:*"
   }
 }

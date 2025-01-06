@@ -2,6 +2,7 @@
   "search.exclude": {
     "**/.pnp.*": true,
     "**/.yarn": true,
+    "**/.turbo": true
   },
   "eslint.nodePath": ".yarn/sdks",
   "eslint.execArgv": [
