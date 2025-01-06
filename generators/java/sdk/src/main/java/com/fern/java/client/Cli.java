@@ -8,6 +8,7 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
@@ -31,11 +32,7 @@ import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
-import com.fern.java.generators.DateTimeDeserializerGenerator;
-import com.fern.java.generators.ObjectMappersGenerator;
-import com.fern.java.generators.PaginationCoreGenerator;
-import com.fern.java.generators.StreamGenerator;
-import com.fern.java.generators.TypesGenerator;
+import com.fern.java.generators.*;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
@@ -182,6 +179,15 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
         this.addGeneratedFile(generatedEnvironmentsClass);
+
+        ir.getApiVersion()
+                .flatMap(apiVersion -> apiVersion.getHeader().map(HeaderApiVersionScheme::getValue))
+                .ifPresent(enumTypeDeclaration -> {
+                    EnumGenerator apiVersionsGenerator = new EnumGenerator(
+                            context.getPoetClassNameFactory().getApiVersionsClassName(), context, enumTypeDeclaration);
+                    GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
+                    this.addGeneratedFile(generatedApiVersions);
+                });
 
         RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(
                 context, context.getPoetClassNameFactory().getRequestOptionsClassName());
