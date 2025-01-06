@@ -38,6 +38,7 @@ import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
+import com.fern.java.generators.EnumGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.StreamGenerator;
