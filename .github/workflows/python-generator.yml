@@ -10,7 +10,7 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
         run: poetry run pre-commit run --all-files
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
