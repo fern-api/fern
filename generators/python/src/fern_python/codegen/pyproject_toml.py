@@ -70,9 +70,7 @@ class PyProjectToml:
             PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
-        content = f"""
-        
-[project]
+        content = f"""[project]
 name = "{self._name}"
 
 """
