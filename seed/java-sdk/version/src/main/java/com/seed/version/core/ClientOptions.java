@@ -19,16 +19,17 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
-    private final String version;
     private final int timeout;
+
+    private final String version;
 
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
-            Optional<String> version,
-            int timeout) {
+            int timeout,
+            Optional<String> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -39,9 +40,9 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.timeout = timeout;
         this.version = version.orElse("2.0.0");
         this.headers.put("X-API-Version", this.version);
-        this.timeout = timeout;
     }
 
     public Environment environment() {
@@ -91,8 +92,9 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
-        private Optional<String> version;
         private int timeout = 60;
+
+        private Optional<String> version;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -109,11 +111,6 @@ public final class ClientOptions {
             return this;
         }
 
-        public Builder version(String version) {
-            this.version = Optional.of(version);
-            return this;
-        }
-
         /**
          * Override the timeout in seconds. Defaults to 60 seconds.
          */
@@ -122,12 +119,17 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder version(String version) {
+            this.version = Optional.of(version);
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
                     .callTimeout(this.timeout, TimeUnit.SECONDS)
-                    .build()
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, version, this.timeout);
+                    .build();
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout, version);
         }
     }
 }

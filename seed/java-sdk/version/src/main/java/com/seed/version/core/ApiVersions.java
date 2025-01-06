@@ -6,9 +6,9 @@ package com.seed.version.core;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ApiVersions {
-    _1_0_0("1.0.0"),
+    V_1("1.0.0"),
 
-    _2_0_0("2.0.0"),
+    V_2("2.0.0"),
 
     LATEST("latest");
 

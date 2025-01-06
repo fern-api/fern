@@ -149,7 +149,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         String.class,
                         platformHeadersPutString)
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
-                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name);
 
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
@@ -159,14 +159,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
                 @Override
                 public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
-                    contructorBuilder.addParameter(ParameterSpec.builder(
+                    constructorBuilder.addParameter(ParameterSpec.builder(
                                     ParameterizedTypeName.get(
                                             ClassName.get(Optional.class), ClassName.get(String.class)),
                                     API_VERSIONS_FIELD.name)
                             .build());
 
                     if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
-                        contructorBuilder.addStatement(
+                        constructorBuilder.addStatement(
                                 "this.$L = $L.orElse($S)",
                                 API_VERSIONS_FIELD.name,
                                 API_VERSIONS_FIELD.name,
@@ -177,11 +177,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         .getName()
                                         .getWireValue());
                     } else {
-                        contructorBuilder.addStatement(
+                        constructorBuilder.addStatement(
                                 "this.$L = $L", API_VERSIONS_FIELD.name, API_VERSIONS_FIELD.name);
                     }
 
-                    contructorBuilder.addStatement(
+                    constructorBuilder.addStatement(
                             "this.$L.put($S,$L)",
                             HEADERS_FIELD.name,
                             headerApiVersionScheme.getHeader().getName().getWireValue(),
@@ -195,7 +195,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
                 }
             });
->>>>>>> main
+        }
 
         variableFields
                 .values()
@@ -291,7 +291,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .httpClientWithTimeout(httpClientWithTimeoutGetter)
                 .builderClassName(builderClassName)
                 .putAllVariableGetters(variableGetters)
-                .version(versionsGetter)
                 .build();
     }
 
@@ -355,9 +354,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
                         .addStatement("return this")
                         .build())
-                .addMethods(getVariableBuilders(variableFields))
-                .addMethod(getBuildMethod(variableFields))
-                .build();
                 .addMethods(getVariableBuilders(variableFields));
 
         if (context.getIr().getApiVersion().isPresent()) {
@@ -395,6 +391,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private MethodSpec getVersionBuilder() {
+        return MethodSpec.methodBuilder(API_VERSIONS_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, API_VERSIONS_FIELD.name)
+                .addStatement("this.$L = $T.of($L)", API_VERSIONS_FIELD.name, Optional.class, API_VERSIONS_FIELD.name)
+                .addStatement("return this")
+                .build();
+    }
+
     private MethodSpec getHeaderSupplierBuilder() {
         return MethodSpec.methodBuilder("addHeader")
                 .addModifiers(Modifier.PUBLIC)
@@ -402,16 +408,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(String.class, "key")
                 .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
                 .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
-                .addStatement("return this")
-                .build();
-    }
-
-    private MethodSpec getVersionBuilder() {
-        return MethodSpec.methodBuilder(API_VERSIONS_FIELD.name)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(builderClassName)
-                .addParameter(String.class, API_VERSIONS_FIELD.name)
-                .addStatement("this.$L = $T.of($L)", API_VERSIONS_FIELD.name, Optional.class, API_VERSIONS_FIELD.name)
                 .addStatement("return this")
                 .build();
     }
@@ -470,11 +466,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         argsBuilder.add(
                 className, environmentField.name, HEADERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name, "okhttpClient");
 
-        String returnString = "return new $T($L, $L, $L, $L";
+        String returnString = "return new $T($L, $L, $L, $L, this.timeout";
 
         if (context.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(API_VERSIONS_FIELD.name);
-            returnString = "return new $T($L, $L, $L, $L, $L";
+            returnString = "return new $T($L, $L, $L, $L, this.timeout, $L";
         }
 
         Object[] args = argsBuilder.build().toArray();
