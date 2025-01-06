@@ -2,7 +2,8 @@
     "ignores": [
         "@types/jest",
         "@types/node",
-        "ts-jest"
+        "ts-jest",
+        "@trivago/prettier-plugin-sort-imports"
     ],
     "ignore-patterns": [
         "lib"

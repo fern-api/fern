@@ -1,7 +1,8 @@
 {
     "ignores": [
         "@types/jest",
-        "globals"
+        "globals",
+        "@trivago/prettier-plugin-sort-imports"
     ],
     "ignore-patterns": [
         "lib"
