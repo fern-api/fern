@@ -74,7 +74,7 @@ class PyProjectToml:
 name = "{self._name}"
 
 """
-        
+
         for block in blocks:
             content += block.to_string()
 
