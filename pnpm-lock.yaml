@@ -4230,8 +4230,6 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/cli/dist/local: {}
-
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':

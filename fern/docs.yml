@@ -589,11 +589,17 @@ navbar-links:
 typography:
   bodyFont:
     name: GT-Planar
-    path: ./assets/GT-Planar.woff2
-    weight: 400
+    paths:
+      - path: ./assets/GT-Planar.woff2
+        weight: 400
+      - path: ./assets/GT-Planar-Medium.woff2
+        weight: 500
+      - path: ./assets/GT-Planar-Bold.woff2
+        weight: 600 700
   headingsFont:
-    name: GT-Planar
+    name: GT-Planar-Bold
     path: ./assets/GT-Planar-Bold.woff2
+    weight: 600 700
 
 logo:
   href: https://www.buildwithfern.com

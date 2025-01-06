@@ -1,3 +1,6 @@
+[project]
+name = "fern_circular-references"
+
 [tool.poetry]
 name = "fern_circular-references"
 version = "0.0.1"

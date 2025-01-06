@@ -1,3 +1,6 @@
+[project]
+name = "fern_inline-types"
+
 [tool.poetry]
 name = "fern_inline-types"
 version = "0.0.1"
