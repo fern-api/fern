@@ -19,6 +19,7 @@ describe.sequential("checkOutputDirectory", () => {
     };
 
     beforeEach(() => {
+        process.env = {};
         mockCliContext = {
             confirmPrompt: vi.fn().mockImplementation(async () => true)
         };
