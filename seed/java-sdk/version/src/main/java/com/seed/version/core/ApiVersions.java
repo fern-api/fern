@@ -10,7 +10,9 @@ public enum ApiVersions {
 
     V_2("2.0.0"),
 
-    LATEST("latest");
+    LATEST("latest"),
+
+    CURRENT("2.0.0");
 
     private final String value;
 

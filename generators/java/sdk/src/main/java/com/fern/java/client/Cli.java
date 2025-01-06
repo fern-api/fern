@@ -8,8 +8,13 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -42,6 +47,7 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
+import com.fern.java.utils.ApiVersionConstants;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -182,9 +188,44 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ir.getApiVersion()
                 .flatMap(apiVersion -> apiVersion.getHeader().map(HeaderApiVersionScheme::getValue))
-                .ifPresent(enumTypeDeclaration -> {
+                .ifPresent(irDeclaration -> {
+                    EnumTypeDeclaration.Builder enumTypeDeclaration =
+                            EnumTypeDeclaration.builder().from(irDeclaration);
+
+                    irDeclaration.getDefault().ifPresent(defaultValue -> {
+                        Name current = Name.builder()
+                                .originalName(ApiVersionConstants.CURRENT_API_VERSION)
+                                .camelCase(SafeAndUnsafeString.builder()
+                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .build())
+                                .pascalCase(SafeAndUnsafeString.builder()
+                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .build())
+                                .snakeCase(SafeAndUnsafeString.builder()
+                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .build())
+                                .screamingSnakeCase(SafeAndUnsafeString.builder()
+                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
+                                        .build())
+                                .build();
+
+                        enumTypeDeclaration.addValues(EnumValue.builder()
+                                .from(defaultValue)
+                                .name(NameAndWireValue.builder()
+                                        .from(defaultValue.getName())
+                                        .name(current)
+                                        .build())
+                                .build());
+                    });
+
                     EnumGenerator apiVersionsGenerator = new EnumGenerator(
-                            context.getPoetClassNameFactory().getApiVersionsClassName(), context, enumTypeDeclaration);
+                            context.getPoetClassNameFactory().getApiVersionsClassName(),
+                            context,
+                            enumTypeDeclaration.build());
                     GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
                     this.addGeneratedFile(generatedApiVersions);
                 });

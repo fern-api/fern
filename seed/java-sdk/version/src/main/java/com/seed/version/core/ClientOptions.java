@@ -21,7 +21,7 @@ public final class ClientOptions {
 
     private final int timeout;
 
-    private final String version;
+    private final ApiVersions version;
 
     private ClientOptions(
             Environment environment,
@@ -29,7 +29,7 @@ public final class ClientOptions {
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
             int timeout,
-            Optional<String> version) {
+            Optional<ApiVersions> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -41,8 +41,8 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
-        this.version = version.orElse("2.0.0");
-        this.headers.put("X-API-Version", this.version);
+        this.version = version.orElse(ApiVersions.CURRENT);
+        this.headers.put("X-API-Version", this.version.toString());
     }
 
     public Environment environment() {
@@ -60,7 +60,7 @@ public final class ClientOptions {
         return values;
     }
 
-    public String version() {
+    public ApiVersions version() {
         return this.version;
     }
 
@@ -94,7 +94,7 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
-        private Optional<String> version;
+        private Optional<ApiVersions> version;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -119,7 +119,7 @@ public final class ClientOptions {
             return this;
         }
 
-        public Builder version(String version) {
+        public Builder version(ApiVersions version) {
             this.version = Optional.of(version);
             return this;
         }
