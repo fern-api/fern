@@ -1,6 +1,13 @@
 
 - changelogEntry: 
   - summary: |
+      Support configuration of Google Analytics and Google Tag Manager in API Docs.
+    type: feat
+  irVersion: 53
+  version: 0.46.21
+
+- changelogEntry: 
+  - summary: |
       The `fern init` command now supports a `--mintlify` option. You can pass in 
       the path to your `mint.json` and the Fern CLI will generate a fern documentation 
       website. 
