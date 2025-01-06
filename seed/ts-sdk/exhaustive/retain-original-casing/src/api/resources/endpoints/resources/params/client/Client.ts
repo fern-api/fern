@@ -9,12 +9,12 @@ import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Params {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,7 +42,7 @@ export class Params {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -105,12 +105,12 @@ export class Params {
     public async getWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePath = {},
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -174,7 +174,7 @@ export class Params {
      */
     public async getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<void> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -240,7 +240,7 @@ export class Params {
      */
     public async getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<void> {
         const { query, numer } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -317,7 +317,7 @@ export class Params {
     public async getWithPathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<void> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -325,7 +325,7 @@ export class Params {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path-query/${encodeURIComponent(param)}`
+                `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -364,7 +364,7 @@ export class Params {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling GET /params/path-query/{param}."
+                    "Timeout exceeded when calling GET /params/path-query/{param}.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -388,7 +388,7 @@ export class Params {
     public async getWithInlinePathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<void> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -396,7 +396,7 @@ export class Params {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path-query/${encodeURIComponent(param)}`
+                `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
             headers: {
@@ -435,7 +435,7 @@ export class Params {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling GET /params/path-query/{param}."
+                    "Timeout exceeded when calling GET /params/path-query/{param}.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
@@ -457,12 +457,12 @@ export class Params {
     public async modifyWithPath(
         param: string,
         request: string,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",
             headers: {
@@ -530,12 +530,12 @@ export class Params {
     public async modifyWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: Params.RequestOptions
+        requestOptions?: Params.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/params/path/${encodeURIComponent(param)}`
+                `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",
             headers: {

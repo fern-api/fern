@@ -30,13 +30,13 @@ export const ExampleRequestBody: core.serialization.Schema<
     });
 
 export declare namespace ExampleRequestBody {
-    type Raw = ExampleRequestBody.InlinedRequestBody | ExampleRequestBody.Reference;
+    export type Raw = ExampleRequestBody.InlinedRequestBody | ExampleRequestBody.Reference;
 
-    interface InlinedRequestBody extends ExampleInlinedRequestBody.Raw {
+    export interface InlinedRequestBody extends ExampleInlinedRequestBody.Raw {
         type: "inlinedRequestBody";
     }
 
-    interface Reference extends serializers.ExampleTypeReference.Raw {
+    export interface Reference extends serializers.ExampleTypeReference.Raw {
         type: "reference";
     }
 }

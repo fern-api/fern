@@ -125,6 +125,54 @@ groups:
 ]
 `;
 
+exports[`fern init > init mintlify 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "instances:
+  - url: https://test-api.docs.buildwithfern.com
+title: Test API
+favicon: favicon.png
+logo:
+  light: logo.png
+  dark: logo.png
+  height: 28
+colors:
+  accentPrimary:
+    dark: '#0050B4'
+    light: '#4D9CFF'
+  background: {}
+navigation: []
+",
+        "name": "docs.yml",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "favicon.png",
+        "type": "file",
+      },
+      {
+        "contents": "{
+    "version": "0.0.0",
+    "organization": "fern"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "logo.png",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
 exports[`fern init > init openapi 1`] = `
 [
   {

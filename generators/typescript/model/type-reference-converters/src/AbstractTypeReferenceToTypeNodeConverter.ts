@@ -1,14 +1,17 @@
-import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
-import { assertNever } from "@fern-api/core-utils";
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { InlineConsts } from "@fern-typescript/commons/src/codegen-utils/inlineConsts";
+import { ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
         getReferenceToNamedType: (typeName: DeclaredTypeName, params: ConvertTypeReferenceParams) => ts.EntityName;
-        generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode;
+        generateForInlineUnion: (typeName: DeclaredTypeName) => ts.TypeNode;
     }
 }
 

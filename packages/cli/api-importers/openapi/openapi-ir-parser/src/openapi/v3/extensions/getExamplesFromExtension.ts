@@ -1,6 +1,8 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EndpointExample } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { OperationContext } from "../converters/contexts";

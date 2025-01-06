@@ -14,7 +14,7 @@ export const UserListContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace UserListContainer {
-    interface Raw {
+    export interface Raw {
         users: serializers.User.Raw[];
     }
 }

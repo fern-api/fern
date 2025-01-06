@@ -153,6 +153,10 @@ Controls the conditional rendering of the table of contents feature on the right
   <img src="./table-of-contents.png" alt="Table of contents feature" />
 </Frame>
 
+<Tip>
+  By default, Fern will center the contents of a page when the table of contents is hidden. To control the layout of the page, see the [layout documentation](#layout).
+</Tip>
+
 ## Navigation links
 
 **Name**: `hide-nav-links`<br />
@@ -199,9 +203,28 @@ logo:
 
 This field specifies the logo for this page. If no logo is set, the site-wide [logo configuration](/learn/docs/getting-started/global-configuration#logo-configuration) is used.
 
+## Layout
+
+**Name**: `layout`<br />
+**Type**: `overview`, `guide`, `reference`, `page`, or `custom`<br />
+**Default**: `guide`
+
+Sets the page layout.
+
+- `overview`: A spacious, full-width layout without a table of contents. Perfect for landing pages, section overviews, and content that benefits from maximum horizontal space. Navigation sidebar remains visible.
+
+- `guide`: The default documentation layout featuring a table of contents on the right side. Ideal for tutorials, how-to guides, and any content that benefits from easy navigation through sections.
+
+- `reference`: A full-width layout optimized for an API or SDK reference. Removes the table of contents so you can add another column, such as code examples. Navigation sidebar remains visible.
+
+- `page`: A distraction-free, full-screen layout that hides both the table of contents and navigation sidebar. Best for standalone content that benefits from focused reading experiences.
+
+- `custom`: A blank canvas layout that removes all default styling constraints. Hides both the table of contents and navigation sidebar, allowing complete control over the page layout.
+
 ## SEO metadata
 
-Fern also supports adding SEO-specific metadata in the frontmatter. 
+Fern supports adding SEO metadata in the frontmatter.
+
 
 | Property | Description | Type |
 | -------- | ----------- | ---- | 

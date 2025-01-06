@@ -14,7 +14,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
         problemVersion: core.serialization.number(),
         files: core.serialization.record(
             core.serialization.lazy(() => serializers.Language),
-            core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
+            core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
         ),
         inputParams: core.serialization.list(core.serialization.lazyObject(() => serializers.VariableTypeAndName)),
         outputType: core.serialization.lazy(() => serializers.VariableType),
@@ -24,7 +24,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
     });
 
 export declare namespace ProblemInfo {
-    interface Raw {
+    export interface Raw {
         problemId: serializers.ProblemId.Raw;
         problemDescription: serializers.ProblemDescription.Raw;
         problemName: string;

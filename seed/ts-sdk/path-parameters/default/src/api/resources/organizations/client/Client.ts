@@ -9,12 +9,12 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Organizations {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         tenantId: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -38,12 +38,12 @@ export class Organizations {
      */
     public async getOrganization(
         organizationId: string,
-        requestOptions?: Organizations.RequestOptions
+        requestOptions?: Organizations.RequestOptions,
     ): Promise<SeedPathParameters.Organization> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/`
+                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/`,
             ),
             method: "GET",
             headers: {
@@ -85,7 +85,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -107,14 +107,12 @@ export class Organizations {
         organizationId: string,
         userId: string,
         request: SeedPathParameters.GetOrganizationUserRequest = {},
-        requestOptions?: Organizations.RequestOptions
+        requestOptions?: Organizations.RequestOptions,
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(
-                    organizationId
-                )}/users/${encodeURIComponent(userId)}`
+                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
             headers: {
@@ -156,7 +154,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/users/{user_id}."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/users/{user_id}.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -178,7 +176,7 @@ export class Organizations {
     public async searchOrganizations(
         organizationId: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
-        requestOptions?: Organizations.RequestOptions
+        requestOptions?: Organizations.RequestOptions,
     ): Promise<SeedPathParameters.Organization[]> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -189,9 +187,7 @@ export class Organizations {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(
-                    organizationId
-                )}/search`
+                `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/search`,
             ),
             method: "GET",
             headers: {
@@ -234,7 +230,7 @@ export class Organizations {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/search."
+                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/search.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

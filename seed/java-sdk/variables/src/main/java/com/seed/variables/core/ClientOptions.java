@@ -18,6 +18,8 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private final int timeout;
+
     private String rootVariable;
 
     private ClientOptions(
@@ -25,6 +27,7 @@ public final class ClientOptions {
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
+            int timeout,
             String rootVariable) {
         this.environment = environment;
         this.headers = new HashMap<>();
@@ -36,6 +39,7 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.timeout = timeout;
         this.rootVariable = rootVariable;
     }
 
@@ -86,6 +90,8 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+        private int timeout = 60;
+
         private String rootVariable;
 
         public Builder environment(Environment environment) {
@@ -103,6 +109,14 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Override the timeout in seconds. Defaults to 60 seconds.
+         */
+        public Builder timeout(int timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
         public Builder rootVariable(String rootVariable) {
             this.rootVariable = rootVariable;
             return this;
@@ -111,8 +125,10 @@ public final class ClientOptions {
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
+                    .callTimeout(this.timeout, TimeUnit.SECONDS)
                     .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.rootVariable);
+            return new ClientOptions(
+                    environment, headers, headerSuppliers, okhttpClient, this.timeout, this.rootVariable);
         }
     }
 }

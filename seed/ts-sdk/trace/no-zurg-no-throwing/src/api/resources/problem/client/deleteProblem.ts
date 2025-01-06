@@ -13,7 +13,7 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -28,7 +28,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.problem.deleteProblem.Error,
-        visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>
+        visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

@@ -1,8 +1,11 @@
-import { assertNever } from "@fern-api/core-utils";
-import { NamedType, ObjectProperty, SingleUnionTypeProperty, TypeReference } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
+import { TypeReferenceNode, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { NamedType, ObjectProperty, SingleUnionTypeProperty, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {

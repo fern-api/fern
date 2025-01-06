@@ -1,9 +1,11 @@
 import { php } from "@fern-api/php-codegen";
+
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;

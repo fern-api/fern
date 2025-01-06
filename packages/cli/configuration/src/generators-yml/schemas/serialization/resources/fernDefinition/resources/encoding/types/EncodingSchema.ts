@@ -15,7 +15,7 @@ export const EncodingSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace EncodingSchema {
-    interface Raw {
+    export interface Raw {
         proto?: ProtobufTypeSchema.Raw | null;
     }
 }

@@ -6,6 +6,6 @@ export function getEndpointPathParameters(
     return typeof endpoint.request !== "string" && endpoint.request?.["path-parameters"]
         ? endpoint.request?.["path-parameters"]
         : endpoint["path-parameters"] != null
-        ? endpoint["path-parameters"]
-        : {};
+          ? endpoint["path-parameters"]
+          : {};
 }

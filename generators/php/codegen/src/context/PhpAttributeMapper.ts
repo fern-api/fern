@@ -1,7 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { isEqual, uniq, uniqWith } from "lodash-es";
+
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+
 import { php } from "..";
 import { ClassInstantiation } from "../ast";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";

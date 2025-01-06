@@ -1,13 +1,16 @@
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+
+import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
+
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
-import { docsYml } from "@fern-api/configuration";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -290,8 +293,8 @@ function convertLayoutConfig(
             layout.searchbarPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
                 : layout.searchbarPlacement === "header-tabs"
-                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
-                : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
+                  ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
+                  : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
             layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header

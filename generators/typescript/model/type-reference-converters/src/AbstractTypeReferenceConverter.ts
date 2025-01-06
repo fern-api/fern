@@ -1,3 +1,7 @@
+import { TypeReferenceNode } from "@fern-typescript/commons";
+import { TypeResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -8,9 +12,6 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { TypeReferenceNode } from "@fern-typescript/commons";
-import { TypeResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
@@ -79,7 +80,7 @@ export namespace ConvertTypeReferenceParams {
         Map: "map",
         Set: "set"
     } as const;
-    export type GenericIn = typeof GenericIn[keyof typeof GenericIn];
+    export type GenericIn = (typeof GenericIn)[keyof typeof GenericIn];
 }
 
 const genericIn = ConvertTypeReferenceParams.GenericIn;

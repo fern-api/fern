@@ -6,20 +6,20 @@ import * as FernOpenapiIr from "../../../index";
 
 export type Pagination = FernOpenapiIr.Pagination.Cursor | FernOpenapiIr.Pagination.Offset;
 
-export declare namespace Pagination {
-    interface Cursor extends FernOpenapiIr.CursorPagination, _Utils {
+export namespace Pagination {
+    export interface Cursor extends FernOpenapiIr.CursorPagination, _Utils {
         type: "cursor";
     }
 
-    interface Offset extends FernOpenapiIr.OffsetPagination, _Utils {
+    export interface Offset extends FernOpenapiIr.OffsetPagination, _Utils {
         type: "offset";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Pagination._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         cursor: (value: FernOpenapiIr.CursorPagination) => _Result;
         offset: (value: FernOpenapiIr.OffsetPagination) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const Pagination = {
             type: "cursor",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Pagination.Cursor,
-                visitor: FernOpenapiIr.Pagination._Visitor<_Result>
+                visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Pagination._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const Pagination = {
             type: "offset",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Pagination.Offset,
-                visitor: FernOpenapiIr.Pagination._Visitor<_Result>
+                visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Pagination._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const Pagination = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.Pagination,
-        visitor: FernOpenapiIr.Pagination._Visitor<_Result>
+        visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "cursor":

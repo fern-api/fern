@@ -13,7 +13,7 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(ObjectWithRequiredField);
 
 export declare namespace Request {
-    type Raw = ObjectWithRequiredField.Raw[];
+    export type Raw = ObjectWithRequiredField.Raw[];
 }
 
 export const Response: core.serialization.Schema<
@@ -22,5 +22,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.list(ObjectWithRequiredField);
 
 export declare namespace Response {
-    type Raw = ObjectWithRequiredField.Raw[];
+    export type Raw = ObjectWithRequiredField.Raw[];
 }

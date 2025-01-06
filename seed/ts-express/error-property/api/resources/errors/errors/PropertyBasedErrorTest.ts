@@ -15,7 +15,7 @@ export class PropertyBasedErrorTest extends errors.SeedErrorPropertyError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            serializers.PropertyBasedErrorTestBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.PropertyBasedErrorTestBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

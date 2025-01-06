@@ -9,11 +9,11 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace PropertyBasedError {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -75,7 +75,7 @@ export class PropertyBasedError {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedErrorPropertyError({
@@ -93,7 +93,7 @@ export class PropertyBasedError {
                 });
             case "timeout":
                 throw new errors.SeedErrorPropertyTimeoutError(
-                    "Timeout exceeded when calling GET /property-based-error."
+                    "Timeout exceeded when calling GET /property-based-error.",
                 );
             case "unknown":
                 throw new errors.SeedErrorPropertyError({

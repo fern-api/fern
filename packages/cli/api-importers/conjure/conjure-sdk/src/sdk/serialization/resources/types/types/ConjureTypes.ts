@@ -11,13 +11,13 @@ export const ConjureTypes: core.serialization.ObjectSchema<serializers.ConjureTy
     core.serialization.objectWithoutOptionalProperties({
         conjureImports: core.serialization.property(
             "conjure-imports",
-            core.serialization.record(core.serialization.string(), core.serialization.string()).optional()
+            core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
         ),
         definitions: ConjureDefinitions.optional(),
     });
 
 export declare namespace ConjureTypes {
-    interface Raw {
+    export interface Raw {
         "conjure-imports"?: Record<string, string> | null;
         definitions?: ConjureDefinitions.Raw | null;
     }

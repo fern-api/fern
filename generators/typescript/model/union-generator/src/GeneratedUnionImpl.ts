@@ -1,11 +1,10 @@
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
+    ObjectWriter,
+    Reference,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocsStructure,
-    ObjectWriter,
-    Reference
+    maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -15,12 +14,15 @@ import {
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
-    ts,
     TypeAliasDeclarationStructure,
     VariableDeclarationKind,
     VariableStatementStructure,
-    WriterFunction
+    WriterFunction,
+    ts
 } from "ts-morph";
+
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 
@@ -367,7 +369,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME,
                     type: getTextOfTsNode(this.getVisitSignature(context))
                 }
-            ]
+            ],
+            isExported: true
         };
     }
 
@@ -383,7 +386,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                     hasQuestionToken: !this.noOptionalProperties && type.isOptional
                 };
-            })
+            }),
+            isExported: true
         };
     }
 
@@ -428,7 +432,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: singleUnionType.getVisitorKey(),
                     type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
                 })
-            )
+            ),
+            isExported: true
         };
     }
 

@@ -20,7 +20,7 @@ export const GeneratorOutputConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorOutputConfig {
-    interface Raw {
+    export interface Raw {
         path: string;
         snippetFilepath?: string | null;
         snippetTemplateFilepath?: string | null;

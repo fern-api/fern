@@ -13,7 +13,7 @@ export const SdkGroupInfo: core.serialization.ObjectSchema<serializers.SdkGroupI
     });
 
 export declare namespace SdkGroupInfo {
-    interface Raw {
+    export interface Raw {
         summary?: string | null;
         description?: string | null;
     }

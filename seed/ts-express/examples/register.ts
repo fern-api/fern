@@ -23,7 +23,7 @@ export function register(
         health: {
             service: health_ServiceService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/", services._root.toRouter());
     (expressApp as any).use("/file/notification/:notificationId", services.file.notification.service.toRouter());

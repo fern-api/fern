@@ -1,7 +1,8 @@
+import path from "path";
+
+import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
-import path from "path";
-import { dependenciesYml } from "@fern-api/configuration";
 
 const EMPTY_DEPENDENCIES_CONFIGURATION: dependenciesYml.DependenciesConfiguration = {
     dependencies: {}

@@ -9,11 +9,11 @@ import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Union {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,7 +37,7 @@ export class Union {
      */
     public async get(
         request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: Union.RequestOptions
+        requestOptions?: Union.RequestOptions,
     ): Promise<SeedUndiscriminatedUnions.MyUnion> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

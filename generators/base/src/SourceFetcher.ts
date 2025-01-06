@@ -1,10 +1,11 @@
-import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { createWriteStream } from "fs";
 import { mkdir, readdir } from "fs/promises";
 import { pipeline } from "stream";
 import { promisify } from "util";
+
 import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
 
 const LOCAL_FILE_SCHEME = "file:///";
 const PROTOBUF_ZIP_FILENAME = "proto.zip";

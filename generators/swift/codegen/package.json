@@ -19,11 +19,10 @@
     "compile": "tsc --build",
     "test": "vitest --run",
     "test:update": "vitest --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
@@ -32,15 +31,15 @@
     "@fern-api/fs-utils": "workspace:*"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
+    "@types/jest": "^29.5.14",
+    "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
-    "depcheck": "^1.4.6",
+    "depcheck": "^1.4.7",
     "esbuild": "^0.24.0",
-    "eslint": "^8.56.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4",
+    "eslint": "^9.16.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "prettier": "^3.4.2",
+    "typescript": "5.7.2",
     "vitest": "^2.0.5"
   }
 }

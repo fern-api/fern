@@ -8,6 +8,8 @@ export interface OpenApiSettingsSchema {
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
+    /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
+    "prefer-undiscriminated-unions-with-literals"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
@@ -18,4 +20,6 @@ export interface OpenApiSettingsSchema {
     "inline-path-parameters"?: boolean;
     /** Filter to apply to the OpenAPI specification. */
     filter?: FernDefinition.OpenApiFilterSchema;
+    /** Fine-tune your example generation */
+    "example-generation"?: FernDefinition.OpenApiExampleGenerationSchema;
 }

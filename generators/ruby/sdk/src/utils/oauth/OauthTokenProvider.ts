@@ -12,6 +12,7 @@ import {
     Property,
     StringClassReference
 } from "@fern-api/ruby-codegen";
+
 import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api";
 
 export interface OauthFunction {

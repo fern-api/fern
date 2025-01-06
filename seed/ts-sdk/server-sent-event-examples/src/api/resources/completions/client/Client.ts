@@ -10,11 +10,11 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Completions {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -31,7 +31,7 @@ export class Completions {
 
     public async stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
-        requestOptions?: Completions.RequestOptions
+        requestOptions?: Completions.RequestOptions,
     ): Promise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "stream"),

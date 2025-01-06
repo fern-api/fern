@@ -14,19 +14,22 @@ export interface NoAuthServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class NoAuthService {
     private router;
 
-    constructor(private readonly methods: NoAuthServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: NoAuthServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -45,13 +48,13 @@ export class NoAuthService {
                             res.json(
                                 serializers.noAuth.postWithNoAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -63,7 +66,7 @@ export class NoAuthService {
                             console.warn(
                                 `Endpoint 'postWithNoAuth' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);

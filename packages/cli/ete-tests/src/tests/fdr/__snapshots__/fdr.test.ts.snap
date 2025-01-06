@@ -74,10 +74,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "value": "type_director:Age"
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_director:Age": {
@@ -172,10 +169,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:CreateMovieRequest": {
@@ -205,10 +199,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:DirectorWrapper": {
@@ -224,10 +215,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "value": "type_director:Director"
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:EmptyObject": {
@@ -235,10 +223,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
             "shape": {
                 "type": "object",
                 "extends": [],
-                "properties": [],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                "properties": []
             }
         },
         "type_imdb:Person": {
@@ -311,10 +296,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         }
     },
@@ -921,10 +903,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "value": "type_director:Age"
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_director:Age": {
@@ -1019,10 +998,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:CreateMovieRequest": {
@@ -1052,10 +1028,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:DirectorWrapper": {
@@ -1071,10 +1044,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "value": "type_director:Director"
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         },
         "type_imdb:EmptyObject": {
@@ -1082,10 +1052,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
             "shape": {
                 "type": "object",
                 "extends": [],
-                "properties": [],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                "properties": []
             }
         },
         "type_imdb:Person": {
@@ -1158,10 +1125,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     }
-                ],
-                "extraProperties": {
-                    "type": "unknown"
-                }
+                ]
             }
         }
     },

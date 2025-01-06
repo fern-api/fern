@@ -16,38 +16,38 @@ export type HttpResponseBody =
      *  */
     | FernIr.HttpResponseBody.StreamParameter;
 
-export declare namespace HttpResponseBody {
-    interface Json extends _Utils {
+export namespace HttpResponseBody {
+    export interface Json extends _Utils {
         type: "json";
         value: FernIr.JsonResponse;
     }
 
-    interface FileDownload extends FernIr.FileDownloadResponse, _Utils {
+    export interface FileDownload extends FernIr.FileDownloadResponse, _Utils {
         type: "fileDownload";
     }
 
-    interface Text extends FernIr.TextResponse, _Utils {
+    export interface Text extends FernIr.TextResponse, _Utils {
         type: "text";
     }
 
-    interface Bytes extends FernIr.BytesResponse, _Utils {
+    export interface Bytes extends FernIr.BytesResponse, _Utils {
         type: "bytes";
     }
 
-    interface Streaming extends _Utils {
+    export interface Streaming extends _Utils {
         type: "streaming";
         value: FernIr.StreamingResponse;
     }
 
-    interface StreamParameter extends FernIr.StreamParameterResponse, _Utils {
+    export interface StreamParameter extends FernIr.StreamParameterResponse, _Utils {
         type: "streamParameter";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.HttpResponseBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         json: (value: FernIr.JsonResponse) => _Result;
         fileDownload: (value: FernIr.FileDownloadResponse) => _Result;
         text: (value: FernIr.TextResponse) => _Result;
@@ -65,7 +65,7 @@ export const HttpResponseBody = {
             type: "json",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.Json,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },
@@ -78,7 +78,7 @@ export const HttpResponseBody = {
             type: "fileDownload",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.FileDownload,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },
@@ -91,7 +91,7 @@ export const HttpResponseBody = {
             type: "text",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.Text,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },
@@ -104,7 +104,7 @@ export const HttpResponseBody = {
             type: "bytes",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.Bytes,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },
@@ -117,7 +117,7 @@ export const HttpResponseBody = {
             type: "streaming",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.Streaming,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },
@@ -130,7 +130,7 @@ export const HttpResponseBody = {
             type: "streamParameter",
             _visit: function <_Result>(
                 this: FernIr.HttpResponseBody.StreamParameter,
-                visitor: FernIr.HttpResponseBody._Visitor<_Result>
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.HttpResponseBody._visit(this, visitor);
             },

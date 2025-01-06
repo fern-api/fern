@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index";
 import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
@@ -18,7 +18,7 @@ export declare namespace Service {
         xApiVersion?: "01-01-2000";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -111,7 +111,7 @@ export class Service {
      */
     public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<string> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
@@ -160,7 +160,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
-                    "Timeout exceeded when calling GET /apiKeyInHeader."
+                    "Timeout exceeded when calling GET /apiKeyInHeader.",
                 );
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({

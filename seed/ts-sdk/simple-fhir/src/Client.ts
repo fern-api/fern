@@ -9,11 +9,11 @@ import * as serializers from "./serialization/index";
 import * as errors from "./errors/index";
 
 export declare namespace SeedApiClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,12 +37,12 @@ export class SeedApiClient {
      */
     public async getAccount(
         accountId: string,
-        requestOptions?: SeedApiClient.RequestOptions
+        requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<SeedApi.Account> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `account/${encodeURIComponent(accountId)}`
+                `account/${encodeURIComponent(accountId)}`,
             ),
             method: "GET",
             headers: {

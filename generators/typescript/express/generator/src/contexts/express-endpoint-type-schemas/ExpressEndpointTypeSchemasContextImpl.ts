@@ -1,9 +1,11 @@
-import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
+
+import { Name } from "@fern-fern/ir-sdk/api";
+
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 

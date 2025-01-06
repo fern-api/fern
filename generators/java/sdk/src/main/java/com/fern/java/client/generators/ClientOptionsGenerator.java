@@ -78,6 +78,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
+                    TypeName.INT, "timeout", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -108,6 +112,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
         Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
+
         String platformHeadersPutString = getPlatformHeadersEntries(
                         generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
                         generatorContext.getGeneratorConfig())
@@ -116,7 +121,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
                         .toString())
                 .collect(Collectors.joining(""));
-        MethodSpec.Builder contructorBuilder = MethodSpec.constructorBuilder()
+
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
                         .build())
@@ -125,6 +131,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(HEADER_SUPPLIERS_FIELD.type, HEADER_SUPPLIERS_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameters(variableFields.values().stream()
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
@@ -142,6 +150,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         platformHeadersPutString)
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+                .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name);
 
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             ApiVersionScheme apiVersionScheme =
@@ -186,19 +195,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
                 }
             });
-        }
+>>>>>>> main
 
         variableFields
                 .values()
-                .forEach(fieldSpec -> contructorBuilder.addStatement("this.$N = $N", fieldSpec, fieldSpec));
+                .forEach(fieldSpec -> constructorBuilder.addStatement("this.$N = $N", fieldSpec, fieldSpec));
+
         TypeSpec.Builder clientOptionsBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
                 .addField(HEADERS_FIELD)
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
+                .addField(TIMEOUT_FIELD)
                 .addFields(variableFields.values())
-                .addMethod(contructorBuilder.build())
+                .addMethod(constructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
 
@@ -210,6 +221,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
+
             MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(
@@ -328,10 +340,24 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD.toBuilder()
                         .initializer("new $T<>()", HashMap.class)
                         .build())
+                .addField(FieldSpec.builder(TypeName.INT, TIMEOUT_FIELD.name, Modifier.PRIVATE)
+                        .initializer("60")
+                        .build())
                 .addFields(variableFields.values())
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
                 .addMethod(getHeaderSupplierBuilder())
+                .addMethod(MethodSpec.methodBuilder("timeout")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the timeout in seconds. Defaults to 60 seconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.INT, TIMEOUT_FIELD.name)
+                        .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethods(getVariableBuilders(variableFields))
+                .addMethod(getBuildMethod(variableFields))
+                .build();
                 .addMethods(getVariableBuilders(variableFields));
 
         if (context.getIr().getApiVersion().isPresent()) {
@@ -417,7 +443,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                             .convertToTypeName(true, variableDeclaration.getType()),
                                     variableParameterName)
                             .addStatement("this.$N = $L", variableField, variableParameterName)
-                            .addStatement("return this", variableField)
+                            .addStatement("return this")
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -464,6 +490,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                     clientGeneratorContext
                                             .getPoetClassNameFactory()
                                             .getRetryInterceptorClassName())
+                            .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
                             .add("\n    .build()")
                             .build())
                     .addStatement(returnString + ")", args)
@@ -471,7 +498,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         } else {
             String variableArgs = variableFields.values().stream()
                     .map(variableField -> "this." + variableField.name)
-                    .collect(Collectors.joining(","));
+                    .collect(Collectors.joining(", "));
             return MethodSpec.methodBuilder("build")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(className)
@@ -482,6 +509,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                     clientGeneratorContext
                                             .getPoetClassNameFactory()
                                             .getRetryInterceptorClassName())
+                            .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
                             .add("\n    .build()")
                             .build())
                     .addStatement(returnString + ", " + variableArgs + ")", args)

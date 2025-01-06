@@ -1,4 +1,4 @@
-import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -11,6 +11,7 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
+
 import { SchemaParserContext } from "../SchemaParserContext";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
@@ -449,6 +450,7 @@ export class ExampleTypeFactory {
                     }
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
+
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,
@@ -471,6 +473,36 @@ export class ExampleTypeFactory {
                         result[property] = propertyExample;
                     }
                 }
+                if (schema.additionalProperties) {
+                    for (const [property, value] of Object.entries(fullExample)) {
+                        if (!(property in result)) {
+                            const propertyExample = this.buildExampleHelper({
+                                schema: SchemaWithExample.unknown({
+                                    example: value,
+                                    title: undefined,
+                                    availability: undefined,
+                                    description: undefined,
+                                    generatedName: "",
+                                    nameOverride: undefined,
+                                    groupName: undefined
+                                }),
+                                exampleId,
+                                example: value,
+                                visitedSchemaIds,
+                                depth: depth + 1,
+                                options: {
+                                    ...options,
+                                    name: property
+                                },
+                                skipReadonly
+                            });
+                            if (propertyExample != null) {
+                                result[property] = propertyExample;
+                            }
+                        }
+                    }
+                }
+
                 return FullExample.object({
                     properties: result
                 });

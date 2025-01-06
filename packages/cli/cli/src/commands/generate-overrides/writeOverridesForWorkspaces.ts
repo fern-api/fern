@@ -1,12 +1,14 @@
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Schema } from "@fern-api/openapi-ir";
-import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
-import { parse } from "@fern-api/openapi-ir-parser";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
-import { getAllOpenAPISpecs, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+import { OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { Schema } from "@fern-api/openapi-ir";
+import { parse } from "@fern-api/openapi-ir-parser";
+import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeOverridesForWorkspaces({
@@ -122,7 +124,7 @@ function writeModels(existingSchemas: Record<string, Record<string, unknown>>, s
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const typeNameOverride: Record<string, any> = {};
-        typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
+        typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? (schema.nameOverride ?? schemaId) : schemaId;
         existingSchemas[schemaId] = typeNameOverride;
     }
 }

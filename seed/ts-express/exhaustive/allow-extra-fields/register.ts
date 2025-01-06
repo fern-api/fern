@@ -33,7 +33,7 @@ export function register(
             primitive: endpoints_PrimitiveService;
             union: endpoints_UnionService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/container", services.endpoints.container.toRouter());
     (expressApp as any).use("/foo", services.endpoints.contentType.toRouter());

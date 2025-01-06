@@ -1,6 +1,8 @@
+import * as prettier from "prettier2";
+
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
+
 import { Writer } from "./Writer";
-import * as prettier from "prettier";
 
 export abstract class AstNode extends AbstractAstNode {
     /**

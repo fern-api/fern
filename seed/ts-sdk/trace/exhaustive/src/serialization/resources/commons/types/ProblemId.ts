@@ -14,5 +14,5 @@ export const ProblemId: core.serialization.Schema<serializers.ProblemId.Raw, See
     });
 
 export declare namespace ProblemId {
-    type Raw = string;
+    export type Raw = string;
 }

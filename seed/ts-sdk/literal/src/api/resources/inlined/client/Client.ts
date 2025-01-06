@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Inlined {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
@@ -17,7 +17,7 @@ export declare namespace Inlined {
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -56,7 +56,7 @@ export class Inlined {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInlinedRequest,
-        requestOptions?: Inlined.RequestOptions
+        requestOptions?: Inlined.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),

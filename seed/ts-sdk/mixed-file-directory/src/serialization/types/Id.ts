@@ -9,5 +9,5 @@ import * as core from "../../core";
 export const Id: core.serialization.Schema<serializers.Id.Raw, SeedMixedFileDirectory.Id> = core.serialization.string();
 
 export declare namespace Id {
-    type Raw = string;
+    export type Raw = string;
 }

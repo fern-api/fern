@@ -30,7 +30,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace WebsocketChannel {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
         audiences: string[];
         path: string;
         groupName: SdkGroupName.Raw;

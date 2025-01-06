@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const TabWithHrefRule: Rule = {

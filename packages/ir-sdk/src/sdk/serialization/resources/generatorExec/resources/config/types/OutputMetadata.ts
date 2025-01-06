@@ -16,7 +16,7 @@ export const OutputMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace OutputMetadata {
-    interface Raw {
+    export interface Raw {
         description?: string | null;
         authors?: OutputMetadataAuthor.Raw[] | null;
     }

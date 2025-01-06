@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,6 +10,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { go } from "../";
 import { GoTypeReference, Type } from "../ast";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";

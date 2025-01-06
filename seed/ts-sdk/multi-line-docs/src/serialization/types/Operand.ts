@@ -10,5 +10,5 @@ export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedMul
     core.serialization.enum_([">", "=", "less_than"]);
 
 export declare namespace Operand {
-    type Raw = ">" | "=" | "less_than";
+    export type Raw = ">" | "=" | "less_than";
 }

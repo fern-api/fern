@@ -16,7 +16,7 @@ export const DiscriminatedUnion1InlineType1: core.serialization.ObjectSchema<
 });
 
 export declare namespace DiscriminatedUnion1InlineType1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
         bar: serializers.DiscriminatedUnion1InlineType1InlineType1.Raw;
         ref: serializers.ReferenceType.Raw;

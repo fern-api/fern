@@ -11,16 +11,16 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMix
         userName: core.serialization.string(),
         metadataTags: core.serialization.property(
             "metadata_tags",
-            core.serialization.list(core.serialization.string())
+            core.serialization.list(core.serialization.string()),
         ),
         extraProperties: core.serialization.property(
             "EXTRA_PROPERTIES",
-            core.serialization.record(core.serialization.string(), core.serialization.string())
+            core.serialization.record(core.serialization.string(), core.serialization.string()),
         ),
     });
 
 export declare namespace User {
-    interface Raw {
+    export interface Raw {
         userName: string;
         metadata_tags: string[];
         EXTRA_PROPERTIES: Record<string, string>;

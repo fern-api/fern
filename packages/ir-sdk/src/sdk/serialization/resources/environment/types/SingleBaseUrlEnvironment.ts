@@ -22,7 +22,7 @@ export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace SingleBaseUrlEnvironment {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         url: EnvironmentUrl.Raw;

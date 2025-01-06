@@ -26,9 +26,9 @@ export const Source: core.serialization.Schema<serializers.Source.Raw, FernIr.So
     });
 
 export declare namespace Source {
-    type Raw = Source.Proto;
+    export type Raw = Source.Proto;
 
-    interface Proto {
+    export interface Proto {
         type: "proto";
         value: ProtobufType.Raw;
     }

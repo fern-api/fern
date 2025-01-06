@@ -1,4 +1,5 @@
 import { isNonNullish } from "@fern-api/core-utils";
+
 import { Rule } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 

@@ -15,7 +15,7 @@ export const OAuthRefreshTokenRequestProperties: core.serialization.ObjectSchema
 });
 
 export declare namespace OAuthRefreshTokenRequestProperties {
-    interface Raw {
+    export interface Raw {
         refreshToken: RequestProperty.Raw;
     }
 }

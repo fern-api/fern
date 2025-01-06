@@ -1,3 +1,11 @@
+- version: 0.1.6
+  createdAt: '2024-12-20'
+  changelogEntry:
+    - type: fix
+      summary: | 
+        The generator now correctly handles float types when converting to OpenAPI specs.
+  irVersion: 53
+
 - version: 0.1.5
   createdAt: '2024-10-06'
   changelogEntry:

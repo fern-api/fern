@@ -1,12 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
+
+import { Reference } from "./Reference";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { Reference } from "./Reference";
 
 type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
-interface StrFormatConfig {
+interface IterableConfig {
+    endWithComma?: boolean;
+}
+
+interface StrConfig {
     multiline?: boolean;
     startOnNewLine?: boolean;
     endWithNewLine?: boolean;
@@ -30,7 +35,7 @@ interface Bool {
 interface Str {
     type: "str";
     value: string;
-    config?: StrFormatConfig;
+    config?: StrConfig;
 }
 
 interface Bytes {
@@ -41,21 +46,25 @@ interface Bytes {
 interface List {
     type: "list";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Set {
     type: "set";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Tuple {
     type: "tuple";
     values: AstNode[];
+    config?: IterableConfig;
 }
 
 interface Dict {
     type: "dict";
     entries: DictEntry[];
+    config?: IterableConfig;
 }
 
 interface DictEntry {
@@ -91,7 +100,7 @@ export class TypeInstantiation extends AstNode {
 
     public static str(
         value: string,
-        config: StrFormatConfig = {
+        config: StrConfig = {
             multiline: false,
             startOnNewLine: false,
             endWithNewLine: false
@@ -104,26 +113,26 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bytes", value });
     }
 
-    public static list(values: AstNode[]): TypeInstantiation {
-        const list = new this({ type: "list", values });
+    public static list(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const list = new this({ type: "list", values, config });
         values.forEach((value) => list.inheritReferences(value));
         return list;
     }
 
-    public static set(values: AstNode[]): TypeInstantiation {
-        const set = new this({ type: "set", values });
+    public static set(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const set = new this({ type: "set", values, config });
         values.forEach((value) => set.inheritReferences(value));
         return set;
     }
 
-    public static tuple(values: AstNode[]): TypeInstantiation {
-        const tuple = new this({ type: "tuple", values });
+    public static tuple(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const tuple = new this({ type: "tuple", values, config });
         values.forEach((value) => tuple.inheritReferences(value));
         return tuple;
     }
 
-    public static dict(entries: DictEntry[]): TypeInstantiation {
-        const dict = new this({ type: "dict", entries });
+    public static dict(entries: DictEntry[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
+        const dict = new this({ type: "dict", entries, config });
         entries.forEach((entry) => {
             dict.inheritReferences(entry.key);
             dict.inheritReferences(entry.value);
@@ -166,56 +175,79 @@ export class TypeInstantiation extends AstNode {
                         endWithNewLine
                     });
                 } else {
-                    writer.write(
-                        `"${this.escapeString(this.internalType.value, { doubleQuote: true, newline: true })}"`
-                    );
+                    writer.write(`"${this.escapeString(this.internalType.value)}"`);
                 }
                 break;
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;
-            case "list":
+            case "list": {
+                const internalType = this.internalType;
                 writer.write("[");
-                this.internalType.values.forEach((value, index) => {
+                internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("]");
                 break;
-            case "set":
+            }
+            case "set": {
+                const internalType = this.internalType;
                 writer.write("{");
-                this.internalType.values.forEach((value, index) => {
+                internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("}");
                 break;
-            case "tuple":
+            }
+            case "tuple": {
+                const internalType = this.internalType;
                 writer.write("(");
                 this.internalType.values.forEach((value, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     value.write(writer);
+                    if (
+                        // If the tuple is of length 1, then we must always add a trailing comma
+                        internalType.values.length === 1 ||
+                        // Otherwise, check the config that was specified
+                        (index === internalType.values.length - 1 && internalType.config?.endWithComma)
+                    ) {
+                        writer.write(",");
+                    }
                 });
                 writer.write(")");
                 break;
-            case "dict":
+            }
+            case "dict": {
+                const internalType = this.internalType;
                 writer.write("{");
-                this.internalType.entries.forEach((entry, index) => {
+                internalType.entries.forEach((entry, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
                     entry.key.write(writer);
                     writer.write(": ");
                     entry.value.write(writer);
+                    if (index === internalType.entries.length - 1 && internalType.config?.endWithComma) {
+                        writer.write(",");
+                    }
                 });
                 writer.write("}");
                 break;
+            }
             case "none":
                 writer.write("None");
                 break;
@@ -235,13 +267,13 @@ export class TypeInstantiation extends AstNode {
     }: {
         writer: Writer;
         value: string;
-    } & Pick<StrFormatConfig, "startOnNewLine" | "endWithNewLine">): void {
+    } & Pick<StrConfig, "startOnNewLine" | "endWithNewLine">): void {
         writer.write('"""');
         const lines = value.split("\n");
 
         // If there is only one line, we can just write it as a single line string
         if (lines.length <= 1) {
-            writer.write(this.escapeString(this.escapeString(lines[0] ?? "")));
+            writer.write(this.escapeString(lines[0] ?? ""));
             writer.write('"""');
             return;
         }
@@ -266,18 +298,37 @@ export class TypeInstantiation extends AstNode {
         writer.writeNoIndent('"""');
     }
 
-    private escapeString(
-        value: string,
-        config: { doubleQuote?: boolean; newline?: boolean } = { doubleQuote: true, newline: false }
-    ): string {
-        let escapedValue = value;
-        if (config.doubleQuote) {
-            escapedValue = escapedValue.replaceAll('"', '\\"');
-        }
-        if (config.newline) {
-            escapedValue = escapedValue.replaceAll("\n", "\\n");
-        }
-        return escapedValue;
+    /**
+     * Escapes certain special characters if they're NOT already preceded
+     * by a backslash. Specifically:
+     *
+     *   - "  -> \"
+     *   - '  -> \'
+     *   - \  -> \\
+     *   - literal \t -> \t
+     *   - literal \n -> \n
+     *   - literal \r -> \r
+     *
+     * Uses a negative lookbehind `(?<!\\)` to handle consecutive matches like
+     * \n\n correctly, since each \n is independently matched in the original string.
+     *
+     * @param input The input string to be escaped
+     */
+    private escapeString(input: string): string {
+        // Negative lookbehind ensures the character is NOT preceded by a backslash
+        // in the original string.
+        const pattern = /(?<!\\)(["'\\\t\n\r])/g;
+
+        const replacements: Record<string, string> = {
+            '"': '\\"',
+            "'": "\\'",
+            "\\": "\\\\",
+            "\t": "\\t",
+            "\n": "\\n",
+            "\r": "\\r"
+        };
+
+        return input.replace(pattern, (char) => replacements[char] ?? char);
     }
 }
 

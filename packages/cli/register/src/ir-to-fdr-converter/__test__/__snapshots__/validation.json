@@ -139,10 +139,7 @@
               "value": "type_:Shape"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

@@ -13,7 +13,7 @@ export const DescribeResponse: core.serialization.ObjectSchema<
     namespaces: core.serialization
         .record(
             core.serialization.string(),
-            core.serialization.lazyObject(() => serializers.NamespaceSummary)
+            core.serialization.lazyObject(() => serializers.NamespaceSummary),
         )
         .optional(),
     dimension: core.serialization.number().optional(),
@@ -22,7 +22,7 @@ export const DescribeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace DescribeResponse {
-    interface Raw {
+    export interface Raw {
         namespaces?: Record<string, serializers.NamespaceSummary.Raw> | null;
         dimension?: number | null;
         fullness?: number | null;

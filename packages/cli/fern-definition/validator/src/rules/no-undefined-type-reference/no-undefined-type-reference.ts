@@ -1,18 +1,20 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import {
-    isRawTextType,
-    NodePath,
-    parseRawBytesType,
-    parseRawFileType,
-    recursivelyVisitRawTypeReference,
-    parseGeneric
-} from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
+
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import {
+    NodePath,
+    isRawTextType,
+    parseGeneric,
+    parseRawBytesType,
+    parseRawFileType,
+    recursivelyVisitRawTypeReference
+} from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { parseReferenceToTypeName } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast";
 
 type TypeName = string;
 

@@ -1,4 +1,3 @@
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getTextOfTsKeyword,
@@ -7,16 +6,19 @@ import {
     maybeAddDocsStructure,
     writerToString
 } from "@fern-typescript/commons";
-import { BrandedGeneratedAliasType, BaseContext } from "@fern-typescript/contexts";
+import { BaseContext, BrandedGeneratedAliasType } from "@fern-typescript/contexts";
 import {
     FunctionDeclarationStructure,
     ModuleDeclarationStructure,
     StatementStructures,
     StructureKind,
-    ts,
     TypeAliasDeclarationStructure,
-    WriterFunction
+    WriterFunction,
+    ts
 } from "ts-morph";
+
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>

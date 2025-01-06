@@ -42,132 +42,132 @@ export type WellKnownProtobufType =
     | FernIr.WellKnownProtobufType.Uint64Value
     | FernIr.WellKnownProtobufType.Value;
 
-export declare namespace WellKnownProtobufType {
-    interface Any extends _Utils {
+export namespace WellKnownProtobufType {
+    export interface Any extends _Utils {
         type: "any";
     }
 
-    interface Api extends _Utils {
+    export interface Api extends _Utils {
         type: "api";
     }
 
-    interface BoolValue extends _Utils {
+    export interface BoolValue extends _Utils {
         type: "boolValue";
     }
 
-    interface BytesValue extends _Utils {
+    export interface BytesValue extends _Utils {
         type: "bytesValue";
     }
 
-    interface DoubleValue extends _Utils {
+    export interface DoubleValue extends _Utils {
         type: "doubleValue";
     }
 
-    interface Duration extends _Utils {
+    export interface Duration extends _Utils {
         type: "duration";
     }
 
-    interface Empty extends _Utils {
+    export interface Empty extends _Utils {
         type: "empty";
     }
 
-    interface Enum extends _Utils {
+    export interface Enum extends _Utils {
         type: "enum";
     }
 
-    interface EnumValue extends _Utils {
+    export interface EnumValue extends _Utils {
         type: "enumValue";
     }
 
-    interface Field extends _Utils {
+    export interface Field extends _Utils {
         type: "field";
     }
 
-    interface FieldCardinality extends _Utils {
+    export interface FieldCardinality extends _Utils {
         type: "fieldCardinality";
     }
 
-    interface FieldKind extends _Utils {
+    export interface FieldKind extends _Utils {
         type: "fieldKind";
     }
 
-    interface FieldMask extends _Utils {
+    export interface FieldMask extends _Utils {
         type: "fieldMask";
     }
 
-    interface FloatValue extends _Utils {
+    export interface FloatValue extends _Utils {
         type: "floatValue";
     }
 
-    interface Int32Value extends _Utils {
+    export interface Int32Value extends _Utils {
         type: "int32Value";
     }
 
-    interface Int64Value extends _Utils {
+    export interface Int64Value extends _Utils {
         type: "int64Value";
     }
 
-    interface ListValue extends _Utils {
+    export interface ListValue extends _Utils {
         type: "listValue";
     }
 
-    interface Method extends _Utils {
+    export interface Method extends _Utils {
         type: "method";
     }
 
-    interface Mixin extends _Utils {
+    export interface Mixin extends _Utils {
         type: "mixin";
     }
 
-    interface NullValue extends _Utils {
+    export interface NullValue extends _Utils {
         type: "nullValue";
     }
 
-    interface Option extends _Utils {
+    export interface Option extends _Utils {
         type: "option";
     }
 
-    interface SourceContext extends _Utils {
+    export interface SourceContext extends _Utils {
         type: "sourceContext";
     }
 
-    interface StringValue extends _Utils {
+    export interface StringValue extends _Utils {
         type: "stringValue";
     }
 
-    interface Struct extends _Utils {
+    export interface Struct extends _Utils {
         type: "struct";
     }
 
-    interface Syntax extends _Utils {
+    export interface Syntax extends _Utils {
         type: "syntax";
     }
 
-    interface Timestamp extends _Utils {
+    export interface Timestamp extends _Utils {
         type: "timestamp";
     }
 
-    interface Type extends _Utils {
+    export interface Type extends _Utils {
         type: "type";
     }
 
-    interface Uint32Value extends _Utils {
+    export interface Uint32Value extends _Utils {
         type: "uint32Value";
     }
 
-    interface Uint64Value extends _Utils {
+    export interface Uint64Value extends _Utils {
         type: "uint64Value";
     }
 
-    interface Value extends _Utils {
+    export interface Value extends _Utils {
         type: "value";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.WellKnownProtobufType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         any: () => _Result;
         api: () => _Result;
         boolValue: () => _Result;
@@ -208,7 +208,7 @@ export const WellKnownProtobufType = {
             type: "any",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Any,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -220,7 +220,7 @@ export const WellKnownProtobufType = {
             type: "api",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Api,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -232,7 +232,7 @@ export const WellKnownProtobufType = {
             type: "boolValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.BoolValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -244,7 +244,7 @@ export const WellKnownProtobufType = {
             type: "bytesValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.BytesValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -256,7 +256,7 @@ export const WellKnownProtobufType = {
             type: "doubleValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.DoubleValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -268,7 +268,7 @@ export const WellKnownProtobufType = {
             type: "duration",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Duration,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -280,7 +280,7 @@ export const WellKnownProtobufType = {
             type: "empty",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Empty,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -292,7 +292,7 @@ export const WellKnownProtobufType = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Enum,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -304,7 +304,7 @@ export const WellKnownProtobufType = {
             type: "enumValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.EnumValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -316,7 +316,7 @@ export const WellKnownProtobufType = {
             type: "field",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Field,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -328,7 +328,7 @@ export const WellKnownProtobufType = {
             type: "fieldCardinality",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.FieldCardinality,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -340,7 +340,7 @@ export const WellKnownProtobufType = {
             type: "fieldKind",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.FieldKind,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -352,7 +352,7 @@ export const WellKnownProtobufType = {
             type: "fieldMask",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.FieldMask,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -364,7 +364,7 @@ export const WellKnownProtobufType = {
             type: "floatValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.FloatValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -376,7 +376,7 @@ export const WellKnownProtobufType = {
             type: "int32Value",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Int32Value,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -388,7 +388,7 @@ export const WellKnownProtobufType = {
             type: "int64Value",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Int64Value,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -400,7 +400,7 @@ export const WellKnownProtobufType = {
             type: "listValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.ListValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -412,7 +412,7 @@ export const WellKnownProtobufType = {
             type: "method",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Method,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -424,7 +424,7 @@ export const WellKnownProtobufType = {
             type: "mixin",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Mixin,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -436,7 +436,7 @@ export const WellKnownProtobufType = {
             type: "nullValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.NullValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -448,7 +448,7 @@ export const WellKnownProtobufType = {
             type: "option",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Option,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -460,7 +460,7 @@ export const WellKnownProtobufType = {
             type: "sourceContext",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.SourceContext,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -472,7 +472,7 @@ export const WellKnownProtobufType = {
             type: "stringValue",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.StringValue,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -484,7 +484,7 @@ export const WellKnownProtobufType = {
             type: "struct",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Struct,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -496,7 +496,7 @@ export const WellKnownProtobufType = {
             type: "syntax",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Syntax,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -508,7 +508,7 @@ export const WellKnownProtobufType = {
             type: "timestamp",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Timestamp,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -520,7 +520,7 @@ export const WellKnownProtobufType = {
             type: "type",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Type,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -532,7 +532,7 @@ export const WellKnownProtobufType = {
             type: "uint32Value",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Uint32Value,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -544,7 +544,7 @@ export const WellKnownProtobufType = {
             type: "uint64Value",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Uint64Value,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -556,7 +556,7 @@ export const WellKnownProtobufType = {
             type: "value",
             _visit: function <_Result>(
                 this: FernIr.WellKnownProtobufType.Value,
-                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+                visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.WellKnownProtobufType._visit(this, visitor);
             },
@@ -565,7 +565,7 @@ export const WellKnownProtobufType = {
 
     _visit: <_Result>(
         value: FernIr.WellKnownProtobufType,
-        visitor: FernIr.WellKnownProtobufType._Visitor<_Result>
+        visitor: FernIr.WellKnownProtobufType._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "any":

@@ -29,13 +29,13 @@ export const Request: core.serialization.Schema<serializers.dynamic.Request.Raw,
         });
 
 export declare namespace Request {
-    type Raw = Request.Body | Request.Inlined;
+    export type Raw = Request.Body | Request.Inlined;
 
-    interface Body extends BodyRequest.Raw {
+    export interface Body extends BodyRequest.Raw {
         type: "body";
     }
 
-    interface Inlined extends InlinedRequest.Raw {
+    export interface Inlined extends InlinedRequest.Raw {
         type: "inlined";
     }
 }

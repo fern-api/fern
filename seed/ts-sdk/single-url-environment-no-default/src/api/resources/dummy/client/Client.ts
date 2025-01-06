@@ -9,12 +9,12 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedSingleUrlEnvironmentNoDefaultEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -79,7 +79,7 @@ export class Dummy {
                 });
             case "timeout":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultTimeoutError(
-                    "Timeout exceeded when calling GET /dummy."
+                    "Timeout exceeded when calling GET /dummy.",
                 );
             case "unknown":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultError({

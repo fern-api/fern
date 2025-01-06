@@ -9,11 +9,11 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedValidationClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,7 +42,7 @@ export class SeedValidationClient {
      */
     public async create(
         request: SeedValidation.CreateRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
@@ -107,7 +107,7 @@ export class SeedValidationClient {
      */
     public async get(
         request: SeedValidation.GetRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const { decimal, even, name } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

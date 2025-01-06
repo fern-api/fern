@@ -1,14 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
 import {
+    RawSchemas,
+    isGeneric,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
-    RawSchemas,
-    parseGeneric,
-    isGeneric
+    parseGeneric
 } from "@fern-api/fern-definition-schema";
+import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
@@ -53,12 +54,12 @@ function constructResolvedTypeReference({
             const shapeType = isRawObjectDefinition(resolvedType.declaration)
                 ? ShapeType.Object
                 : isRawDiscriminatedUnionDefinition(resolvedType.declaration)
-                ? ShapeType.Union
-                : isRawEnumDefinition(resolvedType.declaration)
-                ? ShapeType.Enum
-                : isRawUndiscriminatedUnionDefinition(resolvedType.declaration)
-                ? ShapeType.UndiscriminatedUnion
-                : assertNever(resolvedType.declaration);
+                  ? ShapeType.Union
+                  : isRawEnumDefinition(resolvedType.declaration)
+                    ? ShapeType.Enum
+                    : isRawUndiscriminatedUnionDefinition(resolvedType.declaration)
+                      ? ShapeType.UndiscriminatedUnion
+                      : assertNever(resolvedType.declaration);
             return ResolvedTypeReference.named({
                 name: resolvedType.name,
                 shape: shapeType

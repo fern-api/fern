@@ -14,5 +14,5 @@ export const MultipleEnvironmentUrlValues: core.serialization.Schema<
 > = core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl);
 
 export declare namespace MultipleEnvironmentUrlValues {
-    type Raw = Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
+    export type Raw = Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
 }

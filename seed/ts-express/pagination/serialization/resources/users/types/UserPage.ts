@@ -13,7 +13,7 @@ export const UserPage: core.serialization.ObjectSchema<serializers.UserPage.Raw,
     });
 
 export declare namespace UserPage {
-    interface Raw {
+    export interface Raw {
         data: serializers.UserListContainer.Raw;
         next?: string | null;
     }

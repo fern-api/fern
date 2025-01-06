@@ -1,12 +1,14 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
+
 import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { assertNever } from "@fern-api/core-utils";
 
 type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 

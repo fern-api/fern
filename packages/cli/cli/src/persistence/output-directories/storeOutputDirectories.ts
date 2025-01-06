@@ -1,6 +1,8 @@
 import { mkdir, writeFile } from "fs/promises";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import path from "path";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { getPathToOutputDirectoriesFile } from "./getPathToOutputDirectoriesFile";
 
 export async function storeOutputDirectories(outputDirectories: AbsoluteFilePath[]): Promise<void> {

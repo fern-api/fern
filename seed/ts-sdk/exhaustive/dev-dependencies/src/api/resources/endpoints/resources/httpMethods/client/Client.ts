@@ -8,12 +8,12 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace HttpMethods {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,7 +37,7 @@ export class HttpMethods {
      */
     public async testGet(
         id: string,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
@@ -87,7 +87,7 @@ export class HttpMethods {
      */
     public async testPost(
         request: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/http-methods"),
@@ -140,7 +140,7 @@ export class HttpMethods {
     public async testPut(
         id: string,
         request: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
@@ -207,7 +207,7 @@ export class HttpMethods {
     public async testPatch(
         id: string,
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
@@ -256,7 +256,7 @@ export class HttpMethods {
      */
     public async testDelete(
         id: string,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),

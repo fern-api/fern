@@ -9,7 +9,7 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Query {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
@@ -17,7 +17,7 @@ export declare namespace Query {
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -47,7 +47,7 @@ export class Query {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: Query.RequestOptions
+        requestOptions?: Query.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const { prompt, query, stream } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

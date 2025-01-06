@@ -1,3 +1,9 @@
+import { isEqual, size } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+import urlJoin from "url-join";
+
+import { isNonNullish } from "@fern-api/core-utils";
+
 import {
     ContainerType,
     EnvironmentsConfig,
@@ -23,14 +29,11 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { isEqual, size } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-import urlJoin from "url-join";
-import { isNonNullish } from "@fern-api/core-utils";
+
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { OpenApiComponentSchema, convertTypeReference } from "./typeConverter";
 
 export function convertServices({
     ir,
@@ -151,8 +154,8 @@ function convertHttpEndpoint({
 
     const tag =
         mode === "stoplight"
-            ? httpService.displayName ??
-              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
+            ? (httpService.displayName ??
+              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" "))
             : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,

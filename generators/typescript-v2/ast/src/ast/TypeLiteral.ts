@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode, Writer } from "./core";
+
 import { Type } from "./Type";
+import { AstNode, Writer } from "./core";
 
 type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | NoOp;
 

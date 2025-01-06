@@ -10,5 +10,5 @@ export const SchemaId: core.serialization.Schema<serializers.SchemaId.Raw, FernO
     core.serialization.string();
 
 export declare namespace SchemaId {
-    type Raw = string;
+    export type Raw = string;
 }

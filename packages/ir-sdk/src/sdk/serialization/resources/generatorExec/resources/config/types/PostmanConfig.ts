@@ -15,7 +15,7 @@ export const PostmanConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace PostmanConfig {
-    interface Raw {
+    export interface Raw {
         apiKey: string;
         workspaceId: string;
     }

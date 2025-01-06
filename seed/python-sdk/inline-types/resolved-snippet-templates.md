@@ -8,8 +8,8 @@ client.get_root(
 	),
 	foo="foo"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -19,8 +19,8 @@ client = SeedObject(base_url="https://yourhost.com/path/to/api", )
 client.get_discriminated_union(
 	foo="foo"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -30,7 +30,7 @@ client = SeedObject(base_url="https://yourhost.com/path/to/api", )
 client.get_undiscriminated_union(
 	foo="foo"
 )
- 
-```                        
+
+```
 
 

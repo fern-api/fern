@@ -1,5 +1,6 @@
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 
 export async function visitFilepath({

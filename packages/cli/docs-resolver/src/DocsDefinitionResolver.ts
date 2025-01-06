@@ -1,4 +1,12 @@
-import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { readFile, stat } from "fs/promises";
+import matter from "gray-matter";
+import { kebabCase } from "lodash-es";
+import urlJoin from "url-join";
+
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { WithoutQuestionMarks, docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -7,17 +15,12 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { readFile, stat } from "fs/promises";
-import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -25,7 +28,6 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 dayjs.extend(utc);
 

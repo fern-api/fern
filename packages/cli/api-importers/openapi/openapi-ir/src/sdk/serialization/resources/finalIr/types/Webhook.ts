@@ -32,7 +32,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
         .extend(WithNamespace);
 
 export declare namespace Webhook {
-    interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
         sdkName?: EndpointSdkName.Raw | null;
         method: WebhookHttpMethod.Raw;
         summary?: string | null;

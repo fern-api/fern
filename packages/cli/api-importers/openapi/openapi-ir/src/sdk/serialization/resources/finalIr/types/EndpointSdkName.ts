@@ -17,7 +17,7 @@ export const EndpointSdkName: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointSdkName {
-    interface Raw {
+    export interface Raw {
         groupName: SdkGroupName.Raw;
         methodName: string;
     }

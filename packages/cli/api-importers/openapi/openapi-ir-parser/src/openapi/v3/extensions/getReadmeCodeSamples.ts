@@ -1,7 +1,9 @@
-import { isPlainObject } from "@fern-api/core-utils";
-import { CustomCodeSample } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { CustomCodeSample } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../getExtension";
 import { ReadmeOpenAPIExtension } from "./readmeExtensions";
 

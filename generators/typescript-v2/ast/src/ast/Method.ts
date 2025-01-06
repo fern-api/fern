@@ -1,9 +1,9 @@
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 import { Function } from "./Function";
+import { Parameter } from "./Parameter";
 import { Reference } from "./Reference";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 

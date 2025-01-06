@@ -1,8 +1,8 @@
-import { TypeInstantiation } from "../TypeInstantiation";
-import { GoFile } from "../core/GoFile";
-import { AstNode } from "../core/AstNode";
-import { Type } from "../Type";
 import { GoTypeReference } from "../GoTypeReference";
+import { Type } from "../Type";
+import { TypeInstantiation } from "../TypeInstantiation";
+import { AstNode } from "../core/AstNode";
+import { GoFile } from "../core/GoFile";
 
 interface TestCase {
     description: string;

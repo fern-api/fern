@@ -1,5 +1,7 @@
-import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../getExtension";
 import { getDefaultAsString } from "../../../schema/defaults/getDefault";
 import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName";

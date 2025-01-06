@@ -39,7 +39,7 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
         });
 
 export declare namespace VariableValue {
-    type Raw =
+    export type Raw =
         | VariableValue.IntegerValue
         | VariableValue.BooleanValue
         | VariableValue.DoubleValue
@@ -52,53 +52,53 @@ export declare namespace VariableValue {
         | VariableValue.DoublyLinkedListValue
         | VariableValue.NullValue;
 
-    interface IntegerValue {
+    export interface IntegerValue {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue {
+    export interface BooleanValue {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue {
+    export interface DoubleValue {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue {
+    export interface StringValue {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue {
+    export interface CharValue {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends serializers.MapValue.Raw {
+    export interface MapValue extends serializers.MapValue.Raw {
         type: "mapValue";
     }
 
-    interface ListValue {
+    export interface ListValue {
         type: "listValue";
         value: serializers.VariableValue.Raw[];
     }
 
-    interface BinaryTreeValue extends serializers.BinaryTreeValue.Raw {
+    export interface BinaryTreeValue extends serializers.BinaryTreeValue.Raw {
         type: "binaryTreeValue";
     }
 
-    interface SinglyLinkedListValue extends serializers.SinglyLinkedListValue.Raw {
+    export interface SinglyLinkedListValue extends serializers.SinglyLinkedListValue.Raw {
         type: "singlyLinkedListValue";
     }
 
-    interface DoublyLinkedListValue extends serializers.DoublyLinkedListValue.Raw {
+    export interface DoublyLinkedListValue extends serializers.DoublyLinkedListValue.Raw {
         type: "doublyLinkedListValue";
     }
 
-    interface NullValue {
+    export interface NullValue {
         type: "nullValue";
     }
 }

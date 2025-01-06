@@ -9,14 +9,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Submission {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -47,12 +47,12 @@ export class Submission {
      */
     public async createExecutionSession(
         language: SeedTrace.Language,
-        requestOptions?: Submission.RequestOptions
+        requestOptions?: Submission.RequestOptions,
     ): Promise<SeedTrace.ExecutionSessionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${encodeURIComponent(language)}`
+                `/sessions/create-session/${encodeURIComponent(language)}`,
             ),
             method: "POST",
             headers: {
@@ -94,7 +94,7 @@ export class Submission {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling POST /sessions/create-session/{language}."
+                    "Timeout exceeded when calling POST /sessions/create-session/{language}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -114,12 +114,12 @@ export class Submission {
      */
     public async getExecutionSession(
         sessionId: string,
-        requestOptions?: Submission.RequestOptions
+        requestOptions?: Submission.RequestOptions,
     ): Promise<SeedTrace.ExecutionSessionResponse | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/${encodeURIComponent(sessionId)}`
+                `/sessions/${encodeURIComponent(sessionId)}`,
             ),
             method: "GET",
             headers: {
@@ -181,7 +181,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${encodeURIComponent(sessionId)}`
+                `/sessions/stop/${encodeURIComponent(sessionId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -223,7 +223,7 @@ export class Submission {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}."
+                    "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({
@@ -239,12 +239,12 @@ export class Submission {
      *     await client.submission.getExecutionSessionsState()
      */
     public async getExecutionSessionsState(
-        requestOptions?: Submission.RequestOptions
+        requestOptions?: Submission.RequestOptions,
     ): Promise<SeedTrace.GetExecutionSessionStateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sessions/execution-sessions-state"
+                "/sessions/execution-sessions-state",
             ),
             method: "GET",
             headers: {
@@ -286,7 +286,7 @@ export class Submission {
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /sessions/execution-sessions-state."
+                    "Timeout exceeded when calling GET /sessions/execution-sessions-state.",
                 );
             case "unknown":
                 throw new errors.SeedTraceError({

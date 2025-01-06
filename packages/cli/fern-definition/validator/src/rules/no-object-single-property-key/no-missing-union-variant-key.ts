@@ -1,5 +1,6 @@
-import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawDiscriminatedUnionDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawDiscriminatedUnionDefinition } from "@fern-api/fern-definition-schema";
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

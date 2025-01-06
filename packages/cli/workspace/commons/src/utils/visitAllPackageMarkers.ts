@@ -1,6 +1,7 @@
 import { entries } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { FernWorkspace } from "../FernWorkspace";
 import { getAllPackageMarkers } from "./getAllPackageMarkers";
 

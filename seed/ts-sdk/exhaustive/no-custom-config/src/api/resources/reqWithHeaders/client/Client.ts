@@ -9,12 +9,12 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace ReqWithHeaders {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,7 +42,7 @@ export class ReqWithHeaders {
      */
     public async getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
-        requestOptions?: ReqWithHeaders.RequestOptions
+        requestOptions?: ReqWithHeaders.RequestOptions,
     ): Promise<void> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({
@@ -88,7 +88,7 @@ export class ReqWithHeaders {
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /test-headers/custom-header."
+                    "Timeout exceeded when calling POST /test-headers/custom-header.",
                 );
             case "unknown":
                 throw new errors.SeedExhaustiveError({

@@ -30,7 +30,7 @@ export const SchemaType = {
     UNDISCRIMINATED_UNION: "undiscriminatedUnion",
     OPTIONAL: "optional",
 } as const;
-export type SchemaType = typeof SchemaType[keyof typeof SchemaType];
+export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
 
 export type MaybeValid<T> = Valid<T> | Invalid;
 

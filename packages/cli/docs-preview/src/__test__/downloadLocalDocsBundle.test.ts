@@ -1,4 +1,5 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+
 import { downloadBundle } from "../downloadLocalDocsBundle";
 
 describe("preview", () => {

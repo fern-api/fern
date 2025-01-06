@@ -1,5 +1,7 @@
-import { AbstractWriter } from "@fern-api/base-generator";
 import { Config } from "@wasm-fmt/ruff_fmt";
+
+import { AbstractWriter } from "@fern-api/base-generator";
+
 import { Reference } from "../Reference";
 import { ImportedName } from "./types";
 

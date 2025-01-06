@@ -36,7 +36,7 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace ObjectSchemaWithExample {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

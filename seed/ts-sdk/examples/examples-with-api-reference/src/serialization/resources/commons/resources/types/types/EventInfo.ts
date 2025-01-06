@@ -22,13 +22,13 @@ export const EventInfo: core.serialization.Schema<serializers.commons.EventInfo.
         });
 
 export declare namespace EventInfo {
-    type Raw = EventInfo.Metadata | EventInfo.Tag;
+    export type Raw = EventInfo.Metadata | EventInfo.Tag;
 
-    interface Metadata extends Metadata.Raw {
+    export interface Metadata extends Metadata.Raw {
         type: "metadata";
     }
 
-    interface Tag {
+    export interface Tag {
         type: "tag";
         value: Tag.Raw;
     }

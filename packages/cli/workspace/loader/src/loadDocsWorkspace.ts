@@ -1,10 +1,12 @@
-import { docsYml, DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { addPrefixToString } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+
+import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import { addPrefixToString } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { DocsWorkspace } from "./types/Workspace";
 
 export async function loadDocsWorkspace({

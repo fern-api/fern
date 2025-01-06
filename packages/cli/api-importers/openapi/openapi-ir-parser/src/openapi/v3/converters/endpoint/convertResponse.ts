@@ -1,6 +1,8 @@
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { MediaType, assertNever } from "@fern-api/core-utils";
+import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";

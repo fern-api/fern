@@ -1,5 +1,5 @@
-import { TaskContext } from "@fern-api/task-context";
 import { generatorsYml } from "@fern-api/configuration";
+import { TaskContext } from "@fern-api/task-context";
 
 export async function updateGeneratorGroup({
     generatorsConfiguration,

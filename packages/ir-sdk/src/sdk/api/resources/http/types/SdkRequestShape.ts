@@ -6,21 +6,21 @@ import * as FernIr from "../../../index";
 
 export type SdkRequestShape = FernIr.SdkRequestShape.JustRequestBody | FernIr.SdkRequestShape.Wrapper;
 
-export declare namespace SdkRequestShape {
-    interface JustRequestBody extends _Utils {
+export namespace SdkRequestShape {
+    export interface JustRequestBody extends _Utils {
         type: "justRequestBody";
         value: FernIr.SdkRequestBodyType;
     }
 
-    interface Wrapper extends FernIr.SdkRequestWrapper, _Utils {
+    export interface Wrapper extends FernIr.SdkRequestWrapper, _Utils {
         type: "wrapper";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.SdkRequestShape._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         justRequestBody: (value: FernIr.SdkRequestBodyType) => _Result;
         wrapper: (value: FernIr.SdkRequestWrapper) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -34,7 +34,7 @@ export const SdkRequestShape = {
             type: "justRequestBody",
             _visit: function <_Result>(
                 this: FernIr.SdkRequestShape.JustRequestBody,
-                visitor: FernIr.SdkRequestShape._Visitor<_Result>
+                visitor: FernIr.SdkRequestShape._Visitor<_Result>,
             ) {
                 return FernIr.SdkRequestShape._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const SdkRequestShape = {
             type: "wrapper",
             _visit: function <_Result>(
                 this: FernIr.SdkRequestShape.Wrapper,
-                visitor: FernIr.SdkRequestShape._Visitor<_Result>
+                visitor: FernIr.SdkRequestShape._Visitor<_Result>,
             ) {
                 return FernIr.SdkRequestShape._visit(this, visitor);
             },

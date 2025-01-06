@@ -21,7 +21,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.dynamic.Endpo
     });
 
 export declare namespace Endpoint {
-    interface Raw {
+    export interface Raw {
         auth?: Auth.Raw | null;
         declaration: Declaration.Raw;
         location: EndpointLocation.Raw;

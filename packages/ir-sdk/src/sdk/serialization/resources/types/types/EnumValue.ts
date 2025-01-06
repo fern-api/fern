@@ -16,7 +16,7 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
         .extend(Declaration);
 
 export declare namespace EnumValue {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: NameAndWireValue.Raw;
     }
 }

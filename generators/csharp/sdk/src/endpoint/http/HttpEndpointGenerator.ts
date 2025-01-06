@@ -1,4 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
+
 import {
     CursorPagination,
     ExampleEndpointCall,
@@ -9,12 +11,12 @@ import {
     ResponseProperty,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
-import { RawClient } from "./RawClient";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator";
-import { assertNever } from "@fern-api/core-utils";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { RawClient } from "./RawClient";
 
 export declare namespace EndpointGenerator {
     export interface Args {

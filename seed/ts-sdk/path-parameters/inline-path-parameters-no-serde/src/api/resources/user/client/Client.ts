@@ -8,12 +8,12 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         tenantId: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,13 +39,13 @@ export class User {
      */
     public async getUser(
         request: SeedPathParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User> {
         const { user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
             headers: {
@@ -82,7 +82,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -103,12 +103,12 @@ export class User {
      */
     public async createUser(
         request: SeedPathParameters.User,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/`
+                `/${encodeURIComponent(this._options.tenantId)}/user/`,
             ),
             method: "POST",
             headers: {
@@ -146,7 +146,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling POST /{tenant_id}/user/."
+                    "Timeout exceeded when calling POST /{tenant_id}/user/.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -170,13 +170,13 @@ export class User {
      */
     public async updateUser(
         request: SeedPathParameters.UpdateUserRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User> {
         const { user_id: userId, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
             ),
             method: "PATCH",
             headers: {
@@ -214,7 +214,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}."
+                    "Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({
@@ -235,7 +235,7 @@ export class User {
      */
     public async searchUsers(
         request: SeedPathParameters.SearchUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User[]> {
         const { user_id: userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -246,7 +246,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}/search`
+                `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}/search`,
             ),
             method: "GET",
             headers: {
@@ -284,7 +284,7 @@ export class User {
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search."
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search.",
                 );
             case "unknown":
                 throw new errors.SeedPathParametersError({

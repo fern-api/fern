@@ -6,12 +6,12 @@ import * as core from "./core";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedVariablesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         rootVariable: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

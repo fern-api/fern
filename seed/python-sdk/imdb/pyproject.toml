@@ -1,3 +1,6 @@
+[project]
+name = "fern_imdb"
+
 [tool.poetry]
 name = "fern_imdb"
 version = "0.0.1"

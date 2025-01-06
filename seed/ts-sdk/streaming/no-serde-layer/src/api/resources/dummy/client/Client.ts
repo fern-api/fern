@@ -10,11 +10,11 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -31,7 +31,7 @@ export class Dummy {
 
     public async generateStream(
         request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
@@ -108,7 +108,7 @@ export class Dummy {
      */
     public async generate(
         request: SeedStreaming.Generateequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<SeedStreaming.StreamResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),

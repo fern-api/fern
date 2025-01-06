@@ -12,5 +12,5 @@ export const SupportedSdkLanguage: core.serialization.Schema<
 > = core.serialization.enum_(["curl", "python", "javascript", "typescript", "go", "ruby", "csharp", "java"]);
 
 export declare namespace SupportedSdkLanguage {
-    type Raw = "curl" | "python" | "javascript" | "typescript" | "go" | "ruby" | "csharp" | "java";
+    export type Raw = "curl" | "python" | "javascript" | "typescript" | "go" | "ruby" | "csharp" | "java";
 }

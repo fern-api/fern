@@ -12,13 +12,13 @@ export const UndiscriminatedUnion1DiscriminatedUnion1InlineType1: core.serializa
 > = core.serialization.object({
     foo: core.serialization.string(),
     bar: core.serialization.lazyObject(
-        () => serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
+        () => serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1,
     ),
     ref: core.serialization.lazyObject(() => serializers.ReferenceType),
 });
 
 export declare namespace UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
         bar: serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1.Raw;
         ref: serializers.ReferenceType.Raw;

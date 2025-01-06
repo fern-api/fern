@@ -1,12 +1,13 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
+import { Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { CliContext } from "../cli-context/CliContext";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
 import { getOutputDirectories } from "../persistence/output-directories/getOutputDirectories";
 import { storeOutputDirectories } from "../persistence/output-directories/storeOutputDirectories";
-import { describe, it, expect, beforeEach, vi, Mock, afterEach } from "vitest";
-import { CliContext } from "../cli-context/CliContext";
-import { isCI } from "../utils/isCI";
 
 vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(false)
@@ -18,6 +19,7 @@ describe.sequential("checkOutputDirectory", () => {
     };
 
     beforeEach(() => {
+        process.env = {};
         mockCliContext = {
             confirmPrompt: vi.fn().mockImplementation(async () => true)
         };

@@ -27,13 +27,13 @@ export const OneOfSchema: core.serialization.Schema<serializers.OneOfSchema.Raw,
         });
 
 export declare namespace OneOfSchema {
-    type Raw = OneOfSchema.Discriminated | OneOfSchema.Undisciminated;
+    export type Raw = OneOfSchema.Discriminated | OneOfSchema.Undisciminated;
 
-    interface Discriminated extends serializers.DiscriminatedOneOfSchema.Raw {
+    export interface Discriminated extends serializers.DiscriminatedOneOfSchema.Raw {
         type: "discriminated";
     }
 
-    interface Undisciminated extends serializers.UnDiscriminatedOneOfSchema.Raw {
+    export interface Undisciminated extends serializers.UnDiscriminatedOneOfSchema.Raw {
         type: "undisciminated";
     }
 }

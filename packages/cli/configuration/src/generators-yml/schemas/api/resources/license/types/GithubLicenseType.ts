@@ -3,7 +3,6 @@
  */
 
 export type GithubLicenseType = "MIT" | "Apache-2.0";
-
 export const GithubLicenseType = {
     Mit: "MIT",
     Apache: "Apache-2.0",

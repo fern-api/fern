@@ -1,5 +1,5 @@
-import { Writer } from "../core/Writer";
 import { python } from "..";
+import { Writer } from "../core/Writer";
 
 describe("ClassInstantiation", () => {
     let writer: Writer;

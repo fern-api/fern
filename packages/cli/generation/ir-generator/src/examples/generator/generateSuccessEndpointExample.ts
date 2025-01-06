@@ -21,6 +21,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
+
 import { hashJSON } from "../../utils/hashJSON";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";

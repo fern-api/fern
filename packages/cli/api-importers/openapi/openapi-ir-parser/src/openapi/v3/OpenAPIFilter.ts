@@ -1,7 +1,8 @@
-import { HttpMethod } from "@fern-api/openapi-ir";
-import { ParseOpenAPIOptions } from "../../options";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
+import { HttpMethod } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
+
+import { ParseOpenAPIOptions } from "../../options";
 
 export class OpenAPIFilter {
     public readonly endpoints: Set<string> | undefined;

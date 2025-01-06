@@ -1,17 +1,19 @@
+import { kebabCase } from "lodash-es";
+import urlJoin from "url-join";
+
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -196,7 +198,7 @@ export class ApiReferenceNodeConverter {
                 pkg.slug ??
                 (isSubpackage(subpackage)
                     ? subpackage.urlSlug
-                    : this.apiSection.slug ?? kebabCase(this.apiSection.title));
+                    : (this.apiSection.slug ?? kebabCase(this.apiSection.title)));
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -210,7 +212,7 @@ export class ApiReferenceNodeConverter {
                 title:
                     pkg.title ??
                     (isSubpackage(subpackage)
-                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title),
                 slug: slug.get(),
                 icon: pkg.icon,
@@ -351,7 +353,7 @@ export class ApiReferenceNodeConverter {
                 type: "apiPackage",
                 children: [],
                 title: isSubpackage(subpackage)
-                    ? subpackage.displayName ?? titleCase(subpackage.name)
+                    ? (subpackage.displayName ?? titleCase(subpackage.name))
                     : this.apiSection.title,
                 slug: slug.get(),
                 icon: undefined,
@@ -644,7 +646,7 @@ export class ApiReferenceNodeConverter {
                     type: "apiPackage",
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
-                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title,
                     slug: slug.get(),
                     icon: undefined,

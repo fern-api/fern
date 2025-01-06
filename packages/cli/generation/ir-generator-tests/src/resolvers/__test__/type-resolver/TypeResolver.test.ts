@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { TypeResolverImpl, constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { constructCasingsGenerator, constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 
 describe("TypeResolver", () => {
     it("illogical self-referencing types", async () => {

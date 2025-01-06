@@ -5,7 +5,7 @@ client = SeedSingleUrlEnvironmentDefault(token="YOUR_TOKEN", )
 client.dummy.get_dummy(
 	
 )
- 
-```                        
+
+```
 
 

@@ -1,8 +1,9 @@
 import { AbstractProject } from "@fern-api/base-generator";
+import { loggingExeca } from "@fern-api/logging-execa";
+
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
 import { WriteablePythonFile } from "./WriteablePythonFile";
-import { loggingExeca } from "@fern-api/logging-execa";
 
 /**
  * In memory representation of a Python project.

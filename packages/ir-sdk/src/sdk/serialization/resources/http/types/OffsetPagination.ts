@@ -19,7 +19,7 @@ export const OffsetPagination: core.serialization.ObjectSchema<
 });
 
 export declare namespace OffsetPagination {
-    interface Raw {
+    export interface Raw {
         page: RequestProperty.Raw;
         results: ResponseProperty.Raw;
         hasNextPage?: ResponseProperty.Raw | null;

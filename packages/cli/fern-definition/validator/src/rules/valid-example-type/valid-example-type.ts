@@ -1,9 +1,10 @@
 import {
-    constructFernFileContext,
     ExampleResolverImpl,
     ExampleValidators,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

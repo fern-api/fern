@@ -13,12 +13,12 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
     submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     testCases: core.serialization.record(
         core.serialization.lazy(() => serializers.v2.TestCaseId),
-        core.serialization.lazy(() => serializers.TestCaseGrade)
+        core.serialization.lazy(() => serializers.TestCaseGrade),
     ),
 });
 
 export declare namespace GradedResponseV2 {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         testCases: Record<serializers.v2.TestCaseId.Raw, serializers.TestCaseGrade.Raw>;
     }

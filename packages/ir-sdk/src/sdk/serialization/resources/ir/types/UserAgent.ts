@@ -13,7 +13,7 @@ export const UserAgent: core.serialization.ObjectSchema<serializers.UserAgent.Ra
     });
 
 export declare namespace UserAgent {
-    interface Raw {
+    export interface Raw {
         header: "User-Agent";
         value: string;
     }

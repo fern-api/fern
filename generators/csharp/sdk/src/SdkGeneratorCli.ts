@@ -1,14 +1,21 @@
+import { writeFile } from "fs/promises";
+
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
-    generateModels,
     generateTests as generateModelTests,
-    generateWellKnownProtobufFiles,
-    generateVersion
+    generateModels,
+    generateVersion,
+    generateWellKnownProtobufFiles
 } from "@fern-api/fern-csharp-model";
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { writeFile } from "fs/promises";
+
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
@@ -16,21 +23,17 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
-import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { buildReference } from "./reference/buildReference";
-import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
 import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
+import { buildReference } from "./reference/buildReference";
+import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

@@ -1,5 +1,7 @@
-import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
+
+import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
+
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
 

@@ -14,7 +14,7 @@ export const ObjectWithRequiredField: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectWithRequiredField {
-    interface Raw {
+    export interface Raw {
         string: string;
     }
 }

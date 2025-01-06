@@ -10,12 +10,12 @@ import * as serializers from "../../../../../../../../serialization/index";
 import * as errors from "../../../../../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,12 +39,12 @@ export class Service {
      */
     public async getException(
         notificationId: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Exception> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/file/notification/${encodeURIComponent(notificationId)}`
+                `/file/notification/${encodeURIComponent(notificationId)}`,
             ),
             method: "GET",
             headers: {
@@ -87,7 +87,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError(
-                    "Timeout exceeded when calling GET /file/notification/{notificationId}."
+                    "Timeout exceeded when calling GET /file/notification/{notificationId}.",
                 );
             case "unknown":
                 throw new errors.SeedExamplesError({

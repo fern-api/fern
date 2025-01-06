@@ -122,35 +122,273 @@
           },
         },
         "types": {
-          "EndUser": "unknown",
+          "EndUser": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "created_at": {
+                "docs": "The date and time the end user was created",
+                "type": "optional<string>",
+              },
+              "end_user_id": {
+                "docs": "The unique Ada-generated ID for the end user",
+                "type": "optional<string>",
+              },
+              "profile": {
+                "docs": "The end user's profile information",
+                "type": "optional<EndUserProfile>",
+              },
+              "updated_at": {
+                "docs": "The date and time the end user was updated",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "EndUserCreatedWebhookPayload": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<unknown>",
-              "timestamp": "optional<string>",
-              "type": "optional<string>",
+              "data": {
+                "docs": "The webhook event data",
+                "type": "optional<EndUserCreatedWebhookPayloadData>",
+              },
+              "timestamp": {
+                "docs": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+                "type": "optional<string>",
+              },
+              "type": {
+                "docs": "The webhook event type description",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
             },
           },
-          "EndUserRequest": "unknown",
+          "EndUserCreatedWebhookPayloadData": {
+            "docs": "The webhook event data",
+            "inline": true,
+            "properties": {
+              "created_at": {
+                "docs": "The date and time the end user was created",
+                "type": "optional<string>",
+              },
+              "end_user_id": {
+                "docs": "The unique Ada-generated ID for the end user",
+                "type": "optional<string>",
+              },
+              "profile": {
+                "docs": "The end user's profile information",
+                "type": "optional<EndUserProfile>",
+              },
+              "updated_at": {
+                "docs": "The date and time the end user was updated",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "EndUserProfile": {
+            "docs": "The end user's profile information",
+            "inline": true,
+            "properties": {
+              "email": {
+                "docs": "The end user's email address",
+                "type": "optional<string>",
+              },
+              "first_name": {
+                "docs": "The end user's first name",
+                "type": "optional<string>",
+              },
+              "language": {
+                "docs": "The end user's language in BCP 47 format",
+                "type": "optional<string>",
+              },
+              "last_name": {
+                "docs": "The end user's last name",
+                "type": "optional<string>",
+              },
+              "metadata": {
+                "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                "type": "optional<map<string, unknown>>",
+              },
+              "system_properties": {
+                "docs": "Read-only profile information set by Ada",
+                "type": "optional<EndUserProfileSystemProperties>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "EndUserProfileSystemProperties": {
+            "docs": "Read-only profile information set by Ada",
+            "inline": true,
+            "properties": {
+              "browser": {
+                "docs": "The end user's browser information captured by Ada",
+                "type": "optional<string>",
+              },
+              "browser_version": {
+                "docs": "The end user's browser version captured by Ada",
+                "type": "optional<string>",
+              },
+              "device": {
+                "docs": "The end user's device information captured by Ada",
+                "type": "optional<string>",
+              },
+              "introshown": {
+                "docs": "Whether the introductory message of a campaign has been displayed to the end user",
+                "type": "optional<boolean>",
+              },
+              "last_answer_id": {
+                "docs": "The ID for the last answer displayed to the end user during a conversation",
+                "type": "optional<string>",
+              },
+              "last_question_asked": {
+                "docs": "The last question asked by the end user",
+                "type": "optional<string>",
+              },
+              "sunshine_conversation_id": {
+                "docs": "The ID for the Sunshine Conversation for this end user",
+                "type": "optional<string>",
+              },
+              "sunshine_end_user_channel": {
+                "docs": "The channel used to communicate with the end user via Sunshine Conversations",
+                "type": "optional<string>",
+              },
+              "sunshine_first_message_id": {
+                "docs": "The ID for the first message sent to the end user via Sunshine Conversations",
+                "type": "optional<string>",
+              },
+              "sunshine_signed_up_at": {
+                "docs": "The date the end user signed up for Sunshine Conversations",
+                "type": "optional<string>",
+              },
+              "sunshine_user_id": {
+                "docs": "The Sunshine Conversations user ID for the end user",
+                "type": "optional<string>",
+              },
+              "user_agent": {
+                "docs": "The end user's browser user-agent information captured by Ada",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "EndUserUpdatedWebhookPayload": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<unknown>",
-              "timestamp": "optional<string>",
-              "type": "optional<string>",
+              "data": {
+                "docs": "The webhook event data",
+                "type": "optional<EndUserUpdatedWebhookPayloadData>",
+              },
+              "timestamp": {
+                "docs": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+                "type": "optional<string>",
+              },
+              "type": {
+                "docs": "The webhook event type description",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
             },
           },
-          "EndUsers": "unknown",
-          "Error": "unknown",
-          "Errors": "unknown",
+          "EndUserUpdatedWebhookPayloadData": {
+            "docs": "The webhook event data",
+            "inline": true,
+            "properties": {
+              "created_at": {
+                "docs": "The date and time the end user was created",
+                "type": "optional<string>",
+              },
+              "end_user_id": {
+                "docs": "The unique Ada-generated ID for the end user",
+                "type": "optional<string>",
+              },
+              "profile": {
+                "docs": "The end user's profile information",
+                "type": "optional<EndUserProfile>",
+              },
+              "updated_at": {
+                "docs": "The date and time the end user was updated",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "EndUsers": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "end_users": {
+                "docs": "List of end user profiles",
+                "type": "optional<list<EndUser>>",
+              },
+              "meta": {
+                "docs": "Metadata returned with the results including but not limited to a link to the next page of data",
+                "type": "optional<EndUsersMeta>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "EndUsersMeta": {
+            "docs": "Metadata returned with the results including but not limited to a link to the next page of data",
+            "inline": true,
+            "properties": {
+              "next_page_url": {
+                "docs": "Link to the next page of data using a cursor value",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "Error": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "details": {
+                "docs": "Extra information about the error",
+                "type": "string",
+              },
+              "msg": {
+                "docs": "The error message",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "Errors": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "errors": {
+                "docs": "A list of errors",
+                "type": "list<Error>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
         },
       },
       "rawContents": "errors:
@@ -219,23 +457,204 @@
               details: 'Maximum request size of 4.0 MB exceeded. Content length: 5.0 MB.'
         name: ContentTooLargeError
 types:
-  EndUser: unknown
-  EndUserRequest: unknown
-  Error: unknown
-  Errors: unknown
-  EndUsers: unknown
-  EndUserCreatedWebhookPayload:
+  EndUserProfileSystemProperties:
+    docs: Read-only profile information set by Ada
     properties:
-      type: optional<string>
-      timestamp: optional<string>
-      data: optional<unknown>
+      user_agent:
+        type: optional<string>
+        docs: The end user's browser user-agent information captured by Ada
+      device:
+        type: optional<string>
+        docs: The end user's device information captured by Ada
+      browser:
+        type: optional<string>
+        docs: The end user's browser information captured by Ada
+      browser_version:
+        type: optional<string>
+        docs: The end user's browser version captured by Ada
+      introshown:
+        type: optional<boolean>
+        docs: >-
+          Whether the introductory message of a campaign has been displayed to
+          the end user
+      last_answer_id:
+        type: optional<string>
+        docs: >-
+          The ID for the last answer displayed to the end user during a
+          conversation
+      last_question_asked:
+        type: optional<string>
+        docs: The last question asked by the end user
+      sunshine_first_message_id:
+        type: optional<string>
+        docs: >-
+          The ID for the first message sent to the end user via Sunshine
+          Conversations
+      sunshine_conversation_id:
+        type: optional<string>
+        docs: The ID for the Sunshine Conversation for this end user
+      sunshine_end_user_channel:
+        type: optional<string>
+        docs: >-
+          The channel used to communicate with the end user via Sunshine
+          Conversations
+      sunshine_signed_up_at:
+        type: optional<string>
+        docs: The date the end user signed up for Sunshine Conversations
+      sunshine_user_id:
+        type: optional<string>
+        docs: The Sunshine Conversations user ID for the end user
     source:
       openapi: ../openapi.json
+    inline: true
+  EndUserProfile:
+    docs: The end user's profile information
+    properties:
+      first_name:
+        type: optional<string>
+        docs: The end user's first name
+      last_name:
+        type: optional<string>
+        docs: The end user's last name
+      email:
+        type: optional<string>
+        docs: The end user's email address
+      language:
+        type: optional<string>
+        docs: The end user's language in BCP 47 format
+      metadata:
+        type: optional<map<string, unknown>>
+        docs: >-
+          A dictionary of arbitrary key, value pairs assigned to the end
+          user                      - `metadata` keys may only be of type:
+          `string`                      - `metadata` values may only be one of
+          type: `string`, `boolean`, or `integer`                     
+      system_properties:
+        type: optional<EndUserProfileSystemProperties>
+        docs: Read-only profile information set by Ada
+    source:
+      openapi: ../openapi.json
+    inline: true
+  EndUser:
+    properties:
+      end_user_id:
+        type: optional<string>
+        docs: The unique Ada-generated ID for the end user
+      profile:
+        type: optional<EndUserProfile>
+        docs: The end user's profile information
+      created_at:
+        type: optional<string>
+        docs: The date and time the end user was created
+      updated_at:
+        type: optional<string>
+        docs: The date and time the end user was updated
+    source:
+      openapi: ../openapi.json
+  Error:
+    properties:
+      msg:
+        type: string
+        docs: The error message
+      details:
+        type: string
+        docs: Extra information about the error
+    source:
+      openapi: ../openapi.json
+  Errors:
+    properties:
+      errors:
+        docs: A list of errors
+        type: list<Error>
+    source:
+      openapi: ../openapi.json
+  EndUsersMeta:
+    docs: >-
+      Metadata returned with the results including but not limited to a link to
+      the next page of data
+    properties:
+      next_page_url:
+        type: optional<string>
+        docs: Link to the next page of data using a cursor value
+    source:
+      openapi: ../openapi.json
+    inline: true
+  EndUsers:
+    properties:
+      end_users:
+        type: optional<list<EndUser>>
+        docs: List of end user profiles
+      meta:
+        type: optional<EndUsersMeta>
+        docs: >-
+          Metadata returned with the results including but not limited to a link
+          to the next page of data
+    source:
+      openapi: ../openapi.json
+  EndUserCreatedWebhookPayloadData:
+    docs: The webhook event data
+    properties:
+      end_user_id:
+        type: optional<string>
+        docs: The unique Ada-generated ID for the end user
+      created_at:
+        type: optional<string>
+        docs: The date and time the end user was created
+      updated_at:
+        type: optional<string>
+        docs: The date and time the end user was updated
+      profile:
+        type: optional<EndUserProfile>
+        docs: The end user's profile information
+    source:
+      openapi: ../openapi.json
+    inline: true
+  EndUserCreatedWebhookPayload:
+    properties:
+      type:
+        type: optional<string>
+        docs: The webhook event type description
+      timestamp:
+        type: optional<string>
+        docs: >-
+          The timestamp for when the event was generated. Uses millisecond
+          precision to help with event ordering needs.
+      data:
+        type: optional<EndUserCreatedWebhookPayloadData>
+        docs: The webhook event data
+    source:
+      openapi: ../openapi.json
+  EndUserUpdatedWebhookPayloadData:
+    docs: The webhook event data
+    properties:
+      end_user_id:
+        type: optional<string>
+        docs: The unique Ada-generated ID for the end user
+      created_at:
+        type: optional<string>
+        docs: The date and time the end user was created
+      updated_at:
+        type: optional<string>
+        docs: The date and time the end user was updated
+      profile:
+        type: optional<EndUserProfile>
+        docs: The end user's profile information
+    source:
+      openapi: ../openapi.json
+    inline: true
   EndUserUpdatedWebhookPayload:
     properties:
-      type: optional<string>
-      timestamp: optional<string>
-      data: optional<unknown>
+      type:
+        type: optional<string>
+        docs: The webhook event type description
+      timestamp:
+        type: optional<string>
+        docs: >-
+          The timestamp for when the event was generated. Uses millisecond
+          precision to help with event ordering needs.
+      data:
+        type: optional<EndUserUpdatedWebhookPayloadData>
+        docs: The webhook event data
     source:
       openapi: ../openapi.json
 ",
@@ -267,7 +686,34 @@ types:
                   },
                   "response": {
                     "body": {
-                      "key": "value",
+                      "created_at": "2023-12-08T19:06:04.890000",
+                      "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "profile": {
+                        "email": "ada.lovelace@ada.cx",
+                        "first_name": "Ada",
+                        "language": "en-US",
+                        "last_name": "Lovelace",
+                        "metadata": {
+                          "example_key1": "example_string_value",
+                          "example_key2": true,
+                          "example_key3": 123,
+                        },
+                        "system_properties": {
+                          "browser": "Chrome",
+                          "browser_version": "119.0.0.0",
+                          "device": "macos",
+                          "introshown": false,
+                          "last_answer_id": "650071321ef45533437f6f29",
+                          "last_question_asked": "What is my account balance?",
+                          "sunshine_conversation_id": "12345abc",
+                          "sunshine_end_user_channel": "whatsapp",
+                          "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                          "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                          "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                        },
+                      },
+                      "updated_at": "2023-12-08T19:06:04.890000",
                     },
                   },
                 },
@@ -307,7 +753,41 @@ types:
                   },
                   "response": {
                     "body": {
-                      "key": "value",
+                      "end_users": [
+                        {
+                          "created_at": "2023-12-08T19:06:04.890000",
+                          "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "profile": {
+                            "email": "ada.lovelace@ada.cx",
+                            "first_name": "Ada",
+                            "language": "en-US",
+                            "last_name": "Lovelace",
+                            "metadata": {
+                              "example_key1": "example_string_value",
+                              "example_key2": true,
+                              "example_key3": 123,
+                            },
+                            "system_properties": {
+                              "browser": "Chrome",
+                              "browser_version": "119.0.0.0",
+                              "device": "macos",
+                              "introshown": false,
+                              "last_answer_id": "650071321ef45533437f6f29",
+                              "last_question_asked": "What is my account balance?",
+                              "sunshine_conversation_id": "12345abc",
+                              "sunshine_end_user_channel": "whatsapp",
+                              "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                              "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                              "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                              "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                            },
+                          },
+                          "updated_at": "2023-12-08T19:06:04.890000",
+                        },
+                      ],
+                      "meta": {
+                        "next_page_url": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb",
+                      },
                     },
                   },
                 },
@@ -355,6 +835,58 @@ types:
                 "root.TooManyRequestsError",
                 "root.InternalServerError",
               ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "end_user_id": "end_user_id",
+                  },
+                  "request": {
+                    "profile": {
+                      "email": "ada.lovelace@ada.cx",
+                      "first_name": "Ada",
+                      "language": "en-US",
+                      "last_name": "Lovelace",
+                      "metadata": {
+                        "example_key1": "example_string_value",
+                        "example_key2": true,
+                        "example_key3": 123,
+                      },
+                    },
+                  },
+                  "response": {
+                    "body": {
+                      "created_at": "2023-12-08T19:06:04.890000",
+                      "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "profile": {
+                        "email": "ada.lovelace@ada.cx",
+                        "first_name": "Ada",
+                        "language": "en-US",
+                        "last_name": "Lovelace",
+                        "metadata": {
+                          "example_key1": "example_string_value",
+                          "example_key2": true,
+                          "example_key3": 123,
+                        },
+                        "system_properties": {
+                          "browser": "Chrome",
+                          "browser_version": "119.0.0.0",
+                          "device": "macos",
+                          "introshown": false,
+                          "last_answer_id": "650071321ef45533437f6f29",
+                          "last_question_asked": "What is my account balance?",
+                          "sunshine_conversation_id": "12345abc",
+                          "sunshine_end_user_channel": "whatsapp",
+                          "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                          "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                          "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                        },
+                      },
+                      "updated_at": "2023-12-08T19:06:04.890000",
+                    },
+                  },
+                },
+              ],
               "method": "PATCH",
               "pagination": undefined,
               "path": "/end-users/v1/{end_user_id}",
@@ -365,8 +897,19 @@ types:
                 },
               },
               "request": {
-                "body": "root.EndUserRequest",
+                "body": {
+                  "properties": {
+                    "profile": {
+                      "docs": "The end user's profile information",
+                      "type": "EndUserRequestProfile",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "EndUserRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
@@ -379,6 +922,37 @@ types:
           },
           "source": {
             "openapi": "../openapi.json",
+          },
+        },
+        "types": {
+          "EndUserRequestProfile": {
+            "docs": "The end user's profile information",
+            "inline": true,
+            "properties": {
+              "email": {
+                "docs": "The end user's email address",
+                "type": "optional<string>",
+              },
+              "first_name": {
+                "docs": "The end user's first name",
+                "type": "optional<string>",
+              },
+              "language": {
+                "docs": "The end user's language in BCP 47 format",
+                "type": "optional<string>",
+              },
+              "last_name": {
+                "docs": "The end user's last name",
+                "type": "optional<string>",
+              },
+              "metadata": {
+                "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                "type": "optional<map<string, unknown>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
           },
         },
       },
@@ -413,7 +987,34 @@ service:
             end_user_id: end_user_id
           response:
             body:
-              key: value
+              end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              profile:
+                first_name: Ada
+                last_name: Lovelace
+                email: ada.lovelace@ada.cx
+                language: en-US
+                metadata:
+                  example_key1: example_string_value
+                  example_key2: true
+                  example_key3: 123
+                system_properties:
+                  user_agent: >-
+                    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                    Safari/537.36
+                  device: macos
+                  browser: Chrome
+                  browser_version: 119.0.0.0
+                  introshown: false
+                  last_answer_id: 650071321ef45533437f6f29
+                  last_question_asked: What is my account balance?
+                  sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                  sunshine_conversation_id: 12345abc
+                  sunshine_end_user_channel: whatsapp
+                  sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                  sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              created_at: '2023-12-08T19:06:04.890000'
+              updated_at: '2023-12-08T19:06:04.890000'
     updateEndUserById:
       path: /end-users/v1/{end_user_id}
       method: PATCH
@@ -427,7 +1028,12 @@ service:
           docs: The end_user_id
       display-name: Update an end user by ID
       request:
-        body: root.EndUserRequest
+        name: EndUserRequest
+        body:
+          properties:
+            profile:
+              type: EndUserRequestProfile
+              docs: The end user's profile information
         content-type: application/json
       response:
         docs: OK
@@ -439,6 +1045,49 @@ service:
         - root.ContentTooLargeError
         - root.TooManyRequestsError
         - root.InternalServerError
+      examples:
+        - path-parameters:
+            end_user_id: end_user_id
+          request:
+            profile:
+              first_name: Ada
+              last_name: Lovelace
+              email: ada.lovelace@ada.cx
+              language: en-US
+              metadata:
+                example_key1: example_string_value
+                example_key2: true
+                example_key3: 123
+          response:
+            body:
+              end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              profile:
+                first_name: Ada
+                last_name: Lovelace
+                email: ada.lovelace@ada.cx
+                language: en-US
+                metadata:
+                  example_key1: example_string_value
+                  example_key2: true
+                  example_key3: 123
+                system_properties:
+                  user_agent: >-
+                    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                    Safari/537.36
+                  device: macos
+                  browser: Chrome
+                  browser_version: 119.0.0.0
+                  introshown: false
+                  last_answer_id: 650071321ef45533437f6f29
+                  last_question_asked: What is my account balance?
+                  sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                  sunshine_conversation_id: 12345abc
+                  sunshine_end_user_channel: whatsapp
+                  sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                  sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              created_at: '2023-12-08T19:06:04.890000'
+              updated_at: '2023-12-08T19:06:04.890000'
     getEndUsers:
       path: /end-users/v1
       method: GET
@@ -475,9 +1124,66 @@ service:
             limit: 8
           response:
             body:
-              key: value
+              end_users:
+                - end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+                  profile:
+                    first_name: Ada
+                    last_name: Lovelace
+                    email: ada.lovelace@ada.cx
+                    language: en-US
+                    metadata:
+                      example_key1: example_string_value
+                      example_key2: true
+                      example_key3: 123
+                    system_properties:
+                      user_agent: >-
+                        Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                        Safari/537.36
+                      device: macos
+                      browser: Chrome
+                      browser_version: 119.0.0.0
+                      introshown: false
+                      last_answer_id: 650071321ef45533437f6f29
+                      last_question_asked: What is my account balance?
+                      sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                      sunshine_conversation_id: 12345abc
+                      sunshine_end_user_channel: whatsapp
+                      sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                      sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+                  created_at: '2023-12-08T19:06:04.890000'
+                  updated_at: '2023-12-08T19:06:04.890000'
+              meta:
+                next_page_url: >-
+                  https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb
   source:
     openapi: ../openapi.json
+types:
+  EndUserRequestProfile:
+    docs: The end user's profile information
+    properties:
+      first_name:
+        type: optional<string>
+        docs: The end user's first name
+      last_name:
+        type: optional<string>
+        docs: The end user's last name
+      email:
+        type: optional<string>
+        docs: The end user's email address
+      language:
+        type: optional<string>
+        docs: The end user's language in BCP 47 format
+      metadata:
+        type: optional<map<string, unknown>>
+        docs: >-
+          A dictionary of arbitrary key, value pairs assigned to the end
+          user                      - `metadata` keys may only be of type:
+          `string`                      - `metadata` values may only be one of
+          type: `string`, `boolean`, or `integer`                     
+    source:
+      openapi: ../openapi.json
+    inline: true
 ",
     },
   },

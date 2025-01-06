@@ -1,13 +1,15 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import produce from "immer";
+import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
-import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { NpmPackage } from "../NpmPackage";
+import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
+import { mergeExtraConfigs } from "./mergeExtraConfigs";
 
 const FERN_IGNORE_FILENAME = ".fernignore";
 
@@ -235,9 +237,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private getDevDependencies(): Record<string, string> {
         return {
-            "@types/node": "17.0.33",
-            prettier: "2.7.1",
-            typescript: "4.6.4"
+            "@types/node": "^17.0.41",
+            prettier: "^3.4.2",
+            typescript: "~5.7.2"
         };
     }
 }

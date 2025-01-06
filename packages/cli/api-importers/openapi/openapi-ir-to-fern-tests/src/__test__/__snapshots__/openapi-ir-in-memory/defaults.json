@@ -1,0 +1,104 @@
+{
+  "type": "openapi",
+  "value": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API with Default Values",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/test": {
+        "get": {
+          "parameters": [
+            {
+              "name": "boolParam1",
+              "in": "query",
+              "schema": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            {
+              "name": "boolParam2",
+              "in": "query",
+              "schema": {
+                "type": "boolean",
+                "default": "true"
+              }
+            },
+            {
+              "name": "boolParam3",
+              "in": "query",
+              "schema": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            {
+              "name": "boolParam4",
+              "in": "query",
+              "schema": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "stringParam",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "default": "defaultString"
+              }
+            },
+            {
+              "name": "numberParam",
+              "in": "query",
+              "schema": {
+                "type": "number",
+                "default": 42
+              }
+            },
+            {
+              "name": "integerParam",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "default": 100
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "boolField1": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "boolField2": {
+                        "type": "boolean",
+                        "default": "true"
+                      },
+                      "stringField": {
+                        "type": "string",
+                        "default": "defaultValue"
+                      },
+                      "numberField": {
+                        "type": "number",
+                        "default": 3.14
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

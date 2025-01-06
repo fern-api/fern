@@ -1,3 +1,6 @@
+[project]
+name = "fern_multi-line-docs"
+
 [tool.poetry]
 name = "fern_multi-line-docs"
 version = "0.0.1"

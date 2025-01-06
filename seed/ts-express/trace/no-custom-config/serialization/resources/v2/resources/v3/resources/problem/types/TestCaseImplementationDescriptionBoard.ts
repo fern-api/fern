@@ -24,14 +24,14 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
     });
 
 export declare namespace TestCaseImplementationDescriptionBoard {
-    type Raw = TestCaseImplementationDescriptionBoard.Html | TestCaseImplementationDescriptionBoard.ParamId;
+    export type Raw = TestCaseImplementationDescriptionBoard.Html | TestCaseImplementationDescriptionBoard.ParamId;
 
-    interface Html {
+    export interface Html {
         type: "html";
         value: string;
     }
 
-    interface ParamId {
+    export interface ParamId {
         type: "paramId";
         value: serializers.v2.v3.ParameterId.Raw;
     }

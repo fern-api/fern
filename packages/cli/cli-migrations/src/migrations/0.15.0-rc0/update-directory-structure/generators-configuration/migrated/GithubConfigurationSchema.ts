@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { GithubLicenseSchema } from "./GithubLicenseSchema";
 
 export const GithubConfigurationSchema = z.strictObject({

@@ -9,20 +9,20 @@ import * as FernIr from "../../../../../index";
  */
 export type Request = FernIr.dynamic.Request.Body | FernIr.dynamic.Request.Inlined;
 
-export declare namespace Request {
-    interface Body extends FernIr.dynamic.BodyRequest, _Utils {
+export namespace Request {
+    export interface Body extends FernIr.dynamic.BodyRequest, _Utils {
         type: "body";
     }
 
-    interface Inlined extends FernIr.dynamic.InlinedRequest, _Utils {
+    export interface Inlined extends FernIr.dynamic.InlinedRequest, _Utils {
         type: "inlined";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.Request._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         body: (value: FernIr.dynamic.BodyRequest) => _Result;
         inlined: (value: FernIr.dynamic.InlinedRequest) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -36,7 +36,7 @@ export const Request = {
             type: "body",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Request.Body,
-                visitor: FernIr.dynamic.Request._Visitor<_Result>
+                visitor: FernIr.dynamic.Request._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Request._visit(this, visitor);
             },
@@ -49,7 +49,7 @@ export const Request = {
             type: "inlined",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Request.Inlined,
-                visitor: FernIr.dynamic.Request._Visitor<_Result>
+                visitor: FernIr.dynamic.Request._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Request._visit(this, visitor);
             },

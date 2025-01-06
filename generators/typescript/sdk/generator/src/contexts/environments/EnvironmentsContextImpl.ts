@@ -1,8 +1,10 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
 
 export declare namespace EnvironmentsContextImpl {

@@ -1,5 +1,5 @@
-import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 import { Rule } from "../../Rule";
+import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 
 export const ValidateVersionFileRule: Rule = {
     name: "validate-version-file",

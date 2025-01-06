@@ -29,13 +29,13 @@ export const Environments: core.serialization.Schema<serializers.Environments.Ra
         });
 
 export declare namespace Environments {
-    type Raw = Environments.SingleBaseUrl | Environments.MultipleBaseUrls;
+    export type Raw = Environments.SingleBaseUrl | Environments.MultipleBaseUrls;
 
-    interface SingleBaseUrl extends SingleBaseUrlEnvironments.Raw {
+    export interface SingleBaseUrl extends SingleBaseUrlEnvironments.Raw {
         type: "singleBaseUrl";
     }
 
-    interface MultipleBaseUrls extends MultipleBaseUrlsEnvironments.Raw {
+    export interface MultipleBaseUrls extends MultipleBaseUrlsEnvironments.Raw {
         type: "multipleBaseUrls";
     }
 }

@@ -17,7 +17,7 @@ export const UserModel: core.serialization.ObjectSchema<serializers.UserModel.Ra
     });
 
 export declare namespace UserModel {
-    interface Raw {
+    export interface Raw {
         username?: string | null;
         email?: string | null;
         age?: number | null;

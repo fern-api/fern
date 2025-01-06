@@ -1,8 +1,11 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
+
 import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { readFile } from "fs/promises";
+
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 

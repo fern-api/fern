@@ -1,3 +1,5 @@
+import { mapValues, pickBy } from "lodash-es";
+
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
@@ -15,10 +17,13 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
-import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
+import { RelativeFilePath, dirname, join } from "@fern-api/path-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
-import { mapValues, pickBy } from "lodash-es";
+
+import { FernFileContext, constructFernFileContext, constructRootApiFileContext } from "./FernFileContext";
+import { IdGenerator } from "./IdGenerator";
+import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
@@ -36,13 +41,10 @@ import { convertTypeDeclaration } from "./converters/type-declarations/convertTy
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 import { addExtendedPropertiesToIr } from "./extended-properties/addExtendedPropertiesToIr";
-import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
+import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
-import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { formatDocs } from "./formatDocs";
-import { IdGenerator } from "./IdGenerator";
-import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { EndpointResolverImpl } from "./resolvers/EndpointResolver";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
@@ -567,6 +569,9 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
     for (const [typeId, serviceIds] of Object.entries(typesReferencedByService)) {
         if (serviceIds.size === 1) {
             const serviceId = serviceIds.values().next().value;
+            if (serviceId == null) {
+                break;
+            }
             if (typesReferencedOnlyByService[serviceId] === undefined) {
                 typesReferencedOnlyByService[serviceId] = [];
             }

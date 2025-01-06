@@ -1,11 +1,13 @@
-import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
+
 import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils";
+
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -73,7 +75,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -97,7 +100,8 @@ async function parseAPIConfigurationToApiLocations(
                     respectReadonlySchemas: undefined,
                     onlyIncludeReferencedSchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -121,7 +125,8 @@ async function parseAPIConfigurationToApiLocations(
                             respectReadonlySchemas: undefined,
                             onlyIncludeReferencedSchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
@@ -145,7 +150,8 @@ async function parseAPIConfigurationToApiLocations(
                             respectReadonlySchemas: undefined,
                             onlyIncludeReferencedSchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 } else {
@@ -167,7 +173,8 @@ async function parseAPIConfigurationToApiLocations(
                             objectQueryParameters: undefined,
                             respectReadonlySchemas: undefined,
                             inlinePathParameters: undefined,
-                            filter: undefined
+                            filter: undefined,
+                            exampleGeneration: undefined
                         }
                     });
                 }
@@ -191,7 +198,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -220,7 +228,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         } else if (openapi != null) {
@@ -242,7 +251,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -266,7 +276,8 @@ async function parseAPIConfigurationToApiLocations(
                     objectQueryParameters: undefined,
                     respectReadonlySchemas: undefined,
                     inlinePathParameters: undefined,
-                    filter: undefined
+                    filter: undefined,
+                    exampleGeneration: undefined
                 }
             });
         }
@@ -327,7 +338,8 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        spec.settings?.["prefer-undiscriminated-unions-with-literals"] ?? false,
                     asyncApiMessageNaming: undefined,
                     onlyIncludeReferencedSchemas: spec.settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
@@ -335,7 +347,8 @@ async function parseApiConfigurationV2Schema({
                     objectQueryParameters: spec.settings?.["object-query-parameters"],
                     respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
                     inlinePathParameters: spec.settings?.["inline-path-parameters"],
-                    filter: spec.settings?.filter
+                    filter: spec.settings?.filter,
+                    exampleGeneration: spec.settings?.["example-generation"]
                 }
             };
             if (spec.namespace == null) {
@@ -687,7 +700,7 @@ async function convertOutputMode({
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
+                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                     downloadSnippets,

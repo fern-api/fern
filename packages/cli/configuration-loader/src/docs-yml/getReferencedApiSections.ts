@@ -1,5 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
 import { docsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 
 export type ReferencedApisResponse = DefaultAPIReferenced | NamedAPIReferenced;
 

@@ -15,7 +15,7 @@ export const VoidFunctionSignature: core.serialization.ObjectSchema<
 });
 
 export declare namespace VoidFunctionSignature {
-    interface Raw {
+    export interface Raw {
         parameters: Parameter.Raw[];
     }
 }

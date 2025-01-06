@@ -9,25 +9,25 @@ export type InlinedRequestBody =
     | FernIr.dynamic.InlinedRequestBody.Referenced
     | FernIr.dynamic.InlinedRequestBody.FileUpload;
 
-export declare namespace InlinedRequestBody {
-    interface Properties extends _Utils {
+export namespace InlinedRequestBody {
+    export interface Properties extends _Utils {
         type: "properties";
         value: FernIr.dynamic.NamedParameter[];
     }
 
-    interface Referenced extends FernIr.dynamic.ReferencedRequestBody, _Utils {
+    export interface Referenced extends FernIr.dynamic.ReferencedRequestBody, _Utils {
         type: "referenced";
     }
 
-    interface FileUpload extends FernIr.dynamic.FileUploadRequestBody, _Utils {
+    export interface FileUpload extends FernIr.dynamic.FileUploadRequestBody, _Utils {
         type: "fileUpload";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         properties: (value: FernIr.dynamic.NamedParameter[]) => _Result;
         referenced: (value: FernIr.dynamic.ReferencedRequestBody) => _Result;
         fileUpload: (value: FernIr.dynamic.FileUploadRequestBody) => _Result;
@@ -42,7 +42,7 @@ export const InlinedRequestBody = {
             type: "properties",
             _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.Properties,
-                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
+                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.InlinedRequestBody._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const InlinedRequestBody = {
             type: "referenced",
             _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.Referenced,
-                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
+                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.InlinedRequestBody._visit(this, visitor);
             },
@@ -68,7 +68,7 @@ export const InlinedRequestBody = {
             type: "fileUpload",
             _visit: function <_Result>(
                 this: FernIr.dynamic.InlinedRequestBody.FileUpload,
-                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
+                visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.InlinedRequestBody._visit(this, visitor);
             },
@@ -77,7 +77,7 @@ export const InlinedRequestBody = {
 
     _visit: <_Result>(
         value: FernIr.dynamic.InlinedRequestBody,
-        visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>
+        visitor: FernIr.dynamic.InlinedRequestBody._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "properties":

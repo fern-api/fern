@@ -9,5 +9,5 @@ import * as core from "../../../../core";
 export const MovieId: core.serialization.Schema<serializers.MovieId.Raw, SeedApi.MovieId> = core.serialization.string();
 
 export declare namespace MovieId {
-    type Raw = string;
+    export type Raw = string;
 }

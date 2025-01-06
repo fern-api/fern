@@ -1,15 +1,17 @@
+import { camelCase } from "lodash-es";
+
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { GlobalHeader } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { GlobalHeader } from "@fern-api/openapi-ir";
+import { RelativeFilePath, join } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
-import { camelCase } from "lodash-es";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 
 class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;
@@ -58,7 +60,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                 env: header.env,
                 type:
                     header.schema != null
-                        ? getTypeFromTypeReference(
+                        ? (getTypeFromTypeReference(
                               buildTypeReference({
                                   schema: header.schema,
                                   context,
@@ -68,7 +70,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                                   namespace,
                                   declarationDepth: 0
                               })
-                          ) ?? "optional<string>"
+                          ) ?? "optional<string>")
                         : "optional<string>"
             };
         }

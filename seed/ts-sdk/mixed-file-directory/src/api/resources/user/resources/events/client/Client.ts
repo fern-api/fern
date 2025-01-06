@@ -10,11 +10,11 @@ import * as errors from "../../../../../../errors/index";
 import { Metadata } from "../resources/metadata/client/Client";
 
 export declare namespace Events {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -48,7 +48,7 @@ export class Events {
      */
     public async listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: Events.RequestOptions
+        requestOptions?: Events.RequestOptions,
     ): Promise<SeedMixedFileDirectory.user.Event[]> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -99,7 +99,7 @@ export class Events {
                 });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling GET /users/events/."
+                    "Timeout exceeded when calling GET /users/events/.",
                 );
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({

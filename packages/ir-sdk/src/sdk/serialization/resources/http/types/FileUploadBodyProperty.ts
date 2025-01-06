@@ -17,7 +17,7 @@ export const FileUploadBodyProperty: core.serialization.ObjectSchema<
     .extend(InlinedRequestBodyProperty);
 
 export declare namespace FileUploadBodyProperty {
-    interface Raw extends InlinedRequestBodyProperty.Raw {
+    export interface Raw extends InlinedRequestBodyProperty.Raw {
         contentType?: string | null;
     }
 }

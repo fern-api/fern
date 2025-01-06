@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ArraySchema,
     CasingOverrides,
@@ -16,7 +16,10 @@ import {
     SchemaId,
     WithInline
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -27,12 +30,10 @@ import {
     buildTypeReference,
     buildUnknownTypeReference
 } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { State } from "./State";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -487,7 +488,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
         source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     };
     for (const enumValue of enumSchema.enum) {
-        const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
+        const name = typeof enumValue === "string" ? enumValue : (enumValue.name ?? enumValue.value);
         if (!uniqueEnumName.has(name.toLowerCase())) {
             uniqueEnumSchema.enum.push(enumValue);
             uniqueEnumName.add(name.toLowerCase());

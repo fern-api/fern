@@ -53,7 +53,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
         .extend(Declaration);
 
 export declare namespace HttpEndpoint {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         id: EndpointId.Raw;
         name: EndpointName.Raw;
         displayName?: string | null;

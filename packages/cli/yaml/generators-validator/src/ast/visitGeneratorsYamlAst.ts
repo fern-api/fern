@@ -1,6 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
 import { noop, visitObject, visitObjectAsync } from "@fern-api/core-utils";
+
+import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
 import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";
 
 export async function visitGeneratorsYamlAst(

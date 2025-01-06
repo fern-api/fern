@@ -14,7 +14,7 @@ export const SendResponse: core.serialization.ObjectSchema<serializers.SendRespo
     });
 
 export declare namespace SendResponse {
-    interface Raw {
+    export interface Raw {
         message: string;
         status: number;
         success: true;

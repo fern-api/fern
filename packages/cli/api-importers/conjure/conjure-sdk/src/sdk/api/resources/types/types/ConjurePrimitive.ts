@@ -3,7 +3,6 @@
  */
 
 export type ConjurePrimitive = "rid" | "string" | "safelong" | "integer" | "double" | "boolean";
-
 export const ConjurePrimitive = {
     Rid: "rid",
     String: "string",

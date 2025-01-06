@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jest/no-disabled-tests */
-import { fetcher, newFormData, Stream } from "@fern-typescript/fetcher";
+import { Stream, fetcher, newFormData } from "@fern-typescript/fetcher";
 import * as fs from "fs";
 import path from "path";
 import * as stream from "stream";

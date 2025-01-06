@@ -17,7 +17,7 @@ export const EnumTypeReference: core.serialization.ObjectSchema<
 });
 
 export declare namespace EnumTypeReference {
-    interface Raw {
+    export interface Raw {
         default?: EnumValue.Raw | null;
         name: DeclaredTypeName.Raw;
     }

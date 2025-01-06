@@ -1,9 +1,12 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
+
+import { File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
+
 import { Class, Enum, Interface } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { File } from "@fern-api/base-generator";
 
 export type Namespace = string;
 

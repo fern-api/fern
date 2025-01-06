@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/text",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.getText"
+            },
+            "snippet": {
+                "client": "require \"fern_plain_text\"\n\nplain_text = SeedPlainTextClient::Client.new(base_url: \"https://api.example.com\")\nplain_text.service.get_text",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/text",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.getText"
+            },
+            "snippet": {
+                "client": "require \"fern_plain_text\"\n\nplain_text = SeedPlainTextClient::Client.new(base_url: \"https://api.example.com\")\nplain_text.service.get_text",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

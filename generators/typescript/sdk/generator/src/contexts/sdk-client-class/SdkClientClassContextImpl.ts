@@ -3,6 +3,7 @@ import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
+
 import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer";
 
 export declare namespace SdkClientClassContextImpl {

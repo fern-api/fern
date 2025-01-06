@@ -1,12 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
-import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 

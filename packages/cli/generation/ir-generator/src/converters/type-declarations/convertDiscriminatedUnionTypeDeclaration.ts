@@ -1,10 +1,11 @@
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getAvailability } from "../../utils/getAvailability";
-import { getDocs } from "../../utils/getDocs";
 import { getDisplayName } from "../../utils/getDisplayName";
+import { getDocs } from "../../utils/getDocs";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclaration";
@@ -43,8 +44,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
                     : typeof rawSingleUnionType.type === "string"
-                    ? rawSingleUnionType.type
-                    : undefined;
+                      ? rawSingleUnionType.type
+                      : undefined;
 
             const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
                 wireValue: unionKey,

@@ -12,7 +12,7 @@ export namespace UnionWithLiteral {
         value: "fern";
     }
 
-    interface _Base {
+    export interface _Base {
         base: "base";
     }
 }

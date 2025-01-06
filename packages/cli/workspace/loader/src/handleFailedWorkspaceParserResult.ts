@@ -1,12 +1,13 @@
-import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader";
-import { assertNever, entries } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { formatLog } from "@fern-api/cli-logger";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
+
+import { formatLog } from "@fern-api/cli-logger";
+import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader";
+import { assertNever, entries } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
+import { Logger } from "@fern-api/logger";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {

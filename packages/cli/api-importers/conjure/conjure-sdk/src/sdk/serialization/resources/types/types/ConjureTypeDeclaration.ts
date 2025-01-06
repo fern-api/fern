@@ -21,7 +21,7 @@ export const ConjureTypeDeclaration: core.serialization.Schema<
 ]);
 
 export declare namespace ConjureTypeDeclaration {
-    type Raw =
+    export type Raw =
         | ConjureAliasDeclaration.Raw
         | ConjureUnionDeclaration.Raw
         | ConjureObjectDeclaration.Raw

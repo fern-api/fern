@@ -1,10 +1,12 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
 
 export declare namespace TypescriptProject {
@@ -121,7 +123,7 @@ export abstract class TypescriptProject {
             } else {
                 const contents = await this.volume.promises.readFile(fullPathInVolume);
                 await mkdir(path.dirname(fullPathOnDisk), { recursive: true });
-                await writeFile(fullPathOnDisk, contents);
+                await writeFile(fullPathOnDisk, typeof contents === "string" ? contents : new Uint8Array(contents));
             }
         }
     }

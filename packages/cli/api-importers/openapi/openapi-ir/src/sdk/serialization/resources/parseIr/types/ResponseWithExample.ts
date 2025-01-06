@@ -44,7 +44,7 @@ export const ResponseWithExample: core.serialization.Schema<
     });
 
 export declare namespace ResponseWithExample {
-    type Raw =
+    export type Raw =
         | ResponseWithExample.File
         | ResponseWithExample.Json
         | ResponseWithExample.Text
@@ -52,27 +52,27 @@ export declare namespace ResponseWithExample {
         | ResponseWithExample.StreamingText
         | ResponseWithExample.StreamingJson;
 
-    interface File extends FileResponse.Raw {
+    export interface File extends FileResponse.Raw {
         type: "file";
     }
 
-    interface Json extends JsonResponseWithExample.Raw {
+    export interface Json extends JsonResponseWithExample.Raw {
         type: "json";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
     }
 
-    interface StreamingSse extends JsonResponseWithExample.Raw {
+    export interface StreamingSse extends JsonResponseWithExample.Raw {
         type: "streamingSse";
     }
 
-    interface StreamingText extends TextResponse.Raw {
+    export interface StreamingText extends TextResponse.Raw {
         type: "streamingText";
     }
 
-    interface StreamingJson extends JsonResponseWithExample.Raw {
+    export interface StreamingJson extends JsonResponseWithExample.Raw {
         type: "streamingJson";
     }
 }

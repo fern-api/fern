@@ -14,7 +14,7 @@ export const Error_: core.serialization.ObjectSchema<serializers.dynamic.Error_.
     });
 
 export declare namespace Error_ {
-    interface Raw {
+    export interface Raw {
         severity: ErrorSeverity.Raw;
         message: string;
     }

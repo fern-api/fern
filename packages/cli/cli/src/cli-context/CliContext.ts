@@ -1,20 +1,22 @@
-import { createLogger, LogLevel, LOG_LEVELS, Logger } from "@fern-api/logger";
+import { confirm } from "@inquirer/prompts";
+import chalk from "chalk";
+import { maxBy } from "lodash-es";
+
+import { LOG_LEVELS, LogLevel, Logger, createLogger } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import chalk from "chalk";
-import { maxBy } from "lodash-es";
+
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
-import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
+import { logErrorMessage } from "./logErrorMessage";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
-import { confirm } from "@inquirer/prompts";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
@@ -142,7 +144,7 @@ export class CliContext {
     private longestWorkspaceName: string | undefined;
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api")),
+            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api"))),
             (name) => name.length
         );
         if (longestWorkspaceName != null) {
@@ -207,7 +209,7 @@ export class CliContext {
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
-            workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api"
+            workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api")
         );
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName

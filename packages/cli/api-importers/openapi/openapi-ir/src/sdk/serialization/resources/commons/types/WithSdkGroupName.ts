@@ -16,7 +16,7 @@ export const WithSdkGroupName: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithSdkGroupName {
-    interface Raw {
+    export interface Raw {
         groupName?: SdkGroupName.Raw | null;
     }
 }

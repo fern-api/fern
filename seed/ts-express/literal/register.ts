@@ -17,7 +17,7 @@ export function register(
         path: PathService;
         query: QueryService;
         reference: ReferenceService;
-    }
+    },
 ): void {
     (expressApp as any).use("", services.headers.toRouter());
     (expressApp as any).use("", services.inlined.toRouter());

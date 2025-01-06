@@ -1,4 +1,23 @@
+import {
+    PackageId,
+    TypeReferenceNode,
+    generateInlinePropertiesModule,
+    getExampleEndpointCalls,
+    getParameterNameForPropertyPathParameterName,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    visitJavaScriptRuntime
+} from "@fern-typescript/commons";
+import {
+    GeneratedRequestWrapper,
+    GeneratedRequestWrapperExample,
+    RequestWrapperNonBodyProperty,
+    SdkContext
+} from "@fern-typescript/contexts";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { noop } from "@fern-api/core-utils";
+
 import {
     ExampleEndpointCall,
     FileProperty,
@@ -16,23 +35,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import {
-    generateInlinePropertiesModule,
-    getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameterName,
-    getTextOfTsNode,
-    maybeAddDocsNode,
-    PackageId,
-    TypeReferenceNode,
-    visitJavaScriptRuntime
-} from "@fern-typescript/commons";
-import {
-    GeneratedRequestWrapper,
-    GeneratedRequestWrapperExample,
-    RequestWrapperNonBodyProperty,
-    SdkContext
-} from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {

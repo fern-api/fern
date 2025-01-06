@@ -9,5 +9,5 @@ import * as core from "../../core";
 export const Word: core.serialization.Schema<serializers.Word.Raw, SeedValidation.Word> = core.serialization.string();
 
 export declare namespace Word {
-    type Raw = string;
+    export type Raw = string;
 }

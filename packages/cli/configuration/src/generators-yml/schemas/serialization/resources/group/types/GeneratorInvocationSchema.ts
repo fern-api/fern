@@ -31,7 +31,7 @@ export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorInvocationSchema {
-    interface Raw {
+    export interface Raw {
         name: string;
         version: string;
         output?: GeneratorOutputSchema.Raw | null;

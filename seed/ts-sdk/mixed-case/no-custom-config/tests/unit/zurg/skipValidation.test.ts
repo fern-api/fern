@@ -23,7 +23,7 @@ describe("skipValidation", () => {
             },
             {
                 skipValidation: true,
-            }
+            },
         );
 
         expect(parsed).toEqual({

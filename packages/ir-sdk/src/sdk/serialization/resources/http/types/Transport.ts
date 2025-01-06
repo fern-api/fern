@@ -27,13 +27,13 @@ export const Transport: core.serialization.Schema<serializers.Transport.Raw, Fer
     });
 
 export declare namespace Transport {
-    type Raw = Transport.Http | Transport.Grpc;
+    export type Raw = Transport.Http | Transport.Grpc;
 
-    interface Http {
+    export interface Http {
         type: "http";
     }
 
-    interface Grpc extends GrpcTransport.Raw {
+    export interface Grpc extends GrpcTransport.Raw {
         type: "grpc";
     }
 }

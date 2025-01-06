@@ -17,7 +17,7 @@ export const IntSchema: core.serialization.ObjectSchema<serializers.IntSchema.Ra
     });
 
 export declare namespace IntSchema {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         minimum?: number | null;
         maximum?: number | null;
