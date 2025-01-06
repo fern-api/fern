@@ -9,7 +9,7 @@ export interface OpenApiSettingsSchema {
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
     /** What version of union generation to use, this will grow over time. Defaults to v0. */
-    unions?: FernDefinition.UnionSettingsSchema;
+    "prefer-undiscriminated-unions-with-literals"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
