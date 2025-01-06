@@ -224,7 +224,7 @@ types:
       coerce-enums-to-literals: optional<boolean>
       prefer-undiscriminated-unions-with-literals: 
         type: optional<boolean>
-        docs: What version of union generation to use, this will grow over time. Defaults to v0.
+        docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
       object-query-parameters: 
         type: optional<boolean>
         docs: Enables parsing deep object query parameters

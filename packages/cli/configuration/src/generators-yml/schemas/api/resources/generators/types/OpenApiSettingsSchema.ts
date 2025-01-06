@@ -8,7 +8,7 @@ export interface OpenApiSettingsSchema {
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
-    /** What version of union generation to use, this will grow over time. Defaults to v0. */
+    /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
     "prefer-undiscriminated-unions-with-literals"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;

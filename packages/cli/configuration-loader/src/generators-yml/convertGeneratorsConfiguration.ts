@@ -339,7 +339,7 @@ async function parseApiConfigurationV2Schema({
                 settings: {
                     shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.["prefer-undiscriminated-unions-with-literals"],
+                        spec.settings?.["prefer-undiscriminated-unions-with-literals"] ?? false,
                     asyncApiMessageNaming: undefined,
                     onlyIncludeReferencedSchemas: spec.settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
