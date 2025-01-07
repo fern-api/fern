@@ -992,10 +992,6 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     string: true,
                     hidden: true,
                     description: "Path of the local docs bundle to use"
-                })
-                .option("v2", {
-                    boolean: true,
-                    description: "Use openapi parser v2"
                 }),
         async (argv) => {
             let port: number;
@@ -1005,7 +1001,6 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
             }
             const bundlePath: string | undefined = argv.bundlePath;
-            const v2 = argv.v2;
             await previewDocsWorkspace({
                 loadProject: () =>
                     loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1014,8 +1009,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     }),
                 cliContext,
                 port,
-                bundlePath,
-                v2
+                bundlePath
             });
         }
     );

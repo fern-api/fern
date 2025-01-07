@@ -55,8 +55,7 @@ export async function runPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath,
-    v2
+    bundlePath
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -64,7 +63,6 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
-    v2?: boolean;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -131,8 +129,7 @@ export async function runPreviewServer({
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
-                context,
-                v2
+                context
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;

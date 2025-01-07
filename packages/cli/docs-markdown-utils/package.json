@@ -30,7 +30,7 @@
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.127.3-6479103bd",
+    "@fern-fern/fdr-cjs-sdk": "0.127.4-331678a74",
     "gray-matter": "^4.0.3",
     "mdast-util-from-markdown": "^2.0.1",
     "mdast-util-mdx": "^3.0.0",

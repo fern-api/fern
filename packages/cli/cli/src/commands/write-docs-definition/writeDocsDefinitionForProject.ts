@@ -4,6 +4,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
 import chalk from "chalk";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { isNonNullish } from "@fern-api/core-utils";
 
 export async function writeDocsDefinitionForProject({
     project,
@@ -20,6 +22,17 @@ export async function writeDocsDefinitionForProject({
     }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        const ossWorkspaces = (
+            await Promise.all(
+                project.apiWorkspaces.map(async (workspace) => {
+                    if (workspace instanceof OSSWorkspace) {
+                        return workspace as OSSWorkspace;
+                    }
+                    return null;
+                })
+            )
+        ).filter(isNonNullish);
+
         const fernWorkspaces = await Promise.all(
             project.apiWorkspaces.map(async (workspace) => {
                 return workspace.toFernWorkspace(
@@ -32,6 +45,7 @@ export async function writeDocsDefinitionForProject({
         const docsResolver = new DocsDefinitionResolver(
             docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
             docsWorkspace,
+            ossWorkspaces,
             fernWorkspaces,
             context
         );

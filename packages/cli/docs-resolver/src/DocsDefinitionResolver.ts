@@ -6,7 +6,7 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -26,6 +26,9 @@ import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
+import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 
 dayjs.extend(utc);
 
@@ -51,6 +54,8 @@ type RegisterApiFn = (opts: {
     apiName?: string;
 }) => AsyncOrSync<string>;
 
+type RegisterApiV2Fn = (opts: { api: FdrAPI.api.latest.ApiDefinition; apiName?: string }) => AsyncOrSync<string>;
+
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
@@ -61,16 +66,23 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+const defaultRegisterApiV2: RegisterApiV2Fn = async ({ api }) => {
+    apiCounter++;
+    return `${api.id}-${apiCounter}`;
+};
+
 export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
+        private ossWorkspaces: OSSWorkspace[],
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
         private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi
+        private registerApi: RegisterApiFn = defaultRegisterApi,
+        private registerApiV2: RegisterApiV2Fn = defaultRegisterApiV2
     ) {}
 
     #idgen = NodeIdGenerator.init();
@@ -346,6 +358,18 @@ export class DocsDefinitionResolver {
         throw new Error("Failed to load API Definition referenced in docs");
     }
 
+    private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
+        if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
+            return this.ossWorkspaces[0];
+        } else if (apiSection.apiName != null) {
+            const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
+            if (ossWorkspace != null) {
+                return ossWorkspace;
+            }
+        }
+        throw new Error("Failed to load API Definition referenced in docs");
+    }
+
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
         const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()));
         const id = this.#idgen.get("root");
@@ -542,6 +566,28 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem.ApiSection,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
+        if (this.parsedDocsConfig.experimental?.directOpenapiParser) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
+            if (api == null) {
+                throw new Error("Failed to generate API Definition from OpenAPI workspace");
+            }
+            await this.registerApiV2({
+                api,
+                apiName: item.apiName
+            });
+            const node = new ApiReferenceNodeConverterLatest(
+                item,
+                api,
+                parentSlug,
+                workspace,
+                this.docsWorkspace,
+                this.taskContext,
+                this.markdownFilesToFullSlugs,
+                this.#idgen
+            );
+            return node.get();
+        }
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
         const ir = generateIntermediateRepresentation({
