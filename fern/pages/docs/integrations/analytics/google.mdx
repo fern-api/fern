@@ -1,38 +1,50 @@
 ---
 title: Google Analytics
-subtitle: Add Google Analytics to your Docs with Fern. 
+subtitle: Learn how to add Google Analytics to your Fern Docs for tracking and insights.
 ---
 
-Fern supports integrating with both [Google Analytics 4](https://developers.google.com/analytics) and [Google Tag Manager](https://tagmanager.google.com/). 
+Fern supports integrating with both [Google Analytics 4](https://developers.google.com/analytics) and [Google Tag Manager](https://tagmanager.google.com/). Follow the steps below to configure these services.
 
 ## Google Analytics 4
 
-To integrate Google Analytics 4, you'll need a Google Analytics 4 property ID. It should look like: “UA-XXXXXX-X” or "G-XXXXXXX."
+### Prerequisites
 
-### Integrate Google Analytics 4 with your Docs
+Before you begin, ensure you have a Google Analytics 4 property ID. This ID is typically in the format `G-XXXXXXXXXX`.
 
-In your `docs.yml` file, add your Google Analytics 4 property ID under the `measurement-id` key:
+### Integration Steps
+
+1. Open your docs.yml file.
+2. Add your Google Analytics 4 property ID under the `measurement-id` key.
+3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing.
+
+Example configuration:
 
 <CodeBlock title="docs.yml">
 ```yaml
 analytics:
   ga4:
-    measurement-id: ${GA4_MEASUREMENT_ID} # scans environment variable
+    measurement-id: G-XXXXXXXXXX
 ```
 </CodeBlock>
 
 ## Google Tag Manager
 
-To integrate Google Tag Manager, you'll need a Google Tag Manager container ID. It should look like: "GTM-XXXXXX."
+### Prerequisites
 
-### Integrate Google Tag Manager with your Docs
+To use Google Tag Manager, obtain a container ID from your Google Tag Manager account. This ID follows the format `GTM-XXXXXX`.
 
-In your `docs.yml` file, add your Google Tag Manager container ID:
+### Integration Steps
+
+1. Open your docs.yml file.
+2. Add your Google Tag Manager container ID under the container-id key.
+3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing.
+
+Example configuration:
 
 <CodeBlock title="docs.yml">
 ```yaml
 analytics:
   gtm:
-    container-id: ${GTM_CONTAINER_ID} # scans environment variable
+    container-id: GTM-XXXXXXX
 ```
 </CodeBlock>
