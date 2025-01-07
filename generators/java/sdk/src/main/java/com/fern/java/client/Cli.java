@@ -52,7 +52,6 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
-import com.fern.java.utils.ApiVersionConstants;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -198,31 +197,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                             EnumTypeDeclaration.builder().from(irDeclaration);
 
                     irDeclaration.getDefault().ifPresent(defaultValue -> {
-                        Name current = Name.builder()
-                                .originalName(ApiVersionConstants.CURRENT_API_VERSION)
-                                .camelCase(SafeAndUnsafeString.builder()
-                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .build())
-                                .pascalCase(SafeAndUnsafeString.builder()
-                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .build())
-                                .snakeCase(SafeAndUnsafeString.builder()
-                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .build())
-                                .screamingSnakeCase(SafeAndUnsafeString.builder()
-                                        .unsafeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .safeName(ApiVersionConstants.CURRENT_API_VERSION)
-                                        .build())
-                                .build();
-
                         enumTypeDeclaration.addValues(EnumValue.builder()
                                 .from(defaultValue)
                                 .name(NameAndWireValue.builder()
                                         .from(defaultValue.getName())
-                                        .name(current)
+                                        .name(ApiVersionConstants.CURRENT_API_VERSION_NAME)
                                         .build())
                                 .build());
                     });
