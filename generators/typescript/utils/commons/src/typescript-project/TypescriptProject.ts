@@ -26,7 +26,6 @@ export declare namespace TypescriptProject {
         extraConfigs: Record<string, unknown> | undefined;
         outputJsr: boolean;
         exportSerde: boolean;
-        exportCore: boolean;
     }
 }
 
@@ -66,7 +65,6 @@ export abstract class TypescriptProject {
     protected static BUILD_ESM_SCRIPT_NAME = "build:esm" as const;
 
     private exportSerde: boolean;
-    private exportCore: boolean;
     protected npmPackage: NpmPackage | undefined;
     protected dependencies: PackageDependencies;
     protected extraConfigs: Record<string, unknown> | undefined;
@@ -93,8 +91,7 @@ export abstract class TypescriptProject {
         extraPeerDependenciesMeta,
         dependencies,
         outputJsr,
-        exportSerde,
-        exportCore
+        exportSerde
     }: TypescriptProject.Init) {
         this.runScripts = runScripts;
         this.tsMorphProject = tsMorphProject;
@@ -107,14 +104,10 @@ export abstract class TypescriptProject {
         this.dependencies = dependencies;
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
-        this.exportCore = exportCore;
     }
 
     public getFoldersForExports(): string[] {
         const exports = [];
-        if (this.exportCore) {
-            exports.push("core");
-        }
         if (this.exportSerde) {
             exports.push("serialization");
         }

@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
 
-- Feat: The core and serialization folders are exported as `package.json` exports.
-  You can import code from the folder using  `@packageName/core` and `@packageName/serialization`.
+- Feat: The serialization folder is exported as a `package.json` export.
+  You can import the serialization code using `@packageName/serialization`.
 
 - Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
 
