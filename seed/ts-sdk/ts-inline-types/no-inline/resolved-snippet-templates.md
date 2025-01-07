@@ -8,8 +8,8 @@ await client.getRoot({
   },
   foo: "foo",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -34,8 +34,8 @@ await client.getDiscriminatedUnion(
 		foo: "foo"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -45,7 +45,7 @@ const client = new SeedObjectClient({ environment: "YOUR_BASE_URL" });
 await client.getUndiscriminatedUnion({
   foo: "foo",
 });
- 
-```                        
+
+```
 
 
