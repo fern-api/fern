@@ -44,7 +44,7 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "ResponseBodyReader");
     }
 
-    public ClassName getApiVersionsClassName() {
+    public ClassName getApiVersionClassName() {
         return ClassName.get(getCorePackage(), "ApiVersion");
     }
 

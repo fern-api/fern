@@ -88,36 +88,13 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         FieldSpec apiVersionField = FieldSpec.builder(
                         ParameterizedTypeName.get(
                                 ClassName.get(Optional.class),
-                                clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName()),
+                                clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName()),
                         "version",
                         Modifier.PRIVATE,
                         Modifier.FINAL)
                 .build();
 
-        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            ApiVersionScheme apiVersionScheme =
-                    clientGeneratorContext.getIr().getApiVersion().get();
-
-            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
-                @Override
-                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
-                    getHeadersCodeBlock
-                            .beginControlFlow("if (this.$N.isPresent())", apiVersionField)
-                            .addStatement(
-                                    "headers.put($S,$L)",
-                                    headerApiVersionScheme.getHeader().getName().getWireValue(),
-                                    CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
-                            .endControlFlow();
-
-                    return null;
-                }
-
-                @Override
-                public Void _visitUnknown(Object _o) {
-                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
-                }
-            });
-        }
+        addApiVersionHeader(getHeadersCodeBlock, apiVersionField);
 
         HeaderHandler headerHandler = new HeaderHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
         AuthSchemeHandler authSchemeHandler =
@@ -215,7 +192,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
             builderTypeSpec.addMethod(MethodSpec.methodBuilder(apiVersionField.name)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(
-                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName(),
+                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
                             apiVersionField.name)
                     .addStatement("this.$L = Optional.of($L)", apiVersionField.name, apiVersionField.name)
                     .addStatement("return this")
@@ -284,6 +261,33 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return $N", field.name)
                 .returns(field.type)
                 .build());
+    }
+
+    private void addApiVersionHeader(CodeBlock.Builder getHeadersCodeBlock, FieldSpec apiVersionField) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    getHeadersCodeBlock
+                            .beginControlFlow("if (this.$N.isPresent())", apiVersionField)
+                            .addStatement(
+                                    "headers.put($S,$L)",
+                                    headerApiVersionScheme.getHeader().getName().getWireValue(),
+                                    CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
+                            .endControlFlow();
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
     }
 
     private static class RequestOption {

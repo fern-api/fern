@@ -205,7 +205,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     });
 
                     EnumGenerator apiVersionsGenerator = new EnumGenerator(
-                            context.getPoetClassNameFactory().getApiVersionsClassName(),
+                            context.getPoetClassNameFactory().getApiVersionClassName(),
                             context,
                             enumTypeDeclaration.build());
                     GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();

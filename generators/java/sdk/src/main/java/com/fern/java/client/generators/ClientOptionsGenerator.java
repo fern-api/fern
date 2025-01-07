@@ -101,7 +101,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         this.requestOptionsFile = requestOptionsFile;
         this.clientGeneratorContext = clientGeneratorContext;
         this.apiVersionField = FieldSpec.builder(
-                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName(),
+                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
                         "version",
                         Modifier.PRIVATE,
                         Modifier.FINAL)
@@ -157,57 +157,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name);
 
-        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            ApiVersionScheme apiVersionScheme =
-                    clientGeneratorContext.getIr().getApiVersion().get();
-
-            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
-                @Override
-                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
-                    if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
-                        constructorBuilder.addParameter(ParameterSpec.builder(
-                                        ParameterizedTypeName.get(
-                                                ClassName.get(Optional.class),
-                                                clientGeneratorContext
-                                                        .getPoetClassNameFactory()
-                                                        .getApiVersionsClassName()),
-                                        apiVersionField.name)
-                                .build());
-                        constructorBuilder.addStatement(
-                                "this.$L = $L.orElse($L)",
-                                apiVersionField.name,
-                                apiVersionField.name,
-                                CodeBlock.of(
-                                        "$T.$L",
-                                        clientGeneratorContext
-                                                .getPoetClassNameFactory()
-                                                .getApiVersionsClassName(),
-                                        ApiVersionConstants.CURRENT_API_VERSION));
-                    } else {
-                        constructorBuilder.addParameter(ParameterSpec.builder(
-                                        clientGeneratorContext
-                                                .getPoetClassNameFactory()
-                                                .getApiVersionsClassName(),
-                                        apiVersionField.name)
-                                .build());
-                        constructorBuilder.addStatement("this.$L = $L", apiVersionField.name, apiVersionField.name);
-                    }
-
-                    constructorBuilder.addStatement(
-                            "this.$L.put($S,$L)",
-                            HEADERS_FIELD.name,
-                            headerApiVersionScheme.getHeader().getName().getWireValue(),
-                            CodeBlock.of("this.$L.toString()", apiVersionField.name));
-
-                    return null;
-                }
-
-                @Override
-                public Void _visitUnknown(Object _o) {
-                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
-                }
-            });
-        }
+        addApiVersionToConstructor(constructorBuilder);
 
         variableFields
                 .values()
@@ -289,7 +239,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder(clientGeneratorContext, variableFields))
+                .addType(createBuilder(variableFields))
                 .build();
 
         JavaFile environmentsFile =
@@ -304,6 +254,60 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .builderClassName(builderClassName)
                 .putAllVariableGetters(variableGetters)
                 .build();
+    }
+
+    private void addApiVersionToConstructor(MethodSpec.Builder constructorBuilder) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
+                        constructorBuilder.addParameter(ParameterSpec.builder(
+                                        ParameterizedTypeName.get(
+                                                ClassName.get(Optional.class),
+                                                clientGeneratorContext
+                                                        .getPoetClassNameFactory()
+                                                        .getApiVersionClassName()),
+                                        apiVersionField.name)
+                                .build());
+                        constructorBuilder.addStatement(
+                                "this.$L = $L.orElse($L)",
+                                apiVersionField.name,
+                                apiVersionField.name,
+                                CodeBlock.of(
+                                        "$T.$L",
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getApiVersionClassName(),
+                                        ApiVersionConstants.CURRENT_API_VERSION));
+                    } else {
+                        constructorBuilder.addParameter(ParameterSpec.builder(
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getApiVersionClassName(),
+                                        apiVersionField.name)
+                                .build());
+                        constructorBuilder.addStatement("this.$L = $L", apiVersionField.name, apiVersionField.name);
+                    }
+
+                    constructorBuilder.addStatement(
+                            "this.$L.put($S,$L)",
+                            HEADERS_FIELD.name,
+                            headerApiVersionScheme.getHeader().getName().getWireValue(),
+                            CodeBlock.of("this.$L.toString()", apiVersionField.name));
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
     }
 
     private MethodSpec headersFromRequestOptions() {
@@ -339,7 +343,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return values");
     }
 
-    private TypeSpec createBuilder(ClientGeneratorContext context, Map<VariableId, FieldSpec> variableFields) {
+    private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
@@ -368,8 +372,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethods(getVariableBuilders(variableFields));
 
-        if (context.getIr().getApiVersion().isPresent()) {
-            ApiVersionScheme apiVersionScheme = context.getIr().getApiVersion().get();
+        addApiVersionToBuilder(builder);
+
+        builder.addMethod(getBuildMethod(variableFields));
+
+        return builder.build();
+    }
+
+    private void addApiVersionToBuilder(TypeSpec.Builder builder) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
 
             apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
                 @Override
@@ -378,15 +391,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         builder.addField(FieldSpec.builder(
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class),
-                                                context.getPoetClassNameFactory()
-                                                        .getApiVersionsClassName()),
+                                                clientGeneratorContext
+                                                        .getPoetClassNameFactory()
+                                                        .getApiVersionClassName()),
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
                                 .build());
                         builder.addMethod(getOptionalVersionBuilder());
                     } else {
                         builder.addField(FieldSpec.builder(
-                                        context.getPoetClassNameFactory().getApiVersionsClassName(),
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getApiVersionClassName(),
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
                                 .build());
@@ -402,10 +418,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 }
             });
         }
-
-        builder.addMethod(getBuildMethod(context, variableFields));
-
-        return builder.build();
     }
 
     private MethodSpec getEnvironmentBuilder() {
@@ -434,8 +446,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builderClassName)
                 .addParameter(
-                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName(),
-                        apiVersionField.name)
+                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(), apiVersionField.name)
                 .addStatement("this.$L = $T.of($L)", apiVersionField.name, Optional.class, apiVersionField.name)
                 .addStatement("return this")
                 .build();
@@ -446,8 +457,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builderClassName)
                 .addParameter(
-                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName(),
-                        apiVersionField.name)
+                        clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(), apiVersionField.name)
                 .addStatement("this.$L = $L", apiVersionField.name, apiVersionField.name)
                 .addStatement("return this")
                 .build();
@@ -513,14 +523,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 }));
     }
 
-    private MethodSpec getBuildMethod(ClientGeneratorContext context, Map<VariableId, FieldSpec> variableFields) {
+    private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
                 className, environmentField.name, HEADERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name, "okhttpClient");
 
         String returnString = "return new $T($L, $L, $L, $L, this.timeout";
 
-        if (context.getIr().getApiVersion().isPresent()) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(apiVersionField.name);
             returnString = "return new $T($L, $L, $L, $L, this.timeout, $L";
         }
