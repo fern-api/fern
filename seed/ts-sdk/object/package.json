@@ -17,6 +17,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./serialization": {
+            "types": "./dist/cjs/serialization/index.d.ts",
+            "import": {
+                "types": "./dist/esm/serialization/index.d.ts",
+                "default": "./dist/esm/serialization/index.js"
+            },
+            "require": {
+                "types": "./dist/cjs/serialization/index.d.ts",
+                "default": "./dist/cjs/serialization/index.js"
+            },
+            "default": "./dist/cjs/serialization/index.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
