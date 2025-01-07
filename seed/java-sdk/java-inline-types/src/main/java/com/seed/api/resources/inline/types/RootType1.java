@@ -182,19 +182,20 @@ public final class RootType1 {
              */
             private final String bar;
 
-            //            /**
-            //             * lorem ipsum
-            //             */
-            //            private final Bar.MyEnum myEnum;
+            /**
+             * lorem ipsum
+             */
+            private final RootType1.MyEnum myEnum;
 
             /**
              * lorem ipsum
              */
             private final ReferenceType ref;
 
-            public Bar_(String foo, String bar, ReferenceType ref) {
+            public Bar_(String foo, String bar, RootType1.MyEnum myEnum, ReferenceType ref) {
                 this.foo = foo;
                 this.bar = bar;
+                this.myEnum = myEnum;
                 this.ref = ref;
             }
 
@@ -204,6 +205,10 @@ public final class RootType1 {
 
             public String getBar() {
                 return this.bar;
+            }
+
+            public RootType1.MyEnum getMyEnum() {
+                return this.myEnum;
             }
 
             public ReferenceType getRef() {
@@ -219,6 +224,8 @@ public final class RootType1 {
 
                 private String bar;
 
+                private RootType1.MyEnum myEnum;
+
                 private ReferenceType ref;
 
                 private Builder() {}
@@ -233,35 +240,39 @@ public final class RootType1 {
                     return this;
                 }
 
+                public Bar_.Builder myEnum(RootType1.MyEnum myEnum) {
+                    this.myEnum = myEnum;
+                    return this;
+                }
+
                 public Bar_.Builder ref(ReferenceType ref) {
                     this.ref = ref;
                     return this;
                 }
 
                 public Bar_ build() {
-                    return new Bar_(foo, bar, ref);
+                    return new Bar_(foo, bar, myEnum, ref);
                 }
             }
         }
+    }
 
-        // Inline enums not available in Java 8
-        //        public enum MyEnum {
-        //            SUNNY("Sunny"),
-        //            CLOUDY("Cloudy"),
-        //            RAINING("Raining"),
-        //            SNOWING("Snowing"),
-        //            ;
-        //
-        //            private final String value;
-        //
-        //            MyEnum(String value) {
-        //                this.value = value;
-        //            }
-        //
-        //            public String toString() {
-        //                return this.value;
-        //            }
-        //        }
+    public enum MyEnum {
+        SUNNY("Sunny"),
+        CLOUDY("Cloudy"),
+        RAINING("Raining"),
+        SNOWING("Snowing"),
+        ;
+
+        private final String value;
+
+        MyEnum(String value) {
+            this.value = value;
+        }
+
+        public String toString() {
+            return this.value;
+        }
     }
 
     public class FooMap {
