@@ -19,7 +19,7 @@ type InternalType =
     | Undefined
     | Null
     | Never
-    | NoOp;
+    | Nop;
 
 interface String_ {
     type: "string";
@@ -87,8 +87,8 @@ interface Never {
     type: "never";
 }
 
-interface NoOp {
-    type: "noOp";
+interface Nop {
+    type: "nop";
 }
 
 interface ObjectField {
@@ -110,7 +110,7 @@ export class Type extends AstNode {
                 writer.write("number");
                 break;
             case "bigint":
-                // TODO: Add bigint configuration
+                writer.write("bigint");
                 break;
             case "boolean":
                 writer.write("boolean");
@@ -154,7 +154,7 @@ export class Type extends AstNode {
             case "never":
                 writer.write("never");
                 break;
-            case "noOp":
+            case "nop":
                 break;
             default:
                 assertNever(this.internalType);
@@ -250,16 +250,9 @@ export class Type extends AstNode {
         });
     }
 
-    public static noOp(): Type {
+    public static nop(): Type {
         return new this({
-            type: "noOp"
+            type: "nop"
         });
-    }
-
-    public static property(name: string, valueType: Type): ObjectField {
-        return {
-            name,
-            valueType
-        };
     }
 }

@@ -119,7 +119,11 @@ export class Writer extends AbstractWriter {
     }
 
     public toString(): string {
-        return this.stringifyImports() + this.buffer;
+        const imports = this.stringifyImports();
+        if (imports.length > 0) {
+            return imports + "\n" + this.buffer;
+        }
+        return this.buffer;
     }
 
     private stringifyImports(): string {

@@ -6,8 +6,8 @@ import tmp from "tmp-promise";
 import { Project } from "ts-morph";
 
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { NpmPackage } from "@fern-api/typescript-base";
 
-import { NpmPackage } from "../NpmPackage";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
 

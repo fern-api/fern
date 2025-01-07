@@ -4,7 +4,6 @@ describe("TypeLiteral", () => {
     describe("emptyArrayToString", () => {
         it("Should generate an empty array", () => {
             const literal = ts.TypeLiteral.array({
-                valueType: ts.Type.string(),
                 values: []
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
@@ -14,7 +13,6 @@ describe("TypeLiteral", () => {
     describe("arrayOfStringsToString", () => {
         it("Should generate an array of strings", () => {
             const literal = ts.TypeLiteral.array({
-                valueType: ts.Type.string(),
                 values: [ts.TypeLiteral.string("Hello, World!"), ts.TypeLiteral.string("Goodbye, World!")]
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
@@ -25,7 +23,6 @@ describe("TypeLiteral", () => {
     describe("longArrayOfStringsToString", () => {
         it("Should generate a multiline array of strings", () => {
             const literal = ts.TypeLiteral.array({
-                valueType: ts.Type.string(),
                 values: [
                     ts.TypeLiteral.string("Hello, World!"),
                     ts.TypeLiteral.string("Goodbye, World!"),
@@ -98,8 +95,16 @@ World!\``);
                 writer.write("let myObj = ");
                 writer.writeNode(
                     ts.TypeLiteral.object({
-                        name: ts.TypeLiteral.string("John Smith"),
-                        hometown: ts.TypeLiteral.string("New York, New York")
+                        fields: [
+                            {
+                                name: "name",
+                                value: ts.TypeLiteral.string("John Smith")
+                            },
+                            {
+                                name: "hometown",
+                                value: ts.TypeLiteral.string("New York, New York")
+                            }
+                        ]
                     })
                 );
             });

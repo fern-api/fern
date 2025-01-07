@@ -9,6 +9,8 @@ import { SegmentConfig } from "./SegmentConfig";
 import { FullStoryAnalyticsConfig } from "./FullStoryAnalyticsConfig";
 import { IntercomConfig } from "./IntercomConfig";
 import { PostHogConfig } from "./PostHogConfig";
+import { GtmConfig } from "./GtmConfig";
+import { GoogleAnalytics4Config } from "./GoogleAnalytics4Config";
 
 export const AnalyticsConfig: core.serialization.ObjectSchema<
     serializers.AnalyticsConfig.Raw,
@@ -18,6 +20,8 @@ export const AnalyticsConfig: core.serialization.ObjectSchema<
     fullstory: FullStoryAnalyticsConfig.optional(),
     intercom: IntercomConfig.optional(),
     posthog: PostHogConfig.optional(),
+    gtm: GtmConfig.optional(),
+    ga4: GoogleAnalytics4Config.optional(),
 });
 
 export declare namespace AnalyticsConfig {
@@ -26,5 +30,7 @@ export declare namespace AnalyticsConfig {
         fullstory?: FullStoryAnalyticsConfig.Raw | null;
         intercom?: IntercomConfig.Raw | null;
         posthog?: PostHogConfig.Raw | null;
+        gtm?: GtmConfig.Raw | null;
+        ga4?: GoogleAnalytics4Config.Raw | null;
     }
 }

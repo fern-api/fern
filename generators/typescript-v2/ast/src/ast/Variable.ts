@@ -1,4 +1,3 @@
-import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 
 export declare namespace Variable {
@@ -10,7 +9,7 @@ export declare namespace Variable {
         /* The name of the variable */
         name: string;
         /* The initializer for the variable */
-        initializer: CodeBlock;
+        initializer: AstNode;
     }
 }
 

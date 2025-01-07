@@ -245,6 +245,16 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return typeof environment === "object";
     }
 
+    public newAuthMismatchError({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.Auth;
+        values: FernIr.dynamic.AuthValues;
+    }): Error {
+        return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
+    }
+
     public newParameterNotRecognizedError(parameterName: string): Error {
         return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
     }

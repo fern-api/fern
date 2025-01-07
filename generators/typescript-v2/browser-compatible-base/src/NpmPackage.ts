@@ -1,3 +1,5 @@
+import { PublishInfo } from "./PublishInfo";
+
 export interface NpmPackage {
     packageName: string;
     version: string;
@@ -5,9 +7,4 @@ export interface NpmPackage {
     repoUrl: string | undefined;
     license: string | undefined;
     publishInfo: PublishInfo | undefined;
-}
-
-export interface PublishInfo {
-    registryUrl: string;
-    token: string;
 }
