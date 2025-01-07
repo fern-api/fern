@@ -112,7 +112,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     public GeneratedClientOptions generateFile() {
         MethodSpec environmentGetter = createGetter(environmentField);
         MethodSpec headersFromRequestOptions = headersFromRequestOptions();
-        Optional<MethodSpec> versionsGetter;
         Optional<MethodSpec> headersFromIdempotentRequestOptions = headersFromIdempotentRequestOptions();
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
@@ -175,11 +174,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
 
-        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            clientOptionsBuilder.addField(apiVersionField);
-            versionsGetter = Optional.of(createGetter(apiVersionField));
-            clientOptionsBuilder.addMethod(versionsGetter.get());
-        }
+        addApiVersionField(clientOptionsBuilder);
 
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
@@ -256,6 +251,38 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private void addApiVersionField(TypeSpec.Builder clientOptionsBuilder) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    clientOptionsBuilder.addField(apiVersionField.toBuilder()
+                            .addJavadoc(
+                                    "$L.toString() is sent as the $S header.",
+                                    apiVersionField.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .build());
+                    clientOptionsBuilder.addMethod(createGetter(apiVersionField).toBuilder()
+                            .addJavadoc(
+                                    "$L.toString() is sent as the $S header.",
+                                    apiVersionField.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .build());
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+    }
+
     private void addApiVersionToConstructor(MethodSpec.Builder constructorBuilder) {
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             ApiVersionScheme apiVersionScheme =
@@ -272,6 +299,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                                         .getPoetClassNameFactory()
                                                         .getApiVersionClassName()),
                                         apiVersionField.name)
+                                .addJavadoc(
+                                        "Defaults to $S if empty",
+                                        headerApiVersionScheme
+                                                .getValue()
+                                                .getDefault()
+                                                .get())
                                 .build());
                         constructorBuilder.addStatement(
                                 "this.$L = $L.orElse($L)",
@@ -397,7 +430,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
                                 .build());
-                        builder.addMethod(getOptionalVersionBuilder());
+                        builder.addMethod(getOptionalVersionBuilder(
+                                headerApiVersionScheme.getHeader().getName().getWireValue()));
                     } else {
                         builder.addField(FieldSpec.builder(
                                         clientGeneratorContext
@@ -406,7 +440,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
                                 .build());
-                        builder.addMethod(getRequiredVersionBuilder());
+                        builder.addMethod(getRequiredVersionBuilder(
+                                headerApiVersionScheme.getHeader().getName().getWireValue()));
                     }
 
                     return null;
@@ -441,8 +476,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec getOptionalVersionBuilder() {
+    private MethodSpec getOptionalVersionBuilder(String headerName) {
         return MethodSpec.methodBuilder(apiVersionField.name)
+                .addJavadoc("$L.toString() is sent as the $S header.", apiVersionField.name, headerName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builderClassName)
                 .addParameter(
@@ -452,8 +488,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec getRequiredVersionBuilder() {
+    private MethodSpec getRequiredVersionBuilder(String headerName) {
         return MethodSpec.methodBuilder(apiVersionField.name)
+                .addJavadoc("$L.toString() is sent as the $S header.", apiVersionField.name, headerName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builderClassName)
                 .addParameter(

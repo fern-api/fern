@@ -20,6 +20,9 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
     private final ApiVersion version;
 
     private ClientOptions(
@@ -59,6 +62,9 @@ public final class ClientOptions {
         return values;
     }
 
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
     public ApiVersion version() {
         return this.version;
     }
@@ -118,6 +124,9 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * version.toString() is sent as the "X-API-Version" header.
+         */
         public Builder version(ApiVersion version) {
             this.version = version;
             return this;

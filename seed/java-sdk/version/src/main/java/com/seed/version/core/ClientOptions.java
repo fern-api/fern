@@ -21,8 +21,37 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
     private final ApiVersion version;
 
+    /**
+     * @param version Defaults to "{\n"
+     *     + "  \"name\" : {\n"
+     *     + "    \"wireValue\" : \"2.0.0\",\n"
+     *     + "    \"name\" : {\n"
+     *     + "      \"originalName\" : \"v2\",\n"
+     *     + "      \"camelCase\" : {\n"
+     *     + "        \"unsafeName\" : \"v2\",\n"
+     *     + "        \"safeName\" : \"v2\"\n"
+     *     + "      },\n"
+     *     + "      \"pascalCase\" : {\n"
+     *     + "        \"unsafeName\" : \"V2\",\n"
+     *     + "        \"safeName\" : \"V2\"\n"
+     *     + "      },\n"
+     *     + "      \"snakeCase\" : {\n"
+     *     + "        \"unsafeName\" : \"v_2\",\n"
+     *     + "        \"safeName\" : \"v_2\"\n"
+     *     + "      },\n"
+     *     + "      \"screamingSnakeCase\" : {\n"
+     *     + "        \"unsafeName\" : \"V_2\",\n"
+     *     + "        \"safeName\" : \"V_2\"\n"
+     *     + "      }\n"
+     *     + "    }\n"
+     *     + "  }\n"
+     *     + "}" if empty
+     */
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
@@ -60,6 +89,9 @@ public final class ClientOptions {
         return values;
     }
 
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
     public ApiVersion version() {
         return this.version;
     }
@@ -119,6 +151,9 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * version.toString() is sent as the "X-API-Version" header.
+         */
         public Builder version(ApiVersion version) {
             this.version = Optional.of(version);
             return this;
