@@ -13,9 +13,9 @@ Before you begin, ensure you have a Google Analytics 4 property ID. This ID is t
 
 ### Integration Steps
 
-1. Open your docs.yml file.
+1. Open your `docs.yml` file.
 2. Add your Google Analytics 4 property ID under the `measurement-id` key.
-3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing.
+3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing. You can check your browser's developer tools or the network tab to confirm that the analytics script is loading correctly.
 
 Example configuration:
 
@@ -23,9 +23,20 @@ Example configuration:
 ```yaml
 analytics:
   ga4:
-    measurement-id: G-XXXXXXXXXX
+    measurement-id: G-12345678
 ```
 </CodeBlock>
+
+You can optionally add the ID as an environment variable:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  gtm:
+    container-id: ${GA4_MEASUREMENT_ID} # scans for GA4_MEASUREMENT_ID environment variable
+```
+</CodeBlock>
+
 
 ## Google Tag Manager
 
@@ -35,9 +46,9 @@ To use Google Tag Manager, obtain a container ID from your Google Tag Manager ac
 
 ### Integration Steps
 
-1. Open your docs.yml file.
+1. Open your `docs.yml` file.
 2. Add your Google Tag Manager container ID under the container-id key.
-3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing.
+3. Verify data in Google Analytics. Note that it may take 24–48 hours for website traffic data to start appearing. You can check your browser's developer tools or the network tab to confirm that the analytics script is loading correctly.
 
 Example configuration:
 
@@ -45,6 +56,16 @@ Example configuration:
 ```yaml
 analytics:
   gtm:
-    container-id: GTM-XXXXXXX
+    container-id: GTM-NS32L7KR
+```
+</CodeBlock>
+
+You can optionally add the ID as an environment variable:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  gtm:
+    container-id: ${GTM_CONTAINER_ID} # scans for GTM_CONTAINER_ID environment variable
 ```
 </CodeBlock>
