@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.0] - 2025-01-06
+
+- Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
+
+- Feat: The core and serialization folders are exported as `package.json` exports.
+  You can import code from the folder using  `@packageName/core` and `@packageName/serialization`.
+
+- Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
+
 ## [0.45.2] - 2024-12-31
 
 - Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
