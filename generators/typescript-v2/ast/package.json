@@ -25,7 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "prettier2": "npm:prettier@^2.7.1"
+    "prettier2": "npm:prettier@^2.7.1",
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
@@ -39,6 +40,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "prettier": "^3.4.2",
     "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "zod": "^3.22.3"
   }
 }

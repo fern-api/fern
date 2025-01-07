@@ -1,5 +1,4 @@
-import { NpmPackage } from "@fern-typescript/commons";
-
+import { type NpmPackage } from "../NpmPackage";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export function constructNpmPackage({
