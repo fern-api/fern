@@ -4,9 +4,7 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 
 public final class ApiVersionConstants {
-    /**
-     * Do not instantiate utils class.
-     */
+    /** Do not instantiate utils class. */
     private ApiVersionConstants() {}
 
     public static final String CURRENT_API_VERSION = "CURRENT";
