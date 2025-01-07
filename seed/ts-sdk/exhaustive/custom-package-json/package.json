@@ -1,8 +1,5 @@
 {
-    "name": "@fern/exhaustive",
-    "version": "0.0.2",
-    "private": false,
-    "repository": "https://github.com/exhaustive/fern",
+    "name": "test-package",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
@@ -10,11 +7,8 @@
         "build": "yarn compile && yarn bundle"
     },
     "files": [
-        "exampleFile",
         "dist",
-        "types",
-        "core.d.ts",
-        "serialization.d.ts"
+        "types"
     ],
     "exports": {
         ".": {
@@ -24,20 +18,7 @@
             "default": "./dist/browser/cjs/index.js",
             "types": "./types/index.d.ts"
         },
-        "./core": {
-            "node": "./dist/node/core.js",
-            "import": "./dist/browser/esm/core.js",
-            "require": "./dist/browser/cjs/core.js",
-            "default": "./dist/browser/cjs/core.js",
-            "types": "./types/core/index.d.ts"
-        },
-        "./serialization": {
-            "node": "./dist/node/serialization.js",
-            "import": "./dist/browser/esm/serialization.js",
-            "require": "./dist/browser/cjs/serialization.js",
-            "default": "./dist/browser/cjs/serialization.js",
-            "types": "./types/serialization/index.d.ts"
-        }
+        "./package.json": "./package.json"
     },
     "types": "./types/index.d.ts",
     "dependencies": {
@@ -45,11 +26,10 @@
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
-        "qs": "^6.11.2",
+        "qs": "^6.13.1",
         "readable-stream": "^4.5.2",
         "js-base64": "3.7.7",
-        "lodash-es": "^4.17.21",
-        "stream": "^0.0.2"
+        "lodash-es": "^4.17.21"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
@@ -70,8 +50,6 @@
     "browser": {
         "fs": false,
         "os": false,
-        "path": false,
-        "command-exists": false,
-        "execa": false
+        "path": false
     }
 }

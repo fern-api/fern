@@ -5,7 +5,7 @@ const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
 await client.completions.stream({
   query: "query",
 });
- 
-```                        
+
+```
 
 

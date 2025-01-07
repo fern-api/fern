@@ -6,8 +6,8 @@ const client = new SeedCustomAuthClient({
   customAuthScheme: "YOUR_AUTHORIZATION",
 });
 await client.customAuth.getWithCustomAuth();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -19,7 +19,7 @@ await client.customAuth.postWithCustomAuth(
 		{"key":"value"}
 	}
 )
- 
-```                        
+
+```
 
 

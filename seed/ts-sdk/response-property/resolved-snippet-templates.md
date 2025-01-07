@@ -7,8 +7,8 @@ await client.service.getMovie(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,8 +20,8 @@ await client.service.getMovieDocs(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -33,8 +33,8 @@ await client.service.getMovieName(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -46,8 +46,8 @@ await client.service.getMovieMetadata(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -59,8 +59,8 @@ await client.service.getOptionalMovie(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -72,8 +72,8 @@ await client.service.getOptionalMovieDocs(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -85,7 +85,7 @@ await client.service.getOptionalMovieName(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
