@@ -2,10 +2,13 @@ import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
+
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getNamespaceExport } from "@fern-api/typescript-base";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
@@ -81,7 +84,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
-            namespaceExport: customConfig.namespaceExport,
+            namespaceExport: customConfig.namespaceExport
         });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
