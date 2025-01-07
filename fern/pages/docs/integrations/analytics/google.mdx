@@ -7,7 +7,7 @@ Fern supports integrating with both [Google Analytics 4](https://developers.goog
 
 ## Google Analytics 4
 
-To integrate Google Analytics 4, you'll need a Google Analytics 4 property ID. It should look like: “UA-XXXXXX-X” or "G-XXXXXXX."
+To integrate Google Analytics 4, you'll need a Google Analytics 4 property ID. It usually looks like “UA-XXXXXX-X” or "G-XXXXXXX."
 
 ### Integrate Google Analytics 4 with your Docs
 
@@ -17,13 +17,23 @@ In your `docs.yml` file, add your Google Analytics 4 property ID under the `meas
 ```yaml
 analytics:
   ga4:
-    measurement-id: ${GA4_MEASUREMENT_ID} # scans environment variable
+    measurement-id: G-12345678
+```
+</CodeBlock>
+
+You can also add the ID as an environment variable:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  ga4:
+    measurement-id: ${GA4_MEASUREMENT_ID} # scans for GA4_MEASUREMENT_ID environment variable
 ```
 </CodeBlock>
 
 ## Google Tag Manager
 
-To integrate Google Tag Manager, you'll need a Google Tag Manager container ID. It should look like: "GTM-XXXXXX."
+To integrate Google Tag Manager, you'll need a Google Tag Manager container ID. It usually looks like: "GTM-XXXXXX."
 
 ### Integrate Google Tag Manager with your Docs
 
@@ -33,6 +43,16 @@ In your `docs.yml` file, add your Google Tag Manager container ID:
 ```yaml
 analytics:
   gtm:
-    container-id: ${GTM_CONTAINER_ID} # scans environment variable
+    container-id: GTM-NS32L7KR
+```
+</CodeBlock>
+
+You can also add the ID as an environment variable:
+
+<CodeBlock title="docs.yml">
+```yaml
+analytics:
+  gtm:
+    container-id: ${GTM_CONTAINER_ID} # scans for GTM_CONTAINER_ID environment variable
 ```
 </CodeBlock>
