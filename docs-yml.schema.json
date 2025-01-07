@@ -2214,6 +2214,16 @@
               "type": "null"
             }
           ]
+        },
+        "direct-openapi-parser": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
