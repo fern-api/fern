@@ -5,7 +5,6 @@ package com.seed.version.core;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
@@ -94,7 +93,7 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
-        private Optional<ApiVersion> version;
+        private ApiVersion version;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -120,7 +119,7 @@ public final class ClientOptions {
         }
 
         public Builder version(ApiVersion version) {
-            this.version = Optional.of(version);
+            this.version = version;
             return this;
         }
 
