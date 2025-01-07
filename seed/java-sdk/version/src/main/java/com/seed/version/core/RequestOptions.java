@@ -13,9 +13,12 @@ public final class RequestOptions {
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    private final Optional<ApiVersion> version;
+
+    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit, Optional<ApiVersion> version) {
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
+        this.version = version;
     }
 
     public Optional<Integer> getTimeout() {
@@ -26,8 +29,15 @@ public final class RequestOptions {
         return timeoutTimeUnit;
     }
 
+    public Optional<ApiVersion> getVersion() {
+        return version;
+    }
+
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
+        if (this.version.isPresent()) {
+            headers.put("X-API-Version", this.version.get().toString());
+        }
         return headers;
     }
 
@@ -40,6 +50,8 @@ public final class RequestOptions {
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 
+        private Optional<ApiVersion> version = Optional.empty();
+
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
             return this;
@@ -51,8 +63,13 @@ public final class RequestOptions {
             return this;
         }
 
+        public Builder version(ApiVersion version) {
+            this.version = Optional.of(version);
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(timeout, timeoutTimeUnit);
+            return new RequestOptions(timeout, timeoutTimeUnit, version);
         }
     }
 }

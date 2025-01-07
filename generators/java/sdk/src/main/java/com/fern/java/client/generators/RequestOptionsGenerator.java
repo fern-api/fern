@@ -23,7 +23,9 @@ import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.HttpHeader;
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.ir.model.ir.ApiVersionScheme;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -56,16 +58,18 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
     private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
+    private final ClientGeneratorContext clientGeneratorContext;
 
-    public RequestOptionsGenerator(AbstractGeneratorContext<?, ?> generatorContext, ClassName className) {
+    public RequestOptionsGenerator(ClientGeneratorContext generatorContext, ClassName className) {
         this(generatorContext, className, Collections.emptyList());
     }
 
     public RequestOptionsGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext, ClassName className, List<HttpHeader> additionalHeaders) {
+            ClientGeneratorContext generatorContext, ClassName className, List<HttpHeader> additionalHeaders) {
         super(className, generatorContext);
         this.builderClassName = className.nestedClass("Builder");
         this.additionalHeaders = additionalHeaders;
+        this.clientGeneratorContext = generatorContext;
     }
 
     @Override
@@ -80,6 +84,41 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                         "$T headers = new $T<>()",
                         ParameterizedTypeName.get(Map.class, String.class, String.class),
                         HashMap.class);
+
+        FieldSpec apiVersionField = FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Optional.class),
+                                clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName()),
+                        "version",
+                        Modifier.PRIVATE,
+                        Modifier.FINAL)
+                .build();
+
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    getHeadersCodeBlock
+                            .beginControlFlow("if (this.$N.isPresent())", apiVersionField)
+                            .addStatement(
+                                    "headers.put($S,$L)",
+                                    headerApiVersionScheme.getHeader().getName().getWireValue(),
+                                    CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
+                            .endControlFlow();
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+
         HeaderHandler headerHandler = new HeaderHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
         AuthSchemeHandler authSchemeHandler =
                 new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock, headerHandler);
@@ -127,6 +166,31 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 builderTypeSpec,
                 fields);
 
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    createRequestOptionField(
+                            "getVersion",
+                            apiVersionField.toBuilder(),
+                            CodeBlock.of("$T.empty()", Optional.class),
+                            requestOptionsTypeSpec,
+                            builderTypeSpec,
+                            fields);
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+
         FieldSpec timeoutField = timeoutFieldBuilder.build();
         FieldSpec timeUnitField = timeoutTimeUnitFieldBuilder.build();
         builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
@@ -146,6 +210,18 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());
+
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            builderTypeSpec.addMethod(MethodSpec.methodBuilder(apiVersionField.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(
+                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionsClassName(),
+                            apiVersionField.name)
+                    .addStatement("this.$L = Optional.of($L)", apiVersionField.name, apiVersionField.name)
+                    .addStatement("return this")
+                    .returns(builderClassName)
+                    .build());
+        }
 
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
