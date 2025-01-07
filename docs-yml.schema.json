@@ -433,6 +433,30 @@
       ],
       "additionalProperties": false
     },
+    "docs.GTMConfig": {
+      "type": "object",
+      "properties": {
+        "container-id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "container-id"
+      ],
+      "additionalProperties": false
+    },
+    "docs.GoogleAnalytics4Config": {
+      "type": "object",
+      "properties": {
+        "measurement-id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "measurement-id"
+      ],
+      "additionalProperties": false
+    },
     "docs.AnalyticsConfig": {
       "type": "object",
       "properties": {
@@ -470,6 +494,26 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.PostHogConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gtm": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.GTMConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ga4": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.GoogleAnalytics4Config"
             },
             {
               "type": "null"

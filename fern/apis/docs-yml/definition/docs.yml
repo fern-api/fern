@@ -27,8 +27,8 @@ types:
       fullstory: optional<FullStoryAnalyticsConfig>
       intercom: optional<IntercomConfig>
       posthog: optional<PostHogConfig>
-      # gtm: optional<GTMConfig>
-      # ga4: optional<GoogleAnalytics4Config>
+      gtm: optional<GTMConfig>
+      ga4: optional<GoogleAnalytics4Config>
       # amplitude: optional<AmplitudeConfig>
       # mixpanel: optional<MixpanelConfig>
       # hotjar: optional<HotJarConfig>
@@ -58,13 +58,13 @@ types:
       api-key: string
       endpoint: optional<string>
 
-  # GTMConfig:
-  #   properties:
-  #     container-id: string
+  GTMConfig:
+    properties:
+      container-id: string
 
-  # GoogleAnalytics4Config:
-  #   properties:
-  #     measurement-id: string
+  GoogleAnalytics4Config:
+    properties:
+      measurement-id: string
 
   # AmplitudeConfig:
   #   properties:

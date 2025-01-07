@@ -6,8 +6,7 @@ import urlJoin from "url-join";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-
-import { PublishInfo } from "../NpmPackage";
+import { PublishInfo } from "@fern-api/typescript-base";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {

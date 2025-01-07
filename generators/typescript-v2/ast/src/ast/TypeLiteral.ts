@@ -1,13 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 
-type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | NoOp;
+type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | String_ | Tuple | Nop;
 
 interface Array_ {
     type: "array";
-    valueType: Type;
     values: TypeLiteral[];
 }
 
@@ -31,8 +29,7 @@ interface Object_ {
     fields: ObjectField[];
 }
 
-interface ObjectField {
-    type: "objectField";
+export interface ObjectField {
     name: string;
     value: TypeLiteral;
 }
@@ -44,13 +41,11 @@ interface String_ {
 
 interface Tuple {
     type: "tuple";
-    // TODO: In theory this should be a tuple type, not an array of types
-    valueTypes: Type[];
     values: TypeLiteral[];
 }
 
-interface NoOp {
-    type: "noOp";
+interface Nop {
+    type: "nop";
 }
 
 export class TypeLiteral extends AstNode {
@@ -81,11 +76,6 @@ export class TypeLiteral extends AstNode {
                 this.writeObject({ writer, object: this.internalType });
                 break;
             }
-            case "objectField": {
-                writer.write(`${this.internalType.name}: `);
-                this.internalType.value.write(writer);
-                break;
-            }
             case "string": {
                 if (this.internalType.value.includes("\n")) {
                     this.writeStringWithBackticks({ writer, value: this.internalType.value });
@@ -98,7 +88,7 @@ export class TypeLiteral extends AstNode {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
-            case "noOp":
+            case "nop":
                 break;
             default: {
                 assertNever(this.internalType);
@@ -117,43 +107,44 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple }): void {
-        if (iterable.values.length === 0) {
-            // Don't allow "multiline" empty iterables.
+        const values = filterNopValues({ values: iterable.values });
+        if (values.length === 0) {
             writer.write("[]");
-        } else {
-            writer.writeLine("[");
-            writer.indent();
-            for (const value of iterable.values) {
-                value.write(writer);
-                writer.writeLine(",");
-            }
-            writer.dedent();
-            writer.write("]");
+            return;
         }
+
+        writer.writeLine("[");
+        writer.indent();
+        for (const value of values) {
+            value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("]");
     }
 
     private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
-        if (object.fields.length === 0) {
-            // Don't allow "multiline" empty objects.
+        const fields = filterNopObjectFields({ fields: object.fields });
+        if (fields.length === 0) {
             writer.write("{}");
-        } else {
-            writer.writeLine("{");
-            writer.indent();
-            for (const field of object.fields) {
-                writer.write(`${field.name}: `);
-                field.value.write(writer);
-                writer.writeLine(",");
-            }
-            writer.dedent();
-            writer.write("}");
+            return;
         }
+
+        writer.writeLine("{");
+        writer.indent();
+        for (const field of fields) {
+            writer.write(`${field.name}: `);
+            field.value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
     }
 
     /* Static factory methods for creating a TypeLiteral */
-    public static array({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
+    public static array({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "array",
-            valueType,
             values
         });
     }
@@ -166,23 +157,10 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "number", value });
     }
 
-    public static object(fields: Record<string, TypeLiteral>): TypeLiteral {
-        const objectFields: ObjectField[] = Object.entries(fields).map(([name, value]) => ({
-            type: "objectField",
-            name,
-            value
-        }));
+    public static object({ fields }: { fields: ObjectField[] }): TypeLiteral {
         return new this({
             type: "object",
-            fields: objectFields
-        });
-    }
-
-    public static objectField(name: string, value: TypeLiteral): TypeLiteral {
-        return new this({
-            type: "objectField",
-            name,
-            value
+            fields
         });
     }
 
@@ -193,10 +171,9 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static tuple({ valueTypes, values }: { valueTypes: Type[]; values: TypeLiteral[] }): TypeLiteral {
+    public static tuple({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "tuple",
-            valueTypes,
             values
         });
     }
@@ -205,11 +182,19 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "bigint", value });
     }
 
-    public static noOp(): TypeLiteral {
-        return new this({ type: "noOp" });
+    public static nop(): TypeLiteral {
+        return new this({ type: "nop" });
     }
 
-    public static isNoOp(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === "noOp";
+    public static isNop(typeLiteral: TypeLiteral): boolean {
+        return typeLiteral.internalType.type === "nop";
     }
+}
+
+function filterNopObjectFields({ fields }: { fields: ObjectField[] }): ObjectField[] {
+    return fields.filter((field) => !TypeLiteral.isNop(field.value));
+}
+
+function filterNopValues({ values }: { values: TypeLiteral[] }): TypeLiteral[] {
+    return values.filter((value) => !TypeLiteral.isNop(value));
 }
