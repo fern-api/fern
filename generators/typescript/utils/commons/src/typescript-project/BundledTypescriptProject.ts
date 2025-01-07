@@ -12,42 +12,10 @@ import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
 
 export declare namespace BundledTypescriptProject {
-    export interface Init extends TypescriptProject.Init {
-        npmPackage: NpmPackage | undefined;
-        dependencies: PackageDependencies;
-        extraConfigs: Record<string, unknown> | undefined;
-        outputJsr: boolean;
-    }
+    export interface Init extends TypescriptProject.Init {}
 }
 
 export class BundledTypescriptProject extends TypescriptProject {
-    private static TYPES_DIRECTORY = "types" as const;
-    private static BUILD_SCRIPT_FILENAME = "build.js" as const;
-    private static NODE_DIST_DIRECTORY = "node" as const;
-    private static BROWSER_DIST_DIRECTORY = "browser" as const;
-    private static BROWSER_ESM_DIST_DIRECTORY = `${BundledTypescriptProject.BROWSER_DIST_DIRECTORY}/esm` as const;
-    private static BROWSER_CJS_DIST_DIRECTORY = `${BundledTypescriptProject.BROWSER_DIST_DIRECTORY}/cjs` as const;
-    private static API_BUNDLE_FILENAME = "index.js" as const;
-    private static NON_EXPORTED_FOLDERS = ["core", "serialization"] as const;
-
-    private static FORMAT_SCRIPT_NAME = "format";
-    private static COMPILE_SCRIPT_NAME = "compile";
-    private static BUNDLE_SCRIPT_NAME = "bundle";
-    private static BUILD_SCRIPT_NAME = "build";
-
-    private npmPackage: NpmPackage | undefined;
-    private dependencies: PackageDependencies;
-    private extraConfigs: Record<string, unknown> | undefined;
-    private outputJsr: boolean;
-
-    constructor({ npmPackage, dependencies, extraConfigs, outputJsr, ...superInit }: BundledTypescriptProject.Init) {
-        super(superInit);
-        this.npmPackage = npmPackage;
-        this.dependencies = dependencies;
-        this.extraConfigs = extraConfigs;
-        this.outputJsr = outputJsr;
-    }
-
     protected async addFilesToVolume(): Promise<void> {
         await this.writeFileToVolume(
             RelativeFilePath.of(BundledTypescriptProject.BUILD_SCRIPT_FILENAME),
@@ -100,13 +68,12 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${BundledTypescriptProject.SRC_DIRECTORY}/index.ts",
-        outfile: \`./${BundledTypescriptProject.DIST_DIRECTORY}/\${outdir}/${
-            BundledTypescriptProject.API_BUNDLE_FILENAME
-        }\`,
+        entryPoint: "./${TypescriptProject.SRC_DIRECTORY}/index.ts",
+        outfile: \`./${TypescriptProject.DIST_DIRECTORY}/\${outdir}/${BundledTypescriptProject.API_BUNDLE_FILENAME}\`,
     });
-    ${BundledTypescriptProject.NON_EXPORTED_FOLDERS.map(
-        (folder) => `await runEsbuild({
+    ${this.getFoldersForExports()
+        .map(
+            (folder) => `await runEsbuild({
         platform,
         target,
         format,
@@ -115,7 +82,8 @@ async function bundle({ platform, target, format, outdir }) {
             folder
         )}\`,
     });`
-    ).join("\n    ")}
+        )
+        .join("\n    ")}
 }
 
 async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
@@ -137,7 +105,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
     private async generateGitIgnore(): Promise<void> {
         await this.writeFileToVolume(
-            RelativeFilePath.of(".gitignore"),
+            RelativeFilePath.of(TypescriptProject.GIT_IGNORE_FILENAME),
             [
                 "node_modules",
                 ".DS_Store",
@@ -158,7 +126,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
     private async generatePrettierRc(): Promise<void> {
         await this.writeFileToVolume(
-            RelativeFilePath.of(".prettierrc.yml"),
+            RelativeFilePath.of(TypescriptProject.PRETTIER_RC_FILENAME),
             yaml.dump({
                 tabWidth: 4,
                 printWidth: 120
@@ -167,7 +135,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     }
 
     private async generateStubTypeDeclarations(): Promise<void> {
-        for (const folder of BundledTypescriptProject.NON_EXPORTED_FOLDERS) {
+        for (const folder of this.getFoldersForExports()) {
             await this.writeFileToVolume(
                 this.getPathForStubTypesDeclarationFile(folder),
                 `// this is needed for older versions of TypeScript
@@ -179,9 +147,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
     }
 
     private getAllStubTypeFiles(): RelativeFilePath[] {
-        return BundledTypescriptProject.NON_EXPORTED_FOLDERS.map((folder) =>
-            this.getPathForStubTypesDeclarationFile(folder)
-        );
+        return this.getFoldersForExports().map((folder) => this.getPathForStubTypesDeclarationFile(folder));
     }
 
     private getPathForStubTypesDeclarationFile(folder: string): RelativeFilePath {
@@ -206,7 +172,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         };
 
         await this.writeFileToVolume(
-            RelativeFilePath.of("tsconfig.json"),
+            RelativeFilePath.of(TypescriptProject.TS_CONFIG_FILENAME),
             JSON.stringify(
                 {
                     compilerOptions,
@@ -257,18 +223,21 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 ...this.getAllStubTypeFiles()
             ],
             exports: {
-                ".": this.getExportsForBundle(BundledTypescriptProject.API_BUNDLE_FILENAME, {
+                ".": this.getExportsForBundle({
+                    bundleFilename: BundledTypescriptProject.API_BUNDLE_FILENAME,
                     pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`
                 }),
-                ...BundledTypescriptProject.NON_EXPORTED_FOLDERS.reduce(
+                ...this.getFoldersForExports().reduce(
                     (acc, folder) => ({
                         ...acc,
-                        [`./${folder}`]: this.getExportsForBundle(`${this.getBundleForNonExportedFolder(folder)}`, {
+                        [`./${folder}`]: this.getExportsForBundle({
+                            bundleFilename: this.getBundleForNonExportedFolder(folder),
                             pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`
                         })
                     }),
                     {}
-                )
+                ),
+                "./package.json": "./package.json"
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
@@ -319,7 +288,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
 
-        await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
+        await this.writeFileToVolume(
+            RelativeFilePath.of(TypescriptProject.PACKAGE_JSON_FILENAME),
+            JSON.stringify(packageJson, undefined, 4)
+        );
     }
 
     private async generateJsrJson(): Promise<void> {
@@ -329,11 +301,26 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 version: this.npmPackage.version,
                 exports: "src/index.ts"
             };
-            await this.writeFileToVolume(RelativeFilePath.of("jsr.json"), JSON.stringify(jsr, undefined, 4));
+            await this.writeFileToVolume(
+                RelativeFilePath.of(TypescriptProject.JSR_JSON_FILENAME),
+                JSON.stringify(jsr, undefined, 4)
+            );
         }
     }
 
-    private getExportsForBundle(bundleFilename: string, { pathToTypesFile }: { pathToTypesFile: string }) {
+    private getExportsForBundle({
+        bundleFilename,
+        pathToTypesFile
+    }: {
+        bundleFilename: string;
+        pathToTypesFile: string;
+    }): {
+        node: string;
+        import: string;
+        require: string;
+        default: string;
+        types: string;
+    } {
         return {
             node: this.getPathToNodeDistFile(bundleFilename),
             import: this.getPathToBrowserEsmDistFile(bundleFilename),
@@ -343,20 +330,20 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         };
     }
 
-    private getPathToNodeDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: BundledTypescriptProject.NODE_DIST_DIRECTORY, filename });
+    private getPathToNodeDistFile(filename: string): string {
+        return this.getPathToDistFile({ outdir: TypescriptProject.NODE_DIST_DIRECTORY, filename });
     }
 
-    private getPathToBrowserEsmDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: BundledTypescriptProject.BROWSER_ESM_DIST_DIRECTORY, filename });
+    private getPathToBrowserEsmDistFile(filename: string): string {
+        return this.getPathToDistFile({ outdir: TypescriptProject.BROWSER_ESM_DIST_DIRECTORY, filename });
     }
 
-    private getPathToBrowserCjsDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: BundledTypescriptProject.BROWSER_CJS_DIST_DIRECTORY, filename });
+    private getPathToBrowserCjsDistFile(filename: string): string {
+        return this.getPathToDistFile({ outdir: TypescriptProject.BROWSER_CJS_DIST_DIRECTORY, filename });
     }
 
-    private getPathToDistFile({ outdir, filename }: { outdir: string; filename: string }) {
-        return `./${BundledTypescriptProject.DIST_DIRECTORY}/${outdir}/${filename}`;
+    private getPathToDistFile({ outdir, filename }: { outdir: string; filename: string }): string {
+        return `./${TypescriptProject.DIST_DIRECTORY}/${outdir}/${filename}`;
     }
 
     private getDevDependencies(): Record<string, string> {

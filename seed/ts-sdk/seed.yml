@@ -60,12 +60,15 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
+      outputFolder: with-audiences
+    - customConfig: null
       audiences:
         - audience1
         - audience2
       outputFolder: with-audiences
-    - customConfig: null
-      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true

@@ -420,14 +420,16 @@ export class SdkGenerator {
             }
         }
 
+        let exportSerde: boolean = false;
         if (this.config.includeSerdeLayer) {
             this.generateTypeSchemas();
             this.generateEndpointTypeSchemas();
             this.generateInlinedRequestBodySchemas();
-            const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
-            if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
+            const serializationDirectory = this.rootDirectory.getDirectory("src/serialization");
+            if (serializationDirectory != null && serializationDirectory?.getDescendantSourceFiles().length > 0) {
+                exportSerde = true;
                 this.exportsManager.addExportsForDirectories([
-                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
+                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serialization" } }
                 ]);
                 this.context.logger.debug("Generated serde layer.");
             }
@@ -529,7 +531,8 @@ export class SdkGenerator {
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
                   outputJsr: this.config.outputJsr,
-                  runScripts: this.config.runScripts
+                  runScripts: this.config.runScripts,
+                  exportSerde
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -545,7 +548,8 @@ export class SdkGenerator {
                   extraScripts: this.extraScripts,
                   resolutions: {},
                   extraConfigs: this.config.packageJson,
-                  runScripts: this.config.runScripts
+                  runScripts: this.config.runScripts,
+                  exportSerde
               });
     }
 
