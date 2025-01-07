@@ -143,30 +143,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 builderTypeSpec,
                 fields);
 
-        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            ApiVersionScheme apiVersionScheme =
-                    clientGeneratorContext.getIr().getApiVersion().get();
-
-            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
-                @Override
-                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
-                    createRequestOptionField(
-                            "getVersion",
-                            apiVersionField.toBuilder(),
-                            CodeBlock.of("$T.empty()", Optional.class),
-                            requestOptionsTypeSpec,
-                            builderTypeSpec,
-                            fields);
-
-                    return null;
-                }
-
-                @Override
-                public Void _visitUnknown(Object _o) {
-                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
-                }
-            });
-        }
+        addApiVersionField(requestOptionsTypeSpec, builderTypeSpec, apiVersionField.toBuilder(), fields);
 
         FieldSpec timeoutField = timeoutFieldBuilder.build();
         FieldSpec timeUnitField = timeoutTimeUnitFieldBuilder.build();
@@ -187,18 +164,6 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());
-
-        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
-            builderTypeSpec.addMethod(MethodSpec.methodBuilder(apiVersionField.name)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(
-                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
-                            apiVersionField.name)
-                    .addStatement("this.$L = Optional.of($L)", apiVersionField.name, apiVersionField.name)
-                    .addStatement("return this")
-                    .returns(builderClassName)
-                    .build());
-        }
 
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
@@ -278,6 +243,76 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                                     headerApiVersionScheme.getHeader().getName().getWireValue(),
                                     CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
                             .endControlFlow();
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+    }
+
+    private void addApiVersionField(
+            TypeSpec.Builder requestOptionsTypeSpec,
+            TypeSpec.Builder builderTypeSpec,
+            FieldSpec.Builder apiVersionField,
+            List<RequestOption> fields) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    FieldSpec field = apiVersionField.build();
+                    requestOptionsTypeSpec.addField(apiVersionField
+                            .addModifiers(Modifier.FINAL)
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .build());
+                    fields.add(new RequestOption(
+                            apiVersionField
+                                    .initializer(CodeBlock.of("$T.empty()", Optional.class))
+                                    .build(),
+                            field));
+                    FieldSpec builderField = FieldSpec.builder(field.type, field.name, Modifier.PRIVATE)
+                            .initializer(CodeBlock.of("$T.empty()", Optional.class))
+                            .build();
+                    builderTypeSpec.addField(builderField);
+
+                    requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("getVersion")
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .addModifiers(Modifier.PUBLIC)
+                            .addStatement("return $N", field.name)
+                            .returns(field.type)
+                            .build());
+
+                    builderTypeSpec.addMethod(MethodSpec.methodBuilder(field.name)
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getApiVersionClassName(),
+                                    field.name)
+                            .addStatement("this.$L = Optional.of($L)", field.name, field.name)
+                            .addStatement("return this")
+                            .returns(builderClassName)
+                            .build());
 
                     return null;
                 }

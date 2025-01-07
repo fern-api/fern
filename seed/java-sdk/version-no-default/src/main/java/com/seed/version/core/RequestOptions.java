@@ -13,6 +13,9 @@ public final class RequestOptions {
 
     private final TimeUnit timeoutTimeUnit;
 
+    /**
+     * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+     */
     private final Optional<ApiVersion> version;
 
     private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit, Optional<ApiVersion> version) {
@@ -29,6 +32,9 @@ public final class RequestOptions {
         return timeoutTimeUnit;
     }
 
+    /**
+     * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+     */
     public Optional<ApiVersion> getVersion() {
         return version;
     }
@@ -52,6 +58,14 @@ public final class RequestOptions {
 
         private Optional<ApiVersion> version = Optional.empty();
 
+        /**
+         * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+         */
+        public Builder version(ApiVersion version) {
+            this.version = Optional.of(version);
+            return this;
+        }
+
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
             return this;
@@ -60,11 +74,6 @@ public final class RequestOptions {
         public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
             this.timeout = Optional.of(timeout);
             this.timeoutTimeUnit = timeoutTimeUnit;
-            return this;
-        }
-
-        public Builder version(ApiVersion version) {
-            this.version = Optional.of(version);
             return this;
         }
 
