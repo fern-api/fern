@@ -5,8 +5,8 @@ const client = new SeedAudiencesClient({
   environment: SeedAudiencesEnvironment.EnvironmentA,
 });
 await client.folderA.service.getDirectThread();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -16,8 +16,8 @@ const client = new SeedAudiencesClient({
   environment: SeedAudiencesEnvironment.EnvironmentA,
 });
 await client.folderD.service.getDirectThread();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -31,7 +31,7 @@ await client.foo.find({
   publicProperty: "publicProperty",
   privateProperty: 1,
 });
- 
-```                        
+
+```
 
 

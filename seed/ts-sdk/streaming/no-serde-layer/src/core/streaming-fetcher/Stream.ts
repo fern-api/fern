@@ -1,4 +1,5 @@
 import { Readable } from "stream";
+
 import { RUNTIME } from "../runtime";
 
 export declare namespace Stream {
