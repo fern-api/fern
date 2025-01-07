@@ -425,20 +425,14 @@ export class SdkGenerator {
             this.generateTypeSchemas();
             this.generateEndpointTypeSchemas();
             this.generateInlinedRequestBodySchemas();
-            const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
-            if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
+            const serializationDirectory = this.rootDirectory.getDirectory("src/serialization");
+            if (serializationDirectory != null && serializationDirectory?.getDescendantSourceFiles().length > 0) {
                 exportSerde = true;
                 this.exportsManager.addExportsForDirectories([
-                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
+                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serialization" } }
                 ]);
                 this.context.logger.debug("Generated serde layer.");
             }
-        }
-
-        let exportCore: boolean = false;
-        const coreDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/core"));
-        if (coreDirectory != null && coreDirectory?.getSourceFiles().length > 0) {
-            exportCore = true;
         }
 
         if (this.generateOAuthClients) {
