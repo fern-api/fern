@@ -50,4 +50,27 @@ describe("no-duplicate-overrides", () => {
 
         expect(violations).toMatchSnapshot("./__snapshots__/openapi/complex.json");
     }, 10_000);
+
+    it("inlined failure", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("in-lined")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
+                nodePath: ["paths", "/a/b", "get"],
+                message: "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)"
+            }
+        ];
+
+        expect(violations).toMatchSnapshot("./__snapshots__/openapi/complex.json");
+    }, 10_000);
 });
