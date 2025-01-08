@@ -1,2 +1,2 @@
-export { GenerateStreamRequest } from "./GenerateStreamRequest";
-export { Generateequest } from "./Generateequest";
+export { GenerateStreamRequest } from "./GenerateStreamRequest.js";
+export { Generateequest } from "./Generateequest.js";

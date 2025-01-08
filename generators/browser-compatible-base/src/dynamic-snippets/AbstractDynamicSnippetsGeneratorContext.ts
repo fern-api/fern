@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, keys } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 
@@ -243,6 +243,64 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         environment: FernIr.dynamic.EnvironmentValues
     ): environment is FernIr.dynamic.MultipleEnvironmentUrlValues {
         return typeof environment === "object";
+    }
+
+    public validateMultiEnvironmentUrlValues(
+        multiEnvironmentUrlValues: FernIr.dynamic.MultipleEnvironmentUrlValues
+    ): boolean {
+        if (this._ir.environments == null) {
+            this.errors.add({
+                severity: Severity.Critical,
+                message:
+                    "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+            });
+            return false;
+        }
+        const environments = this._ir.environments.environments;
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                this.errors.add({
+                    severity: Severity.Critical,
+                    message:
+                        "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+                });
+                return false;
+            }
+            case "multipleBaseUrls": {
+                const firstEnvironment = environments.environments[0];
+                if (firstEnvironment == null) {
+                    this.errors.add({
+                        severity: Severity.Critical,
+                        message: "Multiple environments are not supported; use the baseUrl option instead"
+                    });
+                    return false;
+                }
+                const expectedKeys = new Set(keys(firstEnvironment.urls));
+                for (const key of keys(multiEnvironmentUrlValues)) {
+                    if (expectedKeys.has(key)) {
+                        expectedKeys.delete(key);
+                    }
+                }
+                if (expectedKeys.size > 0) {
+                    this.errors.add({
+                        severity: Severity.Critical,
+                        message: `The provided environments are invalid; got: [${Object.keys(multiEnvironmentUrlValues).join(", ")}], expected: [${keys(firstEnvironment.urls).join(", ")}]`
+                    });
+                    return false;
+                }
+                return true;
+            }
+        }
+    }
+
+    public newAuthMismatchError({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.Auth;
+        values: FernIr.dynamic.AuthValues;
+    }): Error {
+        return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
     }
 
     public newParameterNotRecognizedError(parameterName: string): Error {

@@ -8,7 +8,7 @@ COPY poetry.lock ./poetry.lock
 COPY ./core_utilities/fastapi /assets/core_utilities
 COPY ./core_utilities/shared /assets/core_utilities
 
-RUN pip3 install poetry &&\
+RUN pip3 install poetry==1.8.5 &&\
   poetry config virtualenvs.create false &&\
   poetry install
 

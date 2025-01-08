@@ -1,4 +1,4 @@
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { NpmPackage, PersistedTypescriptProject, constructNpmPackage } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 
 import {
@@ -13,7 +13,6 @@ import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as serializers from "@fern-fern/ir-sdk/serialization";
 
-import { constructNpmPackage } from "./constructNpmPackage";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 

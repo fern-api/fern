@@ -144,7 +144,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -153,7 +153,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -162,7 +162,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -651,15 +651,5 @@ export class EndpointSnippetGenerator {
             }),
             arguments_
         });
-    }
-
-    private newAuthMismatchError({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.Auth;
-        values: FernIr.dynamic.AuthValues;
-    }): Error {
-        return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
     }
 }

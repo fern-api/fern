@@ -10,8 +10,8 @@ await client.users.listWithCursorPagination({
   perPage: 1,
   startingAfter: "starting_after",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -26,8 +26,8 @@ await client.users.listWithBodyCursorPagination({
     cursor: "cursor",
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -42,8 +42,8 @@ await client.users.listWithOffsetPagination({
   perPage: 1,
   startingAfter: "starting_after",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -58,8 +58,8 @@ await client.users.listWithBodyOffsetPagination({
     page: 1,
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -73,8 +73,8 @@ await client.users.listWithOffsetStepPagination({
   page: 1,
   limit: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -88,8 +88,8 @@ await client.users.listWithOffsetPaginationHasNextPage({
   page: 1,
   limit: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -102,8 +102,8 @@ const client = new SeedPaginationClient({
 await client.users.listWithExtendedResults({
   cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -116,8 +116,8 @@ const client = new SeedPaginationClient({
 await client.users.listWithExtendedResultsAndOptionalData({
   cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -130,8 +130,8 @@ const client = new SeedPaginationClient({
 await client.users.listUsernames({
   startingAfter: "starting_after",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -144,7 +144,7 @@ const client = new SeedPaginationClient({
 await client.users.listWithGlobalConfig({
   offset: 1,
 });
- 
-```                        
+
+```
 
 

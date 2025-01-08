@@ -222,6 +222,9 @@ types:
       title-as-schema-name: optional<boolean>
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
+      prefer-undiscriminated-unions-with-literals: 
+        type: optional<boolean>
+        docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
       object-query-parameters: 
         type: optional<boolean>
         docs: Enables parsing deep object query parameters

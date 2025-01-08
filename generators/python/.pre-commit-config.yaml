@@ -37,11 +37,6 @@ repos:
     rev: 5.12.0
     hooks:
       - id: isort
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v2.1.1
-    hooks:
-      - id: pycln
-        args: [--all]
   - repo: https://github.com/python-poetry/poetry
     rev: "1.2"
     hooks:

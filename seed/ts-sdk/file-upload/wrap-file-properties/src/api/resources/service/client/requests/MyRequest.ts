@@ -3,7 +3,7 @@
  */
 
 import * as fs from "fs";
-import * as SeedFileUpload from "../../../../index";
+import * as SeedFileUpload from "../../../../index.js";
 
 export interface MyRequest {
     maybeString?: string;

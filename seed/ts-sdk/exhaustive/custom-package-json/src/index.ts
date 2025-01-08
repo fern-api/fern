@@ -1,2 +1,3 @@
-export * as Fiddle from "./api";
-export { FiddleClient } from "./Client";
+export * as Fiddle from "./api/index.js";
+export { FiddleClient } from "./Client.js";
+export * as serialization from "./serialization/index.js";

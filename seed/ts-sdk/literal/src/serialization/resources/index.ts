@@ -1,7 +1,7 @@
-export * as inlined from "./inlined";
-export * from "./inlined/types";
-export * as reference from "./reference";
-export * from "./reference/types";
-export * as headers from "./headers";
-export * from "./headers/client/requests";
-export * from "./inlined/client/requests";
+export * as inlined from "./inlined/index.js";
+export * from "./inlined/types/index.js";
+export * as reference from "./reference/index.js";
+export * from "./reference/types/index.js";
+export * as headers from "./headers/index.js";
+export * from "./headers/client/requests/index.js";
+export * from "./inlined/client/requests/index.js";

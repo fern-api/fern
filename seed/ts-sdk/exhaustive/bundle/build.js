@@ -33,13 +33,6 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./src/core/index.ts",
-        outfile: `./dist/${outdir}/core.js`,
-    });
-    await runEsbuild({
-        platform,
-        target,
-        format,
         entryPoint: "./src/serialization/index.ts",
         outfile: `./dist/${outdir}/serialization.js`,
     });

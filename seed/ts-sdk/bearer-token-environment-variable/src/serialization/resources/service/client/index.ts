@@ -1,1 +1,1 @@
-export * as getWithBearerToken from "./getWithBearerToken";
+export * as getWithBearerToken from "./getWithBearerToken.js";

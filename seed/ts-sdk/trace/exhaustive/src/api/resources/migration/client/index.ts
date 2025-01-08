@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as getAttemptedMigrations from "./getAttemptedMigrations";
+export * from "./requests/index.js";
+export * as getAttemptedMigrations from "./getAttemptedMigrations.js";

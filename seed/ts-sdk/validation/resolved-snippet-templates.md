@@ -7,8 +7,8 @@ await client.create({
   even: 100,
   name: "foo",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,7 +20,7 @@ await client.get({
   even: 100,
   name: "foo",
 });
- 
-```                        
+
+```
 
 

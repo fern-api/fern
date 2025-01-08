@@ -152,8 +152,8 @@ export async function parseDocsConfiguration({
                   }
                 : undefined,
             segment: rawDocsConfiguration.analytics?.segment,
-            gtm: undefined,
-            ga4: undefined,
+            gtm: rawDocsConfiguration.analytics?.gtm,
+            ga4: rawDocsConfiguration.analytics?.ga4,
             amplitude: undefined,
             mixpanel: undefined,
             hotjar: undefined,

@@ -1,17 +1,3 @@
 {
-    "compilerOptions": {
-        "extendedDiagnostics": true,
-        "strict": true,
-        "target": "ES6",
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "declaration": true,
-        "outDir": "dist",
-        "rootDir": "src",
-        "baseUrl": "src"
-    },
-    "include": ["src"],
-    "exclude": []
+    "extends": "./tsconfig.cjs.json"
 }

@@ -1,1 +1,1 @@
-export { StreamCompletionRequest } from "./StreamCompletionRequest";
+export { StreamCompletionRequest } from "./StreamCompletionRequest.js";

@@ -306,8 +306,16 @@ export class DocsDefinitionResolver {
                           endpoint: this.parsedDocsConfig.analyticsConfig.posthog.endpoint
                       }
                     : undefined,
-                gtm: undefined,
-                ga4: undefined,
+                gtm: this.parsedDocsConfig.analyticsConfig?.gtm
+                    ? {
+                          containerId: this.parsedDocsConfig.analyticsConfig.gtm.containerId
+                      }
+                    : undefined,
+                ga4: this.parsedDocsConfig.analyticsConfig?.ga4
+                    ? {
+                          measurementId: this.parsedDocsConfig.analyticsConfig.ga4.measurementId
+                      }
+                    : undefined,
                 amplitude: undefined,
                 mixpanel: undefined,
                 hotjar: undefined,

@@ -7,8 +7,8 @@ const client = new SeedBasicAuthEnvironmentVariablesClient({
   password: "YOUR_PASSWORD",
 });
 await client.basicAuth.getWithBasicAuth();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,7 +20,7 @@ await client.basicAuth.postWithBasicAuth(
 		{"key":"value"}
 	}
 )
- 
-```                        
+
+```
 
 

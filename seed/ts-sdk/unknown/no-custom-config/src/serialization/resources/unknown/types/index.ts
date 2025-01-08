@@ -1,2 +1,2 @@
-export * from "./MyAlias";
-export * from "./MyObject";
+export * from "./MyAlias.js";
+export * from "./MyObject.js";

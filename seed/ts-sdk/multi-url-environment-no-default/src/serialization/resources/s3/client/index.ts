@@ -1,2 +1,2 @@
-export * as getPresignedUrl from "./getPresignedUrl";
-export * from "./requests";
+export * as getPresignedUrl from "./getPresignedUrl.js";
+export * from "./requests/index.js";

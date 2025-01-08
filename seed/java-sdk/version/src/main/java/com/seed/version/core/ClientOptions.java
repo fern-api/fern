@@ -5,6 +5,7 @@ package com.seed.version.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
@@ -20,12 +21,44 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
+    private final ApiVersion version;
+
+    /**
+     * @param version Defaults to "{\n"
+     *     + "  \"name\" : {\n"
+     *     + "    \"wireValue\" : \"2.0.0\",\n"
+     *     + "    \"name\" : {\n"
+     *     + "      \"originalName\" : \"v2\",\n"
+     *     + "      \"camelCase\" : {\n"
+     *     + "        \"unsafeName\" : \"v2\",\n"
+     *     + "        \"safeName\" : \"v2\"\n"
+     *     + "      },\n"
+     *     + "      \"pascalCase\" : {\n"
+     *     + "        \"unsafeName\" : \"V2\",\n"
+     *     + "        \"safeName\" : \"V2\"\n"
+     *     + "      },\n"
+     *     + "      \"snakeCase\" : {\n"
+     *     + "        \"unsafeName\" : \"v_2\",\n"
+     *     + "        \"safeName\" : \"v_2\"\n"
+     *     + "      },\n"
+     *     + "      \"screamingSnakeCase\" : {\n"
+     *     + "        \"unsafeName\" : \"V_2\",\n"
+     *     + "        \"safeName\" : \"V_2\"\n"
+     *     + "      }\n"
+     *     + "    }\n"
+     *     + "  }\n"
+     *     + "}" if empty
+     */
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
-            int timeout) {
+            int timeout,
+            Optional<ApiVersion> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -37,6 +70,8 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
+        this.version = version.orElse(ApiVersion.CURRENT);
+        this.headers.put("X-API-Version", this.version.toString());
     }
 
     public Environment environment() {
@@ -52,6 +87,13 @@ public final class ClientOptions {
             values.putAll(requestOptions.getHeaders());
         }
         return values;
+    }
+
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
+    public ApiVersion version() {
+        return this.version;
     }
 
     public OkHttpClient httpClient() {
@@ -84,6 +126,8 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
+        private Optional<ApiVersion> version;
+
         public Builder environment(Environment environment) {
             this.environment = environment;
             return this;
@@ -107,12 +151,20 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * version.toString() is sent as the "X-API-Version" header.
+         */
+        public Builder version(ApiVersion version) {
+            this.version = Optional.of(version);
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
                     .callTimeout(this.timeout, TimeUnit.SECONDS)
                     .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout);
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout, version);
         }
     }
 }
