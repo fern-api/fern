@@ -6,6 +6,7 @@ import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { filterOssWorkspaces } from "../../utils/filterOssWorkspaces";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function generateDocsWorkspace({
@@ -60,16 +61,7 @@ export async function generateDocsWorkspace({
             })
         );
 
-        const ossWorkspaces = (
-            await Promise.all(
-                project.apiWorkspaces.map(async (workspace) => {
-                    if (workspace instanceof OSSWorkspace) {
-                        return workspace as OSSWorkspace;
-                    }
-                    return null;
-                })
-            )
-        ).filter(isNonNullish);
+        const ossWorkspaces = await filterOssWorkspaces(project);
 
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,

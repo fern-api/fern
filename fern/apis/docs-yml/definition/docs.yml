@@ -974,10 +974,10 @@ types:
           If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
 
           This behavior is unstable and may change in the future.
-      direct-openapi-parser:
+      openapi-parser-v2:
         type: optional<boolean>
         docs: |
-          If `direct-openapi-parser` is set to true, the OpenAPI parser will be used directly, without Fern.
+          If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern.
 
   PlaygroundSettings:
     properties:

@@ -15,13 +15,13 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
         core.serialization.list(core.serialization.string()).optional(),
     ),
     disableStreamToggle: core.serialization.property("disable-stream-toggle", core.serialization.boolean().optional()),
-    directOpenapiParser: core.serialization.property("direct-openapi-parser", core.serialization.boolean().optional()),
+    openapiParserV2: core.serialization.property("openapi-parser-v2", core.serialization.boolean().optional()),
 });
 
 export declare namespace ExperimentalConfig {
     export interface Raw {
         "mdx-components"?: string[] | null;
         "disable-stream-toggle"?: boolean | null;
-        "direct-openapi-parser"?: boolean | null;
+        "openapi-parser-v2"?: boolean | null;
     }
 }

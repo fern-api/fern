@@ -8,6 +8,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { filterOssWorkspaces } from "../../utils/filterOssWorkspaces";
 
 export async function writeDocsDefinitionForProject({
     project,
@@ -24,16 +25,7 @@ export async function writeDocsDefinitionForProject({
     }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        const ossWorkspaces = (
-            await Promise.all(
-                project.apiWorkspaces.map(async (workspace) => {
-                    if (workspace instanceof OSSWorkspace) {
-                        return workspace as OSSWorkspace;
-                    }
-                    return null;
-                })
-            )
-        ).filter(isNonNullish);
+        const ossWorkspaces = await filterOssWorkspaces(project);
 
         const fernWorkspaces = await Promise.all(
             project.apiWorkspaces.map(async (workspace) => {

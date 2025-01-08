@@ -105,8 +105,8 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: parsedDocsConfig.experimental?.directOpenapiParser ? {} : apiCollector.getAPIsForDefinition(),
-        apisV2: parsedDocsConfig.experimental?.directOpenapiParser ? apiCollectorV2.getAPIsForDefinition() : {},
+        apis: parsedDocsConfig.experimental?.openapiParserV2 ? {} : apiCollector.getAPIsForDefinition(),
+        apisV2: parsedDocsConfig.experimental?.openapiParserV2 ? apiCollectorV2.getAPIsForDefinition() : {},
         config: readDocsConfig,
         files: {},
         filesV2,
@@ -156,7 +156,10 @@ class ReferencedAPICollector {
         } catch (e) {
             // Print Error
             const err = e as Error;
-            this.context.logger.error(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.error(
+                "An error occured while trying to read an API definition. Please reach out to support."
+            );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
             }
@@ -181,7 +184,10 @@ class ReferencedAPICollectorV2 {
         } catch (e) {
             // Print Error
             const err = e as Error;
-            this.context.logger.error(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.error(
+                "An error occured while trying to read an API definition. Please reach out to support."
+            );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
             }
