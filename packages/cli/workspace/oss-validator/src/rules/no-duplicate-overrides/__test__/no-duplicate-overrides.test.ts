@@ -25,7 +25,7 @@ describe("no-duplicate-overrides", () => {
             }
         ];
 
-        expect(violations).toMatchSnapshot("./__snapshots__/openapi/simple.json");
+        expect(violations).toMatchSnapshot();
     }, 10_000);
 
     it("complex failure", async () => {
@@ -48,7 +48,7 @@ describe("no-duplicate-overrides", () => {
             }
         ];
 
-        expect(violations).toMatchSnapshot("./__snapshots__/openapi/complex.json");
+        expect(violations).toMatchSnapshot();
     }, 10_000);
 
     it("inlined failure", async () => {
@@ -71,6 +71,6 @@ describe("no-duplicate-overrides", () => {
             }
         ];
 
-        expect(violations).toMatchSnapshot("./__snapshots__/openapi/complex.json");
+        expect(violations).toMatchSnapshot();
     }, 10_000);
 });
