@@ -2258,6 +2258,16 @@
               "type": "null"
             }
           ]
+        },
+        "openapi-parser-v2": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

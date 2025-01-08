@@ -18,6 +18,7 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -36,6 +37,7 @@ export async function publishDocs({
     domain,
     customDomains,
     fernWorkspaces,
+    ossWorkspaces,
     context,
     preview,
     editThisPage,
@@ -47,6 +49,7 @@ export async function publishDocs({
     domain: string;
     customDomains: string[];
     fernWorkspaces: FernWorkspace[];
+    ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
@@ -63,6 +66,7 @@ export async function publishDocs({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
+        ossWorkspaces,
         fernWorkspaces,
         context,
         editThisPage,
@@ -161,7 +165,8 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition
+                definition: apiDefinition,
+                definitionV2: undefined
             });
 
             if (response.ok) {
