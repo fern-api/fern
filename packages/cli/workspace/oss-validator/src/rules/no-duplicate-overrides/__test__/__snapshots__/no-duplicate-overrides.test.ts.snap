@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`no-duplicate-overrides > complex failure > ./__snapshots__/openapi/complex.json 1`] = `
+exports[`no-duplicate-overrides > complex failure 1`] = `
 [
   {
     "message": "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)",
@@ -15,7 +15,22 @@ exports[`no-duplicate-overrides > complex failure > ./__snapshots__/openapi/comp
 ]
 `;
 
-exports[`no-duplicate-overrides > simple failure > ./__snapshots__/openapi/simple.json 1`] = `
+exports[`no-duplicate-overrides > inlined failure 1`] = `
+[
+  {
+    "message": "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)",
+    "nodePath": [
+      "paths",
+      "/a/b",
+      "get",
+    ],
+    "relativeFilepath": "openapi/openapi.yml",
+    "severity": "error",
+  },
+]
+`;
+
+exports[`no-duplicate-overrides > simple failure 1`] = `
 [
   {
     "message": "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)",
