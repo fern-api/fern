@@ -1,1 +1,1 @@
-export * as getAndReturnUnion from "./getAndReturnUnion";
+export * as getAndReturnUnion from "./getAndReturnUnion.js";

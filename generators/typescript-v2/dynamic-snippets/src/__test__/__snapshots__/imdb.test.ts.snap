@@ -1,9 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`imdb (success) > 'GET /movies/{movieId} (simple)' 1`] = `
-"import { Acme } from "acme";
+"import { AcmeClient } from "acme";
 
-const client = new Acme({
+const client = new AcmeClient({
     token: "<YOUR_API_KEY>",
 })
 await client.imdb.getMovie()"

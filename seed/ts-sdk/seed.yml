@@ -60,7 +60,7 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
-      outputFolder: with-audiences
+      outputFolder: no-custom-config
     - customConfig: null
       audiences:
         - audience1

@@ -1,1 +1,1 @@
-export { SeedWebsocketError, SeedWebsocketTimeoutError } from "./errors";
+export { SeedWebsocketError, SeedWebsocketTimeoutError } from "./errors/index.js";

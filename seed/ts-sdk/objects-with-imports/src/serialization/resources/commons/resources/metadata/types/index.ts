@@ -1,1 +1,1 @@
-export * from "./Metadata";
+export * from "./Metadata.js";

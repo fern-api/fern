@@ -1,2 +1,2 @@
-export { type CreateRequest } from "./CreateRequest";
-export { type GetRequest } from "./GetRequest";
+export { type CreateRequest } from "./CreateRequest.js";
+export { type GetRequest } from "./GetRequest.js";

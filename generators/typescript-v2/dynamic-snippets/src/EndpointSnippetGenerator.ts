@@ -1,29 +1,20 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ts } from "@fern-api/typescript-ast";
-import { NpmPackage, constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 
 const CLIENT_VAR_NAME = "client";
+const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
+    type: "primitive",
+    value: "STRING"
+};
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
-    private namespaceExport: string;
-    private moduleName: string;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
-        this.namespaceExport = getNamespaceExport({
-            organization: this.context.config.organization,
-            workspaceName: this.context.config.workspaceName,
-            namespaceExport: this.context.customConfig?.namespaceExport
-        });
-        this.moduleName =
-            constructNpmPackage({
-                generatorConfig: context.config,
-                isPackagePrivate: context.customConfig?.private ?? false
-            })?.packageName ?? this.context.config.organization;
     }
 
     public async generateSnippet({
@@ -74,11 +65,8 @@ export class EndpointSnippetGenerator {
             const: true,
             initializer: ts.instantiateClass({
                 class_: ts.reference({
-                    name: this.namespaceExport,
-                    importFrom: {
-                        type: "named",
-                        moduleName: this.moduleName
-                    }
+                    name: this.context.getRootClientName(),
+                    importFrom: this.context.getModuleImport()
                 }),
                 arguments_: [this.getConstructorArgs({ endpoint, snippet })]
             })
@@ -110,6 +98,13 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.AstNode {
         const fields: ts.ObjectField[] = [];
+        const environmentArgs = this.getConstructorEnvironmentArgs({
+            baseUrl: snippet.baseURL,
+            environment: snippet.environment
+        });
+        if (environmentArgs.length > 0) {
+            fields.push(...environmentArgs);
+        }
         if (endpoint.auth != null) {
             if (snippet.auth != null) {
                 fields.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
@@ -120,10 +115,83 @@ export class EndpointSnippetGenerator {
                 });
             }
         }
+        this.context.errors.scope(Scope.Headers);
+        if (this.context.ir.headers != null && snippet.headers != null) {
+            fields.push(
+                ...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
+        this.context.errors.unscope();
         if (fields.length === 0) {
             return ts.TypeLiteral.nop();
         }
         return ts.TypeLiteral.object({ fields });
+    }
+
+    private getConstructorEnvironmentArgs({
+        baseUrl,
+        environment
+    }: {
+        baseUrl: string | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+    }): ts.ObjectField[] {
+        const environmentValue = this.getEnvironmentValue({ baseUrl, environment });
+        if (environmentValue == null) {
+            return [];
+        }
+        return [
+            {
+                name: "environment",
+                value: environmentValue
+            }
+        ];
+    }
+
+    private getEnvironmentValue({
+        baseUrl,
+        environment
+    }: {
+        baseUrl: string | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+    }): ts.TypeLiteral | undefined {
+        if (baseUrl != null && environment != null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Cannot specify both baseUrl and environment options"
+            });
+            return undefined;
+        }
+        if (baseUrl != null) {
+            return ts.TypeLiteral.string(baseUrl);
+        }
+        if (environment != null) {
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const environmentTypeReference = this.context.getEnvironmentTypeReferenceFromID(environment);
+                if (environmentTypeReference == null) {
+                    this.context.errors.add({
+                        severity: Severity.Warning,
+                        message: `Environment ${JSON.stringify(environment)} was not found`
+                    });
+                    return undefined;
+                }
+                return ts.TypeLiteral.reference(environmentTypeReference);
+            }
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
+                    return undefined;
+                }
+                return ts.TypeLiteral.object({
+                    fields: Object.entries(environment).map(([key, value]) => ({
+                        name: key,
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: STRING_TYPE_REFERENCE,
+                            value
+                        })
+                    }))
+                });
+            }
+        }
+        return undefined;
     }
 
     private getConstructorAuthArgs({
@@ -208,9 +276,51 @@ export class EndpointSnippetGenerator {
         return [
             {
                 name: this.context.getPropertyName(auth.header.name.name),
-                value: ts.TypeLiteral.string("TODO: Implement me!")
+                value: this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: auth.header.typeReference,
+                    value: values.value
+                })
             }
         ];
+    }
+
+    private getConstructorHeaderArgs({
+        headers,
+        values
+    }: {
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+    }): ts.ObjectField[] {
+        const fields: ts.ObjectField[] = [];
+        for (const header of headers) {
+            const field = this.getConstructorHeaderArg({ header, value: values.value });
+            if (field != null) {
+                fields.push(field);
+            }
+        }
+        return fields;
+    }
+
+    private getConstructorHeaderArg({
+        header,
+        value
+    }: {
+        header: FernIr.dynamic.NamedParameter;
+        value: unknown;
+    }): ts.ObjectField | undefined {
+        const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
+            typeReference: header.typeReference,
+            value
+        });
+        if (ts.TypeLiteral.isNop(typeLiteral)) {
+            // Literal header values (e.g. "X-API-Version") should not be included in the
+            // client constructor.
+            return undefined;
+        }
+        return {
+            name: this.context.getPropertyName(header.name.name),
+            value: typeLiteral
+        };
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

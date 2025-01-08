@@ -1,2 +1,2 @@
-export * as directory from "./directory";
-export * from "./directory/types";
+export * as directory from "./directory/index.js";
+export * from "./directory/types/index.js";

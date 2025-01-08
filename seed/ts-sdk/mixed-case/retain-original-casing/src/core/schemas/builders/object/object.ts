@@ -1,14 +1,14 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { entries } from "../../utils/entries";
-import { filterObject } from "../../utils/filterObject";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { isPlainObject } from "../../utils/isPlainObject";
-import { keys } from "../../utils/keys";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { partition } from "../../utils/partition";
-import { getObjectLikeUtils } from "../object-like";
-import { getSchemaUtils } from "../schema-utils";
-import { isProperty } from "./property";
+import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema.js";
+import { entries } from "../../utils/entries.js";
+import { filterObject } from "../../utils/filterObject.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { isPlainObject } from "../../utils/isPlainObject.js";
+import { keys } from "../../utils/keys.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { partition } from "../../utils/partition.js";
+import { getObjectLikeUtils } from "../object-like/index.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
+import { isProperty } from "./property.js";
 import {
     BaseObjectSchema,
     ObjectSchema,
@@ -17,7 +17,7 @@ import {
     inferObjectSchemaFromPropertySchemas,
     inferParsedObjectFromPropertySchemas,
     inferRawObjectFromPropertySchemas,
-} from "./types";
+} from "./types.js";
 
 interface ObjectPropertyWithRawKey {
     rawKey: string;

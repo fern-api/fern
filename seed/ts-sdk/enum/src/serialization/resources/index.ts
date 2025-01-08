@@ -1,2 +1,2 @@
-export * as inlinedRequest from "./inlinedRequest";
-export * from "./inlinedRequest/client/requests";
+export * as inlinedRequest from "./inlinedRequest/index.js";
+export * from "./inlinedRequest/client/requests/index.js";

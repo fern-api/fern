@@ -1,1 +1,1 @@
-export { Inlined } from "./Inlined";
+export { Inlined } from "./Inlined.js";

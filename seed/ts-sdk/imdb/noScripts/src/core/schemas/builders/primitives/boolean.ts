@@ -1,6 +1,6 @@
-import { SchemaType } from "../../Schema";
-import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { SchemaType } from "../../Schema.js";
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 
 export const boolean = createIdentitySchemaCreator<boolean>(
     SchemaType.BOOLEAN,

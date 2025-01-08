@@ -25,5 +25,6 @@
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     "noImplicitReturns": true,
-  }
+  },
+  "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
 }

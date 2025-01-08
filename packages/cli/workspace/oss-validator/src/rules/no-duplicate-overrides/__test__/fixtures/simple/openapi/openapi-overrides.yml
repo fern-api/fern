@@ -1,0 +1,11 @@
+paths:
+  /a/{alpha}:
+    get:
+      x-fern-sdk-group-name:
+        - a
+      x-fern-sdk-method-name: b
+  /a/b:
+    get:
+      x-fern-sdk-group-name:
+        - a
+      x-fern-sdk-method-name: b

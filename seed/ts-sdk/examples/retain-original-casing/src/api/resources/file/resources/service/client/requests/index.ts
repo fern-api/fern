@@ -1,1 +1,1 @@
-export { type GetFileRequest } from "./GetFileRequest";
+export { type GetFileRequest } from "./GetFileRequest.js";

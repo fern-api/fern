@@ -1,1 +1,1 @@
-export * from "./Type";
+export * from "./Type.js";

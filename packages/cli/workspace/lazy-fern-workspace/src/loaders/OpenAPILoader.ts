@@ -1,16 +1,14 @@
-import { Source, bundle } from "@redocly/openapi-core";
 import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { convertObj } from "swagger2openapi";
 
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS, OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, relative } from "@fern-api/fs-utils";
+import { OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons";
+import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
-import { AsyncAPIV2, Document, FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { Document } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 
-import { mergeWithOverrides } from "./mergeWithOverrides";
+import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3";
+import { loadAsyncAPI } from "../utils/loadAsyncAPI";
+import { loadOpenAPI } from "../utils/loadOpenAPI";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
@@ -34,7 +32,7 @@ export class OpenAPILoader {
                     ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
                     : OpenApiIrSource.openapi({ file: sourceRelativePath });
             if (contents.includes("openapi") || contents.includes("swagger")) {
-                const openAPI = await this.loadOpenAPI({
+                const openAPI = await loadOpenAPI({
                     absolutePathToOpenAPI: spec.absoluteFilepath,
                     context,
                     absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
@@ -48,7 +46,7 @@ export class OpenAPILoader {
                         settings: spec.settings
                     });
                 } else if (isOpenAPIV2(openAPI)) {
-                    const convertedOpenAPI = await this.convertOpenAPIV2ToV3(openAPI);
+                    const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
                     documents.push({
                         type: "openapi",
                         value: convertedOpenAPI,
@@ -58,7 +56,7 @@ export class OpenAPILoader {
                     });
                 }
             } else if (contents.includes("asyncapi")) {
-                const asyncAPI = await this.loadAsyncAPI({
+                const asyncAPI = await loadAsyncAPI({
                     context,
                     absoluteFilePath: spec.absoluteFilepath,
                     absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
@@ -75,98 +73,5 @@ export class OpenAPILoader {
             }
         }
         return documents;
-    }
-
-    private async loadOpenAPI({
-        context,
-        absolutePathToOpenAPI,
-        absolutePathToOpenAPIOverrides
-    }: {
-        context: TaskContext;
-        absolutePathToOpenAPI: AbsoluteFilePath;
-        absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
-    }): Promise<OpenAPI.Document> {
-        const parsed = await this.parseOpenAPI({
-            absolutePathToOpenAPI
-        });
-
-        let overridesFilepath = undefined;
-        if (absolutePathToOpenAPIOverrides != null) {
-            overridesFilepath = absolutePathToOpenAPIOverrides;
-        } else if (
-            typeof parsed === "object" &&
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
-        ) {
-            overridesFilepath = join(
-                dirname(absolutePathToOpenAPI),
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
-            );
-        }
-
-        if (overridesFilepath != null) {
-            const merged = await mergeWithOverrides<OpenAPI.Document>({
-                absoluteFilePathToOverrides: overridesFilepath,
-                context,
-                data: parsed
-            });
-            // Run the merged document through the parser again to ensure that any override
-            // references are resolved.
-            return await this.parseOpenAPI({
-                absolutePathToOpenAPI,
-                parsed: merged
-            });
-        }
-        return parsed;
-    }
-
-    private async loadAsyncAPI({
-        context,
-        absoluteFilePath,
-        absoluteFilePathToOverrides
-    }: {
-        context: TaskContext;
-        absoluteFilePath: AbsoluteFilePath;
-        absoluteFilePathToOverrides: AbsoluteFilePath | undefined;
-    }): Promise<AsyncAPIV2.Document> {
-        const contents = (await readFile(absoluteFilePath)).toString();
-        const parsed = (await yaml.load(contents)) as AsyncAPIV2.Document;
-        if (absoluteFilePathToOverrides != null) {
-            return await mergeWithOverrides<AsyncAPIV2.Document>({
-                absoluteFilePathToOverrides,
-                context,
-                data: parsed
-            });
-        }
-        return parsed;
-    }
-
-    private async parseOpenAPI({
-        absolutePathToOpenAPI,
-        parsed
-    }: {
-        absolutePathToOpenAPI: AbsoluteFilePath;
-        parsed?: OpenAPI.Document;
-    }): Promise<OpenAPI.Document> {
-        const result =
-            parsed != null
-                ? await bundle({
-                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                      doc: {
-                          source: new Source(absolutePathToOpenAPI, "<openapi>"),
-                          parsed
-                      }
-                  })
-                : await bundle({
-                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                      ref: absolutePathToOpenAPI
-                  });
-        return result.bundle.parsed;
-    }
-
-    private async convertOpenAPIV2ToV3(openAPI: OpenAPIV2.Document): Promise<OpenAPIV3.Document> {
-        const conversionResult = await convertObj(openAPI, {});
-        return conversionResult.openapi;
     }
 }
