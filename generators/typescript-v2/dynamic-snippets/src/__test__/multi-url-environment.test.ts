@@ -7,9 +7,7 @@ import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 describe("multi-url-environment", () => {
     it("production environment", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: AbsoluteFilePath.of(
-                `${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`
-            ),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -35,9 +33,7 @@ describe("multi-url-environment", () => {
 
     it("staging environment", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: AbsoluteFilePath.of(
-                `${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`
-            ),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -63,9 +59,7 @@ describe("multi-url-environment", () => {
 
     it("custom environment", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: AbsoluteFilePath.of(
-                `${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`
-            ),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -94,9 +88,7 @@ describe("multi-url-environment", () => {
 
     it("invalid environment id", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: AbsoluteFilePath.of(
-                `${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`
-            ),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -122,9 +114,7 @@ describe("multi-url-environment", () => {
 
     it("invalid multi url environments", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: AbsoluteFilePath.of(
-                `${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`
-            ),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/multi-url-environment.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -137,7 +127,7 @@ describe("multi-url-environment", () => {
                 token: "<YOUR_API_KEY>"
             },
             environment: {
-                ec2: "https://custom.ec2.aws.com",
+                ec2: "https://custom.ec2.aws.com"
             },
             pathParameters: undefined,
             queryParameters: undefined,
