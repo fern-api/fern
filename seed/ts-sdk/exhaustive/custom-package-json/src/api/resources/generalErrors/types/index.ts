@@ -1,1 +1,1 @@
-export * from "./BadObjectRequestInfo";
+export * from "./BadObjectRequestInfo.js";

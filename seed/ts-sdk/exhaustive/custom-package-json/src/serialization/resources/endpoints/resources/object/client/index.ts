@@ -1,1 +1,1 @@
-export * as getAndReturnNestedWithRequiredFieldAsList from "./getAndReturnNestedWithRequiredFieldAsList";
+export * as getAndReturnNestedWithRequiredFieldAsList from "./getAndReturnNestedWithRequiredFieldAsList.js";

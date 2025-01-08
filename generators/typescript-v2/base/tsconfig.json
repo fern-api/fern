@@ -1,0 +1,8 @@
+{
+  "extends": "@fern-api/typescript-config/main.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src/**/*"],
+  "references": [
+    { "path": "../browser-compatible-base" },
+  ]
+}

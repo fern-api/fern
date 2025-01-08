@@ -1,2 +1,2 @@
-export * as service from "./service";
-export * from "./service/errors";
+export * as service from "./service/index.js";
+export * from "./service/errors/index.js";

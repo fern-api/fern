@@ -25,5 +25,5 @@
     "noImplicitReturns": true,
     "composite": true
   },
-  "exclude": ["node_modules", "seed"]
+  "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
 }

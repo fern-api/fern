@@ -1,2 +1,2 @@
-export { SeedMixedFileDirectoryError } from "./SeedMixedFileDirectoryError";
-export { SeedMixedFileDirectoryTimeoutError } from "./SeedMixedFileDirectoryTimeoutError";
+export { SeedMixedFileDirectoryError } from "./SeedMixedFileDirectoryError.js";
+export { SeedMixedFileDirectoryTimeoutError } from "./SeedMixedFileDirectoryTimeoutError.js";

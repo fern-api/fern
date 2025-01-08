@@ -1,2 +1,2 @@
-export * as getWithApiKey from "./getWithApiKey";
-export * as getWithHeader from "./getWithHeader";
+export * as getWithApiKey from "./getWithApiKey.js";
+export * as getWithHeader from "./getWithHeader.js";

@@ -1,11 +1,17 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import {
+    JavaScriptRuntime,
+    NpmPackage,
+    PersistedTypescriptProject,
+    ScriptsManager,
+    fixImportsForEsm
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
-import { camelCase, upperFirst } from "lodash-es";
 
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { getNamespaceExport } from "@fern-api/typescript-base";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
@@ -81,10 +87,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
-        const namespaceExport =
-            customConfig.namespaceExport ??
-            `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
-
+        const namespaceExport = getNamespaceExport({
+            organization: config.organization,
+            workspaceName: config.workspaceName,
+            namespaceExport: customConfig.namespaceExport
+        });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -151,8 +158,17 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
+        const scriptsManager = new ScriptsManager();
+        await scriptsManager.copyScripts({
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
+        });
+        await this.postProcess(persistedTypescriptProject);
 
         return persistedTypescriptProject;
+    }
+
+    private async postProcess(persistedTypescriptProject: PersistedTypescriptProject): Promise<void> {
+        await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
     }
 
     protected isPackagePrivate(customConfig: SdkCustomConfig): boolean {

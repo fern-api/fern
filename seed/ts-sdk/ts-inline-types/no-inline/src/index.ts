@@ -1,3 +1,3 @@
-export * as SeedObject from "./api";
-export { SeedObjectClient } from "./Client";
-export { SeedObjectError, SeedObjectTimeoutError } from "./errors";
+export * as SeedObject from "./api/index.js";
+export { SeedObjectClient } from "./Client.js";
+export { SeedObjectError, SeedObjectTimeoutError } from "./errors/index.js";

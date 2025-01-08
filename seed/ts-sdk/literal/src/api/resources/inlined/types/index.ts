@@ -1,3 +1,3 @@
-export * from "./SomeAliasedLiteral";
-export * from "./ATopLevelLiteral";
-export * from "./ANestedLiteral";
+export * from "./SomeAliasedLiteral.js";
+export * from "./ATopLevelLiteral.js";
+export * from "./ANestedLiteral.js";

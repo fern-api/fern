@@ -1,2 +1,2 @@
-export { Page } from "./Page";
-export { Pageable } from "./Pageable";
+export { Page } from "./Page.js";
+export { Pageable } from "./Pageable.js";

@@ -267,7 +267,9 @@ export class ExpressGenerator {
                 "@types/mime": "3.0.4"
             },
             extraConfigs: undefined,
-            outputJsr: false
+            outputJsr: false,
+            exportSerde: false,
+            legacyExports: true
         });
     }
 

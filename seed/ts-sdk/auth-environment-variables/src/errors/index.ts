@@ -1,2 +1,2 @@
-export { SeedAuthEnvironmentVariablesError } from "./SeedAuthEnvironmentVariablesError";
-export { SeedAuthEnvironmentVariablesTimeoutError } from "./SeedAuthEnvironmentVariablesTimeoutError";
+export { SeedAuthEnvironmentVariablesError } from "./SeedAuthEnvironmentVariablesError.js";
+export { SeedAuthEnvironmentVariablesTimeoutError } from "./SeedAuthEnvironmentVariablesTimeoutError.js";

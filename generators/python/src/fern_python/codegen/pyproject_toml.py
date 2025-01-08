@@ -44,6 +44,7 @@ class PyProjectToml:
         extras: typing.Dict[str, List[str]] = {},
         user_defined_toml: Optional[str] = None,
     ):
+        self._name = name
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
@@ -69,7 +70,11 @@ class PyProjectToml:
             PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
-        content = ""
+        content = f"""[project]
+name = "{self._name}"
+
+"""
+
         for block in blocks:
             content += block.to_string()
 

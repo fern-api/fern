@@ -1,5 +1,6 @@
 import type { Readable, Writable } from "readable-stream";
-import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
+
+import { EventCallback, StreamWrapper } from "./chooseStreamWrapper.js";
 
 export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
     private readableStream: Readable;

@@ -1,2 +1,2 @@
-export * as folder from "./folder";
-export * as a from "./a";
+export * as folder from "./folder/index.js";
+export * as a from "./a/index.js";

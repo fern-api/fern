@@ -1,13 +1,21 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 
-type InternalTypeLiteral = Array_ | Boolean_ | BigInt_ | Number_ | Object_ | ObjectField | String_ | Tuple | NoOp;
+type InternalTypeLiteral =
+    | Array_
+    | Boolean_
+    | BigInt_
+    | Number_
+    | Object_
+    | Reference
+    | String_
+    | Tuple
+    | Unkonwn_
+    | Nop;
 
 interface Array_ {
     type: "array";
-    valueType: Type;
     values: TypeLiteral[];
 }
 
@@ -31,10 +39,14 @@ interface Object_ {
     fields: ObjectField[];
 }
 
-interface ObjectField {
-    type: "objectField";
+export interface ObjectField {
     name: string;
     value: TypeLiteral;
+}
+
+interface Reference {
+    type: "reference";
+    value: AstNode;
 }
 
 interface String_ {
@@ -44,13 +56,16 @@ interface String_ {
 
 interface Tuple {
     type: "tuple";
-    // TODO: In theory this should be a tuple type, not an array of types
-    valueTypes: Type[];
     values: TypeLiteral[];
 }
 
-interface NoOp {
-    type: "noOp";
+interface Unkonwn_ {
+    type: "unknown";
+    value: unknown;
+}
+
+interface Nop {
+    type: "nop";
 }
 
 export class TypeLiteral extends AstNode {
@@ -69,21 +84,19 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "number": {
-                // N.B. Defaults to decimal; further work needed to support alternatives like hex, binary, octal, etc.
                 writer.write(this.internalType.value.toString());
                 break;
             }
             case "bigint": {
-                writer.write(this.internalType.value.toString());
+                writer.write(`BigInt(${this.internalType.value.toString()})`);
                 break;
             }
             case "object": {
                 this.writeObject({ writer, object: this.internalType });
                 break;
             }
-            case "objectField": {
-                writer.write(`${this.internalType.name}: `);
-                this.internalType.value.write(writer);
+            case "reference": {
+                writer.writeNode(this.internalType.value);
                 break;
             }
             case "string": {
@@ -98,7 +111,11 @@ export class TypeLiteral extends AstNode {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
-            case "noOp":
+            case "unknown": {
+                this.writeUnknown({ writer, value: this.internalType.value });
+                break;
+            }
+            case "nop":
                 break;
             default: {
                 assertNever(this.internalType);
@@ -117,45 +134,50 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple }): void {
-        if (iterable.values.length === 0) {
-            // Don't allow "multiline" empty iterables.
+        const values = filterNopValues({ values: iterable.values });
+        if (values.length === 0) {
             writer.write("[]");
-        } else {
-            writer.writeLine("[");
-            writer.indent();
-            for (const value of iterable.values) {
-                value.write(writer);
-                writer.writeLine(",");
-            }
-            writer.dedent();
-            writer.write("]");
+            return;
         }
+
+        writer.writeLine("[");
+        writer.indent();
+        for (const value of values) {
+            value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("]");
     }
 
     private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
-        if (object.fields.length === 0) {
-            // Don't allow "multiline" empty objects.
+        const fields = filterNopObjectFields({ fields: object.fields });
+        if (fields.length === 0) {
             writer.write("{}");
-        } else {
-            writer.writeLine("{");
-            writer.indent();
-            for (const field of object.fields) {
-                writer.write(`${field.name}: `);
-                field.value.write(writer);
-                writer.writeLine(",");
-            }
-            writer.dedent();
-            writer.write("}");
+            return;
         }
+
+        writer.writeLine("{");
+        writer.indent();
+        for (const field of fields) {
+            writer.write(`${field.name}: `);
+            field.value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
     }
 
     /* Static factory methods for creating a TypeLiteral */
-    public static array({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
+    public static array({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "array",
-            valueType,
             values
         });
+    }
+
+    public static bigint(value: bigint): TypeLiteral {
+        return new this({ type: "bigint", value });
     }
 
     public static boolean(value: boolean): TypeLiteral {
@@ -166,22 +188,16 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "number", value });
     }
 
-    public static object(fields: Record<string, TypeLiteral>): TypeLiteral {
-        const objectFields: ObjectField[] = Object.entries(fields).map(([name, value]) => ({
-            type: "objectField",
-            name,
-            value
-        }));
+    public static object({ fields }: { fields: ObjectField[] }): TypeLiteral {
         return new this({
             type: "object",
-            fields: objectFields
+            fields
         });
     }
 
-    public static objectField(name: string, value: TypeLiteral): TypeLiteral {
+    public static reference(value: AstNode): TypeLiteral {
         return new this({
-            type: "objectField",
-            name,
+            type: "reference",
             value
         });
     }
@@ -193,23 +209,95 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static tuple({ valueTypes, values }: { valueTypes: Type[]; values: TypeLiteral[] }): TypeLiteral {
+    public static tuple({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "tuple",
-            valueTypes,
             values
         });
     }
 
-    public static bigint(value: bigint): TypeLiteral {
-        return new this({ type: "bigint", value });
+    public static unknown(value: unknown): TypeLiteral {
+        return new this({ type: "unknown", value });
     }
 
-    public static noOp(): TypeLiteral {
-        return new this({ type: "noOp" });
+    public static nop(): TypeLiteral {
+        return new this({ type: "nop" });
     }
 
-    public static isNoOp(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === "noOp";
+    public static isNop(typeLiteral: TypeLiteral): boolean {
+        return typeLiteral.internalType.type === "nop";
     }
+
+    private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
+        switch (typeof value) {
+            case "boolean":
+                writer.write(value.toString());
+                return;
+            case "string":
+                writer.write(value.includes('"') ? `\`${value}\`` : `"${value}"`);
+                return;
+            case "number":
+                writer.write(value.toString());
+                return;
+            case "object":
+                if (value == null) {
+                    writer.write("null");
+                    return;
+                }
+                if (Array.isArray(value)) {
+                    this.writeUnknownArray({ writer, value });
+                    return;
+                }
+                this.writeUnknownObject({ writer, value });
+                return;
+            default:
+                throw new Error(`Internal error; unsupported unknown type: ${typeof value}`);
+        }
+    }
+
+    private writeUnknownArray({
+        writer,
+        value
+    }: {
+        writer: Writer;
+        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    }): void {
+        if (value.length === 0) {
+            writer.write("[]");
+            return;
+        }
+        writer.writeLine("[");
+        writer.indent();
+        for (const element of value) {
+            writer.writeNode(TypeLiteral.unknown(element));
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("]");
+    }
+
+    private writeUnknownObject({ writer, value }: { writer: Writer; value: object }): void {
+        const entries = Object.entries(value);
+        if (entries.length === 0) {
+            writer.write("{}");
+            return;
+        }
+        writer.writeLine("{");
+        writer.indent();
+        for (const [key, val] of entries) {
+            writer.write(`${key}: `);
+            writer.writeNode(TypeLiteral.unknown(val));
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
+    }
+}
+
+function filterNopObjectFields({ fields }: { fields: ObjectField[] }): ObjectField[] {
+    return fields.filter((field) => !TypeLiteral.isNop(field.value));
+}
+
+function filterNopValues({ values }: { values: TypeLiteral[] }): TypeLiteral[] {
+    return values.filter((value) => !TypeLiteral.isNop(value));
 }

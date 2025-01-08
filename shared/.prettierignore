@@ -7,8 +7,7 @@
 ../packages/cli/openapi-ir-sdk/**
 ../packages/seed/src/config/**
 ../generators/csharp/codegen/src/asIs/**/*.Template.*
-../scripts/**
-../seed/**
+../seed/**/*
 ../docker/seed/**
 
 **/*.yaml
@@ -31,9 +30,10 @@
 **/*.sh
 *.d.ts
 
+__snapshots__
+
 .yarn
 .github
 .turbo
+node_modules
 fern
-
-

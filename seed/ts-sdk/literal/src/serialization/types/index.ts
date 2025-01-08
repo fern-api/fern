@@ -1,1 +1,1 @@
-export * from "./SendResponse";
+export * from "./SendResponse.js";
