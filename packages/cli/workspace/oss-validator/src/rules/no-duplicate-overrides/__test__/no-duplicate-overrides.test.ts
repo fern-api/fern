@@ -4,7 +4,7 @@ import { ValidationViolation } from "../../../ValidationViolation";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoDuplicateOverridesRule } from "../no-duplicate-overrides";
 
-describe("compatible-ir-versions", () => {
+describe("no-duplicate-overrides", () => {
     it("simple failure", async () => {
         const violations = await getViolationsForRule({
             rule: NoDuplicateOverridesRule,
@@ -21,10 +21,33 @@ describe("compatible-ir-versions", () => {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
-                message: "Duplicate SDK method found: group 'a' with method 'b'"
+                message: "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)"
             }
         ];
 
-        expect(violations).toEqual(expectedViolations);
+        expect(violations).toMatchFileSnapshot("./__snapshots__/openapi/simple.json");
+    }, 10_000);
+
+    it("complex failure", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("complex")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
+                nodePath: ["paths", "/a/b", "get"],
+                message: "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)"
+            }
+        ];
+
+        expect(violations).toMatchFileSnapshot("./__snapshots__/openapi/complex.json");
     }, 10_000);
 });

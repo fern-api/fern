@@ -28,13 +28,18 @@ export const NoDuplicateOverridesRule: Rule = {
 
                 for (const [path, pathItem] of Object.entries(apiToValidate.paths ?? {})) {
                     for (const [method, operation] of Object.entries(pathItem ?? {})) {
-                        if (method === "parameters" || method === "$ref") {continue;}
+                        if (method === "parameters" || method === "$ref") {
+                            continue;
+                        }
 
                         const operationObj = operation as {
-                            "x-fern-sdk-group-name"?: string;
+                            "x-fern-sdk-group-name"?: string | string[];
                             "x-fern-sdk-method-name"?: string;
                         };
-                        const sdkGroupName = operationObj?.["x-fern-sdk-group-name"];
+                        const rawSdkGroupName = operationObj?.["x-fern-sdk-group-name"];
+                        const sdkGroupName = Array.isArray(rawSdkGroupName)
+                            ? rawSdkGroupName.join(".")
+                            : rawSdkGroupName;
                         const sdkMethodName = operationObj?.["x-fern-sdk-method-name"];
 
                         if (sdkGroupName && sdkMethodName) {
@@ -44,7 +49,7 @@ export const NoDuplicateOverridesRule: Rule = {
                                     severity: "error",
                                     relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                     nodePath: ["paths", path, method],
-                                    message: `Duplicate SDK method found: group '${sdkGroupName}' with method '${sdkMethodName}'`
+                                    message: `SDK method ${sdkGroupName}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
                                 });
                             }
                             seenMethodNames.add(key);
