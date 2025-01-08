@@ -1,6 +1,5 @@
 import { assertNever, keys } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { Name } from "@fern-api/dynamic-ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 
 import { FernGeneratorExec } from "../GeneratorNotificationService";
@@ -298,7 +297,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
     }
 
-    public resolveEnvironmentName(environmentID: string): Name | undefined {
+    public resolveEnvironmentName(environmentID: string): FernIr.Name | undefined {
         if (this._ir.environments == null) {
             return undefined;
         }

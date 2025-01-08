@@ -86,9 +86,9 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "blob": {
-                writer.write(`new Blob([`);
+                writer.write("new Blob([");
                 writer.writeNode(TypeLiteral.string(this.internalType.value));
-                writer.write(`])`);
+                writer.write("])");
                 break;
             }
             case "boolean": {

@@ -31,7 +31,7 @@ export namespace DynamicSnippetsTestRunner {
 
 // eslint-disable-next-line jest/no-export
 export class DynamicSnippetsTestRunner {
-    public runTests(args: DynamicSnippetsTestRunner.Args) {
+    public runTests(args: DynamicSnippetsTestRunner.Args): void {
         this.runExamplesTests(args);
         this.runExhaustiveTests(args);
         this.runFileUploadTests(args);
