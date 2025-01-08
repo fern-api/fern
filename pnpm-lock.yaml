@@ -1532,6 +1532,9 @@ importers:
       '@fern-api/typescript-browser-compatible-base':
         specifier: workspace:*
         version: link:../browser-compatible-base
+      '@fern-api/typescript-config':
+        specifier: workspace:*
+        version: link:../../../packages/typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1562,6 +1565,9 @@ importers:
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
+      '@fern-api/typescript-config':
+        specifier: workspace:*
+        version: link:../../../packages/typescript-config
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898(encoding@0.1.13)
@@ -2589,9 +2595,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2604,9 +2607,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2622,9 +2622,6 @@ importers:
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@edge-runtime/vm@4.0.4)(@types/node@18.15.3)(happy-dom@15.11.7)(jsdom@25.0.1)(sass@1.80.3)(terser@5.37.0)
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
 
   generators/typescript/sdk/client-class-generator:
     dependencies:
