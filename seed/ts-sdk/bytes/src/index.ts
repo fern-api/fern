@@ -1,3 +1,3 @@
-export { SeedBytesClient } from "./Client";
-export * as SeedBytes from "./api";
-export { SeedBytesError, SeedBytesTimeoutError } from "./errors";
+export { SeedBytesClient } from "./Client.js";
+export * as SeedBytes from "./api/index.js";
+export { SeedBytesError, SeedBytesTimeoutError } from "./errors/index.js";

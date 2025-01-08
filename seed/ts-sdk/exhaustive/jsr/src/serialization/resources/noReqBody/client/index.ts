@@ -1,1 +1,1 @@
-export * as postWithNoRequestBody from "./postWithNoRequestBody";
+export * as postWithNoRequestBody from "./postWithNoRequestBody.js";

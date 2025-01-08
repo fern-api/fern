@@ -1,1 +1,1 @@
-export { CreateUserRequest } from "./CreateUserRequest";
+export { CreateUserRequest } from "./CreateUserRequest.js";

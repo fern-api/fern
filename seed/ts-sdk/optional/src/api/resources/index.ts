@@ -1,1 +1,1 @@
-export * as optional from "./optional";
+export * as optional from "./optional/index.js";

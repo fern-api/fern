@@ -1,1 +1,1 @@
-export { SendEnumInlinedRequest } from "./SendEnumInlinedRequest";
+export { SendEnumInlinedRequest } from "./SendEnumInlinedRequest.js";

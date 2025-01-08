@@ -1,2 +1,2 @@
-export * as getWithCustomAuth from "./getWithCustomAuth";
-export * as postWithCustomAuth from "./postWithCustomAuth";
+export * as getWithCustomAuth from "./getWithCustomAuth.js";
+export * as postWithCustomAuth from "./postWithCustomAuth.js";

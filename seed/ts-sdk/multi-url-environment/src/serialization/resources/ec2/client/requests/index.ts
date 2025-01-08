@@ -1,1 +1,1 @@
-export { BootInstanceRequest } from "./BootInstanceRequest";
+export { BootInstanceRequest } from "./BootInstanceRequest.js";

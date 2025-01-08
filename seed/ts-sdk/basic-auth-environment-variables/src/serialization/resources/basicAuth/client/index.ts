@@ -1,2 +1,2 @@
-export * as getWithBasicAuth from "./getWithBasicAuth";
-export * as postWithBasicAuth from "./postWithBasicAuth";
+export * as getWithBasicAuth from "./getWithBasicAuth.js";
+export * as postWithBasicAuth from "./postWithBasicAuth.js";

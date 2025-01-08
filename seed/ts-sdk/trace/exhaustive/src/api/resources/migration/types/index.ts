@@ -1,2 +1,2 @@
-export * from "./MigrationStatus";
-export * from "./Migration";
+export * from "./MigrationStatus.js";
+export * from "./Migration.js";

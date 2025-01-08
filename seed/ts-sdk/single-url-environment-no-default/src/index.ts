@@ -1,5 +1,8 @@
-export { SeedSingleUrlEnvironmentNoDefaultClient } from "./Client";
-export * as SeedSingleUrlEnvironmentNoDefault from "./api";
-export { SeedSingleUrlEnvironmentNoDefaultEnvironment } from "./environments";
-export { SeedSingleUrlEnvironmentNoDefaultError, SeedSingleUrlEnvironmentNoDefaultTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export { SeedSingleUrlEnvironmentNoDefaultClient } from "./Client.js";
+export * as SeedSingleUrlEnvironmentNoDefault from "./api/index.js";
+export { SeedSingleUrlEnvironmentNoDefaultEnvironment } from "./environments.js";
+export {
+    SeedSingleUrlEnvironmentNoDefaultError,
+    SeedSingleUrlEnvironmentNoDefaultTimeoutError,
+} from "./errors/index.js";
+export * as serialization from "./serialization/index.js";

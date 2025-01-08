@@ -1,2 +1,2 @@
-export * from "./UnauthorizedRequest";
-export * from "./BadRequest";
+export * from "./UnauthorizedRequest.js";
+export * from "./BadRequest.js";

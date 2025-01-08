@@ -1,2 +1,2 @@
-export * as getPlaylists from "./getPlaylists";
-export * as updatePlaylist from "./updatePlaylist";
+export * as getPlaylists from "./getPlaylists.js";
+export * as updatePlaylist from "./updatePlaylist.js";

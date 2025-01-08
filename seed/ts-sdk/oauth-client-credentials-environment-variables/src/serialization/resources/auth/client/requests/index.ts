@@ -1,2 +1,2 @@
-export { GetTokenRequest } from "./GetTokenRequest";
-export { RefreshTokenRequest } from "./RefreshTokenRequest";
+export { GetTokenRequest } from "./GetTokenRequest.js";
+export { RefreshTokenRequest } from "./RefreshTokenRequest.js";

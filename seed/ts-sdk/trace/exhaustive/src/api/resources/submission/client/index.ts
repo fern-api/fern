@@ -1,4 +1,4 @@
-export * as createExecutionSession from "./createExecutionSession";
-export * as getExecutionSession from "./getExecutionSession";
-export * as stopExecutionSession from "./stopExecutionSession";
-export * as getExecutionSessionsState from "./getExecutionSessionsState";
+export * as createExecutionSession from "./createExecutionSession.js";
+export * as getExecutionSession from "./getExecutionSession.js";
+export * as stopExecutionSession from "./stopExecutionSession.js";
+export * as getExecutionSessionsState from "./getExecutionSessionsState.js";

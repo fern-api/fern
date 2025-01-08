@@ -1,2 +1,2 @@
-export * as getLightweightProblems from "./getLightweightProblems";
-export * as getProblems from "./getProblems";
+export * as getLightweightProblems from "./getLightweightProblems.js";
+export * as getProblems from "./getProblems.js";

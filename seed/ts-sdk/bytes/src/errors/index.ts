@@ -1,2 +1,2 @@
-export { SeedBytesError } from "./SeedBytesError";
-export { SeedBytesTimeoutError } from "./SeedBytesTimeoutError";
+export { SeedBytesError } from "./SeedBytesError.js";
+export { SeedBytesTimeoutError } from "./SeedBytesTimeoutError.js";

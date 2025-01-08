@@ -1,1 +1,1 @@
-export * as serialization from "./schemas";
+export * as serialization from "./schemas/index.js";

@@ -1,4 +1,4 @@
-import { SchemaUtils } from "./builders";
+import { SchemaUtils } from "./builders/index.js";
 
 export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 

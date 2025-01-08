@@ -1,9 +1,9 @@
-export * as enum_ from "./enum";
-export * from "./enum/types";
-export * as object from "./object";
-export * from "./object/types";
-export * as union from "./union";
-export * from "./union/types";
-export * from "./enum/errors";
-export * from "./object/errors";
-export * from "./union/errors";
+export * as enum_ from "./enum/index.js";
+export * from "./enum/types/index.js";
+export * as object from "./object/index.js";
+export * from "./object/types/index.js";
+export * as union from "./union/index.js";
+export * from "./union/types/index.js";
+export * from "./enum/errors/index.js";
+export * from "./object/errors/index.js";
+export * from "./union/errors/index.js";

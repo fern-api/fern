@@ -1,1 +1,1 @@
-export { PostWithObjectBody } from "./PostWithObjectBody";
+export { PostWithObjectBody } from "./PostWithObjectBody.js";
