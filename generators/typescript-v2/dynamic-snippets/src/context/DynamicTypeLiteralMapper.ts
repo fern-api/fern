@@ -249,7 +249,7 @@ export class DynamicTypeLiteralMapper {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected enum value string, ts.: ${typeof value}`
+                message: `Expected enum value string, got: ${typeof value}`
             });
             return undefined;
         }
@@ -316,7 +316,7 @@ export class DynamicTypeLiteralMapper {
         switch (primitive) {
             case "INTEGER":
             case "UINT": {
-                const num = this.getValueAsNumber({ value });
+                const num = this.context.getValueAsNumber({ value });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -324,7 +324,7 @@ export class DynamicTypeLiteralMapper {
             }
             case "LONG":
             case "UINT_64": {
-                const num = this.getValueAsNumber({ value });
+                const num = this.context.getValueAsNumber({ value });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -335,14 +335,14 @@ export class DynamicTypeLiteralMapper {
             }
             case "FLOAT":
             case "DOUBLE": {
-                const num = this.getValueAsNumber({ value });
+                const num = this.context.getValueAsNumber({ value });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
                 return ts.TypeLiteral.number(num);
             }
             case "BOOLEAN": {
-                const bool = this.getValueAsBoolean({ value });
+                const bool = this.context.getValueAsBoolean({ value });
                 if (bool == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -353,14 +353,14 @@ export class DynamicTypeLiteralMapper {
             case "DATE_TIME":
             case "UUID":
             case "STRING": {
-                const str = this.getValueAsString({ value });
+                const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return ts.TypeLiteral.nop();
                 }
                 return ts.TypeLiteral.string(str);
             }
             case "BIG_INTEGER": {
-                const bigInt = this.getValueAsString({ value });
+                const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -369,42 +369,5 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(primitive);
         }
-    }
-
-    private getValueAsNumber({ value }: { value: unknown }): number | undefined {
-        if (typeof value !== "number") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "number", value }).message
-            });
-            return undefined;
-        }
-        return value;
-    }
-
-    private getValueAsBoolean({ value }: { value: unknown }): boolean | undefined {
-        if (typeof value !== "boolean") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "boolean", value }).message
-            });
-            return undefined;
-        }
-        return value;
-    }
-
-    private getValueAsString({ value }: { value: unknown }): string | undefined {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "string", value }).message
-            });
-            return undefined;
-        }
-        return value;
-    }
-
-    private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
-        return new Error(`Expected ${expected} but got ${typeof value}`);
     }
 }

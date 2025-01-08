@@ -3,6 +3,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ts } from "@fern-api/typescript-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const CLIENT_VAR_NAME = "client";
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
@@ -70,23 +71,6 @@ export class EndpointSnippetGenerator {
                 }),
                 arguments_: [this.getConstructorArgs({ endpoint, snippet })]
             })
-        });
-    }
-
-    private callMethod({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ts.AstNode {
-        return ts.invokeMethod({
-            on: ts.reference({ name: CLIENT_VAR_NAME }),
-            method: this.getMethod({ endpoint }),
-            async: true,
-            arguments_: [
-                // TODO: Map method arguments!
-            ]
         });
     }
 
@@ -321,6 +305,322 @@ export class EndpointSnippetGenerator {
             name: this.context.getPropertyName(header.name.name),
             value: typeLiteral
         };
+    }
+
+    private callMethod({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ts.AstNode {
+        return ts.invokeMethod({
+            on: ts.reference({ name: CLIENT_VAR_NAME }),
+            method: this.getMethod({ endpoint }),
+            async: true,
+            arguments_: this.getMethodArgs({ endpoint, snippet })
+        });
+    }
+
+    private getMethodArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ts.AstNode[] {
+        switch (endpoint.request.type) {
+            case "inlined":
+                return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
+            case "body":
+                return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+        }
+    }
+
+    private getMethodArgsForBodyRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ts.TypeLiteral[] {
+        const args: ts.TypeLiteral[] = [];
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (request.pathParameters != null) {
+            const pathParameterFields = this.getPathParameters({ namedParameters: request.pathParameters, snippet });
+            args.push(...pathParameterFields.map((field) => field.value));
+        }
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        if (request.body != null) {
+            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+        }
+        this.context.errors.unscope();
+
+        return args;
+    }
+
+    private getBodyRequestArg({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBodyType;
+        value: unknown;
+    }): ts.TypeLiteral {
+        switch (body.type) {
+            case "bytes": {
+                return this.getBytesBodyRequestArg({ value });
+            }
+            case "typeReference":
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+        }
+    }
+
+    private getBytesBodyRequestArg({ value }: { value: unknown }): ts.TypeLiteral {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected bytes value to be a string, got ${typeof value}`
+            });
+            return ts.TypeLiteral.nop();
+        }
+        return ts.TypeLiteral.blob(value);
+    }
+
+    private getMethodArgsForInlinedRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ts.TypeLiteral[] {
+        const args: ts.TypeLiteral[] = [];
+
+        const { inlinePathParameters, inlineFileProperties } = {
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+        };
+
+        this.context.errors.scope(Scope.PathParameters);
+        const pathParameterFields: ts.ObjectField[] = [];
+        if (request.pathParameters != null) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        }
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
+        this.context.errors.unscope();
+
+        if (
+            !this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters
+            })
+        ) {
+            args.push(...pathParameterFields.map((field) => field.value));
+        }
+
+        if (!inlineFileProperties) {
+            args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+        }
+
+        if (
+            this.context.needsRequestParameter({
+                request,
+                inlinePathParameters,
+                inlineFileProperties
+            })
+        ) {
+            args.push(
+                this.getInlinedRequestArg({
+                    request,
+                    snippet,
+                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
+                        request,
+                        inlinePathParameters
+                    })
+                        ? pathParameterFields
+                        : [],
+                    filePropertyInfo
+                })
+            );
+        }
+        return args;
+    }
+
+    private getFilePropertyInfo({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): FilePropertyInfo {
+        if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
+            return {
+                fileFields: [],
+                bodyPropertyFields: []
+            };
+        }
+        return this.context.filePropertyMapper.getFilePropertyInfo({
+            body: request.body,
+            value: snippet.requestBody
+        });
+    }
+
+    private getInlinedRequestArg({
+        request,
+        snippet,
+        pathParameterFields,
+        filePropertyInfo
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        pathParameterFields: ts.ObjectField[];
+        filePropertyInfo: FilePropertyInfo;
+    }): ts.TypeLiteral {
+        this.context.errors.scope(Scope.QueryParameters);
+        const queryParameters = this.context.associateQueryParametersByWireValue({
+            parameters: request.queryParameters ?? [],
+            values: snippet.queryParameters ?? {}
+        });
+        const queryParameterFields = queryParameters.map((queryParameter) => ({
+            name: this.context.getPropertyName(queryParameter.name.name),
+            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+        }));
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.Headers);
+        const headers = this.context.associateByWireValue({
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {}
+        });
+        const headerFields = headers.map((header) => ({
+            name: this.context.getPropertyName(header.name.name),
+            value: this.context.dynamicTypeLiteralMapper.convert(header)
+        }));
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        const requestBodyFields =
+            request.body != null
+                ? this.getInlinedRequestBodyObjectFields({
+                      body: request.body,
+                      value: snippet.requestBody,
+                      filePropertyInfo
+                  })
+                : [];
+        this.context.errors.unscope();
+
+        return ts.TypeLiteral.object({
+            fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
+        });
+    }
+
+    private getInlinedRequestBodyObjectFields({
+        body,
+        value,
+        filePropertyInfo
+    }: {
+        body: FernIr.dynamic.InlinedRequestBody;
+        value: unknown;
+        filePropertyInfo: FilePropertyInfo;
+    }): ts.ObjectField[] {
+        switch (body.type) {
+            case "properties":
+                return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
+            case "referenced":
+                return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
+            case "fileUpload":
+                return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
+        }
+    }
+
+    private getFileUploadRequestBodyObjectFields({
+        filePropertyInfo
+    }: {
+        filePropertyInfo: FilePropertyInfo;
+    }): ts.ObjectField[] {
+        if (this.context.customConfig?.inlineFileProperties) {
+            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+        }
+        return filePropertyInfo.bodyPropertyFields;
+    }
+
+    private getReferencedRequestBodyPropertyObjectField({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBody;
+        value: unknown;
+    }): ts.ObjectField {
+        return {
+            name: this.context.getPropertyName(body.bodyKey),
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+        };
+    }
+
+    private getReferencedRequestBodyPropertyTypeLiteral({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBodyType;
+        value: unknown;
+    }): ts.TypeLiteral {
+        switch (body.type) {
+            case "bytes":
+                return this.getBytesBodyRequestArg({ value });
+            case "typeReference":
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+        }
+    }
+
+    private getInlinedRequestBodyPropertyObjectFields({
+        parameters,
+        value
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        value: unknown;
+    }): ts.ObjectField[] {
+        const fields: ts.ObjectField[] = [];
+
+        const bodyProperties = this.context.associateByWireValue({
+            parameters,
+            values: this.context.getRecord(value) ?? {}
+        });
+        for (const parameter of bodyProperties) {
+            fields.push({
+                name: this.context.getPropertyName(parameter.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+            });
+        }
+
+        return fields;
+    }
+
+    private getPathParameters({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ts.ObjectField[] {
+        const args: ts.ObjectField[] = [];
+
+        const pathParameters = this.context.associateByWireValue({
+            parameters: namedParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        for (const parameter of pathParameters) {
+            args.push({
+                name: this.context.getPropertyName(parameter.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+            });
+        }
+
+        return args;
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

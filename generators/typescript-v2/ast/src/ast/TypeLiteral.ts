@@ -4,6 +4,7 @@ import { AstNode, Writer } from "./core";
 
 type InternalTypeLiteral =
     | Array_
+    | Blob_
     | Boolean_
     | BigInt_
     | Number_
@@ -17,6 +18,11 @@ type InternalTypeLiteral =
 interface Array_ {
     type: "array";
     values: TypeLiteral[];
+}
+
+interface Blob_ {
+    type: "blob";
+    value: string;
 }
 
 interface Boolean_ {
@@ -77,6 +83,12 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "array": {
                 this.writeIterable({ writer, iterable: this.internalType });
+                break;
+            }
+            case "blob": {
+                writer.write(`new Blob([`);
+                writer.writeNode(TypeLiteral.string(this.internalType.value));
+                writer.write(`])`);
                 break;
             }
             case "boolean": {
@@ -178,6 +190,10 @@ export class TypeLiteral extends AstNode {
 
     public static bigint(value: bigint): TypeLiteral {
         return new this({ type: "bigint", value });
+    }
+
+    public static blob(value: string): TypeLiteral {
+        return new this({ type: "blob", value });
     }
 
     public static boolean(value: boolean): TypeLiteral {

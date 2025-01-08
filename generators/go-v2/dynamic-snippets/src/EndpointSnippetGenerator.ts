@@ -424,6 +424,11 @@ export class EndpointSnippetGenerator {
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
 
+        const { inlinePathParameters, inlineFileProperties } = {
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+        };
+
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
         if (request.pathParameters != null) {
@@ -435,20 +440,23 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (!this.context.includePathParametersInWrappedRequest({ request })) {
+        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
 
-        if (!this.context.customConfig?.inlineFileProperties) {
+        if (!inlineFileProperties) {
             args.push(...filePropertyInfo.fileFields.map((field) => field.value));
         }
 
-        if (this.context.needsRequestParameter({ request })) {
+        if (this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
+                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
+                        request,
+                        inlinePathParameters
+                    })
                         ? pathParameterFields
                         : [],
                     filePropertyInfo
