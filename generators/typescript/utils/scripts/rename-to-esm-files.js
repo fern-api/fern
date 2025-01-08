@@ -65,7 +65,7 @@ async function updateFileContents(file) {
 }
 
 async function renameFiles(files) {
-  const counter = 0;
+  let counter = 0;
   for (const file of files) {
     const ext = oldExtensions.find(ext => file.endsWith(ext));
     const newExt = extensionMap[ext];
