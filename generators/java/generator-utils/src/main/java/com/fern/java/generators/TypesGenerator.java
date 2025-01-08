@@ -25,6 +25,8 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeSpec;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -35,17 +37,24 @@ public final class TypesGenerator {
     private final Map<TypeId, TypeDeclaration> typeDeclarations;
     private final Map<ErrorId, ErrorDeclaration> errorDeclarations;
     private final AbstractGeneratorContext<?, ?> generatorContext;
+    private final boolean inlineTypes;
 
     public TypesGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         this.errorDeclarations = generatorContext.getIr().getErrors();
         this.typeDeclarations = generatorContext.getTypeDeclarations();
         this.generatorContext = generatorContext;
+        this.inlineTypes = generatorContext.getCustomConfig().inlineTypes();
     }
 
     public Result generateFiles() {
         Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
+                    // Do not generate files for inline types
+                    if (inlineTypes && typeDeclaration.getInline().orElse(false)) {
+                        return Optional.<GeneratedJavaFile>empty();
+                    }
+
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
                     Optional<GeneratedJavaFile> maybeGeneratedJavaFile = typeDeclaration

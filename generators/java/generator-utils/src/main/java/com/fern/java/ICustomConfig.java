@@ -65,6 +65,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("enableInlineTypes")
+    default Boolean inlineTypes() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
