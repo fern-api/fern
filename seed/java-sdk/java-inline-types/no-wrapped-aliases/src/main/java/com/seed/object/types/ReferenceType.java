@@ -17,26 +17,29 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = TestType.Builder.class)
-public final class TestType {
-    private final RootType2 testProperty;
+@JsonDeserialize(builder = ReferenceType.Builder.class)
+public final class ReferenceType {
+    private final String foo;
 
     private final Map<String, Object> additionalProperties;
 
-    private TestType(RootType2 testProperty, Map<String, Object> additionalProperties) {
-        this.testProperty = testProperty;
+    private ReferenceType(String foo, Map<String, Object> additionalProperties) {
+        this.foo = foo;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("testProperty")
-    public RootType2 getTestProperty() {
-        return testProperty;
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("foo")
+    public String getFoo() {
+        return foo;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TestType && equalTo((TestType) other);
+        return other instanceof ReferenceType && equalTo((ReferenceType) other);
     }
 
     @JsonAnyGetter
@@ -44,13 +47,13 @@ public final class TestType {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(TestType other) {
-        return testProperty.equals(other.testProperty);
+    private boolean equalTo(ReferenceType other) {
+        return foo.equals(other.foo);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.testProperty);
+        return Objects.hash(this.foo);
     }
 
     @java.lang.Override
@@ -58,23 +61,23 @@ public final class TestType {
         return ObjectMappers.stringify(this);
     }
 
-    public static TestPropertyStage builder() {
+    public static FooStage builder() {
         return new Builder();
     }
 
-    public interface TestPropertyStage {
-        _FinalStage testProperty(@NotNull RootType2 testProperty);
+    public interface FooStage {
+        _FinalStage foo(@NotNull String foo);
 
-        Builder from(TestType other);
+        Builder from(ReferenceType other);
     }
 
     public interface _FinalStage {
-        TestType build();
+        ReferenceType build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TestPropertyStage, _FinalStage {
-        private RootType2 testProperty;
+    public static final class Builder implements FooStage, _FinalStage {
+        private String foo;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -82,21 +85,25 @@ public final class TestType {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(TestType other) {
-            testProperty(other.getTestProperty());
+        public Builder from(ReferenceType other) {
+            foo(other.getFoo());
+            return this;
+        }
+
+        /**
+         * <p>lorem ipsum</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("foo")
+        public _FinalStage foo(@NotNull String foo) {
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("testProperty")
-        public _FinalStage testProperty(@NotNull RootType2 testProperty) {
-            this.testProperty = Objects.requireNonNull(testProperty, "testProperty must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public TestType build() {
-            return new TestType(testProperty, additionalProperties);
+        public ReferenceType build() {
+            return new ReferenceType(foo, additionalProperties);
         }
     }
 }

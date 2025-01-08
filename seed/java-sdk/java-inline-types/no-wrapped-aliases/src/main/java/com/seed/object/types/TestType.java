@@ -19,17 +19,17 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestType.Builder.class)
 public final class TestType {
-    private final RootType2 testProperty;
+    private final RootType1 testProperty;
 
     private final Map<String, Object> additionalProperties;
 
-    private TestType(RootType2 testProperty, Map<String, Object> additionalProperties) {
+    private TestType(RootType1 testProperty, Map<String, Object> additionalProperties) {
         this.testProperty = testProperty;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("testProperty")
-    public RootType2 getTestProperty() {
+    public RootType1 getTestProperty() {
         return testProperty;
     }
 
@@ -63,7 +63,7 @@ public final class TestType {
     }
 
     public interface TestPropertyStage {
-        _FinalStage testProperty(@NotNull RootType2 testProperty);
+        _FinalStage testProperty(@NotNull RootType1 testProperty);
 
         Builder from(TestType other);
     }
@@ -74,7 +74,7 @@ public final class TestType {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TestPropertyStage, _FinalStage {
-        private RootType2 testProperty;
+        private RootType1 testProperty;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -89,7 +89,7 @@ public final class TestType {
 
         @java.lang.Override
         @JsonSetter("testProperty")
-        public _FinalStage testProperty(@NotNull RootType2 testProperty) {
+        public _FinalStage testProperty(@NotNull RootType1 testProperty) {
             this.testProperty = Objects.requireNonNull(testProperty, "testProperty must not be null");
             return this;
         }

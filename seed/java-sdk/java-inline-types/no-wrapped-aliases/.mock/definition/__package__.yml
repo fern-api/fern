@@ -1,0 +1,107 @@
+types:
+  # this is also the type that would be produced by
+  AliasMapInline: map<string, AliasInlineValue>
+  AliasSetInline: set<AliasInlineValue>
+  AliasListInline: list<AliasInlineValue>
+
+  AliasInlineValue:
+    inline: true
+    properties:
+      foo: string
+      bar: string
+  
+  RootType2: RootType1
+
+  TestType:
+    properties:
+      testProperty: RootType2
+
+  RootType1:
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: RootType1InlineType1
+        docs: lorem ipsum
+      fooMap:
+        type: map<string, RootType1FooMapValue>
+        docs: lorem ipsum
+      fooList:
+        type: list<RootType1FooListItem>
+        docs: lorem ipsum
+      fooSet:
+        type: set<RootType1FooSetItem>
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooMapValue:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooListItem:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooSetItem:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: RootType1InlineType1NestedInlineType1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1InlineType1NestedInlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  ReferenceType:
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
