@@ -25,7 +25,11 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
             }
 
             // Get the referenced file path by using the TypeChecker
-            const symbol = typeChecker.getSymbolAtLocation(importDecl.getModuleSpecifier()!);
+            const importModuleSpecifier = importDecl.getModuleSpecifier();
+            if (importModuleSpecifier == null) {
+                return;
+            }
+            const symbol = typeChecker.getSymbolAtLocation(importModuleSpecifier);
 
             const symbolSourceFile = symbol?.getValueDeclaration()?.getSourceFile();
             if (symbolSourceFile) {
