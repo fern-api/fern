@@ -19,24 +19,16 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType1FooMapValue.Builder.class)
 public final class RootType1FooMapValue {
-    private final String foo;
-
     private final ReferenceType ref;
+
+    private final String foo;
 
     private final Map<String, Object> additionalProperties;
 
-    private RootType1FooMapValue(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
-        this.foo = foo;
+    private RootType1FooMapValue(ReferenceType ref, String foo, Map<String, Object> additionalProperties) {
         this.ref = ref;
+        this.foo = foo;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
-    @JsonProperty("foo")
-    public String getFoo() {
-        return foo;
     }
 
     /**
@@ -45,6 +37,14 @@ public final class RootType1FooMapValue {
     @JsonProperty("ref")
     public ReferenceType getRef() {
         return ref;
+    }
+
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("foo")
+    public String getFoo() {
+        return foo;
     }
 
     @java.lang.Override
@@ -59,12 +59,12 @@ public final class RootType1FooMapValue {
     }
 
     private boolean equalTo(RootType1FooMapValue other) {
-        return foo.equals(other.foo) && ref.equals(other.ref);
+        return ref.equals(other.ref) && foo.equals(other.foo);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.foo, this.ref);
+        return Objects.hash(this.ref, this.foo);
     }
 
     @java.lang.Override
@@ -72,18 +72,18 @@ public final class RootType1FooMapValue {
         return ObjectMappers.stringify(this);
     }
 
-    public static FooStage builder() {
+    public static RefStage builder() {
         return new Builder();
     }
 
-    public interface FooStage {
-        RefStage foo(@NotNull String foo);
+    public interface RefStage {
+        FooStage ref(@NotNull ReferenceType ref);
 
         Builder from(RootType1FooMapValue other);
     }
 
-    public interface RefStage {
-        _FinalStage ref(@NotNull ReferenceType ref);
+    public interface FooStage {
+        _FinalStage foo(@NotNull String foo);
     }
 
     public interface _FinalStage {
@@ -91,10 +91,10 @@ public final class RootType1FooMapValue {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements FooStage, RefStage, _FinalStage {
-        private String foo;
-
+    public static final class Builder implements RefStage, FooStage, _FinalStage {
         private ReferenceType ref;
+
+        private String foo;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,19 +103,8 @@ public final class RootType1FooMapValue {
 
         @java.lang.Override
         public Builder from(RootType1FooMapValue other) {
-            foo(other.getFoo());
             ref(other.getRef());
-            return this;
-        }
-
-        /**
-         * <p>lorem ipsum</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("foo")
-        public RefStage foo(@NotNull String foo) {
-            this.foo = Objects.requireNonNull(foo, "foo must not be null");
+            foo(other.getFoo());
             return this;
         }
 
@@ -125,14 +114,25 @@ public final class RootType1FooMapValue {
          */
         @java.lang.Override
         @JsonSetter("ref")
-        public _FinalStage ref(@NotNull ReferenceType ref) {
+        public FooStage ref(@NotNull ReferenceType ref) {
             this.ref = Objects.requireNonNull(ref, "ref must not be null");
+            return this;
+        }
+
+        /**
+         * <p>lorem ipsum</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("foo")
+        public _FinalStage foo(@NotNull String foo) {
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 
         @java.lang.Override
         public RootType1FooMapValue build() {
-            return new RootType1FooMapValue(foo, ref, additionalProperties);
+            return new RootType1FooMapValue(ref, foo, additionalProperties);
         }
     }
 }

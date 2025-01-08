@@ -26,9 +26,12 @@ import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+import org.commonmark.node.Link;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,51 +66,23 @@ public final class ObjectGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedObject generateFile() {
-        PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
-        List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
-        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
-        List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
-        if (selfInterface.isEmpty()) {
-            enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
-                    .map(objectProperty -> {
-                        EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
-                                objectProperty,
-                                false,
-                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
-                        objectPropertyGetters.put(objectProperty, enrichedObjectProperty);
-                        return enrichedObjectProperty;
-                    })
-                    .collect(Collectors.toList());
-        }
-        List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
-        Set<GeneratedJavaInterface> visited = new HashSet<>();
-        extendedInterfaces.stream()
+        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = objectPropertyGetters();
+        List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>(objectPropertyGetters.values());
+
+        List<ImplementsInterface> implementsInterfaces = extendedInterfaces.stream()
                 .map(generatedInterface -> {
-                    List<EnrichedObjectProperty> enrichedProperties = new ArrayList<>();
-                    Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
-                    interfaceQueue.add(generatedInterface);
-                    while (!interfaceQueue.isEmpty()) {
-                        GeneratedJavaInterface generatedJavaInterface = interfaceQueue.poll();
-                        if (visited.contains(generatedJavaInterface)) {
-                            continue;
-                        }
-                        interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
-                                .map(DeclaredTypeName::getTypeId)
-                                .map(allGeneratedInterfaces::get)
-                                .collect(Collectors.toList()));
-                        enrichedProperties.addAll(
-                                getEnrichedObjectProperties(generatedJavaInterface, objectPropertyGetters));
-                        visited.add(generatedJavaInterface);
-                    }
                     return ImplementsInterface.builder()
                             .interfaceClassName(generatedInterface.getClassName())
-                            .addAllInterfaceProperties(enrichedProperties)
+                            .addAllInterfaceProperties(getInterfaceEnrichedProperties(generatedInterface))
                             .build();
                 })
-                .forEach(implementsInterface -> {
-                    extendedPropertyGetters.addAll(implementsInterface.interfaceProperties());
-                    implementsInterfaces.add(implementsInterface);
-                });
+                .collect(Collectors.toList());
+
+        List<EnrichedObjectProperty> extendedPropertyGetters = implementsInterfaces.stream()
+                .map(ImplementsInterface::interfaceProperties)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
@@ -119,6 +94,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
                 generatorContext.builderNotNullChecks());
+
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();
@@ -128,6 +104,56 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 .putAllObjectPropertyGetters(objectPropertyGetters)
                 .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
                 .build();
+    }
+
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters() {
+        PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
+
+        if (selfInterface.isEmpty()) {
+            return new HashMap<>(KeyedStream.of(objectTypeDeclaration.getProperties().stream())
+                    .map(objectProperty -> EnrichedObjectProperty.of(
+                            objectProperty,
+                            false,
+                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
+                    .collectToMap());
+        }
+
+        return new HashMap<>();
+    }
+
+    /**
+     * Get the entire extension tree for the provided interface.
+     */
+    private Set<GeneratedJavaInterface> expandInterface(GeneratedJavaInterface generatedInterface) {
+        Set<GeneratedJavaInterface> result = new HashSet<>();
+
+        Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
+
+        interfaceQueue.add(generatedInterface);
+        while (!interfaceQueue.isEmpty()) {
+            GeneratedJavaInterface curr = interfaceQueue.poll();
+
+            if (result.contains(curr)) {
+                continue;
+            }
+
+            interfaceQueue.addAll(curr.extendedInterfaces().stream()
+                    .map(DeclaredTypeName::getTypeId)
+                    .map(allGeneratedInterfaces::get)
+                    .collect(Collectors.toList()));
+            result.add(curr);
+        }
+
+        return result;
+    }
+
+    private List<EnrichedObjectProperty> getInterfaceEnrichedProperties(GeneratedJavaInterface generatedInterface) {
+        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = objectPropertyGetters();
+
+        return expandInterface(generatedInterface)
+                .stream()
+                .flatMap(interface_ -> getEnrichedObjectProperties(interface_, objectPropertyGetters).stream())
+                .collect(Collectors.toList());
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
