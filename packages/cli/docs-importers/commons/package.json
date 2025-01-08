@@ -34,7 +34,14 @@
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@fern-api/dev-dependencies": "workspace:*",
-    "@types/js-yaml": "^4.0.8"
+    "@fern-api/typescript-config": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
+    "@types/js-yaml": "^4.0.8",
+    "vitest": "^2.1.8"
   }
 }
