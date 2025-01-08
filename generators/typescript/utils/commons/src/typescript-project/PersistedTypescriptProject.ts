@@ -1,6 +1,7 @@
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
+import { Project } from "ts-morph";
 import urlJoin from "url-join";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";

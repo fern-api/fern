@@ -1,9 +1,9 @@
-export * from "./requests";
-export * as getWithPath from "./getWithPath";
-export * as getWithInlinePath from "./getWithInlinePath";
-export * as getWithQuery from "./getWithQuery";
-export * as getWithAllowMultipleQuery from "./getWithAllowMultipleQuery";
-export * as getWithPathAndQuery from "./getWithPathAndQuery";
-export * as getWithInlinePathAndQuery from "./getWithInlinePathAndQuery";
-export * as modifyWithPath from "./modifyWithPath";
-export * as modifyWithInlinePath from "./modifyWithInlinePath";
+export * from "./requests/index.js";
+export * as getWithPath from "./getWithPath.js";
+export * as getWithInlinePath from "./getWithInlinePath.js";
+export * as getWithQuery from "./getWithQuery.js";
+export * as getWithAllowMultipleQuery from "./getWithAllowMultipleQuery.js";
+export * as getWithPathAndQuery from "./getWithPathAndQuery.js";
+export * as getWithInlinePathAndQuery from "./getWithInlinePathAndQuery.js";
+export * as modifyWithPath from "./modifyWithPath.js";
+export * as modifyWithInlinePath from "./modifyWithInlinePath.js";

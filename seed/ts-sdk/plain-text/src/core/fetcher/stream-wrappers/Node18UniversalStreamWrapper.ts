@@ -1,6 +1,6 @@
 import type { Writable } from "readable-stream";
 
-import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
+import { EventCallback, StreamWrapper } from "./chooseStreamWrapper.js";
 
 export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
     implements

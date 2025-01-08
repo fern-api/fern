@@ -1,2 +1,2 @@
-export { SeedServerSentEventsError } from "./SeedServerSentEventsError";
-export { SeedServerSentEventsTimeoutError } from "./SeedServerSentEventsTimeoutError";
+export { SeedServerSentEventsError } from "./SeedServerSentEventsError.js";
+export { SeedServerSentEventsTimeoutError } from "./SeedServerSentEventsTimeoutError.js";

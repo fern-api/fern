@@ -1,2 +1,2 @@
-export { SeedUnknownAsAnyError } from "./SeedUnknownAsAnyError";
-export { SeedUnknownAsAnyTimeoutError } from "./SeedUnknownAsAnyTimeoutError";
+export { SeedUnknownAsAnyError } from "./SeedUnknownAsAnyError.js";
+export { SeedUnknownAsAnyTimeoutError } from "./SeedUnknownAsAnyTimeoutError.js";

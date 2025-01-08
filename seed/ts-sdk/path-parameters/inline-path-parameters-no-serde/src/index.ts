@@ -1,3 +1,3 @@
-export * as SeedPathParameters from "./api";
-export { SeedPathParametersClient } from "./Client";
-export { SeedPathParametersError, SeedPathParametersTimeoutError } from "./errors";
+export * as SeedPathParameters from "./api/index.js";
+export { SeedPathParametersClient } from "./Client.js";
+export { SeedPathParametersError, SeedPathParametersTimeoutError } from "./errors/index.js";

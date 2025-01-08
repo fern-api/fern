@@ -1,5 +1,11 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import {
+    JavaScriptRuntime,
+    NpmPackage,
+    PersistedTypescriptProject,
+    ScriptsManager,
+    fixImportsForEsm
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -152,8 +158,17 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
+        const scriptsManager = new ScriptsManager();
+        await scriptsManager.copyScripts({
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
+        });
+        await this.postProcess(persistedTypescriptProject);
 
         return persistedTypescriptProject;
+    }
+
+    private async postProcess(persistedTypescriptProject: PersistedTypescriptProject): Promise<void> {
+        await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
     }
 
     protected isPackagePrivate(customConfig: SdkCustomConfig): boolean {

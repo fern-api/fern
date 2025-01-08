@@ -1,3 +1,3 @@
-export * from "./AliasType";
-export * from "./Parent";
-export * from "./Child";
+export * from "./AliasType.js";
+export * from "./Parent.js";
+export * from "./Child.js";

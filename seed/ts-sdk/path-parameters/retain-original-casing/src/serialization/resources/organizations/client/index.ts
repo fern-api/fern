@@ -1,1 +1,1 @@
-export * as searchOrganizations from "./searchOrganizations";
+export * as searchOrganizations from "./searchOrganizations.js";
