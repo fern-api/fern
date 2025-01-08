@@ -93,6 +93,13 @@ fixtures:
     - customConfig:
         package-prefix: "com.customprefix"
       outputFolder: java-custom-package-prefix
+  java-inline-types:
+    - customConfig:
+        enableInlineTypes: true
+      outputFolder: inline
+    - customConfig:
+        enableInlineTypes: false
+      outputFolder: no-inline
 scripts:
   - docker: fernapi/java-seed
     commands:
