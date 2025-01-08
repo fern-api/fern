@@ -1523,6 +1523,9 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
         specifier: ^53.23.0
         version: 53.24.0
