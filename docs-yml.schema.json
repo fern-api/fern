@@ -2259,7 +2259,7 @@
             }
           ]
         },
-        "direct-openapi-parser": {
+        "openapi-parser-v2": {
           "oneOf": [
             {
               "type": "boolean"

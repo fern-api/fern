@@ -511,7 +511,8 @@ export class ApiReferenceNodeConverter {
             left,
             right,
             findEndpointById: (endpointId) => this.#holder.endpoints.get(endpointId),
-            stringifyEndpointPathParts: (endpoint) => stringifyEndpointPathParts(endpoint.path.parts),
+            stringifyEndpointPathParts: (endpoint: APIV1Read.EndpointDefinition) =>
+                stringifyEndpointPathParts(endpoint.path.parts),
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });

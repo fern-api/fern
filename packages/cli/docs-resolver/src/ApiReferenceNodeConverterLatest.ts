@@ -553,7 +553,8 @@ export class ApiReferenceNodeConverterLatest {
             left,
             right,
             findEndpointById: (endpointId) => this.#findEndpointByLocator(endpointId),
-            stringifyEndpointPathParts: (endpoint) => stringifyEndpointPathParts(endpoint.path),
+            stringifyEndpointPathParts: (endpoint: FdrAPI.api.latest.EndpointDefinition) =>
+                stringifyEndpointPathParts(endpoint.path),
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
