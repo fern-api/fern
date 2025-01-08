@@ -16,7 +16,7 @@ export const BytesRequest: core.serialization.ObjectSchema<serializers.BytesRequ
         .extend(WithDocs);
 
 export declare namespace BytesRequest {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         isOptional: boolean;
         contentType?: string | null;
     }

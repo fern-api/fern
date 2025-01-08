@@ -15,7 +15,7 @@ export const CommonPropertyWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace CommonPropertyWithExample {
-    interface Raw {
+    export interface Raw {
         key: string;
         schema: serializers.SchemaWithExample.Raw;
     }

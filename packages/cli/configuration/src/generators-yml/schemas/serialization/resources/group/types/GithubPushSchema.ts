@@ -18,7 +18,7 @@ export const GithubPushSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GithubPushSchema {
-    interface Raw {
+    export interface Raw {
         repository: string;
         license?: GithubLicenseSchema.Raw | null;
         mode: "push";

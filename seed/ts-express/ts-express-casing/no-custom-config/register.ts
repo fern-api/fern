@@ -9,7 +9,7 @@ export function register(
     expressApp: express.Express | express.Router,
     services: {
         imdb: ImdbService;
-    }
+    },
 ): void {
     (expressApp as any).use("/movies", services.imdb.toRouter());
 }

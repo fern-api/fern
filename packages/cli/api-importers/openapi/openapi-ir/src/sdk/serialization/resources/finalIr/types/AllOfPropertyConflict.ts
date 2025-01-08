@@ -17,7 +17,7 @@ export const AllOfPropertyConflict: core.serialization.ObjectSchema<
 });
 
 export declare namespace AllOfPropertyConflict {
-    interface Raw {
+    export interface Raw {
         propertyKey: string;
         allOfSchemaIds: SchemaId.Raw[];
         conflictingTypeSignatures: boolean;

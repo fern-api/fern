@@ -15,7 +15,7 @@ export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            serializers.types.ObjectWithOptionalField.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.types.ObjectWithOptionalField.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

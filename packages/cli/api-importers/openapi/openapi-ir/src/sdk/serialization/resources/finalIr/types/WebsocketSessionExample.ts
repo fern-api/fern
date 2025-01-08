@@ -23,7 +23,7 @@ export const WebsocketSessionExample: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace WebsocketSessionExample {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         queryParameters?: QueryParameterExample.Raw[] | null;
         headers?: HeaderExample.Raw[] | null;

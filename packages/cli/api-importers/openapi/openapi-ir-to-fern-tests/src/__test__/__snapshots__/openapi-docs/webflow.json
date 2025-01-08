@@ -12445,6 +12445,9 @@ service:
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
@@ -12456,6 +12459,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -12537,6 +12543,9 @@ service:
                       ],
                       "createdOn": "2023-03-17T18:47:35.560Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": false,
                         "name": "My new item",
                         "slug": "my-new-item",
                       },
@@ -12611,6 +12620,9 @@ service:
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
@@ -12622,6 +12634,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -12789,6 +12804,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -12853,6 +12871,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -12918,8 +12939,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2022-06-25T14:51:27.809Z",
                           "fieldData": {
+                            "department": "Data",
                             "name": "Senior Data Analyst",
                             "slug": "senior-data-analyst",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
                           },
                           "id": "62b720ef280c7a7a3be8cabe",
                           "isArchived": false,
@@ -12931,8 +12954,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2023-04-10T11:45:30.567Z",
                           "fieldData": {
+                            "department": "Product",
                             "name": "Product Manager",
                             "slug": "product-manager",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
                           },
                           "id": "62c880ef281c7b7b4cf9dabc",
                           "isArchived": false,
@@ -13023,8 +13048,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2022-06-25T14:51:27.809Z",
                           "fieldData": {
+                            "department": "Data",
                             "name": "Senior Data Analyst",
                             "slug": "senior-data-analyst",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
                           },
                           "id": "62b720ef280c7a7a3be8cabe",
                           "isArchived": false,
@@ -13036,8 +13063,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2023-04-10T11:45:30.567Z",
                           "fieldData": {
+                            "department": "Product",
                             "name": "Product Manager",
                             "slug": "product-manager",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
                           },
                           "id": "62c880ef281c7b7b4cf9dabc",
                           "isArchived": false,
@@ -13187,22 +13216,24 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -13235,15 +13266,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -13253,14 +13276,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -13297,22 +13312,24 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -13345,15 +13362,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemLiveRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -13363,14 +13372,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -14797,6 +14798,8 @@ service:
                   fieldData:
                     name: Senior Data Analyst
                     slug: senior-data-analyst
+                    url: https://boards.greenhouse.io/webflow/jobs/26567701
+                    department: Data
                 - id: 62c880ef281c7b7b4cf9dabc
                   cmsLocaleId: 66f6e966c9e1dc700a857ca3
                   lastPublished: '2023-04-15T10:25:18.123Z'
@@ -14807,6 +14810,8 @@ service:
                   fieldData:
                     name: Product Manager
                     slug: product-manager
+                    url: https://boards.greenhouse.io/webflow/jobs/31234567
+                    department: Product
               pagination:
                 limit: 25
                 offset: 0
@@ -14865,6 +14870,9 @@ service:
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -14877,6 +14885,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     list-items-live:
       path: /collections/{collection_id}/items/live
       method: GET
@@ -14946,6 +14957,8 @@ service:
                   fieldData:
                     name: Senior Data Analyst
                     slug: senior-data-analyst
+                    url: https://boards.greenhouse.io/webflow/jobs/26567701
+                    department: Data
                 - id: 62c880ef281c7b7b4cf9dabc
                   cmsLocaleId: 66f6e966c9e1dc700a857ca3
                   lastPublished: '2023-04-15T10:25:18.123Z'
@@ -14956,6 +14969,8 @@ service:
                   fieldData:
                     name: Product Manager
                     slug: product-manager
+                    url: https://boards.greenhouse.io/webflow/jobs/31234567
+                    department: Product
               pagination:
                 limit: 25
                 offset: 0
@@ -15012,6 +15027,9 @@ service:
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -15024,6 +15042,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     create-item-for-multiple-locales:
       path: /collections/{collection_id}/items/bulk
       method: POST
@@ -15085,6 +15106,9 @@ service:
               fieldData:
                 name: My new item
                 slug: my-new-item
+                date: '2022-11-18T00:00:00.000Z'
+                featured: false
+                color: '#db4b68'
     get-item:
       path: /collections/{collection_id}/items/{item_id}
       method: GET
@@ -15137,6 +15161,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     delete-item:
       path: /collections/{collection_id}/items/{item_id}
       method: DELETE
@@ -15195,21 +15222,9 @@ service:
         name: ItemsUpdateItemRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -15234,16 +15249,15 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -15256,6 +15270,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     get-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: GET
@@ -15308,6 +15325,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     delete-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: DELETE
@@ -15369,21 +15389,9 @@ service:
         name: ItemsUpdateItemLiveRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -15408,16 +15416,15 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -15430,6 +15437,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     publish-item:
       path: /collections/{collection_id}/items/publish
       method: POST
@@ -17905,6 +17915,9 @@ webhooks:
                   "cmsLocaleId": "653ad57de882f528b32e810e",
                   "createdOn": "2022-11-17T17:11:57.148Z",
                   "fieldData": {
+                    "color": "#db4b68",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
                     "name": "Pan Galactic Gargle Blaster Recipe",
                     "slug": "pan-galactic-gargle-blaster",
                   },
@@ -17934,6 +17947,9 @@ webhooks:
                   "cmsLocaleId": "653ad57de882f528b32e810e",
                   "createdOn": "2022-11-17T17:11:57.148Z",
                   "fieldData": {
+                    "color": "#db4b68",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
                     "name": "Pan Galactic Gargle Blaster Recipe",
                     "slug": "pan-galactic-gargle-blaster",
                   },
@@ -18172,6 +18188,9 @@ webhooks:
           fieldData:
             name: Pan Galactic Gargle Blaster Recipe
             slug: pan-galactic-gargle-blaster
+            date: '2022-11-18T00:00:00.000Z'
+            featured: true
+            color: '#db4b68'
   collection_item_changed:
     method: POST
     display-name: Item Updated
@@ -18195,6 +18214,9 @@ webhooks:
           fieldData:
             name: Pan Galactic Gargle Blaster Recipe
             slug: pan-galactic-gargle-blaster
+            date: '2022-11-18T00:00:00.000Z'
+            featured: true
+            color: '#db4b68'
   collection_item_deleted:
     method: POST
     display-name: Item Deleted

@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_user:NestedUser": {
@@ -55,10 +52,7 @@
               "value": "type_user:User"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

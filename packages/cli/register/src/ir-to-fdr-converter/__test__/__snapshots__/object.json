@@ -252,10 +252,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Name": {
@@ -282,10 +279,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

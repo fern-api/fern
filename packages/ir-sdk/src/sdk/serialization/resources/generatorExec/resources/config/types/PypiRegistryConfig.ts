@@ -19,7 +19,7 @@ export const PypiRegistryConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace PypiRegistryConfig {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         username: string;
         password: string;

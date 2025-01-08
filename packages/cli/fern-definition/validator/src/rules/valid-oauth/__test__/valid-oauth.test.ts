@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidOauthRule } from "../valid-oauth";
 
 describe("valid-oauth", () => {

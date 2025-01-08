@@ -13,7 +13,7 @@ export const Cat: core.serialization.ObjectSchema<serializers.types.Cat.Raw, Fid
     });
 
 export declare namespace Cat {
-    interface Raw {
+    export interface Raw {
         name: string;
         likesToMeow: boolean;
     }

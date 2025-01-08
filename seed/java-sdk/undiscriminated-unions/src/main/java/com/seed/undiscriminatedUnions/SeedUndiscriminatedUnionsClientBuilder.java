@@ -16,6 +16,14 @@ public final class SeedUndiscriminatedUnionsClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedUndiscriminatedUnionsClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedUndiscriminatedUnionsClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedUndiscriminatedUnionsClient(clientOptionsBuilder.build());

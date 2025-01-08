@@ -21,7 +21,7 @@ export const ConjureService: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ConjureService {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name?: string | null;
         package?: string | null;
         "base-path"?: string | null;

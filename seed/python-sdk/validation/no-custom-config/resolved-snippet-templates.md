@@ -7,8 +7,8 @@ client.create(
 	even=100,
 	name="foo"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -20,7 +20,7 @@ client.get(
 	even=100,
 	name="foo"
 )
- 
-```                        
+
+```
 
 

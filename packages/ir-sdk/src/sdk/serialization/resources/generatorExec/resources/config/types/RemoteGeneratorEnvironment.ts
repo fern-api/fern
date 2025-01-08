@@ -16,7 +16,7 @@ export const RemoteGeneratorEnvironment: core.serialization.ObjectSchema<
 });
 
 export declare namespace RemoteGeneratorEnvironment {
-    interface Raw {
+    export interface Raw {
         coordinatorUrl: string;
         coordinatorUrlV2: string;
         id: string;

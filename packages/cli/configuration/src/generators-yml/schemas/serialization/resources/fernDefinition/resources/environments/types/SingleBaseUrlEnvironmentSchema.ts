@@ -19,7 +19,7 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace SingleBaseUrlEnvironmentSchema {
-    interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
         url: string;
     }
 }

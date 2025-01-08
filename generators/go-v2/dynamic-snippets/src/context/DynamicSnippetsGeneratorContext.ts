@@ -1,13 +1,14 @@
-import { assertNever } from "@fern-api/core-utils";
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
+import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { go } from "@fern-api/go-ast";
+
+import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
+import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {

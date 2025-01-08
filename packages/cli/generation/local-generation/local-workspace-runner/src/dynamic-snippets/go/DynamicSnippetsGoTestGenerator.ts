@@ -1,10 +1,12 @@
-import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
-import { TaskContext } from "@fern-api/task-context";
 import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
+import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;

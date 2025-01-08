@@ -1,5 +1,7 @@
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
+
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+
 import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
@@ -311,9 +313,9 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
-): FdrCjsSdk.api.v1.register.TypeReference {
+): FdrCjsSdk.api.v1.register.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return TypeReference.unknown();
+        return extraProperties ? TypeReference.unknown() : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",

@@ -1,13 +1,18 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     readonly classReference;
 
-    constructor(context: SdkGeneratorContext, readonly errorDeclaration: ErrorDeclaration) {
+    constructor(
+        context: SdkGeneratorContext,
+        readonly errorDeclaration: ErrorDeclaration
+    ) {
         super(context);
         this.classReference = this.context.getExceptionClassReference(this.errorDeclaration.name);
     }

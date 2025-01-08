@@ -46,7 +46,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.9.5
+            version: 0.45.2
             output:
               location: local-file-system
               path: ../sdks/typescript
@@ -56,7 +56,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 0.8.1
+            version: 4.3.10
             output:
               location: local-file-system
               path: ../sdks/python
@@ -66,14 +66,28 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 0.9.1
+            version: 2.8.1
     ```
     ```yaml Go 
     groups:
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.9.1
+            version: 0.35.1
+    ```
+    ```yaml .NET 
+    groups: 
+      java-sdk:
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            version: 1.9.11
+    ```
+    ```yaml Ruby 
+    groups: 
+      ruby-sdk:
+        generators:
+          - name: fernapi/fern-ruby-sdk
+            version: 0.9.0
     ```
   </CodeBlocks>
 
@@ -90,7 +104,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.9.5
+            version: 0.45.2
             output:
               location: npm
               package-name: imdb
@@ -101,7 +115,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 0.8.1
+            version: 4.3.10
             output:
               location: pypi
               package-name: imdb
@@ -112,12 +126,47 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 0.9.1
+            version: 2.8.1
             output:
               location: maven
               artifact: com.imdb:imdb-java
-              username: ${MAVEN_USERNAME} # reads from environment
-              password: ${MAVEN_PASSWORD} # reads from environment
+              username: ${MAVEN_USERNAME}
+              password: ${MAVEN_PASSWORD}
+              signature:
+                keyId: ${MAVEN_CENTRAL_SECRET_KEY_KEY_ID}
+                password: ${MAVEN_CENTRAL_SECRET_KEY_PASSWORD}
+                secretKey: ${MAVEN_CENTRAL_SECRET_KEY}
+    ```
+    ```yaml title="Go"
+    groups: 
+      go-sdk:
+        generators:
+          - name: fernapi/fern-go-sdk
+            version: 0.35.1
+            github: 
+              repository: imdb/imdb-go
+    ```
+    ```yaml title=".NET"
+    groups: 
+      csharp-sdk:
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            version: 1.9.11
+            output:
+              location: nuget
+              package-name: Imdb.Net
+              api-key: ${NUGET_API_KEY}
+    ```
+    ```yaml title="Ruby"
+    groups: 
+      ruby-sdk:
+        generators:
+          - name: fernapi/fern-ruby-sdk
+            version: 0.9.0
+            output:
+              location: nuget
+              package-name: imdb
+              api-key: ${NUGET_API_KEY}
     ```
   </CodeBlocks>
 

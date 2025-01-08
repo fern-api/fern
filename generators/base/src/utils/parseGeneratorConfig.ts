@@ -1,5 +1,6 @@
-import { FernGeneratorExec, GeneratorExecParsing } from "@fern-api/browser-compatible-base-generator";
 import { readFile } from "fs/promises";
+
+import { FernGeneratorExec, GeneratorExecParsing } from "@fern-api/browser-compatible-base-generator";
 
 export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGeneratorExec.GeneratorConfig> {
     const configStr = await readFile(pathToConfig);

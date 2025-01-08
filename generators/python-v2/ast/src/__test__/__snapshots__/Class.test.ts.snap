@@ -13,16 +13,27 @@ class MyDataClass:
 "
 `;
 
-exports[`class > class with de-indented multi-line string 1`] = `
-"class MyClass:
-    multiline_string: str = """Hello
-World"""
-"
-`;
-
 exports[`class > class with generic parent reference 1`] = `
 "class MyClass(MyParentClass[MyParentType]):
     pass
+"
+`;
+
+exports[`class > class with various forms of multi-line strings 1`] = `
+"class MyClass:
+    has_newline_chars__basic: str = """Hello,
+World!"""
+    has_no_newline_chars__basic: str = """Hello, World!"""
+    has_newline_chars__start_on_new_line: str = """\\
+Hello,
+World!"""
+    has_newline_chars__end_with_new_line: str = """Hello,
+World!\\
+"""
+    has_newline_chars__start_and_end_with_new_line: str = """\\
+Hello,
+World!\\
+"""
 "
 `;
 

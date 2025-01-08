@@ -9,24 +9,24 @@ export type ExampleQueryParameterShape =
     | FernIr.ExampleQueryParameterShape.Exploded
     | FernIr.ExampleQueryParameterShape.CommaSeparated;
 
-export declare namespace ExampleQueryParameterShape {
-    interface Single extends _Utils {
+export namespace ExampleQueryParameterShape {
+    export interface Single extends _Utils {
         type: "single";
     }
 
-    interface Exploded extends _Utils {
+    export interface Exploded extends _Utils {
         type: "exploded";
     }
 
-    interface CommaSeparated extends _Utils {
+    export interface CommaSeparated extends _Utils {
         type: "commaSeparated";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         single: () => _Result;
         exploded: () => _Result;
         commaSeparated: () => _Result;
@@ -40,7 +40,7 @@ export const ExampleQueryParameterShape = {
             type: "single",
             _visit: function <_Result>(
                 this: FernIr.ExampleQueryParameterShape.Single,
-                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>
+                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleQueryParameterShape._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const ExampleQueryParameterShape = {
             type: "exploded",
             _visit: function <_Result>(
                 this: FernIr.ExampleQueryParameterShape.Exploded,
-                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>
+                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleQueryParameterShape._visit(this, visitor);
             },
@@ -64,7 +64,7 @@ export const ExampleQueryParameterShape = {
             type: "commaSeparated",
             _visit: function <_Result>(
                 this: FernIr.ExampleQueryParameterShape.CommaSeparated,
-                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>
+                visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleQueryParameterShape._visit(this, visitor);
             },
@@ -73,7 +73,7 @@ export const ExampleQueryParameterShape = {
 
     _visit: <_Result>(
         value: FernIr.ExampleQueryParameterShape,
-        visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>
+        visitor: FernIr.ExampleQueryParameterShape._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "single":

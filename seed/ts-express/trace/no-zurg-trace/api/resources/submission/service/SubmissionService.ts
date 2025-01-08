@@ -21,7 +21,7 @@ export interface SubmissionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getExecutionSession(
         req: express.Request<
@@ -37,7 +37,7 @@ export interface SubmissionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     stopExecutionSession(
         req: express.Request<
@@ -53,7 +53,7 @@ export interface SubmissionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getExecutionSessionsState(
         req: express.Request<never, SeedTrace.GetExecutionSessionStateResponse, never, never>,
@@ -62,7 +62,7 @@ export interface SubmissionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
@@ -72,12 +72,15 @@ export interface SubmissionServiceMethods {
 export class SubmissionService {
     private router;
 
-    constructor(private readonly methods: SubmissionServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: SubmissionServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -98,7 +101,7 @@ export class SubmissionService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -106,7 +109,7 @@ export class SubmissionService {
                     console.warn(
                         `Endpoint 'createExecutionSession' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -126,7 +129,7 @@ export class SubmissionService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -134,7 +137,7 @@ export class SubmissionService {
                     console.warn(
                         `Endpoint 'getExecutionSession' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -154,7 +157,7 @@ export class SubmissionService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -162,7 +165,7 @@ export class SubmissionService {
                     console.warn(
                         `Endpoint 'stopExecutionSession' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -182,7 +185,7 @@ export class SubmissionService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -190,7 +193,7 @@ export class SubmissionService {
                     console.warn(
                         `Endpoint 'getExecutionSessionsState' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

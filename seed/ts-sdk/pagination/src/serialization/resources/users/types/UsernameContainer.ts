@@ -14,7 +14,7 @@ export const UsernameContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace UsernameContainer {
-    interface Raw {
+    export interface Raw {
         results: string[];
     }
 }

@@ -12,5 +12,5 @@ export const WeatherReport: core.serialization.Schema<
 > = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
 export declare namespace WeatherReport {
-    type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
+    export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 }

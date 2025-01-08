@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
-import { assertNever } from "@fern-api/core-utils";
 import { readFile } from "fs/promises";
+
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorExecParsing,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 
 export abstract class AbstractGeneratorCli<
     CustomConfig,

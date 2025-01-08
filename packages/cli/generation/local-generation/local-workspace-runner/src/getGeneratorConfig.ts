@@ -1,5 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import {
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
@@ -13,6 +14,7 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
+
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_PATH_TO_IR,

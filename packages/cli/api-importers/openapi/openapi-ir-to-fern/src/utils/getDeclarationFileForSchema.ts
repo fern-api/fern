@@ -1,8 +1,10 @@
+import { camelCase } from "lodash-es";
+
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
-import { camelCase } from "lodash-es";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { convertSdkGroupNameToFile } from "./convertSdkGroupName";
 
 const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);

@@ -1,8 +1,10 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import { camelCase, upperFirst } from "lodash-es";
-import { getAllRules } from "../getAllRules";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { Rule } from "../Rule";
+import { getAllRules } from "../getAllRules";
 
 const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
 

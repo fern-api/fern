@@ -1,4 +1,5 @@
 import { WriteablePythonFile } from "@fern-api/base-python-generator";
+
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "./ObjectGenerator";
 import { WrappedAliasGenerator } from "./WrappedAliasGenerator";

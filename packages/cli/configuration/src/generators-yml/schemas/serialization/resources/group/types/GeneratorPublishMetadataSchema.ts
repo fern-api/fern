@@ -19,7 +19,7 @@ export const GeneratorPublishMetadataSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorPublishMetadataSchema {
-    interface Raw {
+    export interface Raw {
         "package-description"?: string | null;
         email?: string | null;
         "reference-url"?: string | null;

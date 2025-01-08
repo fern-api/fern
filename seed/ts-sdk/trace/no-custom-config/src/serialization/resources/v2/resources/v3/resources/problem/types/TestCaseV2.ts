@@ -16,13 +16,13 @@ export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.v3.TestC
         implementation: TestCaseImplementationReference,
         arguments: core.serialization.record(
             ParameterId,
-            core.serialization.lazy(() => serializers.VariableValue)
+            core.serialization.lazy(() => serializers.VariableValue),
         ),
         expects: TestCaseExpects.optional(),
     });
 
 export declare namespace TestCaseV2 {
-    interface Raw {
+    export interface Raw {
         metadata: TestCaseMetadata.Raw;
         implementation: TestCaseImplementationReference.Raw;
         arguments: Record<ParameterId.Raw, serializers.VariableValue.Raw>;

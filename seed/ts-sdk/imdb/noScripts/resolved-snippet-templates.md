@@ -9,8 +9,8 @@ await client.imdb.createMovie({
   title: "title",
   rating: 1.1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -21,7 +21,7 @@ const client = new SeedApiClient({
   token: "YOUR_TOKEN",
 });
 await client.imdb.getMovie("movieId");
- 
-```                        
+
+```
 
 

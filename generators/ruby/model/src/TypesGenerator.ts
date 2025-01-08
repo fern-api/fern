@@ -1,5 +1,6 @@
 import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
+
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -14,6 +15,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
@@ -84,7 +86,7 @@ export class TypesGenerator {
         const td = this.types.get(typeId);
         return td === undefined
             ? []
-            : this.flattenedProperties.get(typeId) ??
+            : (this.flattenedProperties.get(typeId) ??
                   td.shape._visit<ObjectProperty[]>({
                       alias: (atd: AliasTypeDeclaration) => {
                           return atd.aliasOf._visit<ObjectProperty[]>({
@@ -122,7 +124,7 @@ export class TypesGenerator {
                       _other: () => {
                           throw new Error("Attempting to type declaration for an unknown type.");
                       }
-                  });
+                  }));
     }
 
     // Create a main file for the gem, this just contains imports to all the types

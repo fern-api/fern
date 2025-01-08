@@ -12,14 +12,14 @@ export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     states: core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazyObject(() => serializers.ExecutionSessionState)
+        core.serialization.lazyObject(() => serializers.ExecutionSessionState),
     ),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
 });
 
 export declare namespace GetExecutionSessionStateResponse {
-    interface Raw {
+    export interface Raw {
         states: Record<string, serializers.ExecutionSessionState.Raw>;
         numWarmingInstances?: number | null;
         warmingSessionIds: string[];

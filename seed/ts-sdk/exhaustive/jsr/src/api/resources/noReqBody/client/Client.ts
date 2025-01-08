@@ -9,12 +9,12 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace NoReqBody {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -36,7 +36,7 @@ export class NoReqBody {
      *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
+        requestOptions?: NoReqBody.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),

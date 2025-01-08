@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     FullExample,
     FullOneOfExample,
@@ -7,7 +8,7 @@ import {
     PrimitiveExample,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export function buildWebsocketSessionExample({

@@ -1,7 +1,8 @@
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildEnumTypeDeclaration } from "./buildTypeDeclaration";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildEnumTypeDeclaration } from "./buildTypeDeclaration";
 import { getHeaderName } from "./utils/getHeaderName";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";

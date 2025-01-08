@@ -1,13 +1,16 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-api/base-generator";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
-import { camelCase, upperFirst } from "lodash-es";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+
+import { FernGeneratorExec } from "@fern-api/base-generator";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { getNamespaceExport } from "@fern-api/typescript-base";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -78,10 +81,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
-        const namespaceExport =
-            customConfig.namespaceExport ??
-            `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
-
+        const namespaceExport = getNamespaceExport({
+            organization: config.organization,
+            workspaceName: config.workspaceName,
+            namespaceExport: customConfig.namespaceExport
+        });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -172,7 +176,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return config.environment.type === "local"
             ? "local"
             : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
-            ? "dev"
-            : "prod";
+              ? "dev"
+              : "prod";
     }
 }

@@ -40,6 +40,14 @@ public final class SeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedOauthClientCredentialsEnvironmentVariablesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedOauthClientCredentialsEnvironmentVariablesClient build() {
         AuthClient authClient = new AuthClient(
                 ClientOptions.builder().environment(this.environment).build());

@@ -1,10 +1,12 @@
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import { z } from "zod";
-import { Rule } from "../../Rule";
+
 import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+
+import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",

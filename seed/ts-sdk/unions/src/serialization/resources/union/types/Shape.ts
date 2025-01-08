@@ -22,17 +22,17 @@ export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.
     });
 
 export declare namespace Shape {
-    type Raw = Shape.Circle | Shape.Square;
+    export type Raw = Shape.Circle | Shape.Square;
 
-    interface Circle extends _Base, Circle.Raw {
+    export interface Circle extends _Base, Circle.Raw {
         type: "circle";
     }
 
-    interface Square extends _Base, Square.Raw {
+    export interface Square extends _Base, Square.Raw {
         type: "square";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

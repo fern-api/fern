@@ -1,5 +1,7 @@
-import { NamedFullExample } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { NamedFullExample } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../../getExtension";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";

@@ -1,10 +1,13 @@
-import { doesPathExist, join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
-import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { mkdir, readdir, rm } from "fs/promises";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
+
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
+import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
 
 export async function generateCliChangelog({
     context,
@@ -21,8 +24,8 @@ export async function generateCliChangelog({
         outputPath == null
             ? AbsoluteFilePath.of(process.cwd())
             : outputPath.startsWith("/")
-            ? AbsoluteFilePath.of(outputPath)
-            : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+              ? AbsoluteFilePath.of(outputPath)
+              : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
 
     await mkdir(resolvedOutputPath, { recursive: true });
 

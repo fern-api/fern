@@ -9,12 +9,12 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Imdb {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,7 +44,7 @@ export class Imdb {
      */
     public async createMovie(
         request: SeedApi.CreateMovieRequest,
-        requestOptions?: Imdb.RequestOptions
+        requestOptions?: Imdb.RequestOptions,
     ): Promise<SeedApi.MovieId> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/movies/create-movie"),
@@ -110,7 +110,7 @@ export class Imdb {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
+                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
             headers: {
@@ -147,7 +147,7 @@ export class Imdb {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedApiError({

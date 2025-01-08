@@ -32,7 +32,7 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace EnumSchemaWithExample {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,

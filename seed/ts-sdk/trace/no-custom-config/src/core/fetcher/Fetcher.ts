@@ -82,9 +82,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.timeoutMs,
                     args.abortSignal,
                     args.withCredentials,
-                    args.duplex
+                    args.duplex,
                 ),
-            args.maxRetries
+            args.maxRetries,
         );
         let responseBody = await getResponseBody(response, args.responseType);
 

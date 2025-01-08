@@ -56,7 +56,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
     .extend(WithNamespace);
 
 export declare namespace EndpointWithExample {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
         internal?: boolean | null;
         idempotent?: boolean | null;

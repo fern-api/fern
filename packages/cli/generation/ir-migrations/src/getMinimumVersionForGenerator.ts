@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
 
 export function getMinimumVersionForGenerator({ generatorName }: { generatorName: string }): string | undefined {

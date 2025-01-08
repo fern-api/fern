@@ -1,3 +1,6 @@
+import { size } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import { Logger } from "@fern-api/logger";
 import {
     Availability,
@@ -11,7 +14,7 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
@@ -20,6 +23,7 @@ import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
 import { getValueIfBoolean } from "../utils/getValue";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
 import { convertAvailability } from "./convertAvailability";
@@ -36,7 +40,6 @@ import {
 } from "./convertUndiscriminatedOneOf";
 import { getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -149,7 +152,7 @@ function getTitleAsName(title: string | undefined): string | undefined {
 }
 
 export function convertSchemaObject(
-    schema: OpenAPIV3.SchemaObject,
+    schema: OpenAPIV3.SchemaObject | string,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
@@ -160,6 +163,9 @@ export function convertSchemaObject(
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
+    if (typeof schema === "string") {
+        schema = { type: schema } as OpenAPIV3.SchemaObject;
+    }
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
         (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
@@ -200,6 +206,29 @@ export function convertSchemaObject(
     const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
     if (fernSchema != null) {
         return fernSchema;
+    }
+
+    // handle type array
+    if (Array.isArray(schema.type)) {
+        const nullIndex = schema.type.indexOf("null");
+        const hasNull = nullIndex !== -1;
+        if (schema.type.length === 1) {
+            schema.type = schema.type[0];
+        } else if (schema.type.length === 2 && hasNull) {
+            schema.type.splice(nullIndex, 1);
+            schema.type = schema.type[0];
+            schema.nullable = true;
+        } else {
+            if (hasNull) {
+                schema.type.splice(nullIndex, 1);
+                schema.nullable = true;
+            }
+            if (schema.oneOf == null) {
+                schema.oneOf = schema.type;
+            } else {
+                schema.oneOf.push(...schema.type);
+            }
+        }
     }
 
     // if a schema is null then we should wrap it as nullable
@@ -275,63 +304,6 @@ export function convertSchemaObject(
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
-    if (isListOfStrings(schema.type) && schema.type[1] != null && schema.type[0] != null) {
-        const firstElement = schema.type[0];
-        const secondElement = schema.type[1];
-        if (firstElement === "null") {
-            return SchemaWithExample.nullable({
-                nameOverride,
-                generatedName,
-                title,
-                value: convertSchemaObject(
-                    {
-                        ...schema,
-                        type: secondElement as OpenAPIV3.NonArraySchemaObjectType
-                    },
-                    wrapAsNullable,
-                    context,
-                    breadcrumbs,
-                    encoding,
-                    source,
-                    namespace,
-                    propertiesToExclude,
-                    referencedAsRequest,
-                    fallback
-                ),
-                groupName,
-                description: schema.description,
-                availability,
-                inline: undefined
-            });
-        } else if (secondElement === "null") {
-            return SchemaWithExample.nullable({
-                nameOverride,
-                generatedName,
-                title,
-                value: convertSchemaObject(
-                    {
-                        ...schema,
-                        type: firstElement as OpenAPIV3.NonArraySchemaObjectType
-                    },
-                    wrapAsNullable,
-                    context,
-                    breadcrumbs,
-                    encoding,
-                    source,
-                    namespace,
-                    propertiesToExclude,
-                    referencedAsRequest,
-                    fallback
-                ),
-                groupName,
-                description: schema.description,
-                availability,
-                inline: undefined
-            });
-        }
-    }
-
     // List of types that is undiscriminated union
     if (isListOfStrings(schema.type) && schema.type.length > 1) {
         const wrapVariantAsNullable = schema.type.includes("null");
@@ -362,7 +334,7 @@ export function convertSchemaObject(
     }
 
     // primitive types
-    if (schema === "boolean" || schema.type === "boolean") {
+    if (schema.type === "boolean") {
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
@@ -381,7 +353,7 @@ export function convertSchemaObject(
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.boolean({
-                default: schema.default,
+                default: getBooleanFromDefault(schema.default),
                 example: getExampleAsBoolean({ schema, logger: context.logger, fallback })
             }),
             wrapAsNullable,
@@ -390,7 +362,8 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "number" || schema.type === "number") {
+
+    if (schema.type === "number") {
         return convertNumber({
             nameOverride,
             generatedName,
@@ -409,7 +382,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "integer" || schema.type === "integer") {
+    if (schema.type === "integer") {
         return convertInteger({
             nameOverride,
             generatedName,
@@ -428,7 +401,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "float") {
+    if ((schema.type as string) === "float") {
         return convertNumber({
             nameOverride,
             generatedName,
@@ -447,7 +420,7 @@ export function convertSchemaObject(
             groupName
         });
     }
-    if (schema === "string" || schema.type === "string") {
+    if (schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
                 nameOverride,
@@ -579,15 +552,6 @@ export function convertSchemaObject(
                 source,
                 namespace
             });
-        }
-    }
-
-    // handle type array
-    if (Array.isArray(schema.type)) {
-        if (schema.oneOf == null) {
-            schema.oneOf = schema.type;
-        } else {
-            schema.oneOf.push(...schema.type);
         }
     }
 
@@ -806,7 +770,7 @@ export function convertSchemaObject(
             }
         }
         if (
-            (schema.properties == null || schema.properties.length === 0) &&
+            (schema.properties == null || hasNoProperties(schema)) &&
             filteredAllOfs.length === 1 &&
             filteredAllOfs[0] != null
         ) {
@@ -835,7 +799,7 @@ export function convertSchemaObject(
         });
 
         if (
-            (schema.properties == null || schema.properties.length === 0) &&
+            (schema.properties == null || hasNoProperties(schema)) &&
             filteredAllOfObjects.length === 1 &&
             filteredAllOfObjects[0] != null
         ) {
@@ -932,6 +896,25 @@ export function convertSchemaObject(
     );
 }
 
+function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
+    if (defaultValue == null) {
+        return undefined;
+    }
+    if (typeof defaultValue === "boolean") {
+        return defaultValue;
+    }
+    if (typeof defaultValue === "string") {
+        const lowercased = defaultValue.toLowerCase();
+        if (lowercased === "true") {
+            return true;
+        }
+        if (lowercased === "false") {
+            return false;
+        }
+    }
+    return undefined;
+}
+
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
         return undefined;
@@ -978,7 +961,7 @@ function hasNoAllOf(schema: OpenAPIV3.SchemaObject): boolean {
 }
 
 function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.properties == null || Object.keys(schema.properties).length === 0;
+    return schema.properties == null || size(schema.properties) === 0;
 }
 
 function isListOfStrings(x: unknown): x is string[] {

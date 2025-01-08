@@ -24,7 +24,7 @@ export namespace Metadata {
         value: string;
     }
 
-    interface _Base {
+    export interface _Base {
         extra: Record<string, string>;
         tags: Set<string>;
     }

@@ -16,7 +16,7 @@ export const AvailabilitySchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace AvailabilitySchema {
-    interface Raw {
+    export interface Raw {
         status: AvailabilityStatusSchema.Raw;
         message?: string | null;
     }

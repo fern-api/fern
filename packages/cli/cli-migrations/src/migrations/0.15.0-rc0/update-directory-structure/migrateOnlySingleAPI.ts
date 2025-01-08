@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
 import { rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
+
 import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,

@@ -7,8 +7,8 @@ client.auth.get_token(
 	client_secret="client_secret",
 	scope="scope"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -18,7 +18,7 @@ client = SeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOU
 client.user.get(
 	
 )
- 
-```                        
+
+```
 
 

@@ -1,9 +1,9 @@
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Promise<IntermediateRepresentation> {
     const context = createMockTaskContext();

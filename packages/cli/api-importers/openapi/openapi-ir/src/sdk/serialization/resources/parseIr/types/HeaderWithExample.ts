@@ -24,7 +24,7 @@ export const HeaderWithExample: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace HeaderWithExample {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         env?: string | null;

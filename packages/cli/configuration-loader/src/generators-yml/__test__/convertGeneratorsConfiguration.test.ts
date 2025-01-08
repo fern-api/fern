@@ -1,5 +1,6 @@
 /* eslint-disable jest/no-conditional-expect */
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
 
 describe("convertGeneratorsConfiguration", () => {

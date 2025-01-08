@@ -14,5 +14,5 @@ export const AsyncApiOrOpenApiSpecSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([OpenApiSpecSchema, AsyncApiSchema]);
 
 export declare namespace AsyncApiOrOpenApiSpecSchema {
-    type Raw = OpenApiSpecSchema.Raw | AsyncApiSchema.Raw;
+    export type Raw = OpenApiSpecSchema.Raw | AsyncApiSchema.Raw;
 }

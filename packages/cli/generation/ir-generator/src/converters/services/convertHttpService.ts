@@ -1,4 +1,8 @@
+import urlJoin from "url-join";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, isVariablePathParameter } from "@fern-api/fern-definition-schema";
 import {
     Encoding,
     HttpEndpoint,
@@ -11,17 +15,16 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
-import urlJoin from "url-join";
+import { SourceResolver } from "@fern-api/source-resolver";
+
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { SourceResolver } from "@fern-api/source-resolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertCodeSample } from "./convertCodeSamples";
@@ -32,8 +35,7 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
-import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
+import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
 
 export function convertHttpService({
     rootDefaultUrl,
@@ -112,8 +114,8 @@ export function convertHttpService({
                     endpoint["base-path"] != null
                         ? urlJoin(endpoint["base-path"], endpoint.path)
                         : file.rootApiFile["base-path"] != null
-                        ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
-                        : urlJoin(serviceDefinition["base-path"], endpoint.path)
+                          ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                          : urlJoin(serviceDefinition["base-path"], endpoint.path)
                 ),
                 pathParameters: endpointPathParameters,
                 allPathParameters:

@@ -1,13 +1,15 @@
+import { readFile } from "fs/promises";
+
 import { docsYml } from "@fern-api/configuration-loader";
+import { noop, visitObjectAsync } from "@fern-api/core-utils";
+import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { visitFilepath } from "./visitFilepath";
-import { readFile } from "fs/promises";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 
 export declare namespace visitNavigationAst {
     interface Args {
@@ -118,17 +120,19 @@ async function visitNavigationItem({
             if (items == null) {
                 return;
             }
-            items.map(async (item, idx) => {
-                await visitNavigationItem({
-                    absolutePathToFernFolder,
-                    navigationItem: item,
-                    visitor,
-                    nodePath: [...nodePath, "contents", `${idx}`],
-                    absoluteFilepathToConfiguration,
-                    loadAPIWorkspace,
-                    context
-                });
-            });
+            await Promise.all(
+                items.map(async (item, idx) => {
+                    await visitNavigationItem({
+                        absolutePathToFernFolder,
+                        navigationItem: item,
+                        visitor,
+                        nodePath: [...nodePath, "contents", `${idx}`],
+                        absoluteFilepathToConfiguration,
+                        loadAPIWorkspace,
+                        context
+                    });
+                })
+            );
         },
         viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
             if (viewers != null && viewers.length > 0) {

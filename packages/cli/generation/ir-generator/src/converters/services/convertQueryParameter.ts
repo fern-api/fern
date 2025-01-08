@@ -1,5 +1,6 @@
-import { QueryParameter } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { QueryParameter } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 

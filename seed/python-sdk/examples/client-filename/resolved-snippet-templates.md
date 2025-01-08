@@ -6,8 +6,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.echo(
 	request="Hello world!\\n\\nwith\\n\\tnewlines"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -18,8 +18,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.echo(
 	request="string"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -28,8 +28,8 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -40,8 +40,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.file.notification.service.get_exception(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -52,8 +52,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.file.notification.service.get_exception(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -64,8 +64,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.file.service.get_file(
 	filename="file.txt"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -76,8 +76,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.file.service.get_file(
 	filename="filename"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -88,8 +88,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.health.service.check(
 	id="id-2sdx82h"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -100,8 +100,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.health.service.check(
 	id="id-3tey93i"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -112,8 +112,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.health.service.check(
 	id="id"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -124,8 +124,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.health.service.ping(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -136,8 +136,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.health.service.ping(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -148,8 +148,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.service.get_movie(
 	movie_id="movie-c06a4ad7"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -160,8 +160,8 @@ client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token=
 client.service.get_movie(
 	movie_id="movieId"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -183,8 +183,8 @@ client.service.create_movie(
 	},
 	revenue=1000000
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -205,8 +205,8 @@ client.service.create_movie(
 	},
 	revenue=1000000
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -219,8 +219,8 @@ client.service.get_metadata(
 	shallow=false,
 	tag="development"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -233,8 +233,8 @@ client.service.get_metadata(
 	shallow=true,
 	tag="tag"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -311,7 +311,7 @@ client.service.create_big_entity(
 		datetime="2024-01-15T09:30:00Z"
 	)
 )
- 
-```                        
+
+```
 
 

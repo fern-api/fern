@@ -44,27 +44,27 @@ export const TestSubmissionStatus: core.serialization.Schema<
     });
 
 export declare namespace TestSubmissionStatus {
-    type Raw =
+    export type Raw =
         | TestSubmissionStatus.Stopped
         | TestSubmissionStatus.Errored
         | TestSubmissionStatus.Running
         | TestSubmissionStatus.TestCaseIdToState;
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: ErrorInfo.Raw;
     }
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: RunningSubmissionState.Raw;
     }
 
-    interface TestCaseIdToState {
+    export interface TestCaseIdToState {
         type: "testCaseIdToState";
         value: Record<string, SubmissionStatusForTestCase.Raw>;
     }

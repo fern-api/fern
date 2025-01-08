@@ -16,7 +16,7 @@ export const SseStreamChunk: core.serialization.ObjectSchema<serializers.SseStre
         .extend(WithDocs);
 
 export declare namespace SseStreamChunk {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         payload: serializers.TypeReference.Raw;
         terminator?: string | null;
     }

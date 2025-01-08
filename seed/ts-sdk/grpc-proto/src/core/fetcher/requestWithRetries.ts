@@ -11,7 +11,7 @@ function addJitter(delay: number): number {
 
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
-    maxRetries: number = DEFAULT_MAX_RETRIES
+    maxRetries: number = DEFAULT_MAX_RETRIES,
 ): Promise<Response> {
     let response: Response = await requestFn();
 

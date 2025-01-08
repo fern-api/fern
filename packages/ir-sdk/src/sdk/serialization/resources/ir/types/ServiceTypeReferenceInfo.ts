@@ -17,7 +17,7 @@ export const ServiceTypeReferenceInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace ServiceTypeReferenceInfo {
-    interface Raw {
+    export interface Raw {
         typesReferencedOnlyByService: Record<ServiceId.Raw, TypeId.Raw[]>;
         sharedTypes: TypeId.Raw[];
     }

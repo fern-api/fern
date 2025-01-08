@@ -8,12 +8,12 @@ import * as FernIr from "../../../../../index";
  * Represents the value to use for a specific environment. There are three cases:
  *
  * 1. When sent as an EnvironmentId string, the generator assumes the value matches the name of the
- *    environment (e.g. "Staging"), and returns an error otherwise.
+ * environment (e.g. "Staging"), and returns an error otherwise.
  *
  * 2. If the API supports multiple environment URLs, send a map of URLs, e.g.
- *    {
- *    "ec2": "https://staging.ec2.aws.com",
- *    "s3": "https://staging.s3.aws.com"
- *    }
+ *   {
+ *     "ec2": "https://staging.ec2.aws.com",
+ *     "s3": "https://staging.s3.aws.com"
+ *   }
  */
 export type EnvironmentValues = FernIr.EnvironmentId | FernIr.dynamic.MultipleEnvironmentUrlValues;

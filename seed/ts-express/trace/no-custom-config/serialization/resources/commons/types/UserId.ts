@@ -9,5 +9,5 @@ import * as core from "../../../../core";
 export const UserId: core.serialization.Schema<serializers.UserId.Raw, SeedTrace.UserId> = core.serialization.string();
 
 export declare namespace UserId {
-    type Raw = string;
+    export type Raw = string;
 }

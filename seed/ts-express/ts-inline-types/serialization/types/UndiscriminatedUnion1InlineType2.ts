@@ -15,7 +15,7 @@ export const UndiscriminatedUnion1InlineType2: core.serialization.ObjectSchema<
 });
 
 export declare namespace UndiscriminatedUnion1InlineType2 {
-    interface Raw {
+    export interface Raw {
         baz: string;
         ref: serializers.ReferenceType.Raw;
     }

@@ -1,5 +1,7 @@
-import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
+
 import { Rule } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 

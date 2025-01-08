@@ -1,10 +1,12 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { parseReferenceToTypeName } from "@fern-api/ir-generator";
+import { mapValues } from "lodash-es";
+
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst } from "../../ast";
-import { mapValues } from "lodash-es";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { parseReferenceToTypeName } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 type ErrorName = string;
 

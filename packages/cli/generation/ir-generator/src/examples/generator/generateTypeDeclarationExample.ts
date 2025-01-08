@@ -1,13 +1,14 @@
 import {
-    ExampleTypeShape,
-    TypeDeclaration,
-    TypeId,
-    ExampleObjectProperty,
     ExampleAliasType,
-    ExampleSingleUnionTypeProperties,
+    ExampleObjectProperty,
     ExampleObjectType,
-    ObjectTypeDeclaration
+    ExampleSingleUnionTypeProperties,
+    ExampleTypeShape,
+    ObjectTypeDeclaration,
+    TypeDeclaration,
+    TypeId
 } from "@fern-api/ir-sdk";
+
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";

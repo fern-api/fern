@@ -14,7 +14,7 @@ export const WithDescription: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithDescription {
-    interface Raw {
+    export interface Raw {
         description?: string | null;
     }
 }

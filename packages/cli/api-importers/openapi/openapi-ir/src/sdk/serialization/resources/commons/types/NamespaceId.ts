@@ -10,5 +10,5 @@ export const NamespaceId: core.serialization.Schema<serializers.NamespaceId.Raw,
     core.serialization.string();
 
 export declare namespace NamespaceId {
-    type Raw = string;
+    export type Raw = string;
 }

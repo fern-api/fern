@@ -16,7 +16,7 @@ export const JsonStreamChunk: core.serialization.ObjectSchema<serializers.JsonSt
         .extend(WithDocs);
 
 export declare namespace JsonStreamChunk {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         payload: serializers.TypeReference.Raw;
         terminator?: string | null;
     }

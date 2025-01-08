@@ -1,6 +1,8 @@
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector";
 import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType";

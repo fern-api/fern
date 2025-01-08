@@ -10,5 +10,5 @@ export const ComplexType: core.serialization.Schema<serializers.ComplexType.Raw,
     core.serialization.enum_(["object", "union", "unknown"]);
 
 export declare namespace ComplexType {
-    type Raw = "object" | "union" | "unknown";
+    export type Raw = "object" | "union" | "unknown";
 }

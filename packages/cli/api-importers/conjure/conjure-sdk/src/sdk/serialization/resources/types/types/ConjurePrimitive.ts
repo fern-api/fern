@@ -12,5 +12,5 @@ export const ConjurePrimitive: core.serialization.Schema<
 > = core.serialization.enum_(["rid", "string", "safelong", "integer", "double", "boolean"]);
 
 export declare namespace ConjurePrimitive {
-    type Raw = "rid" | "string" | "safelong" | "integer" | "double" | "boolean";
+    export type Raw = "rid" | "string" | "safelong" | "integer" | "double" | "boolean";
 }

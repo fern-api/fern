@@ -1,5 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
-import * as IR from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
     DependencyType,
@@ -11,7 +9,11 @@ import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
-import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
+import { Code, arrayOf, code, conditionalOutput, literalOf } from "ts-poet";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import * as IR from "@fern-fern/ir-sdk/api";
 
 export declare namespace JestTestGenerator {
     interface Args {
@@ -98,10 +100,10 @@ export class JestTestGenerator {
     }
 
     private addDependencies(): void {
-        this.dependencyManager.addDependency("jest", "29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@types/jest", "29.5.5", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("ts-jest", "29.1.1", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("jest-environment-jsdom", "29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("ts-jest", "^29.1.1", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
         // this.dependencyManager.addDependency("jest-dev-server", "10.0.0", { type: DependencyType.DEV });
     }
 

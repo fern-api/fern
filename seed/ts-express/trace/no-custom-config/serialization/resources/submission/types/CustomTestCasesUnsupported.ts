@@ -15,7 +15,7 @@ export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
 });
 
 export declare namespace CustomTestCasesUnsupported {
-    interface Raw {
+    export interface Raw {
         problemId: serializers.ProblemId.Raw;
         submissionId: serializers.SubmissionId.Raw;
     }

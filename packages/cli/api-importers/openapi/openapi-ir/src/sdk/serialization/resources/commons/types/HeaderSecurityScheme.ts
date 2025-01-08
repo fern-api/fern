@@ -17,7 +17,7 @@ export const HeaderSecurityScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace HeaderSecurityScheme {
-    interface Raw {
+    export interface Raw {
         headerName: string;
         prefix?: string | null;
         headerVariableName?: string | null;

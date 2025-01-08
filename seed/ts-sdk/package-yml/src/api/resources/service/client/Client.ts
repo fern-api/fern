@@ -7,12 +7,12 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         id: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -38,7 +38,7 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`,
             ),
             method: "GET",
             headers: {

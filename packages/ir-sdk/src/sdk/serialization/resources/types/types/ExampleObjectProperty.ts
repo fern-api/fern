@@ -18,7 +18,7 @@ export const ExampleObjectProperty: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleObjectProperty {
-    interface Raw {
+    export interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
         originalTypeDeclaration: DeclaredTypeName.Raw;

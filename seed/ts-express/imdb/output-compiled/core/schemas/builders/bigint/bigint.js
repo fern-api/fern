@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bigint = void 0;
+exports.bigint = bigint;
 const Schema_1 = require("../../Schema");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
@@ -47,4 +47,3 @@ function bigint() {
     };
     return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
 }
-exports.bigint = bigint;

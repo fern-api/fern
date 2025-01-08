@@ -32,7 +32,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
     .extend(Declaration);
 
 export declare namespace WebSocketChannel {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: WebSocketName.Raw;
         displayName?: string | null;
         path: HttpPath.Raw;

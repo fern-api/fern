@@ -1,8 +1,9 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { createLoggingExecutable, LoggingExecutable } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { LoggingExecutable, createLoggingExecutable } from "@fern-api/logging-execa";
 
 const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
 

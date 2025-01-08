@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { getTypeFromTypeReference } from "./getTypeFromTypeReference";
 
 export function wrapTypeReferenceAsOptional(

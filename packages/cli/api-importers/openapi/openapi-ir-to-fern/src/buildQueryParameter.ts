@@ -1,12 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildTypeReference } from "./buildTypeReference";
+import { QueryParameter, Schema } from "@fern-api/openapi-ir";
+import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
 import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference, getDefaultFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
     queryParameter,

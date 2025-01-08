@@ -14,7 +14,7 @@ export const Base64WithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace Base64WithExample {
-    interface Raw {
+    export interface Raw {
         example?: string | null;
     }
 }

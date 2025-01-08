@@ -1,6 +1,6 @@
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export type TagType = "param" | "return" | "throws" | "var";

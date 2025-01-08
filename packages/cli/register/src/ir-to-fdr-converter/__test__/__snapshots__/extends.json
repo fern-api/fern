@@ -17,10 +17,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:NestedType": {
@@ -40,10 +37,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Docs": {
@@ -61,10 +55,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:JSON": {
@@ -84,10 +75,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

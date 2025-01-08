@@ -10,5 +10,5 @@ export const AliasListInline: core.serialization.Schema<serializers.AliasListInl
     core.serialization.list(core.serialization.lazyObject(() => serializers.AliasInlineValue));
 
 export declare namespace AliasListInline {
-    type Raw = serializers.AliasInlineValue.Raw[];
+    export type Raw = serializers.AliasInlineValue.Raw[];
 }

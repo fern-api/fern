@@ -1,4 +1,5 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
+
 import { Reference } from "../Reference";
 
 type ModuleName = string;
@@ -118,7 +119,11 @@ export class Writer extends AbstractWriter {
     }
 
     public toString(): string {
-        return this.stringifyImports() + this.buffer;
+        const imports = this.stringifyImports();
+        if (imports.length > 0) {
+            return imports + "\n" + this.buffer;
+        }
+        return this.buffer;
     }
 
     private stringifyImports(): string {

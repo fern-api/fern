@@ -15,7 +15,7 @@ export const StreamedCompletion: core.serialization.ObjectSchema<
 });
 
 export declare namespace StreamedCompletion {
-    interface Raw {
+    export interface Raw {
         delta: string;
         tokens?: number | null;
     }

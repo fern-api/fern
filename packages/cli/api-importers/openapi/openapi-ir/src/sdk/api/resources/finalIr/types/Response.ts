@@ -14,36 +14,36 @@ export type Response =
      * Checks if `x-fern-streaming` is present and is true. */
     | FernOpenapiIr.Response.StreamingJson;
 
-export declare namespace Response {
-    interface File_ extends FernOpenapiIr.FileResponse, _Utils {
+export namespace Response {
+    export interface File_ extends FernOpenapiIr.FileResponse, _Utils {
         type: "file";
     }
 
-    interface Json extends FernOpenapiIr.JsonResponse, _Utils {
+    export interface Json extends FernOpenapiIr.JsonResponse, _Utils {
         type: "json";
     }
 
-    interface Text extends FernOpenapiIr.TextResponse, _Utils {
+    export interface Text extends FernOpenapiIr.TextResponse, _Utils {
         type: "text";
     }
 
-    interface StreamingSse extends FernOpenapiIr.JsonResponse, _Utils {
+    export interface StreamingSse extends FernOpenapiIr.JsonResponse, _Utils {
         type: "streamingSse";
     }
 
-    interface StreamingText extends FernOpenapiIr.TextResponse, _Utils {
+    export interface StreamingText extends FernOpenapiIr.TextResponse, _Utils {
         type: "streamingText";
     }
 
-    interface StreamingJson extends FernOpenapiIr.JsonResponse, _Utils {
+    export interface StreamingJson extends FernOpenapiIr.JsonResponse, _Utils {
         type: "streamingJson";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Response._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         file: (value: FernOpenapiIr.FileResponse) => _Result;
         json: (value: FernOpenapiIr.JsonResponse) => _Result;
         text: (value: FernOpenapiIr.TextResponse) => _Result;
@@ -61,7 +61,7 @@ export const Response = {
             type: "file",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.File_,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const Response = {
             type: "json",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.Json,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },
@@ -87,7 +87,7 @@ export const Response = {
             type: "text",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.Text,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },
@@ -100,7 +100,7 @@ export const Response = {
             type: "streamingSse",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.StreamingSse,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },
@@ -113,7 +113,7 @@ export const Response = {
             type: "streamingText",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.StreamingText,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },
@@ -126,7 +126,7 @@ export const Response = {
             type: "streamingJson",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.StreamingJson,
-                visitor: FernOpenapiIr.Response._Visitor<_Result>
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
             },

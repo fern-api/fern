@@ -17,7 +17,7 @@ export const JsonResponseBody: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace JsonResponseBody {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         responseBodyType: serializers.TypeReference.Raw;
     }
 }

@@ -15,7 +15,7 @@ export const CreateRequest: core.serialization.Schema<serializers.CreateRequest.
     });
 
 export declare namespace CreateRequest {
-    interface Raw {
+    export interface Raw {
         decimal: number;
         even: number;
         name: string;

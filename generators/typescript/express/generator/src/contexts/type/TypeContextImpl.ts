@@ -1,11 +1,3 @@
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ObjectProperty,
-    ResolvedTypeReference,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
@@ -16,6 +8,16 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
+
+import {
+    DeclaredTypeName,
+    ExampleTypeReference,
+    ObjectProperty,
+    ResolvedTypeReference,
+    TypeDeclaration,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
+
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {

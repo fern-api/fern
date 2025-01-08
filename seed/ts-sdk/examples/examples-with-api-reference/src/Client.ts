@@ -12,12 +12,12 @@ import { Health } from "./api/resources/health/client/Client";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedExamplesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -116,7 +116,7 @@ export class SeedExamplesClient {
      */
     public async createType(
         request: SeedExamples.Type,
-        requestOptions?: SeedExamplesClient.RequestOptions
+        requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<SeedExamples.Identifier> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

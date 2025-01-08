@@ -1,8 +1,10 @@
-import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
+
+import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
 import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";

@@ -14,7 +14,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnInt(
         req: express.Request<never, number, number, never>,
@@ -23,7 +23,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnLong(
         req: express.Request<never, number, number, never>,
@@ -32,7 +32,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnDouble(
         req: express.Request<never, number, number, never>,
@@ -41,7 +41,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnBool(
         req: express.Request<never, boolean, boolean, never>,
@@ -50,7 +50,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnDatetime(
         req: express.Request<never, Date, Date, never>,
@@ -59,7 +59,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnDate(
         req: express.Request<never, string, string, never>,
@@ -68,7 +68,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnUuid(
         req: express.Request<never, string, string, never>,
@@ -77,7 +77,7 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnBase64(
         req: express.Request<never, string, string, never>,
@@ -86,19 +86,22 @@ export interface PrimitiveServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class PrimitiveService {
     private router;
 
-    constructor(private readonly methods: PrimitiveServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: PrimitiveServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -120,14 +123,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnString.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -135,7 +138,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnString' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -144,7 +147,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -162,13 +165,13 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnInt.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -176,7 +179,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnInt' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -185,7 +188,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -203,14 +206,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnLong.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -218,7 +221,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnLong' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -227,7 +230,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -245,14 +248,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnDouble.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -260,7 +263,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnDouble' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -269,7 +272,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -287,14 +290,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnBool.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -302,7 +305,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnBool' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -311,7 +314,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -329,14 +332,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnDatetime.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -344,7 +347,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnDatetime' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -353,7 +356,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -371,14 +374,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnDate.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -386,7 +389,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnDate' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -395,7 +398,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -413,14 +416,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnUuid.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -428,7 +431,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnUUID' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -437,7 +440,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -455,14 +458,14 @@ export class PrimitiveService {
                                 res.json(
                                     serializers.endpoints.primitive.getAndReturnBase64.Response.jsonOrThrow(
                                         responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -470,7 +473,7 @@ export class PrimitiveService {
                         console.warn(
                             `Endpoint 'getAndReturnBase64' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     }
@@ -479,7 +482,7 @@ export class PrimitiveService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

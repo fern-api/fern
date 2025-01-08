@@ -13,11 +13,11 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.problem.deleteProblem.Error._Unknown,
-                visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>
+                visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.problem.deleteProblem.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.problem.deleteProblem.Error,
-        visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>
+        visitor: SeedTrace.problem.deleteProblem.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

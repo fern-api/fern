@@ -1,7 +1,8 @@
-import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
-import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
+
+import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
+import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
+import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 
 describe("single-url-environment-default", () => {
     it("production environment", async () => {

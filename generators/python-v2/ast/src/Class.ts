@@ -1,8 +1,8 @@
+import { Decorator } from "./Decorator";
+import { Field } from "./Field";
 import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Decorator } from "./Decorator";
-import { Field } from "./Field";
 
 export declare namespace Class {
     interface Args {

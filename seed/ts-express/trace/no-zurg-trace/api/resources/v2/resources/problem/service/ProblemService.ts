@@ -14,7 +14,7 @@ export interface ProblemServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getProblems(
         req: express.Request<never, SeedTrace.v2.ProblemInfoV2[], never, never>,
@@ -23,7 +23,7 @@ export interface ProblemServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getLatestProblem(
         req: express.Request<
@@ -39,7 +39,7 @@ export interface ProblemServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getProblemVersion(
         req: express.Request<
@@ -56,19 +56,22 @@ export interface ProblemServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ProblemService {
     private router;
 
-    constructor(private readonly methods: ProblemServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ProblemServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -89,7 +92,7 @@ export class ProblemService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -97,7 +100,7 @@ export class ProblemService {
                     console.warn(
                         `Endpoint 'getLightweightProblems' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -117,7 +120,7 @@ export class ProblemService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -125,7 +128,7 @@ export class ProblemService {
                     console.warn(
                         `Endpoint 'getProblems' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -145,7 +148,7 @@ export class ProblemService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -153,7 +156,7 @@ export class ProblemService {
                     console.warn(
                         `Endpoint 'getLatestProblem' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -173,7 +176,7 @@ export class ProblemService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -181,7 +184,7 @@ export class ProblemService {
                     console.warn(
                         `Endpoint 'getProblemVersion' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

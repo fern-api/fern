@@ -25,7 +25,7 @@ export namespace Error {
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
         unauthorizedError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -34,7 +34,7 @@ export namespace Error {
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody
+        value: SeedTrace.PlaylistIdNotFoundErrorBody,
     ): SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
@@ -57,7 +57,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.playlist.getPlaylist.Error,
-        visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
+        visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             case "PlaylistIdNotFoundError":

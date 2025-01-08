@@ -9,11 +9,11 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,12 +37,12 @@ export class Service {
      */
     public async getResource(
         resourceId: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/resource/${encodeURIComponent(resourceId)}`
+                `/resource/${encodeURIComponent(resourceId)}`,
             ),
             method: "GET",
             headers: {
@@ -103,7 +103,7 @@ export class Service {
      */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource[]> {
         const { pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

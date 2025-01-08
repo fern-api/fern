@@ -3,7 +3,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.45.1
         output:
           location: local-file-system
           path: ../../../src/sdk
@@ -46,7 +46,7 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
-  python: 
+  python:
     generators:
       - name: fernapi/fern-pydantic-model
         version: 1.4.2
@@ -60,9 +60,9 @@ groups:
           frozen: true
           version: v2
           enum_type: python_enums
-  go: 
+  go:
     generators:
-      - name: fernapi/fern-go-model 
+      - name: fernapi/fern-go-model
         version: 0.9.3
         github:
           repository: fern-api/ir-go

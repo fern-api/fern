@@ -1,11 +1,14 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
+
 import { File } from "@fern-api/base-generator";
-import { Class } from "../ast/Class";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
+
 import { Enum, Trait } from "../ast";
+import { Class } from "../ast/Class";
 import { DataClass } from "../ast/DataClass";
+import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 
 export type Namespace = string;
 

@@ -8,11 +8,11 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedObjectClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,7 +41,7 @@ export class SeedObjectClient {
      */
     public async getRoot(
         request: SeedObject.PostRootRequest,
-        requestOptions?: SeedObjectClient.RequestOptions
+        requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<SeedObject.RootType1> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/root/root"),
@@ -112,7 +112,7 @@ export class SeedObjectClient {
      */
     public async getDiscriminatedUnion(
         request: SeedObject.GetDiscriminatedUnionRequest,
-        requestOptions?: SeedObjectClient.RequestOptions
+        requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/root/discriminated-union"),
@@ -152,7 +152,7 @@ export class SeedObjectClient {
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
-                    "Timeout exceeded when calling POST /root/discriminated-union."
+                    "Timeout exceeded when calling POST /root/discriminated-union.",
                 );
             case "unknown":
                 throw new errors.SeedObjectError({
@@ -184,7 +184,7 @@ export class SeedObjectClient {
      */
     public async getUndiscriminatedUnion(
         request: SeedObject.GetUndiscriminatedUnionRequest,
-        requestOptions?: SeedObjectClient.RequestOptions
+        requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/root/undiscriminated-union"),
@@ -224,7 +224,7 @@ export class SeedObjectClient {
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
-                    "Timeout exceeded when calling POST /root/undiscriminated-union."
+                    "Timeout exceeded when calling POST /root/undiscriminated-union.",
                 );
             case "unknown":
                 throw new errors.SeedObjectError({

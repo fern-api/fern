@@ -1,16 +1,18 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, getExampleEndpointCalls, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { buildUrl } from "../utils/buildUrl";
 import {
+    REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
-    REQUEST_OPTIONS_PARAMETER_NAME
+    getTimeoutExpression
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 

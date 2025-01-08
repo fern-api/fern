@@ -11,5 +11,5 @@ export const SdkGroupName: core.serialization.Schema<serializers.SdkGroupName.Ra
     core.serialization.list(SdkGroup);
 
 export declare namespace SdkGroupName {
-    type Raw = SdkGroup.Raw[];
+    export type Raw = SdkGroup.Raw[];
 }

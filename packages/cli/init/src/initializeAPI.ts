@@ -1,15 +1,17 @@
+import chalk from "chalk";
+import fs from "fs-extra";
+import { mkdir } from "fs/promises";
+import path from "path";
+
 import {
     APIS_DIRECTORY,
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import chalk from "chalk";
-import fs from "fs-extra";
-import { mkdir } from "fs/promises";
-import path from "path";
+
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
 import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace";
 

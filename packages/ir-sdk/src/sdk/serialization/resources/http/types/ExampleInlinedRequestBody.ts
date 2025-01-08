@@ -18,7 +18,7 @@ export const ExampleInlinedRequestBody: core.serialization.ObjectSchema<
     .extend(WithJsonExample);
 
 export declare namespace ExampleInlinedRequestBody {
-    interface Raw extends WithJsonExample.Raw {
+    export interface Raw extends WithJsonExample.Raw {
         properties: ExampleInlinedRequestBodyProperty.Raw[];
     }
 }

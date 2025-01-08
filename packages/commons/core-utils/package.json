@@ -19,11 +19,10 @@
     "compile": "tsc --build",
     "test": "vitest --run",
     "test:update": "vitest --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
@@ -40,15 +39,15 @@
     "@types/json-schema": "^7.0.15",
     "@types/lodash": "^4.17.4",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.7.18",
+    "@types/node": "18.15.3",
     "@types/title": "^3.4.3",
     "@types/ua-parser-js": "^0.7.39",
     "@types/whatwg-mimetype": "^3.0.2",
-    "depcheck": "^1.4.6",
-    "eslint": "^8.56.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.16.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "prettier": "^3.4.2",
+    "typescript": "5.7.2",
     "vitest": "^2.0.5"
   }
 }

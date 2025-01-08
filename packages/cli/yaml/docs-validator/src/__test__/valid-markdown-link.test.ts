@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { getReferencedMarkdownFiles } from "../rules/valid-markdown-link/valid-markdown-link";
 
 describe("getReferencedMarkdownFiles", () => {

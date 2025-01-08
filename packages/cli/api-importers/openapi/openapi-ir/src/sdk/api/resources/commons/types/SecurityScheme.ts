@@ -13,32 +13,32 @@ export type SecurityScheme =
     | FernOpenapiIr.SecurityScheme.Query
     | FernOpenapiIr.SecurityScheme.Oauth;
 
-export declare namespace SecurityScheme {
-    interface Basic extends FernOpenapiIr.BasicSecurityScheme, _Utils {
+export namespace SecurityScheme {
+    export interface Basic extends FernOpenapiIr.BasicSecurityScheme, _Utils {
         type: "basic";
     }
 
-    interface Bearer extends FernOpenapiIr.BearerSecurityScheme, _Utils {
+    export interface Bearer extends FernOpenapiIr.BearerSecurityScheme, _Utils {
         type: "bearer";
     }
 
-    interface Header extends FernOpenapiIr.HeaderSecurityScheme, _Utils {
+    export interface Header extends FernOpenapiIr.HeaderSecurityScheme, _Utils {
         type: "header";
     }
 
-    interface Query extends FernOpenapiIr.QuerySecurityScheme, _Utils {
+    export interface Query extends FernOpenapiIr.QuerySecurityScheme, _Utils {
         type: "query";
     }
 
-    interface Oauth extends FernOpenapiIr.OauthSecurityScheme, _Utils {
+    export interface Oauth extends FernOpenapiIr.OauthSecurityScheme, _Utils {
         type: "oauth";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: FernOpenapiIr.BasicSecurityScheme) => _Result;
         bearer: (value: FernOpenapiIr.BearerSecurityScheme) => _Result;
         header: (value: FernOpenapiIr.HeaderSecurityScheme) => _Result;
@@ -55,7 +55,7 @@ export const SecurityScheme = {
             type: "basic",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Basic,
-                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
             },
@@ -68,7 +68,7 @@ export const SecurityScheme = {
             type: "bearer",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Bearer,
-                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
             },
@@ -81,7 +81,7 @@ export const SecurityScheme = {
             type: "header",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Header,
-                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
             },
@@ -94,7 +94,7 @@ export const SecurityScheme = {
             type: "query",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Query,
-                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
             },
@@ -107,7 +107,7 @@ export const SecurityScheme = {
             type: "oauth",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Oauth,
-                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+                visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
             },
@@ -116,7 +116,7 @@ export const SecurityScheme = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.SecurityScheme,
-        visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
+        visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "basic":

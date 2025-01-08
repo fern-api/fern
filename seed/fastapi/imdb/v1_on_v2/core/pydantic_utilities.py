@@ -45,7 +45,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    return pydantic.parse_obj_as(type_, object_)
+    return pydantic.v1.parse_obj_as(type_, object_)
 
 
 def to_jsonable_with_fallback(
@@ -173,7 +173,7 @@ def universal_root_validator(
     pre: bool = False,
 ) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
+        return pydantic.v1.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 
@@ -182,7 +182,7 @@ def universal_field_validator(
     field_name: str, pre: bool = False
 ) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
+        return pydantic.v1.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 

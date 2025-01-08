@@ -19,13 +19,21 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetWithInlinePathAndQuery.Builder.class)
 public final class GetWithInlinePathAndQuery {
+    private final String param;
+
     private final String query;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithInlinePathAndQuery(String query, Map<String, Object> additionalProperties) {
+    private GetWithInlinePathAndQuery(String param, String query, Map<String, Object> additionalProperties) {
+        this.param = param;
         this.query = query;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("param")
+    public String getParam() {
+        return param;
     }
 
     @JsonProperty("query")
@@ -45,12 +53,12 @@ public final class GetWithInlinePathAndQuery {
     }
 
     private boolean equalTo(GetWithInlinePathAndQuery other) {
-        return query.equals(other.query);
+        return param.equals(other.param) && query.equals(other.query);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query);
+        return Objects.hash(this.param, this.query);
     }
 
     @java.lang.Override
@@ -58,14 +66,18 @@ public final class GetWithInlinePathAndQuery {
         return ObjectMappers.stringify(this);
     }
 
-    public static QueryStage builder() {
+    public static ParamStage builder() {
         return new Builder();
+    }
+
+    public interface ParamStage {
+        QueryStage param(@NotNull String param);
+
+        Builder from(GetWithInlinePathAndQuery other);
     }
 
     public interface QueryStage {
         _FinalStage query(@NotNull String query);
-
-        Builder from(GetWithInlinePathAndQuery other);
     }
 
     public interface _FinalStage {
@@ -73,7 +85,9 @@ public final class GetWithInlinePathAndQuery {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, _FinalStage {
+    public static final class Builder implements ParamStage, QueryStage, _FinalStage {
+        private String param;
+
         private String query;
 
         @JsonAnySetter
@@ -83,7 +97,15 @@ public final class GetWithInlinePathAndQuery {
 
         @java.lang.Override
         public Builder from(GetWithInlinePathAndQuery other) {
+            param(other.getParam());
             query(other.getQuery());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("param")
+        public QueryStage param(@NotNull String param) {
+            this.param = Objects.requireNonNull(param, "param must not be null");
             return this;
         }
 
@@ -96,7 +118,7 @@ public final class GetWithInlinePathAndQuery {
 
         @java.lang.Override
         public GetWithInlinePathAndQuery build() {
-            return new GetWithInlinePathAndQuery(query, additionalProperties);
+            return new GetWithInlinePathAndQuery(param, query, additionalProperties);
         }
     }
 }

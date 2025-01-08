@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import { AliasSchema, DiscriminatedUnionSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema } from "../schemas";
 import { UndiscriminatedUnionSchema } from "../schemas";
 

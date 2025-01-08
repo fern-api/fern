@@ -28,13 +28,13 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
     });
 
 export declare namespace Pagination {
-    type Raw = Pagination.Cursor | Pagination.Offset;
+    export type Raw = Pagination.Cursor | Pagination.Offset;
 
-    interface Cursor extends CursorPagination.Raw {
+    export interface Cursor extends CursorPagination.Raw {
         type: "cursor";
     }
 
-    interface Offset extends OffsetPagination.Raw {
+    export interface Offset extends OffsetPagination.Raw {
         type: "offset";
     }
 }

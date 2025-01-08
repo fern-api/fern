@@ -1,5 +1,32 @@
 - changelogEntry:
     - summary: |
+        Support version headers in request and client options.
+      type: feat
+  createdAt: '2025-01-07'
+  irVersion: 53
+  version: 2.9.0
+- changelogEntry:
+    - summary: |
+        Implement global timeout configuration for generated clients.
+          ```java
+          var client = Client.builder()
+            .apiKey("...")
+            .timeout(40)
+            .build();
+          ```
+      type: feat
+  createdAt: '2024-12-23'
+  irVersion: 53
+  version: 2.8.1
+- changelogEntry:
+    - summary: |
+        Generate inline request bodies with their path parameters in the object.
+      type: feat
+  createdAt: '2024-12-20'
+  irVersion: 53
+  version: 2.8.0
+- changelogEntry:
+    - summary: |
         Apply Content-Type header from endpoint definition in SDK generator.
       type: feat
   createdAt: '2024-12-11'

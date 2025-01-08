@@ -1,10 +1,16 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { askToLogin } from "@fern-api/login";
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
+
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+
+import { Semaphore } from "./Semaphore";
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { publishCli } from "./commands/publish/publishCli";
@@ -19,9 +25,6 @@ import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
-import { Semaphore } from "./Semaphore";
-import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
-import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 
 void tryRunCli();
 

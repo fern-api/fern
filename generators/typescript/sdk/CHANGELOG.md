@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.0] - 2025-01-06
+
+- Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
+
+- Feat: Export `serialization` code from root package export.
+  ```ts
+  import { serialization } from `@packageName`;
+  ```
+
+  The serialization code is also exported as `@packageName/serialization`.
+  ```ts
+  import * as serialization from `@packageName/serialization`;
+  ```
+
+- Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
+
+## [0.45.2] - 2024-12-31
+
+- Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
+
+## [0.45.1] - 2024-12-27
+
+- Fix: Export everything inside of TypeScript namespaces that used to be ambient.
+
+  For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
+
+## [0.45.0] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
+
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
 ## [0.44.3] - 2024-12-18
 
 - Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.

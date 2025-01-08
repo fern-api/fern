@@ -15,7 +15,7 @@ export const ConjureObjectDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureObjectDeclaration {
-    interface Raw {
+    export interface Raw {
         fields: Record<string, ConjureTypeReference.Raw>;
     }
 }

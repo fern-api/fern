@@ -1,3 +1,5 @@
+import { ts } from "ts-morph";
+
 import {
     ExampleEndpointCall,
     FileProperty,
@@ -8,7 +10,7 @@ import {
     PathParameter,
     QueryParameter
 } from "@fern-fern/ir-sdk/api";
-import { ts } from "ts-morph";
+
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
 import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample";

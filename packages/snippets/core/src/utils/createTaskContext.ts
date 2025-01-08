@@ -1,5 +1,6 @@
+import { PosthogEvent, TaskContext } from "@fern-api/task-context";
+
 import { NopLogger } from "./NopLogger";
-import { TaskContext, PosthogEvent } from "@fern-api/task-context";
 
 export enum TaskResult {
     Success,

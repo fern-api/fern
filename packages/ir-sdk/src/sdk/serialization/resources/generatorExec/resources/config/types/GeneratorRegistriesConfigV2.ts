@@ -23,7 +23,7 @@ export const GeneratorRegistriesConfigV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorRegistriesConfigV2 {
-    interface Raw {
+    export interface Raw {
         maven: MavenRegistryConfigV2.Raw;
         npm: NpmRegistryConfigV2.Raw;
         pypi: PypiRegistryConfig.Raw;

@@ -17,7 +17,7 @@ export const InlinedChildRequest: core.serialization.Schema<
     .extend(AliasType);
 
 export declare namespace InlinedChildRequest {
-    interface Raw extends AliasType.Raw {
+    export interface Raw extends AliasType.Raw {
         child: string;
     }
 }

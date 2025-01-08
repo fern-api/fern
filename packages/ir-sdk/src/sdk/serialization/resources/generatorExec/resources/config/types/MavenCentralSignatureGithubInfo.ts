@@ -17,7 +17,7 @@ export const MavenCentralSignatureGithubInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace MavenCentralSignatureGithubInfo {
-    interface Raw {
+    export interface Raw {
         keyIdEnvironmentVariable: EnvironmentVariable.Raw;
         passwordEnvironmentVariable: EnvironmentVariable.Raw;
         secretKeyEnvironmentVariable: EnvironmentVariable.Raw;

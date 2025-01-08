@@ -15,7 +15,7 @@ export const QueryParameterExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace QueryParameterExample {
-    interface Raw {
+    export interface Raw {
         name: string;
         value: serializers.FullExample.Raw;
     }

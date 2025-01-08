@@ -12,7 +12,7 @@ export const Organization: core.serialization.ObjectSchema<serializers.Organizat
     });
 
 export declare namespace Organization {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

@@ -9,11 +9,11 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Foo {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,7 +41,7 @@ export class Foo {
      */
     public async find(
         request: SeedAudiences.FindRequest = {},
-        requestOptions?: Foo.RequestOptions
+        requestOptions?: Foo.RequestOptions,
     ): Promise<SeedAudiences.ImportingType> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

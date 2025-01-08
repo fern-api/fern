@@ -6,8 +6,8 @@ const client = new SeedAuthEnvironmentVariablesClient({
   apiKey: "YOUR_AUTHORIZATION",
 });
 await client.service.getWithApiKey();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,7 +20,7 @@ const client = new SeedAuthEnvironmentVariablesClient({
 await client.service.getWithHeader({
   xEndpointHeader: "X-Endpoint-Header",
 });
- 
-```                        
+
+```
 
 

@@ -20,9 +20,9 @@ export const UnionWithSingleElement: core.serialization.Schema<
     });
 
 export declare namespace UnionWithSingleElement {
-    type Raw = UnionWithSingleElement.Foo;
+    export type Raw = UnionWithSingleElement.Foo;
 
-    interface Foo extends Foo.Raw {
+    export interface Foo extends Foo.Raw {
         type: "foo";
     }
 }

@@ -12,7 +12,7 @@ export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Ra
         bar: core.serialization.lazyObject(() => serializers.RootType1InlineType1),
         fooMap: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazyObject(() => serializers.RootType1FooMapValue)
+            core.serialization.lazyObject(() => serializers.RootType1FooMapValue),
         ),
         fooList: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooListItem)),
         fooSet: core.serialization.list(core.serialization.lazyObject(() => serializers.RootType1FooSetItem)),
@@ -20,7 +20,7 @@ export const RootType1: core.serialization.ObjectSchema<serializers.RootType1.Ra
     });
 
 export declare namespace RootType1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
         bar: serializers.RootType1InlineType1.Raw;
         fooMap: Record<string, serializers.RootType1FooMapValue.Raw>;

@@ -1,7 +1,9 @@
-import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
+
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 export declare namespace RequestBodyParameter {

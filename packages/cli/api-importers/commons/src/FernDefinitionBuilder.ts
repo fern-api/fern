@@ -1,7 +1,9 @@
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, basename, dirname, join, relative, RelativeFilePath } from "@fern-api/path-utils";
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
+
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils";
+
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export type HttpServiceInfo = Partial<
@@ -87,10 +89,7 @@ export interface FernDefinitionBuilder {
 
     addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
 
-    setServiceInfo(
-        file: RelativeFilePath,
-        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
-    ): void;
+    setServiceInfo(file: RelativeFilePath, HttpServiceInfo: HttpServiceInfo): void;
 
     addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 

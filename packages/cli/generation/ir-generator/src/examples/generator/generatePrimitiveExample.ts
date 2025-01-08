@@ -1,12 +1,13 @@
+import { Examples, assertNever } from "@fern-api/core-utils";
 import {
+    DoubleValidationRules,
     ExamplePrimitive,
+    IntegerValidationRules,
     PrimitiveType,
     PrimitiveTypeV2,
-    StringValidationRules,
-    DoubleValidationRules,
-    IntegerValidationRules
+    StringValidationRules
 } from "@fern-api/ir-sdk";
-import { assertNever, Examples } from "@fern-api/core-utils";
+
 import { ExampleGenerationSuccess } from "./ExampleGenerationResult";
 
 export declare namespace generatePrimitiveExample {

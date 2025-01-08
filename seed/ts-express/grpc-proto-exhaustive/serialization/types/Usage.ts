@@ -11,7 +11,7 @@ export const Usage: core.serialization.ObjectSchema<serializers.Usage.Raw, SeedA
 });
 
 export declare namespace Usage {
-    interface Raw {
+    export interface Raw {
         units?: number | null;
     }
 }

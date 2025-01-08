@@ -6,7 +6,7 @@ client.auth.get_token(
 	client_id="client_id",
 	client_secret="client_secret"
 )
- 
-```                        
+
+```
 
 

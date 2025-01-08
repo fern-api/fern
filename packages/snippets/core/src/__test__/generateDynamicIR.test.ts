@@ -1,4 +1,5 @@
 import { OpenAPI } from "openapi-types";
+
 import { generateDynamicIR } from "../generateDynamicIR";
 
 describe("generateDynamicIR", () => {

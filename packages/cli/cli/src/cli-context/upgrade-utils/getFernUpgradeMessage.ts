@@ -1,9 +1,11 @@
 import boxen from "boxen";
 import chalk from "chalk";
+
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
+
 import { FernUpgradeInfo } from "../CliContext";
 import { CliEnvironment } from "../CliEnvironment";
 import { FernGeneratorUpgradeInfo } from "./getGeneratorVersions";
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 function hasGeneratorUpgrade(generatorUpgradeInfo: FernGeneratorUpgradeInfo[]): boolean {
     return generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable).length > 0;

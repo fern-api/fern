@@ -1,12 +1,13 @@
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import {
     AbsoluteFilePath,
+    RelativeFilePath,
     doesPathExist,
     getDirectoryContents,
     getDirectoryContentsForSnapshot,
-    join,
-    RelativeFilePath
+    join
 } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -49,7 +50,12 @@ describe("fern init", () => {
             RelativeFilePath.of("openapi"),
             RelativeFilePath.of("petstore-openapi.yml")
         );
-        const pathOfDirectory = await init({ openApiArg: openApiPath });
+        const pathOfDirectory = await init({
+            additionalArgs: [
+                { name: "--openapi", value: openApiPath },
+                { name: "--log-level", value: "debug" }
+            ]
+        });
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
@@ -61,5 +67,15 @@ describe("fern init", () => {
         });
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
+
+    it("init mintlify", async () => {
+        const mintJsonPath = join(FIXTURES_DIR, RelativeFilePath.of("mintlify"), RelativeFilePath.of("mint.json"));
+
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--mintlify", value: mintJsonPath }]
+        });
+
+        expect(await getDirectoryContentsForSnapshot(pathOfDirectory, { skipBinaryContents: true })).toMatchSnapshot();
     }, 60_000);
 });

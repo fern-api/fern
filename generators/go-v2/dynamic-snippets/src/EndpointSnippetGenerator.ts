@@ -1,8 +1,9 @@
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -143,7 +144,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -152,7 +153,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -161,7 +162,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -650,15 +651,5 @@ export class EndpointSnippetGenerator {
             }),
             arguments_
         });
-    }
-
-    private newAuthMismatchError({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.Auth;
-        values: FernIr.dynamic.AuthValues;
-    }): Error {
-        return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
     }
 }

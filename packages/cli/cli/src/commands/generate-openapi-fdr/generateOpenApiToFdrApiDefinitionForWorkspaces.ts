@@ -1,9 +1,9 @@
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateFdrFromOpenApiWorkspace } from "@fern-api/docs-resolver";
+import { Project } from "@fern-api/project-loader";
+import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,

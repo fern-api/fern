@@ -1,3 +1,5 @@
+import { ts } from "ts-morph";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -6,7 +8,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { ts } from "ts-morph";
+
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToStringExpressionConverter {

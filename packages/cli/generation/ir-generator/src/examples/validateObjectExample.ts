@@ -1,8 +1,10 @@
-import { isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { keyBy } from "lodash-es";
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
+import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+
+import { FernFileContext, constructFernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
@@ -80,7 +82,9 @@ export function validateObjectExample({
     // check properties on example
     for (const [exampleKey, exampleValue] of Object.entries(example)) {
         const propertyWithPath = allPropertiesByWireKey[exampleKey];
-        if (propertyWithPath == null) {
+        if (rawObject["extra-properties"]) {
+            continue;
+        } else if (propertyWithPath == null) {
             violations.push({
                 message: `Unexpected property "${exampleKey}"`
             });

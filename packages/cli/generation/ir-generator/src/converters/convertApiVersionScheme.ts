@@ -1,5 +1,6 @@
-import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../FernFileContext";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration";

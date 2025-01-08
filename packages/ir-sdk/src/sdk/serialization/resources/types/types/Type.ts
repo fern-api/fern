@@ -40,25 +40,25 @@ export const Type: core.serialization.Schema<serializers.Type.Raw, FernIr.Type> 
     });
 
 export declare namespace Type {
-    type Raw = Type.Alias | Type.Enum | Type.Object | Type.Union | Type.UndiscriminatedUnion;
+    export type Raw = Type.Alias | Type.Enum | Type.Object | Type.Union | Type.UndiscriminatedUnion;
 
-    interface Alias extends AliasTypeDeclaration.Raw {
+    export interface Alias extends AliasTypeDeclaration.Raw {
         _type: "alias";
     }
 
-    interface Enum extends EnumTypeDeclaration.Raw {
+    export interface Enum extends EnumTypeDeclaration.Raw {
         _type: "enum";
     }
 
-    interface Object extends ObjectTypeDeclaration.Raw {
+    export interface Object extends ObjectTypeDeclaration.Raw {
         _type: "object";
     }
 
-    interface Union extends UnionTypeDeclaration.Raw {
+    export interface Union extends UnionTypeDeclaration.Raw {
         _type: "union";
     }
 
-    interface UndiscriminatedUnion extends UndiscriminatedUnionTypeDeclaration.Raw {
+    export interface UndiscriminatedUnion extends UndiscriminatedUnionTypeDeclaration.Raw {
         _type: "undiscriminatedUnion";
     }
 }

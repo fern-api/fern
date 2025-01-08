@@ -20,7 +20,7 @@ export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace BasicAuthSchemeSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         scheme: "basic";
         username?: AuthVariable.Raw | null;
         password?: AuthVariable.Raw | null;

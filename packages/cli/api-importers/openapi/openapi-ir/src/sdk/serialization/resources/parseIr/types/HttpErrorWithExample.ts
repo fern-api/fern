@@ -25,7 +25,7 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace HttpErrorWithExample {
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithName.Raw, WithSource.Raw {
         statusCode: StatusCode.Raw;
         schema: serializers.SchemaWithExample.Raw;
         fullExamples?: NamedFullExample.Raw[] | null;

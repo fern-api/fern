@@ -1,11 +1,15 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
-import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
+import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
+import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
+
 export class DynamicSnippetsTestGenerator {
-    constructor(private readonly context: TaskContext, private readonly testSuite: DynamicSnippetsTestSuite) {}
+    constructor(
+        private readonly context: TaskContext,
+        private readonly testSuite: DynamicSnippetsTestSuite
+    ) {}
 
     public async generateTests({
         outputDir,

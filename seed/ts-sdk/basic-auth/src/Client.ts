@@ -6,13 +6,13 @@ import * as core from "./core";
 import { BasicAuth } from "./api/resources/basicAuth/client/Client";
 
 export declare namespace SeedBasicAuthClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         username: core.Supplier<string>;
         password: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

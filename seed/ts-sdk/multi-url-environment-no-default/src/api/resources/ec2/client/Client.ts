@@ -10,7 +10,7 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Ec2 {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
@@ -18,7 +18,7 @@ export declare namespace Ec2 {
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,7 +44,7 @@ export class Ec2 {
      */
     public async bootInstance(
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
+        requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin((await core.Supplier.get(this._options.environment)).ec2, "/ec2/boot"),
@@ -85,7 +85,7 @@ export class Ec2 {
                 });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
-                    "Timeout exceeded when calling POST /ec2/boot."
+                    "Timeout exceeded when calling POST /ec2/boot.",
                 );
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({

@@ -10,5 +10,5 @@ export const EnvironmentUrl: core.serialization.Schema<serializers.EnvironmentUr
     core.serialization.string();
 
 export declare namespace EnvironmentUrl {
-    type Raw = string;
+    export type Raw = string;
 }

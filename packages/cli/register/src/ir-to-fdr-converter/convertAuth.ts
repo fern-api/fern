@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
+
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 export interface PlaygroundConfig {

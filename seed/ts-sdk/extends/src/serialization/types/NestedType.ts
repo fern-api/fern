@@ -15,7 +15,7 @@ export const NestedType: core.serialization.ObjectSchema<serializers.NestedType.
         .extend(Json);
 
 export declare namespace NestedType {
-    interface Raw extends Json.Raw {
+    export interface Raw extends Json.Raw {
         name: string;
     }
 }
