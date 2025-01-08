@@ -9,6 +9,12 @@ types:
     properties:
       foo: string
       bar: string
+  
+  RootType2: RootType1
+
+  TestType:
+    properties:
+      testProperty: RootType2
 
   RootType1:
     docs: lorem ipsum
