@@ -14,7 +14,7 @@ import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils"
 import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
@@ -35,7 +35,7 @@ export async function publishDocs({
     docsWorkspace,
     domain,
     customDomains,
-    loadAPIWorkspace,
+    fernWorkspaces,
     context,
     preview,
     editThisPage,
@@ -46,7 +46,7 @@ export async function publishDocs({
     docsWorkspace: DocsWorkspace;
     domain: string;
     customDomains: string[];
-    loadAPIWorkspace: (name: string | undefined) => AbstractAPIWorkspace<unknown> | undefined;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
@@ -63,7 +63,7 @@ export async function publishDocs({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
-        loadAPIWorkspace,
+        fernWorkspaces,
         context,
         editThisPage,
         async (files) => {

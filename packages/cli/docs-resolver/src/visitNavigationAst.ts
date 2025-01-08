@@ -1,7 +1,7 @@
-import { docsYml } from "@fern-api/configuration";
-import { visitObject, noop } from "@fern-api/core-utils";
+import { docsYml } from "@fern-api/configuration-loader";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>;
@@ -23,14 +23,14 @@ export declare namespace visitNavigationAst {
     interface Args {
         navigation: docsYml.RawSchemas.NavigationConfig;
         visitor: Partial<DocsConfigFileAstVisitor>;
-        loadAPIWorkspace: (id?: string) => AbstractAPIWorkspace<unknown> | undefined;
+        fernWorkspaces: FernWorkspace[];
         context: TaskContext;
     }
 }
 
 export async function visitNavigationAst({
     navigation,
-    loadAPIWorkspace,
+    fernWorkspaces,
     visitor,
     context
 }: visitNavigationAst.Args): Promise<void> {
@@ -43,7 +43,7 @@ export async function visitNavigationAst({
                             await visitNavigationItem({
                                 navigationItem: item,
                                 visitor,
-                                loadAPIWorkspace,
+                                fernWorkspaces,
                                 context
                             });
                         })
@@ -57,7 +57,7 @@ export async function visitNavigationAst({
                 await visitNavigationItem({
                     navigationItem: item,
                     visitor,
-                    loadAPIWorkspace,
+                    fernWorkspaces,
                     context
                 });
             })
@@ -67,12 +67,12 @@ export async function visitNavigationAst({
 async function visitNavigationItem({
     navigationItem,
     visitor,
-    loadAPIWorkspace,
+    fernWorkspaces,
     context
 }: {
     navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
-    loadAPIWorkspace: (id?: string) => AbstractAPIWorkspace<unknown> | undefined;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
 }): Promise<void> {
     await visitObject(navigationItem, {
@@ -102,7 +102,7 @@ async function visitNavigationItem({
                 await visitNavigationItem({
                     navigationItem: item,
                     visitor,
-                    loadAPIWorkspace,
+                    fernWorkspaces,
                     context
                 });
             });
@@ -112,7 +112,7 @@ async function visitNavigationItem({
     });
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = loadAPIWorkspace(navigationItem.apiName != null ? navigationItem.apiName : undefined);
+        const workspace = fernWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
         if (workspace != null) {
             await visitor.apiSection?.({
                 config: navigationItem,

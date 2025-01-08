@@ -43,7 +43,11 @@ export async function previewDocsWorkspace({
                     context,
                     logWarnings: true,
                     logSummary: false,
-                    loadAPIWorkspace: project.loadAPIWorkspace
+                    fernWorkspaces: await Promise.all(
+                        project.apiWorkspaces.map(async (workspace) => {
+                            return workspace.toFernWorkspace({ context });
+                        })
+                    )
                 });
                 for (const apiWorkspace of project.apiWorkspaces) {
                     await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {

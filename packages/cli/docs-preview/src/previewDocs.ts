@@ -51,7 +51,7 @@ export async function getPreviewDocsDefinition({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
-        project.loadAPIWorkspace,
+        fernWorkspaces,
         context,
         undefined,
         async (files) =>

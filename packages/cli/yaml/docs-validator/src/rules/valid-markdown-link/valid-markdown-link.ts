@@ -1,29 +1,31 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-
-import { Rule, RuleViolation } from "../../Rule";
-import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
-import { createMockTaskContext } from "@fern-api/task-context";
-import { APIV1Read, FernNavigation, ApiDefinition } from "@fern-api/fdr-sdk";
-import type { Position } from "unist";
-import { toBaseUrl, getInstanceUrls } from "./url-utils";
 import chalk from "chalk";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { randomUUID } from "crypto";
+import type { Position } from "unist";
+
 import { noop } from "@fern-api/core-utils";
+import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
+import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
-import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames";
+import { createMockTaskContext } from "@fern-api/task-context";
+
+import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl";
+import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
+import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
+import { getInstanceUrls, toBaseUrl } from "./url-utils";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, loadApiWorkspace }) => {
+    create: async ({ workspace, fernWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(url, workspace, loadApiWorkspace, NOOP_CONTEXT);
+        const docsDefinitionResolver = new DocsDefinitionResolver(url, workspace, fernWorkspaces, NOOP_CONTEXT);
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
@@ -131,7 +133,8 @@ export const ValidMarkdownLinks: Rule = {
                     readme: undefined,
                     version: undefined,
                     packageName: undefined,
-                    context: NOOP_CONTEXT
+                    context: NOOP_CONTEXT,
+                    sourceResolver: new SourceResolverImpl(NOOP_CONTEXT, fernWorkspace)
                 });
                 const api = toLatest(convertIrToApiDefinition(ir, randomUUID()));
 

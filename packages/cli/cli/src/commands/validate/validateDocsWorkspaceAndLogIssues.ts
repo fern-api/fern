@@ -1,23 +1,23 @@
 import { APIWorkspaceLoader, validateDocsWorkspace } from "@fern-api/docs-validator";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { logViolations } from "./logViolations";
 
 export async function validateDocsWorkspaceWithoutExiting({
     workspace,
-    loadAPIWorkspace,
+    fernWorkspaces,
     context,
     logWarnings,
     logSummary = true
 }: {
     workspace: DocsWorkspace;
-    loadAPIWorkspace: APIWorkspaceLoader;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateDocsWorkspace(workspace, context, loadAPIWorkspace);
+    const violations = await validateDocsWorkspace(workspace, context, fernWorkspaces);
     const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
 
     return { hasErrors };
@@ -25,12 +25,12 @@ export async function validateDocsWorkspaceWithoutExiting({
 
 export async function validateDocsWorkspaceAndLogIssues({
     workspace,
-    loadAPIWorkspace,
+    fernWorkspaces,
     context,
     logWarnings
 }: {
     workspace: DocsWorkspace;
-    loadAPIWorkspace: APIWorkspaceLoader;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
 }): Promise<void> {
@@ -38,7 +38,7 @@ export async function validateDocsWorkspaceAndLogIssues({
         workspace,
         context,
         logWarnings,
-        loadAPIWorkspace
+        fernWorkspaces
     });
 
     if (hasErrors) {

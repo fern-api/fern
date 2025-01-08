@@ -68,7 +68,7 @@ export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
-        private loadAPIWorkspace: (id?: string) => AbstractAPIWorkspace<unknown> | undefined,
+        private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
@@ -117,7 +117,7 @@ export class DocsDefinitionResolver {
                         });
                     }
                 },
-                loadAPIWorkspace: this.loadAPIWorkspace,
+                fernWorkspaces: this.fernWorkspaces,
                 context: this.taskContext
             });
         }
@@ -380,12 +380,18 @@ export class DocsDefinitionResolver {
         return config;
     }
 
-    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): Promise<FernWorkspace> {
-        const workspace = this.loadAPIWorkspace(apiSection.apiName);
-        if (workspace == null) {
-            this.taskContext.failAndThrow(`Failed to find API workspace for ${apiSection.apiName}`);
+    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): FernWorkspace {
+        if (this.fernWorkspaces.length === 1 && this.fernWorkspaces[0] != null) {
+            return this.fernWorkspaces[0];
+        } else if (apiSection.apiName != null) {
+            const fernWorkspace = this.fernWorkspaces.find((workspace) => {
+                return workspace.workspaceName === apiSection.apiName;
+            });
+            if (fernWorkspace != null) {
+                return fernWorkspace;
+            }
         }
-        return workspace.toFernWorkspace({ context: this.taskContext });
+        throw new Error("Failed to load API Definition referenced in docs");
     }
 
     private _apiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};

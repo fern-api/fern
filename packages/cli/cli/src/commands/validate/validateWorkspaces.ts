@@ -20,7 +20,11 @@ export async function validateWorkspaces({
                 workspace: docsWorkspace,
                 context,
                 logWarnings,
-                loadAPIWorkspace: project.loadAPIWorkspace
+                fernWorkspaces: await Promise.all(
+                    project.apiWorkspaces.map(async (workspace) => {
+                        return workspace.toFernWorkspace({ context });
+                    })
+                )
             });
         });
     }

@@ -1,7 +1,7 @@
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -13,9 +13,9 @@ import { getAllRules } from "./getAllRules";
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
     context: TaskContext,
-    loadApiWorkspace: APIWorkspaceLoader
+    fernWorkspaces: FernWorkspace[]
 ): Promise<ValidationViolation[]> {
-    return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), context, loadApiWorkspace });
+    return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), context, fernWorkspaces });
 }
 
 // exported for testing
@@ -23,17 +23,17 @@ export async function runRulesOnDocsWorkspace({
     workspace,
     rules,
     context,
-    loadApiWorkspace
+    fernWorkspaces
 }: {
     workspace: DocsWorkspace;
     rules: Rule[];
     context: TaskContext;
-    loadApiWorkspace: APIWorkspaceLoader;
+    fernWorkspaces: FernWorkspace[];
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
     const allRuleVisitors = await Promise.all(
-        rules.map((rule) => rule.create({ workspace, loadApiWorkspace, logger: context.logger }))
+        rules.map((rule) => rule.create({ workspace, fernWorkspaces, logger: context.logger }))
     );
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
@@ -53,7 +53,7 @@ export async function runRulesOnDocsWorkspace({
         ),
         absolutePathToFernFolder: workspace.absoluteFilePath,
         context,
-        loadAPIWorkspace: loadApiWorkspace
+        fernWorkspaces
     });
 
     return violations;
