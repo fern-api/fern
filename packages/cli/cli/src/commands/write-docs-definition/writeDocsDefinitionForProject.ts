@@ -1,13 +1,13 @@
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 
-import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { isNonNullish } from "@fern-api/core-utils";
-
-import { Project } from "@fern-api/project-loader";
-import { CliContext } from "../../cli-context/CliContext";
+import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+
+import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeDocsDefinitionForProject({
     project,

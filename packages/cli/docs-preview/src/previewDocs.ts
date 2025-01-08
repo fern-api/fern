@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
+import { isNonNullish } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -15,11 +16,11 @@ import {
 } from "@fern-api/fdr-sdk";
 import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { isNonNullish } from "@fern-api/core-utils";
+
 import { parseDocsConfiguration } from "../../configuration-loader/src/docs-yml/parseDocsConfiguration";
 
 export async function getPreviewDocsDefinition({

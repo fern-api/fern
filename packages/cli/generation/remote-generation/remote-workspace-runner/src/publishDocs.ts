@@ -18,8 +18,8 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
-import { measureImageSizes } from "./measureImageSizes";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
+import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

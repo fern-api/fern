@@ -1,17 +1,19 @@
+import { camelCase, kebabCase } from "lodash-es";
+import urlJoin from "url-join";
+import { threadId } from "worker_threads";
+
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { camelCase, kebabCase } from "lodash-es";
-import urlJoin from "url-join";
+
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { threadId } from "worker_threads";
 
 // TODO: these functions need an extra piece of information from the fdr latest shape, to see if the operation id takes precedence over slug generation
 function getLatestEndpointUrlSlug(endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition) {
