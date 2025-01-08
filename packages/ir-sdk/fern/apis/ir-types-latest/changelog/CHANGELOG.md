@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v54.0.0] - 2024-12-11
+
+- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages - 
+  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case. 
+
+## [v53.24.0] - 2024-11-04
+
+- Feature: The dynamic snippets IR supports a configurable baseURL and/or environment.
+
+## [v53.23.0] - 2024-11-04
+
+- Internal: Update the Dynamic IR discriminator so that the generated types are unaffected
+  when `noSerdeLayer` is enabled.
+
+## [v53.22.0] - 2024-11-04
+
+- Redacted: Use v53.23.0 instead.
+- Internal: Add the `dynamic` property to the IR. This should be
+  made requried in IRv54.
+
+## [v53.21.0] - 2024-11-04
+
+- Internal: Add the `includePathParameters` and `onlyPathParameters` properties to the dynamic
+  IR within the `InlinedRequestMetadata` type.
+
+## [v53.20.0] - 2024-11-04
+
+- Internal: Add `includePathParameters` and `onlyPathParameters` property to the wrapped request.
+
+  With this, the generator can determine whether or not the path parameters should be included in
+  the wrapped request, or if the wrapped request can be omitted entirely.
+
 ## [v53.19.0] - 2024-11-04
 
 - Internal: Add errors property to dynamic `EndpointSnippetResponse`.

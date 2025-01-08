@@ -65,6 +65,7 @@
         "types": {
           "Data": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "bar": "optional<string>",
               "foo": "optional<string>",

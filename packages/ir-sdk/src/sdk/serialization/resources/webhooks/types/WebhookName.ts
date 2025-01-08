@@ -10,5 +10,5 @@ import { Name } from "../../commons/types/Name";
 export const WebhookName: core.serialization.ObjectSchema<serializers.WebhookName.Raw, FernIr.WebhookName> = Name;
 
 export declare namespace WebhookName {
-    type Raw = Name.Raw;
+    export type Raw = Name.Raw;
 }

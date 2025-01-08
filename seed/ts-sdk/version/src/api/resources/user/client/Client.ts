@@ -9,19 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
@@ -41,7 +43,7 @@ export class User {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`
+                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`,
             ),
             method: "GET",
             headers: {
@@ -52,6 +54,7 @@ export class User {
                 "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "2.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -82,7 +85,7 @@ export class User {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedVersionTimeoutError();
+                throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
                 throw new errors.SeedVersionError({
                     message: _response.error.errorMessage,

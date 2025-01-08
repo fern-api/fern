@@ -1,8 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
-import { formatLog, LogLevel } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
-import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import chalk from "chalk";
+
+import { formatLog } from "@fern-api/cli-logger";
+import { assertNever } from "@fern-api/core-utils";
+import { ValidationViolation } from "@fern-api/fern-definition-validator";
+import { LogLevel } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
 
 export interface LogViolationsResponse {
     hasErrors: boolean;

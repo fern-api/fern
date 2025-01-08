@@ -28,6 +28,8 @@ export interface SdkCustomConfig {
     retainOriginalCasing: boolean | undefined;
     allowExtraFields: boolean | undefined;
     inlineFileProperties: boolean | undefined;
+    inlinePathParameters: boolean | undefined;
+    enableInlineTypes: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;

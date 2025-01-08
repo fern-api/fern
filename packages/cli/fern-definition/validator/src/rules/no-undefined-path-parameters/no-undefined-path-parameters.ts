@@ -1,9 +1,11 @@
-import { constructHttpPath } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
 import capitalize from "lodash-es/capitalize";
-import { Rule, RuleViolation } from "../../Rule";
 import urlJoin from "url-join";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { constructHttpPath, getEndpointPathParameters } from "@fern-api/ir-generator";
+
+import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
@@ -35,7 +37,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                             endpoint["base-path"] != null
                                 ? urlJoin(endpoint["base-path"], endpoint.path)
                                 : endpoint.path,
-                        pathParameters: endpoint["path-parameters"] != null ? endpoint["path-parameters"] : {},
+                        pathParameters: getEndpointPathParameters(endpoint),
                         pathType: "endpoint"
                     });
                 }

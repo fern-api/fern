@@ -16,28 +16,28 @@ export type ErrorInfo =
     | SeedTrace.ErrorInfo.InternalError
     | SeedTrace.ErrorInfo._Unknown;
 
-export declare namespace ErrorInfo {
-    interface CompileError extends SeedTrace.CompileError, _Utils {
+export namespace ErrorInfo {
+    export interface CompileError extends SeedTrace.CompileError, _Utils {
         type: "compileError";
     }
 
-    interface RuntimeError extends SeedTrace.RuntimeError, _Utils {
+    export interface RuntimeError extends SeedTrace.RuntimeError, _Utils {
         type: "runtimeError";
     }
 
-    interface InternalError extends SeedTrace.InternalError, _Utils {
+    export interface InternalError extends SeedTrace.InternalError, _Utils {
         type: "internalError";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ErrorInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         compileError: (value: SeedTrace.CompileError) => _Result;
         runtimeError: (value: SeedTrace.RuntimeError) => _Result;
         internalError: (value: SeedTrace.InternalError) => _Result;
@@ -52,7 +52,7 @@ export const ErrorInfo = {
             type: "compileError",
             _visit: function <_Result>(
                 this: SeedTrace.ErrorInfo.CompileError,
-                visitor: SeedTrace.ErrorInfo._Visitor<_Result>
+                visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.ErrorInfo._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const ErrorInfo = {
             type: "runtimeError",
             _visit: function <_Result>(
                 this: SeedTrace.ErrorInfo.RuntimeError,
-                visitor: SeedTrace.ErrorInfo._Visitor<_Result>
+                visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.ErrorInfo._visit(this, visitor);
             },
@@ -78,7 +78,7 @@ export const ErrorInfo = {
             type: "internalError",
             _visit: function <_Result>(
                 this: SeedTrace.ErrorInfo.InternalError,
-                visitor: SeedTrace.ErrorInfo._Visitor<_Result>
+                visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.ErrorInfo._visit(this, visitor);
             },
@@ -90,7 +90,7 @@ export const ErrorInfo = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.ErrorInfo._Unknown,
-                visitor: SeedTrace.ErrorInfo._Visitor<_Result>
+                visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.ErrorInfo._visit(this, visitor);
             },

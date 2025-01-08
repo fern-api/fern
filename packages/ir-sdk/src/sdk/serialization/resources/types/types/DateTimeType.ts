@@ -10,5 +10,5 @@ export const DateTimeType: core.serialization.ObjectSchema<serializers.DateTimeT
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace DateTimeType {
-    interface Raw {}
+    export interface Raw {}
 }

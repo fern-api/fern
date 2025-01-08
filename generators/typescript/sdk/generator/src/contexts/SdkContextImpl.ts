@@ -1,15 +1,11 @@
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
-import { Logger } from "@fern-api/logger";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
-    createExternalDependencies,
     DependencyManager,
     ExternalDependencies,
     ImportsManager,
     JavaScriptRuntime,
-    NpmPackage
+    NpmPackage,
+    createExternalDependencies
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
@@ -34,6 +30,13 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
+
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { Logger } from "@fern-api/logger";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
@@ -111,7 +114,10 @@ export declare namespace SdkContextImpl {
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
+        inlinePathParameters: boolean;
+        enableInlineTypes: boolean;
         omitUndefined: boolean;
+        neverThrowErrors: boolean;
         useBigInt: boolean;
     }
 }
@@ -148,8 +154,10 @@ export class SdkContextImpl implements SdkContext {
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
+    public readonly inlinePathParameters: boolean;
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
+    public readonly neverThrowErrors: boolean;
 
     constructor({
         logger,
@@ -198,9 +206,12 @@ export class SdkContextImpl implements SdkContext {
         retainOriginalCasing,
         targetRuntime,
         inlineFileProperties,
+        inlinePathParameters,
         generateOAuthClients,
         omitUndefined,
-        useBigInt
+        useBigInt,
+        neverThrowErrors,
+        enableInlineTypes
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -210,6 +221,7 @@ export class SdkContextImpl implements SdkContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.inlineFileProperties = inlineFileProperties;
+        this.inlinePathParameters = inlinePathParameters;
         this.targetRuntime = targetRuntime;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
@@ -217,6 +229,7 @@ export class SdkContextImpl implements SdkContext {
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
+        this.neverThrowErrors = neverThrowErrors;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager
@@ -246,7 +259,9 @@ export class SdkContextImpl implements SdkContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -260,7 +275,8 @@ export class SdkContextImpl implements SdkContext {
             treatUnknownAsAny,
             includeSerdeLayer,
             retainOriginalCasing,
-            useBigInt
+            useBigInt,
+            enableInlineTypes
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
@@ -292,7 +308,9 @@ export class SdkContextImpl implements SdkContext {
             importsManager,
             includeSerdeLayer,
             retainOriginalCasing,
-            inlineFileProperties
+            inlineFileProperties,
+            inlinePathParameters,
+            enableInlineTypes
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

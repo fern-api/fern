@@ -1,14 +1,15 @@
 import { SourceFile, ts } from "ts-morph";
+
 import {
-    convertExportedFilePathToFilePath,
     ExportedDirectory,
-    ExportedFilePath
+    ExportedFilePath,
+    convertExportedFilePathToFilePath
 } from "../exports-manager/ExportedFilePath";
 import { ImportsManager } from "../imports-manager/ImportsManager";
+import { GetReferenceOpts, Reference } from "./Reference";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
-import { GetReferenceOpts, Reference } from "./Reference";
 
 export function getReferenceToExportViaNamespaceImport({
     exportedName,

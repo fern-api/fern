@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../../getExtension";
 
 export function getExamples(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject): unknown[] {

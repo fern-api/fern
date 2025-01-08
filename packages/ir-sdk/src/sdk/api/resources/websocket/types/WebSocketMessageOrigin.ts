@@ -3,7 +3,6 @@
  */
 
 export type WebSocketMessageOrigin = "client" | "server";
-
 export const WebSocketMessageOrigin = {
     Client: "client",
     Server: "server",
@@ -19,8 +18,8 @@ export const WebSocketMessageOrigin = {
     },
 } as const;
 
-export declare namespace WebSocketMessageOrigin {
-    interface Visitor<R> {
+export namespace WebSocketMessageOrigin {
+    export interface Visitor<R> {
         client: () => R;
         server: () => R;
         _other: () => R;

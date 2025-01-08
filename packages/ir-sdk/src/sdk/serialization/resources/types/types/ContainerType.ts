@@ -45,33 +45,33 @@ export const ContainerType: core.serialization.Schema<serializers.ContainerType.
         });
 
 export declare namespace ContainerType {
-    type Raw =
+    export type Raw =
         | ContainerType.List
         | ContainerType.Map
         | ContainerType.Optional
         | ContainerType.Set
         | ContainerType.Literal;
 
-    interface List {
+    export interface List {
         _type: "list";
         list: serializers.TypeReference.Raw;
     }
 
-    interface Map extends serializers.MapType.Raw {
+    export interface Map extends serializers.MapType.Raw {
         _type: "map";
     }
 
-    interface Optional {
+    export interface Optional {
         _type: "optional";
         optional: serializers.TypeReference.Raw;
     }
 
-    interface Set {
+    export interface Set {
         _type: "set";
         set: serializers.TypeReference.Raw;
     }
 
-    interface Literal {
+    export interface Literal {
         _type: "literal";
         literal: Literal.Raw;
     }

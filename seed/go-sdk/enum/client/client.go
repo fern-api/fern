@@ -5,6 +5,7 @@ package client
 import (
 	core "github.com/enum/fern/core"
 	inlinedrequest "github.com/enum/fern/inlinedrequest"
+	internal "github.com/enum/fern/internal"
 	option "github.com/enum/fern/option"
 	pathparam "github.com/enum/fern/pathparam"
 	queryparam "github.com/enum/fern/queryparam"
@@ -13,7 +14,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	InlinedRequest *inlinedrequest.Client
@@ -25,8 +26,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

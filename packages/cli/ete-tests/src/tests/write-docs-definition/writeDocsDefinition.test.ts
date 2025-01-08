@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import { rm, readFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import path from "path";
+
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");

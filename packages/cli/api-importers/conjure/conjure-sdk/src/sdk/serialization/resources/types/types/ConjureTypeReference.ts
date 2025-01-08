@@ -14,5 +14,5 @@ export const ConjureTypeReference: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([ConjureType, ConjureTypeWithDocs]);
 
 export declare namespace ConjureTypeReference {
-    type Raw = ConjureType.Raw | ConjureTypeWithDocs.Raw;
+    export type Raw = ConjureType.Raw | ConjureTypeWithDocs.Raw;
 }

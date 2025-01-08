@@ -9,17 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Organization {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,7 +41,7 @@ export class Organization {
      */
     public async create(
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
-        requestOptions?: Organization.RequestOptions
+        requestOptions?: Organization.RequestOptions,
     ): Promise<SeedMixedFileDirectory.Organization> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/organizations/"),
@@ -51,6 +53,7 @@ export class Organization {
                 "User-Agent": "@fern/mixed-file-directory/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -82,7 +85,9 @@ export class Organization {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError();
+                throw new errors.SeedMixedFileDirectoryTimeoutError(
+                    "Timeout exceeded when calling POST /organizations/.",
+                );
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({
                     message: _response.error.errorMessage,

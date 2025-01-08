@@ -5,13 +5,14 @@ package client
 import (
 	auth "github.com/oauth-client-credentials-default/fern/auth"
 	core "github.com/oauth-client-credentials-default/fern/core"
+	internal "github.com/oauth-client-credentials-default/fern/internal"
 	option "github.com/oauth-client-credentials-default/fern/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Auth *auth.Client
@@ -21,8 +22,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

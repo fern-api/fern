@@ -1,3 +1,6 @@
+import { difference } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     Availability,
     Encoding,
@@ -5,17 +8,16 @@ import {
     OneOfSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
-    Source
+    Source,
+    convertNumberToSnakeCase,
+    isSchemaEqual
 } from "@fern-api/openapi-ir";
-import { difference } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+
+import { SchemaParserContext } from "./SchemaParserContext";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaEqual } from "./utils/isSchemaEqual";
-import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
 export interface UndiscriminatedOneOfPrefixNotFound {
     type: "notFound";
@@ -66,7 +68,7 @@ export function convertUndiscriminatedOneOf({
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
-                    generatedName: getGeneratedTypeName([generatedName, enumValue]),
+                    generatedName: getGeneratedTypeName([generatedName, enumValue], context.options.preserveSchemaIds),
                     title: undefined,
                     value: LiteralSchemaValue.string(enumValue),
                     groupName: undefined,
@@ -132,7 +134,8 @@ export function convertUndiscriminatedOneOf({
             _default: undefined,
             groupName,
             context,
-            source
+            source,
+            inline: undefined
         });
     }
 
@@ -201,7 +204,10 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             subtypeReference.properties = {
                 [discriminator.propertyName]: SchemaWithExample.literal({
                     nameOverride: undefined,
-                    generatedName: getGeneratedTypeName([generatedName, discriminantValue]),
+                    generatedName: getGeneratedTypeName(
+                        [generatedName, discriminantValue],
+                        context.options.preserveSchemaIds
+                    ),
                     title: undefined,
                     value: LiteralSchemaValue.string(discriminantValue),
                     groupName: undefined,
@@ -262,7 +268,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             _default: undefined,
             groupName,
             context,
-            source
+            source,
+            inline: undefined
         });
     }
 
@@ -381,12 +388,14 @@ export function wrapUndiscriminantedOneOf({
                     schemas: subtypes,
                     groupName,
                     encoding,
-                    source
+                    source,
+                    inline: undefined
                 })
             ),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.oneOf(
@@ -399,7 +408,8 @@ export function wrapUndiscriminantedOneOf({
             schemas: subtypes,
             groupName,
             encoding,
-            source
+            source,
+            inline: undefined
         })
     );
 }

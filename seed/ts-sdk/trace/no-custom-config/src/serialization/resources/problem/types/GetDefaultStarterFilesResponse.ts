@@ -16,7 +16,7 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetDefaultStarterFilesResponse {
-    interface Raw {
+    export interface Raw {
         files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
     }
 }

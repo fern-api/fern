@@ -9,17 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,7 +37,7 @@ export class Service {
      */
     public async getMovie(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -47,6 +49,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -78,7 +81,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -95,7 +98,7 @@ export class Service {
      */
     public async getMovieDocs(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -107,6 +110,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -138,7 +142,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -155,7 +159,7 @@ export class Service {
      */
     public async getMovieName(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.StringResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -167,6 +171,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -198,7 +203,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -215,7 +220,7 @@ export class Service {
      */
     public async getMovieMetadata(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -227,6 +232,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -260,7 +266,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -277,7 +283,7 @@ export class Service {
      */
     public async getOptionalMovie(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -289,6 +295,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -322,7 +329,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -339,7 +346,7 @@ export class Service {
      */
     public async getOptionalMovieDocs(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.OptionalWithDocs | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -351,6 +358,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -384,7 +392,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -401,7 +409,7 @@ export class Service {
      */
     public async getOptionalMovieName(
         request: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.OptionalStringResponse | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
@@ -413,6 +421,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -446,7 +455,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,

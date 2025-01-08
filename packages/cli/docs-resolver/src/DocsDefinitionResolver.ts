@@ -1,4 +1,12 @@
-import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { readFile, stat } from "fs/promises";
+import matter from "gray-matter";
+import { kebabCase } from "lodash-es";
+import urlJoin from "url-join";
+
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { WithoutQuestionMarks, docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -7,17 +15,12 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Read, APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { readFile, stat } from "fs/promises";
-import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -91,7 +94,7 @@ export class DocsDefinitionResolver {
         }
     > = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
-        this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
+        this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
@@ -341,8 +344,16 @@ export class DocsDefinitionResolver {
                           endpoint: this.parsedDocsConfig.analyticsConfig.posthog.endpoint
                       }
                     : undefined,
-                gtm: undefined,
-                ga4: undefined,
+                gtm: this.parsedDocsConfig.analyticsConfig?.gtm
+                    ? {
+                          containerId: this.parsedDocsConfig.analyticsConfig.gtm.containerId
+                      }
+                    : undefined,
+                ga4: this.parsedDocsConfig.analyticsConfig?.ga4
+                    ? {
+                          measurementId: this.parsedDocsConfig.analyticsConfig.ga4.measurementId
+                      }
+                    : undefined,
                 amplitude: undefined,
                 mixpanel: undefined,
                 hotjar: undefined,
@@ -401,7 +412,8 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             authed: undefined,
             viewers: undefined,
-            orphaned: undefined
+            orphaned: undefined,
+            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role))
         };
     }
 
@@ -524,37 +536,38 @@ export class DocsDefinitionResolver {
 
         const children = await Promise.all(items.map((item) => this.toNavigationChild(id, item, parentSlug)));
 
-        const sidebarRootChildren: FernNavigation.V1.SidebarRootChild[] = [];
+        const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
-            switch (child.type) {
-                case "apiReference":
-                case "section":
-                    sidebarRootChildren.push(child);
-                    return;
-                case "changelog":
-                case "link":
-                case "page": {
-                    let last = sidebarRootChildren[sidebarRootChildren.length - 1];
-                    if (last?.type !== "sidebarGroup") {
-                        last = {
-                            id: this.#idgen.get(`${id}/group`),
-                            type: "sidebarGroup",
-                            children: []
-                        };
-                        sidebarRootChildren.push(last);
-                    }
-                    last.children.push(child);
-                    return;
-                }
-                default:
-                    assertNever(child);
+            if (child.type === "apiReference") {
+                grouped.push(child);
+                return;
             }
+
+            if (child.type === "section" && !child.collapsed) {
+                grouped.push(child);
+                return;
+            }
+
+            const lastChild = grouped.length > 0 ? grouped[grouped.length - 1] : undefined;
+            let sidebarGroup: FernNavigation.V1.SidebarGroupNode;
+            if (lastChild?.type === "sidebarGroup") {
+                sidebarGroup = lastChild;
+            } else {
+                sidebarGroup = {
+                    id: this.#idgen.get(`${id}/group`),
+                    type: "sidebarGroup",
+                    children: []
+                };
+                grouped.push(sidebarGroup);
+            }
+
+            sidebarGroup.children.push(child);
         });
 
         return {
             type: "sidebarRoot",
             id,
-            children: sidebarRootChildren
+            children: grouped
         };
     }
 
@@ -578,7 +591,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
         const workspace = await this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = await generateIntermediateRepresentation({
+        const ir = generateIntermediateRepresentation({
             workspace,
             audiences: item.audiences,
             generationLanguage: undefined,
@@ -588,7 +601,8 @@ export class DocsDefinitionResolver {
             readme: undefined,
             version: undefined,
             packageName: undefined,
-            context: this.taskContext
+            context: this.taskContext,
+            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
         });
         const apiDefinitionId = await this.registerApi({
             ir,
@@ -949,7 +963,7 @@ function createEditThisPageUrl(
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
+    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 }
 
 function convertAvailability(

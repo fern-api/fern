@@ -34,7 +34,7 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
     .extend(WithNamespace);
 
 export declare namespace WebhookWithExample {
-    interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
         sdkName?: EndpointSdkName.Raw | null;
         method: WebhookHttpMethod.Raw;
         summary?: string | null;

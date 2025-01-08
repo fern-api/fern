@@ -1,10 +1,15 @@
-import { Availability, EnumValue, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
-import { camelCase, upperFirst } from "lodash-es";
+import {
+    Availability,
+    EnumValue,
+    SchemaWithExample,
+    SdkGroupName,
+    Source,
+    generateEnumNameFromValue
+} from "@fern-api/openapi-ir";
+import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
+
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";
-import { replaceStartingNumber } from "./utils/replaceStartingNumber";
-
-export const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export function convertEnum({
     nameOverride,
@@ -19,7 +24,8 @@ export function convertEnum({
     wrapAsNullable,
     groupName,
     context,
-    source
+    source,
+    inline
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -34,6 +40,7 @@ export function convertEnum({
     groupName: SdkGroupName | undefined;
     context: SchemaParserContext | undefined;
     source: Source;
+    inline: boolean | undefined;
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
@@ -76,7 +83,8 @@ export function convertEnum({
         description,
         availability,
         groupName,
-        source
+        source,
+        inline
     });
 }
 
@@ -90,7 +98,8 @@ export function wrapEnum({
     description,
     availability,
     groupName,
-    source
+    source,
+    inline
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -102,6 +111,7 @@ export function wrapEnum({
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
+    inline: boolean | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -118,11 +128,13 @@ export function wrapEnum({
                 availability,
                 example: undefined,
                 groupName,
-                source
+                source,
+                inline
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline
         });
     }
     return SchemaWithExample.enum({
@@ -135,40 +147,9 @@ export function wrapEnum({
         default: _default,
         example: undefined,
         groupName,
-        source
+        source,
+        inline
     });
-}
-
-const HARDCODED_ENUM_NAMES: Record<string, string> = {
-    "<": "LESS_THAN",
-    ">": "GREATER_THAN",
-    ">=": "GREATER_THAN_OR_EQUAL_TO",
-    "<=": "LESS_THAN_OR_EQUAL_TO",
-    "!=": "NOT_EQUALS",
-    "=": "EQUAL_TO",
-    "==": "EQUAL_TO",
-    "*": "ALL",
-    "": "EMPTY",
-    '""': "EMPTY_STRING",
-    "-": "HYPHEN",
-    "|": "PIPE",
-    ".": "DOT",
-    "/": "SLASH"
-};
-
-export function generateEnumNameFromValue(value: string): string {
-    const maybeParsedNumber = replaceStartingNumber(value);
-    const maybeHardcodedEnumName = HARDCODED_ENUM_NAMES[value];
-    if (maybeParsedNumber != null) {
-        return upperFirst(camelCase(maybeParsedNumber));
-    } else if (maybeHardcodedEnumName != null) {
-        return maybeHardcodedEnumName;
-    } else {
-        if (value.toLowerCase() === "n/a") {
-            return "NOT_APPLICABLE";
-        }
-        return upperFirst(camelCase(value));
-    }
 }
 
 function stripCommonPrefix(names: string[]): string[] {

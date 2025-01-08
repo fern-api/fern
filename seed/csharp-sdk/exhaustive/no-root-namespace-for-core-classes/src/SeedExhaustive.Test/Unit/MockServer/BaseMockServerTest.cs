@@ -36,5 +36,6 @@ public class BaseMockServerTest
     public void GlobalTeardown()
     {
         Server.Stop();
+        Server.Dispose();
     }
 }

@@ -29,6 +29,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "upload-content",
                 Body = request,
+                ContentType = "application/octet-stream",
                 Options = options,
             },
             cancellationToken

@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_user:NestedUser": {
@@ -55,10 +52,7 @@
               "value": "type_user:User"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -110,8 +104,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "date",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "date"
                 }
               }
             },
@@ -120,8 +113,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "datetime",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "datetime"
                 }
               }
             },
@@ -130,8 +122,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "base64",
-                  "default": "0"
+                  "type": "base64"
                 }
               }
             },
@@ -159,8 +150,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "datetime",
-                    "default": "1970-01-01T00:00:00.000Z"
+                    "type": "datetime"
                   }
                 }
               }

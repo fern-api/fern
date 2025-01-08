@@ -19,7 +19,7 @@ export const ConjureArgumentWithParamType: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ConjureArgumentWithParamType {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         "param-type": ConjureParamType.Raw;
         type: string;
     }

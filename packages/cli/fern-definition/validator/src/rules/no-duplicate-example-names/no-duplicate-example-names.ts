@@ -1,10 +1,11 @@
 import { isNonNullish } from "@fern-api/core-utils";
+
 import { Rule } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 
 export const NoDuplicateExampleNamesRule: Rule = {
     name: "no-duplicate-example-names",
-    create: async () => {
+    create: () => {
         return {
             definitionFile: {
                 typeDeclaration: ({ declaration }) => {

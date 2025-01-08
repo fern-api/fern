@@ -1,5 +1,9 @@
+// Required for ES2017 compatibility.
+import "string.prototype.replaceall";
+
 export { constructCasingsGenerator, type CasingsGenerator } from "./casings/CasingsGenerator";
 export { constructHttpPath } from "./converters/services/constructHttpPath";
+export { convertResponseErrors } from "./converters/services/convertResponseErrors";
 export {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     DEFAULT_REQUEST_PARAMETER_NAME,
@@ -31,8 +35,12 @@ export {
     type ObjectPropertyWithPath
 } from "./utils/getAllPropertiesForObject";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
+export { hashJSON } from "./utils/hashJSON";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
+export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
 export { IdGenerator } from "./IdGenerator";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
 export { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
+export { getEndpointPathParameters } from "./utils/getEndpointPathParameters";
+export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";

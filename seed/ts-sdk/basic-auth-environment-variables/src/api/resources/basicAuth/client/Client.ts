@@ -9,19 +9,21 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
         password?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -50,6 +52,7 @@ export class BasicAuth {
                 "User-Agent": "@fern/basic-auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -75,7 +78,7 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
@@ -92,7 +95,9 @@ export class BasicAuth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError();
+                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
+                    "Timeout exceeded when calling GET /basic-auth.",
+                );
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
@@ -126,6 +131,7 @@ export class BasicAuth {
                 "User-Agent": "@fern/basic-auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -152,7 +158,7 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 400:
                     throw new SeedBasicAuthEnvironmentVariables.BadRequest();
@@ -171,7 +177,9 @@ export class BasicAuth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError();
+                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
+                    "Timeout exceeded when calling POST /basic-auth.",
+                );
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,

@@ -8,18 +8,20 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,7 +41,7 @@ export class NoAuth {
      */
     public async postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoAuth.RequestOptions
+        requestOptions?: NoAuth.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-auth"),
@@ -52,6 +54,7 @@ export class NoAuth {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -83,7 +86,7 @@ export class NoAuth {
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,
                                 breadcrumbsPrefix: ["response"],
-                            })
+                            }),
                         ),
                     };
             }

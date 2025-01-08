@@ -8,18 +8,20 @@ import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Auth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,7 +41,7 @@ export class Auth {
      */
     public async getToken(
         request: SeedOauthClientCredentials.auth.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<
         core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
     > {
@@ -54,6 +56,7 @@ export class Auth {
                 "User-Agent": "@fern/oauth-client-credentials-nested-root/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

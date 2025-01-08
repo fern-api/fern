@@ -9,22 +9,22 @@ export type UnionWithBaseProperties =
     | SeedUnions.UnionWithBaseProperties.String
     | SeedUnions.UnionWithBaseProperties.Foo;
 
-export declare namespace UnionWithBaseProperties {
-    interface Integer extends _Base {
+export namespace UnionWithBaseProperties {
+    export interface Integer extends _Base {
         type: "integer";
         value: number;
     }
 
-    interface String extends _Base {
+    export interface String extends _Base {
         type: "string";
         value: string;
     }
 
-    interface Foo extends SeedUnions.Foo, _Base {
+    export interface Foo extends SeedUnions.Foo, _Base {
         type: "foo";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

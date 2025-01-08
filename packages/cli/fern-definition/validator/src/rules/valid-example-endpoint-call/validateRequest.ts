@@ -1,6 +1,7 @@
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 
 export function validateRequest({
@@ -35,6 +36,7 @@ export function validateRequest({
                 typeName: undefined,
                 typeNameForBreadcrumb: "<Inlined Request>",
                 rawObject: {
+                    "extra-properties": body["extra-properties"],
                     extends: body.extends,
                     properties: body.properties ?? {}
                 },
@@ -43,7 +45,8 @@ export function validateRequest({
                 exampleResolver,
                 workspace,
                 example,
-                breadcrumbs: ["request"]
+                breadcrumbs: ["request"],
+                depth: 0
             }).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })
@@ -57,7 +60,8 @@ export function validateRequest({
                 workspace,
                 typeResolver,
                 exampleResolver,
-                breadcrumbs: ["response", "body"]
+                breadcrumbs: ["response", "body"],
+                depth: 0
             }).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })

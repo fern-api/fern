@@ -10,5 +10,5 @@ export const UpdateResponse: core.serialization.ObjectSchema<serializers.UpdateR
     core.serialization.object({});
 
 export declare namespace UpdateResponse {
-    interface Raw {}
+    export interface Raw {}
 }

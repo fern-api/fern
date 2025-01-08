@@ -21,13 +21,13 @@ export const UnionWithUnknown: core.serialization.Schema<
     });
 
 export declare namespace UnionWithUnknown {
-    type Raw = UnionWithUnknown.Foo | UnionWithUnknown.Unknown;
+    export type Raw = UnionWithUnknown.Foo | UnionWithUnknown.Unknown;
 
-    interface Foo extends Foo.Raw {
+    export interface Foo extends Foo.Raw {
         type: "foo";
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
     }
 }

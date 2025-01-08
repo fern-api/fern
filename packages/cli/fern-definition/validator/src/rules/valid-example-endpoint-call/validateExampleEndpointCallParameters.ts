@@ -1,6 +1,7 @@
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 
 export function validateExampleEndpointCallParameters<T>({
@@ -80,7 +81,8 @@ export function validateExampleEndpointCallParameters<T>({
                             workspace,
                             typeResolver,
                             exampleResolver,
-                            breadcrumbs
+                            breadcrumbs,
+                            depth: 0
                         }).map((val): RuleViolation => {
                             return { severity: "error", message: val.message };
                         })

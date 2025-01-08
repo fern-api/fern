@@ -10,29 +10,29 @@ export type SubmissionStatusForTestCase =
     | SeedTrace.SubmissionStatusForTestCase.Traced
     | SeedTrace.SubmissionStatusForTestCase._Unknown;
 
-export declare namespace SubmissionStatusForTestCase {
-    interface Graded extends SeedTrace.TestCaseResultWithStdout, _Utils {
+export namespace SubmissionStatusForTestCase {
+    export interface Graded extends SeedTrace.TestCaseResultWithStdout, _Utils {
         type: "graded";
     }
 
-    interface GradedV2 extends _Utils {
+    export interface GradedV2 extends _Utils {
         type: "gradedV2";
         value: SeedTrace.TestCaseGrade;
     }
 
-    interface Traced extends SeedTrace.TracedTestCase, _Utils {
+    export interface Traced extends SeedTrace.TracedTestCase, _Utils {
         type: "traced";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         graded: (value: SeedTrace.TestCaseResultWithStdout) => _Result;
         gradedV2: (value: SeedTrace.TestCaseGrade) => _Result;
         traced: (value: SeedTrace.TracedTestCase) => _Result;
@@ -47,7 +47,7 @@ export const SubmissionStatusForTestCase = {
             type: "graded",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Graded,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -60,7 +60,7 @@ export const SubmissionStatusForTestCase = {
             type: "gradedV2",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.GradedV2,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -73,7 +73,7 @@ export const SubmissionStatusForTestCase = {
             type: "traced",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase.Traced,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const SubmissionStatusForTestCase = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusForTestCase._Unknown,
-                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusForTestCase._visit(this, visitor);
             },
@@ -94,7 +94,7 @@ export const SubmissionStatusForTestCase = {
 
     _visit: <_Result>(
         value: SeedTrace.SubmissionStatusForTestCase,
-        visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>
+        visitor: SeedTrace.SubmissionStatusForTestCase._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "graded":

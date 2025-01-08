@@ -7,7 +7,7 @@ import (
 )
 
 func do() () {
-    client := client.NewClient(
+    client := client.NewAcmeClient(
         option.WithToken(
             "<token>",
         ),

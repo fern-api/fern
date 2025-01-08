@@ -1,4 +1,4 @@
-export { type ParseOpenAPIOptions } from "./options";
-export { parse, type Spec } from "./parse";
-export { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "./schema/convertEnum";
-export { isSchemaEqual } from "./schema/utils/isSchemaEqual";
+export { type ParseOpenAPIOptions, getParseOptions } from "./options";
+export { parse, type Document, type OpenAPIDocument } from "./parse";
+export { FernOpenAPIExtension, XFernStreaming, FERN_TYPE_EXTENSIONS } from "./openapi/v3/extensions/fernExtensions";
+export * from "./asyncapi/v2";

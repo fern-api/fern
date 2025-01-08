@@ -1,9 +1,11 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -33,7 +35,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public readonly endpoint: HttpEndpoint;
 
-    private response: GeneratedEndpointResponse;
+    public response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -62,6 +64,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    public isPaginated(context: SdkContext): boolean {
+        return false;
     }
 
     public getExample(args: {
@@ -193,7 +198,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -250,6 +258,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.request.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        return this.request.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

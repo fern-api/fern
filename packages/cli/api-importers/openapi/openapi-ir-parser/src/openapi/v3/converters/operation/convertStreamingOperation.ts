@@ -1,7 +1,9 @@
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { MediaType, assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
+
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -222,7 +224,6 @@ export function isStreamingExample(
         unknown: (unknownExample) => {
             const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(unknownExample);
             if (!maybeFernExample.ok) {
-                context.logger.error("Failed to parse example", maybeFernExample.errors.toString());
                 return undefined;
             }
 

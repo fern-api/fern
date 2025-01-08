@@ -1,10 +1,13 @@
-import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
+import path from "path";
+
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
 import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import path from "path";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -36,23 +39,22 @@ function getEndpointReferencesForService({
             endpoint,
             example: context.getExampleEndpointCallOrThrow(endpoint)
         });
-        if (singleEndpointSnippet == null) {
-            continue;
-        }
-        const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
-            serviceId,
-            endpoint
-        });
-        result.push(
-            getEndpointReference({
-                context,
+        if (singleEndpointSnippet != null) {
+            const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
-                service,
-                endpoint,
-                endpointSignatureInfo,
-                singleEndpointSnippet
-            })
-        );
+                endpoint
+            });
+            result.push(
+                getEndpointReference({
+                    context,
+                    serviceId,
+                    service,
+                    endpoint,
+                    endpointSignatureInfo,
+                    singleEndpointSnippet
+                })
+            );
+        }
     }
     return result;
 }
@@ -63,7 +65,8 @@ function getEndpointReference({
     service,
     endpoint,
     endpointSignatureInfo,
-    singleEndpointSnippet
+    singleEndpointSnippet,
+    isPager = false
 }: {
     context: SdkGeneratorContext;
     serviceId: ServiceId;
@@ -71,6 +74,7 @@ function getEndpointReference({
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
     singleEndpointSnippet: SingleEndpointSnippet;
+    isPager?: boolean;
 }): FernGeneratorCli.EndpointReference {
     return {
         title: {

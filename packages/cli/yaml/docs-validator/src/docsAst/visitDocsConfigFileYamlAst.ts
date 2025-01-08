@@ -1,15 +1,17 @@
-import { docsYml } from "@fern-api/configuration";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+
+import { docsYml } from "@fern-api/configuration-loader";
+import { noop, visitObjectAsync } from "@fern-api/core-utils";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import yaml from "js-yaml";
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
+
 import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
-import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath } from "@fern-api/fern-definition-schema";
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
+import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 import { visitFilepath } from "./visitFilepath";
 import { visitNavigationAst } from "./visitNavigationAst";
-import { validateVersionConfigFileSchema } from "./validateVersionConfig";
-import { readFile } from "fs/promises";
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -36,7 +38,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         []
     );
-    await visitObject(contents, {
+    await visitObjectAsync(contents, {
         instances: noop,
         analytics: noop,
         announcement: noop,
@@ -181,7 +183,7 @@ export async function visitDocsConfigFileYamlAst({
             if (typography == null) {
                 return;
             }
-            await visitObject(typography, {
+            await visitObjectAsync(typography, {
                 bodyFont: async (body) => {
                     if (body == null) {
                         return;

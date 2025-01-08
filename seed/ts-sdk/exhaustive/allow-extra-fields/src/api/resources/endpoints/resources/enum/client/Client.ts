@@ -9,18 +9,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Enum {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,7 +38,7 @@ export class Enum {
      */
     public async getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions
+        requestOptions?: Enum.RequestOptions,
     ): Promise<SeedExhaustive.types.WeatherReport> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/enum"),
@@ -49,6 +51,7 @@ export class Enum {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -84,7 +87,7 @@ export class Enum {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /enum.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,

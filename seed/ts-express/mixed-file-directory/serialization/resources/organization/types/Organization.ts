@@ -16,7 +16,7 @@ export const Organization: core.serialization.ObjectSchema<
 });
 
 export declare namespace Organization {
-    interface Raw {
+    export interface Raw {
         id: serializers.Id.Raw;
         name: string;
         users: serializers.User.Raw[];

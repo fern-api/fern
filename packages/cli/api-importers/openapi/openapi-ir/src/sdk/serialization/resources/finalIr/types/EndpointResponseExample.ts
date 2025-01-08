@@ -5,15 +5,14 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { StreamingResponseExample } from "./StreamingResponseExample";
 
 export const EndpointResponseExample: core.serialization.Schema<
     serializers.EndpointResponseExample.Raw,
     FernOpenapiIr.EndpointResponseExample
 > = core.serialization
     .union("type", {
-        withStreaming: core.serialization.object({
-            value: core.serialization.list(core.serialization.lazy(() => serializers.FullExample)),
-        }),
+        withStreaming: StreamingResponseExample,
         withoutStreaming: core.serialization.object({
             value: core.serialization.lazy(() => serializers.FullExample),
         }),
@@ -22,7 +21,7 @@ export const EndpointResponseExample: core.serialization.Schema<
         transform: (value) => {
             switch (value.type) {
                 case "withStreaming":
-                    return FernOpenapiIr.EndpointResponseExample.withStreaming(value.value);
+                    return FernOpenapiIr.EndpointResponseExample.withStreaming(value);
                 case "withoutStreaming":
                     return FernOpenapiIr.EndpointResponseExample.withoutStreaming(value.value);
                 default:
@@ -33,14 +32,13 @@ export const EndpointResponseExample: core.serialization.Schema<
     });
 
 export declare namespace EndpointResponseExample {
-    type Raw = EndpointResponseExample.WithStreaming | EndpointResponseExample.WithoutStreaming;
+    export type Raw = EndpointResponseExample.WithStreaming | EndpointResponseExample.WithoutStreaming;
 
-    interface WithStreaming {
+    export interface WithStreaming extends StreamingResponseExample.Raw {
         type: "withStreaming";
-        value: serializers.FullExample.Raw[];
     }
 
-    interface WithoutStreaming {
+    export interface WithoutStreaming {
         type: "withoutStreaming";
         value: serializers.FullExample.Raw;
     }

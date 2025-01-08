@@ -1,6 +1,8 @@
-import { DocsLinks } from "@fern-api/configuration";
-import { constructRootApiFileContext, EndpointResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import terminalLink from "terminal-link";
+
+import { DocsLinks } from "@fern-api/configuration-loader";
+import { EndpointResolverImpl, TypeResolverImpl, constructRootApiFileContext } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateRefreshTokenEndpoint } from "./validateRefreshTokenEndpoint";
@@ -19,11 +21,11 @@ export const ValidOauthRule: Rule = {
 
         return {
             rootApiFile: {
-                oauth: async ({ name, oauth }, { relativeFilepath }) => {
+                oauth: ({ name, oauth }, { relativeFilepath }) => {
                     const violations: RuleViolation[] = [];
 
                     const tokenEndpointReference = oauth["get-token"].endpoint;
-                    const resolvedTokenEndpoint = await endpointResolver.resolveEndpoint({
+                    const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
                         endpoint: tokenEndpointReference,
                         file: apiFile
                     });
@@ -46,7 +48,7 @@ export const ValidOauthRule: Rule = {
 
                     const refreshEndpointReference = oauth["refresh-token"]?.endpoint;
                     if (oauth["refresh-token"] != null && refreshEndpointReference != null) {
-                        const resolvedRefreshEndpoint = await endpointResolver.resolveEndpoint({
+                        const resolvedRefreshEndpoint = endpointResolver.resolveEndpoint({
                             endpoint: refreshEndpointReference,
                             file: apiFile
                         });

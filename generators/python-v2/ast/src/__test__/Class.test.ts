@@ -75,6 +75,7 @@ describe("class", () => {
         });
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(clazz.getReferences().length).toBe(1);
     });
 
     it("should generate a class with local classes", async () => {
@@ -99,6 +100,76 @@ describe("class", () => {
         innerClassDef.add(innerMethod);
 
         clazz.add(innerClassDef);
+
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("class with generic parent reference", async () => {
+        const clazz = python.class_({
+            name: "MyClass",
+            extends_: [
+                python.reference({
+                    name: "MyParentClass",
+                    modulePath: ["base"],
+                    genericTypes: [
+                        python.reference({
+                            name: "MyParentType",
+                            modulePath: ["models"]
+                        })
+                    ]
+                })
+            ]
+        });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+
+        expect(clazz.getReferences().length).toBe(2);
+    });
+
+    it("class with various forms of multi-line strings", async () => {
+        const clazz = python.class_({
+            name: "MyClass"
+        });
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__basic",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_no_newline_chars__basic",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello, World!", { multiline: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__start_on_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, startOnNewLine: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__end_with_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, endWithNewLine: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__start_and_end_with_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", {
+                    multiline: true,
+                    startOnNewLine: true,
+                    endWithNewLine: true
+                })
+            })
+        );
 
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();

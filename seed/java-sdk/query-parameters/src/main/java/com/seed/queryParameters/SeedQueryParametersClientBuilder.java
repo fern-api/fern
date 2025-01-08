@@ -16,6 +16,14 @@ public final class SeedQueryParametersClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedQueryParametersClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedQueryParametersClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedQueryParametersClient(clientOptionsBuilder.build());

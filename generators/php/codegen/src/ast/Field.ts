@@ -1,10 +1,10 @@
 import { Access } from "./Access";
+import { Attribute } from "./Attribute";
 import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { Comment } from "./Comment";
-import { Attribute } from "./Attribute";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Field {

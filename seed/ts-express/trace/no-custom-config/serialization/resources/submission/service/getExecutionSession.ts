@@ -12,5 +12,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.ExecutionSessionResponse).optional();
 
 export declare namespace Response {
-    type Raw = serializers.ExecutionSessionResponse.Raw | null | undefined;
+    export type Raw = serializers.ExecutionSessionResponse.Raw | null | undefined;
 }

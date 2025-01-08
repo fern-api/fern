@@ -1,5 +1,6 @@
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
 import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType";
 
 export abstract class AbstractUnknownSingleUnionType<

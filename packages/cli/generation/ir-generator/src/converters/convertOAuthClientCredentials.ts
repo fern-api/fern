@@ -1,5 +1,6 @@
-import { OAuthClientCredentials } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { OAuthClientCredentials } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
@@ -7,7 +8,7 @@ import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint";
 import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint";
 import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils";
 
-export async function convertOAuthClientCredentials({
+export function convertOAuthClientCredentials({
     propertyResolver,
     endpointResolver,
     file,
@@ -21,8 +22,8 @@ export async function convertOAuthClientCredentials({
     oauthScheme: RawSchemas.OAuthSchemeSchema;
     tokenEndpoint: TokenEndpoint;
     refreshTokenEndpoint: RefreshTokenEndpoint | undefined;
-}): Promise<OAuthClientCredentials> {
-    const oauthTokenEndpoint = await convertOAuthTokenEndpoint({
+}): OAuthClientCredentials {
+    const oauthTokenEndpoint = convertOAuthTokenEndpoint({
         propertyResolver,
         endpointResolver,
         file,
@@ -33,7 +34,7 @@ export async function convertOAuthClientCredentials({
     }
     const refreshEndpoint =
         refreshTokenEndpoint != null
-            ? await convertOAuthRefreshEndpoint({
+            ? convertOAuthRefreshEndpoint({
                   propertyResolver,
                   endpointResolver,
                   file,
@@ -44,6 +45,7 @@ export async function convertOAuthClientCredentials({
         clientIdEnvVar: oauthScheme["client-id-env"],
         clientSecretEnvVar: oauthScheme["client-secret-env"],
         tokenPrefix: oauthScheme["token-prefix"],
+        tokenHeader: oauthScheme["token-header"],
         scopes: oauthScheme.scopes,
         tokenEndpoint: oauthTokenEndpoint,
         refreshEndpoint

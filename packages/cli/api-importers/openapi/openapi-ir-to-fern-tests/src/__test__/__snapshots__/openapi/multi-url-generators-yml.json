@@ -126,6 +126,7 @@
         "types": {
           "Token": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessToken": "optional<string>",
               "expiresIn": "optional<integer>",
@@ -137,6 +138,7 @@
           },
           "User": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdAt": "optional<datetime>",
               "email": "optional<string>",

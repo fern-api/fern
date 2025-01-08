@@ -1,12 +1,24 @@
-import { ModelContext } from "@fern-typescript/contexts";
+import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<ModelContext> {
+export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<BaseContext> {
     private static BUILDER_PARAMETER_NAME = "value";
+
+    public generateForInlineUnion(context: BaseContext): ts.TypeNode {
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+    }
 
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
+    }
+
+    public getDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
+        return [];
+    }
+
+    public generateModule(context: BaseContext): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
@@ -22,7 +34,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     }
 
     public getVisitMethodParameterType(
-        _context: ModelContext,
+        _context: BaseContext,
         { discriminant }: { discriminant: string }
     ): ts.TypeNode | undefined {
         return ts.factory.createTypeLiteralNode([
@@ -36,7 +48,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     }
 
     public getParametersForBuilder(
-        _context: ModelContext,
+        _context: BaseContext,
         { discriminant }: { discriminant: string }
     ): ts.ParameterDeclaration[] {
         return [

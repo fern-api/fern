@@ -7,17 +7,19 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,6 +37,7 @@ export class Service {
                 "User-Agent": "@fern/file-download/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -61,7 +64,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError();
+                throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedFileDownloadError({
                     message: _response.error.errorMessage,

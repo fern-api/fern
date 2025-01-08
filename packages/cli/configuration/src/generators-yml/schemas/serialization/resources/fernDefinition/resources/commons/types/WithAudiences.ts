@@ -14,7 +14,7 @@ export const WithAudiences: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithAudiences {
-    interface Raw {
+    export interface Raw {
         audiences?: string[] | null;
     }
 }

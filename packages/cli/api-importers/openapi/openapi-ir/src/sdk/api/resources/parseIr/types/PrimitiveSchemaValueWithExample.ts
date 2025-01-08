@@ -17,56 +17,56 @@ export type PrimitiveSchemaValueWithExample =
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Base64
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Boolean;
 
-export declare namespace PrimitiveSchemaValueWithExample {
-    interface Int extends FernOpenapiIr.IntWithExample, _Utils {
+export namespace PrimitiveSchemaValueWithExample {
+    export interface Int extends FernOpenapiIr.IntWithExample, _Utils {
         type: "int";
     }
 
-    interface Int64 extends FernOpenapiIr.Int64WithExample, _Utils {
+    export interface Int64 extends FernOpenapiIr.Int64WithExample, _Utils {
         type: "int64";
     }
 
-    interface Uint extends FernOpenapiIr.UintWithExample, _Utils {
+    export interface Uint extends FernOpenapiIr.UintWithExample, _Utils {
         type: "uint";
     }
 
-    interface Uint64 extends FernOpenapiIr.Uint64WithExample, _Utils {
+    export interface Uint64 extends FernOpenapiIr.Uint64WithExample, _Utils {
         type: "uint64";
     }
 
-    interface Float extends FernOpenapiIr.FloatWithExample, _Utils {
+    export interface Float extends FernOpenapiIr.FloatWithExample, _Utils {
         type: "float";
     }
 
-    interface Double extends FernOpenapiIr.DoubleWithExample, _Utils {
+    export interface Double extends FernOpenapiIr.DoubleWithExample, _Utils {
         type: "double";
     }
 
-    interface String extends FernOpenapiIr.StringSchemaWithExample, _Utils {
+    export interface String extends FernOpenapiIr.StringSchemaWithExample, _Utils {
         type: "string";
     }
 
-    interface Datetime extends FernOpenapiIr.DatetimeWithExample, _Utils {
+    export interface Datetime extends FernOpenapiIr.DatetimeWithExample, _Utils {
         type: "datetime";
     }
 
-    interface Date_ extends FernOpenapiIr.DateWithExample, _Utils {
+    export interface Date_ extends FernOpenapiIr.DateWithExample, _Utils {
         type: "date";
     }
 
-    interface Base64 extends FernOpenapiIr.Base64WithExample, _Utils {
+    export interface Base64 extends FernOpenapiIr.Base64WithExample, _Utils {
         type: "base64";
     }
 
-    interface Boolean extends FernOpenapiIr.BooleanWithExample, _Utils {
+    export interface Boolean extends FernOpenapiIr.BooleanWithExample, _Utils {
         type: "boolean";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         int: (value: FernOpenapiIr.IntWithExample) => _Result;
         int64: (value: FernOpenapiIr.Int64WithExample) => _Result;
         uint: (value: FernOpenapiIr.UintWithExample) => _Result;
@@ -89,7 +89,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "int",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Int,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -102,7 +102,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "int64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Int64,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -115,7 +115,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "uint",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -128,7 +128,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "uint64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Uint64,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -141,7 +141,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "float",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Float,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -154,7 +154,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "double",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Double,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -167,7 +167,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "string",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.String,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -180,7 +180,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "datetime",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Datetime,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -193,7 +193,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "date",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Date_,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -206,7 +206,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "base64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Base64,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -219,7 +219,7 @@ export const PrimitiveSchemaValueWithExample = {
             type: "boolean",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValueWithExample.Boolean,
-                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
             },
@@ -228,7 +228,7 @@ export const PrimitiveSchemaValueWithExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.PrimitiveSchemaValueWithExample,
-        visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
+        visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "int":

@@ -5,13 +5,20 @@ package extraproperties
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/extra-properties/fern/core"
+	internal "github.com/extra-properties/fern/internal"
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -29,13 +36,11 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(unmarshaler.embed)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-
 	return nil
 }
 
@@ -46,11 +51,11 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return core.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

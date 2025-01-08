@@ -13,7 +13,7 @@ export const StderrResponse: core.serialization.ObjectSchema<serializers.StderrR
     });
 
 export declare namespace StderrResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         stderr: string;
     }

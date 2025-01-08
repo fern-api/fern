@@ -8,18 +8,20 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Primitive {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,7 +37,7 @@ export class Primitive {
      */
     public async getAndReturnString(
         request: string,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/string"),
@@ -48,6 +50,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -85,7 +88,7 @@ export class Primitive {
      */
     public async getAndReturnInt(
         request: number,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/integer"),
@@ -98,6 +101,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -135,7 +139,7 @@ export class Primitive {
      */
     public async getAndReturnLong(
         request: number,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/long"),
@@ -148,6 +152,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -185,7 +190,7 @@ export class Primitive {
      */
     public async getAndReturnDouble(
         request: number,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/double"),
@@ -198,6 +203,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -235,7 +241,7 @@ export class Primitive {
      */
     public async getAndReturnBool(
         request: boolean,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/boolean"),
@@ -248,6 +254,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -285,7 +292,7 @@ export class Primitive {
      */
     public async getAndReturnDatetime(
         request: Date,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/datetime"),
@@ -298,6 +305,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -335,7 +343,7 @@ export class Primitive {
      */
     public async getAndReturnDate(
         request: string,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/date"),
@@ -348,6 +356,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -385,7 +394,7 @@ export class Primitive {
      */
     public async getAndReturnUuid(
         request: string,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/uuid"),
@@ -398,6 +407,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -435,7 +445,7 @@ export class Primitive {
      */
     public async getAndReturnBase64(
         request: string,
-        requestOptions?: Primitive.RequestOptions
+        requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/base64"),
@@ -448,6 +458,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

@@ -9,24 +9,24 @@ export type Animal =
     | SeedExhaustive.types.Animal.Cat
     | SeedExhaustive.types.Animal._Unknown;
 
-export declare namespace Animal {
-    interface Dog extends SeedExhaustive.types.Dog, _Utils {
+export namespace Animal {
+    export interface Dog extends SeedExhaustive.types.Dog, _Utils {
         animal: "dog";
     }
 
-    interface Cat extends SeedExhaustive.types.Cat, _Utils {
+    export interface Cat extends SeedExhaustive.types.Cat, _Utils {
         animal: "cat";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         animal: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedExhaustive.types.Animal._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         dog: (value: SeedExhaustive.types.Dog) => _Result;
         cat: (value: SeedExhaustive.types.Cat) => _Result;
         _other: (value: { animal: string }) => _Result;
@@ -40,7 +40,7 @@ export const Animal = {
             animal: "dog",
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal.Dog,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const Animal = {
             animal: "cat",
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal.Cat,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const Animal = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal._Unknown,
-                visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+                visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
             ) {
                 return SeedExhaustive.types.Animal._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const Animal = {
 
     _visit: <_Result>(
         value: SeedExhaustive.types.Animal,
-        visitor: SeedExhaustive.types.Animal._Visitor<_Result>
+        visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
     ): _Result => {
         switch (value.animal) {
             case "dog":

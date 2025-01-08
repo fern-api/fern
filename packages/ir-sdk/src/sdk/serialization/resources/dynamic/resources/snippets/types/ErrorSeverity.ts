@@ -12,5 +12,5 @@ export const ErrorSeverity: core.serialization.Schema<
 > = core.serialization.enum_(["CRITICAL", "WARNING"]);
 
 export declare namespace ErrorSeverity {
-    type Raw = "CRITICAL" | "WARNING";
+    export type Raw = "CRITICAL" | "WARNING";
 }

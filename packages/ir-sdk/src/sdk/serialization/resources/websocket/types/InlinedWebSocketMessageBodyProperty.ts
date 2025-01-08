@@ -19,7 +19,7 @@ export const InlinedWebSocketMessageBodyProperty: core.serialization.ObjectSchem
     .extend(WithDocsAndAvailability);
 
 export declare namespace InlinedWebSocketMessageBodyProperty {
-    interface Raw extends WithDocsAndAvailability.Raw {
+    export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
     }

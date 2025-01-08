@@ -1,8 +1,8 @@
+import { Decorator } from "./Decorator";
+import { Field } from "./Field";
 import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Decorator } from "./Decorator";
-import { Field } from "./Field";
 
 export declare namespace Class {
     interface Args {
@@ -33,7 +33,11 @@ export class Class extends AstNode {
         this.docs = docs;
 
         this.extends_.forEach((parentClassReference) => {
-            this.addReference(parentClassReference);
+            this.inheritReferences(parentClassReference);
+        });
+
+        this.decorators.forEach((decorator) => {
+            this.inheritReferences(decorator);
         });
     }
 

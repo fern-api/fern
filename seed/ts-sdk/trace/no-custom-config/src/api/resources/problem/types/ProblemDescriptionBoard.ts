@@ -9,18 +9,18 @@ export type ProblemDescriptionBoard =
     | SeedTrace.ProblemDescriptionBoard.Variable
     | SeedTrace.ProblemDescriptionBoard.TestCaseId;
 
-export declare namespace ProblemDescriptionBoard {
-    interface Html {
+export namespace ProblemDescriptionBoard {
+    export interface Html {
         type: "html";
         value: string;
     }
 
-    interface Variable {
+    export interface Variable {
         type: "variable";
         value: SeedTrace.VariableValue;
     }
 
-    interface TestCaseId {
+    export interface TestCaseId {
         type: "testCaseId";
         value: string;
     }

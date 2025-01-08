@@ -1,8 +1,8 @@
 import { RUNTIME } from "../../../../src/core/runtime";
-import { chooseStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 import { Node18UniversalStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper";
 import { NodePre18StreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper";
 import { UndiciStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper";
+import { chooseStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 
 describe("chooseStreamWrapper", () => {
     beforeEach(() => {

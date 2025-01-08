@@ -9,5 +9,5 @@ export const Response: core.serialization.Schema<serializers.union.update.Respon
     core.serialization.boolean();
 
 export declare namespace Response {
-    type Raw = boolean;
+    export type Raw = boolean;
 }

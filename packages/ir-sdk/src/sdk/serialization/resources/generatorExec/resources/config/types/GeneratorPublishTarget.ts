@@ -47,7 +47,7 @@ export const GeneratorPublishTarget: core.serialization.Schema<
     });
 
 export declare namespace GeneratorPublishTarget {
-    type Raw =
+    export type Raw =
         | GeneratorPublishTarget.Maven
         | GeneratorPublishTarget.Npm
         | GeneratorPublishTarget.Pypi
@@ -55,27 +55,27 @@ export declare namespace GeneratorPublishTarget {
         | GeneratorPublishTarget.Rubygems
         | GeneratorPublishTarget.Nuget;
 
-    interface Maven extends MavenRegistryConfigV2.Raw {
+    export interface Maven extends MavenRegistryConfigV2.Raw {
         type: "maven";
     }
 
-    interface Npm extends NpmRegistryConfigV2.Raw {
+    export interface Npm extends NpmRegistryConfigV2.Raw {
         type: "npm";
     }
 
-    interface Pypi extends PypiRegistryConfig.Raw {
+    export interface Pypi extends PypiRegistryConfig.Raw {
         type: "pypi";
     }
 
-    interface Postman extends PostmanConfig.Raw {
+    export interface Postman extends PostmanConfig.Raw {
         type: "postman";
     }
 
-    interface Rubygems extends RubyGemsRegistryConfig.Raw {
+    export interface Rubygems extends RubyGemsRegistryConfig.Raw {
         type: "rubygems";
     }
 
-    interface Nuget extends NugetRegistryConfig.Raw {
+    export interface Nuget extends NugetRegistryConfig.Raw {
         type: "nuget";
     }
 }

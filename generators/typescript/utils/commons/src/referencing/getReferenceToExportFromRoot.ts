@@ -1,17 +1,18 @@
 import { SourceFile, ts } from "ts-morph";
+
 import {
-    convertExportedDirectoryPathToFilePath,
-    convertExportedFilePathToFilePath,
     ExportedDirectory,
-    ExportedFilePath
+    ExportedFilePath,
+    convertExportedDirectoryPathToFilePath,
+    convertExportedFilePathToFilePath
 } from "../exports-manager/ExportedFilePath";
 import { ImportsManager } from "../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "./ModuleSpecifier";
+import { GetReferenceOpts, Reference } from "./Reference";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
-import { ModuleSpecifier } from "./ModuleSpecifier";
-import { GetReferenceOpts, Reference } from "./Reference";
 
 export declare namespace getReferenceToExportFromRoot {
     export interface Args {

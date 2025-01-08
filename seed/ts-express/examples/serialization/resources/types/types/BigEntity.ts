@@ -24,7 +24,7 @@ export const BigEntity: core.serialization.ObjectSchema<serializers.BigEntity.Ra
     });
 
 export declare namespace BigEntity {
-    interface Raw {
+    export interface Raw {
         castMember?: serializers.CastMember.Raw | null;
         extendedMovie?: serializers.ExtendedMovie.Raw | null;
         entity?: serializers.Entity.Raw | null;

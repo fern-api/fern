@@ -9,7 +9,7 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Query {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
@@ -17,7 +17,7 @@ export declare namespace Query {
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -28,6 +28,8 @@ export declare namespace Query {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -45,7 +47,7 @@ export class Query {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: Query.RequestOptions
+        requestOptions?: Query.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const { prompt, query, stream } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -68,6 +70,7 @@ export class Query {
                 "User-Agent": "@fern/literal/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -99,7 +102,7 @@ export class Query {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedLiteralTimeoutError();
+                throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedLiteralError({
                     message: _response.error.errorMessage,

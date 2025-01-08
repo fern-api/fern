@@ -9,17 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Userservice {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,7 +37,7 @@ export class Userservice {
      */
     public async create(
         request: SeedApi.CreateRequest = {},
-        requestOptions?: Userservice.RequestOptions
+        requestOptions?: Userservice.RequestOptions,
     ): Promise<SeedApi.CreateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
@@ -47,6 +49,7 @@ export class Userservice {
                 "User-Agent": "@fern/grpc-proto/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -78,7 +81,7 @@ export class Userservice {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

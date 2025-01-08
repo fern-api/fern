@@ -6,22 +6,22 @@ import * as FernOpenapiIr from "../../../index";
 
 export type LiteralSchemaValue = FernOpenapiIr.LiteralSchemaValue.Boolean | FernOpenapiIr.LiteralSchemaValue.String;
 
-export declare namespace LiteralSchemaValue {
-    interface Boolean extends _Utils {
+export namespace LiteralSchemaValue {
+    export interface Boolean extends _Utils {
         type: "boolean";
         value: boolean;
     }
 
-    interface String extends _Utils {
+    export interface String extends _Utils {
         type: "string";
         value: string;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         boolean: (value: boolean) => _Result;
         string: (value: string) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,7 +35,7 @@ export const LiteralSchemaValue = {
             type: "boolean",
             _visit: function <_Result>(
                 this: FernOpenapiIr.LiteralSchemaValue.Boolean,
-                visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>
+                visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.LiteralSchemaValue._visit(this, visitor);
             },
@@ -48,7 +48,7 @@ export const LiteralSchemaValue = {
             type: "string",
             _visit: function <_Result>(
                 this: FernOpenapiIr.LiteralSchemaValue.String,
-                visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>
+                visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.LiteralSchemaValue._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const LiteralSchemaValue = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.LiteralSchemaValue,
-        visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>
+        visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "boolean":

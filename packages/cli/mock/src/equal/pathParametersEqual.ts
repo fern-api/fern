@@ -1,7 +1,9 @@
-import { ExampleEndpointCall } from "@fern-api/ir-sdk";
-import { isEqualWith } from "lodash-es";
-import { EqualResponse } from "./EqualRequestResponse";
 import { Request } from "express";
+import { isEqualWith } from "lodash-es";
+
+import { ExampleEndpointCall } from "@fern-api/ir-sdk";
+
+import { EqualResponse } from "./EqualRequestResponse";
 
 export declare namespace pathParametersEqual {
     interface Args {

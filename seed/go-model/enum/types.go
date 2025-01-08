@@ -44,6 +44,20 @@ func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
 	return &ColorOrOperand{typ: "Operand", Operand: value}
 }
 
+func (c *ColorOrOperand) GetColor() Color {
+	if c == nil {
+		return ""
+	}
+	return c.Color
+}
+
+func (c *ColorOrOperand) GetOperand() Operand {
+	if c == nil {
+		return ""
+	}
+	return c.Operand
+}
+
 func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
 	var valueColor Color
 	if err := json.Unmarshal(data, &valueColor); err == nil {

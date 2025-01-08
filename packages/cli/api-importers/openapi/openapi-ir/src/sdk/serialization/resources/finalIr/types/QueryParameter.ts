@@ -23,7 +23,7 @@ export const QueryParameter: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace QueryParameter {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         parameterNameOverride?: string | null;

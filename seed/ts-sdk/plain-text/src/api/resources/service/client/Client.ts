@@ -7,17 +7,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -26,6 +28,9 @@ export class Service {
 
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getText()
      */
     public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -38,6 +43,7 @@ export class Service {
                 "User-Agent": "@fern/plain-text/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -64,7 +70,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedPlainTextTimeoutError();
+                throw new errors.SeedPlainTextTimeoutError("Timeout exceeded when calling POST /text.");
             case "unknown":
                 throw new errors.SeedPlainTextError({
                     message: _response.error.errorMessage,

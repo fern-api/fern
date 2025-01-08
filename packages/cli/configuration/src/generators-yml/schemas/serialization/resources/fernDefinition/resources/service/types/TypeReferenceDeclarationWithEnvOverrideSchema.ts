@@ -17,7 +17,7 @@ export const TypeReferenceDeclarationWithEnvOverrideSchema: core.serialization.O
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace TypeReferenceDeclarationWithEnvOverrideSchema {
-    interface Raw extends TypeReferenceDeclarationWithName.Raw {
+    export interface Raw extends TypeReferenceDeclarationWithName.Raw {
         env?: string | null;
     }
 }

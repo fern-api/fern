@@ -1,0 +1,335 @@
+{
+  "title": "API with Default Values",
+  "servers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "boolParam1",
+          "schema": {
+            "generatedName": "GetTestRequestBoolParam1",
+            "value": {
+              "schema": {
+                "default": true,
+                "type": "boolean"
+              },
+              "generatedName": "GetTestRequestBoolParam1",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "boolParam2",
+          "schema": {
+            "generatedName": "GetTestRequestBoolParam2",
+            "value": {
+              "schema": {
+                "default": true,
+                "type": "boolean"
+              },
+              "generatedName": "GetTestRequestBoolParam2",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "boolParam3",
+          "schema": {
+            "generatedName": "GetTestRequestBoolParam3",
+            "value": {
+              "schema": {
+                "default": false,
+                "type": "boolean"
+              },
+              "generatedName": "GetTestRequestBoolParam3",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "boolParam4",
+          "schema": {
+            "generatedName": "GetTestRequestBoolParam4",
+            "value": {
+              "schema": {
+                "default": false,
+                "type": "boolean"
+              },
+              "generatedName": "GetTestRequestBoolParam4",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "stringParam",
+          "schema": {
+            "generatedName": "GetTestRequestStringParam",
+            "value": {
+              "schema": {
+                "default": "defaultString",
+                "type": "string"
+              },
+              "generatedName": "GetTestRequestStringParam",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "numberParam",
+          "schema": {
+            "generatedName": "GetTestRequestNumberParam",
+            "value": {
+              "schema": {
+                "default": 42,
+                "type": "double"
+              },
+              "generatedName": "GetTestRequestNumberParam",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "integerParam",
+          "schema": {
+            "generatedName": "GetTestRequestIntegerParam",
+            "value": {
+              "schema": {
+                "default": 100,
+                "type": "int"
+              },
+              "generatedName": "GetTestRequestIntegerParam",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetTestRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getTestResponseBoolField1",
+              "key": "boolField1",
+              "schema": {
+                "generatedName": "getTestResponseBoolField1",
+                "value": {
+                  "schema": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "generatedName": "GetTestResponseBoolField1",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "getTestResponseBoolField2",
+              "key": "boolField2",
+              "schema": {
+                "generatedName": "getTestResponseBoolField2",
+                "value": {
+                  "schema": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "generatedName": "GetTestResponseBoolField2",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "getTestResponseStringField",
+              "key": "stringField",
+              "schema": {
+                "generatedName": "getTestResponseStringField",
+                "value": {
+                  "schema": {
+                    "default": "defaultValue",
+                    "type": "string"
+                  },
+                  "generatedName": "GetTestResponseStringField",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "getTestResponseNumberField",
+              "key": "numberField",
+              "schema": {
+                "generatedName": "getTestResponseNumberField",
+                "value": {
+                  "schema": {
+                    "default": 3.14,
+                    "type": "double"
+                  },
+                  "generatedName": "GetTestResponseNumberField",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetTestResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "server": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "boolField1": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "boolField2": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "stringField": {
+                  "value": {
+                    "value": "stringField",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "numberField": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channel": [],
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -10,18 +10,20 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -30,7 +32,7 @@ export class Dummy {
 
     public async generateStream(
         request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
@@ -42,6 +44,7 @@ export class Dummy {
                 "User-Agent": "@fern/streaming/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -87,7 +90,7 @@ export class Dummy {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError();
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
@@ -106,7 +109,7 @@ export class Dummy {
      */
     public async generate(
         request: SeedStreaming.Generateequest,
-        requestOptions?: Dummy.RequestOptions
+        requestOptions?: Dummy.RequestOptions,
     ): Promise<SeedStreaming.StreamResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),
@@ -118,6 +121,7 @@ export class Dummy {
                 "User-Agent": "@fern/streaming/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -152,7 +156,7 @@ export class Dummy {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError();
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,

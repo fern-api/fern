@@ -13,7 +13,7 @@ export const HttpPathPart: core.serialization.ObjectSchema<serializers.HttpPathP
     });
 
 export declare namespace HttpPathPart {
-    interface Raw {
+    export interface Raw {
         pathParameter: string;
         tail: string;
     }

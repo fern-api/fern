@@ -19,7 +19,7 @@ export const AsyncApiSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace AsyncApiSchema {
-    interface Raw {
+    export interface Raw {
         asyncapi: string;
         origin?: string | null;
         overrides?: string | null;

@@ -1,3 +1,7 @@
+import chalk from "chalk";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema";
 import {
     ErrorResolver,
     ExampleResolver,
@@ -5,9 +9,7 @@ import {
     FernFileContext,
     TypeResolver
 } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema";
-import chalk from "chalk";
+
 import { RuleViolation } from "../../Rule";
 
 export function validateResponse({
@@ -76,7 +78,8 @@ function validateBodyResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return {
                         severity: "error",
@@ -122,7 +125,8 @@ function validateBodyResponse({
                         exampleResolver,
                         file: errorDeclaration.file,
                         workspace,
-                        breadcrumbs: ["response", "body"]
+                        breadcrumbs: ["response", "body"],
+                        depth: 0
                     }).map((val): RuleViolation => {
                         return { severity: "error", message: val.message };
                     })
@@ -177,7 +181,8 @@ function validateStreamResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
@@ -228,7 +233,8 @@ function validateSseResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })

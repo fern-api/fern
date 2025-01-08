@@ -16,7 +16,7 @@ export const NestedObjectWithLiterals: core.serialization.ObjectSchema<
 });
 
 export declare namespace NestedObjectWithLiterals {
-    interface Raw {
+    export interface Raw {
         literal1: "literal1";
         literal2: "literal2";
         strProp: string;

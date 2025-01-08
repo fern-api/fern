@@ -8,18 +8,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Primitive {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -45,6 +47,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -78,7 +81,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/string.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -105,6 +108,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -138,7 +142,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/integer.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -165,6 +169,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -198,7 +203,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/long.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -225,6 +230,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -258,7 +264,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/double.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -285,6 +291,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -318,7 +325,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/boolean.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -345,6 +352,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -378,7 +386,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/datetime.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -405,6 +413,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -438,7 +447,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/date.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -465,6 +474,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -498,7 +508,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/uuid.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -525,6 +535,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -558,7 +569,7 @@ export class Primitive {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/base64.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,

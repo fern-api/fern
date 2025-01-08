@@ -17,6 +17,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
     FernOpenapiIr.WebsocketChannel
 > = core.serialization
     .objectWithoutOptionalProperties({
+        audiences: core.serialization.list(core.serialization.string()),
         path: core.serialization.string(),
         groupName: SdkGroupName,
         summary: core.serialization.string().optional(),
@@ -29,7 +30,8 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace WebsocketChannel {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
+        audiences: string[];
         path: string;
         groupName: SdkGroupName.Raw;
         summary?: string | null;

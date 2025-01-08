@@ -1,5 +1,6 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function getGeneratorMetadata({
@@ -25,7 +26,7 @@ export async function getGeneratorMetadata({
                 }
 
                 // If there are no groups in the configuration, skip this workspace
-                const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+                const generatorsConfiguration = await loadGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });

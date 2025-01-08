@@ -1,12 +1,18 @@
 import { Values } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+
+import { generatorsYml } from "..";
 import { Audiences } from "../commons";
-import { ApiDefinitionSettingsSchema } from "./schemas";
-import { GeneratorInvocationSchema } from "./schemas";
-import { GeneratorsConfigurationSchema } from "./schemas";
-import { ReadmeSchema } from "./schemas";
+import {
+    ApiDefinitionSettingsSchema,
+    GeneratorInvocationSchema,
+    GeneratorsConfigurationSchema,
+    OpenApiFilterSchema,
+    ReadmeSchema
+} from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -53,6 +59,11 @@ export interface APIDefinitionSettings {
     shouldUseOptionalAdditionalProperties: boolean | undefined;
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
+    respectReadonlySchemas: boolean | undefined;
+    onlyIncludeReferencedSchemas: boolean | undefined;
+    inlinePathParameters: boolean | undefined;
+    filter: OpenApiFilterSchema | undefined;
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -132,6 +143,9 @@ export function getPackageName({
 }: {
     generatorInvocation: GeneratorInvocation;
 }): string | undefined {
+    if (generatorInvocation.language === "go") {
+        return getGoPackageName(generatorInvocation);
+    }
     return generatorInvocation.outputMode._visit<string | undefined>({
         downloadFiles: () => undefined,
         github: (val) =>
@@ -154,6 +168,21 @@ export function getPackageName({
                 nuget: (val) => val.packageName,
                 _other: () => undefined
             }),
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Go doesn't use a central package manager; the Go Module Proxy simply uses the name
+ * of the GitHub repository.
+ */
+function getGoPackageName(generatorInvocation: GeneratorInvocation): string | undefined {
+    return generatorInvocation.outputMode._visit<string | undefined>({
+        downloadFiles: () => undefined,
+        github: (val) => `github.com/${val.owner}/${val.repo}`,
+        githubV2: (val) => `github.com/${val.owner}/${val.repo}`,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined

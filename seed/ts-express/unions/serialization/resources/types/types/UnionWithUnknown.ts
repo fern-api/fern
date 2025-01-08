@@ -20,13 +20,13 @@ export const UnionWithUnknown: core.serialization.Schema<
     });
 
 export declare namespace UnionWithUnknown {
-    type Raw = UnionWithUnknown.Foo | UnionWithUnknown.Unknown;
+    export type Raw = UnionWithUnknown.Foo | UnionWithUnknown.Unknown;
 
-    interface Foo extends serializers.Foo.Raw {
+    export interface Foo extends serializers.Foo.Raw {
         type: "foo";
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
     }
 }

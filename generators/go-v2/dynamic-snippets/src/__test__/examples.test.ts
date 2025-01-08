@@ -1,9 +1,9 @@
-import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
-import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { AuthValues } from "@fern-fern/ir-sdk/api/resources/dynamic";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
+
 import { TestCase } from "./utils/TestCase";
+import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
+import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
+import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 
 describe("examples", () => {
     const testCases: TestCase[] = [
@@ -14,9 +14,12 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: {
                     shallow: false,
@@ -35,9 +38,12 @@ describe("examples", () => {
                     method: "GET",
                     path: "/metadata"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: {
                     shallow: false,
@@ -56,9 +62,12 @@ describe("examples", () => {
                     method: "POST",
                     path: "/movie"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -89,9 +98,12 @@ describe("examples", () => {
                     method: "POST",
                     path: "/big-entity"
                 },
-                auth: AuthValues.bearer({
+                baseURL: undefined,
+                environment: undefined,
+                auth: {
+                    type: "bearer",
                     token: "<YOUR_API_KEY>"
-                }),
+                },
                 pathParameters: undefined,
                 queryParameters: undefined,
                 headers: undefined,
@@ -105,7 +117,7 @@ describe("examples", () => {
         }
     ];
     const generator = buildDynamicSnippetsGenerator({
-        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("examples.json")),
+        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/examples.json`),
         config: buildGeneratorConfig()
     });
     test.each(testCases)("$description", async ({ giveRequest }) => {
@@ -117,7 +129,7 @@ describe("examples", () => {
 describe("examples (errors)", () => {
     it("invalid request body", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("examples.json")),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/examples.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -125,9 +137,12 @@ describe("examples (errors)", () => {
                 method: "POST",
                 path: "/movie"
             },
-            auth: AuthValues.bearer({
+            auth: {
+                type: "bearer",
                 token: "<YOUR_API_KEY>"
-            }),
+            },
+            baseURL: undefined,
+            environment: undefined,
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,

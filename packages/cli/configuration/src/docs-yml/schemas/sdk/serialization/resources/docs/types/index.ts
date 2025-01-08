@@ -4,6 +4,8 @@ export * from "./SegmentConfig";
 export * from "./FullStoryAnalyticsConfig";
 export * from "./IntercomConfig";
 export * from "./PostHogConfig";
+export * from "./GtmConfig";
+export * from "./GoogleAnalytics4Config";
 export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";

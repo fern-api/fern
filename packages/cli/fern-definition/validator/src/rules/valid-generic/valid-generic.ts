@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Rule, RuleViolation } from "../../Rule";
-import { NodePath, visitRawTypeDeclaration, isGeneric, parseGeneric } from "@fern-api/fern-definition-schema";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
+import { Rule, RuleViolation } from "../../Rule";
 import { visitDefinitionFileYamlAst } from "../../ast";
 
 type GenericDeclaration = string;
@@ -9,8 +10,8 @@ type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";
 
 export const ValidGenericRule: Rule = {
     name: "valid-generic",
-    create: async ({ workspace }) => {
-        const genericArgumentCounts = await getGenericArgumentCounts(workspace);
+    create: ({ workspace }) => {
+        const genericArgumentCounts = getGenericArgumentCounts(workspace);
         const propertyBasedErrors: Record<
             PropertyBasedTypeDeclaration,
             {
@@ -123,8 +124,8 @@ export const ValidGenericRule: Rule = {
                                     typeof value === "string"
                                         ? value
                                         : typeof value.type === "string"
-                                        ? value.type
-                                        : undefined;
+                                          ? value.type
+                                          : undefined;
 
                                 if (discriminatedUnionValue && isGeneric(discriminatedUnionValue)) {
                                     if (nodePath) {
@@ -189,11 +190,11 @@ export const ValidGenericRule: Rule = {
     }
 };
 
-async function getGenericArgumentCounts(workspace: FernWorkspace): Promise<Record<string, number>> {
+function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, number> {
     const genericArgumentCounts: Record<GenericDeclaration, number> = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
-        await visitDefinitionFileYamlAst(file, {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
+        visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName, declaration }) => {
                 if (!typeName.isInlined) {
                     const maybeGeneric = parseGeneric(typeName.name);

@@ -13,5 +13,5 @@ export const FileDownloadResponse: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs);
 
 export declare namespace FileDownloadResponse {
-    interface Raw extends WithDocs.Raw {}
+    export interface Raw extends WithDocs.Raw {}
 }

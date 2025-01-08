@@ -35,6 +35,14 @@ types:
           [MyType -> propA -> propB] will turn into MyTypePropAPropB
           [MyType] will turn into MyType
 
+  WithInline:
+    properties:
+      inline:
+        docs: |
+          Whether a type should be inlined. If true, it should be inlined.
+          If false, it may still become inlined in a later stage.
+        type: optional<boolean>
+
   Source:
     union:
       openapi: OpenAPISource
@@ -43,7 +51,7 @@ types:
   OpenAPISource:
     properties:
       file: string
-  
+
   ProtobufSource:
     properties:
       file: string

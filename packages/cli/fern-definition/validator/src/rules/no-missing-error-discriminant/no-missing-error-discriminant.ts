@@ -1,10 +1,12 @@
-import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { isEmpty } from "lodash-es";
+
+import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
+
 import { Rule } from "../../Rule";
 
 export const NoMissingErrorDiscriminantRule: Rule = {
     name: "no-missing-error-discriminant",
-    create: async ({ workspace }) => {
+    create: ({ workspace }) => {
         if (!doesApiDeclareErrors(workspace)) {
             return {};
         }

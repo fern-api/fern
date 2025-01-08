@@ -15,7 +15,7 @@ export const CommonProperty: core.serialization.ObjectSchema<
 });
 
 export declare namespace CommonProperty {
-    interface Raw {
+    export interface Raw {
         key: string;
         schema: serializers.Schema.Raw;
     }

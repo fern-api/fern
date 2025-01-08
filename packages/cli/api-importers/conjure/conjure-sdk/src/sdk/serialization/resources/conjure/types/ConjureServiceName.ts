@@ -12,5 +12,5 @@ export const ConjureServiceName: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace ConjureServiceName {
-    type Raw = string;
+    export type Raw = string;
 }

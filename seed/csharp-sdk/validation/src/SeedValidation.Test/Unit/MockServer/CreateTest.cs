@@ -17,18 +17,18 @@ public class CreateTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
 
         const string mockResponse = """
             {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
@@ -51,9 +51,9 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.CreateAsync(
             new CreateRequest
             {
-                Decimal = 1.1,
-                Even = 1,
-                Name = "name",
+                Decimal = 2.2,
+                Even = 100,
+                Name = "foo",
                 Shape = Shape.Square,
             },
             RequestOptions

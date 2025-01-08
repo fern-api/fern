@@ -1,8 +1,10 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { PhpFile } from "@fern-api/php-codegen";
 import { FileGenerator } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
+
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

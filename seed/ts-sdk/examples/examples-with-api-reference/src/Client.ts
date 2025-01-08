@@ -12,23 +12,41 @@ import { Health } from "./api/resources/health/client/Client";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedExamplesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedExamplesClient {
+    protected _file: File_ | undefined;
+    protected _health: Health | undefined;
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
+
+    public get file(): File_ {
+        return (this._file ??= new File_(this._options));
+    }
+
+    public get health(): Health {
+        return (this._health ??= new Health(this._options));
+    }
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {string} request
@@ -49,6 +67,7 @@ export class SeedExamplesClient {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -80,7 +99,7 @@ export class SeedExamplesClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
@@ -97,7 +116,7 @@ export class SeedExamplesClient {
      */
     public async createType(
         request: SeedExamples.Type,
-        requestOptions?: SeedExamplesClient.RequestOptions
+        requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<SeedExamples.Identifier> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -110,6 +129,7 @@ export class SeedExamplesClient {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -141,30 +161,12 @@ export class SeedExamplesClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _file: File_ | undefined;
-
-    public get file(): File_ {
-        return (this._file ??= new File_(this._options));
-    }
-
-    protected _health: Health | undefined;
-
-    public get health(): Health {
-        return (this._health ??= new Health(this._options));
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

@@ -1,0 +1,28 @@
+service:
+  auth: false
+  base-path: /base/{baseParameter}
+  path-parameters:
+    fakeBaseParameter: string
+  endpoints:
+    legacy:
+      path: /path/{parameter}/to/endpoint
+      path-parameters:
+        parameter: string
+      method: POST
+    
+    inlined:
+      path: /path/{parameter}/to/endpoint
+      request:
+        name: InlinedRequest
+        path-parameters:
+          parameter: string
+      method: POST
+
+    conflict:
+      path: /path/{parameter1}/{parameter2}/to/endpoint
+      path-parameters:
+        parameter1: string
+      request:
+        path-parameters:
+          parameter2: string
+      method: POST

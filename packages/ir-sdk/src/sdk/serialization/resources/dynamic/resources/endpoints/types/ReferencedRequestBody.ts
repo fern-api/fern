@@ -17,7 +17,7 @@ export const ReferencedRequestBody: core.serialization.ObjectSchema<
 });
 
 export declare namespace ReferencedRequestBody {
-    interface Raw {
+    export interface Raw {
         bodyKey: Name.Raw;
         bodyType: ReferencedRequestBodyType.Raw;
     }

@@ -14,7 +14,7 @@ describe("object", () => {
         },
         {
             title: "functions as identity when values are primitives and property() isn't used",
-        }
+        },
     );
 
     itSchema(
@@ -26,7 +26,7 @@ describe("object", () => {
         {
             raw: { raw_foo: "foo", bar: "bar" },
             parsed: { foo: "foo", bar: "bar" },
-        }
+        },
     );
 
     itSchema(
@@ -37,7 +37,7 @@ describe("object", () => {
         {
             raw: {},
             parsed: {},
-        }
+        },
     );
 
     itSchema(
@@ -48,7 +48,7 @@ describe("object", () => {
         {
             raw: {},
             parsed: {},
-        }
+        },
     );
 
     describe("unrecognizedObjectKeys", () => {
@@ -75,7 +75,7 @@ describe("object", () => {
                     opts: {
                         unrecognizedObjectKeys: "passthrough",
                     },
-                }
+                },
             );
 
             itParse(
@@ -98,7 +98,7 @@ describe("object", () => {
                     opts: {
                         unrecognizedObjectKeys: "strip",
                     },
-                }
+                },
             );
         });
 
@@ -125,7 +125,7 @@ describe("object", () => {
                     opts: {
                         unrecognizedObjectKeys: "passthrough",
                     },
-                }
+                },
             );
 
             itJson(
@@ -148,7 +148,7 @@ describe("object", () => {
                     opts: {
                         unrecognizedObjectKeys: "strip",
                     },
-                }
+                },
             );
         });
     });
@@ -176,7 +176,7 @@ describe("object", () => {
                 {
                     raw: { raw_foo: null },
                     parsed: { foo: undefined },
-                }
+                },
             );
 
             describe("parse()", () => {
@@ -186,7 +186,7 @@ describe("object", () => {
                     {
                         raw: { raw_foo: null },
                         parsed: { foo: undefined },
-                    }
+                    },
                 );
             });
         });
@@ -204,7 +204,7 @@ describe("object", () => {
                 path: [],
                 message: 'Missing required key "bar"',
             },
-        ]
+        ],
     );
 
     itValidate(
@@ -219,7 +219,7 @@ describe("object", () => {
                 path: ["baz"],
                 message: 'Unexpected key "baz"',
             },
-        ]
+        ],
     );
 
     itValidate(
@@ -234,7 +234,7 @@ describe("object", () => {
                 path: [],
                 message: "Expected object. Received list.",
             },
-        ]
+        ],
     );
 
     itValidate(
@@ -250,6 +250,6 @@ describe("object", () => {
                 path: ["foo", "bar"],
                 message: 'Expected number. Received "hello".',
             },
-        ]
+        ],
     );
 });

@@ -13,15 +13,22 @@ export declare namespace ClassReference {
 export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
+    private fullyQualified: boolean;
 
     constructor({ name, namespace }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
+        this.fullyQualified = false;
+    }
+
+    public requireFullyQualified(): void {
+        this.fullyQualified = true;
     }
 
     public write(writer: Writer): void {
         writer.addReference(this);
-        writer.write(`${this.name}`);
+        const refString = this.fullyQualified ? `\\${this.namespace}\\${this.name}` : this.name;
+        writer.write(`${refString}`);
     }
 }

@@ -24,9 +24,9 @@ import org.jetbrains.annotations.NotNull;
 public final class ScoredColumn {
     private final String id;
 
-    private final Optional<Double> score;
+    private final Optional<Float> score;
 
-    private final Optional<List<Double>> values;
+    private final Optional<List<Float>> values;
 
     private final Optional<Metadata> metadata;
 
@@ -36,8 +36,8 @@ public final class ScoredColumn {
 
     private ScoredColumn(
             String id,
-            Optional<Double> score,
-            Optional<List<Double>> values,
+            Optional<Float> score,
+            Optional<List<Float>> values,
             Optional<Metadata> metadata,
             Optional<IndexedData> indexedData,
             Map<String, Object> additionalProperties) {
@@ -55,12 +55,12 @@ public final class ScoredColumn {
     }
 
     @JsonProperty("score")
-    public Optional<Double> getScore() {
+    public Optional<Float> getScore() {
         return score;
     }
 
     @JsonProperty("values")
-    public Optional<List<Double>> getValues() {
+    public Optional<List<Float>> getValues() {
         return values;
     }
 
@@ -116,13 +116,13 @@ public final class ScoredColumn {
     public interface _FinalStage {
         ScoredColumn build();
 
-        _FinalStage score(Optional<Double> score);
+        _FinalStage score(Optional<Float> score);
 
-        _FinalStage score(Double score);
+        _FinalStage score(Float score);
 
-        _FinalStage values(Optional<List<Double>> values);
+        _FinalStage values(Optional<List<Float>> values);
 
-        _FinalStage values(List<Double> values);
+        _FinalStage values(List<Float> values);
 
         _FinalStage metadata(Optional<Metadata> metadata);
 
@@ -141,9 +141,9 @@ public final class ScoredColumn {
 
         private Optional<Metadata> metadata = Optional.empty();
 
-        private Optional<List<Double>> values = Optional.empty();
+        private Optional<List<Float>> values = Optional.empty();
 
-        private Optional<Double> score = Optional.empty();
+        private Optional<Float> score = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -194,27 +194,27 @@ public final class ScoredColumn {
         }
 
         @java.lang.Override
-        public _FinalStage values(List<Double> values) {
+        public _FinalStage values(List<Float> values) {
             this.values = Optional.ofNullable(values);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public _FinalStage values(Optional<List<Double>> values) {
+        public _FinalStage values(Optional<List<Float>> values) {
             this.values = values;
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage score(Double score) {
+        public _FinalStage score(Float score) {
             this.score = Optional.ofNullable(score);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "score", nulls = Nulls.SKIP)
-        public _FinalStage score(Optional<Double> score) {
+        public _FinalStage score(Optional<Float> score) {
             this.score = score;
             return this;
         }

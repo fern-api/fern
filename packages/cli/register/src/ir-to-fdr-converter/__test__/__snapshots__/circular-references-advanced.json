@@ -16,10 +16,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType": {
@@ -37,10 +34,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_a:A": {
@@ -50,10 +44,7 @@
         "extends": [
           "type_:RootType"
         ],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_ast:ContainerValue": {
@@ -120,10 +111,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_ast:FieldName": {
@@ -207,10 +195,7 @@
               "value": "type_ast:FieldValue"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

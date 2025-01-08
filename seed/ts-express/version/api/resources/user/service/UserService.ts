@@ -22,19 +22,22 @@ export interface UserServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class UserService {
     private router;
 
-    constructor(private readonly methods: UserServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: UserServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -55,7 +58,7 @@ export class UserService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -63,7 +66,7 @@ export class UserService {
                     console.warn(
                         `Endpoint 'getUser' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

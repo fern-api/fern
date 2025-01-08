@@ -35,6 +35,7 @@ export const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     449: "RetryWithError", // non-standard
     450: "BlockedByWindowsParentalControlsError", // non-standard
     451: "UnavailableForLegalReasonsError", // non-standard
+    498: "InvalidTokenError", // non-standard
     499: "ClientClosedRequestError", // non-standard
     500: "InternalServerError",
     501: "NotImplementedError",

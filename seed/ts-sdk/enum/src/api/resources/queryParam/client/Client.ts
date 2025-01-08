@@ -8,17 +8,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace QueryParam {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,7 +39,7 @@ export class QueryParam {
      */
     public async send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -63,6 +65,7 @@ export class QueryParam {
                 "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -89,7 +92,7 @@ export class QueryParam {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError();
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
@@ -111,7 +114,7 @@ export class QueryParam {
      */
     public async sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -131,7 +134,7 @@ export class QueryParam {
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                typeof item === "string" ? item : JSON.stringify(item)
+                typeof item === "string" ? item : JSON.stringify(item),
             );
         } else {
             _queryParams["operandOrColor"] =
@@ -141,7 +144,7 @@ export class QueryParam {
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : JSON.stringify(item)
+                    typeof item === "string" ? item : JSON.stringify(item),
                 );
             } else {
                 _queryParams["maybeOperandOrColor"] =
@@ -159,6 +162,7 @@ export class QueryParam {
                 "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -185,7 +189,7 @@ export class QueryParam {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError();
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,

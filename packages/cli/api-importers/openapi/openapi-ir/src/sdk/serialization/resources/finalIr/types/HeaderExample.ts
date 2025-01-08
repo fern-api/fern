@@ -15,7 +15,7 @@ export const HeaderExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace HeaderExample {
-    interface Raw {
+    export interface Raw {
         name: string;
         value: serializers.FullExample.Raw;
     }

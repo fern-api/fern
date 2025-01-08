@@ -10,7 +10,8 @@ export interface ObjectSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     allOf: FernOpenapiIr.ReferencedSchema[];
     properties: FernOpenapiIr.ObjectProperty[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];

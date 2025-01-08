@@ -8,10 +8,10 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.Dummy.Generate(
+    client.Dummy.GenerateStream(
         context.TODO(),
-        &v2.Generateequest{
-            NumEvents: 5,
+        &v2.GenerateStreamRequest{
+            NumEvents: 1,
         },
     )
 }

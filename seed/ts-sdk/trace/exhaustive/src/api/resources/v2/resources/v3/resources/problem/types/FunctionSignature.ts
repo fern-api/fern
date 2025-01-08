@@ -12,28 +12,30 @@ export type FunctionSignature =
     | SeedTrace.v2.v3.FunctionSignature.VoidThatTakesActualResult
     | SeedTrace.v2.v3.FunctionSignature._Unknown;
 
-export declare namespace FunctionSignature {
-    interface Void extends SeedTrace.v2.v3.VoidFunctionSignature, _Utils {
+export namespace FunctionSignature {
+    export interface Void extends SeedTrace.v2.v3.VoidFunctionSignature, _Utils {
         type: "void";
     }
 
-    interface NonVoid extends SeedTrace.v2.v3.NonVoidFunctionSignature, _Utils {
+    export interface NonVoid extends SeedTrace.v2.v3.NonVoidFunctionSignature, _Utils {
         type: "nonVoid";
     }
 
-    interface VoidThatTakesActualResult extends SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult, _Utils {
+    export interface VoidThatTakesActualResult
+        extends SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult,
+            _Utils {
         type: "voidThatTakesActualResult";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         void: (value: SeedTrace.v2.v3.VoidFunctionSignature) => _Result;
         nonVoid: (value: SeedTrace.v2.v3.NonVoidFunctionSignature) => _Result;
         voidThatTakesActualResult: (value: SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult) => _Result;
@@ -48,7 +50,7 @@ export const FunctionSignature = {
             type: "void",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.Void,
-                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.FunctionSignature._visit(this, visitor);
             },
@@ -61,7 +63,7 @@ export const FunctionSignature = {
             type: "nonVoid",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.NonVoid,
-                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.FunctionSignature._visit(this, visitor);
             },
@@ -69,14 +71,14 @@ export const FunctionSignature = {
     },
 
     voidThatTakesActualResult: (
-        value: SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult
+        value: SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult,
     ): SeedTrace.v2.v3.FunctionSignature.VoidThatTakesActualResult => {
         return {
             ...value,
             type: "voidThatTakesActualResult",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature.VoidThatTakesActualResult,
-                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.FunctionSignature._visit(this, visitor);
             },
@@ -88,7 +90,7 @@ export const FunctionSignature = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.FunctionSignature._Unknown,
-                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.FunctionSignature._visit(this, visitor);
             },
@@ -97,7 +99,7 @@ export const FunctionSignature = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.v3.FunctionSignature,
-        visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>
+        visitor: SeedTrace.v2.v3.FunctionSignature._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "void":

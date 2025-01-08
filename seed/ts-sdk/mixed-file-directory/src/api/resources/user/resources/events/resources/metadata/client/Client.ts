@@ -9,17 +9,19 @@ import * as serializers from "../../../../../../../../serialization/index";
 import * as errors from "../../../../../../../../errors/index";
 
 export declare namespace Metadata {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,7 +41,7 @@ export class Metadata {
      */
     public async getMetadata(
         request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-        requestOptions?: Metadata.RequestOptions
+        requestOptions?: Metadata.RequestOptions,
     ): Promise<SeedMixedFileDirectory.user.events.Metadata> {
         const { id } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -54,6 +56,7 @@ export class Metadata {
                 "User-Agent": "@fern/mixed-file-directory/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -85,7 +88,9 @@ export class Metadata {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError();
+                throw new errors.SeedMixedFileDirectoryTimeoutError(
+                    "Timeout exceeded when calling GET /users/events/metadata/.",
+                );
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({
                     message: _response.error.errorMessage,

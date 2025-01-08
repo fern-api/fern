@@ -58,6 +58,7 @@
         "types": {
           "AzureAudience": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "optional<string>",
               "id": "optional<string>",
@@ -68,6 +69,7 @@
           },
           "AzureGovernmentCertification": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "title": "optional<string>",
               "uri": "optional<string>",
@@ -79,6 +81,7 @@
           },
           "AzureIncludedBaseQuantity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isInfinite": "optional<boolean>",
               "quantity": "optional<double>",
@@ -93,12 +96,14 @@
               "Monthly",
               "Annual",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureListingContact": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email": "optional<string>",
               "name": "optional<string>",
@@ -116,12 +121,14 @@
               "Engineering",
               "ChannelManager",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureListingUri": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "displayText": "optional<string>",
               "subtype": "optional<string>",
@@ -134,6 +141,7 @@
           },
           "AzureLocalizedDateTime": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dateTimeInUtc": "optional<string>",
               "localizePerMarket": "optional<boolean>",
@@ -144,6 +152,7 @@
           },
           "AzureLocalizedTimeRange": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endAt": "optional<AzureLocalizedDateTime>",
               "startAt": "optional<AzureLocalizedDateTime>",
@@ -154,6 +163,7 @@
           },
           "AzureMarket": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "friendlyName": "optional<string>",
               "marketCode": {
@@ -167,6 +177,7 @@
           },
           "AzureMarketState": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "marketCode": {
                 "docs": "ISO Country Code",
@@ -185,12 +196,14 @@
               "StopSelling",
               "Terminated",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureMarketplacePrice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currency": {
                 "docs": "ISO 4217 currency code",
@@ -209,6 +222,7 @@
           },
           "AzureMarketplacePrivateOffer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "$schema": "optional<string>",
               "acceptBy": {
@@ -262,6 +276,7 @@
           },
           "AzureMarketplacePrivateOfferAcceptanceLink": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "beneficiaryId": {
                 "docs": "The Customer Billing Account ID.",
@@ -275,6 +290,7 @@
           },
           "AzureMarketplacePrivateOfferBeneficiary": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "beneficiaryRecipients": "optional<list<AzureMarketplacePrivateOfferBeneficiaryRecipient>>",
               "description": "optional<string>",
@@ -289,6 +305,7 @@
           },
           "AzureMarketplacePrivateOfferBeneficiaryRecipient": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "optional<string>",
               "recipientType": "optional<AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType>",
@@ -302,12 +319,14 @@
               "cspCustomer",
               "billingGroup",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureMarketplacePrivateOfferPricing": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "discountPercentage": {
                 "docs": "between 0 and 100",
@@ -347,6 +366,7 @@
               "percentage",
               "absolute",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -357,6 +377,7 @@
               "FLAT_RATE",
               "PER_USER",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -366,12 +387,14 @@
               "customerPromotion",
               "cspPromotion",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureMarketplacePrivateOfferPromotionReference": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "optional<string>",
               "name": "optional<string>",
@@ -387,6 +410,7 @@
               "withdrawn",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -396,12 +420,14 @@
               "pendingAcceptance",
               "accepted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureMarketplaceTerm": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": "optional<AzureMarketplaceTermType>",
               "value": {
@@ -420,12 +446,14 @@
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureMarketplaceValidation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "$schema": "optional<string>",
               "code": "optional<AzureMarketplaceValidationCode>",
@@ -453,6 +481,7 @@
               "resourceNotFound",
               "schemaValidationError",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -462,12 +491,14 @@
               "informational",
               "warning",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzurePendingUpdateInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "status": "optional<string>",
               "updateType": "optional<string>",
@@ -478,6 +509,7 @@
           },
           "AzurePrice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currencyCode": {
                 "docs": "ISO currency code, Three characters",
@@ -492,6 +524,7 @@
           },
           "AzurePriceAndAvailabilityPrivateOfferCustomMeters": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "meters": "optional<unknown>",
               "priceInputOption": {
@@ -509,12 +542,14 @@
               "perMarket",
               "usd",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzurePriceAndAvailabilityPrivateOfferPlan": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "$schema": "optional<string>",
               "id": "optional<string>",
@@ -530,6 +565,7 @@
           },
           "AzurePriceAndAvailabilityPrivateOfferPrice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "customMeters": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMeters>",
               "recurrentPrice": "optional<AzurePriceAndAvailabilityRecurrentPrice>",
@@ -540,6 +576,7 @@
           },
           "AzurePriceAndAvailabilityRecurrentPrice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "priceInputOption": {
                 "docs": "default "usd"",
@@ -553,6 +590,7 @@
           },
           "AzurePriceAndAvailabilityRecurrentPriceItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "billingTerm": "optional<AzureMarketplaceTerm>",
               "paymentOption": "optional<AzureMarketplaceTerm>",
@@ -569,12 +607,14 @@
               "perMarket",
               "usd",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzurePriceCadence": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": "optional<AzurePriceCadenceType>",
               "value": "optional<integer>",
@@ -588,12 +628,14 @@
               "Month",
               "Year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzurePriceSchedule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "priceCadence": "optional<AzurePriceCadence>",
               "pricingModel": "optional<AzurePriceSchedulePricingModel>",
@@ -610,12 +652,14 @@
               "Recurring",
               "Usage",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzurePricingUnit": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isUnlimitedUnit": "optional<boolean>",
               "lowerUnit": "optional<integer>",
@@ -632,12 +676,14 @@
               "sharedcore",
               "transactions",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "availabilities": "optional<list<AzureProductAvailability>>",
               "branches": "optional<list<AzureProductBranch>>",
@@ -662,6 +708,7 @@
           },
           "AzureProductAvailability": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "emailAudiences": "optional<list<AzureAudience>>",
               "enterpriseLicensing": "optional<string>",
@@ -676,6 +723,7 @@
           },
           "AzureProductBranch": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currentDraftInstanceID": "optional<string>",
               "friendlyName": "optional<string>",
@@ -691,6 +739,7 @@
           },
           "AzureProductFeatureAvailability": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "customMeters": "optional<list<AzureProductVariantCustomMeter>>",
               "id": "optional<string>",
@@ -717,12 +766,14 @@
               "Public",
               "Private",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProductListing": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessInformation": "optional<string>",
               "assets": {
@@ -750,6 +801,7 @@
           },
           "AzureProductListingAsset": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "optional<string>",
               "fileName": "optional<string>",
@@ -772,6 +824,7 @@
               "ListingImage",
               "ListingVideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -784,12 +837,14 @@
               "Processed",
               "ProcessFailed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProductPackageConfiguration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "azureActiveDirectoryApplicationID": "optional<string>",
               "azureActiveDirectoryTenantID": "optional<string>",
@@ -804,6 +859,7 @@
           },
           "AzureProductProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "additionalCategories": "optional<list<string>>",
               "appVersion": "optional<string>",
@@ -830,6 +886,7 @@
           },
           "AzureProductSetup": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "callToAction": "optional<AzureProductSetupCallToAction>",
               "channelStates": "optional<list<AzureTypeValue>>",
@@ -855,6 +912,7 @@
                 "value": "contact-me",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -864,12 +922,14 @@
               "ListingOnly",
               "ListAndSell",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProductSubmission": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "areResourcesReady": "optional<boolean>",
               "friendlyName": "optional<string>",
@@ -893,6 +953,7 @@
               "Inprogress",
               "Published",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -908,12 +969,14 @@
               "Published",
               "InStore",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProductVariant": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "azureGovernmentCertifications": "optional<list<AzureGovernmentCertification>>",
               "cloudAvailabilities": "optional<list<string>>",
@@ -937,6 +1000,7 @@
           },
           "AzureProductVariantCustomMeter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "displayName": "optional<string>",
               "id": "optional<string>",
@@ -952,6 +1016,7 @@
           },
           "AzureProductVariantPriceSchedule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dateTimeRange": "optional<AzureLocalizedTimeRange>",
               "friendlyName": "optional<string>",
@@ -974,6 +1039,7 @@
               "AzureSkuVariant",
               "AzureTestDriveVariant",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -983,12 +1049,14 @@
               "InActive",
               "Active",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureProductVariantTrial": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dateTimeRange": "optional<AzureLocalizedTimeRange>",
               "duration": "optional<integer>",
@@ -1005,6 +1073,7 @@
               "Days",
               "Months",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1016,12 +1085,14 @@
               "TimedUsage",
               "Unlimited",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "AzureTypeValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": "optional<string>",
               "value": "optional<string>",
@@ -1032,6 +1103,7 @@
           },
           "AzureValidationResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "errorMessage": "optional<string>",
               "memberNames": "optional<list<string>>",
@@ -1042,6 +1114,7 @@
           },
           "AzureVariantResource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "resources": "optional<list<AzureTypeValue>>",
               "variantID": "optional<string>",
@@ -1052,6 +1125,7 @@
           },
           "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": {
                 "docs": "One part of a key-value pair that makes up a tag. A key is a label that acts
@@ -1074,6 +1148,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "result": "optional<list<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage>>",
@@ -1084,6 +1159,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dimension": {
                 "docs": "Dimension identifier",
@@ -1129,6 +1205,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "additionalInfo": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo>",
               "code": "optional<string>",
@@ -1140,6 +1217,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acceptedMessage": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse>",
             },
@@ -1149,6 +1227,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dimension": {
                 "docs": "Dimension identifier",
@@ -1203,12 +1282,14 @@ This member is required.",
               "InvalidQuantity",
               "BadArgument",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": "optional<string>",
               "agreementID": "optional<string>",
@@ -1245,6 +1326,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "azureAssetID": "optional<string>",
               "azureBillingAccountID": "optional<string>",
@@ -1270,6 +1352,7 @@ This member is required.",
           },
           "GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "abandoned": "optional<double>",
               "accountID": "optional<string>",
@@ -1305,6 +1388,7 @@ This member is required.",
           },
           "MarketplacemeteringBatchMeterUsageOutput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "resultMetadata": {
                 "docs": "Metadata pertaining to the operation's result.",
@@ -1330,6 +1414,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
           "MiddlewareMetadata": "map<string, unknown>",
           "ServicecontrolReportError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "operationId": {
                 "docs": "OperationId: The Operation.operation_id value from the request.",
@@ -1346,6 +1431,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
           },
           "ServicecontrolReportResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reportErrors": {
                 "docs": "ReportErrors: Partial failures, one for each `Operation` in the
@@ -1378,6 +1464,7 @@ request.",
           },
           "ServicecontrolStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Code: The status code, which should be an enum value of
@@ -1402,6 +1489,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAddEntitlementCreditResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "creditAmountIncrement": {
                 "docs": "The amount to be added to the credit amount.",
@@ -1421,6 +1509,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedApiClientAccessToken": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": "optional<string>",
               "expires_in": {
@@ -1439,6 +1528,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsAccountIdentifier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsAccountID": {
                 "docs": "The AWS Account ID of the buyer in AWS Marketplace",
@@ -1460,6 +1550,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsAceIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential": "optional<SharedAwsIntegrationCredential>",
               "partnerId": {
@@ -1485,6 +1576,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsIntegrationCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessKeyId": {
                 "docs": "The access key ID of the IAM user for Suger service to access the client's AWS services.",
@@ -1505,6 +1597,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsMarketplaceIntegration": {
             "docs": "The data struct to store integration info for Suger service to access the client's AWS services.",
+            "inline": undefined,
             "properties": {
               "externalID": {
                 "docs": "The external ID for assuming IAM role. If empty, means no external ID set or needed. Otherwise, it should be auth_id in table identity.organization.",
@@ -1561,6 +1654,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "Description": "optional<SharedAwsSaasProductDescription>",
               "Dimensions": "optional<list<SharedAwsSaasProductDimension>>",
@@ -1579,6 +1673,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductAdditionalResource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "Text": "optional<string>",
               "Type": "optional<string>",
@@ -1590,6 +1685,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductDeliveryOption": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "FulfillmentUrl": "optional<string>",
               "Id": "optional<string>",
@@ -1601,6 +1697,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductDescription": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "AssociatedProducts": "optional<string>",
               "Categories": "optional<list<string>>",
@@ -1623,6 +1720,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductDimension": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "Description": "optional<string>",
               "Key": "optional<string>",
@@ -1636,6 +1734,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductPromotionalResources": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "AdditionalResources": "optional<list<SharedAwsSaasProductAdditionalResource>>",
               "LogoUrl": "optional<string>",
@@ -1646,6 +1745,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductSupportInformation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "Description": "optional<string>",
             },
@@ -1655,6 +1755,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSaasProductVersion": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "DeliveryOptions": "optional<list<SharedAwsSaasProductDeliveryOption>>",
               "Id": "optional<string>",
@@ -1665,6 +1766,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAwsSnsSubscription": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "Endpoint": "optional<string>",
               "Protocol": "optional<string>",
@@ -1682,12 +1784,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "CONFIRMED",
               "PENDING_CONFIRMATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedAzureAdIdentifier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "buyerInfo": "optional<SharedAzureBuyerInfo>",
               "companyInfo": "optional<SharedCompanyInfo>",
@@ -1708,6 +1812,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAzureBuyerInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "billingAccountId": "optional<string>",
               "customerId": "optional<string>",
@@ -1720,6 +1825,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAzureIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cmaFullSyncDone": {
                 "docs": "Is Azure Commercial Marketplace Analytics (CMA) full-sync done.",
@@ -1737,6 +1843,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAzureIntegrationCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessToken": "optional<string>",
               "clientID": "optional<string>",
@@ -1759,6 +1866,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedAzureMarketplaceSubscription": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowedCustomerOperations": "optional<list<SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem>>",
               "autoRenew": "optional<boolean>",
@@ -1792,6 +1900,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "Update",
               "Delete",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1801,6 +1910,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "None",
               "Csp",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1810,6 +1920,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "None",
               "DryRun",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1822,12 +1933,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "Suspended",
               "Unsubscribed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedAzureTerm": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chargeDuration": "optional<string>",
               "endDate": "optional<datetime>",
@@ -1840,6 +1953,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedBuyerInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsBuyer": {
                 "docs": "Buyer from AWS Marketplace",
@@ -1872,6 +1986,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedCommitDimension": {
             "docs": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
+            "inline": undefined,
             "properties": {
               "category": "optional<string>",
               "description": "optional<string>",
@@ -1940,6 +2055,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "MONTH",
               "YEAR",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -1949,12 +2065,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "FLAT_RATE",
               "PER_USER",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedCompanyInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "addressLine1": "optional<string>",
               "addressLine2": "optional<string>",
@@ -1971,6 +2089,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedContact": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "company": "optional<string>",
               "email": "optional<string>",
@@ -1982,6 +2101,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedEntitlementInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "autoRenew": {
                 "docs": "Is this Entitlement Auto Renew enabled.",
@@ -2050,6 +2170,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedEntitlementTermInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": "optional<SharedEntitlementTermType>",
             },
@@ -2069,12 +2190,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "QuantityChange",
               "Signup",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedEntitlementUsageRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amounts": "optional<list<double>>",
               "date": "optional<datetime>",
@@ -2094,6 +2217,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "ENTITLEMENT_TERM",
               "INTEGRATION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2110,12 +2234,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "ISV",
               "CURRENT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedGcpCommerceProducerExternalAccountSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loginUri": "optional<string>",
               "signupUri": "optional<string>",
@@ -2127,6 +2253,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerListingSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "externalAccountSpec": "optional<SharedGcpCommerceProducerExternalAccountSpec>",
               "listingType": "optional<literal<"BillingIntegratedManagedService">>",
@@ -2139,6 +2266,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerMarketingSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "optional<string>",
               "displayNames": {
@@ -2167,6 +2295,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPrice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currencyCode": {
                 "docs": "ISO currency code, Three UPPER_CASE characters",
@@ -2187,6 +2316,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPriceInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "optional<string>",
               "priceModel": "optional<SharedGcpCommerceProducerPriceModel>",
@@ -2210,12 +2340,14 @@ in the google.rpc.Status.details field, or localized by the client.",
               "USAGE",
               "SUBSCRIPTION_PLUS_USAGE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedGcpCommerceProducerPriceSubscription": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "period": "optional<literal<"ONE_YEAR">>",
               "price": {
@@ -2230,6 +2362,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPriceTier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endUsageAmount": {
                 "docs": "The usage amount below which this tier is effective.",
@@ -2250,6 +2383,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPriceUsage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "displayQuantity": {
                 "docs": "Default value is 1.",
@@ -2268,6 +2402,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPurchaseMetric": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Description: A detailed description of the metric, which can be used in documentation.",
@@ -2295,6 +2430,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerPurchaseSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "metrics": "optional<list<SharedGcpCommerceProducerPurchaseMetric>>",
               "purchaseOptionSpecs": "optional<list<SharedGcpPurchasePlan>>",
@@ -2305,6 +2441,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerServiceBilling": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "metrics": {
                 "docs": "in format of ["{product-name}.endpoints.{provider-id}.cloud.goog/{plan_key}_{usage_dimension_key}"]",
@@ -2317,6 +2454,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerServiceConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "billing": "optional<SharedGcpCommerceProducerServiceBilling>",
               "metrics": {
@@ -2339,6 +2477,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpCommerceProducerSupportSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "optional<string>",
               "email": "optional<string>",
@@ -2350,6 +2489,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "gcpProjectId": "optional<string>",
               "gcpProjectNumber": "optional<string>",
@@ -2387,6 +2527,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpMarketplaceConsumer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "project": {
                 "docs": "The project name with format `projects/`.",
@@ -2399,6 +2540,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           },
           "SharedGcpMarketplaceEntitlement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account": {
                 "docs": "The resource name of the account that this entitlement is based on, if any, in format ""providers/{provider_id}/accounts/{account_id}"",
@@ -2554,12 +2696,14 @@ This field is present only if the product has usage-based billing configured.",
                 "value": "ENTITLEMENT_SUSPENDED",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedGcpMarketplaceUserAccount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "approvals": {
                 "docs": "The approvals for this account, that are permitted or have been completed.",
@@ -2598,6 +2742,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedGcpMarketplaceUserAccountApproval": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": "optional<string>",
               "reason": {
@@ -2621,6 +2766,7 @@ This field is present only if the product has usage-based billing configured.",
               "APPROVED",
               "REJECTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2636,12 +2782,14 @@ This field is present only if the product has usage-based billing configured.",
                 "value": "ACCOUNT_ACTIVE",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedGcpProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createTime": "optional<datetime>",
               "id": {
@@ -2666,6 +2814,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedGcpPurchasePlan": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The Plan key.",
@@ -2684,6 +2833,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedGcpUserInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "roles": {
                 "docs": "An array of strings representing the user's roles. Right now, it can be either: ** account_admin, which indicates that the user is a Billing Account Administrator of the billing account that purchased the product, or ** project_editor, which indicates that the user is a Project Editor, but not a Billing Administrator, of the project under that billing account.",
@@ -2700,6 +2850,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedHubspotCrmCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessToken": "optional<string>",
               "acquiredOn": {
@@ -2715,6 +2866,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedHubspotCrmIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential": "optional<SharedHubspotCrmCredential>",
               "portalId": {
@@ -2729,6 +2881,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedIdentityBuyer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "creationTime": "optional<datetime>",
               "description": "optional<string>",
@@ -2750,12 +2903,14 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedIdentityIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdBy": "optional<string>",
               "creationTime": "optional<datetime>",
@@ -2777,6 +2932,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -2787,12 +2943,14 @@ This field is present only if the product has usage-based billing configured.",
               "VERIFIED",
               "NOT_VERIFIED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedIntegrationInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsAceIntegration": {
                 "docs": "AWS ACE Integration",
@@ -2826,6 +2984,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedListRevenueRecordDetailsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "nextOffset": "optional<integer>",
               "revenueRecordDetails": "optional<list<SharedRevenueRecordDetail>>",
@@ -2836,6 +2995,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedListRevenueRecordsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "nextOffset": "optional<integer>",
               "revenueRecords": "optional<list<SharedRevenueRecord>>",
@@ -2846,6 +3006,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedListUsageRecordGroupsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "nextOffset": "optional<integer>",
               "usageRecordGroups": "optional<list<SharedMeteringUsageRecordGroup>>",
@@ -2856,6 +3017,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedListUsageRecordReportsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "nextOffset": "optional<integer>",
               "usageRecordReports": "optional<list<SharedMeteringUsageRecordReport>>",
@@ -2866,6 +3028,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedMeteringDimension": {
             "docs": "The dimension to meter usage in entitlement.",
+            "inline": undefined,
             "properties": {
               "category": "optional<string>",
               "description": "optional<string>",
@@ -2892,6 +3055,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedMeteringUsageRecordGroup": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "creationTime": "optional<datetime>",
               "entitlementID": "optional<string>",
@@ -2910,6 +3074,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedMeteringUsageRecordGroupMetaInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "originRecords": {
                 "docs": "The original records reported by the customer before convertion. If no dimension mapping is applied, this field is the same as the records field.",
@@ -2922,6 +3087,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedMeteringUsageRecordReport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "creationTime": "optional<datetime>",
               "entitlementID": "optional<string>",
@@ -2937,6 +3103,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedMeteringUsageRecordReportInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsMeteringResponse": {
                 "docs": "The raw response from AWS metering service.",
@@ -3009,6 +3176,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedNotificationEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": "optional<SharedNotificationEventAction>",
               "entityID": "optional<string>",
@@ -3054,6 +3222,7 @@ This field is present only if the product has usage-based billing configured.",
               "NOTIFY_CONTACTS",
               "TEST",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3069,12 +3238,14 @@ This field is present only if the product has usage-based billing configured.",
               "DONE",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedOfferInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "azureOriginalPlan": {
                 "docs": "The origin pricing of Azure plan. Only applicable for Azure Marketplace plans.",
@@ -3135,12 +3306,14 @@ This field is present only if the product has usage-based billing configured.",
               "PRIVATE",
               "PUBLIC",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedOfferMetaInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "baseAgreementId": {
                 "docs": "Applicable for AWS Marketplace only, when the IsAgreementBasedOffer is true.",
@@ -3169,6 +3342,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedOperation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endTime": "optional<datetime>",
               "id": {
@@ -3188,6 +3362,7 @@ This field is present only if the product has usage-based billing configured.",
           "SharedOperationType": "literal<"TemporalWorkflow">",
           "SharedPaymentInstallment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "optional<double>",
               "chargeOn": "optional<datetime>",
@@ -3198,6 +3373,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedProductInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attributes": "optional<map<string, string>>",
               "awsSaasProduct": "optional<SharedAwsSaasProduct>",
@@ -3217,6 +3393,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedRevenueRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The revenue amount for the revenue report",
@@ -3258,6 +3435,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedRevenueRecordDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsRevenueRecordDetail": {
                 "docs": "For AWS Marketplace",
@@ -3278,6 +3456,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedRevenueRecordInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "awsRevenueRecords": {
                 "docs": "For raw revenue records in AWS Marketplace",
@@ -3298,6 +3477,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedRevenueReport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "buyerID": "optional<string>",
               "entitlementID": "optional<string>",
@@ -3319,12 +3499,14 @@ This field is present only if the product has usage-based billing configured.",
               "CollectableAmount",
               "DisbursedAmount",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedSalesforceCrmCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": "optional<string>",
               "exp": "optional<integer>",
@@ -3337,6 +3519,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedSalesforceCrmIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential": {
                 "docs": "System created",
@@ -3357,6 +3540,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedSalesforceSyncFilter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "fieldName": "optional<string>",
               "operator": "optional<string>",
@@ -3368,6 +3552,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedSlackIntegration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessToken": "optional<string>",
               "appId": "optional<string>",
@@ -3391,6 +3576,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedUsageCount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "creditCount": {
                 "docs": "The count of this dimension usage records that are handled as credit.",
@@ -3411,6 +3597,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SharedUsageReport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "entitlementID": "optional<string>",
               "organizationID": "optional<string>",
@@ -3434,12 +3621,14 @@ This field is present only if the product has usage-based billing configured.",
               "DISTRIBUTION",
               "MONEY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedWorkloadEntitlement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "buyerID": "optional<string>",
               "creationTime": "optional<datetime>",
@@ -3474,6 +3663,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3486,12 +3676,14 @@ This field is present only if the product has usage-based billing configured.",
               "PENDING_START",
               "UNKNOWN",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedWorkloadEntitlementTerm": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "buyerID": "optional<string>",
               "commitAmount": "optional<double>",
@@ -3524,12 +3716,14 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedWorkloadOffer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdBy": "optional<string>",
               "creationTime": "optional<datetime>",
@@ -3570,6 +3764,7 @@ This field is present only if the product has usage-based billing configured.",
               "PRIVATE",
               "UNKNOWN",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3580,6 +3775,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3597,12 +3793,14 @@ This field is present only if the product has usage-based billing configured.",
               "CANCEL_FAILED",
               "CANCEL_SUCCESS",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SharedWorkloadProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdBy": "optional<string>",
               "creationTime": "optional<datetime>",
@@ -3629,6 +3827,7 @@ This field is present only if the product has usage-based billing configured.",
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3642,12 +3841,14 @@ This field is present only if the product has usage-based billing configured.",
               "PER_USER",
               "USAGE_BASED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
           },
           "SlackOAuthResponseIncomingWebhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "channel": "optional<string>",
               "channel_id": "optional<string>",
@@ -3660,6 +3861,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SlackOAuthV2ResponseAuthedUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": "optional<string>",
               "expires_in": "optional<integer>",
@@ -3674,6 +3876,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SlackOAuthV2ResponseEnterprise": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "optional<string>",
               "name": "optional<string>",
@@ -3684,6 +3887,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SlackOAuthV2ResponseTeam": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "optional<string>",
               "name": "optional<string>",
@@ -3694,6 +3898,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "SqlNullTime": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "time": "optional<string>",
               "valid": {
@@ -3707,6 +3912,7 @@ This field is present only if the product has usage-based billing configured.",
           },
           "TypesEntitlement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "customerIdentifier": {
                 "docs": "The customer identifier is a handle to each unique customer in an application.
@@ -3741,6 +3947,7 @@ provided by AWS Marketplace when the product listing is created.",
           },
           "TypesUsageAllocation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allocatedUsageQuantity": {
                 "docs": "The total quantity allocated to this bucket of usage.
@@ -3760,6 +3967,7 @@ tags, this parameter can be left out.",
           },
           "TypesUsageRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "customerIdentifier": {
                 "docs": "The CustomerIdentifier is obtained through the ResolveCustomer operation and
@@ -3800,6 +4008,7 @@ must equal the Quantity of the UsageRecord.",
           },
           "TypesUsageRecordResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "meteringRecordId": {
                 "docs": "The MeteringRecordId is a unique identifier for this metering event.",
@@ -3846,6 +4055,7 @@ the same customer, dimension, and time, but a different quantity.",
               "CustomerNotSubscribed",
               "DuplicateRecord",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -3895,6 +4105,7 @@ types:
     enum:
       - Monthly
       - Annual
+    inline: true
     source:
       openapi: ../swagger.json
   AzureIncludedBaseQuantity:
@@ -3909,6 +4120,7 @@ types:
       - CustomerSupport
       - Engineering
       - ChannelManager
+    inline: true
     source:
       openapi: ../swagger.json
   AzureListingContact:
@@ -3954,6 +4166,7 @@ types:
       - Enabled
       - StopSelling
       - Terminated
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketState:
@@ -3980,6 +4193,7 @@ types:
     enum:
       - customerPromotion
       - cspPromotion
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferState:
@@ -3988,12 +4202,14 @@ types:
       - live
       - withdrawn
       - deleted
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferSubState:
     enum:
       - pendingAcceptance
       - accepted
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOffer:
@@ -4062,6 +4278,7 @@ types:
     enum:
       - cspCustomer
       - billingGroup
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferBeneficiaryRecipient:
@@ -4074,6 +4291,7 @@ types:
     enum:
       - percentage
       - absolute
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferPricingPlanType:
@@ -4081,6 +4299,7 @@ types:
       - FLAT_RATE
       - PER_USER
     docs: The type of the plan, FLAT_RATE or PER_USER.
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplacePrivateOfferPricing:
@@ -4121,6 +4340,7 @@ types:
       - week
       - month
       - year
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceTerm:
@@ -4146,12 +4366,14 @@ types:
       - productLocked
       - resourceNotFound
       - schemaValidationError
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceValidationLevel:
     enum:
       - informational
       - warning
+    inline: true
     source:
       openapi: ../swagger.json
   AzureMarketplaceValidation:
@@ -4183,6 +4405,7 @@ types:
       - perMarket
       - usd
     docs: default "usd"
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceAndAvailabilityPrivateOfferCustomMeters:
@@ -4216,6 +4439,7 @@ types:
       - perMarket
       - usd
     docs: default "usd"
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceAndAvailabilityRecurrentPrice:
@@ -4238,6 +4462,7 @@ types:
     enum:
       - Month
       - Year
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceCadence:
@@ -4251,6 +4476,7 @@ types:
       - Flat
       - Recurring
       - Usage
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePriceSchedule:
@@ -4265,6 +4491,7 @@ types:
     enum:
       - sharedcore
       - transactions
+    inline: true
     source:
       openapi: ../swagger.json
   AzurePricingUnit:
@@ -4320,6 +4547,7 @@ types:
     enum:
       - Public
       - Private
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductFeatureAvailability:
@@ -4367,6 +4595,7 @@ types:
       - ListingAsset
       - ListingImage
       - ListingVideo
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductListingAssetState:
@@ -4376,6 +4605,7 @@ types:
       - InProcessing
       - Processed
       - ProcessFailed
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductListingAsset:
@@ -4431,12 +4661,14 @@ types:
         name: FreeTrial
       - value: contact-me
         name: ContactMe
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSetupSellingOption:
     enum:
       - ListingOnly
       - ListAndSell
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSetup:
@@ -4454,6 +4686,7 @@ types:
     enum:
       - Inprogress
       - Published
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSubmissionSubState:
@@ -4466,6 +4699,7 @@ types:
       - Publishing
       - Published
       - InStore
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductSubmission:
@@ -4488,12 +4722,14 @@ types:
     enum:
       - AzureSkuVariant
       - AzureTestDriveVariant
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantState:
     enum:
       - InActive
       - Active
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariant:
@@ -4543,6 +4779,7 @@ types:
       - Minute
       - Days
       - Months
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantTrialType:
@@ -4551,6 +4788,7 @@ types:
       - TimedAccess
       - TimedUsage
       - Unlimited
+    inline: true
     source:
       openapi: ../swagger.json
   AzureProductVariantTrial:
@@ -5149,18 +5387,21 @@ types:
       - Read
       - Update
       - Delete
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscriptionSandboxType:
     enum:
       - None
       - Csp
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscriptionSessionMode:
     enum:
       - None
       - DryRun
+    inline: true
     source:
       openapi: ../swagger.json
   SharedAzureMarketplaceSubscription:
@@ -5944,6 +6185,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityBuyer:
@@ -5964,6 +6206,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityIntegrationStatus:
@@ -5971,6 +6214,7 @@ types:
       - CREATED
       - VERIFIED
       - NOT_VERIFIED
+    inline: true
     source:
       openapi: ../swagger.json
   SharedIdentityIntegration:
@@ -6207,6 +6451,7 @@ types:
       - PRIVATE
       - PUBLIC
     docs: The default visibility of offer is PRIVATE.
+    inline: true
     source:
       openapi: ../swagger.json
   SharedOfferInfo:
@@ -6497,6 +6742,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlementStatus:
@@ -6506,6 +6752,7 @@ types:
       - SUSPENDED
       - PENDING_START
       - UNKNOWN
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlement:
@@ -6538,6 +6785,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadEntitlementTerm:
@@ -6573,6 +6821,7 @@ types:
       - PER_USER
       - PRIVATE
       - UNKNOWN
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOfferPartner:
@@ -6580,6 +6829,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOfferStatus:
@@ -6594,6 +6844,7 @@ types:
       - PENDING_CANCEL
       - CANCEL_FAILED
       - CANCEL_SUCCESS
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadOffer:
@@ -6626,6 +6877,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadProductProductType:
@@ -6636,6 +6888,7 @@ types:
       - FLAT_RATE
       - PER_USER
       - USAGE_BASED
+    inline: true
     source:
       openapi: ../swagger.json
   SharedWorkloadProduct:
@@ -6928,6 +7181,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetApiClientAccessTokenParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7210,6 +7464,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7464,6 +7719,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedAddEntitlementCreditParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8127,6 +8383,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8149,6 +8406,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9208,6 +9466,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedCreateIntegrationParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9565,6 +9824,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedUpdateIntegrationParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9631,6 +9891,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9640,6 +9901,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9650,6 +9912,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9659,6 +9922,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9669,6 +9933,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9679,6 +9944,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9689,6 +9955,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9698,6 +9965,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9708,6 +9976,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -9717,6 +9986,7 @@ service:
               "MARKETPLACE",
               "CRM",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -10136,6 +10406,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   GetIntegrationRequestPartner:
@@ -10182,6 +10453,7 @@ types:
       - AWS
       - AZURE
       - GCP
+    inline: true
     source:
       openapi: ../swagger.json
   VerifyIntegrationRequestPartner:
@@ -10883,6 +11155,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedCreateUsageRecordGroupParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12082,9 +12355,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Bearer <token>",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "orgId": "orgId",
                     "partner": "AWS",
@@ -12166,16 +12437,6 @@ service:
                   "docs": "Cloud Partner",
                   "type": "ListOffersByPartnerRequestPartner",
                 },
-              },
-              "request": {
-                "headers": {
-                  "Authorization": {
-                    "docs": "Bearer Access Token",
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
-                "name": "ListOffersByPartnerRequest",
               },
               "response": {
                 "docs": "OK",
@@ -12296,6 +12557,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -12821,13 +13083,6 @@ service:
           type: ListOffersByPartnerRequestPartner
           docs: Cloud Partner
       display-name: list offers by partner
-      request:
-        name: ListOffersByPartnerRequest
-        headers:
-          Authorization:
-            type: string
-            name: authorization
-            docs: Bearer Access Token
       response:
         docs: OK
         type: list<root.SharedWorkloadOffer>
@@ -12837,8 +13092,7 @@ service:
         - path-parameters:
             orgId: orgId
             partner: AWS
-          headers:
-            Authorization: Bearer <token>
+          headers: {}
           response:
             body:
               - createdBy: createdBy
@@ -13592,6 +13846,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedUpdateProductParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13614,6 +13869,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -14089,6 +14345,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetRevenueReportParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14158,6 +14415,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetUsageReportParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14357,6 +14615,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -14367,6 +14626,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -14378,6 +14638,7 @@ service:
               "AZURE",
               "GCP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../swagger.json",
             },
@@ -14405,6 +14666,7 @@ service:
       - AZURE
       - GCP
     docs: Required.
+    inline: true
     source:
       openapi: ../swagger.json
 imports:

@@ -1,11 +1,13 @@
-import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { homedir } from "os";
 import { dirname } from "path";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
+
+import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { PosthogEvent } from "@fern-api/task-context";
+
 import { PosthogManager } from "./PosthogManager";
 
 const DISTINCT_ID_FILENAME = "id";

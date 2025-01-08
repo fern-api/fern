@@ -3,7 +3,6 @@
  */
 
 export type GithubCommitAndReleaseMode = "commit" | "release";
-
 export const GithubCommitAndReleaseMode = {
     Commit: "commit",
     Release: "release",

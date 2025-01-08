@@ -7,13 +7,13 @@ import * as core from "../../../../core";
 
 export type Error = SeedTrace.sysprop.getNumWarmInstances.Error._Unknown;
 
-export declare namespace Error {
-    interface _Unknown {
+export namespace Error {
+    export interface _Unknown {
         errorName: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -28,7 +28,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.sysprop.getNumWarmInstances.Error,
-        visitor: SeedTrace.sysprop.getNumWarmInstances.Error._Visitor<_Result>
+        visitor: SeedTrace.sysprop.getNumWarmInstances.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

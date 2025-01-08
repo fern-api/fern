@@ -8,22 +8,35 @@ import { A } from "./api/resources/a/client/Client";
 import { Folder } from "./api/resources/folder/client/Client";
 
 export declare namespace SeedApiClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedApiClient {
+    protected _a: A | undefined;
+    protected _folder: Folder | undefined;
+
     constructor(protected readonly _options: SeedApiClient.Options) {}
+
+    public get a(): A {
+        return (this._a ??= new A(this._options));
+    }
+
+    public get folder(): Folder {
+        return (this._folder ??= new Folder(this._options));
+    }
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -42,6 +55,7 @@ export class SeedApiClient {
                 "User-Agent": "@fern/folders/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -67,23 +81,11 @@ export class SeedApiClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _a: A | undefined;
-
-    public get a(): A {
-        return (this._a ??= new A(this._options));
-    }
-
-    protected _folder: Folder | undefined;
-
-    public get folder(): Folder {
-        return (this._folder ??= new Folder(this._options));
     }
 }

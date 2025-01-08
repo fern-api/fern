@@ -30,13 +30,13 @@ export const ExampleWebSocketMessageBody: core.serialization.Schema<
     });
 
 export declare namespace ExampleWebSocketMessageBody {
-    type Raw = ExampleWebSocketMessageBody.InlinedBody | ExampleWebSocketMessageBody.Reference;
+    export type Raw = ExampleWebSocketMessageBody.InlinedBody | ExampleWebSocketMessageBody.Reference;
 
-    interface InlinedBody extends ExampleInlinedRequestBody.Raw {
+    export interface InlinedBody extends ExampleInlinedRequestBody.Raw {
         type: "inlinedBody";
     }
 
-    interface Reference extends serializers.ExampleTypeReference.Raw {
+    export interface Reference extends serializers.ExampleTypeReference.Raw {
         type: "reference";
     }
 }

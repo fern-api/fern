@@ -9,17 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedAliasClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,7 +39,7 @@ export class SeedAliasClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`
+                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`,
             ),
             method: "GET",
             headers: {
@@ -47,6 +49,7 @@ export class SeedAliasClient {
                 "User-Agent": "@fern/alias/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -72,7 +75,7 @@ export class SeedAliasClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedAliasTimeoutError();
+                throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
             case "unknown":
                 throw new errors.SeedAliasError({
                     message: _response.error.errorMessage,

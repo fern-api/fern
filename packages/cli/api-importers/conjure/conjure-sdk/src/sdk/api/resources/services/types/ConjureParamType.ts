@@ -3,7 +3,6 @@
  */
 
 export type ConjureParamType = "path" | "query" | "body";
-
 export const ConjureParamType = {
     Path: "path",
     Query: "query",

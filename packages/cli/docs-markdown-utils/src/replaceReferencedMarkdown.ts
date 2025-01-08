@@ -1,7 +1,8 @@
-import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     // strip frontmatter from the referenced markdown

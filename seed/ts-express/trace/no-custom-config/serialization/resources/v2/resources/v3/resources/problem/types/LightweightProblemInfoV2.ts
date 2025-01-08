@@ -17,7 +17,7 @@ export const LightweightProblemInfoV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace LightweightProblemInfoV2 {
-    interface Raw {
+    export interface Raw {
         problemId: serializers.ProblemId.Raw;
         problemName: string;
         problemVersion: number;

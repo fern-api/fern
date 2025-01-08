@@ -9,17 +9,19 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace PropertyBasedError {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -47,6 +49,7 @@ export class PropertyBasedError {
                 "User-Agent": "@fern/error-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -72,7 +75,7 @@ export class PropertyBasedError {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedErrorPropertyError({
@@ -89,7 +92,9 @@ export class PropertyBasedError {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedErrorPropertyTimeoutError();
+                throw new errors.SeedErrorPropertyTimeoutError(
+                    "Timeout exceeded when calling GET /property-based-error.",
+                );
             case "unknown":
                 throw new errors.SeedErrorPropertyError({
                     message: _response.error.errorMessage,

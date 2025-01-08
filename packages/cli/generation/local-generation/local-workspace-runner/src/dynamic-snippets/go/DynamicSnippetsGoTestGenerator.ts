@@ -1,10 +1,12 @@
-import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
-import { TaskContext } from "@fern-api/task-context";
 import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
+import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
@@ -30,7 +32,9 @@ export class DynamicSnippetsGoTestGenerator {
         this.context.logger.debug("Generating dynamic snippet tests...");
         for (const [idx, request] of requests.entries()) {
             try {
-                const response = await this.dynamicSnippetsGenerator.generate(request);
+                const response = await this.dynamicSnippetsGenerator.generate(
+                    this.convertDynamicEndpointSnippetRequest(request)
+                );
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);
@@ -45,5 +49,21 @@ export class DynamicSnippetsGoTestGenerator {
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
         return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`));
+    }
+
+    /**
+     * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
+     * convention doesn't match.
+     */
+    private convertDynamicEndpointSnippetRequest(request: DynamicSnippets.EndpointSnippetRequest): Omit<
+        DynamicSnippets.EndpointSnippetRequest,
+        "baseUrl"
+    > & {
+        baseURL: string | undefined;
+    } {
+        return {
+            ...request,
+            baseURL: request.baseUrl
+        };
     }
 }

@@ -26,14 +26,14 @@ export const UnionWithDiscriminant: core.serialization.Schema<
     });
 
 export declare namespace UnionWithDiscriminant {
-    type Raw = UnionWithDiscriminant.Foo | UnionWithDiscriminant.Bar;
+    export type Raw = UnionWithDiscriminant.Foo | UnionWithDiscriminant.Bar;
 
-    interface Foo {
+    export interface Foo {
         _type: "foo";
         foo: Foo.Raw;
     }
 
-    interface Bar {
+    export interface Bar {
         _type: "bar";
         bar: Bar.Raw;
     }

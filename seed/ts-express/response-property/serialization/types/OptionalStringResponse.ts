@@ -12,5 +12,5 @@ export const OptionalStringResponse: core.serialization.Schema<
 > = core.serialization.lazyObject(() => serializers.StringResponse).optional();
 
 export declare namespace OptionalStringResponse {
-    type Raw = serializers.StringResponse.Raw | null | undefined;
+    export type Raw = serializers.StringResponse.Raw | null | undefined;
 }

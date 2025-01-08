@@ -1,4 +1,5 @@
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import {
     CustomCodeSample,
@@ -16,21 +17,25 @@ import {
     SchemaWithExample,
     SupportedSdkLanguage
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
+import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly";
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { hasIncompleteExample } from "../hasIncompleteExample";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private logger: Logger;
-    private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
+    constructor(
+        private readonly schemas: Record<string, SchemaWithExample>,
+        private readonly context: OpenAPIV3ParserContext
+    ) {
         this.schemas = schemas;
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas);
-        this.logger = logger;
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
+        this.logger = context.logger;
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
@@ -53,13 +58,15 @@ export class ExampleEndpointFactory {
 
             if (requestSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
-                    skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
+                    skipReadonly: shouldSkipReadOnly(endpoint.method),
                     schema: requestSchemaIdResponse.schema,
                     exampleId: undefined,
                     example: undefined,
                     options: {
                         isParameter: false,
                         ignoreOptionals: true
+                        // TODO(dsinghvi): Respect depth on request examples
+                        // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                     }
                 });
                 if (example != null) {
@@ -68,13 +75,15 @@ export class ExampleEndpointFactory {
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
                     const example = this.exampleTypeFactory.buildExample({
-                        skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
+                        skipReadonly: shouldSkipReadOnly(endpoint.method),
                         schema: requestSchemaIdResponse.schema,
                         exampleId,
                         example: rawExample,
                         options: {
                             isParameter: false,
                             ignoreOptionals: true
+                            // TODO(dsinghvi): Respect depth on request examples
+                            // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                         }
                     });
                     if (example != null) {
@@ -102,7 +111,7 @@ export class ExampleEndpointFactory {
                     exampleId: undefined,
                     example: undefined,
                     options: {
-                        maxDepth: 3,
+                        maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                         isParameter: false,
                         ignoreOptionals: false
                     }
@@ -110,8 +119,17 @@ export class ExampleEndpointFactory {
                 if (example != null) {
                     if (endpoint.response?.type === "json") {
                         responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)]);
-                    } else if (endpoint.response?.type === "streamingJson") {
-                        responseExamples.push([undefined, EndpointResponseExample.withStreaming([example])]);
+                    } else if (
+                        endpoint.response?.type === "streamingJson" ||
+                        endpoint.response?.type === "streamingSse"
+                    ) {
+                        responseExamples.push([
+                            undefined,
+                            EndpointResponseExample.withStreaming({
+                                sse: endpoint.response?.type === "streamingSse",
+                                events: [example]
+                            })
+                        ]);
                     }
                 }
             } else {
@@ -122,7 +140,7 @@ export class ExampleEndpointFactory {
                         exampleId,
                         example: rawExample,
                         options: {
-                            maxDepth: 3,
+                            maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                             isParameter: false,
                             ignoreOptionals: false
                         }
@@ -130,8 +148,17 @@ export class ExampleEndpointFactory {
                     if (example != null) {
                         if (endpoint.response?.type === "json") {
                             responseExamples.push([exampleId, EndpointResponseExample.withoutStreaming(example)]);
-                        } else if (endpoint.response?.type === "streamingJson") {
-                            responseExamples.push([exampleId, EndpointResponseExample.withStreaming([example])]);
+                        } else if (
+                            endpoint.response?.type === "streamingJson" ||
+                            endpoint.response?.type === "streamingSse"
+                        ) {
+                            responseExamples.push([
+                                undefined,
+                                EndpointResponseExample.withStreaming({
+                                    sse: endpoint.response?.type === "streamingSse",
+                                    events: [example]
+                                })
+                            ]);
                         }
                     }
                 }
@@ -413,7 +440,7 @@ function consolidateRequestResponseExamples(
         for (let idx = 0; idx < responseExamples.length; idx++) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const [responseId, responseExample] = responseExamples[idx]!;
-            if (responseId != null || visitedResponseIdx.has(idx)) {
+            if (responseId == null || visitedResponseIdx.has(idx)) {
                 continue;
             }
             if (requestId === responseId) {
@@ -442,7 +469,6 @@ function consolidateRequestResponseExamples(
         if (visitedResponseIdx.has(idx)) {
             continue;
         }
-
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const [responseId, responseExample] = responseExamples[idx]!;
 
@@ -493,7 +519,7 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     if (response == null) {
         return undefined;
     }
-    if (response.type !== "json" && response.type !== "streamingJson") {
+    if (response.type !== "json" && response.type !== "streamingJson" && response.type !== "streamingSse") {
         return { type: "unsupported" };
     }
     return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
@@ -571,7 +597,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     generatedName: property.key,
                     nameOverride: undefined,
                     availability: undefined,
-                    readonly: undefined
+                    readonly: undefined,
+                    inline: undefined
                 };
             })
             .filter(isNonNullish),
@@ -585,6 +612,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,
-        source: request.source
+        source: request.source,
+        inline: undefined
     });
 }

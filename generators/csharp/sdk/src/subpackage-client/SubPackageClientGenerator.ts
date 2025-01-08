@@ -1,11 +1,13 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -85,7 +87,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
         if (this.service != null && this.serviceId != null) {
             for (const endpoint of this.service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -93,7 +95,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 

@@ -1,4 +1,12 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import {
+    RawSchemas,
+    isRawAliasDefinition,
+    isRawObjectDefinition,
+    visitRawTypeDeclaration,
+    visitRawTypeReference
+} from "@fern-api/fern-definition-schema";
 import {
     DeclaredTypeName,
     ExampleContainer,
@@ -11,16 +19,10 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
-    isRawObjectDefinition,
-    RawSchemas,
-    visitRawTypeDeclaration,
-    visitRawTypeReference
-} from "@fern-api/fern-definition-schema";
-import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
+
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import {
@@ -99,8 +101,8 @@ export function convertTypeExample({
                 typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
                     : typeof rawSingleUnionType.type === "string"
-                    ? rawSingleUnionType.type
-                    : undefined;
+                      ? rawSingleUnionType.type
+                      : undefined;
 
             return ExampleTypeShape.union({
                 discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -123,7 +125,11 @@ export function convertTypeExample({
         },
         enum: (rawEnum) => {
             if (typeof example !== "string") {
-                throw new Error("Enum example is not a string");
+                const validValues = rawEnum.enum
+                    .map((enumEntry) => (typeof enumEntry === "string" ? enumEntry : enumEntry.value))
+                    .join(", ");
+
+                throw new Error(`Expected one of ${validValues}. Received ${example}`);
             }
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -141,7 +147,8 @@ export function convertTypeExample({
                     exampleResolver,
                     file: fileContainingType,
                     workspace,
-                    breadcrumbs: []
+                    breadcrumbs: [],
+                    depth: 0
                 });
                 if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({
@@ -158,7 +165,11 @@ export function convertTypeExample({
                     });
                 }
             }
-            throw new Error("Example doesn't match any of the undiscriminated unions");
+            const variantOptions = undiscriminatedUnion.union.map((variant) => {
+                return typeof variant === "string" ? variant : variant.type;
+            });
+            const validValues = variantOptions.join(", ");
+            throw new Error(`Expected one of ${validValues}. Received ${example}`);
         }
     });
 }
@@ -360,7 +371,7 @@ function convertPrimitiveExample({
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected string. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -370,7 +381,7 @@ function convertPrimitiveExample({
         },
         dateTime: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected ISO datetime. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.datetime({
@@ -381,13 +392,13 @@ function convertPrimitiveExample({
         },
         date: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected ISO date. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
         },
         base64: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected base64 encoded string. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -397,55 +408,55 @@ function convertPrimitiveExample({
         },
         uint: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected unsigned integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
         },
         uint64: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected unsigned 64-bit integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },
         float: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected float. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected double. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
         },
         long: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error(`Expected long. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
         },
         boolean: () => {
             if (typeof example !== "boolean") {
-                throw new Error("Example is not a boolean");
+                throw new Error(`Expected boolean. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
         },
         uuid: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected uuid. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
         },
         bigInteger: () => {
             if (typeof example !== "string") {
-                throw new Error("Example is not a string");
+                throw new Error(`Expected big integer. Received ${example}`);
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -664,10 +675,19 @@ function convertSingleUnionType({
                 throw new Error("Example is not an object");
             }
             const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
-            const rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+            let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
                 file: fileContainingType
             });
+            while (isRawAliasDefinition(rawDeclaration.declaration)) {
+                rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType:
+                        typeof rawDeclaration.declaration === "string"
+                            ? rawDeclaration.declaration
+                            : rawDeclaration.declaration.type,
+                    file: fileContainingType
+                });
+            }
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
                 throw new Error(`${rawValueType} is not an object`);
             }

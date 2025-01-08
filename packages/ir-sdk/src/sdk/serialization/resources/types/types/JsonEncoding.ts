@@ -10,5 +10,5 @@ export const JsonEncoding: core.serialization.ObjectSchema<serializers.JsonEncod
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace JsonEncoding {
-    interface Raw {}
+    export interface Raw {}
 }

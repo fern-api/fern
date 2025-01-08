@@ -9,18 +9,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Auth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -40,7 +42,7 @@ export class Auth {
      */
     public async getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentials.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
@@ -53,6 +55,7 @@ export class Auth {
                 "User-Agent": "@fern/oauth-client-credentials/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -88,7 +91,7 @@ export class Auth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedOauthClientCredentialsTimeoutError();
+                throw new errors.SeedOauthClientCredentialsTimeoutError("Timeout exceeded when calling POST /token.");
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsError({
                     message: _response.error.errorMessage,
@@ -110,7 +113,7 @@ export class Auth {
      */
     public async refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
-        requestOptions?: Auth.RequestOptions
+        requestOptions?: Auth.RequestOptions,
     ): Promise<SeedOauthClientCredentials.TokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
@@ -123,6 +126,7 @@ export class Auth {
                 "User-Agent": "@fern/oauth-client-credentials/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -158,7 +162,7 @@ export class Auth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedOauthClientCredentialsTimeoutError();
+                throw new errors.SeedOauthClientCredentialsTimeoutError("Timeout exceeded when calling POST /token.");
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsError({
                     message: _response.error.errorMessage,

@@ -5,7 +5,7 @@ package oauthclientcredentials
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/oauth-client-credentials/fern/core"
+	internal "github.com/oauth-client-credentials/fern/internal"
 )
 
 type GetTokenRequest struct {
@@ -102,6 +102,27 @@ type TokenResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *TokenResponse) GetAccessToken() string {
+	if t == nil {
+		return ""
+	}
+	return t.AccessToken
+}
+
+func (t *TokenResponse) GetExpiresIn() int {
+	if t == nil {
+		return 0
+	}
+	return t.ExpiresIn
+}
+
+func (t *TokenResponse) GetRefreshToken() *string {
+	if t == nil {
+		return nil
+	}
+	return t.RefreshToken
+}
+
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -113,18 +134,16 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TokenResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *TokenResponse) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

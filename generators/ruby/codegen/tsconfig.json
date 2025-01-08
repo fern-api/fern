@@ -2,5 +2,5 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../../../packages/commons/fs-utils" }, { "path": "../../commons" }]
+  "references": [{ "path": "../../../packages/commons/fs-utils" }, { "path": "../../base" }]
 }

@@ -12,5 +12,5 @@ export const MessageNamingSettingsSchema: core.serialization.Schema<
 > = core.serialization.enum_(["v1", "v2"]);
 
 export declare namespace MessageNamingSettingsSchema {
-    type Raw = "v1" | "v2";
+    export type Raw = "v1" | "v2";
 }

@@ -39,48 +39,48 @@ export type CodeExecutionUpdate =
      * Sent once a submission is graded and fully recorded. */
     | SeedTrace.CodeExecutionUpdate.Finished;
 
-export declare namespace CodeExecutionUpdate {
-    interface BuildingExecutor extends SeedTrace.BuildingExecutorResponse {
+export namespace CodeExecutionUpdate {
+    export interface BuildingExecutor extends SeedTrace.BuildingExecutorResponse {
         type: "buildingExecutor";
     }
 
-    interface Running extends SeedTrace.RunningResponse {
+    export interface Running extends SeedTrace.RunningResponse {
         type: "running";
     }
 
-    interface Errored extends SeedTrace.ErroredResponse {
+    export interface Errored extends SeedTrace.ErroredResponse {
         type: "errored";
     }
 
-    interface Stopped extends SeedTrace.StoppedResponse {
+    export interface Stopped extends SeedTrace.StoppedResponse {
         type: "stopped";
     }
 
-    interface Graded extends SeedTrace.GradedResponse {
+    export interface Graded extends SeedTrace.GradedResponse {
         type: "graded";
     }
 
-    interface GradedV2 extends SeedTrace.GradedResponseV2 {
+    export interface GradedV2 extends SeedTrace.GradedResponseV2 {
         type: "gradedV2";
     }
 
-    interface WorkspaceRan extends SeedTrace.WorkspaceRanResponse {
+    export interface WorkspaceRan extends SeedTrace.WorkspaceRanResponse {
         type: "workspaceRan";
     }
 
-    interface Recording extends SeedTrace.RecordingResponseNotification {
+    export interface Recording extends SeedTrace.RecordingResponseNotification {
         type: "recording";
     }
 
-    interface Recorded extends SeedTrace.RecordedResponseNotification {
+    export interface Recorded extends SeedTrace.RecordedResponseNotification {
         type: "recorded";
     }
 
-    interface InvalidRequest extends SeedTrace.InvalidRequestResponse {
+    export interface InvalidRequest extends SeedTrace.InvalidRequestResponse {
         type: "invalidRequest";
     }
 
-    interface Finished extends SeedTrace.FinishedResponse {
+    export interface Finished extends SeedTrace.FinishedResponse {
         type: "finished";
     }
 }

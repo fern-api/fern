@@ -2,121 +2,14 @@ package core
 
 import (
 	"bufio"
-	"context"
 	"encoding/json"
 	"io"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
-const (
-	// DefaultDataPrefix is the default prefix used for SSE streaming.
-	DefaultSSEDataPrefix = "data: "
-
-	// DefaultTerminator is the default terminator used for SSE streaming.
-	DefaultSSETerminator = "[DONE]"
-
-	// The default stream delimiter used to split messages.
-	defaultStreamDelimiter = '\n'
-)
-
-// Streamer calls APIs and streams responses using a *Stream.
-type Streamer[T any] struct {
-	client  HTTPClient
-	retrier *Retrier
-}
-
-// NewStreamer returns a new *Streamer backed by the given caller's HTTP client.
-func NewStreamer[T any](caller *Caller) *Streamer[T] {
-	return &Streamer[T]{
-		client:  caller.client,
-		retrier: caller.retrier,
-	}
-}
-
-// StreamParams represents the parameters used to issue an API streaming call.
-type StreamParams struct {
-	URL             string
-	Method          string
-	Prefix          string
-	Delimiter       string
-	Terminator      string
-	MaxAttempts     uint
-	Headers         http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	Client          HTTPClient
-	Request         interface{}
-	ErrorDecoder    ErrorDecoder
-}
-
-// Stream issues an API streaming call according to the given stream parameters.
-func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream[T], error) {
-	url := buildURL(params.URL, params.QueryParameters)
-	req, err := newRequest(
-		ctx,
-		url,
-		params.Method,
-		params.Headers,
-		params.Request,
-		params.BodyProperties,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	// If the call has been cancelled, don't issue the request.
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
-
-	client := s.client
-	if params.Client != nil {
-		// Use the HTTP client scoped to the request.
-		client = params.Client
-	}
-
-	var retryOptions []RetryOption
-	if params.MaxAttempts > 0 {
-		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
-
-	resp, err := s.retrier.Run(
-		client.Do,
-		req,
-		params.ErrorDecoder,
-		retryOptions...,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	// Check if the call was cancelled before we return the error
-	// associated with the call and/or unmarshal the response data.
-	if err := ctx.Err(); err != nil {
-		defer resp.Body.Close()
-		return nil, err
-	}
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer resp.Body.Close()
-		return nil, decodeError(resp, params.ErrorDecoder)
-	}
-
-	var opts []StreamOption
-	if params.Delimiter != "" {
-		opts = append(opts, WithDelimiter(params.Delimiter))
-	}
-	if params.Prefix != "" {
-		opts = append(opts, WithPrefix(params.Prefix))
-	}
-	if params.Terminator != "" {
-		opts = append(opts, WithTerminator(params.Terminator))
-	}
-
-	return NewStream[T](resp, opts...), nil
-}
+// defaultStreamDelimiter is the default stream delimiter used to split messages.
+const defaultStreamDelimiter = '\n'
 
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
@@ -262,18 +155,21 @@ func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
 }
 
 func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
-	var start int
+	var startIndex int
 	if s.options != nil && s.options.prefix != "" {
 		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
-			start = i + len(s.options.prefix)
+			startIndex = i + len(s.options.prefix)
 		}
 	}
-	data := bytes[start:]
-	if i := strings.Index(string(data), s.options.delimiter); i >= 0 {
-		data = data[:i+len(s.options.delimiter)]
+	data := bytes[startIndex:]
+	delimIndex := strings.Index(string(data), s.options.delimiter)
+	if delimIndex < 0 {
+		return startIndex + len(data), data, nil
 	}
-	n := start + len(data) + len(s.options.delimiter)
-	return n, data, nil
+	endIndex := delimIndex + len(s.options.delimiter)
+	parsedData := data[:endIndex]
+	n := startIndex + endIndex
+	return n, parsedData, nil
 }
 
 func (s *scannerStreamReader) isTerminated(bytes []byte) bool {

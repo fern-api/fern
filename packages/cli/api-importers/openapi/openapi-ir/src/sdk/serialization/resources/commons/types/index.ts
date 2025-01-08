@@ -4,6 +4,7 @@ export * from "./WithEncoding";
 export * from "./WithDescription";
 export * from "./WithAvailability";
 export * from "./WithName";
+export * from "./WithInline";
 export * from "./Source";
 export * from "./OpenApiSource";
 export * from "./ProtobufSource";

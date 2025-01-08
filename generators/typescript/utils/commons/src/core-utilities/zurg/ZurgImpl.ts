@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Reference } from "../../referencing";
 import { CoreUtility } from "../CoreUtility";
 import { Zurg } from "./Zurg";
@@ -77,7 +79,28 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     private getObjectUtils(objectSchema: Zurg.BaseSchema): Zurg.ObjectUtils {
         return {
-            extend: (extension) => this.extend(objectSchema, extension)
+            extend: (extension) => this.extend(objectSchema, extension),
+            passthrough: () => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                objectSchema.toExpression(),
+                                ts.factory.createIdentifier("passthrough")
+                            ),
+                            undefined,
+                            []
+                        )
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema),
+                    ...this.getObjectLikeUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema)
+                };
+            }
         };
     }
 
@@ -165,15 +188,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                               value
                                           )
                                         : ts.isCallExpression(value)
-                                        ? ts.factory.createArrowFunction(
-                                              undefined,
-                                              undefined,
-                                              [],
-                                              undefined,
-                                              undefined,
-                                              value
-                                          )
-                                        : value
+                                          ? ts.factory.createArrowFunction(
+                                                undefined,
+                                                undefined,
+                                                [],
+                                                undefined,
+                                                undefined,
+                                                value
+                                            )
+                                          : value
                                 );
                             }),
                             true

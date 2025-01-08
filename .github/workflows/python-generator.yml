@@ -10,13 +10,15 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
+        with:
+          version: 1.8.5
 
       - name: Install Dependencies
         working-directory: ./generators/python
@@ -31,13 +33,15 @@ jobs:
         run: poetry run pre-commit run --all-files
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
+        with:
+          version: 1.8.5
 
       - name: Update models for testing
         working-directory: ./generators/python

@@ -373,6 +373,7 @@ Executes a deployed Workflow and streams back its results.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExecuteWorkflowStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -470,6 +471,7 @@ Generate a completion using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -566,6 +568,7 @@ Generate a stream of completions using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateStreamBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -659,6 +662,7 @@ Perform a search against a document index.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SearchRequestBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -726,6 +730,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SubmitCompletionActualsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -750,12 +755,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "JINJA",
               "FUNCTION_DEFINITION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "ChatMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "role": "ChatMessageRole",
               "text": "string",
@@ -766,6 +773,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ChatMessageRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "role": "ChatMessageRole",
               "text": "string",
@@ -785,12 +793,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "USER",
               "FUNCTION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "ConditionalNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ConditionalNodeResultData",
             },
@@ -800,6 +810,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ConditionalNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "source_handle_id": "optional<string>",
             },
@@ -814,12 +825,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "STRING",
               "JSON",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "DeploymentNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "DeploymentNodeResultData",
             },
@@ -829,6 +842,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "DeploymentNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": "optional<string>",
               "output_id": "string",
@@ -840,6 +854,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "DeploymentRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "active_model_version_ids": "list<string>",
               "created": "datetime",
@@ -910,12 +925,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "INACTIVE",
               "ARCHIVED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "Document": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "external_id": {
                 "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
@@ -954,6 +971,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "DocumentDocumentToDocumentIndex": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document_index_id": {
                 "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
@@ -992,6 +1010,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "DocumentIndexRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created": "datetime",
               "environment": {
@@ -1054,12 +1073,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "ACTIVE",
               "ARCHIVED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "EnrichedNormalizedCompletion": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "external_id": {
                 "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
@@ -1110,12 +1131,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "STAGING",
               "PRODUCTION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "EvaluationParams": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "target": {
                 "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
@@ -1128,6 +1151,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "EvaluationParamsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "target": {
                 "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
@@ -1147,12 +1171,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "STOP",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "GenerateErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "docs": "Details about why the request failed.",
@@ -1165,6 +1191,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateOptionsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "logprobs": {
                 "docs": "Which logprobs to include, if any. Defaults to NONE.
@@ -1180,6 +1207,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_history": {
                 "docs": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
@@ -1200,6 +1228,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "The results of each generation request.",
@@ -1212,6 +1241,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "docs": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
@@ -1228,6 +1258,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "completions": {
                 "docs": "The generated completions. This will generally be a list of length one.",
@@ -1240,6 +1271,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateResultError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "The error message returned by the LLM provider.",
@@ -1252,6 +1284,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateStreamResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": "GenerateStreamResult",
             },
@@ -1261,6 +1294,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateStreamResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<GenerateStreamResultData>",
               "error": "optional<GenerateResultError>",
@@ -1272,6 +1306,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "GenerateStreamResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "completion": "EnrichedNormalizedCompletion",
               "completion_index": "integer",
@@ -1293,6 +1328,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "INDEXED",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1304,6 +1340,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "ALL",
               "NONE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1315,12 +1352,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "GENERATE",
               "CLASSIFY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "ModelVersionBuildConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "base_model": {
                 "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
@@ -1337,6 +1376,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ModelVersionCompilePromptResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "prompt": {
                 "docs": "Information about the compiled prompt.",
@@ -1349,6 +1389,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ModelVersionCompiledPrompt": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "num_tokens": {
                 "docs": "The approximate number of tokens used by the compiled prompt.",
@@ -1372,6 +1413,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ModelVersionExecConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "input_variables": {
                 "docs": "Names of the input variables specified in the prompt template.",
@@ -1394,6 +1436,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ModelVersionExecConfigParameters": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
               "logit_bias": "optional<map<string, optional<double>>>",
@@ -1410,6 +1453,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ModelVersionRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "build_config": {
                 "docs": "Configuration used to build this model version.",
@@ -1490,12 +1534,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "CREATION_FAILED",
               "DISABLED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "ModelVersionSandboxSnapshot": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the sandbox snapshot.",
@@ -1524,6 +1570,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "NormalizedLogProbs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "likelihood": "optional<double>",
               "tokens": "list<NormalizedTokenLogProbs>",
@@ -1534,6 +1581,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "NormalizedTokenLogProbs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "logprob": "optional<double>",
               "text_offset": "integer",
@@ -1546,6 +1594,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PaginatedSlimDocumentList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1587,12 +1636,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "PROCESSED",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "PromptNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "PromptNodeResultData",
             },
@@ -1602,6 +1653,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": "optional<string>",
               "output_id": "string",
@@ -1613,6 +1665,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlock": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "block_type": "BlockTypeEnum",
               "id": "string",
@@ -1624,6 +1677,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlockData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "blocks": "list<PromptTemplateBlock>",
               "version": "integer",
@@ -1634,6 +1688,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlockDataRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "blocks": "list<PromptTemplateBlockRequest>",
               "version": "integer",
@@ -1644,6 +1699,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlockProperties": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "blocks": "optional<list<PromptTemplateBlock>>",
               "chat_message_unterminated": {
@@ -1663,6 +1719,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlockPropertiesRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "blocks": "optional<list<PromptTemplateBlockRequest>>",
               "chat_message_unterminated": {
@@ -1698,6 +1755,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateBlockRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "block_type": "BlockTypeEnum",
               "id": {
@@ -1717,6 +1775,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateInputVariable": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": {
                 "docs": "The name of the input variable.",
@@ -1729,6 +1788,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PromptTemplateInputVariableRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": {
                 "docs": "The name of the input variable.",
@@ -1764,12 +1824,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "OPENAI",
               "PYQ",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "RegisterPromptErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "docs": "Details about why the request failed.",
@@ -1782,6 +1844,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisterPromptModelParametersRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
               "logit_bias": "optional<map<string, optional<double>>>",
@@ -1798,6 +1861,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisterPromptPrompt": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the generated prompt.",
@@ -1814,6 +1878,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisterPromptPromptInfoRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "input_variables": {
                 "docs": "Names of the input variables specified in the prompt template.",
@@ -1831,6 +1896,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisterPromptResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "deployment": {
                 "docs": "Information about the generated deployment",
@@ -1859,6 +1925,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisteredPromptDeployment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the generated deployment.",
@@ -1879,6 +1946,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisteredPromptModelVersion": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the generated model version.",
@@ -1895,6 +1963,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisteredPromptSandbox": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the generated sandbox.",
@@ -1911,6 +1980,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "RegisteredPromptSandboxSnapshot": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the generated sandbox snapshot.",
@@ -1923,6 +1993,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SandboxMetricInputParams": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "params": "optional<EvaluationParams>",
             },
@@ -1932,6 +2003,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SandboxMetricInputParamsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "params": "optional<EvaluationParamsRequest>",
             },
@@ -1941,6 +2013,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SandboxNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "SandboxNodeResultData",
             },
@@ -1950,6 +2023,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SandboxNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": "optional<string>",
               "output_id": "string",
@@ -1961,6 +2035,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SandboxScenario": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The id of the scenario",
@@ -1982,6 +2057,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ScenarioInput": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_history": "optional<list<ChatMessage>>",
               "key": "string",
@@ -1994,6 +2070,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ScenarioInputRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_history": "optional<list<ChatMessageRequest>>",
               "key": {
@@ -2019,12 +2096,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "TEXT",
               "CHAT_HISTORY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "SearchErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "docs": "Details about why the request failed.",
@@ -2037,6 +2116,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchFiltersRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "external_ids": {
                 "docs": "The document external IDs to filter by",
@@ -2049,6 +2129,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "SearchNodeResultData",
             },
@@ -2058,6 +2139,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "list<map<string, unknown>>",
               "results_output_id": "string",
@@ -2070,6 +2152,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchRequestOptionsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "filters": {
                 "docs": "The filters to apply to the search.",
@@ -2094,6 +2177,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "The results of the search. Each result represents a chunk that matches the search query.",
@@ -2106,6 +2190,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document": {
                 "docs": "The document that contains the chunk that matched the search query.",
@@ -2127,6 +2212,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchResultMergingRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "enabled": {
                 "docs": "Whether to enable merging results",
@@ -2139,6 +2225,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SearchWeightsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "keywords": {
                 "docs": "The relative weight to give to keyword matches",
@@ -2155,6 +2242,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SlimDocument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document_to_document_indexes": "list<DocumentDocumentToDocumentIndex>",
               "external_id": {
@@ -2227,6 +2315,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SubmitCompletionActualRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "external_id": {
                 "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
@@ -2274,6 +2363,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SubmitCompletionActualsErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": "string",
             },
@@ -2283,6 +2373,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TerminalNodeChatHistoryResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The unique name given to the terminal node that produced this output.",
@@ -2296,6 +2387,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TerminalNodeJsonResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The unique name given to the terminal node that produced this output.",
@@ -2309,6 +2401,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TerminalNodeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "TerminalNodeResultData",
             },
@@ -2318,6 +2411,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TerminalNodeResultData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "output": "TerminalNodeResultOutput",
             },
@@ -2342,6 +2436,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TerminalNodeStringResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The unique name given to the terminal node that produced this output.",
@@ -2355,6 +2450,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "TestSuiteTestCase": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "evaluation_params": {
                 "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
@@ -2379,6 +2475,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "UploadDocumentErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": "string",
             },
@@ -2388,6 +2485,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "UploadDocumentResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document_id": {
                 "docs": "The ID of the newly created document.",
@@ -2406,6 +2504,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowEventError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": "WorkflowExecutionEventErrorCode",
               "message": "string",
@@ -2421,12 +2520,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "WORKFLOW_INITIALIZATION",
               "NODE_EXECUTION",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "WorkflowExecutionNodeResultEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "WorkflowNodeResultEvent",
               "external_id": "optional<string>",
@@ -2438,6 +2539,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowExecutionWorkflowResultEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "WorkflowResultEvent",
               "external_id": "optional<string>",
@@ -2467,6 +2569,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowNodeResultEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<WorkflowNodeResultData>",
               "error": "optional<WorkflowEventError>",
@@ -2491,12 +2594,14 @@ Used to submit feedback regarding the quality of previously generated completion
               "FULFILLED",
               "REJECTED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "WorkflowRequestChatHistoryInputRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The variable's name, as defined in the Workflow.",
@@ -2531,6 +2636,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowRequestJsonInputRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The variable's name, as defined in the Workflow.",
@@ -2550,6 +2656,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowRequestStringInputRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The variable's name, as defined in the Workflow.",
@@ -2569,6 +2676,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowResultEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": "optional<WorkflowEventError>",
               "id": "string",
@@ -2597,6 +2705,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowResultEventOutputDataChatHistory": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": {
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
@@ -2613,6 +2722,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowResultEventOutputDataJson": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": {
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
@@ -2629,6 +2739,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "WorkflowResultEventOutputDataString": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delta": {
                 "docs": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
@@ -4743,6 +4854,7 @@ Creates a new document index.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIndexCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4960,6 +5072,12 @@ Used to list documents. Optionally filter on supported fields.
                   "document_index_id": {
                     "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": {
                     "docs": "Number of results to return per page.",
@@ -5051,6 +5169,7 @@ Upload a document to be indexed and used for search.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadDocumentBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5096,6 +5215,8 @@ service:
               Filter down to only those documents that are included in the
               specified index. You may provide either the Vellum-generated ID or
               the unique name of the index specified upon initial creation.
+            validation:
+              format: uuid
           limit:
             type: optional<integer>
             docs: Number of results to return per page.
@@ -5248,6 +5369,7 @@ Compiles the prompt backing the model version using the provided input values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ModelVersionCompilePromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5604,6 +5726,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RegisterPromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5926,6 +6049,7 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSandboxScenarioRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -6200,6 +6324,7 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestSuiteTestCaseRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

@@ -9,17 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedValidationClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,15 +34,15 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.create({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name",
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo",
      *         shape: "SQUARE"
      *     })
      */
     public async create(
         request: SeedValidation.CreateRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
@@ -52,6 +54,7 @@ export class SeedValidationClient {
                 "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -83,7 +86,7 @@ export class SeedValidationClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedValidationTimeoutError();
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
@@ -97,14 +100,14 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.get({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name"
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo"
      *     })
      */
     public async get(
         request: SeedValidation.GetRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const { decimal, even, name } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -121,6 +124,7 @@ export class SeedValidationClient {
                 "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -152,7 +156,7 @@ export class SeedValidationClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedValidationTimeoutError();
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,

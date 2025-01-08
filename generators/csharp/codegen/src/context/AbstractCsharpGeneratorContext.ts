@@ -1,7 +1,11 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { camelCase, upperFirst } from "lodash-es";
+
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import {
     FernFilepath,
+    HttpHeader,
     IntermediateRepresentation,
     Name,
     PrimitiveType,
@@ -11,16 +15,16 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
+
 import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
     DATETIME_SERIALIZER_CLASS_NAME,
+    ENUM_SERIALIZER_CLASS_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
-    STRING_ENUM_SERIALIZER_CLASS_NAME,
-    ENUM_SERIALIZER_CLASS_NAME
+    STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
 import { Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -107,6 +111,14 @@ export abstract class AbstractCsharpGeneratorContext<
     public hasGrpcEndpoints(): boolean {
         // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
+    }
+
+    public hasIdempotencyHeaders(): boolean {
+        return this.getIdempotencyHeaders().length > 0;
+    }
+
+    public getIdempotencyHeaders(): HttpHeader[] {
+        return this.ir.idempotencyHeaders;
     }
 
     public getConstantsClassReference(): csharp.ClassReference {

@@ -14,7 +14,7 @@ describe("undiscriminatedUnion", () => {
         {
             raw: { hello_world: "foo " },
             parsed: { helloWorld: "foo " },
-        }
+        },
     );
 
     it("Returns errors for all variants", async () => {

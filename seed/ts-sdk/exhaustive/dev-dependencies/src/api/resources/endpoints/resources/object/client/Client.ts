@@ -8,18 +8,20 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Object_ {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -51,7 +53,7 @@ export class Object_ {
      */
     public async getAndReturnWithOptionalField(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
@@ -61,7 +63,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-optional-field"
+                "/object/get-and-return-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -72,6 +74,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -109,7 +112,7 @@ export class Object_ {
      */
     public async getAndReturnWithRequiredField(
         request: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField,
@@ -119,7 +122,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-required-field"
+                "/object/get-and-return-with-required-field",
             ),
             method: "POST",
             headers: {
@@ -130,6 +133,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -171,7 +175,7 @@ export class Object_ {
      */
     public async getAndReturnWithMapOfMap(
         request: Fiddle.types.ObjectWithMapOfMap,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
     > {
@@ -186,6 +190,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -240,7 +245,7 @@ export class Object_ {
      */
     public async getAndReturnNestedWithOptionalField(
         request: Fiddle.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithOptionalField,
@@ -250,7 +255,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-optional-field"
+                "/object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -261,6 +266,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -290,7 +296,7 @@ export class Object_ {
     }
 
     /**
-     * @param {string} string
+     * @param {string} string_
      * @param {Fiddle.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -317,9 +323,9 @@ export class Object_ {
      *     })
      */
     public async getAndReturnNestedWithRequiredField(
-        string: string,
+        string_: string,
         request: Fiddle.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
@@ -329,7 +335,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
             ),
             method: "POST",
             headers: {
@@ -340,6 +346,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -415,7 +422,7 @@ export class Object_ {
      */
     public async getAndReturnNestedWithRequiredFieldAsList(
         request: Fiddle.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
@@ -425,7 +432,7 @@ export class Object_ {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field-list"
+                "/object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
             headers: {
@@ -436,6 +443,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

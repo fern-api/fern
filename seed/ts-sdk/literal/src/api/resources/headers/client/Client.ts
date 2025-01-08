@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Headers {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
@@ -17,7 +17,7 @@ export declare namespace Headers {
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -28,6 +28,8 @@ export declare namespace Headers {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -45,7 +47,7 @@ export class Headers {
      */
     public async send(
         request: SeedLiteral.SendLiteralsInHeadersRequest,
-        requestOptions?: Headers.RequestOptions
+        requestOptions?: Headers.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "headers"),
@@ -65,6 +67,7 @@ export class Headers {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-Endpoint-Version": "02-12-2024",
                 "X-Async": "true",
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -96,7 +99,7 @@ export class Headers {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedLiteralTimeoutError();
+                throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /headers.");
             case "unknown":
                 throw new errors.SeedLiteralError({
                     message: _response.error.errorMessage,

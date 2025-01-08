@@ -34,6 +34,7 @@ export * from "./JsonResponseBody";
 export * from "./JsonResponseBodyWithProperty";
 export * from "./FileDownloadResponse";
 export * from "./TextResponse";
+export * from "./BytesResponse";
 export * from "./StreamParameterResponse";
 export * from "./StreamingResponse";
 export * from "./TextStreamChunk";

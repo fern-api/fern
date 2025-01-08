@@ -17,7 +17,7 @@ export const WithEnvironmentsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithEnvironmentsSchema {
-    interface Raw {
+    export interface Raw {
         "default-url"?: string | null;
         "default-environment"?: string | null;
         environments?: Record<string, EnvironmentSchema.Raw> | null;

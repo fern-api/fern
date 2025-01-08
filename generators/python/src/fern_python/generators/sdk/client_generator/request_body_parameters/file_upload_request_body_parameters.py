@@ -132,21 +132,42 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             writer.write_line("{")
             with writer.indent():
                 for property in self._request.properties:
+                    type_hint = self._get_property_type(property)
                     property_as_union = property.get_as_union()
                     if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
-                        writer.write(f'"{property_as_union.name.wire_value}": (None, ')
-                        writer.write_node(
-                            AST.Expression(
-                                Json.dumps(
+                        if type_hint.is_optional:
+                            writer.write_line("**(")
+                            with writer.indent():
+                                writer.write(f'{{"{property_as_union.name.wire_value}": (None, ')
+                                writer.write_node(
                                     AST.Expression(
-                                        self._context.core_utilities.jsonable_encoder(
-                                            AST.Expression(property_as_union.name.wire_value)
+                                        Json.dumps(
+                                            AST.Expression(
+                                                self._context.core_utilities.jsonable_encoder(
+                                                    AST.Expression(property_as_union.name.wire_value)
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                writer.write_line(f', "{property_as_union.content_type}")}}')
+                                writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
+                                writer.write_line("else {}")
+                            writer.write_line("),")
+                        else:
+                            writer.write(f'"{property_as_union.name.wire_value}": (None, ')
+                            writer.write_node(
+                                AST.Expression(
+                                    Json.dumps(
+                                        AST.Expression(
+                                            self._context.core_utilities.jsonable_encoder(
+                                                AST.Expression(property_as_union.name.wire_value)
+                                            )
                                         )
                                     )
                                 )
                             )
-                        )
-                        writer.write_line(f', "{property_as_union.content_type}"),')
+                            writer.write_line(f', "{property_as_union.content_type}"),')
                     elif property_as_union.type == "file":
                         file_property_as_union = property_as_union.value.get_as_union()
                         if file_property_as_union.content_type is not None:
@@ -154,7 +175,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             writer.write_node(
                                 self._context.core_utilities.with_content_type(
                                     AST.Expression(
-                                        f'file={file_property_as_union.key.wire_value}, content_type="{file_property_as_union.content_type}"'
+                                        f'file={file_property_as_union.key.wire_value}, default_content_type="{file_property_as_union.content_type}"'
                                     )
                                 )
                             )

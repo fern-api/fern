@@ -1,15 +1,17 @@
+import { groupBy, noop } from "lodash-es";
+
+import { getDefinitionFile } from "@fern-api/api-workspace-commons";
+import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import {
+    TypeResolverImpl,
     constructFernFileContext,
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
     getEnumName,
     getSingleUnionTypeName,
-    getUnionDiscriminantName,
-    TypeResolverImpl
+    getUnionDiscriminantName
 } from "@fern-api/ir-generator";
-import { getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-import { groupBy, noop } from "lodash-es";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
@@ -92,8 +94,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     typeof singleUnionType === "string"
                                         ? singleUnionType
                                         : typeof singleUnionType.type === "string"
-                                        ? singleUnionType.type
-                                        : undefined;
+                                          ? singleUnionType.type
+                                          : undefined;
 
                                 // if the union type has a key, we don't need to check for conflicts
                                 // because the variant is nested under the key
@@ -174,8 +176,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
 function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[] {
     const nameToCount: Record<string, number> = {};
     for (const item of items) {
-        nameToCount[getName(item)] ??= 0;
-        nameToCount[getName(item)]++;
+        const count = nameToCount[getName(item)] ?? 0;
+        nameToCount[getName(item)] = count + 1;
     }
 
     return Object.entries(nameToCount).reduce<string[]>((duplicates, [name, count]) => {

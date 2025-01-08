@@ -7,18 +7,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         id: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,7 +38,7 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`,
             ),
             method: "GET",
             headers: {
@@ -46,6 +48,7 @@ export class Service {
                 "User-Agent": "@fern/package-yml/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -71,7 +74,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedPackageYmlTimeoutError();
+                throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling GET /{id}/{nestedId}.");
             case "unknown":
                 throw new errors.SeedPackageYmlError({
                     message: _response.error.errorMessage,

@@ -16,6 +16,14 @@ public final class SeedExtraPropertiesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedExtraPropertiesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedExtraPropertiesClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedExtraPropertiesClient(clientOptionsBuilder.build());

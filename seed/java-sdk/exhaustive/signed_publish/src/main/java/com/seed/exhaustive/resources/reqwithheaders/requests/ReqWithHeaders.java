@@ -14,6 +14,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ReqWithHeaders.Builder.class)
@@ -84,17 +85,17 @@ public final class ReqWithHeaders {
     }
 
     public interface XTestServiceHeaderStage {
-        XTestEndpointHeaderStage xTestServiceHeader(String xTestServiceHeader);
+        XTestEndpointHeaderStage xTestServiceHeader(@NotNull String xTestServiceHeader);
 
         Builder from(ReqWithHeaders other);
     }
 
     public interface XTestEndpointHeaderStage {
-        BodyStage xTestEndpointHeader(String xTestEndpointHeader);
+        BodyStage xTestEndpointHeader(@NotNull String xTestEndpointHeader);
     }
 
     public interface BodyStage {
-        _FinalStage body(String body);
+        _FinalStage body(@NotNull String body);
     }
 
     public interface _FinalStage {
@@ -125,22 +126,23 @@ public final class ReqWithHeaders {
 
         @java.lang.Override
         @JsonSetter("X-TEST-SERVICE-HEADER")
-        public XTestEndpointHeaderStage xTestServiceHeader(String xTestServiceHeader) {
-            this.xTestServiceHeader = xTestServiceHeader;
+        public XTestEndpointHeaderStage xTestServiceHeader(@NotNull String xTestServiceHeader) {
+            this.xTestServiceHeader = Objects.requireNonNull(xTestServiceHeader, "xTestServiceHeader must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("X-TEST-ENDPOINT-HEADER")
-        public BodyStage xTestEndpointHeader(String xTestEndpointHeader) {
-            this.xTestEndpointHeader = xTestEndpointHeader;
+        public BodyStage xTestEndpointHeader(@NotNull String xTestEndpointHeader) {
+            this.xTestEndpointHeader =
+                    Objects.requireNonNull(xTestEndpointHeader, "xTestEndpointHeader must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(String body) {
-            this.body = body;
+        public _FinalStage body(@NotNull String body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 

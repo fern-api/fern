@@ -9,17 +9,19 @@ import * as SeedUnknownAsAny from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Unknown {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -46,6 +48,7 @@ export class Unknown {
                 "User-Agent": "@fern/unknown/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -77,7 +80,7 @@ export class Unknown {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError();
+                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,
@@ -98,7 +101,7 @@ export class Unknown {
      */
     public async postObject(
         request: SeedUnknownAsAny.MyObject,
-        requestOptions?: Unknown.RequestOptions
+        requestOptions?: Unknown.RequestOptions,
     ): Promise<unknown[]> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/with-object"),
@@ -110,6 +113,7 @@ export class Unknown {
                 "User-Agent": "@fern/unknown/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -141,7 +145,7 @@ export class Unknown {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError();
+                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /with-object.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,

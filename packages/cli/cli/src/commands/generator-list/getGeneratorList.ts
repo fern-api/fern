@@ -1,9 +1,11 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { CliContext } from "../../cli-context/CliContext";
+
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { Values, assertNever } from "@fern-api/core-utils";
+import { Project } from "@fern-api/project-loader";
+
+import { CliContext } from "../../cli-context/CliContext";
 
 export const GenerationModeFilter = {
     GitHub: "github",
@@ -44,7 +46,7 @@ export async function getGeneratorList({
                 }
 
                 // If there are no groups in the configuration, skip this workspace
-                const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+                const generatorsConfiguration = await loadGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });

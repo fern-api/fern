@@ -14,51 +14,51 @@ export type FullExample =
     | FernOpenapiIr.FullExample.OneOf
     | FernOpenapiIr.FullExample.Unknown;
 
-export declare namespace FullExample {
-    interface Primitive extends _Utils {
+export namespace FullExample {
+    export interface Primitive extends _Utils {
         type: "primitive";
         value: FernOpenapiIr.PrimitiveExample;
     }
 
-    interface Object_ extends FernOpenapiIr.FullObjectExample, _Utils {
+    export interface Object_ extends FernOpenapiIr.FullObjectExample, _Utils {
         type: "object";
     }
 
-    interface Array extends _Utils {
+    export interface Array extends _Utils {
         type: "array";
         value: FernOpenapiIr.FullExample[];
     }
 
-    interface Map extends _Utils {
+    export interface Map extends _Utils {
         type: "map";
         value: FernOpenapiIr.KeyValuePair[];
     }
 
-    interface Enum extends _Utils {
+    export interface Enum extends _Utils {
         type: "enum";
         value: string;
     }
 
-    interface Literal extends _Utils {
+    export interface Literal extends _Utils {
         type: "literal";
         value: FernOpenapiIr.LiteralExample;
     }
 
-    interface OneOf extends _Utils {
+    export interface OneOf extends _Utils {
         type: "oneOf";
         value: FernOpenapiIr.FullOneOfExample;
     }
 
-    interface Unknown extends _Utils {
+    export interface Unknown extends _Utils {
         type: "unknown";
         value: FernOpenapiIr.FullExample;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.FullExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         primitive: (value: FernOpenapiIr.PrimitiveExample) => _Result;
         object: (value: FernOpenapiIr.FullObjectExample) => _Result;
         array: (value: FernOpenapiIr.FullExample[]) => _Result;
@@ -78,7 +78,7 @@ export const FullExample = {
             type: "primitive",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Primitive,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -91,7 +91,7 @@ export const FullExample = {
             type: "object",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Object_,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -104,7 +104,7 @@ export const FullExample = {
             type: "array",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Array,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -117,7 +117,7 @@ export const FullExample = {
             type: "map",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Map,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -130,7 +130,7 @@ export const FullExample = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Enum,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -143,7 +143,7 @@ export const FullExample = {
             type: "literal",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Literal,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -156,7 +156,7 @@ export const FullExample = {
             type: "oneOf",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.OneOf,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -169,7 +169,7 @@ export const FullExample = {
             type: "unknown",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullExample.Unknown,
-                visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
             },
@@ -178,7 +178,7 @@ export const FullExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.FullExample,
-        visitor: FernOpenapiIr.FullExample._Visitor<_Result>
+        visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "primitive":

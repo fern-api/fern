@@ -15,7 +15,7 @@ export const DebugKeyValuePairs: core.serialization.ObjectSchema<
 });
 
 export declare namespace DebugKeyValuePairs {
-    interface Raw {
+    export interface Raw {
         key: serializers.DebugVariableValue.Raw;
         value: serializers.DebugVariableValue.Raw;
     }

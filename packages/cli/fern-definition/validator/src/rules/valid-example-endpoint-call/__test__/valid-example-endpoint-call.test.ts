@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidExampleEndpointCallRule } from "../valid-example-endpoint-call";
 
 describe("valid-example-endpoint-call", () => {
@@ -503,6 +504,36 @@ describe("valid-example-endpoint-call", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("endpoint-level-base-path")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("endpoint-recursive-types", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("endpoint-recursive-types")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("extra-properties", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("extra-properties")
             )
         });
 

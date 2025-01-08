@@ -67,12 +67,7 @@ module.exports = {
                 ignoreRestSiblings: true
             }
         ],
-        "@typescript-eslint/no-namespace": [
-            "error",
-            {
-                allowDeclarations: true
-            }
-        ],
+        "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/explicit-module-boundary-types": [
             "error",
             {
@@ -129,7 +124,7 @@ module.exports = {
         {
             files: ['**/*.test.ts', '**/*.spec.ts'],
             rules: {
-            'no-console': 'off'
+                'no-console': 'off'
             }
         }
     ]

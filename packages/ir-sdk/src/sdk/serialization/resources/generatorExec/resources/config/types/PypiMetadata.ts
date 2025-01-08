@@ -19,7 +19,7 @@ export const PypiMetadata: core.serialization.ObjectSchema<
     .extend(OutputMetadata);
 
 export declare namespace PypiMetadata {
-    interface Raw extends OutputMetadata.Raw {
+    export interface Raw extends OutputMetadata.Raw {
         keywords?: string[] | null;
         documentationLink?: string | null;
         homepageLink?: string | null;

@@ -1,12 +1,15 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
+import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
+
 import { OutputMode } from "../config/api";
 import { ParsedDockerName } from "../utils/parseDockerOrThrow";
 
-export function getGeneratorInvocation({
+export async function getGeneratorInvocation({
     absolutePathToOutput,
     docker,
     language,
@@ -28,12 +31,12 @@ export function getGeneratorInvocation({
     irVersion: string;
     publishMetadata: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
-}): generatorsYml.GeneratorInvocation {
+}): Promise<generatorsYml.GeneratorInvocation> {
     return {
         name: docker.name,
         version: docker.version,
         config: customConfig,
-        outputMode: getOutputMode({ outputMode, language, fixtureName, publishConfig }),
+        outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,
         language,
@@ -41,13 +44,16 @@ export function getGeneratorInvocation({
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
-        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined,
+        publishMetadata:
+            publishMetadata != null
+                ? await FernFiddleSerialization.PublishingMetadata.parseOrThrow(publishMetadata)
+                : undefined,
         readme,
         settings: undefined
     };
 }
 
-function getOutputMode({
+async function getOutputMode({
     outputMode,
     language,
     fixtureName,
@@ -57,10 +63,13 @@ function getOutputMode({
     language: generatorsYml.GenerationLanguage | undefined;
     fixtureName: string;
     publishConfig: unknown;
-}): FernFiddle.OutputMode {
+}): Promise<FernFiddle.OutputMode> {
     switch (outputMode) {
         case "github":
-            const githubPublishInfo = publishConfig != null ? (publishConfig as GithubPublishInfo) : undefined;
+            const githubPublishInfo =
+                publishConfig != null
+                    ? await FernFiddleSerialization.GithubPublishInfo.parseOrThrow(publishConfig)
+                    : undefined;
             return FernFiddle.OutputMode.github({
                 repo: "fern",
                 owner: fixtureName,

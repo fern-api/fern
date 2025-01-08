@@ -171,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -349,6 +349,136 @@ await client.endpoints.container.getAndReturnOptional({
 <dd>
 
 **requestOptions:** `Container.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Endpoints ContentType
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentType({
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: "1000000",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: "1000000",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
 
 </dd>
 </dl>
@@ -1153,6 +1283,77 @@ await client.endpoints.params.getWithPath("param");
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePath("param");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePath`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -1358,6 +1559,79 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePathAndQuery("param", {
+    query: "query",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePathAndQuery`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -1411,6 +1685,79 @@ await client.endpoints.params.modifyWithPath("param", "string");
 <dd>
 
 **request:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.modifyWithInlinePath("param", {
+    body: "string",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>

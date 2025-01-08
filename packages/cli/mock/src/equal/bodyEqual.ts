@@ -1,7 +1,9 @@
-import { ExampleEndpointCall } from "@fern-api/ir-sdk";
-import { isEqualWith, isEqual } from "lodash-es";
-import { EqualResponse } from "./EqualRequestResponse";
 import { Request } from "express";
+import { isEqual, isEqualWith } from "lodash-es";
+
+import { ExampleEndpointCall } from "@fern-api/ir-sdk";
+
+import { EqualResponse } from "./EqualRequestResponse";
 
 export declare namespace bodyEqual {
     interface Args {

@@ -1,7 +1,8 @@
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
-import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing";
-import { convertExportedFilePathToFilePath, ExportedDirectory, ExportedFilePath } from "./ExportedFilePath";
+
+import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from "../referencing";
+import { ExportedDirectory, ExportedFilePath, convertExportedFilePathToFilePath } from "./ExportedFilePath";
 
 export interface ExportDeclaration {
     exportAll?: boolean;

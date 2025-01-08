@@ -6,20 +6,20 @@ import * as FernOpenapiIr from "../../../index";
 
 export type CustomCodeSample = FernOpenapiIr.CustomCodeSample.Language | FernOpenapiIr.CustomCodeSample.Sdk;
 
-export declare namespace CustomCodeSample {
-    interface Language extends FernOpenapiIr.CustomCodeSampleLanguage, _Utils {
+export namespace CustomCodeSample {
+    export interface Language extends FernOpenapiIr.CustomCodeSampleLanguage, _Utils {
         type: "language";
     }
 
-    interface Sdk extends FernOpenapiIr.CustomCodeSampleSdk, _Utils {
+    export interface Sdk extends FernOpenapiIr.CustomCodeSampleSdk, _Utils {
         type: "sdk";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         language: (value: FernOpenapiIr.CustomCodeSampleLanguage) => _Result;
         sdk: (value: FernOpenapiIr.CustomCodeSampleSdk) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const CustomCodeSample = {
             type: "language",
             _visit: function <_Result>(
                 this: FernOpenapiIr.CustomCodeSample.Language,
-                visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>
+                visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.CustomCodeSample._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const CustomCodeSample = {
             type: "sdk",
             _visit: function <_Result>(
                 this: FernOpenapiIr.CustomCodeSample.Sdk,
-                visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>
+                visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.CustomCodeSample._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const CustomCodeSample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.CustomCodeSample,
-        visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>
+        visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "language":

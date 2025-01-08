@@ -8,6 +8,7 @@
         "types": {
           "Game": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "added_at": "optional<datetime>",
               "complete": "GameComplete",
@@ -44,6 +45,7 @@
           },
           "GameComplete": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "completed_at": "datetime",
               "completion_time": "optional<integer>",
@@ -57,6 +59,7 @@
           },
           "GameExtraFieldsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "key": "string",
               "label": "optional<string>",
@@ -69,6 +72,7 @@
           },
           "GamePhotosItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "added_at": "optional<datetime>",
               "photo": "string",
@@ -89,6 +93,7 @@
           },
           "Group": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "added_at": "optional<datetime>",
               "date": {
@@ -124,6 +129,7 @@
           },
           "GroupGamesItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "added_at": "optional<datetime>",
               "complete": "GroupGamesItemComplete",
@@ -158,6 +164,7 @@
           },
           "GroupGamesItemComplete": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "completed_at": "datetime",
               "completion_time": "optional<integer>",
@@ -171,6 +178,7 @@
           },
           "GroupGamesItemExtraFieldsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "key": "string",
               "label": "optional<string>",
@@ -183,6 +191,7 @@
           },
           "GroupPhotosItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "added_at": "optional<datetime>",
               "game": "optional<string>",
@@ -204,6 +213,7 @@
           },
           "GroupPlayersItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "added_at": "optional<datetime>",
               "email": {
@@ -245,6 +255,7 @@
           },
           "GroupPlayersItemExtraFieldsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "key": "string",
               "label": "optional<string>",
@@ -257,6 +268,7 @@
           },
           "Photo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "added_at": "optional<datetime>",
               "id": "optional<string>",
@@ -277,6 +289,7 @@
           },
           "PhotoProcessedItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "added_at": "optional<datetime>",
               "game": "optional<string>",
@@ -299,6 +312,7 @@
           },
           "Player": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "added_at": "optional<datetime>",
               "email": {
@@ -340,6 +354,7 @@
           },
           "PlayerExtraFieldsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "key": "string",
               "label": "optional<string>",
@@ -352,6 +367,7 @@
           },
           "Room": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "hidden": "optional<boolean>",
               "id": "optional<integer>",
@@ -393,6 +409,7 @@
       ready: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   GameExtraFieldsItem:
     properties:
       key: string
@@ -401,6 +418,7 @@
       present: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   GameComplete:
     properties:
       completed_at: datetime
@@ -410,6 +428,7 @@
       completion_time: optional<integer>
     source:
       openapi: ../openapi.yml
+    inline: true
   Game:
     properties:
       id: optional<integer>
@@ -440,6 +459,7 @@
       present: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   GroupGamesItemComplete:
     properties:
       completed_at: datetime
@@ -449,6 +469,7 @@
       completion_time: optional<integer>
     source:
       openapi: ../openapi.yml
+    inline: true
   GroupGamesItem:
     properties:
       id: optional<integer>
@@ -469,6 +490,7 @@
       complete: GroupGamesItemComplete
     source:
       openapi: ../openapi.yml
+    inline: true
   GroupPlayersItemExtraFieldsItem:
     properties:
       key: string
@@ -477,6 +499,7 @@
       present: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   GroupPlayersItem:
     properties:
       added_at: optional<datetime>
@@ -499,6 +522,7 @@
       signature: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   GroupPhotosItem:
     properties:
       added_at: optional<datetime>
@@ -511,6 +535,7 @@
       ready: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Group:
     properties:
       id: optional<integer>
@@ -540,6 +565,7 @@
       present: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   Player:
     properties:
       id: optional<integer>
@@ -575,6 +601,7 @@
       ready: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Photo:
     properties:
       id: optional<string>
@@ -1293,6 +1320,7 @@
         "types": {
           "ListAccountsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1321,6 +1349,7 @@
           },
           "ListGamesResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1349,6 +1378,7 @@
           },
           "ListGroupsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1377,6 +1407,7 @@
           },
           "ListLocationsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1405,6 +1436,7 @@
           },
           "ListPhotosResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {
@@ -1433,6 +1465,7 @@
           },
           "ListPlayersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "optional<integer>",
               "next": {

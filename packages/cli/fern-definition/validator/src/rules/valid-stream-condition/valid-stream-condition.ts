@@ -1,23 +1,24 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
+    RequestPropertyValidator,
     getRequestPropertyComponents,
     maybePrimitiveType,
-    RequestPropertyValidator,
     requestTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 
 export const ValidStreamConditionRule: Rule = {
     name: "valid-stream-condition",
-    create: async ({ workspace }) => {
+    create: ({ workspace }) => {
         return {
             definitionFile: {
                 streamCondition: (

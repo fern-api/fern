@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type ExampleCodeSample = FernIr.ExampleCodeSample.Language | FernIr.ExampleCodeSample.Sdk;
 
-export declare namespace ExampleCodeSample {
-    interface Language extends FernIr.ExampleCodeSampleLanguage, _Utils {
+export namespace ExampleCodeSample {
+    export interface Language extends FernIr.ExampleCodeSampleLanguage, _Utils {
         type: "language";
     }
 
-    interface Sdk extends FernIr.ExampleCodeSampleSdk, _Utils {
+    export interface Sdk extends FernIr.ExampleCodeSampleSdk, _Utils {
         type: "sdk";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleCodeSample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         language: (value: FernIr.ExampleCodeSampleLanguage) => _Result;
         sdk: (value: FernIr.ExampleCodeSampleSdk) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const ExampleCodeSample = {
             type: "language",
             _visit: function <_Result>(
                 this: FernIr.ExampleCodeSample.Language,
-                visitor: FernIr.ExampleCodeSample._Visitor<_Result>
+                visitor: FernIr.ExampleCodeSample._Visitor<_Result>,
             ) {
                 return FernIr.ExampleCodeSample._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const ExampleCodeSample = {
             type: "sdk",
             _visit: function <_Result>(
                 this: FernIr.ExampleCodeSample.Sdk,
-                visitor: FernIr.ExampleCodeSample._Visitor<_Result>
+                visitor: FernIr.ExampleCodeSample._Visitor<_Result>,
             ) {
                 return FernIr.ExampleCodeSample._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const ExampleCodeSample = {
 
     _visit: <_Result>(
         value: FernIr.ExampleCodeSample,
-        visitor: FernIr.ExampleCodeSample._Visitor<_Result>
+        visitor: FernIr.ExampleCodeSample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "language":

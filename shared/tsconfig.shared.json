@@ -2,7 +2,11 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -23,6 +27,5 @@
     "noImplicitReturns": true,
     "types": ["node", "vitest/globals"],
 		"typeRoots": ["node_modules/@types"],
-  },
-  "exclude": ["node_modules", "lib"]
+  }
 }

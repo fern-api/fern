@@ -1,17 +1,20 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference): TypeReferenceNode {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
+            ts.factory.createArrayTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
         );
     }
 
-    protected override optional(itemType: TypeReference): TypeReferenceNode {
-        const referencedToValueType = this.convert(itemType).typeNode;
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         return {
             isOptional: true,
             typeNode: ts.factory.createUnionTypeNode([

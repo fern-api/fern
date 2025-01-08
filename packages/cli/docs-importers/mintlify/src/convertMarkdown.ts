@@ -1,9 +1,12 @@
-import grayMatter from "gray-matter";
-import { MintlifyFrontmatter } from "./mintlify";
 import { readFile } from "fs/promises";
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import grayMatter from "gray-matter";
+
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, relativize } from "@fern-api/fs-utils";
+
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+
+import { MintlifyFrontmatter } from "./mintlify";
 
 export declare namespace convertMarkdown {
     interface Args {

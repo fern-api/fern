@@ -1,6 +1,8 @@
-import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { RequestParameter } from "../../request-parameter/RequestParameter";
 
 export declare namespace GeneratedQueryParams {

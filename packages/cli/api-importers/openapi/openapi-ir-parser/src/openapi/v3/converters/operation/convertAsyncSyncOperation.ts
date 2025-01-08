@@ -1,5 +1,7 @@
-import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir";
+
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -69,7 +71,7 @@ export function convertAsyncSyncOperation({
         name: headerToIgnore,
         schema: SchemaWithExample.literal({
             nameOverride: undefined,
-            generatedName: getGeneratedTypeName([headerToIgnore]),
+            generatedName: getGeneratedTypeName([headerToIgnore], context.options.preserveSchemaIds),
             title: undefined,
             description: undefined,
             availability: undefined,

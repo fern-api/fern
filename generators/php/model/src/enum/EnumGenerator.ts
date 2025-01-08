@@ -1,6 +1,8 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FileGenerator, php, PhpFile } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile, php } from "@fern-api/php-codegen";
+
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

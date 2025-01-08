@@ -17,7 +17,7 @@ export const DoubleSchema: core.serialization.ObjectSchema<serializers.DoubleSch
     });
 
 export declare namespace DoubleSchema {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         minimum?: number | null;
         maximum?: number | null;

@@ -32,13 +32,13 @@ export const MultipartSchema: core.serialization.Schema<
     });
 
 export declare namespace MultipartSchema {
-    type Raw = MultipartSchema.File | MultipartSchema.Json;
+    export type Raw = MultipartSchema.File | MultipartSchema.Json;
 
-    interface File extends FileSchema.Raw {
+    export interface File extends FileSchema.Raw {
         type: "file";
     }
 
-    interface Json {
+    export interface Json {
         type: "json";
         value: serializers.Schema.Raw;
     }

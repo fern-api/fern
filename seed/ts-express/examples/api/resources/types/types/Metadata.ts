@@ -13,18 +13,18 @@ import * as SeedExamples from "../../../index";
  */
 export type Metadata = SeedExamples.Metadata.Html | SeedExamples.Metadata.Markdown;
 
-export declare namespace Metadata {
-    interface Html extends _Base {
+export namespace Metadata {
+    export interface Html extends _Base {
         type: "html";
         value: string;
     }
 
-    interface Markdown extends _Base {
+    export interface Markdown extends _Base {
         type: "markdown";
         value: string;
     }
 
-    interface _Base {
+    export interface _Base {
         extra: Record<string, string>;
         tags: Set<string>;
     }

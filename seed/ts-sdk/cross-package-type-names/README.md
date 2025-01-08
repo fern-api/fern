@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names";
 
 const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL" });
 await client.foo.find({
@@ -64,6 +64,18 @@ try {
 
 ## Advanced
 
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.foo.find(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -72,9 +84,9 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
@@ -111,12 +123,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
--   Node.js 18+
--   Vercel
--   Cloudflare Workers
--   Deno v1.25+
--   Bun 1.0+
--   React Native
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
 
 ### Customizing Fetch Client
 

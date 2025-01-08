@@ -1,29 +1,32 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     HeaderWithExample,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     SchemaId,
-    Schemas,
     SchemaWithExample,
+    Schemas,
     Source,
     WebsocketChannel,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../getExtension";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { ParseOpenAPIOptions } from "../options";
 import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
-import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../schema/convertUndiscriminatedOneOf";
+import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { getSchemas } from "../utils/getSchemas";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "./fernExtensions";
-import { getFernExamples, WebsocketSessionExampleExtension } from "./getFernExamples";
+import { WebsocketSessionExampleExtension, getFernExamples } from "./getFernExamples";
 import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
@@ -76,7 +79,7 @@ export function parseAsyncAPI({
         schemas[schemaId] = convertedSchema;
     }
 
-    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, taskContext.logger);
+    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
         if (channel.bindings?.ws == null) {
@@ -225,6 +228,7 @@ export function parseAsyncAPI({
 
             const tags = document.tags?.[0]?.name != null ? [document.tags?.[0].name] : undefined;
             parsedChannel = {
+                audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
                     headers: headers.map((header) => {
                         return {

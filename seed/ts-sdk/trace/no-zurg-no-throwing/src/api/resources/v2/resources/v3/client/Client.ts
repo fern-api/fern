@@ -7,14 +7,14 @@ import * as core from "../../../../../../core";
 import { Problem } from "../resources/problem/client/Client";
 
 export declare namespace V3 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -23,13 +23,15 @@ export declare namespace V3 {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class V3 {
-    constructor(protected readonly _options: V3.Options = {}) {}
-
     protected _problem: Problem | undefined;
+
+    constructor(protected readonly _options: V3.Options = {}) {}
 
     public get problem(): Problem {
         return (this._problem ??= new Problem(this._options));

@@ -10,17 +10,19 @@ import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,7 +43,7 @@ export class Service {
         maybeFile: File | fs.ReadStream | Blob | undefined,
         maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined,
         request: SeedFileUpload.MyRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
@@ -83,7 +85,7 @@ export class Service {
                 for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
+                        typeof _item === "string" ? _item : JSON.stringify(_item),
                     );
                 }
         }
@@ -108,6 +110,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
             },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
@@ -134,7 +137,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedFileUploadTimeoutError();
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,
@@ -161,6 +164,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
             },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
@@ -187,7 +191,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedFileUploadTimeoutError();
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,
@@ -203,7 +207,7 @@ export class Service {
     public async justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (request.maybeString != null) {
@@ -243,6 +247,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
             },
             queryParameters: _queryParams,
             requestType: "file",
@@ -270,7 +275,9 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedFileUploadTimeoutError();
+                throw new errors.SeedFileUploadTimeoutError(
+                    "Timeout exceeded when calling POST /just-file-with-query-params.",
+                );
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,
@@ -286,12 +293,16 @@ export class Service {
     public async withContentType(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
         await _request.append("foo", request.foo);
         await _request.append("bar", JSON.stringify(request.bar));
+        if (request.foobar != null) {
+            await _request.append("foobar", JSON.stringify(request.foobar));
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),
@@ -304,6 +315,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
             },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
@@ -330,7 +342,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedFileUploadTimeoutError();
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-content-type.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,

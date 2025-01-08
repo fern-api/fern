@@ -8,18 +8,20 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,6 +46,7 @@ export class Dummy {
                 "User-Agent": "@fern/no-environment/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -74,7 +77,7 @@ export class Dummy {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedNoEnvironmentTimeoutError();
+                throw new errors.SeedNoEnvironmentTimeoutError("Timeout exceeded when calling GET /dummy.");
             case "unknown":
                 throw new errors.SeedNoEnvironmentError({
                     message: _response.error.errorMessage,

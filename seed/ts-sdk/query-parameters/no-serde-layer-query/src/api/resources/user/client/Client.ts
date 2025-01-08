@@ -8,17 +8,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -31,7 +33,7 @@ export class User {
      */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedQueryParameters.User> {
         const {
             limit,
@@ -93,6 +95,7 @@ export class User {
                 "User-Agent": "@fern/query-parameters/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -119,7 +122,7 @@ export class User {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedQueryParametersTimeoutError();
+                throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
             case "unknown":
                 throw new errors.SeedQueryParametersError({
                     message: _response.error.errorMessage,

@@ -9,18 +9,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Object_ {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -52,12 +54,12 @@ export class Object_ {
      */
     public async getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-optional-field"
+                "/object/get-and-return-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -68,6 +70,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -103,7 +106,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-with-optional-field.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -122,12 +127,12 @@ export class Object_ {
      */
     public async getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-required-field"
+                "/object/get-and-return-with-required-field",
             ),
             method: "POST",
             headers: {
@@ -138,6 +143,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -173,7 +179,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-with-required-field.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -196,7 +204,7 @@ export class Object_ {
      */
     public async getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
@@ -209,6 +217,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -244,7 +253,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-with-map-of-map.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -280,12 +291,12 @@ export class Object_ {
      */
     public async getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-optional-field"
+                "/object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
             headers: {
@@ -296,6 +307,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -331,7 +343,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -340,7 +354,7 @@ export class Object_ {
     }
 
     /**
-     * @param {string} string
+     * @param {string} string_
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -367,14 +381,14 @@ export class Object_ {
      *     })
      */
     public async getAndReturnNestedWithRequiredField(
-        string: string,
+        string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
             ),
             method: "POST",
             headers: {
@@ -385,6 +399,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -420,7 +435,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field/{string}.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -475,12 +492,12 @@ export class Object_ {
      */
     public async getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_.RequestOptions
+        requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field-list"
+                "/object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
             headers: {
@@ -491,6 +508,7 @@ export class Object_ {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -526,7 +544,9 @@ export class Object_ {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,

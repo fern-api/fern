@@ -1,3 +1,4 @@
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -26,6 +27,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 }

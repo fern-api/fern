@@ -18,7 +18,7 @@ export const GithubOutputMode: core.serialization.ObjectSchema<
 });
 
 export declare namespace GithubOutputMode {
-    interface Raw {
+    export interface Raw {
         version: string;
         repoUrl: string;
         installationToken?: string | null;

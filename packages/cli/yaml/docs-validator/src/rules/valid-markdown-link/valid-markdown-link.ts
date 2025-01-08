@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { createMockTaskContext } from "@fern-api/task-context";

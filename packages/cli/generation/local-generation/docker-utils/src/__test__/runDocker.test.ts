@@ -1,9 +1,11 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { exec } from "child_process";
 import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
+
 import { runDocker } from "../runDocker";
 
 const promisifiedExec = promisify(exec);

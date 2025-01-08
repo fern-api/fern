@@ -9,7 +9,7 @@ export function register(
     expressApp: express.Express | express.Router,
     services: {
         union: UnionService;
-    }
+    },
 ): void {
     (expressApp as any).use("/", services.union.toRouter());
 }

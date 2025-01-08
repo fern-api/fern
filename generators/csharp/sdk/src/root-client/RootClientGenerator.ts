@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import {
     AuthScheme,
     HttpHeader,
@@ -12,11 +13,12 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -116,7 +118,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -124,7 +126,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 

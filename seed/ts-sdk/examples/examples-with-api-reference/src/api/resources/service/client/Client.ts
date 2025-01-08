@@ -10,18 +10,20 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,12 +39,12 @@ export class Service {
      */
     public async getMovie(
         movieId: SeedExamples.MovieId,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Movie> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
+                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
             headers: {
@@ -53,6 +55,7 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -83,7 +86,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /movie/{movieId}.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
@@ -121,7 +124,7 @@ export class Service {
      */
     public async createMovie(
         request: SeedExamples.Movie,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.MovieId> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
@@ -134,6 +137,7 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -165,7 +169,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
@@ -186,7 +190,7 @@ export class Service {
      */
     public async getMetadata(
         request: SeedExamples.GetMetadataRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Metadata> {
         const { shallow, tag, xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -214,6 +218,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-API-Version": xApiVersion,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -245,7 +250,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /metadata.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
@@ -420,7 +425,7 @@ export class Service {
      */
     public async createBigEntity(
         request: SeedExamples.BigEntity,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/big-entity"),
@@ -433,6 +438,7 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -464,7 +470,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,

@@ -19,7 +19,7 @@ export const JsonRequest: core.serialization.ObjectSchema<serializers.JsonReques
         .extend(WithSource);
 
 export declare namespace JsonRequest {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
         schema: serializers.Schema.Raw;
         contentType?: string | null;
         additionalProperties: boolean;

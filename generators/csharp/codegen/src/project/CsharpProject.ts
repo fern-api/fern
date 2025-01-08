@@ -1,9 +1,11 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher, File, AbstractProject, FernGeneratorExec } from "@fern-api/generator-commons";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
+
+import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
+
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../cli";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
@@ -107,7 +109,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -125,7 +127,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
             this.publicCoreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -183,6 +185,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
         const csproj = new CsProj({
+            name: this.name,
             license: this.context.config.license,
             githubUrl: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
@@ -198,6 +201,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`)),
             templateCsProjContents
         );
+
+        await writeFile(
+            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
+        );
+
         await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
             doNotPipeOutput: true,
             cwd: absolutePathToSrcDirectory
@@ -218,13 +227,20 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await mkdir(absolutePathToTestProject, { recursive: true });
 
-        const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
+        const testCsProjTemplateContents = (
+            await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
+        ).toString();
         const testCsProjContents = template(testCsProjTemplateContents)({
-            projectName: this.name
+            projectName: this.name,
+            testProjectName
         });
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`)),
             testCsProjContents
+        );
+        await writeFile(
+            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
         await loggingExeca(
             this.context.logger,
@@ -342,6 +358,20 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return absolutePathToPublicCoreDirectory;
     }
 
+    private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace("test/", "").replace(".Template", ""),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace
+            })
+        );
+    }
+
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -350,6 +380,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             replaceTemplate({
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                 namespace
             })
         );
@@ -363,6 +394,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             replaceTemplate({
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                 namespace: this.context.getTestUtilsNamespace()
             })
         );
@@ -385,14 +417,17 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 function replaceTemplate({
     contents,
     grpc,
+    idempotencyHeaders,
     namespace
 }: {
     contents: string;
     grpc: boolean;
+    idempotencyHeaders: boolean;
     namespace: string;
 }): string {
     return template(contents)({
         grpc,
+        idempotencyHeaders,
         namespace
     });
 }
@@ -435,6 +470,7 @@ class CsharpProjectFilepaths {
 
 declare namespace CsProj {
     interface Args {
+        name: string;
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
@@ -446,13 +482,15 @@ declare namespace CsProj {
 const FOUR_SPACES = "    ";
 
 class CsProj {
+    private name: string;
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+    public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+        this.name = name;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
@@ -468,23 +506,8 @@ class CsProj {
 
 ${projectGroup.join("\n")}
 
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
-    </PropertyGroup>
-
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-        <Reference Include="System.Net.Http" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="PolySharp" Version="1.14.1">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -501,15 +524,24 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="${this.name}.Custom.props" Condition="Exists('${this.name}.Custom.props')" />
 </Project>
 `;
     }
 
     private getDependencies(): string[] {
         const result: string[] = [];
-        result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
-        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
+        result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
+        result.push(
+            `${FOUR_SPACES}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
+        );
+        result.push(`${FOUR_SPACES}<PrivateAssets>all</PrivateAssets>`);
+        result.push("</PackageReference>");
+        result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
+        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
+        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
@@ -562,7 +594,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             `${FOUR_SPACES}${FOUR_SPACES}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<ImplicitUsings>enable</ImplicitUsings>`);
-        result.push(`${FOUR_SPACES}${FOUR_SPACES}<NuGetAudit>false</NuGetAudit>`);
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<LangVersion>12</LangVersion>`);
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<Nullable>enable</Nullable>`);
 
@@ -579,6 +610,8 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         if (this.context.version != null) {
             result.push(`<Version>${this.context.version}</Version>`);
+            result.push("<AssemblyVersion>$(Version)</AssemblyVersion>");
+            result.push("<FileVersion>$(Version)</FileVersion>");
         }
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
@@ -599,6 +632,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         if (this.githubUrl != null) {
             result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
         }
+        result.push("<PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>");
         return result;
     }
 

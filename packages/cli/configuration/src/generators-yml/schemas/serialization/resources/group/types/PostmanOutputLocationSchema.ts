@@ -16,7 +16,7 @@ export const PostmanOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace PostmanOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         "api-key": string;
         "workspace-id": string;
         "collection-id"?: string | null;

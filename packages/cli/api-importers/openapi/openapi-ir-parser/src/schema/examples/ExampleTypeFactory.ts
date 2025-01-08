@@ -1,4 +1,4 @@
-import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -11,6 +11,8 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
+
+import { SchemaParserContext } from "../SchemaParserContext";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
@@ -32,11 +34,11 @@ export declare namespace ExampleTypeFactory {
 }
 
 export class ExampleTypeFactory {
-    private schemas: Record<SchemaId, SchemaWithExample>;
-
-    constructor(schemas: Record<SchemaId, SchemaWithExample>) {
-        this.schemas = schemas;
-    }
+    constructor(
+        private readonly schemas: Record<SchemaId, SchemaWithExample>,
+        private readonly nonRequestReferencedSchemas: Set<SchemaId>,
+        private readonly context: SchemaParserContext
+    ) {}
 
     public buildExample({
         schema,
@@ -103,7 +105,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -124,6 +126,9 @@ export class ExampleTypeFactory {
                 ) {
                     return undefined;
                 }
+                if (Object.is(example, null)) {
+                    return undefined;
+                }
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
@@ -131,7 +136,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -152,6 +157,11 @@ export class ExampleTypeFactory {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
                 if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
                     visitedSchemaIds.add(schema.schema);
+
+                    const isInlinedRequest =
+                        referencedSchemaWithExample?.type === "object" &&
+                        !this.nonRequestReferencedSchemas.has(schema.schema);
+
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
@@ -159,7 +169,9 @@ export class ExampleTypeFactory {
                         visitedSchemaIds,
                         depth,
                         options,
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        // by default we respect readonly on inlined requests
+                        skipReadonly:
+                            isInlinedRequest || this.context.options.respectReadonlySchemas ? skipReadonly : false
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -231,7 +243,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                    skipReadonly
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -246,7 +258,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                    skipReadonly
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -268,7 +280,7 @@ export class ExampleTypeFactory {
                                 visitedSchemaIds,
                                 depth,
                                 options,
-                                skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                skipReadonly
                             });
                         }
                         break;
@@ -307,7 +319,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -323,7 +335,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -338,7 +350,7 @@ export class ExampleTypeFactory {
                         depth: depth + 1,
                         visitedSchemaIds,
                         options,
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        skipReadonly
                     });
                     if (itemExample != null) {
                         itemExamples.push(itemExample);
@@ -364,7 +376,7 @@ export class ExampleTypeFactory {
                             visitedSchemaIds,
                             depth: depth + 1,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly
                         });
                         if (valueExample != null) {
                             kvs.push({
@@ -408,7 +420,7 @@ export class ExampleTypeFactory {
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
                         name: "value"
                     },
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly
                 });
                 if (valueExample != null) {
                     return FullExample.map([
@@ -436,9 +448,9 @@ export class ExampleTypeFactory {
                     if (skipReadonly && schema.readonly) {
                         continue;
                     }
-
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
+
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,
@@ -449,7 +461,7 @@ export class ExampleTypeFactory {
                             ...options,
                             name: property
                         },
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        skipReadonly
                     });
                     if (required && propertyExample != null) {
                         result[property] = propertyExample;
@@ -461,6 +473,36 @@ export class ExampleTypeFactory {
                         result[property] = propertyExample;
                     }
                 }
+                if (schema.additionalProperties) {
+                    for (const [property, value] of Object.entries(fullExample)) {
+                        if (!(property in result)) {
+                            const propertyExample = this.buildExampleHelper({
+                                schema: SchemaWithExample.unknown({
+                                    example: value,
+                                    title: undefined,
+                                    availability: undefined,
+                                    description: undefined,
+                                    generatedName: "",
+                                    nameOverride: undefined,
+                                    groupName: undefined
+                                }),
+                                exampleId,
+                                example: value,
+                                visitedSchemaIds,
+                                depth: depth + 1,
+                                options: {
+                                    ...options,
+                                    name: property
+                                },
+                                skipReadonly
+                            });
+                            if (propertyExample != null) {
+                                result[property] = propertyExample;
+                            }
+                        }
+                    }
+                }
+
                 return FullExample.object({
                     properties: result
                 });

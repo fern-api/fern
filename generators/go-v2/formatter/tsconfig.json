@@ -6,7 +6,7 @@
     { "path": "../../../packages/commons/core-utils" },
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../../packages/cli/fern-definition/schema" },
-    { "path": "../../commons" },
-    { "path": "../codegen" }
+    { "path": "../../base" },
+    { "path": "../ast" }
   ]
 }

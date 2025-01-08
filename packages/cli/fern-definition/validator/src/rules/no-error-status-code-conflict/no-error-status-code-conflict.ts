@@ -1,19 +1,21 @@
+import { noop } from "lodash-es";
+
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst } from "../../ast";
-import { noop } from "lodash-es";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",
-    create: async ({ workspace }) => {
+    create: ({ workspace }) => {
         if (workspace.definition.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {};
         }
-        const errorDeclarations = await getErrorDeclarations(workspace);
+        const errorDeclarations = getErrorDeclarations(workspace);
         return {
             definitionFile: {
-                httpEndpoint: async ({ endpoint }) => {
+                httpEndpoint: ({ endpoint }) => {
                     if (endpoint.errors == null) {
                         return [];
                     }
@@ -47,12 +49,10 @@ export const NoErrorStatusCodeConflictRule: Rule = {
     }
 };
 
-async function getErrorDeclarations(
-    workspace: FernWorkspace
-): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
+function getErrorDeclarations(workspace: FernWorkspace): Record<string, RawSchemas.ErrorDeclarationSchema> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
-    await visitAllDefinitionFiles(workspace, async (_relativeFilepath, file) => {
-        await visitDefinitionFileYamlAst(file, {
+    visitAllDefinitionFiles(workspace, (_relativeFilepath, file) => {
+        visitDefinitionFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;

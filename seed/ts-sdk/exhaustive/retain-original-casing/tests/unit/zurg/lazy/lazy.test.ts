@@ -29,12 +29,12 @@ describe("lazy", () => {
         {
             title: "passes opts through",
             opts: { unrecognizedObjectKeys: "passthrough" },
-        }
+        },
     );
 
     itSchemaIdentity(
         lazy(() => object({ foo: string() })),
-        { foo: "hello" }
+        { foo: "hello" },
     );
 
     // eslint-disable-next-line jest/expect-expect

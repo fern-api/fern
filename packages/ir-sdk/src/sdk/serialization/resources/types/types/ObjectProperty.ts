@@ -17,7 +17,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectP
         .extend(Declaration);
 
 export declare namespace ObjectProperty {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
     }

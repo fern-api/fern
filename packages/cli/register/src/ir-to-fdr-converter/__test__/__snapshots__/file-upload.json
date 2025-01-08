@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_service:ObjectType": {
@@ -405,6 +402,18 @@
                     "valueType": {
                       "type": "id",
                       "value": "type_service:MyObject"
+                    },
+                    "contentType": "application/json"
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "foobar",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyObject"
+                      }
                     },
                     "contentType": "application/json"
                   }

@@ -420,6 +420,355 @@ client.endpoints.container.get_and_return_optional(
 </dl>
 </details>
 
+## Endpoints ContentType
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+import uuid
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.content_type.post_json_patch_content_type(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**integer:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**long_:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**double:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bool_:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datetime:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date:** `typing.Optional[dt.date]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uuid_:** `typing.Optional[uuid.UUID]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**base_64:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**set_:** `typing.Optional[typing.Set[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**map_:** `typing.Optional[typing.Dict[int, str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bigint:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+import uuid
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.content_type.post_json_patch_content_with_charset_type(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**integer:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**long_:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**double:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bool_:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datetime:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date:** `typing.Optional[dt.date]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uuid_:** `typing.Optional[uuid.UUID]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**base_64:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**set_:** `typing.Optional[typing.Set[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**map_:** `typing.Optional[typing.Dict[int, str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bigint:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Enum
 <details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_enum</a>(...)</code></summary>
 <dl>
@@ -1562,6 +1911,77 @@ client.endpoints.params.get_with_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_inline_path(
+    param="param",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_query</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1802,6 +2222,86 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path_and_query</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_inline_path_and_query(
+    param="param",
+    query="query",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_path</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1836,6 +2336,86 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 client.endpoints.params.modify_with_path(
+    param="param",
+    request="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_inline_path</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.modify_with_inline_path(
     param="param",
     request="string",
 )

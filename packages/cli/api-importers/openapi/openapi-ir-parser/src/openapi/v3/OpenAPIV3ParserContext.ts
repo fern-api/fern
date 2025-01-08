@@ -1,6 +1,8 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { SchemaId, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import {
@@ -11,15 +13,12 @@ import {
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+    public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
-
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
-
     private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
-
     private schemasToExclude: Set<SchemaId> = new Set();
 
     constructor({

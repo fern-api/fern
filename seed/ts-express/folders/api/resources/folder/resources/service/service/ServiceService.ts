@@ -13,7 +13,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     unknownRequest(
         req: express.Request<never, never, unknown, never>,
@@ -22,19 +22,22 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ServiceService {
     private router;
 
-    constructor(private readonly methods: ServiceServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ServiceServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -55,7 +58,7 @@ export class ServiceService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -63,7 +66,7 @@ export class ServiceService {
                     console.warn(
                         `Endpoint 'endpoint' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -83,7 +86,7 @@ export class ServiceService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -95,7 +98,7 @@ export class ServiceService {
                             console.warn(
                                 `Endpoint 'unknownRequest' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);

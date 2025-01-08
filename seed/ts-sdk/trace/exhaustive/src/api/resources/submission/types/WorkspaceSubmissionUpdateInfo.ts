@@ -14,46 +14,46 @@ export type WorkspaceSubmissionUpdateInfo =
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Finished
     | SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown;
 
-export declare namespace WorkspaceSubmissionUpdateInfo {
-    interface Running extends _Utils {
+export namespace WorkspaceSubmissionUpdateInfo {
+    export interface Running extends _Utils {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Ran extends SeedTrace.WorkspaceRunDetails, _Utils {
+    export interface Ran extends SeedTrace.WorkspaceRunDetails, _Utils {
         type: "ran";
     }
 
-    interface Stopped extends _Utils {
+    export interface Stopped extends _Utils {
         type: "stopped";
     }
 
-    interface Traced extends _Utils {
+    export interface Traced extends _Utils {
         type: "traced";
     }
 
-    interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate, _Utils {
+    export interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate, _Utils {
         type: "tracedV2";
     }
 
-    interface Errored extends _Utils {
+    export interface Errored extends _Utils {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface Finished extends _Utils {
+    export interface Finished extends _Utils {
         type: "finished";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         running: (value: SeedTrace.RunningSubmissionState) => _Result;
         ran: (value: SeedTrace.WorkspaceRunDetails) => _Result;
         stopped: () => _Result;
@@ -72,7 +72,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "running",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Running,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "ran",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Ran,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -97,7 +97,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "stopped",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -109,7 +109,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "traced",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Traced,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -122,7 +122,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "tracedV2",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -135,7 +135,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "errored",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Errored,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -147,7 +147,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             type: "finished",
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo.Finished,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -159,7 +159,7 @@ export const WorkspaceSubmissionUpdateInfo = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown,
-                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.WorkspaceSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -168,7 +168,7 @@ export const WorkspaceSubmissionUpdateInfo = {
 
     _visit: <_Result>(
         value: SeedTrace.WorkspaceSubmissionUpdateInfo,
-        visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>
+        visitor: SeedTrace.WorkspaceSubmissionUpdateInfo._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "running":
