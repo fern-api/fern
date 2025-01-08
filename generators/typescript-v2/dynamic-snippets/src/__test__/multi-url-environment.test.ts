@@ -126,6 +126,7 @@ describe("multi-url-environment", () => {
                 type: "bearer",
                 token: "<YOUR_API_KEY>"
             },
+            baseURL: undefined,
             environment: {
                 ec2: "https://custom.ec2.aws.com"
             },
