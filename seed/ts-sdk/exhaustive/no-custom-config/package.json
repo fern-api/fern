@@ -4,6 +4,7 @@
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
+    "packageManager": "yarn@1.22.22",
     "exports": {
         ".": {
             "types": "./dist/cjs/index.d.ts",

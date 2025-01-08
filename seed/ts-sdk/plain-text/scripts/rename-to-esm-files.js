@@ -35,9 +35,13 @@ async function findFiles(rootPath) {
 }
 
 async function updateFiles(files) {
+    const updatedFiles = [];
     for (const file of files) {
-        await updateFileContents(file);
+        const updated = await updateFileContents(file);
+        updatedFiles.push(updated);
     }
+
+    console.log(`Updated imports in ${updatedFiles.length} files.`);
 }
 
 async function updateFileContents(file) {
@@ -52,11 +56,13 @@ async function updateFileContents(file) {
 
     if (content !== newContent) {
         await fs.writeFile(file, newContent, "utf8");
-        console.log(`Updated imports in ${file}`);
+        return true;
     }
+    return false;
 }
 
 async function renameFiles(files) {
+    let counter = 0;
     for (const file of files) {
         const ext = oldExtensions.find((ext) => file.endsWith(ext));
         const newExt = extensionMap[ext];
@@ -64,9 +70,11 @@ async function renameFiles(files) {
         if (newExt) {
             const newPath = file.slice(0, -ext.length) + newExt;
             await fs.rename(file, newPath);
-            console.log(`${file} → ${newPath}`);
+            counter++;
         }
     }
+
+    console.log(`Renamed ${counter} files.`);
 }
 
 async function main() {
@@ -94,11 +102,8 @@ async function main() {
             process.exit(0);
         }
 
-        console.log(`Found ${files.length} files to update.`);
+        console.log(`Found ${files.length} files.`);
         await updateFiles(files);
-        console.log("\nDone!");
-
-        console.log(`Found ${files.length} files to rename.`);
         await renameFiles(files);
         console.log("\nDone!");
     } catch (error) {
