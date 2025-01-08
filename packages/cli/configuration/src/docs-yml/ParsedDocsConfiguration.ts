@@ -200,6 +200,7 @@ export declare namespace DocsNavigationItem {
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
+        noindex: boolean | undefined;
     }
 
     export interface Section extends CjsFdrSdk.navigation.v1.WithPermissions {

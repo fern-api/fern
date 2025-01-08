@@ -60,7 +60,7 @@ export async function generateDocsWorkspace({
 
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
-            loadAPIWorkspace: project.loadAPIWorkspace,
+            fernWorkspaces,
             docsWorkspace,
             context,
             token,

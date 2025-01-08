@@ -22,10 +22,19 @@ export async function writeDocsDefinitionForProject({
     }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        const fernWorkspaces = await Promise.all(
+            project.apiWorkspaces.map(async (workspace) => {
+                return workspace.toFernWorkspace(
+                    { context },
+                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                );
+            })
+        );
+
         const docsResolver = new DocsDefinitionResolver(
             docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
             docsWorkspace,
-            project.loadAPIWorkspace,
+            fernWorkspaces,
             context
         );
         const docsDefinition = await docsResolver.resolve();
