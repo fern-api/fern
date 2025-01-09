@@ -191,16 +191,17 @@ export const ValidMarkdownLinks: Rule = {
 };
 
 function createLinkViolationMessage(pathnameToCheck: PathnameToCheck, targetPathname: string): string {
-    return `${getPositionMessage(pathnameToCheck.position)}Page (${targetPathname}) contains a link to ${chalk.bold(
+    return `${getPositionMessage(pathnameToCheck)}Page (${targetPathname}) contains a link to ${chalk.bold(
         pathnameToCheck.pathname
     )} that does not exist.`;
 }
 
-function getPositionMessage(position: Position | undefined): string {
-    if (position == null) {
+function getPositionMessage(pathnameToCheck: PathnameToCheck): string {
+    const { position, sourceFilepath } = pathnameToCheck;
+    if (sourceFilepath == null || position == null) {
         return "";
     }
-    return `[${position.start.line}:${position.start.column}-${position.end.line}:${position.end.column}] `;
+    return `[${sourceFilepath.toString()}:${position.start.line}:${position.start.column}] `;
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {

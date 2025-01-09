@@ -1,11 +1,12 @@
-import { parseMarkdownToTree, getMarkdownFormat } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { toHast } from "mdast-util-to-hast";
+import { walk } from "estree-walker";
 import type { Root as HastRoot } from "hast";
+import { toHast } from "mdast-util-to-hast";
+import { readFileSync } from "node:fs";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
-import { walk } from "estree-walker";
-import { readFileSync } from "node:fs";
+
+import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
@@ -17,11 +18,13 @@ const MDX_NODE_TYPES = [
 
 interface HastLink {
     href: string;
+    sourceFilepath?: AbsoluteFilePath;
     position?: Position;
 }
 
 interface HastSource {
     src: string;
+    sourceFilepath?: AbsoluteFilePath;
     position?: Position;
 }
 
@@ -53,7 +56,7 @@ export function collectLinksAndSources({
     do {
         loopCount++;
         if (loopCount > LOOP_LIMIT) {
-            throw new Error("Infinit loop detected while collecting links and sources");
+            throw new Error("Infinite loop detected while collecting links and sources");
         }
         const popped = contentQueue.shift();
         if (popped == null) {
@@ -110,12 +113,12 @@ export function collectLinksAndSources({
             if (node.type === "element") {
                 const href = node.properties.href;
                 if (typeof href === "string") {
-                    links.push({ href, position: node.position });
+                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
                 }
 
                 const src = node.properties.src;
                 if (typeof src === "string") {
-                    sources.push({ src, position: node.position });
+                    sources.push({ src, sourceFilepath: absoluteFilepath, position: node.position });
                 }
             }
 
@@ -146,11 +149,19 @@ export function collectLinksAndSources({
                 // NOTE: this collects links if they are in the form of <a href="...">
                 // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
                 if (hrefAttribute != null && typeof hrefAttribute.value === "string") {
-                    links.push({ href: hrefAttribute.value, position: node.position });
+                    links.push({
+                        href: hrefAttribute.value,
+                        sourceFilepath: absoluteFilepath,
+                        position: node.position
+                    });
                 }
 
                 if (srcAttribute != null && typeof srcAttribute.value === "string") {
-                    sources.push({ src: srcAttribute.value, position: node.position });
+                    sources.push({
+                        src: srcAttribute.value,
+                        sourceFilepath: absoluteFilepath,
+                        position: node.position
+                    });
                 }
             }
             return;

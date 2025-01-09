@@ -1,5 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Position } from "unist";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { RuleViolation } from "../../Rule";
 import { safeCollectLinksAndSources } from "./collect-links";
 import { stripAnchorsAndSearchParams } from "./url-utils";
@@ -10,7 +12,18 @@ const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
 export interface PathnameToCheck {
     markdown: boolean;
     pathname: string;
+    sourceFilepath?: AbsoluteFilePath;
     position?: Position;
+}
+
+function getFrontmatterOffset(content: string): number {
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+    const match = content.match(frontmatterRegex);
+    if (!match) {
+        return 0;
+    }
+    // Count the number of newlines in the frontmatter (including the --- lines)
+    return (match[0].match(/\n/g) || []).length + 1;
 }
 
 export function collectPathnamesToCheck(
@@ -29,6 +42,7 @@ export function collectPathnamesToCheck(
     const violations: RuleViolation[] = [];
     const pathnamesToCheck: PathnameToCheck[] = [];
 
+    const frontmatterOffset = getFrontmatterOffset(content);
     const { links, sources } = safeCollectLinksAndSources({ content, absoluteFilepath });
 
     links.forEach((link) => {
@@ -50,7 +64,12 @@ export function collectPathnamesToCheck(
 
                 pathnamesToCheck.push({
                     pathname: url.pathname,
-                    position: link.position,
+                    sourceFilepath: link.sourceFilepath,
+                    position: link.position && {
+                        ...link.position,
+                        start: { ...link.position.start, line: link.position.start.line + frontmatterOffset },
+                        end: { ...link.position.end, line: link.position.end.line + frontmatterOffset }
+                    },
                     markdown: true
                 });
             } catch (error) {
@@ -71,7 +90,12 @@ export function collectPathnamesToCheck(
 
         pathnamesToCheck.push({
             pathname,
-            position: link.position,
+            sourceFilepath: link.sourceFilepath,
+            position: link.position && {
+                ...link.position,
+                start: { ...link.position.start, line: link.position.start.line + frontmatterOffset },
+                end: { ...link.position.end, line: link.position.end.line + frontmatterOffset }
+            },
             markdown: true
         });
     });
@@ -91,7 +115,12 @@ export function collectPathnamesToCheck(
         } else {
             pathnamesToCheck.push({
                 pathname: source.src,
-                position: source.position,
+                sourceFilepath: source.sourceFilepath,
+                position: source.position && {
+                    ...source.position,
+                    start: { ...source.position.start, line: source.position.start.line + frontmatterOffset },
+                    end: { ...source.position.end, line: source.position.end.line + frontmatterOffset }
+                },
                 markdown: false
             });
         }
