@@ -9,6 +9,7 @@ import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
@@ -25,6 +26,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
     private final ClassName className;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
+    private final SingleTypeSpecGenerator typeSpecGenerator;
 
     public SingleTypeGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -37,6 +39,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.declaredTypeName = declaredTypeName;
         this.fromErrorDeclaration = fromErrorDeclaration;
+        this.typeSpecGenerator = new SingleTypeSpecGenerator(
+                generatorContext, declaredTypeName, className, allGeneratedInterfaces, fromErrorDeclaration);
     }
 
     @Override
@@ -60,13 +64,19 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
                 .map(DeclaredTypeName::getTypeId)
                 .map(allGeneratedInterfaces::get)
                 .collect(Collectors.toList());
-        ObjectGenerator objectGenerator = new ObjectGenerator(
+        ObjectTypeSpecGenerator objectTypeSpecGenerator = new ObjectTypeSpecGenerator(
                 value,
                 Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName.getTypeId())),
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                generatorContext,
+                className,
+                objectTypeSpecGenerator.generate(),
+                objectTypeSpecGenerator.objectPropertyGetters(),
+                objectTypeSpecGenerator.extendedPropertyGetters());
         GeneratedObject generatedObject = objectGenerator.generateFile();
         return Optional.of(GeneratedJavaFile.builder()
                 .className(generatedObject.getClassName())

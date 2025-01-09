@@ -24,6 +24,7 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
+import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.spring.SpringGeneratorContext;
@@ -63,13 +64,19 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
                 .addAllExtends(inlinedRequestBody.getExtends())
                 .addAllProperties(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody))
                 .build();
-        ObjectGenerator objectGenerator = new ObjectGenerator(
+        ObjectTypeSpecGenerator objectTypeSpecGenerator = new ObjectTypeSpecGenerator(
                 objectTypeDeclaration,
                 Optional.empty(),
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                generatorContext,
+                className,
+                objectTypeSpecGenerator.generate(),
+                objectTypeSpecGenerator.objectPropertyGetters(),
+                objectTypeSpecGenerator.extendedPropertyGetters());
         return objectGenerator.generateFile();
     }
 }
