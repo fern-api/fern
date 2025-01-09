@@ -18,5 +18,8 @@
     {
       "path": "../../packages/commons/core-utils"
     },
+    {
+      "path": "../../packages/commons/path-utils"
+    },
   ]
 }

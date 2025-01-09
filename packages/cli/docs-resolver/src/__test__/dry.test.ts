@@ -23,9 +23,11 @@ it.skip("converts to api reference node", async () => {
         "domain",
         docsWorkspace,
         [],
+        [],
         context,
         undefined,
         async (_files) => [],
+        async (_opts) => "",
         async (_opts) => ""
     );
 

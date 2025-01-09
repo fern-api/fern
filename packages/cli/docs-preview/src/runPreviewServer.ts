@@ -18,6 +18,7 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
     apis: {},
+    apisV2: {},
     files: {},
     filesV2: {},
     config: {

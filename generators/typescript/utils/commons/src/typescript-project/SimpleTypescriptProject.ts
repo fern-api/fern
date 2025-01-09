@@ -14,20 +14,20 @@ export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         outputEsm: boolean;
         resolutions: Record<string, string>;
-        legacyExports?: boolean;
+        useLegacyExports: boolean;
     }
 }
 
 export class SimpleTypescriptProject extends TypescriptProject {
     private outputEsm: boolean;
-    private legacyExports: boolean;
+    private useLegacyExports: boolean;
     private resolutions: Record<string, string>;
 
-    constructor({ outputEsm, resolutions, legacyExports, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ outputEsm, resolutions, useLegacyExports, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.outputEsm = outputEsm;
         this.resolutions = resolutions;
-        this.legacyExports = legacyExports ?? false;
+        this.useLegacyExports = useLegacyExports ?? false;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -97,14 +97,14 @@ export class SimpleTypescriptProject extends TypescriptProject {
             baseUrl: SimpleTypescriptProject.SRC_DIRECTORY
         };
 
-        if (this.legacyExports) {
+        if (this.useLegacyExports) {
             await this.writeFileToVolume(
                 RelativeFilePath.of(TypescriptProject.TS_CONFIG_FILENAME),
                 JSON.stringify(
                     {
                         compilerOptions: {
                             ...compilerOptions,
-                            module: "CommonJS" as unknown as ModuleKind,
+                            module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
                         include: [SimpleTypescriptProject.SRC_DIRECTORY],
@@ -210,18 +210,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
             };
         }
 
-        const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.js`;
-        const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.d.ts`;
-        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.js`;
-        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.d.ts`;
-        const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
-        const defaultExport = this.outputEsm ? mjsFile : cjsFile;
-
-        if (this.legacyExports) {
+        if (this.useLegacyExports) {
             packageJson = {
                 ...packageJson,
-                main: defaultExport,
-                types: defaultTypesExport,
+                main: "./index.js",
+                types: "/index.d.ts",
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
@@ -229,6 +222,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 }
             };
         } else {
+            const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.js`;
+            const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.d.ts`;
+            const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.mjs`;
+            const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.d.mts`;
+            const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
+            const defaultExport = this.outputEsm ? mjsFile : cjsFile;
             packageJson = {
                 ...packageJson,
                 type: this.outputEsm ? "module" : "commonjs",
@@ -251,8 +250,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     ...this.getFoldersForExports().reduce((acc, folder) => {
                         const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.js`;
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.d.ts`;
-                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.js`;
-                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.d.ts`;
+                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.mjs`;
+                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.d.mts`;
                         const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 
@@ -279,7 +278,10 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `yarn ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && yarn ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
-                    [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`
+                    [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
+                        `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
+                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.js ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
+                    ].join(" && ")
                 }
             };
         }

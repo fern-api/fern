@@ -2,7 +2,6 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { go } from "@fern-api/go-ast";
@@ -40,52 +39,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             ir: this.ir,
             config: this.config
         });
-    }
-
-    public needsRequestParameter({ request }: { request: FernIr.dynamic.InlinedRequest }): boolean {
-        if (this.includePathParametersInWrappedRequest({ request })) {
-            return true;
-        }
-        if (request.queryParameters != null && request.queryParameters.length > 0) {
-            return true;
-        }
-        if (request.headers != null && request.headers.length > 0) {
-            return true;
-        }
-        if (request.body != null) {
-            return this.includeRequestBodyInWrappedRequest({ body: request.body });
-        }
-        if (request.metadata?.onlyPathParameters) {
-            return false;
-        }
-        return true;
-    }
-
-    public includePathParametersInWrappedRequest({ request }: { request: FernIr.dynamic.InlinedRequest }): boolean {
-        return (this.customConfig?.inlinePathParameters ?? false) && (request.metadata?.includePathParameters ?? false);
-    }
-
-    private includeRequestBodyInWrappedRequest({ body }: { body: FernIr.dynamic.InlinedRequestBody }): boolean {
-        switch (body.type) {
-            case "properties":
-            case "referenced":
-                return true;
-            case "fileUpload":
-                return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body });
-            default:
-                assertNever(body);
-        }
-    }
-
-    private includeFileUploadBodyInWrappedRequest({
-        fileUpload
-    }: {
-        fileUpload: FernIr.dynamic.FileUploadRequestBody;
-    }): boolean {
-        return (
-            this.fileUploadHasBodyProperties({ fileUpload }) ||
-            ((this.customConfig?.inlineFileProperties ?? false) && this.fileUploadHasFileProperties({ fileUpload }))
-        );
     }
 
     public getMethodName(name: FernIr.Name): string {
@@ -162,28 +115,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): go.TypeReference | undefined {
-        if (this.ir.environments == null) {
+        const environmentName = this.resolveEnvironmentName(environmentID);
+        if (environmentName == null) {
             return undefined;
         }
-        const environments = this.ir.environments.environments;
-        switch (environments.type) {
-            case "singleBaseUrl": {
-                const environment = environments.environments.find((env) => env.id === environmentID);
-                if (environment == null) {
-                    return undefined;
-                }
-                return this.getEnvironmentTypeReference(environment.name);
-            }
-            case "multipleBaseUrls": {
-                const environment = environments.environments.find((env) => env.id === environmentID);
-                if (environment == null) {
-                    return undefined;
-                }
-                return this.getEnvironmentTypeReference(environment.name);
-            }
-            default:
-                assertNever(environments);
-        }
+        return this.getEnvironmentTypeReference(environmentName);
     }
 
     private getEnvironmentTypeReference(name: FernIr.Name): go.TypeReference {

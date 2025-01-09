@@ -2,7 +2,7 @@ import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
 
 import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
@@ -84,7 +84,9 @@ export async function convertMarkdown({
             "twitter:card": undefined,
             noindex: undefined,
             nofollow: undefined,
-            "jsonld:breadcrumb": undefined
+            "jsonld:breadcrumb": undefined,
+            logo: undefined,
+            keywords: undefined
         },
         content: transformedContent
     };

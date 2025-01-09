@@ -96,6 +96,59 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return instances;
     }
 
+    public getSingleFileValue({
+        property,
+        record
+    }: {
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
+        record: Record<string, unknown>;
+    }): string | undefined {
+        const fileValue = record[property.wireValue];
+        if (fileValue == null) {
+            return undefined;
+        }
+        if (typeof fileValue !== "string") {
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `Expected file value to be a string, got ${typeof fileValue}`
+            });
+            return undefined;
+        }
+        return fileValue;
+    }
+
+    public getFileArrayValues({
+        property,
+        record
+    }: {
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
+        record: Record<string, unknown>;
+    }): string[] | undefined {
+        const fileArrayValue = record[property.wireValue];
+        if (fileArrayValue == null) {
+            return undefined;
+        }
+        if (!Array.isArray(fileArrayValue)) {
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `Expected file array value to be an array of strings, got ${typeof fileArrayValue}`
+            });
+            return undefined;
+        }
+        const stringValues: string[] = [];
+        for (const value of fileArrayValue) {
+            if (typeof value !== "string") {
+                this.errors.add({
+                    severity: Severity.Critical,
+                    message: `Expected file array value to be an array of strings, got ${typeof value}`
+                });
+                return undefined;
+            }
+            stringValues.push(value);
+        }
+        return stringValues;
+    }
+
     public getRecord(value: unknown): Record<string, unknown> | undefined {
         if (typeof value !== "object" || Array.isArray(value)) {
             this.errors.add({
@@ -193,32 +246,41 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return endpoints;
     }
 
-    public fileUploadHasBodyProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
-        return fileUpload.properties.some((property) => {
-            switch (property.type) {
-                case "file":
-                case "fileArray":
-                    return false;
-                case "bodyProperty":
-                    return true;
-                default:
-                    assertNever(property);
-            }
-        });
+    public needsRequestParameter({
+        request,
+        inlinePathParameters,
+        inlineFileProperties
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        inlinePathParameters: boolean;
+        inlineFileProperties: boolean;
+    }): boolean {
+        if (this.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
+            return true;
+        }
+        if (request.queryParameters != null && request.queryParameters.length > 0) {
+            return true;
+        }
+        if (request.headers != null && request.headers.length > 0) {
+            return true;
+        }
+        if (request.body != null) {
+            return this.includeRequestBodyInWrappedRequest({ body: request.body, inlineFileProperties });
+        }
+        if (request.metadata?.onlyPathParameters) {
+            return false;
+        }
+        return true;
     }
 
-    public fileUploadHasFileProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
-        return fileUpload.properties.some((property) => {
-            switch (property.type) {
-                case "file":
-                case "fileArray":
-                    return true;
-                case "bodyProperty":
-                    return false;
-                default:
-                    assertNever(property);
-            }
-        });
+    public includePathParametersInWrappedRequest({
+        request,
+        inlinePathParameters
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        inlinePathParameters: boolean;
+    }): boolean {
+        return inlinePathParameters && (request.metadata?.includePathParameters ?? false);
     }
 
     public isFileUploadRequestBody(
@@ -232,6 +294,31 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 return false;
             default:
                 assertNever(body);
+        }
+    }
+
+    public resolveEnvironmentName(environmentID: string): FernIr.Name | undefined {
+        if (this._ir.environments == null) {
+            return undefined;
+        }
+        const environments = this._ir.environments.environments;
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const environment = environments.environments.find((env) => env.id === environmentID);
+                if (environment == null) {
+                    return undefined;
+                }
+                return environment.name;
+            }
+            case "multipleBaseUrls": {
+                const environment = environments.environments.find((env) => env.id === environmentID);
+                if (environment == null) {
+                    return undefined;
+                }
+                return environment.name;
+            }
+            default:
+                assertNever(environments);
         }
     }
 
@@ -293,6 +380,39 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
     }
 
+    public getValueAsNumber({ value }: { value: unknown }): number | undefined {
+        if (typeof value !== "number") {
+            this.errors.add({
+                severity: Severity.Critical,
+                message: this.newTypeMismatchError({ expected: "number", value }).message
+            });
+            return undefined;
+        }
+        return value;
+    }
+
+    public getValueAsBoolean({ value }: { value: unknown }): boolean | undefined {
+        if (typeof value !== "boolean") {
+            this.errors.add({
+                severity: Severity.Critical,
+                message: this.newTypeMismatchError({ expected: "boolean", value }).message
+            });
+            return undefined;
+        }
+        return value;
+    }
+
+    public getValueAsString({ value }: { value: unknown }): string | undefined {
+        if (typeof value !== "string") {
+            this.errors.add({
+                severity: Severity.Critical,
+                message: this.newTypeMismatchError({ expected: "string", value }).message
+            });
+            return undefined;
+        }
+        return value;
+    }
+
     public newAuthMismatchError({
         auth,
         values
@@ -305,6 +425,69 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
 
     public newParameterNotRecognizedError(parameterName: string): Error {
         return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
+    }
+
+    public newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
+        return new Error(`Expected ${expected}, got ${typeof value}`);
+    }
+
+    private includeRequestBodyInWrappedRequest({
+        body,
+        inlineFileProperties
+    }: {
+        body: FernIr.dynamic.InlinedRequestBody;
+        inlineFileProperties: boolean;
+    }): boolean {
+        switch (body.type) {
+            case "properties":
+            case "referenced":
+                return true;
+            case "fileUpload":
+                return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body, inlineFileProperties });
+            default:
+                assertNever(body);
+        }
+    }
+
+    private includeFileUploadBodyInWrappedRequest({
+        fileUpload,
+        inlineFileProperties
+    }: {
+        fileUpload: FernIr.dynamic.FileUploadRequestBody;
+        inlineFileProperties: boolean;
+    }): boolean {
+        return (
+            this.fileUploadHasBodyProperties({ fileUpload }) ||
+            (inlineFileProperties && this.fileUploadHasFileProperties({ fileUpload }))
+        );
+    }
+
+    private fileUploadHasBodyProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return false;
+                case "bodyProperty":
+                    return true;
+                default:
+                    assertNever(property);
+            }
+        });
+    }
+
+    private fileUploadHasFileProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return true;
+                case "bodyProperty":
+                    return false;
+                default:
+                    assertNever(property);
+            }
+        });
     }
 
     private isListTypeReference(typeReference: FernIr.dynamic.TypeReference): boolean {
