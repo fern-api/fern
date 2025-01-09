@@ -82,14 +82,14 @@ function validateBodyResponse({
                     depth: 0
                 }).map((val): RuleViolation => {
                     return {
-                        severity: "error",
+                        severity: "fatal",
                         message: val.message
                     };
                 })
             );
         } else if (example.body != null) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message:
                     "Unexpected response in example. If you're adding an example of an error response, set the \"error\" property to the error's name"
             });
@@ -107,7 +107,7 @@ function validateBodyResponse({
                 });
             if (!endpointAllowsForError) {
                 violations.push({
-                    severity: "error",
+                    severity: "fatal",
                     message: `${chalk.bold(
                         example.error
                     )} is not specified as an allowed error for this endpoint. Add ${chalk.bold(
@@ -128,12 +128,12 @@ function validateBodyResponse({
                         breadcrumbs: ["response", "body"],
                         depth: 0
                     }).map((val): RuleViolation => {
-                        return { severity: "error", message: val.message };
+                        return { severity: "fatal", message: val.message };
                     })
                 );
             } else if (example.body != null) {
                 violations.push({
-                    severity: "error",
+                    severity: "fatal",
                     message: `Unexpected response in example. ${chalk.bold(example.error)} does not have a body.`
                 });
             }
@@ -161,7 +161,7 @@ function validateStreamResponse({
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         });
     } else if (
@@ -184,13 +184,13 @@ function validateStreamResponse({
                     breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: "error", message: val.message };
+                    return { severity: "fatal", message: val.message };
                 })
             );
         }
     } else {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message:
                 "Endpoint response expects server-sent events (`response-stream.format: sse`), but the provided example is a regular stream. Use the `events` key to provide an list of server-sent event examples."
         });
@@ -217,7 +217,7 @@ function validateSseResponse({
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         });
     } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
@@ -236,13 +236,13 @@ function validateSseResponse({
                     breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: "error", message: val.message };
+                    return { severity: "fatal", message: val.message };
                 })
             );
         }
     } else {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message:
                 "Endpoint response expects a regular stream, but the provided example is a server-sent event. Use the `stream` key to provide a list of stream examples."
         });

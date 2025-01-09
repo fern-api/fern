@@ -12,7 +12,7 @@ function getMaybeBadVersionMessage(
     if (!isVersionAhead(cliVersion, minCliVersion)) {
         return [
             {
-                severity: "error",
+                severity: "fatal",
                 message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}). Please run \`fern upgrade\` to upgrade your CLI version and use this generator.`
             }
         ];

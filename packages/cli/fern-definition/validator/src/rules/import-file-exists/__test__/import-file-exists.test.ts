@@ -19,19 +19,19 @@ describe("import-file-exists", () => {
                 message: "Import missing points to non-existent path missing/missing.yml.",
                 nodePath: ["imports", "missing"],
                 relativeFilepath: RelativeFilePath.of("root.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Import missing points to non-existent path ./missing.yml.",
                 nodePath: ["imports", "missing"],
                 relativeFilepath: RelativeFilePath.of("subfolder-a/a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Import doesNotExist points to non-existent path ../subfolder-a/a.",
                 nodePath: ["imports", "doesNotExist"],
                 relativeFilepath: RelativeFilePath.of("subfolder-b/b.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

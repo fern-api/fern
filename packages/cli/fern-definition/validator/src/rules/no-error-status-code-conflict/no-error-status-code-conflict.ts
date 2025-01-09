@@ -37,7 +37,7 @@ export const NoErrorStatusCodeConflictRule: Rule = {
                     for (const [statusCode, errorNames] of Object.entries(statusCodeToError)) {
                         if (errorNames.length > 1) {
                             result.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(", ")}`
                             });
                         }

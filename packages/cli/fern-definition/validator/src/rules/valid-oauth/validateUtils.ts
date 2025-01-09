@@ -263,7 +263,7 @@ function validateRequestProperty({
     const requestPropertyComponents = getRequestPropertyComponents(requestProperty);
     if (requestPropertyComponents == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $request (e.g. $request.${propertyValidator.propertyID}).`
@@ -273,7 +273,7 @@ function validateRequestProperty({
     if (requestPropertyComponents.length > 1) {
         // For now, we prevent request properties from being nested further than the top-level.
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(
                 endpointId
             )} cannot reference nested $request properties like '${requestProperty}'; expected '$request.${
@@ -292,7 +292,7 @@ function validateRequestProperty({
         })
     ) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${requestProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
@@ -322,7 +322,7 @@ function validateResponseProperty({
     const responsePropertyComponents = getResponsePropertyComponents(responseProperty);
     if (responsePropertyComponents == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $response (e.g. $response.${propertyValidator.propertyID}).`
@@ -339,7 +339,7 @@ function validateResponseProperty({
         })
     ) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${responseProperty}, which is not a valid '${propertyValidator.propertyID}' type.`

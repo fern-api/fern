@@ -17,7 +17,7 @@ describe("valid-example-error", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("error.yml"),
                 nodePath: ["errors", "ForbiddenError", "type"],
                 message: 'Expected example to be a string. Example is: {"foo":{"bar":"baz"}}'

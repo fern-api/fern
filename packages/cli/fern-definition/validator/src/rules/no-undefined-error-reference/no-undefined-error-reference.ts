@@ -40,7 +40,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: "Error is not defined."
                 }
             ];

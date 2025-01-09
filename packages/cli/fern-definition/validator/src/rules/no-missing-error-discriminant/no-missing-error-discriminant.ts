@@ -20,7 +20,7 @@ export const NoMissingErrorDiscriminantRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: "error-discrimination is required because this API has declared errors."
                         }
                     ];

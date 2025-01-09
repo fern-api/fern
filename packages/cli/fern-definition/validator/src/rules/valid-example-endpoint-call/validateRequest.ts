@@ -26,7 +26,7 @@ export function validateRequest({
     if (body == null) {
         if (example != null) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: "Unexpected request in example."
             });
         }
@@ -48,7 +48,7 @@ export function validateRequest({
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "error", message: val.message };
+                return { severity: "fatal", message: val.message };
             })
         );
     } else {
@@ -63,7 +63,7 @@ export function validateRequest({
                 breadcrumbs: ["response", "body"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "error", message: val.message };
+                return { severity: "fatal", message: val.message };
             })
         );
     }

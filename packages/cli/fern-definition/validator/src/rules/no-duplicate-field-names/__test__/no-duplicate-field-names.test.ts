@@ -16,7 +16,7 @@ describe("no-duplicate-field-names", () => {
 
         expect(violations).toEqual([
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicateNames"],
                 message: `Object has multiple properties named "b":
@@ -24,7 +24,7 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicateNames -> c`
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicatedNameDirectAndByExtension"],
                 message: `Object has multiple properties named "blogPostName":
@@ -32,7 +32,7 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicatedNameDirectAndByExtension -> (extends) blog.BlogPostAlias -> (alias of) BlogPost -> blogPostName`
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicatedNameFooByDifferentExtensions"],
                 message: `Object has multiple properties named "foo":
@@ -40,20 +40,20 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "EnumWithDuplicates"],
                 message: 'Name "A" is used by multiple values.'
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "UnionWithOverlap"],
                 message: `Discriminant "type" conflicts with extended property:
   - a -> ObjectWithTypeProperty -> type`
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "UnionWithOverlapWithCustomName"],
                 message: `Discriminant "foo" conflicts with extended properties:
