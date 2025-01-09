@@ -1,5 +1,8 @@
 {
-    "name": "test-package",
+    "name": "@fern/exhaustive",
+    "version": "0.0.1",
+    "private": false,
+    "repository": "https://github.com/exhaustive/fern",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",

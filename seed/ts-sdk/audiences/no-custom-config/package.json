@@ -1,7 +1,10 @@
 {
-    "name": "test-package",
+    "name": "@fern/audiences",
+    "version": "0.0.1",
+    "private": false,
+    "repository": "https://github.com/audiences/fern",
     "main": "./index.js",
-    "types": "/index.d.ts",
+    "types": "./index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
