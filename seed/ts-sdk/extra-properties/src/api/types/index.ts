@@ -1,1 +1,1 @@
-export * from "./Failure.js";
+export * from "./Failure";

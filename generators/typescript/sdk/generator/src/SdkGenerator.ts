@@ -132,6 +132,7 @@ export declare namespace SdkGenerator {
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
         useBigInt: boolean;
+        useLegacyExports: boolean;
     }
 }
 
@@ -549,7 +550,8 @@ export class SdkGenerator {
                   resolutions: {},
                   extraConfigs: this.config.packageJson,
                   runScripts: this.config.runScripts,
-                  exportSerde
+                  exportSerde,
+                  useLegacyExports: this.config.useLegacyExports
               });
     }
 

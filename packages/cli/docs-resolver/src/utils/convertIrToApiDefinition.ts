@@ -1,10 +1,4 @@
-import {
-    APIV1Read,
-    DocsV1Read,
-    SDKSnippetHolder,
-    convertAPIDefinitionToDb,
-    convertDbAPIDefinitionToRead
-} from "@fern-api/fdr-sdk";
+import { APIV1Read, SDKSnippetHolder, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 

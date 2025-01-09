@@ -1,4 +1,4 @@
-export * as organization from "./organization/index.js";
-export * from "./organization/types/index.js";
-export * as user from "./user/index.js";
-export * from "./user/types/index.js";
+export * as organization from "./organization";
+export * from "./organization/types";
+export * as user from "./user";
+export * from "./user/types";

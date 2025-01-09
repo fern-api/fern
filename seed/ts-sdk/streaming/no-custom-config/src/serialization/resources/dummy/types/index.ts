@@ -1,1 +1,1 @@
-export * from "./StreamResponse.js";
+export * from "./StreamResponse";

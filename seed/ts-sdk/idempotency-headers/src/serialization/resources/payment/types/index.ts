@@ -1,1 +1,1 @@
-export * from "./Currency.js";
+export * from "./Currency";

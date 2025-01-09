@@ -1,2 +1,2 @@
-export * from "./PlaylistIdNotFoundError.js";
-export * from "./UnauthorizedError.js";
+export * from "./PlaylistIdNotFoundError";
+export * from "./UnauthorizedError";

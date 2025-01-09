@@ -1,2 +1,2 @@
-export { ListUsersBodyCursorPaginationRequest } from "./ListUsersBodyCursorPaginationRequest.js";
-export { ListUsersBodyOffsetPaginationRequest } from "./ListUsersBodyOffsetPaginationRequest.js";
+export { ListUsersBodyCursorPaginationRequest } from "./ListUsersBodyCursorPaginationRequest";
+export { ListUsersBodyOffsetPaginationRequest } from "./ListUsersBodyOffsetPaginationRequest";

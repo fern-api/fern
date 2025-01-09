@@ -1,4 +1,3 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
@@ -63,18 +62,11 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        const fileValue = record[property.wireValue];
+        const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
             return go.TypeInstantiation.nop();
         }
-        if (typeof fileValue !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected file value to be a string, got ${typeof fileValue}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue as string));
+        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue));
     }
 
     private getArrayFileProperty({
@@ -84,30 +76,13 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        const fileArrayValue = record[property.wireValue];
-        if (fileArrayValue == null) {
+        const fileValues = this.context.getFileArrayValues({ property, record });
+        if (fileValues == null) {
             return go.TypeInstantiation.nop();
-        }
-        if (!Array.isArray(fileArrayValue)) {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected file array value to be an array of strings, got ${typeof fileArrayValue}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        const stringValues: string[] = [];
-        for (const value of fileArrayValue) {
-            if (typeof value !== "string") {
-                this.context.errors.add({
-                    severity: Severity.Critical,
-                    message: `Expected file array value to be an array of strings, got ${typeof value}`
-                });
-            }
-            stringValues.push(value as string);
         }
         return go.TypeInstantiation.slice({
             valueType: go.Type.reference(this.context.getIoReaderTypeReference()),
-            values: stringValues.map((value) =>
+            values: fileValues.map((value) =>
                 go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(value))
             )
         });

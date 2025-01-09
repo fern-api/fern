@@ -1,2 +1,2 @@
-export * from "./resources/index.js";
-export { SeedVersionVersion } from "./version.js";
+export * from "./resources";
+export { SeedVersionVersion } from "./version";

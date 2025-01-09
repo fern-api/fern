@@ -1,1 +1,1 @@
-export * from "./ErrorWithUnionBody.js";
+export * from "./ErrorWithUnionBody";

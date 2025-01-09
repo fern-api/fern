@@ -1,1 +1,1 @@
-export * as getAttemptedMigrations from "./getAttemptedMigrations.js";
+export * as getAttemptedMigrations from "./getAttemptedMigrations";

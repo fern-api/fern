@@ -1,2 +1,2 @@
-export { SeedOauthClientCredentialsDefaultError } from "./SeedOauthClientCredentialsDefaultError.js";
-export { SeedOauthClientCredentialsDefaultTimeoutError } from "./SeedOauthClientCredentialsDefaultTimeoutError.js";
+export { SeedOauthClientCredentialsDefaultError } from "./SeedOauthClientCredentialsDefaultError";
+export { SeedOauthClientCredentialsDefaultTimeoutError } from "./SeedOauthClientCredentialsDefaultTimeoutError";

@@ -14,4 +14,6 @@ export interface ExperimentalConfig {
      * This behavior is unstable and may change in the future.
      */
     disableStreamToggle?: boolean;
+    /** If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern. */
+    openapiParserV2?: boolean;
 }

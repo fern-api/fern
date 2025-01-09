@@ -109,6 +109,9 @@
       "path": "../fern-definition/validator"
     },
     {
+      "path": "../workspace/oss-validator"
+    },
+    {
       "path": "../cli-migrations"
     },
     {

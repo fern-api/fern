@@ -1,19 +1,20 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec,
-    Severity
+    FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { assertNever, keys } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
+import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: TypescriptCustomConfigSchema | undefined;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
+    public filePropertyMapper: FilePropertyMapper;
     public moduleName: string;
     public namespaceExport: string;
 
@@ -29,6 +30,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.customConfig =
             config.customConfig != null ? (config.customConfig as TypescriptCustomConfigSchema) : undefined;
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
+        this.filePropertyMapper = new FilePropertyMapper({ context: this });
         this.moduleName = getModuleName({ config, customConfig: this.customConfig });
         this.namespaceExport = getNamespaceExport({
             organization: config.organization,
@@ -71,26 +73,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): ts.Reference | undefined {
-        if (this.ir.environments == null) {
+        const environmentName = this.resolveEnvironmentName(environmentID);
+        if (environmentName == null) {
             return undefined;
         }
-        const environments = this.ir.environments.environments;
-        switch (environments.type) {
-            case "singleBaseUrl": {
-                const environment = environments.environments.find((env) => env.id === environmentID);
-                if (environment == null) {
-                    return undefined;
-                }
-                return this.getEnvironmentsTypeReference(environment.name);
-            }
-            case "multipleBaseUrls": {
-                const environment = environments.environments.find((env) => env.id === environmentID);
-                if (environment == null) {
-                    return undefined;
-                }
-                return this.getEnvironmentsTypeReference(environment.name);
-            }
-        }
+        return this.getEnvironmentsTypeReference(environmentName);
     }
 
     private getEnvironmentsTypeReference(name: FernIr.Name): ts.Reference {

@@ -1,7 +1,7 @@
-export * as getMovie from "./getMovie.js";
-export * as getMovieDocs from "./getMovieDocs.js";
-export * as getMovieName from "./getMovieName.js";
-export * as getMovieMetadata from "./getMovieMetadata.js";
-export * as getOptionalMovie from "./getOptionalMovie.js";
-export * as getOptionalMovieDocs from "./getOptionalMovieDocs.js";
-export * as getOptionalMovieName from "./getOptionalMovieName.js";
+export * as getMovie from "./getMovie";
+export * as getMovieDocs from "./getMovieDocs";
+export * as getMovieName from "./getMovieName";
+export * as getMovieMetadata from "./getMovieMetadata";
+export * as getOptionalMovie from "./getOptionalMovie";
+export * as getOptionalMovieDocs from "./getOptionalMovieDocs";
+export * as getOptionalMovieName from "./getOptionalMovieName";
