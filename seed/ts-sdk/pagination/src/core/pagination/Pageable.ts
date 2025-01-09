@@ -1,4 +1,4 @@
-import { Page } from "./Page.js";
+import { Page } from "./Page";
 
 export declare namespace Pageable {
     interface Args<Response, Item> {

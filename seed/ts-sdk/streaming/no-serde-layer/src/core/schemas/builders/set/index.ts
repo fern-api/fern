@@ -1,1 +1,1 @@
-export { set } from "./set.js";
+export { set } from "./set";

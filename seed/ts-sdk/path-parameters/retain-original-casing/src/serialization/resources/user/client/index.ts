@@ -1,1 +1,1 @@
-export * as searchUsers from "./searchUsers.js";
+export * as searchUsers from "./searchUsers";

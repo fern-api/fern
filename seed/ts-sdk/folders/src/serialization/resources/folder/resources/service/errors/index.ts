@@ -1,1 +1,1 @@
-export * from "./NotFoundError.js";
+export * from "./NotFoundError";

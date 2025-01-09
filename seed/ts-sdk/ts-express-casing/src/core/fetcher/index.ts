@@ -1,5 +1,5 @@
-export type { APIResponse } from "./APIResponse.js";
-export { fetcher } from "./Fetcher.js";
-export type { Fetcher, FetchFunction } from "./Fetcher.js";
-export { getHeader } from "./getHeader.js";
-export { Supplier } from "./Supplier.js";
+export type { APIResponse } from "./APIResponse";
+export { fetcher } from "./Fetcher";
+export type { Fetcher, FetchFunction } from "./Fetcher";
+export { getHeader } from "./getHeader";
+export { Supplier } from "./Supplier";

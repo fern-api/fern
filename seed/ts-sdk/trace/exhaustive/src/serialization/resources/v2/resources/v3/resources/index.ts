@@ -1,2 +1,2 @@
-export * as problem from "./problem/index.js";
-export * from "./problem/types/index.js";
+export * as problem from "./problem";
+export * from "./problem/types";

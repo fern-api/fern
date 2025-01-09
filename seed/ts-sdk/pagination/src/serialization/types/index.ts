@@ -1,2 +1,2 @@
-export * from "./UsernameCursor.js";
-export * from "./UsernamePage.js";
+export * from "./UsernameCursor";
+export * from "./UsernamePage";

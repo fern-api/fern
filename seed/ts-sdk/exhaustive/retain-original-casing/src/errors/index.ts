@@ -1,2 +1,2 @@
-export { SeedExhaustiveError } from "./SeedExhaustiveError.js";
-export { SeedExhaustiveTimeoutError } from "./SeedExhaustiveTimeoutError.js";
+export { SeedExhaustiveError } from "./SeedExhaustiveError";
+export { SeedExhaustiveTimeoutError } from "./SeedExhaustiveTimeoutError";

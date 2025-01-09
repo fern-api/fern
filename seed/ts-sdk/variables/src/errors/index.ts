@@ -1,2 +1,2 @@
-export { SeedVariablesError } from "./SeedVariablesError.js";
-export { SeedVariablesTimeoutError } from "./SeedVariablesTimeoutError.js";
+export { SeedVariablesError } from "./SeedVariablesError";
+export { SeedVariablesTimeoutError } from "./SeedVariablesTimeoutError";

@@ -1,11 +1,11 @@
-export { getObjectUtils, object } from "./object.js";
-export { objectWithoutOptionalProperties } from "./objectWithoutOptionalProperties.js";
+export { getObjectUtils, object } from "./object";
+export { objectWithoutOptionalProperties } from "./objectWithoutOptionalProperties";
 export type {
     inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas,
     inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas
-} from "./objectWithoutOptionalProperties.js";
-export { isProperty, property } from "./property.js";
-export type { Property } from "./property.js";
+} from "./objectWithoutOptionalProperties";
+export { isProperty, property } from "./property";
+export type { Property } from "./property";
 export type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
@@ -19,4 +19,4 @@ export type {
     ObjectSchema,
     ObjectUtils,
     PropertySchemas
-} from "./types.js";
+} from "./types";

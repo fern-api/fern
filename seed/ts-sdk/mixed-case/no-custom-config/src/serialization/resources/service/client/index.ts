@@ -1,1 +1,1 @@
-export * as listResources from "./listResources.js";
+export * as listResources from "./listResources";

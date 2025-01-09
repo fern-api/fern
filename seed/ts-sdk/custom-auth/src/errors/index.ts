@@ -1,2 +1,2 @@
-export { SeedCustomAuthError } from "./SeedCustomAuthError.js";
-export { SeedCustomAuthTimeoutError } from "./SeedCustomAuthTimeoutError.js";
+export { SeedCustomAuthError } from "./SeedCustomAuthError";
+export { SeedCustomAuthTimeoutError } from "./SeedCustomAuthTimeoutError";

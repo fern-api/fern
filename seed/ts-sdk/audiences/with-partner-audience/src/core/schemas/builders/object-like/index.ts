@@ -1,2 +1,2 @@
-export { getObjectLikeUtils, withParsedProperties } from "./getObjectLikeUtils.js";
-export type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
+export { getObjectLikeUtils, withParsedProperties } from "./getObjectLikeUtils";
+export type { ObjectLikeSchema, ObjectLikeUtils } from "./types";

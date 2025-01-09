@@ -1,1 +1,1 @@
-export { SendLiteralsInHeadersRequest } from "./SendLiteralsInHeadersRequest.js";
+export { SendLiteralsInHeadersRequest } from "./SendLiteralsInHeadersRequest";

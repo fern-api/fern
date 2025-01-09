@@ -1,1 +1,1 @@
-export * from "./Organization.js";
+export * from "./Organization";

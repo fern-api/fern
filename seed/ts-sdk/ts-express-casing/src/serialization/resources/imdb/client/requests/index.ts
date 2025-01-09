@@ -1,1 +1,1 @@
-export { CreateMovieRequest } from "./CreateMovieRequest.js";
+export { CreateMovieRequest } from "./CreateMovieRequest";

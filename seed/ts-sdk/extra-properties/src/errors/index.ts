@@ -1,2 +1,2 @@
-export { SeedExtraPropertiesError } from "./SeedExtraPropertiesError.js";
-export { SeedExtraPropertiesTimeoutError } from "./SeedExtraPropertiesTimeoutError.js";
+export { SeedExtraPropertiesError } from "./SeedExtraPropertiesError";
+export { SeedExtraPropertiesTimeoutError } from "./SeedExtraPropertiesTimeoutError";

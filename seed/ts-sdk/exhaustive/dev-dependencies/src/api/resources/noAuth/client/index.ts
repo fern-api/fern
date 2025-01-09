@@ -1,1 +1,1 @@
-export * as postWithNoAuth from "./postWithNoAuth.js";
+export * as postWithNoAuth from "./postWithNoAuth";
