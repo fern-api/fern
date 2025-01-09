@@ -25,7 +25,6 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
