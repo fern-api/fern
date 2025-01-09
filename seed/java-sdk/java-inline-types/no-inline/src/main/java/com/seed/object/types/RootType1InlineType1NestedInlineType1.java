@@ -19,28 +19,20 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType1InlineType1NestedInlineType1.Builder.class)
 public final class RootType1InlineType1NestedInlineType1 {
-    private final ReferenceType ref;
-
     private final String foo;
 
     private final String bar;
 
+    private final ReferenceType ref;
+
     private final Map<String, Object> additionalProperties;
 
     private RootType1InlineType1NestedInlineType1(
-            ReferenceType ref, String foo, String bar, Map<String, Object> additionalProperties) {
-        this.ref = ref;
+            String foo, String bar, ReferenceType ref, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.bar = bar;
+        this.ref = ref;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
-    @JsonProperty("ref")
-    public ReferenceType getRef() {
-        return ref;
     }
 
     /**
@@ -59,6 +51,14 @@ public final class RootType1InlineType1NestedInlineType1 {
         return bar;
     }
 
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("ref")
+    public ReferenceType getRef() {
+        return ref;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -72,12 +72,12 @@ public final class RootType1InlineType1NestedInlineType1 {
     }
 
     private boolean equalTo(RootType1InlineType1NestedInlineType1 other) {
-        return ref.equals(other.ref) && foo.equals(other.foo) && bar.equals(other.bar);
+        return foo.equals(other.foo) && bar.equals(other.bar) && ref.equals(other.ref);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.ref, this.foo, this.bar);
+        return Objects.hash(this.foo, this.bar, this.ref);
     }
 
     @java.lang.Override
@@ -85,22 +85,22 @@ public final class RootType1InlineType1NestedInlineType1 {
         return ObjectMappers.stringify(this);
     }
 
-    public static RefStage builder() {
+    public static FooStage builder() {
         return new Builder();
-    }
-
-    public interface RefStage {
-        FooStage ref(@NotNull ReferenceType ref);
-
-        Builder from(RootType1InlineType1NestedInlineType1 other);
     }
 
     public interface FooStage {
         BarStage foo(@NotNull String foo);
+
+        Builder from(RootType1InlineType1NestedInlineType1 other);
     }
 
     public interface BarStage {
-        _FinalStage bar(@NotNull String bar);
+        RefStage bar(@NotNull String bar);
+    }
+
+    public interface RefStage {
+        _FinalStage ref(@NotNull ReferenceType ref);
     }
 
     public interface _FinalStage {
@@ -108,12 +108,12 @@ public final class RootType1InlineType1NestedInlineType1 {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RefStage, FooStage, BarStage, _FinalStage {
-        private ReferenceType ref;
-
+    public static final class Builder implements FooStage, BarStage, RefStage, _FinalStage {
         private String foo;
 
         private String bar;
+
+        private ReferenceType ref;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -122,20 +122,9 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         @java.lang.Override
         public Builder from(RootType1InlineType1NestedInlineType1 other) {
-            ref(other.getRef());
             foo(other.getFoo());
             bar(other.getBar());
-            return this;
-        }
-
-        /**
-         * <p>lorem ipsum</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("ref")
-        public FooStage ref(@NotNull ReferenceType ref) {
-            this.ref = Objects.requireNonNull(ref, "ref must not be null");
+            ref(other.getRef());
             return this;
         }
 
@@ -156,14 +145,25 @@ public final class RootType1InlineType1NestedInlineType1 {
          */
         @java.lang.Override
         @JsonSetter("bar")
-        public _FinalStage bar(@NotNull String bar) {
+        public RefStage bar(@NotNull String bar) {
             this.bar = Objects.requireNonNull(bar, "bar must not be null");
+            return this;
+        }
+
+        /**
+         * <p>lorem ipsum</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("ref")
+        public _FinalStage ref(@NotNull ReferenceType ref) {
+            this.ref = Objects.requireNonNull(ref, "ref must not be null");
             return this;
         }
 
         @java.lang.Override
         public RootType1InlineType1NestedInlineType1 build() {
-            return new RootType1InlineType1NestedInlineType1(ref, foo, bar, additionalProperties);
+            return new RootType1InlineType1NestedInlineType1(foo, bar, ref, additionalProperties);
         }
     }
 }

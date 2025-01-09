@@ -25,35 +25,43 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType1.Builder.class)
 public final class RootType1 {
+    private final String foo;
+
     private final RootType1InlineType1 bar;
 
     private final Map<String, RootType1FooMapValue> fooMap;
-
-    private final ReferenceType ref;
-
-    private final String foo;
 
     private final List<RootType1FooListItem> fooList;
 
     private final Set<RootType1FooSetItem> fooSet;
 
+    private final ReferenceType ref;
+
     private final Map<String, Object> additionalProperties;
 
     private RootType1(
+            String foo,
             RootType1InlineType1 bar,
             Map<String, RootType1FooMapValue> fooMap,
-            ReferenceType ref,
-            String foo,
             List<RootType1FooListItem> fooList,
             Set<RootType1FooSetItem> fooSet,
+            ReferenceType ref,
             Map<String, Object> additionalProperties) {
+        this.foo = foo;
         this.bar = bar;
         this.fooMap = fooMap;
-        this.ref = ref;
-        this.foo = foo;
         this.fooList = fooList;
         this.fooSet = fooSet;
+        this.ref = ref;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("foo")
+    public String getFoo() {
+        return foo;
     }
 
     /**
@@ -75,22 +83,6 @@ public final class RootType1 {
     /**
      * @return lorem ipsum
      */
-    @JsonProperty("ref")
-    public ReferenceType getRef() {
-        return ref;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
-    @JsonProperty("foo")
-    public String getFoo() {
-        return foo;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
     @JsonProperty("fooList")
     public List<RootType1FooListItem> getFooList() {
         return fooList;
@@ -102,6 +94,14 @@ public final class RootType1 {
     @JsonProperty("fooSet")
     public Set<RootType1FooSetItem> getFooSet() {
         return fooSet;
+    }
+
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("ref")
+    public ReferenceType getRef() {
+        return ref;
     }
 
     @java.lang.Override
@@ -116,17 +116,17 @@ public final class RootType1 {
     }
 
     private boolean equalTo(RootType1 other) {
-        return bar.equals(other.bar)
+        return foo.equals(other.foo)
+                && bar.equals(other.bar)
                 && fooMap.equals(other.fooMap)
-                && ref.equals(other.ref)
-                && foo.equals(other.foo)
                 && fooList.equals(other.fooList)
-                && fooSet.equals(other.fooSet);
+                && fooSet.equals(other.fooSet)
+                && ref.equals(other.ref);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.bar, this.fooMap, this.ref, this.foo, this.fooList, this.fooSet);
+        return Objects.hash(this.foo, this.bar, this.fooMap, this.fooList, this.fooSet, this.ref);
     }
 
     @java.lang.Override
@@ -134,22 +134,22 @@ public final class RootType1 {
         return ObjectMappers.stringify(this);
     }
 
-    public static BarStage builder() {
+    public static FooStage builder() {
         return new Builder();
     }
 
-    public interface BarStage {
-        RefStage bar(@NotNull RootType1InlineType1 bar);
+    public interface FooStage {
+        BarStage foo(@NotNull String foo);
 
         Builder from(RootType1 other);
     }
 
-    public interface RefStage {
-        FooStage ref(@NotNull ReferenceType ref);
+    public interface BarStage {
+        RefStage bar(@NotNull RootType1InlineType1 bar);
     }
 
-    public interface FooStage {
-        _FinalStage foo(@NotNull String foo);
+    public interface RefStage {
+        _FinalStage ref(@NotNull ReferenceType ref);
     }
 
     public interface _FinalStage {
@@ -175,12 +175,12 @@ public final class RootType1 {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements BarStage, RefStage, FooStage, _FinalStage {
+    public static final class Builder implements FooStage, BarStage, RefStage, _FinalStage {
+        private String foo;
+
         private RootType1InlineType1 bar;
 
         private ReferenceType ref;
-
-        private String foo;
 
         private Set<RootType1FooSetItem> fooSet = new LinkedHashSet<>();
 
@@ -195,12 +195,23 @@ public final class RootType1 {
 
         @java.lang.Override
         public Builder from(RootType1 other) {
+            foo(other.getFoo());
             bar(other.getBar());
             fooMap(other.getFooMap());
-            ref(other.getRef());
-            foo(other.getFoo());
             fooList(other.getFooList());
             fooSet(other.getFooSet());
+            ref(other.getRef());
+            return this;
+        }
+
+        /**
+         * <p>lorem ipsum</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("foo")
+        public BarStage foo(@NotNull String foo) {
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 
@@ -221,19 +232,8 @@ public final class RootType1 {
          */
         @java.lang.Override
         @JsonSetter("ref")
-        public FooStage ref(@NotNull ReferenceType ref) {
+        public _FinalStage ref(@NotNull ReferenceType ref) {
             this.ref = Objects.requireNonNull(ref, "ref must not be null");
-            return this;
-        }
-
-        /**
-         * <p>lorem ipsum</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("foo")
-        public _FinalStage foo(@NotNull String foo) {
-            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 
@@ -323,7 +323,7 @@ public final class RootType1 {
 
         @java.lang.Override
         public RootType1 build() {
-            return new RootType1(bar, fooMap, ref, foo, fooList, fooSet, additionalProperties);
+            return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
         }
     }
 }

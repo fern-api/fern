@@ -25,13 +25,13 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType1.Builder.class)
 public final class RootType1 {
-    private final Map<String, RootType1FooMapValue> fooMap;
-
-    private final List<RootType1FooListItem> fooList;
-
     private final String foo;
 
     private final RootType1InlineType1 bar;
+
+    private final Map<String, RootType1FooMapValue> fooMap;
+
+    private final List<RootType1FooListItem> fooList;
 
     private final Set<RootType1FooSetItem> fooSet;
 
@@ -40,36 +40,20 @@ public final class RootType1 {
     private final Map<String, Object> additionalProperties;
 
     private RootType1(
-            Map<String, RootType1FooMapValue> fooMap,
-            List<RootType1FooListItem> fooList,
             String foo,
             RootType1InlineType1 bar,
+            Map<String, RootType1FooMapValue> fooMap,
+            List<RootType1FooListItem> fooList,
             Set<RootType1FooSetItem> fooSet,
             ReferenceType ref,
             Map<String, Object> additionalProperties) {
-        this.fooMap = fooMap;
-        this.fooList = fooList;
         this.foo = foo;
         this.bar = bar;
+        this.fooMap = fooMap;
+        this.fooList = fooList;
         this.fooSet = fooSet;
         this.ref = ref;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
-    @JsonProperty("fooMap")
-    public Map<String, RootType1FooMapValue> getFooMap() {
-        return fooMap;
-    }
-
-    /**
-     * @return lorem ipsum
-     */
-    @JsonProperty("fooList")
-    public List<RootType1FooListItem> getFooList() {
-        return fooList;
     }
 
     /**
@@ -86,6 +70,22 @@ public final class RootType1 {
     @JsonProperty("bar")
     public RootType1InlineType1 getBar() {
         return bar;
+    }
+
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("fooMap")
+    public Map<String, RootType1FooMapValue> getFooMap() {
+        return fooMap;
+    }
+
+    /**
+     * @return lorem ipsum
+     */
+    @JsonProperty("fooList")
+    public List<RootType1FooListItem> getFooList() {
+        return fooList;
     }
 
     /**
@@ -116,17 +116,17 @@ public final class RootType1 {
     }
 
     private boolean equalTo(RootType1 other) {
-        return fooMap.equals(other.fooMap)
-                && fooList.equals(other.fooList)
-                && foo.equals(other.foo)
+        return foo.equals(other.foo)
                 && bar.equals(other.bar)
+                && fooMap.equals(other.fooMap)
+                && fooList.equals(other.fooList)
                 && fooSet.equals(other.fooSet)
                 && ref.equals(other.ref);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.fooMap, this.fooList, this.foo, this.bar, this.fooSet, this.ref);
+        return Objects.hash(this.foo, this.bar, this.fooMap, this.fooList, this.fooSet, this.ref);
     }
 
     @java.lang.Override
@@ -195,10 +195,10 @@ public final class RootType1 {
 
         @java.lang.Override
         public Builder from(RootType1 other) {
-            fooMap(other.getFooMap());
-            fooList(other.getFooList());
             foo(other.getFoo());
             bar(other.getBar());
+            fooMap(other.getFooMap());
+            fooList(other.getFooList());
             fooSet(other.getFooSet());
             ref(other.getRef());
             return this;
@@ -323,7 +323,7 @@ public final class RootType1 {
 
         @java.lang.Override
         public RootType1 build() {
-            return new RootType1(fooMap, fooList, foo, bar, fooSet, ref, additionalProperties);
+            return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
         }
     }
 }
