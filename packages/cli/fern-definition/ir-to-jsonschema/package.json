@@ -40,7 +40,7 @@
     "json-schema": "^0.4.0"
   },
   "devDependencies": {
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

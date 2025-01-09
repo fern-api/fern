@@ -47,7 +47,7 @@
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "tmp-promise": "^3.0.3",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

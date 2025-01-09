@@ -34,7 +34,7 @@
     "@fern-fern/fiddle-sdk": "0.0.584"
   },
   "devDependencies": {
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

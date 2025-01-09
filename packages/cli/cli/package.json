@@ -110,7 +110,7 @@
     "validate-npm-package-name": "^5.0.1",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

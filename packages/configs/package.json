@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/typescript-config",
+  "name": "@fern-api/configs",
   "version": "0.0.0",
   "private": true,
   "license": "MIT"

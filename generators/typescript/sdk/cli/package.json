@@ -46,7 +46,7 @@
     "@types/tmp": "^0.2.4",
     "ts-loader": "^9.3.1",
     "tsup": "^8.3.5",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

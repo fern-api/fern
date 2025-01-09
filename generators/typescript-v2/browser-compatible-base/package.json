@@ -29,7 +29,7 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
   },
   "devDependencies": {
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/lodash-es": "^4.17.12",

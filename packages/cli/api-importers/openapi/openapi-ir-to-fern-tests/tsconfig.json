@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-api/typescript-config/test.json",
+  "extends": "@fern-api/configs/tsconfig/test.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",

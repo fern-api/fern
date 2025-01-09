@@ -43,7 +43,7 @@
     "ts-loader": "^9.3.1",
     "tsup": "^8.3.5",
     "zod": "^3.22.3",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

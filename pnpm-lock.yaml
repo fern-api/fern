@@ -47,9 +47,9 @@ importers:
       '@blueprintjs/stylelint-plugin':
         specifier: ^4.1.14
         version: 4.1.14(stylelint@14.14.0)
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:packages/typescript-config
+        version: link:packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -177,9 +177,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -229,9 +229,9 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -278,9 +278,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -314,15 +314,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
         version: 53.24.0
@@ -368,6 +368,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -383,9 +386,6 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.17
         version: 0.0.17
@@ -459,9 +459,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -492,15 +492,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -543,6 +543,9 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -558,9 +561,6 @@ importers:
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -601,9 +601,9 @@ importers:
         specifier: ^0.4.9
         version: 0.4.9
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -631,9 +631,9 @@ importers:
 
   generators/go-v2/model:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -667,9 +667,9 @@ importers:
 
   generators/go-v2/sdk:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -706,15 +706,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: 53.9.0
         version: 53.9.0
@@ -794,9 +794,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -830,15 +830,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-api/php-codegen':
         specifier: workspace:*
         version: link:../codegen
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.24.0
@@ -884,6 +884,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -896,9 +899,6 @@ importers:
       '@fern-api/php-model':
         specifier: workspace:*
         version: link:../model
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -953,15 +953,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: 53.9.0
         version: 53.9.0
@@ -1026,9 +1026,9 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1078,9 +1078,9 @@ importers:
         specifier: ^3.22.4
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1108,9 +1108,9 @@ importers:
 
   generators/python-v2/fastapi:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1150,6 +1150,9 @@ importers:
       '@fern-api/base-python-generator':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -1159,9 +1162,6 @@ importers:
       '@fern-api/python-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1223,9 +1223,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1272,9 +1272,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1308,6 +1308,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1320,9 +1323,6 @@ importers:
       '@fern-api/ruby-generator-cli':
         specifier: workspace:*
         version: link:../cli
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1374,6 +1374,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/fern-ruby-model':
         specifier: workspace:*
         version: link:../model
@@ -1389,9 +1392,6 @@ importers:
       '@fern-api/ruby-generator-cli':
         specifier: workspace:*
         version: link:../cli
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1447,9 +1447,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1493,12 +1493,12 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0
@@ -1532,12 +1532,12 @@ importers:
 
   generators/typescript-v2/base:
     devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/typescript-browser-compatible-base':
         specifier: workspace:*
         version: link:../browser-compatible-base
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1568,9 +1568,9 @@ importers:
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/typescript-config
+        version: link:../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1619,6 +1619,9 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -1634,9 +1637,6 @@ importers:
       '@fern-api/typescript-browser-compatible-base':
         specifier: workspace:*
         version: link:../browser-compatible-base
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../packages/typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1670,9 +1670,9 @@ importers:
 
   generators/typescript/express/cli:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1758,9 +1758,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1804,9 +1804,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1853,9 +1853,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1893,9 +1893,9 @@ importers:
         specifier: workspace:*
         version: link:../../utils/contexts
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1939,9 +1939,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1988,9 +1988,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2037,9 +2037,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2128,9 +2128,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2171,9 +2171,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2217,9 +2217,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2263,9 +2263,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2309,9 +2309,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2358,9 +2358,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2404,9 +2404,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2450,9 +2450,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2502,9 +2502,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2562,6 +2562,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
@@ -2571,9 +2574,6 @@ importers:
       '@fern-api/typescript-base':
         specifier: workspace:*
         version: link:../../../typescript-v2/base
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../../packages/typescript-config
       '@fern-fern/ir-sdk':
         specifier: 53.23.0
         version: 53.23.0
@@ -2650,9 +2650,9 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2699,9 +2699,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2742,9 +2742,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2863,9 +2863,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2915,9 +2915,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2961,9 +2961,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3016,9 +3016,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3062,9 +3062,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3111,9 +3111,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3157,9 +3157,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3197,9 +3197,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3249,9 +3249,9 @@ importers:
         specifier: workspace:*
         version: link:../contexts
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3289,9 +3289,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3371,9 +3371,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3441,9 +3441,9 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3478,9 +3478,9 @@ importers:
         specifier: ^3.7.6
         version: 3.7.7
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3511,9 +3511,9 @@ importers:
 
   generators/typescript/utils/core-utilities/base:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3544,9 +3544,9 @@ importers:
 
   generators/typescript/utils/core-utilities/callback-queue:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3590,9 +3590,9 @@ importers:
         specifier: ^4.5.2
         version: 4.5.2
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3656,9 +3656,9 @@ importers:
 
   generators/typescript/utils/core-utilities/utils:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3695,9 +3695,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.0)
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../../packages/typescript-config
+        version: link:../../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3735,9 +3735,9 @@ importers:
         specifier: workspace:*
         version: link:../commons
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../../../packages/configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3781,9 +3781,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3811,9 +3811,9 @@ importers:
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3860,9 +3860,9 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3900,9 +3900,9 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3931,9 +3931,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -3995,9 +3995,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4053,9 +4053,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4105,9 +4105,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4157,9 +4157,9 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4205,6 +4205,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -4301,9 +4304,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../typescript-config
       '@fern-api/venus-api-sdk':
         specifier: 0.10.2
         version: 0.10.2
@@ -4440,9 +4440,9 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4513,9 +4513,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4568,9 +4568,9 @@ importers:
         specifier: workspace:*
         version: link:../task-context
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4617,9 +4617,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4693,9 +4693,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4751,9 +4751,9 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4806,9 +4806,9 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4858,9 +4858,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4958,9 +4958,9 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5064,9 +5064,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -5134,9 +5134,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5201,9 +5201,9 @@ importers:
         specifier: npm:prettier@^2.7.1
         version: prettier@2.8.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5268,9 +5268,9 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5305,9 +5305,9 @@ importers:
         specifier: workspace:*
         version: link:../../../ir-sdk
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5381,9 +5381,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5417,6 +5417,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../workspace/commons
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
@@ -5438,9 +5441,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../../typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5511,9 +5511,9 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5728,9 +5728,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5774,9 +5774,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5865,9 +5865,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5995,9 +5995,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../typescript-config
+        version: link:../../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6047,9 +6047,9 @@ importers:
         specifier: workspace:*
         version: link:../../../commons/path-utils
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6123,9 +6123,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6163,9 +6163,9 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6224,9 +6224,9 @@ importers:
         specifier: 6.12.1
         version: 6.12.1
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6288,9 +6288,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6337,9 +6337,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6389,9 +6389,9 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6459,9 +6459,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6493,9 +6493,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6527,9 +6527,9 @@ importers:
         specifier: workspace:*
         version: link:../logger
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6582,9 +6582,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6649,9 +6649,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6770,9 +6770,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6858,9 +6858,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -6916,9 +6916,9 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7007,9 +7007,9 @@ importers:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7077,9 +7077,9 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../typescript-config
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7129,9 +7129,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7196,9 +7196,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7233,9 +7233,9 @@ importers:
         specifier: workspace:*
         version: link:../core-utils
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7273,9 +7273,9 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7300,9 +7300,9 @@ importers:
 
   packages/commons/path-utils:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../typescript-config
+        version: link:../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7328,6 +7328,8 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/configs: {}
+
   packages/core:
     dependencies:
       '@fern-api/venus-api-sdk':
@@ -7346,9 +7348,9 @@ importers:
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7376,9 +7378,9 @@ importers:
 
   packages/ir-sdk:
     devDependencies:
-      '@fern-api/typescript-config':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7406,15 +7408,15 @@ importers:
 
   packages/scripts:
     devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
       '@fern-api/ir-migrations':
         specifier: workspace:*
         version: link:../cli/generation/ir-migrations
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7457,6 +7459,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../cli/workspace/commons
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../cli/configuration
@@ -7484,9 +7489,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../cli/workspace/loader
@@ -7592,6 +7594,9 @@ importers:
       '@fern-api/browser-compatible-fern-workspace':
         specifier: workspace:*
         version: link:../../cli/workspace/browser-compatible-fern-workspace
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../cli/configuration
@@ -7607,9 +7612,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../cli/task-context
-      '@fern-api/typescript-config':
-        specifier: workspace:*
-        version: link:../../typescript-config
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -7643,8 +7645,6 @@ importers:
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/typescript-config: {}
 
 packages:
 

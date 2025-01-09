@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

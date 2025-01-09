@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-api/typescript-config/react.json",
+  "extends": "@fern-api/configs/tsconfig/react.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"]
 }

@@ -38,7 +38,7 @@
     "@types/jest": "^29.5.14",
     "string.prototype.replaceall": "^1.0.10",
     "tsup": "^8.3.5",
-    "@fern-api/typescript-config": "workspace:*",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
