@@ -397,7 +397,7 @@ export class ApiReferenceNodeConverterLatest {
 
             this.#visitedSubpackages.add(subpackageId);
             this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackageId]);
-            const urlSlug = subpackage.name;
+            const urlSlug = kebabCase(subpackage.name);
             const slug = parentSlug.apply({ urlSlug });
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
                 id: subpackageNodeId,
@@ -583,7 +583,7 @@ export class ApiReferenceNodeConverterLatest {
             }
 
             const slug = parentSlug.apply({
-                urlSlug: subpackageMetadata.name
+                urlSlug: kebabCase(subpackageMetadata.name)
             });
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
@@ -647,7 +647,7 @@ export class ApiReferenceNodeConverterLatest {
                         );
                         return;
                     }
-                    let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
+                    let slugGenerator = parentSlug.apply({ urlSlug: kebabCase(subpackageCursor.slug) });
 
                     for (const namespacePart of endpoint.namespace.slice(1)) {
                         let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
