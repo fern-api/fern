@@ -3,7 +3,6 @@ import {
     AbsoluteFilePath,
     RelativeFilePath,
     doesPathExist,
-    getDirectoryContents,
     getDirectoryContentsForSnapshot,
     join
 } from "@fern-api/fs-utils";
@@ -62,7 +61,7 @@ describe("fern init", () => {
     it("init docs", async () => {
         const pathOfDirectory = await init();
 
-        await runFernCli(["init", "--docs"], {
+        await runFernCli(["init", "--docs", "--organization", "fern"], {
             cwd: pathOfDirectory
         });
 
