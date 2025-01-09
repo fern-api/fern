@@ -158,11 +158,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
+        await this.postProcess(persistedTypescriptProject);
+
         const scriptsManager = new ScriptsManager();
         await scriptsManager.copyScripts({
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
-        await this.postProcess(persistedTypescriptProject);
 
         return persistedTypescriptProject;
     }
