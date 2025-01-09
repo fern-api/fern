@@ -1,5 +1,5 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
@@ -33,8 +33,8 @@
     {
       "path": "../fern-definition/schema"
     },
-    { 
-      "path": "../docs-importers/mintlify" 
+    {
+      "path": "../docs-importers/mintlify"
     }
   ]
 }
