@@ -22,19 +22,19 @@ import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
 // TODO: these functions need an extra piece of information from the fdr latest shape, to see if the operation id takes precedence over slug generation
 function getLatestEndpointUrlSlug(endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition) {
-    const slugParts = endpoint.namespace?.map((subpackageId) => subpackageId.toString()) ?? [];
+    const slugParts = endpoint.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
     slugParts.push(kebabCase(endpoint.id.split(".").pop() ?? ""));
     return endpoint.operationId != null ? kebabCase(endpoint.operationId) : urlJoin(slugParts);
 }
 
 function getLatestWebSocketUrlSlug(webSocket: FdrAPI.api.latest.websocket.WebSocketChannel) {
-    const slugParts = webSocket.namespace?.map((subpackageId) => subpackageId.toString()) ?? [];
+    const slugParts = webSocket.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
     slugParts.push(kebabCase(webSocket.id.split(".").pop() ?? ""));
     return webSocket.operationId != null ? kebabCase(webSocket.operationId) : urlJoin(slugParts);
 }
 
 function getLatestWebhookUrlSlug(webhook: FdrAPI.api.latest.webhook.WebhookDefinition) {
-    const slugParts = webhook.namespace?.map((subpackageId) => subpackageId.toString()) ?? [];
+    const slugParts = webhook.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
     slugParts.push(kebabCase(webhook.id.split(".").pop() ?? ""));
     return webhook.operationId != null ? kebabCase(webhook.operationId) : urlJoin(slugParts);
 }
