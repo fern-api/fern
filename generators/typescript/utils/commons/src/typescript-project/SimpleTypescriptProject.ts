@@ -214,7 +214,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             packageJson = {
                 ...packageJson,
                 main: "./index.js",
-                types: "/index.d.ts",
+                types: "./index.d.ts",
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",

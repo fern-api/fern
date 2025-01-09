@@ -4,9 +4,8 @@ import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { NpmPackage } from "@fern-api/typescript-base";
 
-import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+import { DependencyType } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
 import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
