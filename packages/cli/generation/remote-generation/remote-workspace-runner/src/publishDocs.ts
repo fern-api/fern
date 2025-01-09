@@ -188,6 +188,35 @@ export async function publishDocs({
                         }
                 }
             }
+        },
+        async ({ api, apiName }) => {
+            context.logger.debug("Calling registerAPI with v2 definition... ", JSON.stringify(api, undefined, 4));
+            const response = await fdr.api.v1.register.registerApiDefinition({
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
+                definition: undefined,
+                definitionV2: api
+            });
+
+            if (response.ok) {
+                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+                return response.body.apiDefinitionId;
+            } else {
+                switch (response.error.error) {
+                    case "UnauthorizedError":
+                    case "UserNotInOrgError": {
+                        return context.failAndThrow(
+                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                        );
+                    }
+                    default:
+                        if (apiName != null) {
+                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                        } else {
+                            return context.failAndThrow("Failed to register API", response.error);
+                        }
+                }
+            }
         }
     );
 
