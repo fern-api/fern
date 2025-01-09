@@ -161,7 +161,6 @@ export async function publishDocs({
         },
         async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
-            context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
@@ -182,15 +181,18 @@ export async function publishDocs({
                     }
                     default:
                         if (apiName != null) {
-                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
                         } else {
-                            return context.failAndThrow("Failed to register API", response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
                         }
                 }
             }
         },
         async ({ api, apiName }) => {
-            context.logger.debug("Calling registerAPI with v2 definition... ", JSON.stringify(api, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
@@ -211,9 +213,13 @@ export async function publishDocs({
                     }
                     default:
                         if (apiName != null) {
-                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
                         } else {
-                            return context.failAndThrow("Failed to register API", response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
                         }
                 }
             }
