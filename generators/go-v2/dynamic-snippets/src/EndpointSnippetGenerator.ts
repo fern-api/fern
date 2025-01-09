@@ -1,4 +1,5 @@
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
@@ -167,6 +168,8 @@ export class EndpointSnippetGenerator {
                     return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
+            default:
+                assertNever(auth);
         }
     }
 
@@ -360,6 +363,8 @@ export class EndpointSnippetGenerator {
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
             case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
         }
     }
 
@@ -401,6 +406,8 @@ export class EndpointSnippetGenerator {
             }
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
@@ -554,6 +561,8 @@ export class EndpointSnippetGenerator {
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
+            default:
+                assertNever(body);
         }
     }
 
@@ -593,6 +602,8 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 

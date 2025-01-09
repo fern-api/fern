@@ -129,9 +129,8 @@ export class TypeLiteral extends AstNode {
             }
             case "nop":
                 break;
-            default: {
+            default:
                 assertNever(this.internalType);
-            }
         }
     }
 

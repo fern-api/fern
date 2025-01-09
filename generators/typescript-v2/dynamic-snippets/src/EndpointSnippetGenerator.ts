@@ -1,4 +1,5 @@
 import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ts } from "@fern-api/typescript-ast";
 
@@ -213,6 +214,8 @@ export class EndpointSnippetGenerator {
                     return [];
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values });
+            default:
+                assertNever(auth);
         }
     }
 
@@ -334,6 +337,8 @@ export class EndpointSnippetGenerator {
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
             case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
         }
     }
 
@@ -375,6 +380,8 @@ export class EndpointSnippetGenerator {
             }
             case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
@@ -535,6 +542,8 @@ export class EndpointSnippetGenerator {
                 return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
+            default:
+                assertNever(body);
         }
     }
 
@@ -574,6 +583,8 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
