@@ -524,42 +524,42 @@ export class DynamicTypeInstantiationMapper {
                 return go.TypeInstantiation.bool(bool);
             }
             case "STRING": {
-                const str = this.getValueAsString({ value });
+                const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.string(str);
             }
             case "DATE": {
-                const date = this.getValueAsString({ value });
+                const date = this.context.getValueAsString({ value });
                 if (date == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.date(date);
             }
             case "DATE_TIME": {
-                const dateTime = this.getValueAsString({ value });
+                const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.dateTime(dateTime);
             }
             case "UUID": {
-                const uuid = this.getValueAsString({ value });
+                const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.uuid(uuid);
             }
             case "BASE_64": {
-                const base64 = this.getValueAsString({ value });
+                const base64 = this.context.getValueAsString({ value });
                 if (base64 == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.bytes(base64);
             }
             case "BIG_INTEGER": {
-                const bigInt = this.getValueAsString({ value });
+                const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {
                     return go.TypeInstantiation.nop();
                 }
@@ -578,14 +578,7 @@ export class DynamicTypeInstantiationMapper {
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): number | undefined {
         const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
-        if (typeof num !== "number") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "number", value }).message
-            });
-            return undefined;
-        }
-        return num;
+        return this.context.getValueAsNumber({ value: num });
     }
 
     private getValueAsBoolean({
@@ -597,28 +590,6 @@ export class DynamicTypeInstantiationMapper {
     }): boolean | undefined {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
-        if (typeof bool !== "boolean") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "boolean", value }).message
-            });
-            return undefined;
-        }
-        return bool;
-    }
-
-    private getValueAsString({ value }: { value: unknown }): string | undefined {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "string", value }).message
-            });
-            return undefined;
-        }
-        return value;
-    }
-
-    private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
-        return new Error(`Expected ${expected} but got ${typeof value}`);
+        return this.context.getValueAsBoolean({ value: bool });
     }
 }
