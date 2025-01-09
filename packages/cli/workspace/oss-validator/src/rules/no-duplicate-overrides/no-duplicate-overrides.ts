@@ -46,7 +46,7 @@ export const NoDuplicateOverridesRule: Rule = {
                             const key = `${sdkGroupName}:${sdkMethodName}`;
                             if (seenMethodNames.has(key)) {
                                 violations.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                     nodePath: ["paths", path, method],
                                     message: `SDK method ${sdkGroupName}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`

@@ -18,7 +18,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
                 message: "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)"
@@ -41,7 +41,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
                 message: "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)"
@@ -64,7 +64,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
                 message: "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)"
