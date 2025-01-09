@@ -55,7 +55,8 @@ export async function generateDocsWorkspace({
             workspace: docsWorkspace,
             context,
             logWarnings: false,
-            fernWorkspaces
+            fernWorkspaces,
+            errorOnBrokenLinks: false
         });
 
         await runRemoteGenerationForDocsWorkspace({

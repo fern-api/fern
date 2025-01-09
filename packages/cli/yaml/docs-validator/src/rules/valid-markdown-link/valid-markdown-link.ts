@@ -108,6 +108,7 @@ export const ValidMarkdownLinks: Rule = {
                         return exists.map((brokenPathname) => {
                             const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                             return {
+                                name: ValidMarkdownLinks.name,
                                 severity: "warning" as const,
                                 message
                             };
@@ -173,6 +174,7 @@ export const ValidMarkdownLinks: Rule = {
                                 return exists.map((brokenPathname) => {
                                     const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                                     return {
+                                        name: ValidMarkdownLinks.name,
                                         severity: "warning" as const,
                                         message
                                     };

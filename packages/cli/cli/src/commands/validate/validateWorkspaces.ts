@@ -7,11 +7,13 @@ import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLog
 export async function validateWorkspaces({
     project,
     cliContext,
-    logWarnings
+    logWarnings,
+    errorOnBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    errorOnBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
@@ -24,7 +26,8 @@ export async function validateWorkspaces({
                     project.apiWorkspaces.map(async (workspace) => {
                         return workspace.toFernWorkspace({ context });
                     })
-                )
+                ),
+                errorOnBrokenLinks
             });
         });
     }

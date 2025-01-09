@@ -727,6 +727,12 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Log warnings in addition to errors.",
                     default: false
+                })
+                .option("no-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -735,7 +741,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 }),
                 cliContext,
-                logWarnings: argv.warnings
+                logWarnings: argv.warnings,
+                errorOnBrokenLinks: argv.noBrokenLinks
             });
         }
     );

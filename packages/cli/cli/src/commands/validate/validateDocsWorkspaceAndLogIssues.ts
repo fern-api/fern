@@ -9,16 +9,22 @@ export async function validateDocsWorkspaceWithoutExiting({
     fernWorkspaces,
     context,
     logWarnings,
+    errorOnBrokenLinks,
     logSummary = true
 }: {
     workspace: DocsWorkspace;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
+    errorOnBrokenLinks?: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
     const violations = await validateDocsWorkspace(workspace, context, fernWorkspaces);
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+    let { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+
+    if (errorOnBrokenLinks) {
+        hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
+    }
 
     return { hasErrors };
 }
@@ -27,18 +33,21 @@ export async function validateDocsWorkspaceAndLogIssues({
     workspace,
     fernWorkspaces,
     context,
-    logWarnings
+    logWarnings,
+    errorOnBrokenLinks
 }: {
     workspace: DocsWorkspace;
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
+    errorOnBrokenLinks?: boolean;
 }): Promise<void> {
     const { hasErrors } = await validateDocsWorkspaceWithoutExiting({
         workspace,
         context,
         logWarnings,
-        fernWorkspaces
+        fernWorkspaces,
+        errorOnBrokenLinks
     });
 
     if (hasErrors) {
