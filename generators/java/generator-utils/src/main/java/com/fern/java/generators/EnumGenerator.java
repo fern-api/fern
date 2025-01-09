@@ -19,15 +19,13 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import javax.lang.model.element.Modifier;
 
-public final class EnumGenerator extends AbstractFileGenerator {
+public final class EnumGenerator extends AbstractTypeGenerator {
     private static final FieldSpec VALUE_FIELD = FieldSpec.builder(String.class, "value")
             .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -43,11 +41,11 @@ public final class EnumGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public TypeSpec getTypeSpec() {
         if (generatorContext.getCustomConfig().enableForwardCompatibleEnum()) {
             ForwardCompatibleEnumGenerator forwardCompatibleEnumGenerator =
                     new ForwardCompatibleEnumGenerator(className, generatorContext, enumTypeDeclaration);
-            return forwardCompatibleEnumGenerator.generateFile();
+            return forwardCompatibleEnumGenerator.getTypeSpec();
         } else {
             TypeSpec.Builder enumTypeSpecBuilder = TypeSpec.enumBuilder(className);
             enumTypeDeclaration.getValues().forEach(enumValue -> {
@@ -71,13 +69,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
                             .addStatement("return this.$L", VALUE_FIELD.name)
                             .build())
                     .build();
-
-            JavaFile enumFile = JavaFile.builder(className.packageName(), enumTypeSpecBuilder.build())
-                    .build();
-            return GeneratedJavaFile.builder()
-                    .className(className)
-                    .javaFile(enumFile)
-                    .build();
+            return enumTypeSpecBuilder.build();
         }
     }
 }

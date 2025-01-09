@@ -7,10 +7,8 @@ import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -18,7 +16,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
-public final class AliasGenerator extends AbstractFileGenerator {
+public final class AliasGenerator extends AbstractTypeGenerator {
 
     private static final String VALUE_FIELD_NAME = "value";
     private static final String OF_METHOD_NAME = "of";
@@ -30,38 +28,6 @@ public final class AliasGenerator extends AbstractFileGenerator {
             AliasTypeDeclaration aliasTypeDeclaration) {
         super(className, generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
-        TypeSpec.Builder aliasTypeSpecBuilder =
-                TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
-        TypeName aliasTypeName =
-                generatorContext.getPoetTypeNameMapper().convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
-        TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
-                .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
-                .addMethod(getConstructor(aliasTypeName))
-                .addMethod(getGetMethod(aliasTypeName))
-                .addMethod(getEqualsMethod(aliasTypeName))
-                .addMethod(getHashCodeMethod())
-                .addMethod(getToStringMethod())
-                .addMethod(getOfMethodName(aliasTypeName));
-        Optional<CodeBlock> maybeValueOfFactoryMethod = valueOfFactoryMethod(aliasTypeDeclaration.getAliasOf());
-        if (maybeValueOfFactoryMethod.isPresent()) {
-            aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
-                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                    .addParameter(ParameterSpec.builder(String.class, VALUE_FIELD_NAME)
-                            .build())
-                    .returns(className)
-                    .addCode(maybeValueOfFactoryMethod.get())
-                    .build());
-        }
-        JavaFile aliasFile = JavaFile.builder(className.packageName(), aliasTypeSpecBuilder.build())
-                .build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(aliasFile)
-                .build();
     }
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {
@@ -182,6 +148,33 @@ public final class AliasGenerator extends AbstractFileGenerator {
                         .build();
         }
         throw new IllegalStateException("Unsupported primitive type: " + primitiveType + "for `valueOf` method.");
+    }
+
+    @Override
+    public TypeSpec getTypeSpec() {
+        TypeSpec.Builder aliasTypeSpecBuilder =
+                TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeName aliasTypeName =
+                generatorContext.getPoetTypeNameMapper().convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
+        TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
+                .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                .addMethod(getConstructor(aliasTypeName))
+                .addMethod(getGetMethod(aliasTypeName))
+                .addMethod(getEqualsMethod(aliasTypeName))
+                .addMethod(getHashCodeMethod())
+                .addMethod(getToStringMethod())
+                .addMethod(getOfMethodName(aliasTypeName));
+        Optional<CodeBlock> maybeValueOfFactoryMethod = valueOfFactoryMethod(aliasTypeDeclaration.getAliasOf());
+        if (maybeValueOfFactoryMethod.isPresent()) {
+            aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .addParameter(ParameterSpec.builder(String.class, VALUE_FIELD_NAME)
+                            .build())
+                    .returns(className)
+                    .addCode(maybeValueOfFactoryMethod.get())
+                    .build());
+        }
+        return aliasTypeSpecBuilder.build();
     }
 
     private static final class ToStringMethodSpecVisitor implements PrimitiveTypeV1.Visitor<CodeBlock> {

@@ -7,11 +7,9 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -22,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator {
+public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator {
 
     private static final String VALUE_TYPE_NAME = "Value";
     private static final String VALUE_FIELD_NAME = "value";
@@ -48,32 +46,6 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
         super(className, generatorContext);
         this.enumTypeDeclaration = enumTypeDeclaration;
         this.valueFieldClassName = this.className.nestedClass(VALUE_TYPE_NAME);
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
-        Map<EnumValue, FieldSpec> enumConstants = getConstants();
-        VisitorFactory.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
-        TypeSpec enumTypeSpec = TypeSpec.classBuilder(className)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addFields(enumConstants.values())
-                .addFields(getPrivateMembers())
-                .addMethod(getConstructor())
-                .addMethod(getEnumValueMethod())
-                .addMethod(getToStringMethod())
-                .addMethod(getEqualsMethod())
-                .addMethod(getHashCodeMethod())
-                .addMethod(getVisitMethod(generatedVisitor))
-                .addMethod(getValueOfMethod(enumConstants))
-                .addType(getNestedValueEnum())
-                .addType(generatedVisitor.typeSpec())
-                .build();
-        JavaFile enumFile =
-                JavaFile.builder(className.packageName(), enumTypeSpec).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(enumFile)
-                .build();
     }
 
     private Map<EnumValue, FieldSpec> getConstants() {
@@ -252,5 +224,25 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
                 })
                 .collect(Collectors.toList());
         return VisitorFactory.buildVisitorInterface(visitMethodArgs);
+    }
+
+    @Override
+    public TypeSpec getTypeSpec() {
+        Map<EnumValue, FieldSpec> enumConstants = getConstants();
+        VisitorFactory.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
+        return TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addFields(enumConstants.values())
+                .addFields(getPrivateMembers())
+                .addMethod(getConstructor())
+                .addMethod(getEnumValueMethod())
+                .addMethod(getToStringMethod())
+                .addMethod(getEqualsMethod())
+                .addMethod(getHashCodeMethod())
+                .addMethod(getVisitMethod(generatedVisitor))
+                .addMethod(getValueOfMethod(enumConstants))
+                .addType(getNestedValueEnum())
+                .addType(generatedVisitor.typeSpec())
+                .build();
     }
 }

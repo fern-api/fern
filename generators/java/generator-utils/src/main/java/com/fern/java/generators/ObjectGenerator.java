@@ -45,6 +45,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
+    private List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -63,10 +65,23 @@ public final class ObjectGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedObject generateFile() {
+        objectPropertyGetters = new HashMap<>();
+        extendedPropertyGetters = new ArrayList<>();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), getTypeSpec()).build();
+        return GeneratedObject.builder()
+                .className(className)
+                .javaFile(javaFile)
+                .putAllObjectPropertyGetters(objectPropertyGetters)
+                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
+                .build();
+    }
+
+    public TypeSpec getTypeSpec() {
+        objectPropertyGetters = new HashMap<>();
+        extendedPropertyGetters = new ArrayList<>();
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
-        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
-        List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
         if (selfInterface.isEmpty()) {
             enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
                     .map(objectProperty -> {
@@ -119,15 +134,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
                 generatorContext.builderNotNullChecks());
-        TypeSpec objectTypeSpec = genericObjectGenerator.generate();
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return GeneratedObject.builder()
-                .className(className)
-                .javaFile(javaFile)
-                .putAllObjectPropertyGetters(objectPropertyGetters)
-                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
-                .build();
+        return genericObjectGenerator.generate();
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(

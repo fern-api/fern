@@ -53,7 +53,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
+public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private static final String TYPE_COMMENT = "If %d, value is of type %s";
     private static final String TYPE_FIELD_NAME = "type";
@@ -310,5 +310,10 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                             .isContainer();
         }
         return false;
+    }
+
+    @Override
+    public TypeSpec getTypeSpec() {
+        return null;
     }
 }

@@ -10,11 +10,9 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -26,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UnionGenerator extends AbstractFileGenerator {
+public final class UnionGenerator extends AbstractTypeGenerator {
 
     private final UnionTypeDeclaration unionTypeDeclaration;
 
@@ -39,7 +37,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public TypeSpec getTypeSpec() {
         List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
                 .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType))
                 .collect(Collectors.toList());
@@ -49,13 +47,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 unionSubTypes,
                 unknownSubType,
                 generatorContext.getIr().getConstants());
-        TypeSpec unionTypeSpec = unionTypeSpecGenerator.generateUnionTypeSpec();
-        JavaFile unionFile =
-                JavaFile.builder(className.packageName(), unionTypeSpec).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(unionFile)
-                .build();
+        return unionTypeSpecGenerator.generateUnionTypeSpec();
     }
 
     private final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
