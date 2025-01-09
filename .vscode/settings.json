@@ -11,6 +11,7 @@
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
+    "pnpm-lock.yaml": true,
   },
   "eslint.execArgv": [
     "--max_old_space_size=16384"
