@@ -1,7 +1,10 @@
 {
-    "name": "test-package",
+    "name": "@fern/error-property",
+    "version": "0.0.1",
+    "private": true,
+    "repository": "https://github.com/error-property/fern",
     "main": "./index.js",
-    "types": "/index.d.ts",
+    "types": "./index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",

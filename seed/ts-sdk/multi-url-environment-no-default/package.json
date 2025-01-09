@@ -1,7 +1,10 @@
 {
-    "name": "test-package",
+    "name": "@fern/multi-url-environment-no-default",
+    "version": "0.0.1",
+    "private": false,
+    "repository": "https://github.com/multi-url-environment-no-default/fern",
     "main": "./index.js",
-    "types": "/index.d.ts",
+    "types": "./index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
