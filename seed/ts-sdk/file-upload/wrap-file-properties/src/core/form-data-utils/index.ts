@@ -1,1 +1,1 @@
-export * from "./FormDataWrapper.js";
+export * from "./FormDataWrapper";

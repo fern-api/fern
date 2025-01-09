@@ -1,1 +1,1 @@
-export * as getNumWarmInstances from "./getNumWarmInstances.js";
+export * as getNumWarmInstances from "./getNumWarmInstances";

@@ -1,2 +1,2 @@
-export { SeedMultiLineDocsError } from "./SeedMultiLineDocsError.js";
-export { SeedMultiLineDocsTimeoutError } from "./SeedMultiLineDocsTimeoutError.js";
+export { SeedMultiLineDocsError } from "./SeedMultiLineDocsError";
+export { SeedMultiLineDocsTimeoutError } from "./SeedMultiLineDocsTimeoutError";

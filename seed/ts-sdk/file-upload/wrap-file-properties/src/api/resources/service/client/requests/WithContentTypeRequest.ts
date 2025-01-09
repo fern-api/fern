@@ -3,7 +3,7 @@
  */
 
 import * as fs from "fs";
-import * as SeedFileUpload from "../../../../index.js";
+import * as SeedFileUpload from "../../../../index";
 
 export interface WithContentTypeRequest {
     file: File | fs.ReadStream | Blob;

@@ -1,3 +1,3 @@
-export * from "./Animal.js";
-export * from "./Dog.js";
-export * from "./Cat.js";
+export * from "./Animal";
+export * from "./Dog";
+export * from "./Cat";

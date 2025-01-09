@@ -1,2 +1,2 @@
-export * from "./LangServerRequest.js";
-export * from "./LangServerResponse.js";
+export * from "./LangServerRequest";
+export * from "./LangServerResponse";

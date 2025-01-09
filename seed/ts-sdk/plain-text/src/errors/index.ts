@@ -1,2 +1,2 @@
-export { SeedPlainTextError } from "./SeedPlainTextError.js";
-export { SeedPlainTextTimeoutError } from "./SeedPlainTextTimeoutError.js";
+export { SeedPlainTextError } from "./SeedPlainTextError";
+export { SeedPlainTextTimeoutError } from "./SeedPlainTextTimeoutError";

@@ -1,3 +1,3 @@
-export * as errors from "./errors/index.js";
-export * from "./errors/types/index.js";
-export * as customAuth from "./customAuth/index.js";
+export * as errors from "./errors";
+export * from "./errors/types";
+export * as customAuth from "./customAuth";

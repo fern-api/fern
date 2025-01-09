@@ -1,3 +1,3 @@
-export * as users from "./users/index.js";
-export * from "./users/types/index.js";
-export * from "./users/client/requests/index.js";
+export * as users from "./users";
+export * from "./users/types";
+export * from "./users/client/requests";

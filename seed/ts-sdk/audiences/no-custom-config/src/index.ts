@@ -1,5 +1,5 @@
-export * as SeedAudiences from "./api/index.js";
-export { SeedAudiencesClient } from "./Client.js";
-export { SeedAudiencesEnvironment } from "./environments.js";
-export { SeedAudiencesError, SeedAudiencesTimeoutError } from "./errors/index.js";
-export * as serialization from "./serialization/index.js";
+export * as SeedAudiences from "./api";
+export { SeedAudiencesClient } from "./Client";
+export { SeedAudiencesEnvironment } from "./environments";
+export { SeedAudiencesError, SeedAudiencesTimeoutError } from "./errors";
+export * as serialization from "./serialization";

@@ -1,1 +1,1 @@
-export { GetPresignedUrlRequest } from "./GetPresignedUrlRequest.js";
+export { GetPresignedUrlRequest } from "./GetPresignedUrlRequest";

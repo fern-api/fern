@@ -1,3 +1,3 @@
-export * from "./ImportingType.js";
-export * from "./OptionalString.js";
-export * from "./FilteredType.js";
+export * from "./ImportingType";
+export * from "./OptionalString";
+export * from "./FilteredType";

@@ -1,1 +1,1 @@
-export { enum_ } from "./enum.js";
+export { enum_ } from "./enum";
