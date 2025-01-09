@@ -30,14 +30,12 @@ import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -102,44 +100,6 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
-        EqualsMethod equalsMethod = generateEqualsMethod();
-
-        TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
-                .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
-                        .addMember("using", "$T.class", deserializerClassName)
-                        .build())
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addField(VALUE_FIELD_SPEC)
-                .addField(FieldSpec.builder(int.class, TYPE_FIELD_NAME)
-                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PRIVATE)
-                        .addParameter(Object.class, VALUE_FIELD_SPEC.name)
-                        .addParameter(int.class, TYPE_FIELD_NAME)
-                        .addStatement("this.$L = $L", VALUE_FIELD_SPEC.name, VALUE_FIELD_SPEC.name)
-                        .addStatement("this.$L = $L", TYPE_FIELD_NAME, TYPE_FIELD_NAME)
-                        .build())
-                .addMethod(getRetriever())
-                .addMethod(getVisitMethod())
-                .addMethod(equalsMethod.getEqualsMethodSpec());
-        equalsMethod.getEqualToMethodSpec().ifPresent(unionTypeSpec::addMethod);
-        unionTypeSpec
-                .addMethod(generateHashCode())
-                .addMethod(generateToString())
-                .addMethods(getStaticFactories())
-                .addType(getVisitor())
-                .addType(getDeserializer());
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), unionTypeSpec.build()).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(javaFile)
-                .build();
     }
 
     private MethodSpec getRetriever() {
@@ -314,6 +274,34 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     @Override
     public TypeSpec getTypeSpec() {
-        return null;
+        EqualsMethod equalsMethod = generateEqualsMethod();
+
+        TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
+                .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                        .addMember("using", "$T.class", deserializerClassName)
+                        .build())
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addField(VALUE_FIELD_SPEC)
+                .addField(FieldSpec.builder(int.class, TYPE_FIELD_NAME)
+                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                        .build())
+                .addMethod(MethodSpec.constructorBuilder()
+                        .addModifiers(Modifier.PRIVATE)
+                        .addParameter(Object.class, VALUE_FIELD_SPEC.name)
+                        .addParameter(int.class, TYPE_FIELD_NAME)
+                        .addStatement("this.$L = $L", VALUE_FIELD_SPEC.name, VALUE_FIELD_SPEC.name)
+                        .addStatement("this.$L = $L", TYPE_FIELD_NAME, TYPE_FIELD_NAME)
+                        .build())
+                .addMethod(getRetriever())
+                .addMethod(getVisitMethod())
+                .addMethod(equalsMethod.getEqualsMethodSpec());
+        equalsMethod.getEqualToMethodSpec().ifPresent(unionTypeSpec::addMethod);
+        unionTypeSpec
+                .addMethod(generateHashCode())
+                .addMethod(generateToString())
+                .addMethods(getStaticFactories())
+                .addType(getVisitor())
+                .addType(getDeserializer());
+        return unionTypeSpec.build();
     }
 }

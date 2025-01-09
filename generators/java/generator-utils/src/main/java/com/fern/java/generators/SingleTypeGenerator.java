@@ -86,6 +86,6 @@ public final class SingleTypeGenerator implements Type.Visitor<GeneratedJavaFile
 
     @Override
     public GeneratedJavaFile _visitUnknown(Object unknown) {
-        return AbstractTypeGenerator.generateFile(className, typeSpec);
+        throw new RuntimeException("Encountered unknown type: " + unknown);
     }
 }

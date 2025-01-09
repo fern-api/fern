@@ -12,8 +12,10 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<TypeSpec>> {
 
@@ -37,29 +39,47 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
     }
 
     @Override
-    public Optional<TypeSpec> visitAlias(AliasTypeDeclaration aliasTypeDeclaration) {
+    public Optional<TypeSpec> visitAlias(AliasTypeDeclaration value) {
+        if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
+            AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, value);
+            return Optional.of(aliasGenerator.getTypeSpec());
+        }
         return Optional.empty();
     }
 
     @Override
-    public Optional<TypeSpec> visitEnum(EnumTypeDeclaration enumTypeDeclaration) {
-        return Optional.empty();
+    public Optional<TypeSpec> visitEnum(EnumTypeDeclaration value) {
+        EnumGenerator forwardCompatibleEnumGenerator = new EnumGenerator(className, generatorContext, value);
+        return Optional.of(forwardCompatibleEnumGenerator.getTypeSpec());
     }
 
     @Override
-    public Optional<TypeSpec> visitObject(ObjectTypeDeclaration objectTypeDeclaration) {
-        return Optional.empty();
+    public Optional<TypeSpec> visitObject(ObjectTypeDeclaration value) {
+        List<GeneratedJavaInterface> extendedInterfaces = value.getExtends().stream()
+                .map(DeclaredTypeName::getTypeId)
+                .map(allGeneratedInterfaces::get)
+                .collect(Collectors.toList());
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                value,
+                Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName.getTypeId())),
+                extendedInterfaces,
+                generatorContext,
+                allGeneratedInterfaces,
+                className);
+        return Optional.of(objectGenerator.getTypeSpec());
     }
 
     @Override
-    public Optional<TypeSpec> visitUnion(UnionTypeDeclaration unionTypeDeclaration) {
-        return Optional.empty();
+    public Optional<TypeSpec> visitUnion(UnionTypeDeclaration value) {
+        UnionGenerator unionGenerator = new UnionGenerator(className, generatorContext, value);
+        return Optional.of(unionGenerator.getTypeSpec());
     }
 
     @Override
-    public Optional<TypeSpec> visitUndiscriminatedUnion(
-            UndiscriminatedUnionTypeDeclaration undiscriminatedUnionTypeDeclaration) {
-        return Optional.empty();
+    public Optional<TypeSpec> visitUndiscriminatedUnion(UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+        UndiscriminatedUnionGenerator unionGenerator =
+                new UndiscriminatedUnionGenerator(className, generatorContext, undiscriminatedUnion);
+        return Optional.of(unionGenerator.getTypeSpec());
     }
 
     @Override
