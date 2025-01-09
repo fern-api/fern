@@ -15,10 +15,13 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedJavaFile generateFile() {
+        return generateFile(className, getTypeSpec());
+    }
+
+    public static GeneratedJavaFile generateFile(ClassName className, TypeSpec typeSpec) {
         return GeneratedJavaFile.builder()
                 .className(className)
-                .javaFile(
-                        JavaFile.builder(className.packageName(), getTypeSpec()).build())
+                .javaFile(JavaFile.builder(className.packageName(), typeSpec).build())
                 .build();
     }
 }

@@ -25,6 +25,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeSpec;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -55,15 +56,25 @@ public final class TypesGenerator {
 
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
-                    Optional<GeneratedJavaFile> maybeGeneratedJavaFile = typeDeclaration
+
+                    Optional<TypeSpec> maybeTypeSpec = typeDeclaration
+                            .getShape()
+                            .visit(new SingleTypeSpecGenerator(
+                                    generatorContext,
+                                    typeDeclaration.getName(),
+                                    className,
+                                    generatedInterfaces,
+                                    false));
+
+                    return maybeTypeSpec.map(typeSpec -> typeDeclaration
                             .getShape()
                             .visit(new SingleTypeGenerator(
                                     generatorContext,
                                     typeDeclaration.getName(),
                                     className,
                                     generatedInterfaces,
-                                    false));
-                    return maybeGeneratedJavaFile;
+                                    false,
+                                    typeSpec)));
                 })
                 .filter(Optional::isPresent)
                 .map(Optional::get)
