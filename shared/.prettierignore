@@ -33,7 +33,6 @@
 __snapshots__
 
 .yarn
-.github
 .turbo
 node_modules
 fern
