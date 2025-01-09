@@ -1,3 +1,3 @@
-export * from "./Id.js";
-export * from "./MyObject.js";
-export * from "./ObjectType.js";
+export * from "./Id";
+export * from "./MyObject";
+export * from "./ObjectType";

@@ -1,2 +1,2 @@
-export * from "./File_.js";
-export * from "./FileInfo.js";
+export * from "./File_";
+export * from "./FileInfo";

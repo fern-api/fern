@@ -1,1 +1,1 @@
-export * as dummy from "./dummy/index.js";
+export * as dummy from "./dummy";

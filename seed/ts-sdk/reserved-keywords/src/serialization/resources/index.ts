@@ -1,2 +1,2 @@
-export * as package_ from "./package/index.js";
-export * from "./package/types/index.js";
+export * as package_ from "./package";
+export * from "./package/types";

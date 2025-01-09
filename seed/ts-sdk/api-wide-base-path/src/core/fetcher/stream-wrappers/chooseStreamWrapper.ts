@@ -1,6 +1,6 @@
 import type { Readable } from "readable-stream";
 
-import { RUNTIME } from "../../runtime/index.js";
+import { RUNTIME } from "../../runtime";
 
 export type EventCallback = (data?: any) => void;
 

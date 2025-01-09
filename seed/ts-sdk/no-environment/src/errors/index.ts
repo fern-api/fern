@@ -1,2 +1,2 @@
-export { SeedNoEnvironmentError } from "./SeedNoEnvironmentError.js";
-export { SeedNoEnvironmentTimeoutError } from "./SeedNoEnvironmentTimeoutError.js";
+export { SeedNoEnvironmentError } from "./SeedNoEnvironmentError";
+export { SeedNoEnvironmentTimeoutError } from "./SeedNoEnvironmentTimeoutError";

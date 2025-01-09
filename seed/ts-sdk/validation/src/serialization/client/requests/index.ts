@@ -1,1 +1,1 @@
-export { CreateRequest } from "./CreateRequest.js";
+export { CreateRequest } from "./CreateRequest";

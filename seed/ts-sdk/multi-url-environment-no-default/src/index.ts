@@ -1,8 +1,8 @@
-export { SeedMultiUrlEnvironmentNoDefaultClient } from "./Client.js";
-export * as SeedMultiUrlEnvironmentNoDefault from "./api/index.js";
+export { SeedMultiUrlEnvironmentNoDefaultClient } from "./Client";
+export * as SeedMultiUrlEnvironmentNoDefault from "./api";
 export {
     SeedMultiUrlEnvironmentNoDefaultEnvironment,
     SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls,
-} from "./environments.js";
-export { SeedMultiUrlEnvironmentNoDefaultError, SeedMultiUrlEnvironmentNoDefaultTimeoutError } from "./errors/index.js";
-export * as serialization from "./serialization/index.js";
+} from "./environments";
+export { SeedMultiUrlEnvironmentNoDefaultError, SeedMultiUrlEnvironmentNoDefaultTimeoutError } from "./errors";
+export * as serialization from "./serialization";

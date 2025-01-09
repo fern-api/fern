@@ -1,1 +1,1 @@
-export * from "./Operand.js";
+export * from "./Operand";

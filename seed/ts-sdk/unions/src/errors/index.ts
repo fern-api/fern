@@ -1,2 +1,2 @@
-export { SeedUnionsError } from "./SeedUnionsError.js";
-export { SeedUnionsTimeoutError } from "./SeedUnionsTimeoutError.js";
+export { SeedUnionsError } from "./SeedUnionsError";
+export { SeedUnionsTimeoutError } from "./SeedUnionsTimeoutError";

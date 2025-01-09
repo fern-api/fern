@@ -1,1 +1,1 @@
-export * as echo from "./echo.js";
+export * as echo from "./echo";

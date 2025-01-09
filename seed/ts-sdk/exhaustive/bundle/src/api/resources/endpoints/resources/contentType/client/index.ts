@@ -1,2 +1,2 @@
-export * as postJsonPatchContentType from "./postJsonPatchContentType.js";
-export * as postJsonPatchContentWithCharsetType from "./postJsonPatchContentWithCharsetType.js";
+export * as postJsonPatchContentType from "./postJsonPatchContentType";
+export * as postJsonPatchContentWithCharsetType from "./postJsonPatchContentWithCharsetType";

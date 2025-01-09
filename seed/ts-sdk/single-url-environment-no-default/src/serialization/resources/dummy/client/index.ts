@@ -1,1 +1,1 @@
-export * as getDummy from "./getDummy.js";
+export * as getDummy from "./getDummy";

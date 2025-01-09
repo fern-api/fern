@@ -1,4 +1,4 @@
-import { RUNTIME } from "../runtime/index.js";
+import { RUNTIME } from "../runtime";
 
 /**
  * Returns a fetch function based on the runtime
